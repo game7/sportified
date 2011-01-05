@@ -1,0 +1,8 @@
+<%= semantic_form_for @division do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :league if @division.new_record %>
+    <%= f.input :current_season, :collection => @division.seasons if !@division.new_record %>
+  <% end %>
+  <%= f.buttons %>
+<% end %>

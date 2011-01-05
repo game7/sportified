@@ -1,0 +1,29 @@
+<h1>Listing divisions</h1>
+
+<table border="1" cellpadding="5" style="border-collapse: collapse;">
+  <tr>
+    <th>Name</th>
+    <th>League</th>
+    <th>Current Season</th>
+    <th>Related</th>
+    <th>Actions</th>
+  </tr>
+
+<% @divisions.each do |division| %>
+  <tr>
+    <td><%= division.name %></td>
+    <td><%= division.league_name %></td>
+    <td><%= link_to_unless(division.current_season_id.nil?, division.current_season_name, :controller => "seasons", :action => "show", :id => division.current_season_id) %></td>
+    <td><%= link_to 'Seasons', seasons_path %></td>
+    <td>
+      <%= link_to 'Show', division %>
+      <%= link_to 'Edit', edit_division_path(division) %>
+      <%= link_to 'Destroy', division, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Division', new_division_path %>

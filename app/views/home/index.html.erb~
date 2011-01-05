@@ -1,0 +1,14 @@
+<h1>Home#index</h1>
+<p>Sportified!</p>
+<h3>League Divisions</h3>
+<ul>
+<%= @divisions.each do |d| %>
+  <li><%= d.name %></li>
+<% end %>
+</ul>
+<h3>Users</h3>
+<ul>
+<% @users.each do |user| %>
+  <li><%= link_to user.name, user %></li>
+<% end %>
+<ul>
