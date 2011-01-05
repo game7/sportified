@@ -88,7 +88,9 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
-    machinist (2.0.0.beta2)
+    machinist (1.0.6)
+    machinist_mongo (1.1.1)
+      machinist (~> 1.0.4)
     mail (2.2.13)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -184,7 +186,8 @@ DEPENDENCIES
   faker
   formtastic (~> 1.1.0)
   launchy
-  machinist (>= 2.0.0.beta1)
+  machinist (~> 1.0.4)
+  machinist_mongo
   mongoid (= 2.0.0.beta.20)
   mongoid_slug
   nifty-generators

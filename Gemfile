@@ -42,7 +42,8 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
-  gem 'machinist', '>= 2.0.0.beta1'
+  gem 'machinist', '~> 1.0.4'
+  gem 'machinist_mongo', :require => 'machinist/mongoid'
   gem 'faker'
 
 end

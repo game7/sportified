@@ -11,7 +11,7 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
     when /^the seasons page for the division named (.*)$/
-      division_seasons_path(Division.find(:name => $1))
+      division_seasons_path(Division.find(:name =>$1)
 
     when /the new divisions page/
       new_divisions_path

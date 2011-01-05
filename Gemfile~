@@ -34,14 +34,20 @@ gem 'delayed_job'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :test do
-#   gem 'webrat'
+
   gem 'rspec'
   gem 'rspec-rails'
   gem 'webrat'
   gem 'cucumber-rails'
-  #gem 'capybara'
+  gem 'cucumber'
+  gem 'capybara'
+  gem 'launchy'   # so we can use : Then show me the page
+  gem 'machinist', '>= 2.0.0.beta1'
+  gem 'machinist_mongo', :require => 'machinist/mongoid'
+  gem 'faker'
+
 end
 
 group :development do
-  
+  gem 'nifty-generators'  
 end
