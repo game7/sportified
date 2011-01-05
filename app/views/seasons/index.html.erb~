@@ -17,7 +17,7 @@
     <td><%= link_to 'Teams', season_teams_path(season)%></td>
     <td>
       <%= link_to 'Show', season %> |
-      <%= link_to 'Edit', edit_season_path(, season) %> |
+      <%= link_to 'Edit', edit_season_path(season) %> |
       <%= link_to 'Destroy', season, :confirm => 'Are you sure?', :method => :delete %>
     </td>
   </tr>

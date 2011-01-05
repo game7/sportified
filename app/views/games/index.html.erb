@@ -4,13 +4,17 @@
   <tr>
     <th>Starts on</th>
     <th>Starts at</th>
+    <th>Home</th>
+    <th>Away</th>
     <th>Actions</th>
   </tr>
 
 <% @games.each do |game| %>
   <tr>
     <td><%= game.starts_on.strftime("%a %m/%d/%y") %></td>
-    <td><%= game.starts_at.strftime("%I:%M %p") %></td>
+    <td><%= game.starts_on.strftime("%I:%M %p") %></td>
+    <td><%= game.home_team_name %></td>
+    <td><%= game.away_team_name %></td>
     <td>
       <%= link_to 'Show', game %>
       <%= link_to 'Edit', edit_game_path(game) %>

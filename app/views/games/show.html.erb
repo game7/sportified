@@ -1,13 +1,13 @@
 <p>
   <b>Starts on:</b>
-  <%= @game.starts_on %>
+  <%= @game.starts_on.strftime("%a %m/%d/%y") %>
 </p>
 
 <p>
   <b>Starts at:</b>
-  <%= @game.starts_at %>
+  <%= @game.starts_on.strftime("%I:%M %p") %>
 </p>
 
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', season_games_path(@season) %>
+<%= link_to 'Back', season_games_path(@game.season_id) %>

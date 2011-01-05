@@ -14,7 +14,10 @@
     <td><%= season.name %></td>
     <td><%= season.starts_on %></td>
     <td><%= season.ends_on %></td>
-    <td><%= link_to 'Teams', season_teams_path(season)%></td>
+    <td>
+      <%= link_to 'Teams', season_teams_path(season)%> | 
+      <%= link_to 'Games', season_games_path(season)%>
+    </td>
     <td>
       <%= link_to 'Show', season %> |
       <%= link_to 'Edit', edit_season_path(season) %> |
