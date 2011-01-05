@@ -9,7 +9,7 @@ Sportified::Application.routes.draw do
   resources :divisions, :shallow => true do
     resources :seasons, :shallow => true do
       resources :games
-      resources :teams do
+      resources :teams, :shallow => true do
         resources :players
       end
     end

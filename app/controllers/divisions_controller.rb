@@ -60,7 +60,7 @@ class DivisionsController < ApplicationController
 
     respond_to do |format|
       if @division.update_attributes(params[:division])
-        format.html { redirect_to(@division, :notice => 'Division was successfully updated.') }
+        format.html { redirect_to(divisions_path, :notice => 'Division was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -2,8 +2,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
+    @team = Team.find(params[:team_id])
     @players = @team.players
 
     respond_to do |format|
@@ -15,9 +14,7 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.xml
   def show
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
-    @player = @team.players.criteria.id(params[:id]).documents[0]
+    @player = Player.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,8 +25,7 @@ class PlayersController < ApplicationController
   # GET /players/new
   # GET /players/new.xml
   def new
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
+    @team = Team.find(params[:team_id])
     @player = @team.players.build
 
     respond_to do |format|
@@ -40,21 +36,18 @@ class PlayersController < ApplicationController
 
   # GET /players/1/edit
   def edit
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
-    @player = @team.players.build #where(:id => params[:id])
+    @player = Player.find(params[:id])    
   end
 
   # POST /players
   # POST /players.xml
   def create
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.where(:id => params[:team_id])
+    @team = Team.find(params[:team_id])
     @player = @team.players.build(params[:player])
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to([@season, @team, @player], :notice => 'Player was successfully created.') }
+        format.html { redirect_to(team_players_path(@team), :notice => 'Player was successfully created.') }
         format.xml  { render :xml => @player, :status => :created, :location => @player }
       else
         format.html { render :action => "new" }
@@ -66,13 +59,11 @@ class PlayersController < ApplicationController
   # PUT /players/1
   # PUT /players/1.xml
   def update
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
-    @player = @team.players.find(params[:id])
+    @player = Player.find(params[:id])
 
     respond_to do |format|
       if @player.update_attributes(params[:player])
-        format.html { redirect_to([@season, @team, @player], :notice => 'Player was successfully updated.') }
+        format.html { redirect_to(team_players_path(@player.team_id), :notice => 'Player was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -84,13 +75,11 @@ class PlayersController < ApplicationController
   # DELETE /players/1
   # DELETE /players/1.xml
   def destroy
-    @season = Season.find(params[:season_id])
-    @team = @season.teams.find(params[:team_id])
-    @player = @Steam.players.find(params[:id])
+    @player = Player.find(params[:id])
     @player.destroy
 
     respond_to do |format|
-      format.html { redirect_to(players_url) }
+      format.html { redirect_to(team_players_url(@player.team_id)) }
       format.xml  { head :ok }
     end
   end

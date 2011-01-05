@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   # GET /teams.xml
   def index
     @season = Season.find(params[:season_id])
-    @teams = Team.all
+    @teams = @season.teams
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class TeamsController < ApplicationController
     @team = @season.teams.build(params[:team])
 
     respond_to do |format|
-      if @season.save
+      if @team.save
         format.html { redirect_to(season_teams_path(@team.season_id), :notice => 'Team was successfully created.') }
         format.xml  { render :xml => @team, :status => :created, :location => @team }
       else

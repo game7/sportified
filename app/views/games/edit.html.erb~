@@ -1,5 +1,6 @@
-<h1>New game</h1>
+<h1>Editing game</h1>
 
 <%= render 'form' %>
 
+<%= link_to 'Show', @game %> |
 <%= link_to 'Back', season_games_path(@season) %>

@@ -4,18 +4,17 @@ Sportified::Application.routes.draw do
   devise_for :users
   resources :users, :only => :show
 
-  scope "league" do
-    resources :sports
-    resources :leagues
-    resources :divisions, :shallow => true do
-      resources :seasons, :shallow => true do
-        resources :games
-        resources :teams do
-          resources :players
-        end
+  resources :sports
+  resources :leagues
+  resources :divisions, :shallow => true do
+    resources :seasons, :shallow => true do
+      resources :games
+      resources :teams do
+        resources :players
       end
     end
   end
+
 
  
 

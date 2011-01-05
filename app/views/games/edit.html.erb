@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+<%= link_to 'Back', season_games_path(@game.season_id) %>

@@ -43,7 +43,7 @@ class GamesController < ApplicationController
   # POST /games.xml
   def create
     @season = Season.find(params[:season_id])
-    @game = @season.games.build(params[:game])
+    @game = @season.game.build(params[:game])
 
     respond_to do |format|
       if @game.save

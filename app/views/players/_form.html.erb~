@@ -1,29 +1,8 @@
-<%= form_for([@season, @team, @player) do |f| %>
-  <% if @player.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
-
-      <ul>
-      <% @player.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+<%= semantic_form_for [@season, @team, @player] do |f| %>
+  <% f.inputs do %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :jersey_number %>
   <% end %>
-
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :jersey_number %><br />
-    <%= f.text_field :jersey_number %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.buttons %>
 <% end %>

@@ -1,21 +1,21 @@
 <h1>Listing games</h1>
 
-<table border="1" cellpadding="5" style="border-collapse: collapse;">
+<table>
   <tr>
     <th>Starts on</th>
     <th>Starts at</th>
-    <th>Actions</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
 <% @games.each do |game| %>
   <tr>
     <td><%= game.starts_on.strftime("%a %m/%d/%y") %></td>
     <td><%= game.starts_at.strftime("%I:%M %p") %></td>
-    <td>
-      <%= link_to 'Show', game %>
-      <%= link_to 'Edit', edit_game_path(game) %>
-      <%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %>
-    </td>
+    <td><%= link_to 'Show', game %></td>
+    <td><%= link_to 'Edit', edit_game_path(game) %></td>
+    <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

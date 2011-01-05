@@ -6,6 +6,4 @@ class Game
 
   referenced_in :season, :inverse_of => :games
 
-  
-
 end

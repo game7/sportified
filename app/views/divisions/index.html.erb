@@ -3,7 +3,6 @@
 <table border="1" cellpadding="5" style="border-collapse: collapse;">
   <tr>
     <th>Name</th>
-    <th>League</th>
     <th>Current Season</th>
     <th>Related</th>
     <th>Actions</th>
@@ -12,7 +11,6 @@
 <% @divisions.each do |division| %>
   <tr>
     <td><%= division.name %></td>
-    <td><%= division.league_name %></td>
     <td><%= link_to_unless(division.current_season_id.nil?, division.current_season_name, :controller => "seasons", :action => "show", :id => division.current_season_id) %></td>
     <td><%= link_to 'Seasons', division_seasons_path(division) %></td>
     <td>

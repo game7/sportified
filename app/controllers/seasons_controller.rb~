@@ -2,7 +2,7 @@ class SeasonsController < ApplicationController
   # GET /seasons
   # GET /seasons.xml
   def index
-    @division = Division.find(params[:division_id])
+    @division = Division.find_by_slug(params[:division_id])
     @seasons = @division.seasons
 
     respond_to do |format|
@@ -25,7 +25,7 @@ class SeasonsController < ApplicationController
   # GET /seasons/new
   # GET /seasons/new.xml
   def new
-    @division = Division.find(params[:division_id])
+    @division = Division.find_by_slug(params[:division_id])
     @season = @division.seasons.build
 
     respond_to do |format|
@@ -42,7 +42,7 @@ class SeasonsController < ApplicationController
   # POST /seasons
   # POST /seasons.xml
   def create
-    @division = Division.find(params[:division_id])
+    @division = Division.find_by_slug(params[:division_id])
     @season = @division.seasons.build(params[:season])
 
     respond_to do |format|
@@ -63,7 +63,7 @@ class SeasonsController < ApplicationController
 
     respond_to do |format|
       if @season.update_attributes(params[:season])
-        format.html { redirect_to(@season, :notice => 'Season was successfully updated.') }
+        format.html { redirect_to(division_seasons_path(@division), :notice => 'Season was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

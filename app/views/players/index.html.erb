@@ -14,9 +14,9 @@
     <td><%= player.last_name %></td>
     <td><%= player.jersey_number %></td>
     <td>
-      <%= link_to 'Show', [@season, @team, player] %>
-      <%= link_to 'Edit', edit_season_team_player_path(@season, @team, player) %>
-      <%= link_to 'Destroy', [@season, @team, player], :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to 'Show', player %>
+      <%= link_to 'Edit', edit_player_path(player) %>
+      <%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %>
     </td>
   </tr>
 <% end %>
@@ -24,4 +24,4 @@
 
 <br />
 
-<%= link_to 'New Player', new_season_team_player_path(@season, @team) %>
+<%= link_to 'New Player', new_team_player_path(@team) %>

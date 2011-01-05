@@ -80,7 +80,7 @@ class TeamsController < ApplicationController
     @team.destroy
 
     respond_to do |format|
-      format.html { redirect_to(season_teams_url(@season_id) }
+      format.html { redirect_to(season_teams_url(@season_id)) }
       format.xml  { head :ok }
     end
   end
