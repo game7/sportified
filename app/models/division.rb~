@@ -1,6 +1,5 @@
 class Division
   include Mongoid::Document
-  include Mongoid::Slug
 
   attr_accessible :name, :league_id, :current_season_id
   
@@ -13,8 +12,9 @@ class Division
   referenced_in :current_season, :class_name => "Season"
 
   before_save :set_slug
-  before_save :set_current_season_name
   before_save :set_current_season_id
+  before_save :set_current_season_name
+
 
   private
 
@@ -28,7 +28,9 @@ class Division
     end
 
     def set_current_season_id
-      self.current_season_id = nil if self.current_season_id = ''     
+      if self.current_season_id = ''
+        self.current_season_id = nil
+      end    
     end
 
 end

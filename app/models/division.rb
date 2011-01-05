@@ -12,8 +12,9 @@ class Division
   referenced_in :current_season, :class_name => "Season"
 
   before_save :set_slug
-  before_save :set_current_season_name
   before_save :set_current_season_id
+  before_save :set_current_season_name
+
 
   private
 
@@ -27,7 +28,7 @@ class Division
     end
 
     def set_current_season_id
-      self.current_season_id = nil if self.current_season_id = ''     
+      self.current_season_id = nil if !self.current_season
     end
 
 end
