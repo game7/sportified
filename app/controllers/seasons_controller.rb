@@ -15,6 +15,7 @@ class SeasonsController < ApplicationController
   # GET /seasons/1.xml
   def show
     @season = Season.find(params[:id])
+    @teams = @season.teams
 
     respond_to do |format|
       format.html # show.html.erb

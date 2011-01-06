@@ -1,20 +1,17 @@
-<p id="notice"><%= notice %></p>
-
+<h1>
+  <% @season.name_path.each_with_index do |name, count| %>
+    <%= ' :: ' if count > 0 %>
+    <%= name %>
+  <% end %>
+</h1>
 <p>
-  <b>Name:</b>
-  <%= @season.name %>
+  From <%= @season.starts_on %> to <%= @season.ends_on %>
 </p>
-
-<p>
-  <b>Starts on:</b>
-  <%= @season.starts_on %>
-</p>
-
-<p>
-  <b>Ends on:</b>
-  <%= @season.ends_on %>
-</p>
-
 
 <%= link_to 'Edit', edit_season_path(@season) %> |
-<%= link_to 'Back', division_seasons_path(@season.division_id) %>
+<%= link_to 'All Seasons', division_seasons_path(@season.division_id) %>
+
+<h3>Teams</h3>
+<%= render "teams_list" %>
+
+<h3>Games</h3>
