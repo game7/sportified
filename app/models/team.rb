@@ -11,7 +11,7 @@ class Team
   field :slug_path, :type => Array
 
   referenced_in :season, :inverse_of => :teams
-  references_many :players
+  references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
 
