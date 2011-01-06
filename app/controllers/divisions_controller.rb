@@ -14,6 +14,7 @@ class DivisionsController < ApplicationController
   # GET /divisions/1.xml
   def show
     @division = Division.find(params[:id])
+    @seasons = @division.seasons
 
     respond_to do |format|
       format.html # show.html.erb

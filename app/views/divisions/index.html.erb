@@ -4,7 +4,6 @@
   <tr>
     <th>Name</th>
     <th>Current Season</th>
-    <th>Related</th>
     <th>Actions</th>
   </tr>
 
@@ -12,7 +11,6 @@
   <tr>
     <td><%= division.name %></td>
     <td><%= link_to_unless(division.current_season_id.nil?, division.current_season_name, :controller => "seasons", :action => "show", :id => division.current_season_id) %></td>
-    <td><%= link_to 'Seasons', division_seasons_path(division) %></td>
     <td>
       <%= link_to 'Show', division %>
       <%= link_to 'Edit', edit_division_path(division) %>

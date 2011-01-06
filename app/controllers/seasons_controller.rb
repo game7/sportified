@@ -47,7 +47,7 @@ class SeasonsController < ApplicationController
 
     respond_to do |format|
       if @season.save
-        format.html { redirect_to(division_seasons_path(@division), :notice => 'Season was successfully created.') }
+        format.html { redirect_to(@division, :notice => 'Season was successfully created.') }
         format.xml  { render :xml => @season, :status => :created, :location => @season }
       else
         format.html { render :action => "new" }
@@ -63,7 +63,7 @@ class SeasonsController < ApplicationController
 
     respond_to do |format|
       if @season.update_attributes(params[:season])
-        format.html { redirect_to(division_seasons_path(@division), :notice => 'Season was successfully updated.') }
+        format.html { redirect_to(@season, :notice => 'Season was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -80,7 +80,7 @@ class SeasonsController < ApplicationController
     @season.destroy
 
     respond_to do |format|
-      format.html { redirect_to(division_seasons_url(@division)) }
+      format.html { redirect_to(@division) }
       format.xml  { head :ok }
     end
   end
