@@ -1,8 +1,0 @@
-class GameTeam
-  include Mongoid::Document
-
-  field :name
-  
-  referenced_in :team
-
-end

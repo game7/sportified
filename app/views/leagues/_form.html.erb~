@@ -1,6 +1,0 @@
-<%= semantic_form_for @league do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name %>
-  <% end %>
-  <%= f.buttons %>
-<% end %>

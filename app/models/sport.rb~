@@ -1,8 +1,0 @@
-class Sport
-  include Mongoid::Document
-  
-  key :name
-
-  references_many :leagues
-
-end

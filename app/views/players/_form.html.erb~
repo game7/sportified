@@ -1,8 +1,0 @@
-<%= semantic_form_for [@season, @team, @player] do |f| %>
-  <% f.inputs do %>
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :jersey_number %>
-  <% end %>
-  <%= f.buttons %>
-<% end %>
