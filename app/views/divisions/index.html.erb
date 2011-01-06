@@ -12,7 +12,7 @@
     <td><%= division.name %></td>
     <td><%= link_to_unless(division.current_season_id.nil?, division.current_season_name, :controller => "seasons", :action => "show", :id => division.current_season_id) %></td>
     <td>
-      <%= link_to 'Show', division %>
+      <%= link_to 'Go To', division %>
       <%= link_to 'Edit', edit_division_path(division) %>
       <%= link_to 'Destroy', division, :confirm => 'Are you sure?', :method => :delete %>
     </td>

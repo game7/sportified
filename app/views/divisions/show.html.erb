@@ -1,10 +1,6 @@
-<p>
-  <b>Name:</b>
-  <%= @division.name %>
-</p>
 
-<%= link_to 'Edit', edit_division_path(@division) %> |
-<%= link_to 'Back', divisions_path %>
+<h1><%= @division.name %></h1>
+<%= link_to 'Edit', edit_division_path(@division) %> | <%= link_to 'All Divisions', divisions_path %>
 
 <h3>Seasons</h3>
 
