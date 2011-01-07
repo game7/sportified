@@ -1,4 +1,8 @@
-<h1>Listing teams</h1>
+<h1>Teams</h1>
+<p>
+  <%= link_to @season.name_path[0], division_path(@season.id_path[0]) %> :: 
+  <%= link_to @season.name, @season %></h1>
+</p>
 
 <table border="1" cellpadding="5" style="border-collapse: collapse;">
   <tr>
