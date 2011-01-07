@@ -1,9 +1,4 @@
-<h1>
-  <% @season.name_path.each_with_index do |name, count| %>
-    <%= ' :: ' if count > 0 %>
-    <%= name %>
-  <% end %>
-</h1>
+<% title @season.name_path[0] << " :: " << @season.name %>
 <p>
   From <%= @season.starts_on %> to <%= @season.ends_on %>
 </p>
