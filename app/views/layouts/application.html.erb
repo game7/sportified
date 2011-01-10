@@ -17,6 +17,9 @@
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
       <%= content_tag :h1, yield(:title) if show_title? %>
+      <p>
+        <%= render "layouts/breadcrumbs" if @breadcrumbs %>
+      </p>
       <%= yield %>
     </div>
   </body>

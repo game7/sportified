@@ -5,21 +5,18 @@ class Team
   
   field :name
   field :short_name
-  field :slug
-  field :id_path, :type => Array
-  field :name_path, :type => Array
-  field :slug_path, :type => Array
+  field :slugs, :type => Array
+  field :breadcrumbs, :type => Array
 
   referenced_in :season, :inverse_of => :teams
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
 
-  before_save :set_slug
-  before_save :set_paths
+  before_save :set_slugs_and_breadcrumbs
   before_save :ensure_short_name
 
-  scope :with_slugs, lambda { |slugs| all_in(:slug_path => slugs) }
+  scope :with_slugs, lambda { |slugs| all_in(:slugs => slugs) }
 
   private
 
@@ -29,15 +26,10 @@ class Team
       end
     end
 
-    def set_slug
-      self.slug = self.name.parameterize
-    end
-
-    def set_paths
+    def set_slugs_and_breadcrumbs
       @parent = self.season
-      self.id_path = @parent.id_path << self.id
-      self.name_path = @parent.name_path << self.name 
-      self.slug_path = @parent.slug_path << self.slug
+      self.slugs = @parent.slugs << self.name.parameterize
+      self.breadcrumbs = @parent.breadcrumbs << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slugs.last }
     end
 
 end

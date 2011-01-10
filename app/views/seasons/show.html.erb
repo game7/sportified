@@ -1,4 +1,5 @@
 <% title @season.name_path[0] << " :: " << @season.name %>
+<% breadcrumbs @season.breadcrumbs %>
 <p>
   From <%= @season.starts_on %> to <%= @season.ends_on %>
 </p>
