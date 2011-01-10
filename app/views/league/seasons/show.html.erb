@@ -1,0 +1,13 @@
+<% title @season.name_path[0] << " :: " << @season.name %>
+<% breadcrumbs @season.breadcrumbs %>
+
+<p>
+  From <%= @season.starts_on %> to <%= @season.ends_on %>
+</p>
+
+<%= link_to 'Edit', edit_league_season_path(@season) %>
+
+<h3>Teams</h3>
+<%= render "teams_list" %>
+
+<h3>Games</h3>

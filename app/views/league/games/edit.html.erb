@@ -1,0 +1,7 @@
+<% title "Edit Game" %>
+<% breadcrumbs @game.breadcrumbs %>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', [:league, @game] %> |
+<%= link_to 'Back', league_season_games_path(@game.season_id) %>

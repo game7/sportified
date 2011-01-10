@@ -1,0 +1,2 @@
+module League::DashboardHelper
+end

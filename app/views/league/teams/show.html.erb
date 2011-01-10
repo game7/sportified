@@ -1,0 +1,16 @@
+<% title @team.name %>
+<% breadcrumbs @team.breadcrumbs %>
+
+<p>
+  <b>Name:</b>
+  <%= @team.name %>
+</p>
+
+<p>
+  <b>Short Name:</b>
+  <%= @team.short_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_league_team_path(@team) %> |
+<%= link_to 'Back', league_season_teams_path(@team.season_id) %>
