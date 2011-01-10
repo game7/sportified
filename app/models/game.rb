@@ -1,31 +1,26 @@
 class Game
   include Mongoid::Document
-  
+
+  TEAM_ALIGNMENT = %w[home away]
+
+  accepts_nested_attributes_for :left_team
+  accepts_nested_attributes_for :right_team
+ 
   field :starts_on, :type => DateTime
-  field :home_team_name
-  field :home_team_use_custom_name, :type => Boolean
-  field :away_team_name
-  field :away_team_use_custom_name, :type => Boolean
 
   referenced_in :season, :inverse_of => :games
-  referenced_in :home_team, :class_name => "Team"
-  referenced_in :away_team, :class_name => "Team"
 
-  before_save :update_home_team_name
-  before_save :update_away_team_name
+  embeds_one :left_team, :class_name => "GameTeam"
+  embeds_one :right_team, :class_name => "GameTeam"
+
+  before_save :update_team_names
 
   private
 
-    def update_home_team_name
-      if !self.home_team_use_custom_name
-        self.home_team_name = self.home_team ? self.home_team.name : ''
-      end
-    end
-
-    def update_away_team_name
-      if !self.away_team_use_custom_name
-        self.away_team_name = self.away_team ? self.away_team.name : ''
-      end      
+    # workaound to overcome mongoid not cascading events to embedded documents
+    def update_team_names
+      self.left_team.update_team_name if self.left_team
+      self.right_team.update_team_name if self.right_team
     end
 
 end

@@ -14,8 +14,8 @@
   <tr>
     <td><%= game.starts_on.strftime("%a %m/%d/%y") %></td>
     <td><%= game.starts_on.strftime("%I:%M %p") %></td>
-    <td><%= game.home_team_name %></td>
-    <td><%= game.away_team_name %></td>
+    <td><%= game.left_team.name %></td>
+    <td><%= game.right_team.name %></td>
     <td>
       <%= link_to 'Show', [:league, game] %>
       <%= link_to 'Edit', edit_league_game_path(game) %>

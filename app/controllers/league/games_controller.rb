@@ -26,7 +26,10 @@ class League::GamesController < League::LeagueController
   # GET /games/new.xml
   def new
     @season = Season.find(params[:season_id])
+    @teams = Season.teams
     @game = @season.games.build
+    @game.left_team = GameTeam.new
+    @game.right_team = GameTeam.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +40,7 @@ class League::GamesController < League::LeagueController
   # GET /games/1/edit
   def edit
     @game = Game.find(params[:id])
+    @teams = @game.season.teams
   end
 
   # POST /games
