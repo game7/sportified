@@ -18,7 +18,7 @@
       <% end %>
       <%= content_tag :h1, yield(:title) if show_title? %>
       <p>
-        <%= render "layouts/breadcrumbs" if @breadcrumbs %>
+        <%= render "layouts/breadcrumbs" %>
       </p>
       <%= yield %>
     </div>

@@ -1,5 +1,15 @@
 
-<% @breadcrumbs.each_with_index do |crumb, index| %>
-  <%= " > " if index > 0 %>
-  <%= link_to crumb["name"], :controller => crumb["controller"], :action => "show", :id => crumb["id"] %>
+<% if @area_name && @area_url %>
+  <a href="<%= @area_url %>"><%= @area_name %></a>
+<% elsif @area_name %>
+  <%= @area_name %>
 <% end %>
+
+<% if @breadcrumbs %>
+  <% @breadcrumbs.each_with_index do |crumb, index|%>
+    <%= " > " if @area_name || index > 0 %>
+    <%= link_to crumb["name"], :controller => crumb["controller"], :action => "show", :id => crumb["id"] %> 
+  <% end %>
+<% end %>
+
+

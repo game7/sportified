@@ -1,16 +1,22 @@
 Sportified::Application.routes.draw do
 
+
+  get "home/index"
+
   root :to => "home#index"
   devise_for :users
   resources :users, :only => :show
 
-  resources :sports
-  resources :leagues
-  resources :divisions, :shallow => true do
-    resources :seasons, :shallow => true do
-      resources :games
-      resources :teams, :shallow => true do
-        resources :players
+  match "/league" => "league/home#index", :as => :league
+  namespace :league do
+    resources :divisions, :shallow => true do
+      scope "/league" do
+        resources :seasons, :shallow => true do
+          resources :games
+          resources :teams, :shallow => true do
+            resources :players
+          end
+        end
       end
     end
   end

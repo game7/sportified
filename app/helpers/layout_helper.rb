@@ -10,7 +10,7 @@ module LayoutHelper
   end
 
   def breadcrumbs(crumbs)
-    @breadcrumbs = crumbs
+    @breadcrumbs = crumbs  
   end
 
   def breadcrumbs?
