@@ -81,6 +81,7 @@ GEM
       i18n (>= 0.4.0)
     gherkin (2.3.3)
       json (~> 1.4.6)
+    haml (3.0.25)
     highline (1.6.1)
     i18n (0.5.0)
     json (1.4.6)
@@ -185,6 +186,7 @@ DEPENDENCIES
   devise
   faker
   formtastic (~> 1.1.0)
+  haml
   launchy
   machinist (~> 1.0.4)
   machinist_mongo

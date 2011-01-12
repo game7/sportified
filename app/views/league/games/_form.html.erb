@@ -1,7 +1,6 @@
 <%= semantic_form_for [:league, @season, @game] do |f| %>
   <%= f.inputs :name => "Logistics" do %>
-    <%= f.input :starts_on, :as => :date %>
-    <%= f.input :starts_on, :as => :time %>
+    <%= f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" } %>
   <% end %>
   <%= f.inputs :name => "Away Team", :for => :left_team do |left| %>
     <%= left.input :team, :collection => @teams %>
@@ -13,6 +12,7 @@
     <%= right.input :use_custom_name, :as => :boolean %>
     <%= right.input :name %>
   <% end %>
+  <%= f.inputs :name => "Resources" %>
   <%= f.buttons %>
 <% end %>
 

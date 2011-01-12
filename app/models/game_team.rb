@@ -14,7 +14,6 @@ class GameTeam
   referenced_in :team
   embedded_in :game, :inverse_of => :left_team
   embedded_in :game, :inverse_of => :right_team
-  embeds_many :sub_scores, :class_name => "GameTeamSubScore"
 
   #before_save :update_team_name
 

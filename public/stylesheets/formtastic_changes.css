@@ -12,3 +12,17 @@ The following style may be *conditionally* included for improved support on olde
 form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
+
+form.formtastic fieldset {
+    padding: 5px;
+}
+form.formtastic fieldset.inputs { 
+    border: solid 1px gray;     
+}
+
+form.formtastic legend {
+    padding: 5px;
+    margin-left: 5px;
+}
+
+

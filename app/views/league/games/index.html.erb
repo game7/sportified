@@ -7,6 +7,7 @@
     <th>Starts at</th>
     <th>Home</th>
     <th>Away</th>
+    <th>Result</th>
     <th>Actions</th>
   </tr>
 
@@ -14,8 +15,12 @@
   <tr>
     <td><%= game.starts_on.strftime("%a %m/%d/%y") %></td>
     <td><%= game.starts_on.strftime("%I:%M %p") %></td>
-    <td><%= game.left_team.name %></td>
-    <td><%= game.right_team.name %></td>
+    <td><%= game.left_team.name %> <%= game.result.left_team_score if game.has_result? %></td>
+    <td><%= game.right_team.name %> <%= game.result.right_team_score if game.has_result? %></td>
+    <td>
+      <%= link_to "Add", new_league_game_result_path(game) if game.can_add_result?  %>
+      <%= link_to "Drop", league_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result? %>
+    </td>
     <td>
       <%= link_to 'Show', [:league, game] %>
       <%= link_to 'Edit', edit_league_game_path(game) %>

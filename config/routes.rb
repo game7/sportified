@@ -1,5 +1,17 @@
 Sportified::Application.routes.draw do
 
+  get "game_result/create"
+
+  get "game_result/new"
+
+  get "game_result/edit"
+
+  get "game_result/show"
+
+  get "game_result/update"
+
+  get "game_result/destroy"
+
   get "home/index"
 
   root :to => "home#index"
@@ -9,17 +21,16 @@ Sportified::Application.routes.draw do
   match "/league" => "league/home#index", :as => :league
   namespace :league do
     resources :divisions, :shallow => true do
-      resources :seasons, :shallow => true do
-        resources :games
-        resources :teams, :shallow => true do
+      resources :seasons do
+        resources :games do
+          resource :result, :controller => "game_result"
+        end
+        resources :teams do
           resources :players
         end
       end
     end
   end
-
-
- 
 
 
   # The priority is based upon order of creation:

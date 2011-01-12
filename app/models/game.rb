@@ -12,8 +12,21 @@ class Game
 
   embeds_one :left_team, :class_name => "GameTeam"
   embeds_one :right_team, :class_name => "GameTeam"
+  embeds_one :result, :class_name => "GameResult"
 
   before_save :update_team_names
+
+  def has_result?
+    !self.result.nil?
+  end
+
+  def can_add_result?
+    !self.has_result? && self.starts_on < DateTime.now
+  end
+
+  def can_delete_result?
+    self.has_result?
+  end
 
   private
 

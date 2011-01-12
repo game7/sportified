@@ -3,7 +3,7 @@ class League::GamesController < League::LeagueController
   # GET /games.xml
   def index
     @season = Season.find(params[:season_id])
-    @games = @season.games
+    @games = @season.games.asc(:starts_on)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +26,7 @@ class League::GamesController < League::LeagueController
   # GET /games/new.xml
   def new
     @season = Season.find(params[:season_id])
-    @teams = Season.teams
+    @teams = @season.teams
     @game = @season.games.build
     @game.left_team = GameTeam.new
     @game.right_team = GameTeam.new
