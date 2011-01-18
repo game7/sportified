@@ -1,4 +1,4 @@
-class League::StandingsController < ApplicationController
+class League::StandingsController < League::LeagueController
   
   def index
     @division = Division.with_slug(params[:division_slug]).first
