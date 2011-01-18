@@ -2,28 +2,41 @@ Feature: Manage seasons
   In order to administer a sports league
   As a league administrator
   I want to create and manage seasons for a division
-  
-  Scenario: Create new season
-    Given I have a new division named "adult a"
-    And I go to the seasons page for the division named "adult a"
-    And I follow "New Season"
-    And I fill in "Name" with "Winter 2010"
-    And I fill in "Starts On" with "9/1/2010"
-    And I fill in "Ends On" with "2/1/2011"
-    And I press "Create"
-    Then I should see "Season was successfully created"
-    Then I should see "Winter 2010"
-    And I should have 1 season
+
+  Background:
+    Given a division named "Novice"
+    And the "Novice" division has the following seasons:
+      | name   |
+      | Winter |
+      | Summer |
+      | Spring |
 
   Scenario: List seasons for a division
-    Given I have a new division named "midget"
-    And the new division has a season named "Winter"
-    And the new division has a season named "Summer"
-    And the new division has a season named "Spring"
-    When I go to seasons page for the division named "midget"
+    When I go to the page for the "Novice" division
     Then I should see "Winter"
     And I should see "Summer"
     And I should see "Spring"
+  
+  Scenario: Create new season
+    When I go to the page for the "Novice" division
+    And I follow "New Season"
+    And I fill in "Name" with "Fall"
+    And I fill in "Starts on" with "9/1/2010"
+    And I fill in "Ends on" with "2/1/2011"
+    And I press "Create"
+    Then I should see "Season was successfully created"
+    When I go to the page for the "Novice" division
+    And I should see the following seasons:
+      | name   |
+      | Winter |
+      | Summer |
+      | Spring |
+      | Fall   |
+
+  Scenario: Display a season
+    When I go to the page for the "Winter" season
+    Then I should see "Winter"
+
 
   # Rails generates Delete links that use Javascript to pop up a confirmation
   # dialog and then do a HTTP POST request (emulated DELETE request).

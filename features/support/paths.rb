@@ -10,11 +10,12 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
-    when /^the seasons page for the division named (.*)$/
-      division_seasons_path(Division.find(:name => $1))
+
+    when /the divisions page/
+      league_divisions_path      
 
     when /the new divisions page/
-      new_divisions_path
+      new_league_divisions_path
 
 
     # Add more mappings here.

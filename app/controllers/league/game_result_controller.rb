@@ -36,7 +36,7 @@ class League::GameResultController < ApplicationController
 
   def destroy
     @game = Game.find(params[:game_id])
-    @game.result = nil
+    @game.result.destroy
     @game.save
 
     respond_to do |format|

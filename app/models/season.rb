@@ -4,7 +4,7 @@ class Season
   attr_accessible :name, :starts_on, :ends_on, :division_id
   
   field :name  
-  field :slugs, :type => Array
+  field :slug
   field :breadcrumbs, :type => Array
   field :starts_on
   field :ends_on
@@ -14,16 +14,18 @@ class Season
   references_many :teams
   references_many :games
 
+  scope :with_name, lambda { |name| where(:name => name) }
+  scope :with_slug, lambda { |slug| where(:slug => slug) }
   scope :active, where(:starts_on.lt => DateTime.now, :ends_on.gt => DateTime.now)
 
-  before_save :set_slugs_and_breadcrumbs
+  before_save :set_slug_and_breadcrumbs
 
   private
 
-    def set_slugs_and_breadcrumbs
+    def set_slug_and_breadcrumbs
       @parent = self.division
-      self.slugs = @parent.slugs << self.name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs << { :controller => "seasons", :id => self.id, :name => self.name, :slug => self.slugs.last }
+      self.slug = self.name.parameterize
+      self.breadcrumbs = @parent.breadcrumbs << { :controller => "seasons", :id => self.id, :name => self.name, :slug => self.slug }
     end
 
 end

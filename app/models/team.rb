@@ -1,22 +1,25 @@
 class Team
   include Mongoid::Document
 
-  attr_accessible :_id, :name, :short_name
+  attr_accessible :_id, :name, :short_name, :show_in_standings
   
   field :name
   field :short_name
-  field :slugs, :type => Array
+  field :slug
   field :breadcrumbs, :type => Array
+  field :show_in_standings, :type => Boolean, :default => true
 
   referenced_in :season, :inverse_of => :teams
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
+  embeds_one :record, :class_name => "TeamRecord"
 
-  before_save :set_slugs_and_breadcrumbs
+  before_save :set_slug_and_breadcrumbs
   before_save :ensure_short_name
+  before_save :ensure_record
 
-  scope :with_slugs, lambda { |slugs| all_in(:slugs => slugs) }
+  scope :with_slug, lambda { |slugs| where(:slug => slug) }
 
   private
 
@@ -26,10 +29,14 @@ class Team
       end
     end
 
-    def set_slugs_and_breadcrumbs
+    def ensure_record
+      self.record ||= TeamRecord.new
+    end
+
+    def set_slug_and_breadcrumbs
       @parent = self.season
-      self.slugs = @parent.slugs << self.name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slugs.last }
+      self.slug = self.name.parameterize
+      self.breadcrumbs = @parent.breadcrumbs << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slug }
     end
 
 end

@@ -1,5 +1,6 @@
 class GameResult
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   COMPLETED_IN = %w[regulation overtime shootout forfeit]
 
@@ -9,7 +10,16 @@ class GameResult
   field :completed_in
   field :left_team_score, :type => Integer
   field :right_team_score, :type => Integer
-  field :left_team_points_awarded, :type => Integer
-  field :right_team_points_awarded, :type => Integer
+  field :internal_note, :default => ''
+
+  before_create :raise_created_event
+
+  private
+
+    def raise_created_event
+      @event = Event.new(:game_result_posted)
+      @event.data[:game_id] = self.game.id
+      EventBus.current.publish(@event)
+    end
 
 end

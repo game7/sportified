@@ -7,18 +7,18 @@ Feature: Manage divisions
     Given I have no divisions
     And I go to the divisions page
     When I follow "New Division"
-    And I fill in "Name" with "Midget"
+    And I fill in "Name" with "Mite"
     And I press "Create"
     Then I should see "Division was successfully created"
-    And I should see "Midget"
+    And I should see "Mite"
     And I should have 1 division
 
   Scenario: List the divisions
     Given a division named "Peewee"
-    And a division named "Bantam"
+    And a division named "Squirt"
     When I go to the divisions page
     Then I should see "Peewee"
-    And I should see "Bantam"
+    And I should see "Squirt"
   
   # Rails generates Delete links that use Javascript to pop up a confirmation
   # dialog and then do a HTTP POST request (emulated DELETE request).

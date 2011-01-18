@@ -1,16 +1,6 @@
 Sportified::Application.routes.draw do
 
-  get "game_result/create"
-
-  get "game_result/new"
-
-  get "game_result/edit"
-
-  get "game_result/show"
-
-  get "game_result/update"
-
-  get "game_result/destroy"
+  match 'league/standings/:division_slug(/:season_slug)' => 'league/standings#index', :as => :league_standings
 
   get "home/index"
 

@@ -1,0 +1,34 @@
+<% title 'Standings' %>
+
+<% @division.seasons.each do |season| %>
+  <%= link_to_standings @division, season %>
+<% end %>
+<table border="1" cellpadding="5" style="border-collapse: collapse;">
+  <tr>
+    <th>TEAM</th>
+    <th>GP</th>
+    <th>W</th>
+    <th>L</th>
+    <th>T</th>
+    <th>PTS</th>
+    <th>L</th>
+    <th>T</th>
+    <th>PTS</th>
+  </tr>
+
+<% @teams.each do |team| %>
+  <% if team.show_in_standings %>
+    <tr>
+      <td><%= team.name %></td>
+      <td><%= team.record.games_played %></td>
+      <td><%= team.record.wins %></td>
+      <td><%= team.record.losses %></td>
+      <td><%= team.record.ties %></td>
+      <td><%= team.record.points %></td>
+      <td><%= team.record.losses %></td>
+      <td><%= team.record.ties %></td>
+      <td><%= team.record.points %></td>
+    </tr>
+  <% end %>
+<% end %>
+</table>

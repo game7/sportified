@@ -1,17 +1,11 @@
 
-
-Given /^the following divisions:$/ do |divisions|
-  Division.create!(divisions.hashes)
-end
-
 Given /^I have no divisions$/ do
   Division.find(:all).each{|d| d.destroy}
 end
 
 Given /^a division named "([^"]*)"$/ do |name|
-  Division.make!(:name => name)
+  Factory.create(:division, :name => name)
 end
-
 
 Then /^I should have (\d+) division$/ do |count|
   Division.count.should == count.to_i
