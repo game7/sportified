@@ -43,9 +43,7 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
-  gem 'machinist', '~> 1.0.4'
-  gem 'machinist_mongo', :require => 'machinist/mongoid'
-  gem 'faker'
+  gem 'factory_girl_rails'
 
 end
 
