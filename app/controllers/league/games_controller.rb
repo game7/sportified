@@ -2,12 +2,18 @@ class League::GamesController < League::LeagueController
   # GET /games
   # GET /games.xml
   def index
-    @season = Season.find(params[:season_id])
+    if params[:season_id]
+      @season = Season.find(params[:season_id])
+    else
+      @division = Division.with_slug(params[:division_slug]).first
+      @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
+      @season ||= @division.seasons.order_by(:starts_on, :desc).last  
+    end
     @games = @season.games.asc(:starts_on)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @games }
+      format.xml  { render :xml => @games.entries }
     end
   end
 
@@ -51,7 +57,7 @@ class League::GamesController < League::LeagueController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to(league_season_games_path(@game.season_id), :notice => 'Game was successfully created.') }
+        format.html { redirect_to(league_season_schedule_friendly_path(@game.season.division.slug, @game.season.slug), :notice => 'Game was successfully created.') }
         format.xml  { render :xml => @game, :status => :created, :location => @game }
       else
         format.html { render :action => "new" }
@@ -67,7 +73,7 @@ class League::GamesController < League::LeagueController
 
     respond_to do |format|
       if @game.update_attributes(params[:game])
-        format.html { redirect_to(league_season_games_path(@game.season_id), :notice => 'Game was successfully updated.') }
+        format.html { redirect_to( league_season_schedule_friendly_path(@game.season.division.slug, @game.season.slug), :notice => 'Game was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

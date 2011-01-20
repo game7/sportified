@@ -1,4 +1,8 @@
 <% title 'Standings' %>
+<% breadcrumbs @season.breadcrumbs %>
+<% content_for :area_menu do %>
+  <%= render  "league/shared/season_area_menu" %>
+<% end %>
 
 <% @division.seasons.each do |season| %>
   <%= link_to_standings @division, season %>

@@ -1,6 +1,7 @@
 Sportified::Application.routes.draw do
 
-  match 'league/standings/:division_slug(/:season_slug)' => 'league/standings#index', :as => :league_standings
+
+
 
   get "home/index"
 
@@ -9,6 +10,14 @@ Sportified::Application.routes.draw do
   resources :users, :only => :show
 
   match "/league" => "league/home#index", :as => :league
+  match "/league/:division_slug/:season_slug/home" => "league/seasons#show", :as => :league_season_friendly
+  match 'league/:division_slug(/:season_slug)/schedule' => 'league/games#index', :as => :league_season_schedule_friendly
+  match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly
+  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_season_standings_friendly
+  match 'league/:division_slug/:season_slug/teams/' => 'league/teams#index', :as => :league_season_teams_friendly
+  match 'league/:division_slug/:season_slug/:team_slug/home' => 'league/teams#show', :as => :league_team_friendly
+  match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly
+
   namespace :league do
     resources :divisions, :shallow => true do
       resources :seasons do

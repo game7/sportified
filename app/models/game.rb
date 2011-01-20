@@ -14,6 +14,8 @@ class Game
   embeds_one :right_team, :class_name => "GameTeam"
   embeds_one :result, :class_name => "GameResult"
 
+  scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
+
   before_save :update_team_names
 
   def has_result?

@@ -14,7 +14,12 @@ class League::SeasonsController < League::LeagueController
   # GET /seasons/1
   # GET /seasons/1.xml
   def show
-    @season = Season.find(params[:id])
+    if params[:id]
+      @season = Season.find(params[:id])
+    else
+      @division = Division.with_slug(params[:division_slug]).first
+      @season = @division.seasons.with_slug(params[:season_slug]).first
+    end
     @teams = @season.teams
 
     respond_to do |format|

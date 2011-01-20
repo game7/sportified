@@ -1,9 +1,19 @@
 class League::PlayersController < League::LeagueController
+  
+  before_filter :determine_division_and_season_and_team, :only => [:index, :show]
+
+  def determine_division_and_season_and_team
+    @division = Division.with_slug(params[:division_slug]).first
+    @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
+    @season ||= @division.seasons.order_by(:starts_on, :desc).last    
+    @team = @season.teams.with_slug(params[:team_slug]).first if params[:team_slug]
+  end
+
   # GET /players
   # GET /players.xml
   def index
-    @team = Team.find(params[:team_id])
-    @players = @team.players
+    @team ||= Team.find(params[:team_id])
+    @players = @team.players.desc(:last_name)
 
     respond_to do |format|
       format.html # index.html.erb

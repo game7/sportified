@@ -19,7 +19,7 @@ class Team
   before_save :ensure_short_name
   before_save :ensure_record
 
-  scope :with_slug, lambda { |slugs| where(:slug => slug) }
+  scope :with_slug, lambda { |slug| where(:slug => slug) }
 
   private
 

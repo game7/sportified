@@ -1,27 +1,13 @@
 <% title "Teams" %>
 <% breadcrumbs @season.breadcrumbs %>
-
-<table border="1" cellpadding="5" style="border-collapse: collapse;">
-  <tr>
-    <th>Name</th>
-    <th>Short Name</th>
-    <th>Related</th>
-    <th>Actions</th>
-  </tr>
+<% content_for :area_menu do %>
+  <%= render  "league/shared/season_area_menu" %>
+<% end %>
 
 <% @teams.each do |team| %>
-  <tr>
-    <td><%= team.name %></td>
-    <td><%= team.short_name %></td>
-    <td><%= link_to 'Roster', league_team_players_path(team) %></td>
-    <td>
-      <%= link_to 'Show', [:league, team] %>
-      <%= link_to 'Edit', edit_league_team_path(team) %>
-      <%= link_to 'Destroy', [:league, team], :confirm => 'Are you sure?', :method => :delete %>
-    </td>
-  </tr>
+  <%= render :partial => "team_card", :locals => { :division => @division, :season => @season, :team => team } %>
 <% end %>
-</table>
+<div style="clear: both;"></div>
 
 <br />
 

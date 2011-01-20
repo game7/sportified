@@ -12,7 +12,7 @@ class GameResult
   field :right_team_score, :type => Integer
   field :internal_note, :default => ''
 
-  before_create :raise_created_event
+  after_create :raise_created_event
 
   private
 
