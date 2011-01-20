@@ -1,0 +1,2 @@
+module League::ScoreboardHelper
+end
