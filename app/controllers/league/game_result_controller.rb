@@ -14,9 +14,6 @@ class League::GameResultController < ApplicationController
     @season = @game.season
     @game.result = GameResult.new
 
-    #default values
-    @game.result.played_on = @game.starts_on
-
   end
 
   def create

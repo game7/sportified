@@ -27,7 +27,7 @@ class TeamGameResult
     @result = game.result
 
     self.game_id = game.id    
-    self.played_on = @result.played_on
+    self.played_on = game.starts_on.to_date
     self.completed_in = @result.completed_in
 
     if game.left_team.team_id == team_id

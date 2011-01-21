@@ -6,7 +6,6 @@ class GameResult
 
   embedded_in :game, :inverse_of => :result
   
-  field :played_on, :type => Date
   field :completed_in
   field :left_team_score, :type => Integer
   field :right_team_score, :type => Integer
