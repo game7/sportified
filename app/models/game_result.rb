@@ -13,6 +13,7 @@ class GameResult
   field :internal_note, :default => ''
 
   after_create :raise_created_event
+  after_destroy :raise_deleted_event
 
   private
 
@@ -20,6 +21,12 @@ class GameResult
       @event = Event.new(:game_result_posted)
       @event.data[:game_id] = self.game.id
       EventBus.current.publish(@event)
+    end
+
+    def raise_deleted_event
+      @event = Event.new(:game_result_deleted)
+      @event.data[:game_id] = self.game.id
+      EventBus.current.publish(@event)      
     end
 
 end

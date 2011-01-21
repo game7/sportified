@@ -9,7 +9,7 @@ class League::StandingsController < League::LeagueController
   end
   
   def index
-    @teams = @season.teams
+    @team_records = @season.team_records.desc('points')
   end
 
 end

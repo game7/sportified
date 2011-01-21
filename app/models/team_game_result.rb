@@ -17,10 +17,12 @@ class TeamGameResult
 
   def initialize(params = nil)
     super(nil)
-    self.load_from_game(params[:team], params[:game]) if params[:game] && params[:team]
+    if (params && params[:game] && params[:team_id])
+      self.load_from_game(params[:team_id], params[:game]) if params[:game] && params[:team_id]
+    end
   end
 
-  def load_from_game(team, game)
+  def load_from_game(team_id, game)
     
     @result = game.result
 
@@ -28,12 +30,12 @@ class TeamGameResult
     self.played_on = @result.played_on
     self.completed_in = @result.completed_in
 
-    if game.left_team.team_id = team.id
+    if game.left_team.team_id == team_id
       self.opponent_id = game.right_team.team_id
       self.opponent_name = game.right_team.name
       self.goals_scored = @result.left_team_score
       self.goals_allowed = @result.right_team_score
-    elsif game.right_team.team_id = team.id
+    elsif game.right_team.team_id == team_id
       self.opponent_id = game.left_team.team_id
       self.opponent_name = game.left_team.name
       self.goals_scored = @result.right_team_score

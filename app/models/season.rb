@@ -12,6 +12,7 @@ class Season
   referenced_in :division, :inverse_of => :seasons
   references_one :current_season, :class_name => "Division"
   references_many :teams
+  references_many :team_records
   references_many :games
 
   scope :with_name, lambda { |name| where(:name => name) }

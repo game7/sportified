@@ -13,15 +13,25 @@ class Team
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
-  embeds_one :record, :class_name => "TeamRecord"
+  references_one :record, :class_name => "TeamRecord"
 
   before_save :set_slug_and_breadcrumbs
   before_save :ensure_short_name
   before_save :ensure_record
+  after_create :raise_team_created_event
 
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 
   private
+
+    def raise_team_created_event
+      @event = Event.new(:team_created)
+      @event.data[:season_id] = self.season_id
+      @event.data[:team_id] = self.id
+      @event.data[:team_name] = self.name
+      @event.data[:team_short_name] = self.short_name
+      EventBus.current.publish(@event)      
+    end
 
     def ensure_short_name
       if self.short_name.nil? || self.short_name.empty?
