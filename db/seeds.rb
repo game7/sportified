@@ -20,9 +20,11 @@ kings = season.teams.create :name => 'Kings'
 ducks = season.teams.create :name => 'Ducks'
 sharks = season.teams.create :name => 'Sharks'
 stars = season.teams.create :name => 'Stars'
+coyotes = season.teams.create :name => 'Coyotes'
+avalanche = season.teams.create :name => 'Avalanche'
 
 puts 'GENERATING GAMES'
-game_times = [ DateTime.parse('1/13/2011 9:00 pm'), DateTime.parse('1/13/2011 10:30 pm') ]
+game_times = [ DateTime.parse('12/30/10 7:30 pm'), DateTime.parse('12/30/10 9:00 pm'), DateTime.parse('12/30/10 10:30 pm') ]
 teams = season.teams.all.entries
 team_count = teams.count
 rounds = 10
@@ -59,5 +61,10 @@ rounds.times do |round|
   game_times.push @a
 end
 
+puts 'POST SOME RESULTS GAMES'
+season.games.where(:starts_on.lt => DateTime.now).each do |game|
+  game.result = GameResult.new(:game => game, :left_team_score => rand(8), :right_team_score => rand(8))
+  game.result.save
+end
 
 
