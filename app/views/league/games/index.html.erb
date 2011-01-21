@@ -14,9 +14,14 @@
     <th>Actions</th>
   </tr>
 
-<% @games.each do |game| %>
+<% @rowspans = get_rowspans @games %>
+<% @games.each_with_index do |game, i| %>
   <tr>
-    <td><%= game.starts_on.strftime("%a %m/%d/%y") %></td>
+    <% if @rowspans[i] %>
+      <td rowspan="<%= @rowspans[i].to_s %>">
+        <%= game.starts_on.strftime("%a %m/%d/%y") %>
+      </td>
+    <% end %>
     <td><%= game.starts_on.strftime("%I:%M %p") %></td>
     <td><%= game.left_team.name %> <%= game.result.left_team_score if game.has_result? %></td>
     <td><%= game.right_team.name %> <%= game.result.right_team_score if game.has_result? %></td>

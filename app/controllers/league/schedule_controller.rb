@@ -4,7 +4,7 @@ class League::ScheduleController < League::LeagueController
     @division = Division.with_slug(params[:division_slug]).first
     @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
     @season ||= @division.seasons.order_by(:starts_on, :desc).last
-    @games = @season.games
+    @games = @season.games.entries
   end
 
 end
