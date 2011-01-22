@@ -14,6 +14,14 @@ class GameResult
   after_create :raise_created_event
   after_destroy :raise_deleted_event
 
+  def left_team_is_winner?
+    return left_team_score > right_team_score
+  end
+
+  def right_team_is_winner?
+    return left_team_score < right_team_score
+  end
+
   private
 
     def raise_created_event
