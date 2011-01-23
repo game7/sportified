@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for?(:title) ? yield(:title) : 'Untitled' %></title>
-    <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes', :cache => 'base' %>
+    <%= stylesheet_link_tag 'application', 'formtastic', 'formtastic_changes', :cache => true %>
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
