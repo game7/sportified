@@ -3,8 +3,8 @@
   [<%= link_to 'Edit', edit_league_division_path(division) %>]
   <ul>
     <% division.seasons.desc(:starts_on).each do |season| %>
-    <li><%= link_to season.name, league_season_friendly_path(division.slug, season.slug) %></li>
-    <li><%= link_to 'New Season', new_league_division_season_path(division) %></li>
+      <li><%= link_to season.name, league_season_friendly_path(division.slug, season.slug) %></li>
     <% end %>
+    <li><%= link_to 'New Season', new_league_division_season_path(division) %></li>
   </ul>
 </div>
