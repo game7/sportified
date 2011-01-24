@@ -3,5 +3,11 @@
     <%= f.input :name %>
     <%= f.input :current_season, :collection => @division.seasons, :include_blank => true if !@division.new_record %>
   <% end %>
-  <%= f.buttons %>
+  <% f.buttons do %>
+    <%= f.commit_button %>
+    <% unless @division.new_record? %>
+      <li><%= button_to 'Delete this division', [:league, @division], :confirm => 'Are you sure?', :method => :delete %></li>
+    <% end %>
+    <li><%= link_to 'Cancel', league_path %></li>
+  <% end %>
 <% end %>

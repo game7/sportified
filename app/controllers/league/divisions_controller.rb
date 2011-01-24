@@ -61,7 +61,7 @@ class League::DivisionsController < League::LeagueController
 
     respond_to do |format|
       if @division.update_attributes(params[:division])
-        format.html { redirect_to([:league, @division], :notice => 'Division was successfully updated.') }
+        format.html { redirect_to(league_division_friendly_path(@division.slug), :notice => 'Division was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
