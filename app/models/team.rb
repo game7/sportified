@@ -46,7 +46,7 @@ class Team
     def set_slug_and_breadcrumbs
       @parent = self.season
       self.slug = self.name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slug }
+      self.breadcrumbs = @parent.breadcrumbs.clone << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slug }
     end
 
 end

@@ -23,7 +23,7 @@ class Player
     def set_slug_and_breadcrumbs
       @parent = self.team
       self.slug = full_name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs << { :controller => "players", :id => self.id, :name => self.full_name, :slug => self.slug }
+      self.breadcrumbs = @parent.breadcrumbs.clone << { :controller => "players", :id => self.id, :name => self.full_name, :slug => self.slug }
     end
 
 end

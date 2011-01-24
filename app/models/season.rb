@@ -26,7 +26,7 @@ class Season
     def set_slug_and_breadcrumbs
       @parent = self.division
       self.slug = self.name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs << { :controller => "seasons", :id => self.id, :name => self.name, :slug => self.slug }
+      self.breadcrumbs = @parent.breadcrumbs.clone << { :controller => "seasons", :id => self.id, :name => self.name, :slug => self.slug }
     end
 
 end
