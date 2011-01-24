@@ -57,7 +57,7 @@ class League::TeamsController < League::LeagueController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to(league_team_friendly_path(@season.division.slug, @season.slug, @team.slug), :notice => 'Team was successfully created.') }
+        format.html { redirect_to(league_season_teams_friendly_path(@season.division.slug, @season.slug), :notice => 'Team was successfully created.') }
         format.xml  { render :xml => @team, :status => :created, :location => @team }
       else
         format.html { render :action => "new" }
@@ -86,11 +86,11 @@ class League::TeamsController < League::LeagueController
   # DELETE /teams/1.xml
   def destroy
     @team = Team.find(params[:id])
-    @season_id = @team.season_id
+    @season = @team.season
     @team.destroy
 
     respond_to do |format|
-      format.html { redirect_to(league_season_url(@season_id)) }
+      format.html { redirect_to( league_season_teams_friendly_path(@season.division.slug, @season.slug) ) }
       format.xml  { head :ok }
     end
   end

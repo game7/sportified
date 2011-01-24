@@ -54,7 +54,7 @@ class League::SeasonsController < League::LeagueController
 
     respond_to do |format|
       if @season.save
-        format.html { redirect_to([:league, @season], :notice => 'Season was successfully created.') }
+        format.html { redirect_to( league_season_friendly_path(@division.slug, @season.slug) , :notice => 'Season was successfully created.') }
         format.xml  { render :xml => @season, :status => :created, :location => @season }
       else
         format.html { render :action => "new" }
@@ -70,7 +70,7 @@ class League::SeasonsController < League::LeagueController
 
     respond_to do |format|
       if @season.update_attributes(params[:season])
-        format.html { redirect_to([:league, @season], :notice => 'Season was successfully updated.') }
+        format.html { redirect_to( league_season_friendly_path(@season.division.slug, @season.slug) , :notice => 'Season was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

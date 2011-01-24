@@ -3,21 +3,16 @@
 
 <table border="1" cellpadding="5" style="border-collapse: collapse;">
   <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Jersey number</th>
-    <th>Actions</th>
+    <th>#</th>
+    <th>Name</th>
   </tr>
 
 <% @players.each do |player| %>
   <tr>
-    <td><%= player.first_name %></td>
-    <td><%= player.last_name %></td>
     <td><%= player.jersey_number %></td>
     <td>
-      <%= link_to 'Show', [:league, player] %>
-      <%= link_to 'Edit', edit_league_player_path(player) %>
-      <%= link_to 'Destroy', [:league, player], :confirm => 'Are you sure?', :method => :delete %>
+      <%= player.full_name %> <%= link_to 'Edit', edit_league_player_path(player) %> |
+      <%= link_to 'Delete', [:league, player], :confirm => 'Are you sure?', :method => :delete %>
     </td>
   </tr>
 <% end %>

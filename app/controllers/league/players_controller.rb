@@ -57,7 +57,7 @@ class League::PlayersController < League::LeagueController
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to(league_team_players_path(@team), :notice => 'Player was successfully created.') }
+        format.html { redirect_to(league_team_roster_friendly_path(@team.season.division.slug, @team.season.slug, @team.slug), :notice => 'Player was successfully created.') }
         format.xml  { render :xml => @player, :status => :created, :location => @player }
       else
         format.html { render :action => "new" }
@@ -70,10 +70,11 @@ class League::PlayersController < League::LeagueController
   # PUT /players/1.xml
   def update
     @player = Player.find(params[:id])
+    @team = @player.team
 
     respond_to do |format|
       if @player.update_attributes(params[:player])
-        format.html { redirect_to(league_team_players_path(@player.team_id), :notice => 'Player was successfully updated.') }
+        format.html { redirect_to(league_team_roster_friendly_path(@team.season.division.slug, @team.season.slug, @team.slug), :notice => 'Player was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -86,10 +87,11 @@ class League::PlayersController < League::LeagueController
   # DELETE /players/1.xml
   def destroy
     @player = Player.find(params[:id])
+    @team = @player.team
     @player.destroy
 
     respond_to do |format|
-      format.html { redirect_to(league_team_players_url(@player.team_id)) }
+      format.html { redirect_to( league_team_roster_friendly_path(@team.season.division.slug, @team.season.slug, @team.slug) ) }
       format.xml  { head :ok }
     end
   end
