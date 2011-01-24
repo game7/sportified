@@ -9,14 +9,14 @@ Sportified::Application.routes.draw do
   devise_for :users
   resources :users, :only => :show
 
-  match "/league" => "league/home#index", :as => :league
-  match "/league/:division_slug/:season_slug/home" => "league/seasons#show", :as => :league_season_friendly
-  match 'league/:division_slug(/:season_slug)/schedule' => 'league/games#index', :as => :league_season_schedule_friendly
-  match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly
-  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_season_standings_friendly
-  match 'league/:division_slug/:season_slug/teams/' => 'league/teams#index', :as => :league_season_teams_friendly
-  match 'league/:division_slug/:season_slug/:team_slug/home' => 'league/teams#show', :as => :league_team_friendly
-  match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly
+  match "league" => "league/home#index", :as => :league, :via => :get
+  match "league/:division_slug/:season_slug/home" => "league/seasons#show", :as => :league_season_friendly, :via => :get
+  match 'league/:division_slug(/:season_slug)/schedule' => 'league/games#index', :as => :league_season_schedule_friendly, :via => :get
+  match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly, :via => :get
+  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_season_standings_friendly, :via => :get
+  match 'league/:division_slug/:season_slug/teams/' => 'league/teams#index', :as => :league_season_teams_friendly, :via => :get
+  match 'league/:division_slug/:season_slug/:team_slug/home' => 'league/teams#show', :as => :league_team_friendly, :via => :get
+  match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly, :via => :get
 
   namespace :league do
     resources :divisions, :shallow => true do
