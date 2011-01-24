@@ -16,6 +16,7 @@ class League::SeasonsController < League::LeagueController
   def show
     if params[:id]
       @season = Season.find(params[:id])
+      @division = @season.division
     else
       @division = Division.with_slug(params[:division_slug]).first
       @season = @division.seasons.with_slug(params[:season_slug]).first
