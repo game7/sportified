@@ -5,7 +5,7 @@
     <table class="game-header-table" style="width: 65%">
       <tbody>
         <tr>
-          <td width="20 px"><%= '>' if game.result.left_team_is_winner? %> </td>
+          <td width="20 px"><%= '>' if game.result && game.result.left_team_is_winner? %> </td>
           <td class="team-name"><%= game.left_team.name %></td>
           <td class="team-score"><%= game.result.left_team_score if game.result %></td>
         </tr>
@@ -15,7 +15,7 @@
           </td>
         </tr>
         <tr>
-          <td><%= '>' if game.result.right_team_is_winner? %> </td>
+          <td><%= '>' if game.result && game.result.right_team_is_winner? %> </td>
           <td class="team-name"><%= game.right_team.name %></td>
           <td class="team-score"><%= game.result.right_team_score if game.result %></td>
         </tr>
@@ -28,6 +28,7 @@
     </table>
     <%= link_to "Post Score", new_league_game_result_path(game) if game.can_add_result?  %>
     <%= link_to "Drop Score", league_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result? %>
+    <%= link_to "Scoresheet", new_league_game_hockey_scoresheet_path(game) %>
   </div>
 
 </div>
