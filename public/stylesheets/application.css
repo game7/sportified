@@ -190,32 +190,157 @@ form li label, form li legend span.label {
 form li li label {
   font-weight: normal; }
 
+form.formtastic ul, form.formtastic ol, form.formtastic legend, form.formtastic p {
+  margin: 0;
+  padding: 0; }
+form.formtastic li {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px; }
 form.formtastic fieldset {
-  width: 410px; }
-form.formtastic ol, form.formtastic li {
+  display: block;
+  *display: inline-block; }
+  form.formtastic fieldset:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+form.formtastic abbr, form.formtastic acronym {
+  border: 0;
+  font-variant: normal;
+  font-weight: normal; }
+form.formtastic ol, form.formtastic ul {
   list-style: none; }
-form.formtastic ol li label {
+form.formtastic label {
+  display: block;
+  *display: inline-block; }
+  form.formtastic label:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+form.formtastic input, form.formtastic textarea {
+  vertical-align: middle; }
+form.formtastic .check_boxes input, form.formtastic .radio input {
+  margin: 0; }
+form.formtastic .check_boxes label, form.formtastic .radio label {
+  cursor: pointer; }
+form.formtastic .hidden {
+  display: none; }
+form.formtastic .date li, form.formtastic .time li, form.formtastic .datetime li {
   float: left;
-  width: 88px;
-  text-align: right; }
-form.formtastic ol li fieldset legend {
-  width: 88px;
-  padding-right: 12px;
-  text-align: right; }
-  form.formtastic ol li fieldset legend span.label {
-    position: absolute;
-    width: 88px; }
-form.formtastic ol li fieldset ol {
-  padding: 0 10px 0 100px; }
-form.formtastic ol li p.inline-hints, form.formtastic ol li p.inline-errors, form.formtastic ol li ul.errors {
-  margin: 0 0 0 100px; }
-form.formtastic ol li.string input, form.formtastic ol li.password input, form.formtastic ol li.numeric input, form.formtastic ol li.text textarea, form.formtastic ol li select {
-  width: 300px; }
-form.formtastic ol li.boolean label {
-  padding-left: 100px; }
-form.formtastic fieldset.buttons {
-  padding-left: 100px;
-  width: 300px; }
+  width: auto;
+  clear: none; }
+form.formtastic .date label, form.formtastic .time label, form.formtastic .datetime label {
+  display: none;
+  width: auto; }
+form.formtastic .date input, form.formtastic .time input, form.formtastic .datetime input {
+  display: inline;
+  margin: 0;
+  padding: 0; }
+form.formtastic .errors {
+  list-style: square; }
+  form.formtastic .errors li {
+    padding: 0;
+    border: none;
+    display: list-item;
+    float: none;
+    clear: both; }
+form.formtastic .inputs {
+  z-index: 99; }
+form.formtastic .buttons li {
+  float: left; }
+form.formtastic li {
+  *display: inline-block;
+  display: block; }
+  form.formtastic li:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  form.formtastic li fieldset {
+    border: none;
+    position: relative;
+    margin-top: 0px; }
+  form.formtastic li legend {
+    display: block;
+    margin-bottom: 0; }
+  form.formtastic li .label {
+    display: block;
+    clear: both;
+    background: transparent; }
+  form.formtastic li ol {
+    float: left;
+    margin: 0; }
+    form.formtastic li ol li {
+      padding: 0;
+      border: 0;
+      display: inline; }
+form.formtastic fieldset {
+  width: 100%; }
+form.formtastic ol {
+  padding-left: right; }
+form.formtastic input {
+  clear: both;
+  float: none; }
+form.formtastic li {
+  display: block;
+  clear: both;
+  float: none;
+  width: 100%; }
+  form.formtastic li ol {
+    padding: 0; }
+  form.formtastic li li {
+    clear: none;
+    width: auto; }
+  form.formtastic li fieldset legend, form.formtastic li fieldset legend .label {
+    display: block;
+    clear: both; }
+  form.formtastic li fieldset .label {
+    position: relative; }
+  form.formtastic li fieldset label, form.formtastic li fieldset input {
+    width: auto; }
+form.formtastic .date ol, form.formtastic .time ol, form.formtastic .datetime ol {
+  width: 100%; }
+form.formtastic .date li, form.formtastic .time li, form.formtastic .datetime li {
+  display: inline;
+  clear: none;
+  float: left;
+  padding-right: "right"/2; }
+form.formtastic .checkbox li, form.formtastic .radio li {
+  display: block; }
+form.formtastic .checkbox input, form.formtastic .radio input {
+  border: none; }
+form.formtastic label {
+  display: block;
+  clear: both;
+  float: none;
+  width: full; }
+form.formtastic input, form.formtastic textarea {
+  width: 100%-"right"; }
+form.formtastic select {
+  width: auto; }
+form.formtastic .errors li {
+  display: list-item; }
+form.formtastic .buttons ol {
+  padding-left: right;
+  padding-right: right; }
+form.formtastic .buttons li {
+  float: left;
+  width: auto;
+  clear: none;
+  display: inline; }
+form.formtastic .buttons input {
+  width: auto; }
+form.formtastic #errorExplanation {
+  width: 100%-"right"; }
+form.formtastic .label {
+  #left: -0.5em;
+  #position: relative; }
 
 .stack ul, .stack ol, .stack legend, .stack p {
   margin: 0;
