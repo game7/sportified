@@ -239,8 +239,7 @@ form.formtastic .date label, form.formtastic .time label, form.formtastic .datet
   width: auto; }
 form.formtastic .date input, form.formtastic .time input, form.formtastic .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 form.formtastic .errors {
   list-style: square; }
   form.formtastic .errors li {
@@ -391,8 +390,7 @@ form.formtastic .label {
   width: auto; }
 .stack .date input, .stack .time input, .stack .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .stack .errors {
   list-style: square; }
   .stack .errors li {
@@ -542,8 +540,7 @@ form.formtastic .label {
   width: auto; }
 .stack.buttons-right .date input, .stack.buttons-right .time input, .stack.buttons-right .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .stack.buttons-right .errors {
   list-style: square; }
   .stack.buttons-right .errors li {
@@ -694,8 +691,7 @@ form.formtastic .label {
   width: auto; }
 .float-left .date input, .float-left .time input, .float-left .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .float-left .errors {
   list-style: square; }
   .float-left .errors li {
@@ -842,8 +838,7 @@ form.formtastic .label {
   width: auto; }
 .float-left.buttons-right .date input, .float-left.buttons-right .time input, .float-left.buttons-right .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .float-left.buttons-right .errors {
   list-style: square; }
   .float-left.buttons-right .errors li {
@@ -993,8 +988,7 @@ form.formtastic .label {
   width: auto; }
 .float-right .date input, .float-right .time input, .float-right .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .float-right .errors {
   list-style: square; }
   .float-right .errors li {
@@ -1141,8 +1135,7 @@ form.formtastic .label {
   width: auto; }
 .float-right.buttons-right .date input, .float-right.buttons-right .time input, .float-right.buttons-right .datetime input {
   display: inline;
-  margin: 0;
-  padding: 0; }
+  margin: 0; }
 .float-right.buttons-right .errors {
   list-style: square; }
   .float-right.buttons-right .errors li {
