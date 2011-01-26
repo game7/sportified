@@ -44,6 +44,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
   gem 'factory_girl_rails'
+  # Autotest
+  gem 'autotest'
+  gem 'autotest-rails'
+  gem 'autotest-notification'
 
 end
 
