@@ -17,10 +17,9 @@
         .clear
     %div{ :id => "container" }
       %div{ :id => "header" }
-        %a{ :href => "" }
-          [Site Name]
+        %div{ :id => "title"}
+          %a{ :href => "" } [Site Name]
         = render "layouts/site_navigation"
-        .clear
         = render "layouts/breadcrumbs"
         = render "layouts/area_navigation"
       %div{ :id => "main" }

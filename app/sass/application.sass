@@ -3,6 +3,7 @@
 @import scaffold.sass
 @import formtastic_base.sass
 @import skintastic.sass
+@import hat.sass
 @import navigation.sass
 
 
@@ -34,16 +35,7 @@ a
   :height 0
   :overflow hidden
 
-#hat
-  :background-color #CCC
-  :height 43px
-  :border-bottom solid 1px #666
-  :width 100%
-
-#hat-container
-  :padding-bottom 5px
-
-#container, #hat-container
+#container
   :margin 0px auto
   :width 800px
 
@@ -55,8 +47,12 @@ a
   :padding 0px 0px
   :background-color #DEDEDE
 
+#title
+  :height 40px
+  :vertical-align middle
+
 #main
-  :padding 10px
+  :padding 20px
 
 #page_header
   h1
@@ -104,16 +100,6 @@ a
 
 ul, ol
   :list-style none
-
-ul.user-tasks
-  :float right
-  :height 31px
-  li
-    :float left
-    :margin 13px 0px 0px 15px
-  a
-    :color #FF4000
-    :font-weight normal
 
 form
   +bold-labels

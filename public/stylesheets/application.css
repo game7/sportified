@@ -113,14 +113,48 @@ form .buttons {
   form .buttons input {
     border: 1px solid #999999; }
 
+#hat {
+  background-color: #cccccc;
+  height: 43px;
+  border-bottom: solid 1px #666666;
+  width: 100%; }
+
+#hat-container {
+  padding-bottom: 5px;
+  margin: 0px auto;
+  width: 800px; }
+
+ul.user-tasks {
+  float: right;
+  height: 31px; }
+  ul.user-tasks li {
+    float: left;
+    margin: 13px 0px 0px 15px; }
+  ul.user-tasks a {
+    color: #ff4000;
+    font-weight: normal; }
+
+#site-nav-container {
+  width: 100%;
+  position: relative; }
+
+#breadcrumb-nav-container {
+  width: 100%;
+  position: relative;
+  background-color: white;
+  border-top: 1px #666666 solid;
+  border-bottom: 1px #666666 solid; }
+
+#area-nav-container {
+  width: 100%;
+  position: relative;
+  background-color: black; }
+
 #site-nav li {
   float: left;
-  overflow: hidden; }
-  #site-nav li span {
-    display: block;
-    float: left;
-    height: 38px;
-    width: 5px; }
+  overflow: hidden;
+  border: 1px solid #666666;
+  margin: 1px 1px; }
   #site-nav li a {
     color: #222222;
     display: block;
@@ -128,35 +162,24 @@ form .buttons {
     font-size: 14px;
     line-height: 38px;
     text-align: center;
-    margin-right: 5px;
-    margin-left: 5px; }
+    padding: 0px 5px 0px 5px; }
 
-#nav li {
-  float: left;
-  overflow: hidden; }
-  #nav li span {
-    display: block;
-    float: left;
-    height: 38px;
-    width: 5px; }
-  #nav li a {
-    color: #222222;
-    display: block;
-    float: left;
-    font-size: 14px;
-    line-height: 38px;
-    text-align: center;
-    margin-right: 5px;
-    margin-left: 5px; }
-
-#area-nav-container {
-  background-color: black;
+#breadcrumb-nav {
+  z-index: 200000;
   position: relative;
-  width: 800px; }
-
-#breadcrumb-nav-container {
-  position: relative;
-  width: 800px; }
+  margin-left: 5px; }
+  #breadcrumb-nav li {
+    float: left;
+    overflow: hidden;
+    margin: 1px 0px 1px;
+    padding: 0px 3px;
+    position: relative;
+    font-style: italic; }
+    #breadcrumb-nav li a {
+      border-bottom-style: none;
+      color: inherit;
+      float: left;
+      font-size: 12px; }
 
 #area-nav {
   height: 32px;
@@ -170,25 +193,6 @@ form .buttons {
     padding: 0px 10px;
     position: relative; }
     #area-nav li a {
-      border-bottom-style: none;
-      color: inherit;
-      float: left;
-      font-size: 12px;
-      text-shadow: black 0px -1px 0px; }
-
-#breadcrumb-nav {
-  height: 32px;
-  z-index: 200000;
-  position: relative; }
-  #breadcrumb-nav li {
-    float: left;
-    overflow: hidden;
-    color: white;
-    margin: 9px 0px 0px;
-    padding: 0px 10px;
-    position: relative;
-    border: solid 1px #333333; }
-    #breadcrumb-nav li a {
       border-bottom-style: none;
       color: inherit;
       float: left;
@@ -222,16 +226,7 @@ a {
   height: 0;
   overflow: hidden; }
 
-#hat {
-  background-color: #cccccc;
-  height: 43px;
-  border-bottom: solid 1px #666666;
-  width: 100%; }
-
-#hat-container {
-  padding-bottom: 5px; }
-
-#container, #hat-container {
+#container {
   margin: 0px auto;
   width: 800px; }
 
@@ -243,8 +238,12 @@ a {
   padding: 0px 0px;
   background-color: #dedede; }
 
+#title {
+  height: 40px;
+  vertical-align: middle; }
+
 #main {
-  padding: 10px; }
+  padding: 20px; }
 
 #page_header h1 {
   margin-bottom: 20px; }
@@ -290,16 +289,6 @@ a {
 
 ul, ol {
   list-style: none; }
-
-ul.user-tasks {
-  float: right;
-  height: 31px; }
-  ul.user-tasks li {
-    float: left;
-    margin: 13px 0px 0px 15px; }
-  ul.user-tasks a {
-    color: #ff4000;
-    font-weight: normal; }
 
 form li label, form li legend span.label {
   font-weight: bold; }
