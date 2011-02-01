@@ -1,8 +1,37 @@
-class League::SeasonsController < League::LeagueController
+class League::SeasonsController < League::BaseSeasonController
+  
+  before_filter :load_for_season, :only => [:show, :edit]
+  before_filter :load_for_division, :only => [:index, :new]
+
+  def load_for_season
+    
+    if params[:id]
+      @season = Season.find(params[:id])
+      @division = @season.division
+    else
+      @division = Division.with_slug(params[:division_slug]).first
+      @season = @division.seasons.with_slug(params[:season_slug]).first
+    end
+
+    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+    add_new_breadcrumb @season.name
+
+    load_area_navigation @division, @season
+
+  end
+
+  def load_for_division
+    
+    @division = Division.find(params[:division_id])
+
+    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)    
+
+  end
+  
   # GET /seasons
   # GET /seasons.xml
   def index
-    @division = Division.find(params[:division_id])
+
     @seasons = @division.seasons
 
     respond_to do |format|
@@ -14,13 +43,7 @@ class League::SeasonsController < League::LeagueController
   # GET /seasons/1
   # GET /seasons/1.xml
   def show
-    if params[:id]
-      @season = Season.find(params[:id])
-      @division = @season.division
-    else
-      @division = Division.with_slug(params[:division_slug]).first
-      @season = @division.seasons.with_slug(params[:season_slug]).first
-    end
+
     @teams = @season.teams
 
     respond_to do |format|
@@ -32,7 +55,7 @@ class League::SeasonsController < League::LeagueController
   # GET /seasons/new
   # GET /seasons/new.xml
   def new
-    @division = Division.find(params[:division_id])
+
     @season = @division.seasons.build
 
     respond_to do |format|
@@ -43,7 +66,7 @@ class League::SeasonsController < League::LeagueController
 
   # GET /seasons/1/edit
   def edit
-    @season = Season.find(params[:id])
+
   end
 
   # POST /seasons

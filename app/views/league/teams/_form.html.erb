@@ -1,9 +1,0 @@
-<%= semantic_form_for [:league, @season, @team] do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name %>
-    <%= f.input :short_name %>
-    <%= f.input :show_in_standings, :as => :boolean %>
-  <% end %>
-  <%= f.buttons %>
-<% end %>
-

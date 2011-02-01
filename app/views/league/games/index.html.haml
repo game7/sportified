@@ -1,0 +1,27 @@
+- title 'Game Schedule'
+%table{ :border => "1", :cellpadding => "5", :style => "border-collapse: collapse;" }
+  %tr
+    %th Starts on
+    %th Starts at
+    %th Home
+    %th Away
+    %th Location
+    %th Actions
+  - @rowspans = get_rowspans @games
+  - @games.each_with_index do |game, i|
+    %tr
+      - if @rowspans[i]
+        %td{ :rowspan => "#{@rowspans[i].to_s}" } #{game.starts_on.strftime("%a %m/%d/%y")}
+      %td #{game.starts_on.strftime("%I:%M %p")}
+      %td 
+        = game.left_team.name
+        = game.result.left_team_score if game.has_result?
+      %td 
+        = game.right_team.name
+        = game.result.right_team_score if game.has_result?
+      %td
+      %td
+        = link_to 'Edit', edit_league_game_path(game)
+        = link_to 'Delete', [:league, game], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Game', new_league_season_game_path(@season)

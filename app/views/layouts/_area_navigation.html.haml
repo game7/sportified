@@ -1,0 +1,9 @@
+- if @area_menu_items
+  %div{ :id => "area-nav-container" }  
+    %ul{ :id => "area-nav" }
+      - @area_menu_items.each_with_index do |item, index|
+        %li
+          - if item[:url]
+            %a{ :href => "#{item[:url]}" } #{item[:title]}
+          - else
+            = item[:title]

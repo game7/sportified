@@ -1,0 +1,14 @@
+%div{ :style => "float: left; border: 1px solid gray; padding: 10px; margin: 5px; width: 200px; height: 50px;" }
+  %strong> #{link_to team.name, league_team_friendly_path(@division.slug, @season.slug, team.slug)}
+  %br/
+  %span
+    Schedule | 
+    = link_to 'Roster', league_team_roster_friendly_path(@division.slug, @season.slug, team.slug)
+    = " | "
+    Stats
+  %br/
+  %span
+    = link_to 'Edit', edit_league_team_path(team)
+    = " | "
+    = link_to 'Delete', [:league, team], :confirm => 'Are you sure?', :method => :delete
+

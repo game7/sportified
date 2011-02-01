@@ -1,0 +1,16 @@
+= semantic_form_for [:league, @season, @game] do |f|
+  = f.inputs :name => "Logistics" do
+    = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
+  = f.inputs :name => "Away Team", :for => :left_team do |left|
+    = left.input :team, :collection => @teams
+    = left.input :use_custom_name, :as => :boolean
+    = left.input :name
+  = f.inputs :name => "Home Team", :for => :right_team do |right|
+    = right.input :team, :collection => @teams
+    = right.input :use_custom_name, :as => :boolean
+    = right.input :name
+  = f.buttons do
+    = f.commit_button
+    %li #{link_to 'Cancel', league_season_schedule_friendly_path(@game.season.division.slug, @game.season.slug)}
+
+

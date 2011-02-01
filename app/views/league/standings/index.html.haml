@@ -1,0 +1,28 @@
+- title 'Standings'
+
+- @division.seasons.each do |season|
+  = link_to_standings @division, season
+
+%table{ :border => "1", :width => "90%", :cellpadding => "5", :style => "border-collapse: collapse;" }
+  %tr
+    %th TEAM
+    %th GP
+    %th W
+    %th L
+    %th T
+    %th PTS
+    %th GF
+    %th GA  
+    %th +/-
+  - @team_records.each do |record|
+    %tr
+      %td #{record.team_name}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.games_played}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.wins}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.losses}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.ties}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.points}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.goals_scored}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.goals_allowed}
+      %td{ :style => "text-align: center; width: 50px;" } #{record.goal_differential}
+

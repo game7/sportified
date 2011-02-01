@@ -1,14 +1,42 @@
-class League::GamesController < League::LeagueController
+class League::GamesController < League::BaseSeasonController
+  
+  before_filter :load_for_season, :only => [:index, :new]
+  before_filter :load_for_game, :only => [:show, :edit]
+
+  def load_for_season
+
+    if params[:season_id]
+      @season = Season.find(params[:season_id])
+      @division = @season.division
+    else
+      @division = Division.with_slug(params[:division_slug]).first
+      @season = @division.seasons.with_slug(params[:season_slug]).first
+    end
+
+    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+    add_new_breadcrumb @season.name
+
+    load_area_navigation @division, @season
+        
+  end
+
+  def load_for_game
+
+    @game = Game.find(params[:id])
+    @season = @game.season
+    @division = @season.division
+
+    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+    add_new_breadcrumb @season.name
+
+    load_area_navigation @division, @season
+        
+  end
+
   # GET /games
   # GET /games.xml
   def index
-    if params[:season_id]
-      @season = Season.find(params[:season_id])
-    else
-      @division = Division.with_slug(params[:division_slug]).first
-      @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
-      @season ||= @division.seasons.order_by(:starts_on, :desc).last  
-    end
+
     @games = @season.games.asc(:starts_on)
 
     respond_to do |format|

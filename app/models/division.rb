@@ -1,6 +1,7 @@
 class Division
   include Mongoid::Document
   include ActiveModel::Observing
+  cache
 
   attr_accessible :name, :league_id, :current_season_id
   

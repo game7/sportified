@@ -1,4 +1,12 @@
-class League::DivisionsController < League::LeagueController
+class League::DivisionsController < League::BaseLeagueController
+  
+  before_filter :load_for_division, :only => [:show, :edit]
+
+  def load_for_division
+    @division = params[:division_slug] ? Division.with_slug(params[:division_slug]).first : Division.find(params[:id])  
+    add_new_breadcrumb @division.name
+  end
+
   # GET /divisions
   # GET /divisions.xml
   def index
@@ -13,7 +21,6 @@ class League::DivisionsController < League::LeagueController
   # GET /divisions/1
   # GET /divisions/1.xml
   def show
-    @division = Division.find(params[:id])
     @seasons = @division.seasons
 
     respond_to do |format|
@@ -35,7 +42,7 @@ class League::DivisionsController < League::LeagueController
 
   # GET /divisions/1/edit
   def edit
-    @division = Division.find(params[:id])
+
   end
 
   # POST /divisions

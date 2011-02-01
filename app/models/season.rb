@@ -1,5 +1,6 @@
 class Season
   include Mongoid::Document
+  cache
 
   attr_accessible :name, :starts_on, :ends_on, :division_id
   

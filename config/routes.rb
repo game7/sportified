@@ -10,6 +10,7 @@ Sportified::Application.routes.draw do
   resources :users, :only => :show
 
   match "league" => "league/home#index", :as => :league, :via => :get
+  match "league/:division_slug/home" => "league/divisions#show", :as => :league_division_friendly, :via => :get
   match "league/:division_slug/:season_slug/home" => "league/seasons#show", :as => :league_season_friendly, :via => :get
   match 'league/:division_slug(/:season_slug)/schedule' => 'league/games#index', :as => :league_season_schedule_friendly, :via => :get
   match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly, :via => :get

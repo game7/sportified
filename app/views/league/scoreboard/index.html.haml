@@ -1,0 +1,9 @@
+- title 'Scoreboard'
+- @last_date = DateTime.now.to_date
+- @games.each do |game|  
+  - if game.starts_on.to_date < @last_date
+    .clear
+    %div{ :style => "background-color: #dedede; width: 100%; padding: 5px;" } #{game.starts_on.to_date}
+    - @last_date = game.starts_on.to_date
+  = render :partial => "score_card", :locals => { :game => game }
+.clear

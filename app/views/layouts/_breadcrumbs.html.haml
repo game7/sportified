@@ -1,0 +1,11 @@
+- if @breadcrumbs
+  %div{ :id => "breadcrumb-nav-container" }  
+    %ul{ :id => "breadcrumb-nav" }
+      - @breadcrumbs.each_with_index do |crumb, index|
+        %li
+          - if crumb[:url]
+            %a{ :href => "#{crumb[:url]}" } #{crumb[:title]}
+          - else
+            = crumb[:title]
+
+

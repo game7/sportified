@@ -1,0 +1,6 @@
+- title "Teams"
+- @teams.each do |team|
+  = render :partial => "team_card", :locals => { :division => @division, :season => @season, :team => team }
+.clear
+%br/
+= link_to 'New Team', new_league_season_team_path(@season)

@@ -1,0 +1,19 @@
+%div{ :style => "float: left; border: 1px solid #c2c2c2; padding: 2px; margin: 5px; width: 300px;", :class => "game-box" }
+  %div{ :style =>"border-top: 4px solid #4D4D4D; background-color: #DFDFDF; padding-bottom: 3px", :class => "game-header" }
+    %table{ :class => "game-header-table", :style => "width: 65%" }
+      %tbody
+        %tr
+          %td{ :width => "20 px"} #{'>' if game.result && game.result.left_team_is_winner?}
+          %td{ :class => "team-name" } #{game.left_team.name}
+          %td{ :class => "team-score" } #{game.result.left_team_score if game.result}
+        %tr
+          %td{ :colspan => "3", :class => "team-record" }
+        %tr
+          %td{ :width => "20 px"} #{'>' if game.result && game.result.right_team_is_winner?}
+          %td{ :class => "team-name" } #{game.right_team.name}
+          %td{ :class => "team-score" } #{game.result.right_team_score if game.result}
+        %tr
+          %td{ :colspan => "3", :class => "team-record" }
+    = link_to "Post Score", new_league_game_result_path(game) if game.can_add_result?
+    = link_to "Drop Score", league_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result?
+

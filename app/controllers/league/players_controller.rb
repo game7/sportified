@@ -1,18 +1,43 @@
-class League::PlayersController < League::LeagueController
+class League::PlayersController < League::BaseSeasonController
   
-  before_filter :determine_division_and_season_and_team, :only => [:index, :show]
+  before_filter :load_for_team, :only => [:index, :new]
+  before_filter :load_for_player, :only => [:show, :edit]
 
-  def determine_division_and_season_and_team
-    @division = Division.with_slug(params[:division_slug]).first
-    @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
-    @season ||= @division.seasons.order_by(:starts_on, :desc).last    
-    @team = @season.teams.with_slug(params[:team_slug]).first if params[:team_slug]
+  def load_for_team
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+      @season = @team.season
+      @division = @season.division
+    else
+      @division = Division.with_slug(params[:division_slug]).first
+      @season = @division.seasons.with_slug(params[:season_slug]).first
+      @team = @season.teams.with_slug(params[:team_slug]).first
+    end
+
+    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+    add_new_breadcrumb @season.name, league_season_friendly_path(@division.slug, @season.slug)
+    add_new_breadcrumb @team.name
+
+    load_area_navigation @division, @season
+  end
+
+  def load_for_player
+    
+    if params[:id]
+      @player = Player.find(params[:id])
+      @team = @player.team
+      @season = @team.season
+      @division = @season.division
+    else
+      
+    end
+    
   end
 
   # GET /players
   # GET /players.xml
   def index
-    @team ||= Team.find(params[:team_id])
+
     @players = @team.players.desc(:last_name)
 
     respond_to do |format|

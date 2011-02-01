@@ -1,0 +1,17 @@
+- title 'Player Roster'
+%table{ :border => "1", :cellpadding => "5", :style => "border-collapse: collapse;" }
+  %thead
+    %tr
+      %th #
+      %th Name
+  %tbody
+    - @players.each do |player|
+      %tr
+        %td #{player.jersey_number}
+        %td
+          = player.full_name
+          = link_to 'Edit', edit_league_player_path(player)
+          = " | "
+          = link_to 'Delete', [:league, player], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Player', new_league_team_player_path(@team)

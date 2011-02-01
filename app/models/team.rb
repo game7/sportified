@@ -1,5 +1,6 @@
 class Team
   include Mongoid::Document
+  cache
 
   attr_accessible :_id, :name, :short_name, :show_in_standings
   

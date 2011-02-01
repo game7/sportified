@@ -113,29 +113,141 @@ form .buttons {
   form .buttons input {
     border: 1px solid #999999; }
 
+#site-nav li {
+  float: left;
+  overflow: hidden; }
+  #site-nav li span {
+    display: block;
+    float: left;
+    height: 38px;
+    width: 5px; }
+  #site-nav li a {
+    color: #222222;
+    display: block;
+    float: left;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px; }
+
+#nav li {
+  float: left;
+  overflow: hidden; }
+  #nav li span {
+    display: block;
+    float: left;
+    height: 38px;
+    width: 5px; }
+  #nav li a {
+    color: #222222;
+    display: block;
+    float: left;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px; }
+
+#area-nav-container {
+  background-color: black;
+  position: relative;
+  width: 800px; }
+
+#breadcrumb-nav-container {
+  position: relative;
+  width: 800px; }
+
+#area-nav {
+  height: 32px;
+  z-index: 300000;
+  position: relative; }
+  #area-nav li {
+    float: left;
+    overflow: hidden;
+    color: white;
+    margin: 9px 0px 0px;
+    padding: 0px 10px;
+    position: relative; }
+    #area-nav li a {
+      border-bottom-style: none;
+      color: inherit;
+      float: left;
+      font-size: 12px;
+      text-shadow: black 0px -1px 0px; }
+
+#breadcrumb-nav {
+  height: 32px;
+  z-index: 200000;
+  position: relative; }
+  #breadcrumb-nav li {
+    float: left;
+    overflow: hidden;
+    color: white;
+    margin: 9px 0px 0px;
+    padding: 0px 10px;
+    position: relative;
+    border: solid 1px #333333; }
+    #breadcrumb-nav li a {
+      border-bottom-style: none;
+      color: inherit;
+      float: left;
+      font-size: 12px;
+      text-shadow: black 0px -1px 0px; }
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  outline: 0px;
+  vertical-align: baseline; }
+
 body {
   background-color: #4b7399;
   font-family: Verdana, Helvetica, Arial;
-  font-size: 14px; }
+  font-size: 14px;
+  margin: 0px;
+  padding: 0px; }
 
 a img {
   border: none; }
 
 a {
-  color: blue; }
+  color: blue;
+  font-weight: bold;
+  text-decoration: none; }
 
 .clear {
   clear: both;
   height: 0;
   overflow: hidden; }
 
+#hat {
+  background-color: #cccccc;
+  height: 43px;
+  border-bottom: solid 1px #666666;
+  width: 100%; }
+
+#hat-container {
+  padding-bottom: 5px; }
+
+#container, #hat-container {
+  margin: 0px auto;
+  width: 800px; }
+
 #container {
-  width: 75%;
-  margin: 0 auto;
-  background-color: white;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px; }
+  background-color: white; }
+
+#header {
+  margin: 0px auto 0px;
+  padding: 0px 0px;
+  background-color: #dedede; }
+
+#main {
+  padding: 10px; }
+
+#page_header h1 {
+  margin-bottom: 20px; }
 
 #flash_notice, #flash_error, #flash_alert {
   padding: 5px 8px;
@@ -176,14 +288,18 @@ a {
 .error_messages ul {
   margin: 0; }
 
-ul.hmenu {
-  list-style: none;
-  margin: 0 0 2em;
-  padding: 0; }
+ul, ol {
+  list-style: none; }
 
-ul.hmenu li {
-  display: inline;
-  margin-right: 5px; }
+ul.user-tasks {
+  float: right;
+  height: 31px; }
+  ul.user-tasks li {
+    float: left;
+    margin: 13px 0px 0px 15px; }
+  ul.user-tasks a {
+    color: #ff4000;
+    font-weight: normal; }
 
 form li label, form li legend span.label {
   font-weight: bold; }

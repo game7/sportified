@@ -1,0 +1,9 @@
+- title @season.name
+= link_to 'Edit', edit_league_season_path(@season)
+= " | "
+= link_to 'Delete', [:league, @season], :confirm => 'Are you sure?', :method => :delete
+%p
+  From #{@season.starts_on} to #{@season.ends_on}
+
+
+

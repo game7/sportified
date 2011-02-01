@@ -1,0 +1,16 @@
+%table{ border => "1", :cellpadding => "5", :style => "border-collapse: collapse;" }
+  %tr
+    %th Name
+    %th Short Name
+    %th Related
+    %th Actions
+- @teams.each do |team|
+  %tr
+    %td #{team.name}
+    %td #{team.short_name}
+    %td #{link_to 'Roster', league_team_players_path(team)}
+    %td 
+      = link_to 'Show', [:league, team]
+      = link_to 'Edit', edit_league_team_path(team)
+      = link_to 'Destroy', [:league, team], :confirm => 'Are you sure?', :method => :delete
+= link_to 'New Team', new_league_season_team_path(@season)
