@@ -28,6 +28,7 @@ Sportified::Application.routes.draw do
         resources :teams do
           resources :players
         end
+        resources :standings_columns
       end
     end
   end

@@ -17,6 +17,7 @@ class League::StandingsController < League::BaseSeasonController
   def index
     @columns = @season.standings_columns.asc(:order)
     @team_records = @season.team_records.desc('points')
+    if @columns.count == 0 then flash[:error] = "Standings have not been setup for this season" end
   end
 
 end
