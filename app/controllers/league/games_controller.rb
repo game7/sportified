@@ -48,7 +48,6 @@ class League::GamesController < League::BaseSeasonController
   # GET /games/1
   # GET /games/1.xml
   def show
-    @game = Game.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -59,8 +58,8 @@ class League::GamesController < League::BaseSeasonController
   # GET /games/new
   # GET /games/new.xml
   def new
-    @season = Season.find(params[:season_id])
-    @teams = @season.teams
+
+    @teams = @season.teams.entries
     @game = @season.games.build
     @game.left_team = GameTeam.new
     @game.right_team = GameTeam.new
