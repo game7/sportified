@@ -8,8 +8,8 @@ class TeamGameResult
   field :opponent_name
   field :decision
   field :completed_in
-  field :goals_scored, :type => Integer
-  field :goals_allowed, :type => Integer
+  field :scored, :type => Integer
+  field :allowed, :type => Integer
 
   embedded_in :team_record, :inverse_of => :results
   referenced_in :game
@@ -24,22 +24,22 @@ class TeamGameResult
 
   def load_from_game(team_id, game)
     
-    @result = game.result
+    result = game.result
 
     self.game_id = game.id    
     self.played_on = game.starts_on.to_date
-    self.completed_in = @result.completed_in
+    self.completed_in = result.completed_in
 
     if game.left_team.team_id == team_id
       self.opponent_id = game.right_team.team_id
       self.opponent_name = game.right_team.name
-      self.goals_scored = @result.left_team_score
-      self.goals_allowed = @result.right_team_score
+      self.scored = result.left_team_score
+      self.allowed = result.right_team_score
     elsif game.right_team.team_id == team_id
       self.opponent_id = game.left_team.team_id
       self.opponent_name = game.left_team.name
-      self.goals_scored = @result.right_team_score
-      self.goals_allowed = @result.left_team_score
+      self.scored = result.right_team_score
+      self.allowed = result.left_team_score
     end
 
     self.update_decision
@@ -48,12 +48,12 @@ class TeamGameResult
 
   def update_decision
     
-    @margin = goals_scored - goals_allowed
+    margin = scored - allowed
     
     case
-      when @margin > 0 then self.decision = 'win'
-      when @margin == 0 then self.decision = 'tie'
-      when @margin < 0 then self.decision = 'loss'
+      when margin > 0 then self.decision = 'win'
+      when margin == 0 then self.decision = 'tie'
+      when margin < 0 then self.decision = 'loss'
     end
 
   end

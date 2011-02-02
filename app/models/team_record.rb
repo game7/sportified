@@ -8,13 +8,21 @@ class TeamRecord
   field :ties, :type => Integer, :default => 0
   field :points, :type => Integer, :default => 0
   field :win_percentage, :type => Float, :default => 0.00
-  field :goals_scored, :type => Integer, :default => 0
-  field :goals_allowed, :type => Integer, :default => 0
-  field :goal_differential, :type => Integer, :default => 0
+  field :scored, :type => Integer, :default => 0
+  field :allowed, :type => Integer, :default => 0
+  field :margin, :type => Integer, :default => 0
+  field :last_decision
+  field :streak, :type => Integer, :default => 0
+  field :owp, :type => Float, :default => 0.00
+  field :oowp, :type => Float, :default => 0.00
+  field :sos, :type => Float, :default => 0.00
+  field :rpi, :type => Float, :default => 0.00
 
   referenced_in :season, :inverse_of => :team_records
   referenced_in :team, :inverse_of => :record
   embeds_many :results, :class_name => 'TeamGameResult'
+
+  scope :for_team_id, lambda { |team_id| where(:team_id => team_id)}
 
   def reset!
     self.games_played = 0
@@ -22,10 +30,16 @@ class TeamRecord
     self.losses = 0
     self.ties = 0
     self.points = 0
-    self.win_percentage = 0
-    self.goals_scored = 0
-    self.goals_allowed = 0
-    self.goal_differential = 0
+    self.win_percentage = 0.00
+    self.scored = 0
+    self.allowed = 0
+    self.margin = 0
+    self.last_decision = nil
+    self.streak = 0
+    self.owp = 0.00
+    self.oowp = 0.00
+    self.sos = 0.00
+    self.rpi = 0.00
     self.results.each{ |r| r.delete }
   end
 
@@ -41,8 +55,8 @@ class TeamRecord
   def cancel_result_for_game(game)
     @result = self.results.where( :game_id => game.id ).first
     if @result
+      @result.delete      
       remove_team_game_result(@result)
-      @result.delete
     end
   end
 
@@ -51,6 +65,7 @@ class TeamRecord
   end
 
   def apply_team_game_result(result)
+    
     self.games_played += 1
     case
       when result.decision == 'win' then self.wins += 1
@@ -60,11 +75,13 @@ class TeamRecord
     self.update_points!
     self.update_win_percentage!
     
-    self.goals_scored += result.goals_scored
-    self.goals_allowed += result.goals_allowed
-    self.update_goal_differential!
+    self.scored += result.scored
+    self.allowed += result.allowed
+    self.update_margin!
 
-    self.results << result    
+    self.results << result 
+
+    self.update_streak!  
   end
 
   def remove_team_game_result(result)
@@ -77,13 +94,14 @@ class TeamRecord
     self.update_points!
     self.update_win_percentage!
     
-    self.goals_scored -= result.goals_scored
-    self.goals_allowed -= result.goals_allowed
-    self.update_goal_differential!    
+    self.scored -= result.scored
+    self.allowed -= result.allowed
+    self.update_margin!  
+    self.update_streak!  
   end
 
-  def update_goal_differential!
-    self.goal_differential = self.goals_scored - self.goals_allowed
+  def update_margin!
+    self.margin = self.scored - self.allowed
   end
 
   def update_points!
@@ -91,7 +109,16 @@ class TeamRecord
   end
 
   def update_win_percentage!
-    @pct = self.games_played > 0 ? self.wins / self.games_played : 0.00
+    self.win_percentage = self.games_played > 0 ? self.wins.fdiv(self.games_played) : 0.00
+  end
+
+  def update_streak!
+    self.streak = 0
+    results.desc(:played_on).each_with_index do |result, index|
+      self.last_decision = result.decision if index == 0
+      break unless self.last_decision == result.decision 
+      self.streak += 1
+    end
   end
 
 end

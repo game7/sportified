@@ -24,10 +24,10 @@ coyotes = season.teams.create :name => 'Coyotes'
 avalanche = season.teams.create :name => 'Avalanche'
 
 puts 'GENERATING GAMES'
-game_times = [ DateTime.parse('12/30/10 7:30 pm'), DateTime.parse('12/30/10 9:00 pm'), DateTime.parse('12/30/10 10:30 pm') ]
+game_times = [ DateTime.parse('10/07/10 7:30 pm'), DateTime.parse('10/07/10 9:00 pm'), DateTime.parse('10/07/10 10:30 pm') ]
 teams = season.teams.all.entries
 team_count = teams.count
-rounds = 10
+rounds = 25
 games_per_round = team_count / 2
 
 puts '- ' << team_count.to_s << ' teams'

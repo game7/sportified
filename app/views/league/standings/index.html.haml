@@ -5,24 +5,27 @@
 
 %table{ :border => "1", :width => "90%", :cellpadding => "5", :style => "border-collapse: collapse;" }
   %tr
-    %th TEAM
-    %th GP
-    %th W
-    %th L
-    %th T
-    %th PTS
-    %th GF
-    %th GA  
-    %th +/-
+    - @columns.each do |column|
+      %th #{column.title}
   - @team_records.each do |record|
     %tr
-      %td #{record.team_name}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.games_played}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.wins}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.losses}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.ties}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.points}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.goals_scored}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.goals_allowed}
-      %td{ :style => "text-align: center; width: 50px;" } #{record.goal_differential}
+      - @columns.each do |column|
+        %td #{record[column.field_name]}
+//      %td #{record.team_name}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.games_played}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.wins}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.losses}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.ties}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.points}
+//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.win_percentage, :precision => 3)}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.scored}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.allowed}
+//      %td{ :style => "text-align: center; width: 50px;" } #{record.margin}
+//      %td{ :style => "text-align: center; width: 50px;" } 
+//        = record.last_decision
+//        = record.streak
+//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.owp, :precision => 3)}
+//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.oowp, :precision => 3)}
+//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.rpi, :precision => 3)}
+//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.sos, :precision => 3)}
 

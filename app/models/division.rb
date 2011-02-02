@@ -4,6 +4,7 @@ class Division
   cache
 
   attr_accessible :name, :league_id, :current_season_id
+  accepts_nested_attributes_for :standings_columns
   
   field :name
   field :slug
@@ -12,6 +13,7 @@ class Division
   references_many :seasons
   
   embeds_one :path
+  embeds_many :standings_columns, :class_name => "StandingsColumn"
 
   field :current_season_name
   referenced_in :current_season, :class_name => "Season"
