@@ -7,9 +7,10 @@ gem 'rails', '3.0.3'
 
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'mongoid', '2.0.0.beta.20'
+#gem 'mongoid', '2.0.0.beta.20'
+gem 'mongoid', :git => 'https://github.com/mongoid/mongoid.git'
 gem 'bson_ext', '1.1.5'
-gem 'mongoid_slug', :require => 'mongoid/slug'
+#gem 'mongoid_slug', :require => 'mongoid/slug'
 gem 'haml'
 gem 'devise'
 gem 'formtastic', '~> 1.1.0'
