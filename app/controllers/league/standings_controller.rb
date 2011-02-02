@@ -15,7 +15,7 @@ class League::StandingsController < League::BaseSeasonController
   end
   
   def index
-    @columns = @division.standings_columns.asc(:order)
+    @columns = @season.standings_columns.asc(:order)
     @team_records = @season.team_records.desc('points')
   end
 

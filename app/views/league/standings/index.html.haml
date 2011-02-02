@@ -3,29 +3,20 @@
 - @division.seasons.each do |season|
   = link_to_standings @division, season
 
-%table{ :border => "1", :width => "90%", :cellpadding => "5", :style => "border-collapse: collapse;" }
-  %tr
-    - @columns.each do |column|
-      %th #{column.title}
-  - @team_records.each do |record|
+%table{ :class => "standings" }
+  %thead
     %tr
       - @columns.each do |column|
-        %td #{record[column.field_name]}
-//      %td #{record.team_name}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.games_played}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.wins}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.losses}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.ties}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.points}
-//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.win_percentage, :precision => 3)}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.scored}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.allowed}
-//      %td{ :style => "text-align: center; width: 50px;" } #{record.margin}
-//      %td{ :style => "text-align: center; width: 50px;" } 
-//        = record.last_decision
-//        = record.streak
-//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.owp, :precision => 3)}
-//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.oowp, :precision => 3)}
-//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.rpi, :precision => 3)}
-//      %td{ :style => "text-align: center; width: 50px;" } #{number_with_precision(record.sos, :precision => 3)}
+        %th{ :class => "#{column.field_name}" } #{column.title}
+  %tbody
+    - @team_records.each_with_index do |record, row|
+      %tr{ :class => cycle("odd", "even") }
+        - @columns.each do |column|
+          %td{ :class => "#{column.field_name}" } 
+            - if record.fields[column.field_name].type.to_s == "Float"
+              = number_with_precision(record[column.field_name], :precision => 3)
+            - else
+              = record[column.field_name]
+
+
 
