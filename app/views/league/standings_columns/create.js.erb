@@ -7,5 +7,5 @@
   $("#flash_notice").html("<%= escape_javascript( flash[:notice] )%>");
   $("#flash_notice").show(300);
   $("#standings").html("<%= escape_javascript( render(:partial => "/league/standings/standings_table", :locals => { :team_records => @team_records, :columns => @columns } ) )%>");
-  $("form.standings_column").html("<%= escape_javascript( render(:partial => "/league/standings/new_column_form", :locals => { :season => @season } ) )%>");
+  clearForm($("form.standings_column"));
 <% end %>
