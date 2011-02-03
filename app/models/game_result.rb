@@ -9,7 +9,7 @@ class GameResult
   field :completed_in
   field :left_team_score, :type => Integer
   field :right_team_score, :type => Integer
-  field :internal_note, :default => ''
+  field :note, :default => ''
 
   after_create :raise_created_event
   after_destroy :raise_deleted_event

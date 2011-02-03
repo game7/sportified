@@ -1,0 +1,23 @@
+%table{ :id => "standings", :class => "standings" }
+  %thead
+    %tr
+      - columns.each do |column|
+        %th{ :class => "#{column.field_name}" } #{column.title}
+  %tbody
+    - team_records.each_with_index do |record, row|
+      %tr{ :class => cycle("odd", "even") }
+        - @columns.each do |column|
+          %td{ :class => "#{column.field_name}" } 
+            - if is_float?(record.fields[column.field_name])
+              = number_with_precision(record[column.field_name], :precision => 3)
+            - else
+              = record[column.field_name]
+  %tfoot
+    %tr
+      - columns.each_with_index do |column, index|
+        %td{ :class => "#{column.field_name}" } 
+          - if index > 0
+            = link_to '<', push_left_league_season_standings_column_path(@season, column), :remote => true, :method => :post
+          = link_to 'X', league_season_standings_column_path(@season, column), :remote => true, :confirm => 'Are you sure?', :method => :delete
+          - if index < columns.count - 1
+            = link_to '>', push_right_league_season_standings_column_path(@season, column), :remote => true, :method => :post

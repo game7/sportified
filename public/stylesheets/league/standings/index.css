@@ -1,6 +1,6 @@
 table.standings {
   border-collapse: collapse;
-  width: 600px; }
+  width: 100%; }
   table.standings td, table.standings th {
     border: 1px solid #cccccc;
     padding: 5px;

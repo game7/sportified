@@ -1,2 +1,7 @@
-= form_for( :standings_column, :url => new_league_season_standings_column_path(@season), :remote => true ) do |f|
-  Form Here
+= semantic_form_for( :standings_column, :url => league_season_standings_columns_path(season), :remote => true ) do |f|
+  = f.inputs do
+    = f.input :field_name, :as => :select, :collection => TeamRecord.list_fields
+    = f.input :title
+    = f.input :description
+  = f.buttons do
+    = f.submit

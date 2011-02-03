@@ -3,20 +3,8 @@
 - @division.seasons.each do |season|
   = link_to_standings @division, season
 
-%table{ :class => "standings" }
-  %thead
-    %tr
-      - @columns.each do |column|
-        %th{ :class => "#{column.field_name}" } #{column.title}
-  %tbody
-    - @team_records.each_with_index do |record, row|
-      %tr{ :class => cycle("odd", "even") }
-        - @columns.each do |column|
-          %td{ :class => "#{column.field_name}" } 
-            - if record.fields[column.field_name].type.to_s == "Float"
-              = number_with_precision(record[column.field_name], :precision => 3)
-            - else
-              = record[column.field_name]
-= render "new_column_form"
+= render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns }
+
+= render :partial => "new_column_form", :locals => { :season => @season }
 
 
