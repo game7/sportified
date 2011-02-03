@@ -9,4 +9,8 @@ module League::StandingsHelper
     link_to season.name, @path
   end
 
+  def is_float?(field)
+    field && field.options[:type].to_s == "Float"
+  end
+
 end

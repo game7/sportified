@@ -3,6 +3,7 @@ class Season
   cache
 
   attr_accessible :name, :starts_on, :ends_on, :division_id
+  accepts_nested_attributes_for :standings_columns
   
   field :name  
   field :slug
@@ -15,6 +16,7 @@ class Season
   references_many :teams
   references_many :team_records
   references_many :games
+  embeds_many :standings_columns, :class_name => "StandingsColumn"
 
   scope :with_name, lambda { |name| where(:name => name) }
   scope :with_slug, lambda { |slug| where(:slug => slug) }

@@ -1,0 +1,13 @@
+table.standings {
+  border-collapse: collapse;
+  width: 100%; }
+  table.standings td, table.standings th {
+    border: 1px solid #cccccc;
+    padding: 5px;
+    width: 50px;
+    text-align: center; }
+  table.standings td.team_name, table.standings th.team_name {
+    width: auto;
+    text-align: left; }
+  table.standings tr.even td {
+    background-color: #eeeeee; }

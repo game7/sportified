@@ -32,6 +32,15 @@ Sportified::Application.routes.draw do
     end
   end
 
+  namespace :league do
+    resources :seasons, :only => [] do
+      resources :standings_columns do
+        post 'push_left', :on => :member
+        post 'push_right', :on => :member
+      end
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

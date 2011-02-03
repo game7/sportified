@@ -1,7 +1,7 @@
 
 
 @import scaffold.sass
-@import formtastic_base.sass
+//@import formtastic_base.sass
 @import skintastic.sass
 @import hat.sass
 @import navigation.sass
@@ -101,30 +101,5 @@ a
 ul, ol
   :list-style none
 
-form
-  +bold-labels
 
-form.formtastic
-  +stack-form(100%,"full","right")
-
-.stack
-  +stack-form(100%,92%,3%)
-  &.buttons-right
-    +stack-form(100%,92%,3%,"buttons-right")
-
-.float-left
-  +float-form-left(100%,20%,72%,2%)
-  &.buttons-right
-    +float-form-left(100%,20%,72%,2%,"buttons-right")
-
-.float-right
-  +float-form-right(100%,20%,72%,2%)
-  &.buttons-right
-    +float-form-right(100%,20%,72%,2%,"buttons-right")
-
-.float-right, .float-left, .stack
-  &.input-float
-    +float-inputs
-  &.input-grid
-    +grid-inputs(200px)
 

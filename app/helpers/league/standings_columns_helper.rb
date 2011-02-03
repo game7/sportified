@@ -1,0 +1,2 @@
+module League::StandingsColumnsHelper
+end
