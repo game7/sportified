@@ -36,7 +36,7 @@ class TeamRecordManager
         opponent = records[result.opponent_id]
         if opponent
           count += 1
-          owp += opponent.win_percentage
+          owp += opponent.pct
         end
       end
       record.owp = count > 0 ? owp / count : 0.0   
@@ -55,7 +55,7 @@ class TeamRecordManager
       end
       record.oowp = count > 0 ? oowp / count : 0.0  
       record.sos = ( ( 2 * record.owp ) + record.oowp ) / 3
-      record.rpi = ( record.win_percentage * 0.25 ) + ( record.owp * 0.5 ) + ( record.oowp * 0.25 )
+      record.rpi = ( record.pct * 0.25 ) + ( record.owp * 0.5 ) + ( record.oowp * 0.25 )
     end
 
     # save each team's record
