@@ -12,7 +12,7 @@ class League::GameResultController < ApplicationController
   def new
     @game = Game.find(params[:game_id])
     @season = @game.season
-    @game.result = GameResult.new
+    @game.build_result
 
   end
 
