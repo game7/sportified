@@ -17,7 +17,7 @@
       - columns.each_with_index do |column, index|
         %td{ :class => "#{column.field_name}" } 
           - if index > 0
-            = link_to '<', push_left_league_season_standings_column_path(@season, column), :remote => true, :method => :post
-          = link_to 'X', league_season_standings_column_path(@season, column), :remote => true, :confirm => 'Are you sure?', :method => :delete
+            = link_to '<', push_left_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the left'
+          = link_to 'X', league_season_standings_column_path(@season, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
           - if index < columns.count - 1
-            = link_to '>', push_right_league_season_standings_column_path(@season, column), :remote => true, :method => :post
+            = link_to '>', push_right_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the right'
