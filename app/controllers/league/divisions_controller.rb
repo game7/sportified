@@ -1,6 +1,7 @@
 class League::DivisionsController < League::BaseLeagueController
   
   before_filter :load_for_division, :only => [:show, :edit]
+  before_filter :mark_return_point, :only => [:new, :edit]
 
   def load_for_division
     @division = params[:division_slug] ? Division.with_slug(params[:division_slug]).first : Division.find(params[:id])  
@@ -52,7 +53,7 @@ class League::DivisionsController < League::BaseLeagueController
 
     respond_to do |format|
       if @division.save
-        format.html { redirect_to(league_path, :notice => 'Division was successfully created.') }
+        format.html { return_to_last_point(:notice => 'Division was successfully created.') }
         format.xml  { render :xml => @division, :status => :created, :location => @division }
       else
         format.html { render :action => "new" }
@@ -68,7 +69,7 @@ class League::DivisionsController < League::BaseLeagueController
 
     respond_to do |format|
       if @division.update_attributes(params[:division])
-        format.html { redirect_to(league_division_friendly_path(@division.slug), :notice => 'Division was successfully updated.') }
+        format.html { return_to_last_point(:notice => 'Division was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

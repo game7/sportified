@@ -1,5 +1,6 @@
 class League::TeamsController < League::BaseSeasonController
   
+  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :load_for_team, :only => [:show, :edit]
   before_filter :load_for_season, :only => [:index, :new]
 
@@ -86,7 +87,7 @@ class League::TeamsController < League::BaseSeasonController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to(league_season_teams_friendly_path(@season.division.slug, @season.slug), :notice => 'Team was successfully created.') }
+        format.html { return_to_last_point(:notice => 'Team was successfully created.') }
         format.xml  { render :xml => @team, :status => :created, :location => @team }
       else
         format.html { render :action => "new" }
@@ -102,7 +103,7 @@ class League::TeamsController < League::BaseSeasonController
     @season = @team.season
     respond_to do |format|
       if @team.update_attributes(params[:team])
-        format.html { redirect_to(league_team_friendly_path(@season.division.slug, @season.slug, @team.slug), :notice => 'Team was successfully updated.') }
+        format.html { return_to_last_point(:notice => 'Team was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -119,7 +120,7 @@ class League::TeamsController < League::BaseSeasonController
     @team.destroy
 
     respond_to do |format|
-      format.html { redirect_to( league_season_teams_friendly_path(@season.division.slug, @season.slug) ) }
+      format.html { return_to_last_point(:notice => 'Team has been deleted.') }
       format.xml  { head :ok }
     end
   end

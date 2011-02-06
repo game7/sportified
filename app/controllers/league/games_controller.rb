@@ -1,5 +1,6 @@
 class League::GamesController < League::BaseSeasonController
   
+  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :load_for_season, :only => [:index, :new]
   before_filter :load_for_game, :only => [:show, :edit]
 
@@ -84,7 +85,7 @@ class League::GamesController < League::BaseSeasonController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to(league_season_schedule_friendly_path(@game.season.division.slug, @game.season.slug), :notice => 'Game was successfully created.') }
+        format.html { return_to_last_point(:notice => 'Game was successfully created.') }
         format.xml  { render :xml => @game, :status => :created, :location => @game }
       else
         format.html { render :action => "new" }
@@ -100,7 +101,7 @@ class League::GamesController < League::BaseSeasonController
 
     respond_to do |format|
       if @game.update_attributes(params[:game])
-        format.html { redirect_to( league_season_schedule_friendly_path(@game.season.division.slug, @game.season.slug), :notice => 'Game was successfully updated.') }
+        format.html { return_to_last_point(:notice => 'Game was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -116,7 +117,7 @@ class League::GamesController < League::BaseSeasonController
     @game.destroy
 
     respond_to do |format|
-      format.html { redirect_to(league_season_games_path(@game.season_id)) }
+      format.html { return_to_last_point(:notice => 'Game has been deleted.') }
       format.xml  { head :ok }
     end
   end
