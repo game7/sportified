@@ -228,6 +228,9 @@ a {
   height: 0;
   overflow: hidden; }
 
+.hidden {
+  display: none; }
+
 #container {
   margin: 0px auto;
   width: 800px; }

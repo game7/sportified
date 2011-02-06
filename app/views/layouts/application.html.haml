@@ -27,6 +27,8 @@
         %div{ :id => "page_header" }
           = content_tag :h1, yield(:title) if show_title?
         %div{ :id => "content" }
+          - unless flash[:notice]
+            %div{ :id => "flash_notice", :class => "hidden" }
           - flash.each do |name, msg|
             = content_tag :div, msg, :id => "flash_#{name}"
           = yield
