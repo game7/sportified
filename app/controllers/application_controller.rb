@@ -16,4 +16,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def mark_return_point
+    session[:return_to] = request.env["HTTP_REFERER"]
+  end
+
+  def return_to_last_point(response_status = {})
+    redirect_to(session[:return_to], response_status)
+  end
+
 end
