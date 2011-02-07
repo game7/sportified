@@ -8,6 +8,7 @@ class Game
  
   field :starts_on, :type => DateTime
 
+  referenced_in :division, :inverse_of => :gemes
   referenced_in :season, :inverse_of => :games
 
   embeds_one :left_team, :class_name => "GameTeam"
@@ -15,8 +16,16 @@ class Game
   embeds_one :result, :class_name => "GameResult"
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
+  scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
+  scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
+  scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
 
   before_save :update_team_names
+  
+  before_save :update_division
+  def update_division
+    self.division_id = self.season.division_id
+  end
 
   def has_result?
     !self.result.nil?

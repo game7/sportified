@@ -10,6 +10,7 @@ class Division
   field :breadcrumbs, :type => Array
 
   references_many :seasons
+  references_many :games
   
   embeds_one :path
 
