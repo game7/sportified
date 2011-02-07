@@ -20,6 +20,13 @@ class Game
   scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
   scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
 
+  class << self
+    def for_team(team)
+      id = team.class.to_s == 'Team' ? team.id : team
+      any_of( { "left_team.team_id" => id }, { "right_team.team_id" => id } )
+    end
+  end
+
   before_save :update_team_names
   
   before_save :update_division

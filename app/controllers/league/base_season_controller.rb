@@ -6,7 +6,7 @@ class League::BaseSeasonController < League::BaseLeagueController
     division ||= season.division
 
     add_area_menu_item('Home', league_season_friendly_path(division.slug, season.slug))
-    add_area_menu_item('Schedule', league_season_schedule_friendly_path(division.slug, season.slug))
+    add_area_menu_item('Schedule', league_division_schedule_friendly_path(division.slug))
     add_area_menu_item('Scoreboard', league_season_scoreboard_friendly_path(division.slug, season.slug))
     add_area_menu_item('Standings', league_season_standings_friendly_path(division.slug, season.slug))
     add_area_menu_item('Statistics')

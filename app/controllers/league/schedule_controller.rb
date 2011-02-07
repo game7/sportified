@@ -14,8 +14,9 @@ class League::ScheduleController < League::BaseSeasonController
   end
 
   def index
-    @season ||= @division.seasons.order_by(:starts_on, :desc).last
-    @games = @season.games.entries
+    start_date = Date.today - 8
+    end_date = Date.today + 8
+    @games = @division.games.between(start_date, end_date).asc(:starts_on)
   end
 
 end

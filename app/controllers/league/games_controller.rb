@@ -1,7 +1,7 @@
 class League::GamesController < League::BaseSeasonController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :load_for_season, :only => [:index, :new]
+  before_filter :load_for_season, :only => [:new, :index]
   before_filter :load_for_game, :only => [:show, :edit]
 
   def load_for_season
@@ -11,7 +11,8 @@ class League::GamesController < League::BaseSeasonController
       @division = @season.division
     else
       @division = Division.with_slug(params[:division_slug]).first
-      @season = @division.seasons.with_slug(params[:season_slug]).first
+      @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
+      @season ||= @division.seasons.desc(:starts_on).first
     end
 
     add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
@@ -37,8 +38,29 @@ class League::GamesController < League::BaseSeasonController
   # GET /games
   # GET /games.xml
   def index
+    
+    if params[:season_id]
 
-    @games = @season.games.asc(:starts_on)
+    elsif params[:season_slug]
+      @season = @division.seasons.with_slug(params[:season_slug]).first
+      @games = @season.games.asc(:starts_on)
+      if params[:team_slug]
+        @team = @season.teams.with_slug(params[:team_slug])
+        @games = @games.for_team(@team.id)
+      end
+    else
+      @season = @division.current_season
+      @date = params[:date] ? Date.parse(params[:date]) : Date.current
+      @days_in_future = 14
+      @days_in_past = 7
+      @start_date = @date - @days_in_past - 1
+      @end_date = @date + @days_in_future + 1
+      @next_date = @date + @days_in_future + @days_in_past
+      @prev_date = @date - @days_in_future - @days_in_past
+      @games = @division.games.between(@start_date, @end_date).asc(:starts_on)
+    end
+
+    @seasons = @division.seasons.desc(:starts_on)
 
     respond_to do |format|
       format.html # index.html.erb
