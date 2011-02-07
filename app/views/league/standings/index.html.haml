@@ -1,10 +1,8 @@
-- title 'Standings'
+- title 'Standings - ' + @season.name
 
-- @division.seasons.each do |season|
-  = link_to_standings @division, season
+%div
+  Season: 
+  = collection_select("season", :id, @division.seasons, :slug, :name)
 
-= render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns }
-
-= render :partial => "new_column_form", :locals => { :season => @season }
-
+= render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns, :edit => false }
 

@@ -18,7 +18,10 @@ Sportified::Application.routes.draw do
   match 'league/:division_slug/schedule(/:season_slug(/:team_slug))' => 'league/games#index', :as => :league_division_schedule_friendly, :via => :get
 
   match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly, :via => :get
+  
   match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_season_standings_friendly, :via => :get
+  match 'league/:division_slug(/:season_slug)/standings/edit' => 'league/standings#edit', :as => :edit_league_season_standings_friendly, :via => :get
+
   match 'league/:division_slug/:season_slug/teams/' => 'league/teams#index', :as => :league_season_teams_friendly, :via => :get
   match 'league/:division_slug/:season_slug/:team_slug/home' => 'league/teams#show', :as => :league_team_friendly, :via => :get
   match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly, :via => :get

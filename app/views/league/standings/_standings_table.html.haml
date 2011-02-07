@@ -12,12 +12,13 @@
               = number_with_precision(record[column.field_name], :precision => 3)
             - else
               = record[column.field_name]
-  %tfoot
-    %tr
-      - columns.each_with_index do |column, index|
-        %td{ :class => "#{column.field_name}" } 
-          - if index > 0
-            = link_to '<', push_left_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the left'
-          = link_to 'X', league_season_standings_column_path(@season, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
-          - if index < columns.count - 1
-            = link_to '>', push_right_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the right'
+  - if edit
+    %tfoot
+      %tr
+        - columns.each_with_index do |column, index|
+          %td{ :class => "#{column.field_name}" } 
+            - if index > 0
+              = link_to '<', push_left_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the left'
+            = link_to 'X', league_season_standings_column_path(@season, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
+            - if index < columns.count - 1
+              = link_to '>', push_right_league_season_standings_column_path(@season, column), :remote => true, :method => :post, :title => 'Push to the right'

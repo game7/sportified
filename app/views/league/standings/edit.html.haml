@@ -1,0 +1,9 @@
+- title 'Edit Standings - ' + @season.name
+
+%div
+  Season: 
+  = collection_select("season", :id, @division.seasons, :slug, :name)
+
+= render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns, :edit => true }
+
+= render :partial => "new_column_form", :locals => { :season => @season }
