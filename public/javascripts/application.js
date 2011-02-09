@@ -14,3 +14,11 @@ function clearForm(form) {
       this.selectedIndex = -1;
   });
 };
+
+$(document).ready(function() {
+  
+  $('select.redirect_to').change(function() {
+    window.location = this.value;
+  });
+
+});

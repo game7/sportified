@@ -29,7 +29,8 @@ class League::TeamsController < League::BaseSeasonController
       @division = @season.division
     else
       @division = Division.with_slug(params[:division_slug]).first
-      @season = @division.seasons.with_slug(params[:season_slug]).first
+      @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
+      @season ||= @division.seasons.desc(:starts_on).first
     end
 
     add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
