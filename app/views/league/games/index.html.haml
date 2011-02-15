@@ -23,10 +23,13 @@
             %td.location LOCATION
         %tr{ :class => cycle("odd","even") }
           %td
-            = game.left_team_name
-            vs.
-            = game.right_team_name  
-            (#{link_to 'Edit', edit_league_game_path(game)})  
+            - if game.has_result?
+              - if game.result.right_team_is_winner?
+                #{game.right_team_name} #{game.result.right_team_score} , #{game.left_team_name} #{game.result.left_team_score}
+              - else
+                #{game.left_team_name} #{game.result.left_team_score}, #{game.right_team_name} #{game.result.right_team_score} 
+            - else
+              #{game.left_team_name} vs. #{game.right_team_name} (#{link_to 'Edit', edit_league_game_path(game)}) 
           %td #{game.starts_on.strftime("%l:%M %p")}
           %td Location
         - last_date = game.starts_on.to_date
