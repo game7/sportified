@@ -22,6 +22,10 @@ class Division
   scope :with_name, lambda { |name| where(:name => name) }
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 
+  def default_season
+    self.current_season ? self.current_season : seasons.desc(:starts_on).first
+  end
+
   private
 
     def set_slug
