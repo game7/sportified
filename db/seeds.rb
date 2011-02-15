@@ -24,6 +24,7 @@ puts '2 - Create Seasons'
   season = Season.new( :name => s, :starts_on => '1/1/' + s)
   Division.all.each do |d|
     season.divisions << d
+    d.seasons << season
     d.save
   end
   season.save
