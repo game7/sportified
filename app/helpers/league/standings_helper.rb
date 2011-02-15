@@ -14,7 +14,7 @@ module League::StandingsHelper
   end
 
   def standings_season_select(division)
-    select( "season", :id, get_standings_season_options(division), { :selected => request.request_uri }, { :class => "redirect_to" } )
+    select( "season", :id, get_standings_season_options(division), { :selected => request.fullpath }, { :class => "redirect_to" } )
   end
 
   def get_standings_season_options(division)
