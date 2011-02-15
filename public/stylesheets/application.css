@@ -231,6 +231,10 @@ a img {
 
 .controls {
   padding: 5px; }
+  .controls select {
+    padding: 2px;
+    border: 1px solid #cfcfcf;
+    background: #e7e7e7; }
 
 .mod-container {
   width: 100%;
