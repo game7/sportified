@@ -19,8 +19,8 @@ class GameTeam
 
   def update_team_name
     if !self.use_custom_name
-      team = self.team
-      self.name = team ? team.name : ''
+      t = self.team
+      self.name = t ? t.name : ''
     end
   end
 
