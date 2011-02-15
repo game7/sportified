@@ -23,8 +23,8 @@ puts '2 - Create Seasons'
 ['2010', '2011'].each do |s|
   season = Season.new( :name => s, :starts_on => '1/1/' + s)
   Division.all.each do |d|
-    season.divisions << d
-    d.seasons << season
+    season.division_ids << d.id
+    d.season_ids << season.id
     d.save
   end
   season.save
