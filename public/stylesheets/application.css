@@ -199,6 +199,31 @@ ul.user-tasks {
       font-size: 12px;
       text-shadow: black 0px -1px 0px; }
 
+.action {
+  display: inline; }
+  .action div {
+    display: inline; }
+
+.action a {
+  padding: 2px 2px 2px 17px;
+  border: solid 1px transparent; }
+  .action a:hover {
+    border: solid 1px #c5c5c5;
+    background-color: #dedede;
+    color: black; }
+
+.add a {
+  background: url(/images/icons/add.png) no-repeat; }
+
+.delete a {
+  background: url(/images/icons/delete.png) no-repeat; }
+
+.calendar_edit a {
+  background: url(/images/icons/calendar_edit.png) no-repeat; }
+
+.calendar_delete a {
+  background: url(/images/icons/calendar_delete.png) no-repeat; }
+
 html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li {
   border: 0px;
   margin: 0px;
