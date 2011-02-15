@@ -2,17 +2,15 @@ class Game
   include Mongoid::Document
 
   TEAM_ALIGNMENT = %w[home away]
-
-  accepts_nested_attributes_for :left_team
-  accepts_nested_attributes_for :right_team
  
   field :starts_on, :type => DateTime
+  field :left_team_name
+  field :right_team_name
 
   referenced_in :division
   referenced_in :season
-
-  embeds_one :left_team, :class_name => "GameTeam"
-  embeds_one :right_team, :class_name => "GameTeam"
+  referenced_in :left_team, :class_name => "Team"
+  referenced_in :right_team, :class_name => "Team"
   embeds_one :result, :class_name => "GameResult"
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
@@ -23,7 +21,7 @@ class Game
   class << self
     def for_team(t)
       id = t.class == Team ? t.id : t
-      any_of( { "left_team.team_id" => id }, { "right_team.team_id" => id } )
+      any_of( { "left_team_id" => id }, { "right_team_id" => id } )
     end
     def for_season(s)
       id = s.class == Season ? s.id : s
@@ -51,10 +49,9 @@ class Game
 
   private
 
-    # workaound to overcome mongoid not cascading events to embedded documents
     def update_team_names
-      self.left_team.update_team_name if self.left_team
-      self.right_team.update_team_name if self.right_team
+      self.left_team_name = self.left_team.name if self.left_team
+      self.right_team_name = self.right_team.name if self.right_team
     end
 
 end

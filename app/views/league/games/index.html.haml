@@ -23,9 +23,9 @@
             %td.location LOCATION
         %tr{ :class => cycle("odd","even") }
           %td
-            = game.left_team.name
+            = game.left_team_name
             vs.
-            = game.right_team.name  
+            = game.right_team_name  
             (#{link_to 'Edit', edit_league_game_path(game)})  
           %td #{game.starts_on.strftime("%l:%M %p")}
           %td Location

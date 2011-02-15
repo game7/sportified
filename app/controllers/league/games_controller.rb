@@ -79,8 +79,6 @@ class League::GamesController < League::BaseDivisionController
 
     @teams = @division.teams.entries
     @game = @division.games.build
-    @game.left_team = GameTeam.new
-    @game.right_team = GameTeam.new
     @game.season_id = @division.seasons.most_current.id
 
     respond_to do |format|

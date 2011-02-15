@@ -30,14 +30,14 @@ class TeamGameResult
     self.played_on = game.starts_on.to_date
     self.completed_in = result.completed_in
 
-    if game.left_team.team_id == team_id
-      self.opponent_id = game.right_team.team_id
-      self.opponent_name = game.right_team.name
+    if game.left_team_id == team_id
+      self.opponent_id = game.right_team_id
+      self.opponent_name = game.right_team_name
       self.scored = result.left_team_score
       self.allowed = result.right_team_score
-    elsif game.right_team.team_id == team_id
-      self.opponent_id = game.left_team.team_id
-      self.opponent_name = game.left_team.name
+    elsif game.right_team_id == team_id
+      self.opponent_id = game.left_team_id
+      self.opponent_name = game.left_team_name
       self.scored = result.right_team_score
       self.allowed = result.left_team_score
     end

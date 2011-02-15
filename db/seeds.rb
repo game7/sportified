@@ -68,8 +68,8 @@ rounds.times do |round|
     g = division.games.build
     g.season = season
     g.starts_on = game_times[game].advance(:days => @days_advance)
-    g.left_team = GameTeam.new( :team => @left_team )
-    g.right_team = GameTeam.new( :team => @right_team )
+    g.left_team = @left_team
+    g.right_team = @right_team
     puts ' - save... '
     g.save
   end

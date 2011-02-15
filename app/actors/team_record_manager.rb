@@ -65,10 +65,10 @@ class TeamRecordManager
 
   def post_result_to_team_records!(game)
   
-    left = game.left_team.team.record
+    left = game.left_team.record
     left.post_result_from_game(game)
     left.save
-    right = game.right_team.team.record
+    right = game.right_team.record
     right.post_result_from_game(game)
     right.save
    
@@ -105,10 +105,10 @@ class TeamRecordManager
   on :game_result_deleted do |event|
     
     game = Game.find(event.data[:game_id])
-    left = game.left_team.team.record
+    left = game.left_team.record
     left.cancel_result_for_game(game)
     left.save
-    right = game.right_team.team.record
+    right = game.right_team.record
     right.cancel_result_for_game(game)
     right.save
     manager = TeamRecordManager.new

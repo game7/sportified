@@ -2,14 +2,12 @@
   = f.inputs :name => "Logistics" do
     = f.input :season_id, :as => :select, :collection => @game.division.seasons
     = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
-  = f.inputs :name => "Away Team", :for => :left_team do |left|
-    = left.input :team_id, :collection => @teams
-    = left.input :use_custom_name, :as => :boolean
-    = left.input :name
-  = f.inputs :name => "Home Team", :for => :right_team do |right|
-    = right.input :team_id, :collection => @teams
-    = right.input :use_custom_name, :as => :boolean
-    = right.input :name
+  = f.inputs :name => "Away Team" do
+    = f.input :left_team_id, :collection => @teams
+    = f.input :left_team_name
+  = f.inputs :name => "Home Team" do
+    = f.input :right_team_id, :collection => @teams
+    = f.input :right_team_name
   = f.buttons do
     = f.commit_button
     %li #{link_to 'Cancel', session[:return_to]}

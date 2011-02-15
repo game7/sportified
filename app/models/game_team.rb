@@ -3,8 +3,6 @@ class GameTeam
 
   OUTCOMES = %w[win loss tie]
 
-  accepts_nested_attributes_for :sub_scores
-
   field :name
   field :use_custom_name, :type => Boolean
   field :score, :type => Integer
@@ -12,8 +10,7 @@ class GameTeam
   field :outcome
 
   referenced_in :team
-  embedded_in :game, :inverse_of => :left_team
-  embedded_in :game, :inverse_of => :right_team
+  embedded_in :game
 
   #before_save :update_team_name
 
