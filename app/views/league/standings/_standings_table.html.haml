@@ -16,8 +16,11 @@
       %tr
         - columns.each_with_index do |column, index|
           %td{ :class => "#{column.field_name}" } 
-            - if index > 0
-              = link_to icon('arrow_left', 'Move column left'), push_left_league_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the left'
-            = link_to icon('delete', 'Delete column'), league_division_standings_column_path(@division, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
-            - if index < columns.count - 1
-              = link_to icon('arrow_right', 'Move column right'), push_right_league_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the right'
+            .move
+              - if index > 0
+                = link_to icon('arrow_left', 'Move column left'), push_left_league_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the left'
+              - if index < columns.count - 1
+                = link_to icon('arrow_right', 'Move column right'), push_right_league_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the right'
+            .delete
+              = link_to icon('delete', 'Delete column'), league_division_standings_column_path(@division, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
+
