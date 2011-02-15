@@ -1,13 +1,14 @@
 - title 'Game Schedule'
 - last_date = nil
 
-.controls.left
-  = render "date_selector"
-.controls.right
-  - #TODO: Wire-up season and team selectors
-  - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-  = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
-.clear
+.controls
+  .left
+    = render "date_selector"
+  .right
+    - #TODO: Wire-up season and team selectors
+    - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
+    = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
+  .clear
 
 .mod-container.mod-table.mod-no-header-footer
   .mod-content
