@@ -38,8 +38,11 @@ gem 'delayed_job'
 # and rake tasks are available in development mode:
 group :test do
 
-  gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec', '>= 2.0.1'
+  gem 'rspec-rails', '>= 2.0.1'
+  gem "remarkable_mongoid", ">= 0.5.0"
+  gem 'machinist_mongo', :require => 'machinist/mongoid'
+  gem 'faker'
   gem 'webrat'
   gem 'cucumber-rails'
   gem 'cucumber'

@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Division do
   
   before(:each) do
-    @division = Division.make
+    @division = Division.make_unsaved
   end
 
   describe "validations" do
     
-    it "should have a title" do
-      @division.title = ""
+    it "should have a name" do
+      @division.name = ""
       @division.valid?.should == false
     end
 

@@ -14,6 +14,8 @@ class Season
   references_many :games
   references_many :teams
 
+  validates_presence_of :name, :starts_on
+
   scope :with_name, lambda { |name| where(:name => name) }
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 

@@ -13,6 +13,8 @@ class Division
   references_many :teams
   references_many :team_records
 
+  validates_presence_of :name
+
   embeds_many :standings_columns, :class_name => "StandingsColumn"
 
   before_save :set_slug

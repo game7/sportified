@@ -16,6 +16,10 @@ class Team
   references_many :games, :inverse_of => :away_team
   references_one :record, :class_name => "TeamRecord", :dependent => :delete
 
+  validates_presence_of :name
+  validates_presence_of :division
+  validates_presence_of :season
+
   before_save :set_slug
   before_save :ensure_short_name
   before_save :ensure_record
