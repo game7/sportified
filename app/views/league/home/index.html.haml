@@ -1,0 +1,10 @@
+- title "League"
+
+%h3 Divisions
+%div
+  - @divisions.each do |division|
+    = render :partial => "division_card", :locals => { :division => division }
+.clear
+%p
+  = link_to 'Add Division', new_league_division_path
+

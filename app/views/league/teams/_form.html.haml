@@ -1,10 +1,10 @@
-= semantic_form_for [:league, @season, @team] do |f|
+= semantic_form_for [:league, @division, @team] do |f|
   - f.inputs do
     = f.input :name
     = f.input :short_name
     = f.input :show_in_standings, :as => :boolean
   = f.buttons do
     = f.commit_button
-    %li #{link_to 'Cancel', league_season_teams_friendly_path(@team.season.division.slug, @team.season.slug)}
+    %li #{ link_to 'Cancel', session[:return_to] }
 
 

@@ -1,0 +1,45 @@
+.game-box {
+  float: left;
+  border: 1px solid #c2c2c2;
+  padding: 2px;
+  margin: 5px;
+  width: 300px; }
+
+.game-header {
+  border-top: 4px solid #c9c9c9;
+  background: #dfdfdf;
+  background: -webkit-gradient(linear, left top, left bottom, from(white), to(#dfdfdf));
+  background: -moz-linear-gradient(top, white, #dfdfdf);
+  padding: 1px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #c2c2c2; }
+
+table.game-header-table {
+  border-right: #c2c2c2 1px solid;
+  float: left;
+  margin: 2px; }
+  table.game-header-table td.winner {
+    width: 15px;
+    font-size: 16px;
+    font-weight: 700; }
+  table.game-header-table td.team-name, table.game-header-table td.team-score {
+    font-size: 16px;
+    font-weight: 700; }
+  table.game-header-table td.team-name {
+    width: 120px; }
+  table.game-header-table td.team-score {
+    text-align: right;
+    padding-right: 4px;
+    width: 30px; }
+
+ul.game-info li {
+  line-height: 30px !important;
+  min-height: 30px !important; }
+ul.game-info li.status {
+  text-indent: 5px; }
+
+.game-actions {
+  border-bottom: 1px solid #c2c2c2;
+  font-size: 10px;
+  line-height: 14px;
+  padding: 5px; }

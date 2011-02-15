@@ -1,4 +1,4 @@
-= title @team.name
+- title @team.name
 %p
   %strong Name:
   = @team.name
@@ -6,5 +6,4 @@
   %strong Short Name:
   = @team.short_name
 = link_to 'Edit', edit_league_team_path(@team)
-= " | "
-= link_to 'Back', league_season_teams_path(@team.season_id)
+

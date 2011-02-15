@@ -5,5 +5,5 @@
     = f.input :jersey_number
   = f.buttons do
     = f.commit_button
-    %li #{link_to 'Cancel', league_team_roster_friendly_path(@player.team.season.division.slug, @player.team.season.slug, @player.team.slug)}
+    %li #{link_to 'Cancel', session[:return_to]}
 

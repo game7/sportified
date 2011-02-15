@@ -1,30 +1,30 @@
 class TeamRecordManager
   extend EventHandler
 
-  def recalculate_team_records(season_id)
+  def recalculate(division_id, season_id)
     
     # first clear them all
-    TeamRecord.where(:season_id => season_id).each do |record|
+    TeamRecord.for_division(division_id).for_season(season_id).each do |record|
       record.reset!
       record.save
     end   
 
     # then repost the results
-    Game.where(:season_id => season_id).each do |game|
+    Game.for_division(division_id).for_season(season_id).each do |game|
       post_result_to_team_records!(game) if game.has_result?
     end
 
     #then update power rankings
-    update_power_rankings(season_id)
+    update_power_rankings(division_id, season_id)
 
   end
 
-  def update_power_rankings(season_id)
+  def update_power_rankings(division_id, season_id)
     
     records = Hash.new
 
     # make hash of team records
-    TeamRecord.where(:season_id=> season_id).each do |record|
+    TeamRecord.for_division(division_id).for_season(season_id).each do |record|
       records[record.team_id] = record
     end
 
@@ -77,6 +77,7 @@ class TeamRecordManager
   def create_record_for_team!(team)
 
     record = TeamRecord.new
+    record.division_id = team.division_id
     record.season_id = team.season_id
     record.team_id = team.id
     record.team_name = team.name
@@ -97,7 +98,7 @@ class TeamRecordManager
     game = Game.find(event.data[:game_id])
     manager = TeamRecordManager.new
     manager.post_result_to_team_records!(game)
-    manager.update_power_rankings(game.season_id)
+    manager.update_power_rankings(game.division_id, game.season_id)
 
   end
 
@@ -111,7 +112,7 @@ class TeamRecordManager
     right.cancel_result_for_game(game)
     right.save
     manager = TeamRecordManager.new
-    manager.update_power_rankings(game.season_id)
+    manager.update_power_rankings(game.division_id, game.season_id)
 
   end
 

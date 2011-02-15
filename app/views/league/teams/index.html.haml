@@ -1,9 +1,11 @@
 - title "Teams"
-%div
-  Season:
-  = season_select(@division)
-- @teams.each do |team|
-  = render :partial => "team_card", :locals => { :division => @division, :season => @season, :team => team }
+
+.controls-left
+  Season: #{team_season_select(@division)}
 .clear
-%br/
-= link_to 'New Team', new_league_season_team_path(@season)
+
+= render :partial => "team_cards"
+
+= render :partial => "quick_add"
+
+= link_to 'New Team', new_league_division_team_path(@division)

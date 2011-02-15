@@ -30,11 +30,23 @@ class TeamRecord
   field :rpi, :type => Float, :default => 0.00
 
 
-  referenced_in :season, :inverse_of => :team_records
-  referenced_in :team, :inverse_of => :record
+  referenced_in :division
+  referenced_in :season
+  referenced_in :team
   embeds_many :results, :class_name => 'TeamGameResult'
 
   scope :for_team_id, lambda { |team_id| where(:team_id => team_id)}
+
+  class << self
+    def for_season(s)
+      s = s.id if s.class == Season
+      where(:season_id => s)
+    end
+    def for_division(d)
+      d = d.id if d.class == d
+      where(:division_id => d)
+    end
+  end
 
   def self.list_fields
     fields = []

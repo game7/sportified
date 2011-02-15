@@ -8,8 +8,8 @@ class Game
  
   field :starts_on, :type => DateTime
 
-  referenced_in :division, :inverse_of => :gemes
-  referenced_in :season, :inverse_of => :games
+  referenced_in :division
+  referenced_in :season
 
   embeds_one :left_team, :class_name => "GameTeam"
   embeds_one :right_team, :class_name => "GameTeam"
@@ -21,19 +21,22 @@ class Game
   scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
 
   class << self
-    def for_team(team)
-      id = team.class.to_s == 'Team' ? team.id : team
+    def for_team(t)
+      id = t.class == Team ? t.id : t
       any_of( { "left_team.team_id" => id }, { "right_team.team_id" => id } )
+    end
+    def for_season(s)
+      id = s.class == Season ? s.id : s
+      where(:season_id => id)
+    end
+    def for_division(d)
+      id = d.class == Division ? d.id : d
+      where(:division_id => id)
     end
   end
 
   before_save :update_team_names
   
-  before_save :update_division
-  def update_division
-    self.division_id = self.season.division_id
-  end
-
   def has_result?
     !self.result.nil?
   end

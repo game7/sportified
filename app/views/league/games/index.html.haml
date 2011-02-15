@@ -1,34 +1,35 @@
 - title 'Game Schedule'
 - last_date = nil
-%div
-  = link_to("Previous #{@days_in_past + @days_in_future} Days", :date => @prev_date)
-  = " | " 
-  = @start_date.strftime("%b %e")
-  = " - "
-  = @end_date.strftime("%b %e")
-  = " | "
-  = link_to("Next #{@days_in_past + @days_in_future} Days", :date => @next_date)
-%div
+
+.controls.left
+  = render "date_selector"
+.controls.right
   - #TODO: Wire-up season and team selectors
-  = collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-  = collection_select("team", :id, @season.teams.asc(:name), :slug, :name, { :include_blank => 'Team Schedules' })
-%table{ :border => "1", :cellpadding => "5", :style => "border-collapse: collapse;" }
-  - @games.each do |game|
-    - if game.starts_on.to_date != last_date
-      %tr
-        %td{ :colspan => "3" } #{game.starts_on.to_date}
-      %tr
-        %th Teams
-        %th Time
-        %th Location
-    %tr
-      %td
-        = game.left_team.name
-        vs.
-        = game.right_team.name    
-      %td #{game.starts_on.strftime("%I:%M %p")}
-      %td Location
-    - last_date = game.starts_on.to_date
+  - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
+  = collection_select("team", :id, @teams, :slug, :name, { :include_blank => 'Team Schedules' })
+.clear
+
+.mod-container.mod-table.mod-no-header-footer
+  .mod-content
+    %table.stat#schedule{ :cellspacing => "1" }
+      - @games.each do |game|
+        - if game.starts_on.to_date != last_date
+          - reset_cycle()
+          %tr.group-head
+            %td{ :colspan => "3" } #{game.starts_on.to_date.strftime("%A, %B %e %Y")}
+          %tr.col-head
+            %td.teams TEAMS
+            %td.time TIME
+            %td.location LOCATION
+        %tr{ :class => cycle("odd","even") }
+          %td
+            = game.left_team.name
+            vs.
+            = game.right_team.name  
+            (#{link_to 'Edit', edit_league_game_path(game)})  
+          %td #{game.starts_on.strftime("%l:%M %p")}
+          %td Location
+        - last_date = game.starts_on.to_date
 //  - @rowspans = get_rowspans @games
 //  - @games.each_with_index do |game, i|
 //    %tr
@@ -45,5 +46,7 @@
 //      %td
 //        = link_to 'Edit', edit_league_game_path(game)
 //        = link_to 'Delete', [:league, game], :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Game', new_league_season_game_path(@season)
+.controls.left
+  = render "date_selector"
+.clear
+= link_to 'New Game', new_league_division_game_path(@division)

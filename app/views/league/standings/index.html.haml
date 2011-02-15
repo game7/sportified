@@ -1,8 +1,14 @@
 - title 'Standings - ' + @season.name
-
-%div
-  Season: 
-  = collection_select("season", :id, @division.seasons, :slug, :name)
-
-= render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns, :edit => false }
+.controls.left Season: #{standings_season_select(@division)}
+.clear
+.mod-container.mod-table.mod-no-header
+  .mod-content
+    = render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns }
+  .mod-footer
+    .foot-header.group-head Glossary
+    .foot-content
+      = render :partial => "standings_glossary", :locals => { :columns => @columns }
+    .foot-footer 
+      %p Standings are updated with the posting of each game's final result
+= render :partial => "new_column_form", :locals => { :division => @division }
 

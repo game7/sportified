@@ -2,31 +2,38 @@ class Team
   include Mongoid::Document
   cache
 
-  attr_accessible :_id, :name, :short_name, :show_in_standings
+  attr_accessible :_id, :name, :short_name, :season_id
   
   field :name
   field :short_name
   field :slug
-  field :breadcrumbs, :type => Array
   field :show_in_standings, :type => Boolean, :default => true
 
-  referenced_in :season, :inverse_of => :teams
+  referenced_in :division
+  referenced_in :season
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
-  references_one :record, :class_name => "TeamRecord"
+  references_one :record, :class_name => "TeamRecord", :dependent => :delete
 
-  before_save :set_slug_and_breadcrumbs
+  before_save :set_slug
   before_save :ensure_short_name
   before_save :ensure_record
   after_create :raise_team_created_event
 
+  class << self
+    def for_season(season)
+      season = season.id if season.class == Season
+      where(:season_id => season)
+    end
+  end
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 
   private
 
     def raise_team_created_event
       @event = Event.new(:team_created)
+      @event.data[:division_id] = self.division_id
       @event.data[:season_id] = self.season_id
       @event.data[:team_id] = self.id
       @event.data[:team_name] = self.name
@@ -44,10 +51,8 @@ class Team
       self.record ||= TeamRecord.new
     end
 
-    def set_slug_and_breadcrumbs
-      @parent = self.season
+    def set_slug
       self.slug = self.name.parameterize
-      self.breadcrumbs = @parent.breadcrumbs.clone << { :controller => "teams", :id => self.id, :name => self.name, :slug => self.slug }
     end
 
 end

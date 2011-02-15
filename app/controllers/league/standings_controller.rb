@@ -1,30 +1,22 @@
-class League::StandingsController < League::BaseSeasonController
+class League::StandingsController < League::BaseDivisionController
   
-  before_filter :load_for_season
+  before_filter :load_for_division
 
-  def load_for_season
+  def load_for_division
     
     @division = Division.with_slug(params[:division_slug]).first
     @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.current_season
-    @season ||= @division.seasons.order_by(:starts_on, :desc).last 
-
     add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
     add_new_breadcrumb @season.name
+    load_area_navigation @division
 
-    load_area_navigation @division, @season
-   
   end
   
   def index
-    @columns = @season.standings_columns.asc(:order)
-    @team_records = @season.team_records.desc('points')
+    @columns = @division.standings_columns.asc(:order)
+    @team_records = @division.team_records.for_season(@season).desc('points').entries
     if @columns.count == 0 then flash[:error] = "Standings layout has not been setup for this season" end
   end
 
-  def edit
-    @columns = @season.standings_columns.asc(:order)
-    @team_records = @season.team_records.desc('points')
-    if @columns.count == 0 then flash[:error] = "Standings layout has not been setup for this season" end    
-  end
 
 end

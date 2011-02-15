@@ -1,5 +1,18 @@
 require 'spec_helper'
 
 describe Division do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  before(:each) do
+    @division = Division.make
+  end
+
+  describe "validations" do
+    
+    it "should have a title" do
+      @division.title = ""
+      @division.valid?.should == false
+    end
+
+  end
+
 end

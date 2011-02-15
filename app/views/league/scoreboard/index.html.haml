@@ -1,9 +1,20 @@
 - title 'Scoreboard'
-- last_date = DateTime.now.to_date
-- @games.each do |game|  
-  - if game.starts_on.to_date < last_date
+
+.controls.left
+  = render "date_selector"
+.clear
+
+- last_date = @games[0].starts_on.to_date unless @games.count == 0
+
+- @games.each_with_index do |game, i|  
+  - if i == 0 || game.starts_on.to_date < last_date
     .clear
-    %div{ :style => "background-color: #dedede; width: 100%; padding: 5px;" } #{game.starts_on.to_date}
+    .group-head #{game.starts_on.to_date.strftime("%A, %B %e %Y")}
     - last_date = game.starts_on.to_date
   = render :partial => "score_card", :locals => { :game => game }
 .clear
+.group-end
+.controls.left
+  = render "date_selector"
+.clear
+

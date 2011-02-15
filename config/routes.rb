@@ -11,37 +11,32 @@ Sportified::Application.routes.draw do
 
   match "league" => "league/home#index", :as => :league, :via => :get
   match "league/:division_slug/home" => "league/divisions#show", :as => :league_division_friendly, :via => :get
-  match "league/:division_slug/:season_slug/home" => "league/seasons#show", :as => :league_season_friendly, :via => :get
 
-  match 'league/:division_slug(/:season_slug)/schedule' => 'league/games#index', :as => :league_season_schedule_friendly, :via => :get
+  match 'league/:division_slug/schedule' => 'league/games#index', :as => :league_division_schedule_friendly, :via => :get
 
-  match 'league/:division_slug/schedule(/:season_slug(/:team_slug))' => 'league/games#index', :as => :league_division_schedule_friendly, :via => :get
-
-  match 'league/:division_slug/:season_slug/scoreboard' => 'league/scoreboard#index', :as => :league_season_scoreboard_friendly, :via => :get
+  match 'league/:division_slug/scoreboard' => 'league/scoreboard#index', :as => :league_division_scoreboard_friendly, :via => :get
   
-  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_season_standings_friendly, :via => :get
-  match 'league/:division_slug(/:season_slug)/standings/edit' => 'league/standings#edit', :as => :edit_league_season_standings_friendly, :via => :get
+  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_division_standings_friendly, :via => :get
 
-  match 'league/:division_slug(/:season_slug)/teams/' => 'league/teams#index', :as => :league_season_teams_friendly, :via => :get
+  match 'league/:division_slug(/:season_slug)/teams/' => 'league/teams#index', :as => :league_division_teams_friendly, :via => :get
 
   match 'league/:division_slug/:season_slug/:team_slug/home' => 'league/teams#show', :as => :league_team_friendly, :via => :get
   match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly, :via => :get
 
   namespace :league do
+    resources :seasons
     resources :divisions, :shallow => true do
-      resources :seasons do
-        resources :games do
-          resource :result, :controller => "game_result"
-        end
-        resources :teams do
-          resources :players
-        end
+      resources :games do
+        resource :result, :controller => "game_result"
+      end
+      resources :teams do
+        resources :players
       end
     end
   end
 
   namespace :league do
-    resources :seasons, :only => [] do
+    resources :divisions, :only => [] do
       resources :standings_columns do
         post 'push_left', :on => :member
         post 'push_right', :on => :member

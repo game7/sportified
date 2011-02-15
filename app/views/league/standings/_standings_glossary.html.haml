@@ -1,0 +1,8 @@
+#standings-glossary
+  - lists = ( columns.count / 4 )
+  - for i in 0..lists do
+    %ul
+      - columns[i * 4, 4].each do |column|
+        %li 
+          %strong #{column.title + ":"}
+          #{column.description}

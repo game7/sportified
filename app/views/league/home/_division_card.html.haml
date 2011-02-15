@@ -1,0 +1,8 @@
+.division-card
+  %strong #{link_to division.name, league_division_friendly_path(division.slug)}
+  = "["
+  = link_to 'Edit', edit_league_division_path(division)
+  = " | "
+  = link_to 'Delete', [:league, division], :confirm => 'Are you sure?', :method => :delete
+  = "]"
+

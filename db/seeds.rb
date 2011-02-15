@@ -11,21 +11,40 @@ puts 'SETTING UP DEFAULT USER LOGIN'
 user = User.create! :name => 'First User', :email => 'first_user@test.com', :password => 'please', :password_confirmation => 'please'
 puts 'New user created: ' << user.name
 
+puts ''
 puts 'SETTING UP DEMO LEAGUE'
-division = Division.create! :name => 'Advanced'
-season = division.seasons.build :name => 'Winter 2011', :starts_on => '1/1/2011', :ends_on => '4/1/2011'
-season.save
 
-kings = season.teams.create :name => 'Kings'
-ducks = season.teams.create :name => 'Ducks'
-sharks = season.teams.create :name => 'Sharks'
-stars = season.teams.create :name => 'Stars'
-coyotes = season.teams.create :name => 'Coyotes'
-avalanche = season.teams.create :name => 'Avalanche'
+puts ''
+puts '1 - Create Divisions'
+['A', 'B', 'C', 'O30'].each{|d| Division.create!(:name => d)}
 
-puts 'GENERATING GAMES'
+puts ''
+puts '2 - Create Seasons'
+['2010', '2011'].each do |s|
+  season = Season.new( :name => s, :starts_on => '1/1/' + s)
+  Division.all.each do |d|
+    season.divisions << d
+    d.save
+  end
+  season.save
+end
+
+puts ''
+puts '3 - Create Teams'
+a = Division.with_slug('a').first
+['Kings', 'Ducks', 'Sharks', 'Stars', 'Coyotes', 'Avalanche'].each do |t|
+  Season.all.each do |s|
+    team = a.teams.build :name => t
+    team.season = s
+    team.save
+  end
+end
+
+division = Division.first
+season = Season.first
+puts 'GENERATING GAMES FOR ' + division.name + ' ' + season.name
 game_times = [ DateTime.parse('10/07/10 7:30 pm'), DateTime.parse('10/07/10 9:00 pm'), DateTime.parse('10/07/10 10:30 pm') ]
-teams = season.teams.all.entries
+teams = division.teams.for_season(season).entries
 team_count = teams.count
 rounds = 25
 games_per_round = team_count / 2
@@ -45,10 +64,13 @@ rounds.times do |round|
     end
     puts ' ' << @left_team.name << ' vs ' << @right_team.name
     @days_advance = round * 7
-    g = season.games.build
+    puts ' - build game...'
+    g = division.games.build
+    g.season = season
     g.starts_on = game_times[game].advance(:days => @days_advance)
     g.left_team = GameTeam.new( :team => @left_team )
     g.right_team = GameTeam.new( :team => @right_team )
+    puts ' - save... '
     g.save
   end
   #shift teams
@@ -62,7 +84,7 @@ rounds.times do |round|
 end
 
 puts 'POST SOME RESULTS GAMES'
-season.games.where(:starts_on.lt => DateTime.now).each do |game|
+division.games.for_season(season).in_the_past.each do |game|
   game.result = GameResult.new(:game => game, :left_team_score => rand(8), :right_team_score => rand(8))
   game.result.save
 end

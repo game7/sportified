@@ -17,19 +17,17 @@ html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li
 body
   :background-color #4B7399
   :font-family Verdana, Helvetica, Arial
-  :font-size 14px
   :margin 0px
   :padding 0px
 
 a img
   :border none
 
-a
-  :color #0000FF
-  :font-weight bold
-  :text-decoration none
 
-
+.float-left, .left
+  :float left
+.float-right, .right
+  :float right
 .clear
   :clear both
   :height 0
@@ -37,6 +35,107 @@ a
 
 .hidden
   :display none
+
+.controls
+  :padding 5px
+
+.mod-container
+  :width 100%
+  :clear both
+
+.mod-content
+  :background white
+  :font-size 11px
+  :border-width 0 1px
+  :border-color #C2C2C2
+  :border-style solid
+  :overflow hidden
+  :padding 2px
+
+.mod-footer
+  :background white
+  :border-width 0 1px 1px
+  :border-color #C2C2C2
+  :border-style solid
+  :margin-bottom 2px
+
+.mod-table
+  .mod-content
+    :padding 0 !important
+  .mod-footer
+    :text-align left
+    :margin-bottom 6px
+    :overflow hidden
+    p
+      :margin 0
+      :padding 0 5px
+      :font-size 10px
+      :line-height 25px
+      :overflow hidden
+    .foot-header
+      :color white
+    .foot-content
+      :padding 8px
+      :font-size 11px
+      :overflow hidden
+      ul
+        :float left
+        :margin 0 25px 10px 0
+        li
+          :padding-bottom 4px
+    .foot-footer
+      :background #DDD
+      :clear both
+      :border-top 1px solid #BBB
+
+.mod-no-header
+  .mod-content
+    :border-top-width 1px
+
+.mod-no-footer
+  .mod-content
+    :border-bottom-width 1px
+
+.mod-no-header-footer
+  .mod-content
+    :margin-bottom 6px
+    :border-top-width 1px
+    :border-bottom-width 1px
+
+.group-head
+  :background-color #227A92
+  :color white
+  :font-weight 700
+  :font-size 13px
+  :padding 5px
+  :border-bottom 1px solid #CCC
+
+.group-end
+  :border-top 1px solid #CCCCCC
+  :height 1px
+
+table.stat
+  :width 100%
+  td, th
+    :padding 3px 6px 3px 6px
+  tr.group-head
+    td, th
+      :background-color #227A92
+      :border-bottom 1px solid #CCC
+      :color white
+      :font-weight 700
+      :font-size 13px
+  tr.col-head
+    td, th
+      :background -webkit-gradient(linear, left top, left bottom, from(#C2C2C2), to(#E8E8E8))
+      :background -moz-linear-gradient(top, #C2C2C2, #E8E8E8)
+      :color #444
+      :border-bottom 1px #C2C2C2 solid
+      :font-weight 700
+      :font-size 11px
+  tr.even
+    td
+      :background-color #F1F1F1
 
 #container
   :margin 0px auto
@@ -101,8 +200,195 @@ a
 .error_messages ul
   :margin 0
 
+.no-margin
+  :border none
+
+ul.message
+  :padding 0.583em 0px 0.083em
+  li
+    :background-position 0.8em 0.1em
+    :background-repeat no-repeat
+    :font-size 0.833em
+    :line-height 1.3em
+    :padding 0.2em 1em 0.8em 3em
+    :text-transform uppercase
+
+ul.controls-buttons
+  :float right
+  li
+    :display block
+    :float left
+    :line-height 1.333em
+    :margin -1px 0px -1px 0.5em
+    :padding 0.333em 0.25em
+    a
+      :line-height 1.333em
+      :margin -0.333em -0.25em
+  
+
+.message li, div.message, p.message
+  :color #576A73
+
+.message
+  :background-color #E4E4DC
+  :border-color #999
+  :-webkit-background-clip padding-box
+  :-webkit-box-shadow 0px 0px 5px rgba(0, 0, 0, 0.496094)
+  :background #F0F0F0
+  :border 1px solid #999
+  :border-bottom-left-radius 0.333em 0.333em
+  :border-bottom-right-radius 0.333em 0.333em
+  :border-top-left-radius 0.333em 0.333em
+  :border-top-right-radius 0.333em 0.333em
+  :line-height 1.25em
+  :margin-bottom 2.5em
+  :position relative
+  :z-index 89
+
+.block_content
+  :-webkit-background-clip padding-box
+  :-webkit-box-shadow 0px 0px 4px rgba(0, 0, 0, 0.496094)
+  :background white-webkit-box-shadow 0px 1px 3px rgba(0, 0, 0, 0.496094)
+  :border 1px solid #999
+  :border-bottom-left-radius 0.25em 0.25em
+  :border-bottom-right-radius 0.25em 0.25em
+  :border-top-left-radius 0.25em 0.25em
+  :border-top-right-radius 0.25em 0.25em
+  :padding 1.667em
+  :position relative
+  .no-margin
+    :margin-left -1.667em
+    :margin-right -1.667em
+  .message
+    :-webkit-box-shadow none
+    &.no-margin
+      :margin 0px -1.667em 1.667em
+      :-webkit-background-clip padding-box
+      :border-bottom-left-radius 0px 0px
+      :border-bottom-right-radius 0px 0px
+      :border-width 1px 0px
+      :border-top-left-radius 0px 0px
+      :border-top-right-radius 0px 0px
+  h1, .h1
+    :-webkit-background-clip padding-box
+    :-webkit-box-shadow 0px 1px 3px rgba(0, 0, 0, 0.496094)
+    :border-bottom-left-radius 0.278em 0.278em
+    :border-bottom-right-radius 0.278em 0.278em
+    :border-top-left-radius 0.278em 0.278em
+    :border-top-right-radius 0.278em 0.278em
+    :left 0.5em
+    :margin 0px
+    :position absolute
+    :top -0.444em
+    :z-index 100
+    :-webkit-background-size 100% 100%
+    :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), color-stop(0.03, #72C6E4), to(#0C5FA5))
+    :background-size 100% 100%
+    :border-color initial
+    :border 1px solid
+    :color white
+    :font-family 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Sans', Arial, Helvetica, sans-serif
+    :font-size 1.5em
+    :padding 0.278em 0.444em 0.389em
+    :text-shadow -1px -1px 0px rgba(0, 0, 0, 0.199219)
+  .block-controls
+    &:first-child
+      :border-top-left-radius 0.2em 0.2em
+      :border-top-right-radius 0.2em 0.2em
+      :margin-top -2.833em
+
+
+.block_content
+  :padding-top 2.833em
+
+.block_border
+  :-webkit-background-clip padding-box
+  :-webkit-box-shadow 0px 0px 4px rgba(50, 50, 50, 0.496094)
+  :background rgba(255, 255, 255, 0.199219)
+  :border-color rgba(255, 255, 255, 0.746094)
+  :border-bottom-left-radius 0.8em 0.8em
+  :border-bottom-right-radius 0.8em 0.8em
+  :border 1px solid rgba(255, 255, 255, 0.746094)
+  :border-top-left-radius 0.8em 0.8em
+  :border-top-right-radius 0.8em 0.8em
+  :padding 0.833em
+  .block_content
+    :-webkit-box-shadow 0px 0px 0.8em rgba(255, 255, 255, 0.496094)
+
+.block_controls
+  :-webkit-background-size 100% 100%
+  :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), color-stop(0.88, #E5E5E5), to(#D8D8D8))
+  :background-size 100% 100%
+  :margin 0px -1.667em 1.667em
+  :padding 1em
+  :text-align right
+  :display block
+
+
+
+.dark-grey-gradient
+  :-webkit-background-size 100% 100%
+  :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3D3D3D), color-stop(0.02, #484848), color-stop(0.08, #585858), to(#666))
+  :background-size 100% 100%
+  :color white
+
 ul, ol
   :list-style none
+
+ul.grid
+  :padding 0.75em 0px 0px 0.75em
+  :display block
+  > li
+    :webkit-background-clip padding-box
+    :-webkit-background-size 100% 100%
+    :-webkit-box-shadow 0px 0px 3px rgba(0, 0, 0, 0.496094)
+    :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(whiteSmoke), to(#CCC))
+    :background-size 100% 100%
+    :border 1px solid white
+    :border-bottom-left-radius 0.417em 0.417em
+    :border-bottom-right-radius 0.417em 0.417em
+    :border-top-left-radius 0.417em 0.417em
+    :border-top-right-radius 0.417em 0.417em
+    :color #333
+    :float left
+    :margin 0px 0.75em 0.75em 0px
+    :padding 0.75em
+    :position relative
+    :width 17em   
+    .grid-name
+      :color #373737
+      :font-size 1.5em
+      :font-weight bold
+      :margin-bottom 0.25em   
+    .grid-details
+      :color gray
+      b
+        :color #333
+        :font-weight normal
+    .grid-actions
+      :-webkit-background-size 100% 100%
+      :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F0F0F0), to(#B3B3B3))
+      :background-size 100% 100%
+      :border-bottom-left-radius 0px 0px
+      :border-bottom-right-radius 0.333em 0.333em
+      :border-left 1px solid white
+      :border-top-left-radius 0px 0px
+      :border-top-right-radius 0.333em 0.333em
+      :bottom 0px
+      :position absolute
+      :right 0px
+      :top 0px
+      :width 1.7em
+      li
+        :border-bottom 1px solid #B3B3B3
+        :border-top 1px solid white
+        :height 1.75em
+        :line-height 1.75em
+        :text-align center
+        &:first-child
+          :border-top none
+        &:last-child
+          :border-bottom none
 
 
 

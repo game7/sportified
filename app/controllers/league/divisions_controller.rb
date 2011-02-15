@@ -1,4 +1,4 @@
-class League::DivisionsController < League::BaseLeagueController
+class League::DivisionsController < League::BaseDivisionController
   
   before_filter :load_for_division, :only => [:show, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
@@ -6,6 +6,7 @@ class League::DivisionsController < League::BaseLeagueController
   def load_for_division
     @division = params[:division_slug] ? Division.with_slug(params[:division_slug]).first : Division.find(params[:id])  
     add_new_breadcrumb @division.name
+    load_area_navigation @division
   end
 
   # GET /divisions
@@ -34,6 +35,7 @@ class League::DivisionsController < League::BaseLeagueController
   # GET /divisions/new.xml
   def new
     @division = Division.new
+    @all_seasons = Season.all.desc(:starts_on).entries
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,7 +45,7 @@ class League::DivisionsController < League::BaseLeagueController
 
   # GET /divisions/1/edit
   def edit
-
+    @all_seasons = Season.all.desc(:starts_on).entries
   end
 
   # POST /divisions
@@ -66,7 +68,8 @@ class League::DivisionsController < League::BaseLeagueController
   # PUT /divisions/1.xml
   def update
     @division = Division.find(params[:id])
-
+    # clear out season_ids so that non selected items are removed (because not re-added below)
+    @division.season_ids = []
     respond_to do |format|
       if @division.update_attributes(params[:division])
         format.html { return_to_last_point(:notice => 'Division was successfully updated.') }

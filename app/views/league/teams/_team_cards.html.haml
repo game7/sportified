@@ -1,0 +1,17 @@
+- @teams.each do |team|
+  .team-box
+    .team-logo
+    .team-name 
+      #{link_to team.name, league_team_friendly_path(@division.slug, @season.slug, team.slug)}
+    .team-nav
+      Schedule
+      = " | "
+      = link_to 'Roster', league_team_roster_friendly_path(@division.slug, @season.slug, team.slug)
+      = " | "
+      Stats
+//    .team-actions
+//      = link_to 'Edit', edit_league_team_path(team)
+//      = " | "
+//      = link_to 'Delete', [:league, team], :confirm => 'Are you sure?', :method => :delete, :remote => true
+.clear
+

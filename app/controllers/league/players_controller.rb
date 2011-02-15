@@ -1,4 +1,4 @@
-class League::PlayersController < League::BaseSeasonController
+class League::PlayersController < League::BaseDivisionController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
   before_filter :load_for_team, :only => [:index, :new]
@@ -8,7 +8,7 @@ class League::PlayersController < League::BaseSeasonController
     if params[:team_id]
       @team = Team.find(params[:team_id])
       @season = @team.season
-      @division = @season.division
+      @division = @team.division
     else
       @division = Division.with_slug(params[:division_slug]).first
       @season = @division.seasons.with_slug(params[:season_slug]).first
@@ -16,10 +16,10 @@ class League::PlayersController < League::BaseSeasonController
     end
 
     add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
-    add_new_breadcrumb @season.name, league_season_friendly_path(@division.slug, @season.slug)
+    add_new_breadcrumb @season.name
     add_new_breadcrumb @team.name
 
-    load_area_navigation @division, @season
+    load_area_navigation @division
   end
 
   def load_for_player
