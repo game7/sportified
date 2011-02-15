@@ -205,24 +205,44 @@ ul.user-tasks {
     display: inline; }
 
 .action a {
-  padding: 2px 2px 2px 17px;
-  border: solid 1px transparent; }
+  -mox-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding: 2px 4px 2px 20px;
+  border: solid 1px transparent;
+  font-size: 12px;
+  background-repeat: no-repeat;
+  background-position: 2px 1px; }
   .action a:hover {
     border: solid 1px #c5c5c5;
     background-color: #dedede;
     color: black; }
 
 .add a {
-  background: url(/images/icons/add.png) no-repeat; }
+  background-image: url(/images/icons/add.png); }
 
 .delete a {
-  background: url(/images/icons/delete.png) no-repeat; }
+  background-image: url(/images/icons/delete.png); }
+
+.calendar_add a {
+  background-image: url(/images/icons/calendar_add.png); }
 
 .calendar_edit a {
-  background: url(/images/icons/calendar_edit.png) no-repeat; }
+  background-image: url(/images/icons/calendar_edit.png); }
 
 .calendar_delete a {
-  background: url(/images/icons/calendar_delete.png) no-repeat; }
+  background-image: url(/images/icons/calendar_delete.png); }
+
+.player_add a {
+  background-image: url(/images/icons/user_add.png); }
+
+.player_edit a {
+  background-image: url(/images/icons/user_edit.png); }
+
+.player_delete a {
+  background-image: url(/images/icons/user_delete.png); }
+
+.icalendar a {
+  background-image: url(/images/icons/date.png); }
 
 html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li {
   border: 0px;
@@ -267,7 +287,7 @@ a img {
 
 .mod-content {
   background: white;
-  font-size: 11px;
+  font-size: 12px;
   border-width: 0 1px;
   border-color: #c2c2c2;
   border-style: solid;

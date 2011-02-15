@@ -15,10 +15,10 @@
             %td #{player.jersey_number}
             %td
               = player.full_name
-              = link_to 'Edit', edit_league_player_path(player)
-              = " | "
-              = link_to 'Delete', [:league, player], :confirm => 'Are you sure?', :method => :delete
+              .action.right
+                .player_edit #{link_to 'Edit', edit_league_player_path(player)}
+                .player_delete #{link_to 'Delete', [:league, player], :confirm => 'Are you sure?', :method => :delete}
             %td
             %td
-
-= link_to 'New Player', new_league_team_player_path(@team)
+.action
+  .player_add #{link_to 'Add Player', new_league_team_player_path(@team)}

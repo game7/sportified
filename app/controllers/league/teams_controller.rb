@@ -1,7 +1,7 @@
 class League::TeamsController < League::BaseDivisionController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :load_for_team, :only => [:show, :edit]
+  before_filter :load_for_team, :only => [:show, :edit, :schedule]
   before_filter :load_for_division, :only => [:index, :new]
 
   def load_for_team
@@ -35,6 +35,13 @@ class League::TeamsController < League::BaseDivisionController
     
   end
 
+  def links_to_team_schedule(division, season)
+    teams = division.teams.for_season(season).asc(:name)
+    teams.each.collect do |t|
+      [t.name, league_team_schedule_friendly_path(division.slug, season.slug, t.slug)] 
+    end   
+  end
+
   # GET /teams
   # GET /teams.xml
   def index
@@ -44,6 +51,11 @@ class League::TeamsController < League::BaseDivisionController
       format.html # index.html.erb
       format.xml  { render :xml => @teams }
     end
+  end
+
+  def schedule
+    @games = Game.for_team(@team).asc(:starts_on)
+    @team_links = links_to_team_schedule(@division, @season)
   end
 
   # GET /teams/1

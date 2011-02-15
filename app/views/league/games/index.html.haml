@@ -6,7 +6,7 @@
 .controls.right
   - #TODO: Wire-up season and team selectors
   - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-  = collection_select("team", :id, @teams, :slug, :name, { :include_blank => 'Team Schedules' })
+  = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
 .clear
 
 .mod-container.mod-table.mod-no-header-footer
@@ -55,4 +55,5 @@
 .controls.left
   = render "date_selector"
 .clear
-= link_to 'New Game', new_league_division_game_path(@division)
+.action
+  .calendar_add #{link_to 'Add Game', new_league_division_game_path(@division)}

@@ -4,6 +4,13 @@ class League::GamesController < League::BaseDivisionController
   before_filter :load_for_division, :only => [:new, :index]
   before_filter :load_for_game, :only => [:show, :edit]
 
+  def links_to_team_schedule(division, season)
+    teams = division.teams.for_season(season).asc(:name)
+    teams.each.collect do |t|
+      [t.name, league_team_schedule_friendly_path(division.slug, season.slug, t.slug)] 
+    end   
+  end
+
   def load_for_division
 
     if params[:division_id]
@@ -37,7 +44,7 @@ class League::GamesController < League::BaseDivisionController
   # GET /games.xml
   def index
 
-    @teams = @division.teams.for_season(@season).asc(:name).entries
+    @team_links = links_to_team_schedule(@division, @season)
     
     if params[:season_slug]
       @season = @division.seasons.with_slug(params[:season_slug]).first

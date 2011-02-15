@@ -89,7 +89,7 @@ class TeamRecord
 
     raise 'Game already posted to team record' if is_game_posted?(game)
 
-    @team_game_result = TeamGameResult.new(:team_id => self.team_id, :game => game)
+    @team_game_result = TeamGameResult.new(:team => self.team_id, :game => game)
     apply_team_game_result(@team_game_result)
     
   end

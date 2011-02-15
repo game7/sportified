@@ -17,12 +17,14 @@ class TeamGameResult
 
   def initialize(params = nil)
     super(nil)
-    if (params && params[:game] && params[:team_id])
-      self.load_from_game(params[:team_id], params[:game]) if params[:game] && params[:team_id]
+    if (params && params[:game] && params[:team])
+      self.load_from_game(params[:team], params[:game]) if params[:game] && params[:team]
     end
   end
 
-  def load_from_game(team_id, game)
+  def load_from_game(team, game)
+    
+    team_id = team.class == Team ? team.id : team
     
     result = game.result
 

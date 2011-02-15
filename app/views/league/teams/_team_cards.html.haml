@@ -4,7 +4,7 @@
     .team-name 
       #{link_to team.name, league_team_friendly_path(@division.slug, @season.slug, team.slug)}
     .team-nav
-      Schedule
+      = link_to 'Schedule', league_team_schedule_friendly_path(@division.slug, @season.slug, team.slug)
       = " | "
       = link_to 'Roster', league_team_roster_friendly_path(@division.slug, @season.slug, team.slug)
       = " | "
