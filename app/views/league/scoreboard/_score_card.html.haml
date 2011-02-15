@@ -18,6 +18,9 @@
       %li.status #{game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")}
     .clear
   .game-actions
-    = link_to "Post Score", new_league_game_result_path(game) if game.can_add_result?
-    = link_to "Drop Score", league_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result?
+    .action
+      .add
+        = link_to "Post Score", new_league_game_result_path(game) if game.can_add_result?
+      .delete
+        = link_to "Drop Score", league_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result?
 
