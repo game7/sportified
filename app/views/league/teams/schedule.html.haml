@@ -1,0 +1,35 @@
+- title @team.name + ' Schedule - ' + @season.name
+- last_month = nil
+- last_future = false
+
+.controls.left
+  Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+.controls.right
+  .action.icalendar #{link_to 'iCalendar', params.merge(:format => :ics)}
+.clear
+
+.mod-container.mod-table.mod-no-header-footer
+  .mod-content
+    %table.stat#schedule{ :cellspacing => "1" }
+      %tr.group-head
+        %td{ :colspan => "4" } #{@season.name + ' ' + @division.name + ' Schedule'}
+      - @games.each do |game|
+        - month = game.starts_on.strftime('%B')
+        - future = game.starts_on.future?
+        - if month != last_month || last_future != future
+          - reset_cycle()
+          %tr.col-head
+            %td.month #{month}
+            %td.opponent OPPONENT
+            - if future
+              %td.time TIME
+            - else
+              %td.result RESULT
+            %td.location LOCATION
+          - last_month = month
+          - last_future = future
+        %tr{ :class => cycle("odd","even") }
+          %td #{ game.starts_on.strftime('%a, %b %e') }
+          %td #{ game.left_team_id == @team.id ? game.right_team_name : game.left_team_name }
+          %td #{ future ? game.starts_on.strftime('%l:%M %p') : display_result(@team, game) }
+          %td Location
