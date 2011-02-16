@@ -1,8 +1,6 @@
 .division-card
   %strong #{link_to division.name, league_division_friendly_path(division.slug)}
-  = "["
-  = link_to 'Edit', edit_league_division_path(division)
-  = " | "
-  = link_to 'Delete', [:league, division], :confirm => 'Are you sure?', :method => :delete
-  = "]"
+  .action.block
+    .division_edit #{link_to 'Edit', edit_league_division_path(division)}
+    .division_delete #{link_to 'Delete', [:league, division], :confirm => 'Are you sure?', :method => :delete}
 

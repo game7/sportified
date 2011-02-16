@@ -244,6 +244,15 @@ ul.user-tasks {
 .icalendar a {
   background-image: url(/images/icons/date.png); }
 
+.division_add a {
+  background-image: url(/images/icons/folder_add.png); }
+
+.division_edit a {
+  background-image: url(/images/icons/folder_edit.png); }
+
+.division_delete a {
+  background-image: url(/images/icons/folder_delete.png); }
+
 html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, ul, li {
   border: 0px;
   margin: 0px;
@@ -270,6 +279,9 @@ a img {
   clear: both;
   height: 0;
   overflow: hidden; }
+
+.block {
+  display: block; }
 
 .hidden {
   display: none; }
