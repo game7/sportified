@@ -1,0 +1,142 @@
+// Page layout can be done using mixins applied to your semantic classes and IDs
+// For instance this layout defines a two column layout on pages with
+// a body class of "two-col".
+//
+// The markup would look like:
+//    <div id="container">
+//      <div id="header"></div>
+//      <div id="sidebar"></div>
+//      <div id="content"></div>
+//      <div id="footer"></div>
+//    </div>
+//
+// and the layout would look like:
+//    +------------------------+
+//    |        #header         |
+//    +--------+---------------+
+//    |        |               |
+//    |#sidebar|    #content   |
+//    |        |               |
+//    +------------------------+
+//    |        #footer         |
+//    +--------+---------------+
+
+// color scheme
+// #334433, #3366aa, #6699aa, #aabbbb, #778877
+
+$color1: #334433
+$color2: #3366aa
+$color3: #6699aa
+$color4: #aabbbb
+$color5: #778877
+
+#container
+  @include container
+  :border 1px solid gray
+
+#hat, #header, #site-nav, #breadcrumbs, #area-nav, #footer
+  @include column($blueprint-grid-columns)
+
+#hat
+  :background #3366aa
+  :height 30px
+
+#header
+  :height 80px
+
+#site-nav
+  :height 24px
+
+#site-name
+  :display block
+  :float left
+  :line-height 30px
+  :font-size 18px
+  :font-family verdana, helvetica, arial, sans-serif
+  :font-weight bold
+  :color #FFF
+  :margin-left 10px
+
+ul.user-tasks
+  :float right
+  :list-style none
+  :padding 0
+  :margin 0!important
+  li
+    :display block
+    :float left
+    :height 30px
+    :padding 0
+    a
+      :display block
+      :border-left 1px solid #69A
+      :border-right 1px solid #343
+      :height 30px
+      :color #FFF
+      :text-decoration none
+      :padding 0 10px
+      :line-height 30px
+      &:visited
+        :color #FFF
+      &:hover
+        :background #69A
+
+#site-nav, #area-nav
+  nav
+    :width 100%
+    :display table
+    ul
+      :display table-row
+      li
+        :display table-cell
+        :text-align center
+        :height 24px
+        a
+          :display block
+          :padding 3px 15px
+          :text-decoration none
+          :font-weight 700
+
+#site-nav 
+  :background #3366aa
+  a
+    :color white
+    :border-left solid 1px #6699AA
+    :border-right solid 1px #334433
+    &:hover
+      :background #AABBBB
+      :color #334433
+
+#area-nav 
+  :background #aabbbb
+  a
+    :color #334433
+    :border-left solid 1px #6699AA
+    :border-right solid 1px #334433
+    &:hover
+      :background #778877
+      :color #FFF
+
+#breadcrumbs
+  ul
+    li
+      :list-style-type none
+      :float left
+      :padding 3px
+
+#content
+  // Two thirds of the grid columns, rounding up.
+  // With 24 cols, this is 16.
+  $content-columns: ceil(2 * $blueprint-grid-columns / 3)
+  // true means it's the last column in the row
+  @include column($content-columns)
+  :background blue
+
+#page_header
+  :margin-top 10px
+  :margin-left 20px
+#sidebar
+  // One third of the grid columns, rounding down. With 24 cols, this is 8.
+  $sidebar-columns: floor($blueprint-grid-columns / 3)
+  @include column($sidebar-columns, true)
+  :background #DEDEDE

@@ -68,6 +68,8 @@ GEM
     celerity (0.8.6)
     childprocess (0.1.6)
       ffi (~> 0.6.3)
+    compass (0.10.6)
+      haml (>= 3.0.4)
     configuration (1.2.0)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -202,6 +204,7 @@ DEPENDENCIES
   bson_ext (= 1.2)
   capistrano
   capybara
+  compass (>= 0.10.6)
   cucumber
   cucumber-rails
   delayed_job

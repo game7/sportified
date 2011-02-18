@@ -16,6 +16,7 @@ gem 'haml'
 gem 'devise'
 gem 'formtastic', '~> 1.1.0'
 gem 'delayed_job'
+gem 'compass', ">= 0.10.6"
 
 # Use unicorn as the web server
 # gem 'unicorn'
