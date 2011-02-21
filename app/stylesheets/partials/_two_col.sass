@@ -12,14 +12,33 @@
 //
 // and the layout would look like:
 //    +------------------------+
-//    |        #header         |
-//    +--------+---------------+
-//    |        |               |
-//    |#sidebar|    #content   |
-//    |        |               |
+//    |        #hat            |
 //    +------------------------+
+//    |        #header         |
+//    +------------------------+
+//    |        #site-nav       |
+//    +-----------------+------+
+//    |                 |      |
+//    |     #content    | #bar |
+//    |                 |      |
+//    +-----------------+------+
 //    |        #footer         |
 //    +--------+---------------+
+
+#container
+  @include container
+
+#hat, #header, #site-nav, #breadcrumbs, #footer
+  @include column($blueprint-grid-columns)
+
+#content
+  $content-columns: ceil(3 * $blueprint-grid-columns / 4)
+  @include column($content-columns)
+
+#sidebar
+  $sidebar-columns: floor($blueprint-grid-columns / 4)
+  @include column($sidebar-columns, true)
+
 
 // color scheme
 // #334433, #3366aa, #6699aa, #aabbbb, #778877
@@ -31,11 +50,7 @@ $color4: #aabbbb
 $color5: #778877
 
 #container
-  @include container
   :border 1px solid gray
-
-#hat, #header, #site-nav, #breadcrumbs, #area-nav, #footer
-  @include column($blueprint-grid-columns)
 
 #hat
   :background #3366aa
@@ -81,25 +96,23 @@ ul.user-tasks
       &:hover
         :background #69A
 
-#site-nav, #area-nav
+#site-nav
+  :background #3366aa
+  :height 30px
   nav
     :width 100%
     :display table
-    ul
-      :display table-row
-      li
-        :display table-cell
-        :text-align center
-        :height 24px
-        a
-          :display block
-          :padding 3px 15px
-          :text-decoration none
-          :font-weight 700
-
-#site-nav 
-  :background #3366aa
+  ul
+    :display table-row
+  li
+    :display table-cell
+    :text-align center
   a
+    :display block
+    :padding 0 15px
+    :line-height 30px
+    :text-decoration none
+    :font-weight 700
     :color white
     :border-left solid 1px #6699AA
     :border-right solid 1px #334433
@@ -107,36 +120,48 @@ ul.user-tasks
       :background #AABBBB
       :color #334433
 
-#area-nav 
-  :background #aabbbb
+#area-nav
+  nav
+    :width 100%
+    :display table
+  ul
+    :display table-row
+  li
+    :display table-cell
+    :text-align center
+    :height 24px
   a
+    :display block
+    :margin 4px 2px
+    :padding 3px 15px
+    :text-decoration none
+    :font-weight 700
     :color #334433
-    :border-left solid 1px #6699AA
-    :border-right solid 1px #334433
+    :border solid 1px #6699AA
+    :background #AABBBB
     &:hover
       :background #778877
       :color #FFF
+  li:first-child
+    a
+      :margin-left 4px
+  li:last-child
+    a
+      :margin-right 4px
 
 #breadcrumbs
+  :border-bottom 1px solid gray
   ul
-    li
-      :list-style-type none
-      :float left
-      :padding 3px
-
-#content
-  // Two thirds of the grid columns, rounding up.
-  // With 24 cols, this is 16.
-  $content-columns: ceil(2 * $blueprint-grid-columns / 3)
-  // true means it's the last column in the row
-  @include column($content-columns)
-  :background blue
+    :margin 0 10px
+    :padding 0
+  li
+    :list-style-type none
+    :float left
+    :padding 3px
 
 #page_header
   :margin-top 10px
   :margin-left 20px
 #sidebar
-  // One third of the grid columns, rounding down. With 24 cols, this is 8.
-  $sidebar-columns: floor($blueprint-grid-columns / 3)
-  @include column($sidebar-columns, true)
   :background #DEDEDE
+

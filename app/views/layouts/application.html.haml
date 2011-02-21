@@ -27,9 +27,9 @@
       #site-nav 
         %nav #{render "layouts/site_navigation"}
       #breadcrumbs #{render "layouts/breadcrumbs"}
-      #area-nav 
-        %nav #{render "layouts/area_navigation"}
       #content
+        #area-nav 
+          %nav #{render "layouts/area_navigation"}  
         #page_header
           = content_tag :h1, yield(:title) if show_title?
         - unless flash[:notice]
