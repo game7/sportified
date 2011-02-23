@@ -2,7 +2,6 @@ class League::SeasonsController < League::BaseSeasonController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]    
   before_filter :load_for_season, :only => [:show, :edit]
-  before_filter :load_for_division, :only => [:index, :new]
 
   def load_for_season
     
@@ -21,19 +20,12 @@ class League::SeasonsController < League::BaseSeasonController
 
   end
 
-  def load_for_division
-    
-    @division = Division.find(params[:division_id])
-
-    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)    
-
-  end
-  
+ 
   # GET /seasons
   # GET /seasons.xml
   def index
 
-    @seasons = @division.seasons
+    @seasons = Season.all
 
     respond_to do |format|
       format.html # index.html.erb

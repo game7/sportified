@@ -9,6 +9,11 @@ GIT
       will_paginate (~> 3.0.pre)
 
 PATH
+  remote: vendor/engines/league
+  specs:
+    league (0.0.1)
+
+PATH
   remote: vendor/engines/pages
   specs:
     pages (0.0.1)
@@ -219,6 +224,7 @@ DEPENDENCIES
   formtastic (~> 1.1.0)
   haml
   launchy
+  league!
   machinist_mongo
   mongoid!
   nifty-generators
