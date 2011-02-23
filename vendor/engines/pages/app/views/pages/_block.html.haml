@@ -1,0 +1,4 @@
+
+- if block.title
+  %h3 #{block.title}
+= render :partial => block.partial, :locals => { :block => block }
