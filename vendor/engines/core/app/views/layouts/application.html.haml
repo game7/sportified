@@ -3,13 +3,13 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-    = stylesheet_link_tag 'compiled/application'
+    //= stylesheet_link_tag 'compiled/application'
     = stylesheet_link_tag 'compiled/screen', :media => 'screen'
     = stylesheet_link_tag 'compiled/print', :media => 'print'
     / [if lt IE 8]
       = stylesheet_link_tag 'compiled/ie'
     = stylesheet_link_tag *(@stylesheets)
-    = javascript_include_tag 'jquery-1.4.3.min'
+    = javascript_include_tag 'jquery-1.4.3.min.js'
     = javascript_include_tag 'rails'
     = javascript_include_tag 'application'
     = csrf_meta_tag
@@ -43,4 +43,5 @@
         %p #{request.host}
         %p #{request.domain}
         %p #{request.subdomains.join(".")}
+        %p #{controller_path}/#{action_name}
 

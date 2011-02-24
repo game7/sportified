@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails
     ["#{controller_path}/shared", "#{controller_path}/#{action_name}"].each do |stylesheet|
-      @stylesheets << stylesheet if File.exists? "#{RAILS_ROOT}/public/stylesheets/#{stylesheet}.css"
+      #TODO - dirty hack added below -- need more reliable file path
+      @stylesheets << stylesheet if File.exists? "#{RAILS_ROOT}/vendor/engines/core/public/stylesheets/#{stylesheet}.css"
     end
   end
 

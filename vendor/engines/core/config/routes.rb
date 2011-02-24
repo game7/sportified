@@ -1,11 +1,8 @@
-Sportified::Application.routes.draw do
+::Sportified::Application.routes.draw do
 
+  match "home/index" => "home#index", :via => :get
 
-
-
-  get "home/index"
-
-  root :to => "home#index"
+  root :to => "welcome#index"
   devise_for :users
   resources :users, :only => :show
 
