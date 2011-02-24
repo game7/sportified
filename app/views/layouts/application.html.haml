@@ -17,7 +17,7 @@
   %body.bp.two-col
     #container
       #hat
-        #site-name sportified.it
+        #site-name #{current_site.name if current_site}
         %ul.user-tasks
           = render "devise/menu/login_items"
           = render "devise/menu/user_items"
@@ -39,5 +39,8 @@
           = content_tag :div, msg, :id => "flash_#{name}"
         = yield
       #sidebar Yipee!
-      #footer rah!
+      #footer 
+        %p #{request.host}
+        %p #{request.domain}
+        %p #{request.subdomains.join(".")}
 

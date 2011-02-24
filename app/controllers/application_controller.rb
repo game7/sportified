@@ -9,6 +9,17 @@ class ApplicationController < ActionController::Base
     @stylesheets = []
   end
 
+  def find_site
+    subdomains = request.subdomains
+    subdomains.delete("www")
+    Site.with_domain(request.domain).with_subdomain(subdomains.join(".")).first
+  end
+
+  def current_site
+    @current_site ||= find_site
+  end
+  helper_method :current_site
+
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails
     ["#{controller_path}/shared", "#{controller_path}/#{action_name}"].each do |stylesheet|
