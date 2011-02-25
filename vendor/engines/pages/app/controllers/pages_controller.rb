@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
   def index
-    @pages = Page.all.asc(:position)
+    @pages = Page.top_level.asc(:position)
   end
 
   def show
