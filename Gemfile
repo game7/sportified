@@ -11,6 +11,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 #gem 'bson_ext', '1.1.5'
 gem 'mongoid', :git => 'https://github.com/mongoid/mongoid.git'
 gem 'bson_ext', '1.2'
+gem 'mongoid-tree', :require => 'mongoid/tree'
 #gem 'mongoid_slug', :require => 'mongoid/slug'
 gem 'haml'
 gem 'devise'
@@ -22,20 +23,6 @@ gem 'core', :path => "vendor/engines/core"
 gem 'league', :path => "vendor/engines/league"
 gem 'pages', :path => "vendor/engines/pages"
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
- gem 'capistrano'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
@@ -53,7 +40,6 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
-  gem 'factory_girl_rails'
   # Autotest
   gem 'autotest'
   gem 'autotest-rails'
