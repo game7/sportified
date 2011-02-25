@@ -81,6 +81,8 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.2)
+    carrierwave (0.5.2)
+      activesupport (~> 3.0)
     celerity (0.8.6)
     childprocess (0.1.6)
       ffi (~> 0.6.3)
@@ -207,6 +209,7 @@ DEPENDENCIES
   autotest-rails
   bson_ext (= 1.2)
   capybara
+  carrierwave
   compass (>= 0.10.6)
   core!
   cucumber
