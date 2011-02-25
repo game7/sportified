@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find(params[:id])
+    @page = params[:id] ? Page.find(params[:id]) : Page.with_path(params[:path]).first
   end
 
 end
