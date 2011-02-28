@@ -7,5 +7,6 @@
 - pages.each do |page|
   - page.level.times do
     = "-"
-  #{page.title}
+  = link_to page.title, page_path(page.path)
+  (#{link_to "Edit", edit_page_path(page.id)})
   %br

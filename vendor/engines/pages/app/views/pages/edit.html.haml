@@ -1,0 +1,4 @@
+
+%h1 #{ @page.title }
+- @page.blocks.each do |b| 
+  = render :partial => "pages/blocks/edit", :locals => { :block => b }

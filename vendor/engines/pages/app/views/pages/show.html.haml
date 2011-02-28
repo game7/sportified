@@ -1,4 +1,4 @@
 
 %h1 #{ @page.title }
 - @page.blocks.each do |b| 
-  = render :partial => "block", :locals => { :block => b }
+  = render :partial => "pages/blocks/show", :locals => { :block => b }

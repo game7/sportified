@@ -1,0 +1,3 @@
+- if block.title
+  %h3 #{block.title}
+= render :partial => "/pages/blocks/"+block.class.to_s.underscore+"/show", :locals => { :block => block }
