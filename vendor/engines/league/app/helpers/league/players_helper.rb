@@ -1,2 +1,2 @@
-module PlayersHelper
+module League::PlayersHelper
 end

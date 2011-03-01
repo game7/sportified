@@ -1,2 +1,2 @@
-module SeasonsHelper
+module League::SeasonsHelper
 end

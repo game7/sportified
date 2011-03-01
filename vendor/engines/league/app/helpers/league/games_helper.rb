@@ -1,2 +1,2 @@
-module GamesHelper
+module League::GamesHelper
 end

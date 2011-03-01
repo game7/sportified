@@ -1,2 +1,2 @@
-module DivisionsHelper
+module League::DivisionsHelper
 end
