@@ -81,6 +81,11 @@ a img {
   border: none;
 }
 
+/* line 12, ../../../app/stylesheets/partials/_base.sass */
+.hidden {
+  display: none;
+}
+
 /* line 9, ../../../app/stylesheets/partials/_page.scss */
 body.bp {
   line-height: 1.5;
@@ -327,10 +332,6 @@ body.bp .bottom {
   margin-bottom: 0;
   padding-bottom: 0;
 }
-/* line 8, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
-body.bp .showgrid {
-  background: url('/images/grid.png');
-}
 /* line 4, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
 body.bp .error {
   padding: 0.8em;
@@ -389,66 +390,208 @@ body.bp .removed {
   color: white;
 }
 
-/* line 18, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp label {
-  font-weight: bold;
+/* line 4, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
 }
-/* line 19, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp fieldset {
-  padding: 1.4em;
-  margin: 0 0 1.5em 0;
+
+/* line 6, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+html {
+  font-size: 100.01%;
 }
-/* line 20, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp legend {
-  font-weight: bold;
-  font-size: 1.2em;
+
+/* line 16, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
+pre, a, abbr, acronym, address, code, del, dfn, em, img,
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, tbody, tfoot, thead, tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
 }
-/* line 26, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input.text, form.bp input.title, form.bp input[type=email], form.bp input[type=text], form.bp input[type=password] {
-  margin: 0.5em 0;
+
+/* line 18, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+blockquote, q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  quotes: "" "";
+}
+/* line 45, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+}
+
+/* line 20, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+th, td, caption {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 22, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+
+/* line 24, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 8, ../../../app/stylesheets/partials/_form.sass */
+form {
+  background: #eeeeee;
+  border: 1px solid #dedede;
+}
+/* line 12, ../../../app/stylesheets/partials/_form.sass */
+form li {
+  padding: 5px 0px;
+  list-style: none;
+}
+/* line 16, ../../../app/stylesheets/partials/_form.sass */
+form li li {
+  padding: 0;
+}
+/* line 21, ../../../app/stylesheets/partials/_form.sass */
+form fieldset {
+  margin-top: 20px;
+}
+/* line 26, ../../../app/stylesheets/partials/_form.sass */
+form li fieldset {
+  padding: 0;
+}
+/* line 31, ../../../app/stylesheets/partials/_form.sass */
+form legend, form label {
+  color: #333333;
+}
+/* line 34, ../../../app/stylesheets/partials/_form.sass */
+form label, form .label {
+  padding-bottom: 0px;
+  display: block;
+  margin-left: 2px;
+}
+/* line 39, ../../../app/stylesheets/partials/_form.sass */
+form label abbr, form .label abbr {
+  color: red;
+}
+/* line 41, ../../../app/stylesheets/partials/_form.sass */
+form label {
+  line-height: 1.4em;
+  font-size: 13px;
+}
+/* line 45, ../../../app/stylesheets/partials/_form.sass */
+form legend span {
+  font-size: 1.4em;
+  line-height: 1em;
+}
+/* line 49, ../../../app/stylesheets/partials/_form.sass */
+form legend span.label {
+  font-size: 1em;
+}
+/* line 54, ../../../app/stylesheets/partials/_form.sass */
+form select {
+  padding: 3px;
+}
+/* line 56, ../../../app/stylesheets/partials/_form.sass */
+form input, form textarea, form select {
+  font-family: inherit;
+  font-size: 14px;
+}
+/* line 59, ../../../app/stylesheets/partials/_form.sass */
+form textarea, form input {
+  border: 1px solid #999999;
+  padding: 6px 8px;
+  line-height: 100%;
+}
+/* line 67, ../../../app/stylesheets/partials/_form.sass */
+form .date li, form .time li, form .datetime li {
+  margin: 0 0.3em 0 0;
+}
+/* line 75, ../../../app/stylesheets/partials/_form.sass */
+form #errorExplanation li {
+  margin-left: 15px;
+}
+/* line 77, ../../../app/stylesheets/partials/_form.sass */
+form form p, form .errors {
+  padding: 3px 0px;
+}
+/* line 80, ../../../app/stylesheets/partials/_form.sass */
+form .required input, form .required textarea, form .required select {
   background-color: white;
-  padding: 5px;
 }
-/* line 27, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input.title {
-  font-size: 1.5em;
+/* line 83, ../../../app/stylesheets/partials/_form.sass */
+form .error input, form .error textarea, form .error select {
+  background-color: #ffcccc;
+  border: 1px solid #ff6666;
 }
-/* line 31, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input[type=checkbox], form.bp input.checkbox, form.bp input[type=radio], form.bp input.radio {
-  position: relative;
-  top: 0.25em;
+/* line 87, ../../../app/stylesheets/partials/_form.sass */
+form .optional input, form .optional textarea, form .optional select {
+  background-color: white;
 }
-/* line 33, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp textarea {
-  margin: 0.5em 0;
-  padding: 5px;
+/* line 89, ../../../app/stylesheets/partials/_form.sass */
+form .errors {
+  color: #aa0000;
 }
-/* line 34, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp select {
-  margin: 0.5em 0;
+/* line 91, ../../../app/stylesheets/partials/_form.sass */
+form .errors li {
+  margin-left: 1.2em;
 }
-/* line 59, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp fieldset {
-  border: 1px solid #cccccc;
+/* line 93, ../../../app/stylesheets/partials/_form.sass */
+form p.inline-errors {
+  color: red;
 }
-/* line 62, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input.text, form.bp input.title, form.bp input[type=email], form.bp input[type=text], form.bp input[type=password],
-form.bp textarea, form.bp select {
-  border: 1px solid #bbbbbb;
+/* line 95, ../../../app/stylesheets/partials/_form.sass */
+form p.inline-hints {
+  color: #777777;
 }
-/* line 64, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input.text:focus, form.bp input.title:focus, form.bp input[type=email]:focus, form.bp input[type=text]:focus, form.bp input[type=password]:focus,
-form.bp textarea:focus, form.bp select:focus {
-  border: 1px solid #666666;
+/* line 100, ../../../app/stylesheets/partials/_form.sass */
+form .buttons {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-top: 0;
 }
-/* line 48, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp input.text, form.bp input.title, form.bp input[type=email], form.bp input[type=text], form.bp input[type=password] {
-  width: 300px;
+/* line 104, ../../../app/stylesheets/partials/_form.sass */
+form .buttons li {
+  padding-right: 0.5em;
 }
-/* line 50, ../../../../../../../../../../usr/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_form.scss */
-form.bp textarea {
-  width: 390px;
-  height: 250px;
+/* line 106, ../../../app/stylesheets/partials/_form.sass */
+form .buttons input {
+  border: 1px solid #999999;
 }
 
 /* line 2, ../../../app/stylesheets/partials/_mod.sass */
@@ -608,17 +751,18 @@ table.stat tr.even td {
 /* line 2, ../../../app/stylesheets/partials/_block.sass */
 .edit_block {
   border: 1px solid #dedede;
+  margin-bottom: 4px;
 }
-/* line 4, ../../../app/stylesheets/partials/_block.sass */
+/* line 5, ../../../app/stylesheets/partials/_block.sass */
 .edit_block .chrome {
   background: #dedede;
   padding: 2px;
 }
-/* line 7, ../../../app/stylesheets/partials/_block.sass */
+/* line 8, ../../../app/stylesheets/partials/_block.sass */
 .edit_block .block {
   padding: 2px;
 }
-/* line 9, ../../../app/stylesheets/partials/_block.sass */
+/* line 10, ../../../app/stylesheets/partials/_block.sass */
 .edit_block .editor {
   padding: 2px;
   border-top: 1px solid #dedede;
@@ -840,4 +984,9 @@ ul.user-tasks li a:hover {
 /* line 167, ../../../app/stylesheets/partials/_two_col.sass */
 #sidebar {
   background: #dedede;
+}
+/* line 169, ../../../app/stylesheets/partials/_two_col.sass */
+#sidebar .wrapper {
+  padding: 8px;
+  height: 400px;
 }

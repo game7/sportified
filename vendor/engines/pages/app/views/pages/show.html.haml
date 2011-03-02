@@ -1,4 +1,8 @@
+- content_for :sidebar do
+  %ul
+    %li #{link_to 'Edit This Page', edit_page_path(@page)}
 
 %h1 #{ @page.title }
-- @page.blocks.each do |b| 
-  = render :partial => "pages/blocks/show", :locals => { :block => b }
+#blocks
+  - @page.blocks.each do |b| 
+    = render :partial => "blocks/show", :locals => { :block => b }

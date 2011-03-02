@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/benedikt/mongoid-tree
+  remote: https://github.com/benedikt/mongoid-tree
   revision: d82d2177306b918208dd91396283e8eb0e09f0c1
   branch: mongoid-2.0.0
   specs:

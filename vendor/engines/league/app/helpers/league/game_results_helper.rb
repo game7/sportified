@@ -1,2 +1,0 @@
-module League::GameResultsHelper
-end

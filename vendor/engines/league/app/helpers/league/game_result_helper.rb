@@ -1,2 +1,2 @@
-module GameResultHelper
+module League::GameResultHelper
 end

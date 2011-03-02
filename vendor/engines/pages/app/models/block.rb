@@ -11,12 +11,28 @@ class Block
     self.class.to_s.titlecase
   end
 
-  def partial
-    self.class.to_s.underscore
+  def at_top?
+    self == page.blocks.first
   end
 
-  def edit_partial
-    "edit_" + self.class.to_s.underscore    
+  def at_bottom?
+    self == page.blocks.last
+  end
+
+  def move_to_top
+    page.move_block_to_top(self)
+  end
+
+  def move_to_bottom
+    page.move_block_to_bottom(self)
+  end
+
+  def move_up
+    page.move_block_up(self)
+  end
+
+  def move_down
+    page.move_block_down(self)
   end
 
 end

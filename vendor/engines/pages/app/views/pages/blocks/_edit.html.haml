@@ -1,9 +1,0 @@
-.edit_block
-  .chrome 
-    .left #{block.name}
-    .right Up | Down | Delete
-    .clear
-  .block
-    = render :partial => "/pages/blocks/show", :locals => { :block => block }
-  .editor
-    = render :partial => "/pages/blocks/"+block.class.to_s.underscore+"/edit", :locals => { :block => block }

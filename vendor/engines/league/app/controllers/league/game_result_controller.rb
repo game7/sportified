@@ -1,4 +1,4 @@
-class League::GameResultController < ApplicationController
+class League::GameResultController < League::BaseDivisionController
   
   before_filter :mark_return_point, :only => [:new, :destroy]
 

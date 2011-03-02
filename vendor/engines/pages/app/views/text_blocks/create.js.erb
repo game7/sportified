@@ -1,0 +1,9 @@
+<% if @block.errors.any? %>
+  $("#flash_notice").hide(300);
+  $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
+  $("#errors-<%= @block.id %>").show(300);
+<% else %>
+  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").show(300);
+  $("#blocks").append("<%= escape_javascript( render(:partial => "/blocks/edit", :locals => { :block => @block } ) )%>");
+<% end %>

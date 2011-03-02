@@ -21,4 +21,11 @@ $(document).ready(function() {
     window.location = this.value;
   });
 
+  $('.toggle').live("click", function() {
+    $('#'+this.getAttribute('rel')).slideToggle(300);
+    return false;
+  });
+
 });
+
+

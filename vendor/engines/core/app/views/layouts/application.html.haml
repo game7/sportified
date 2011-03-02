@@ -39,5 +39,7 @@
           = content_tag :div, msg, :id => "flash_#{name}"
         .wrapper
           = yield
-      #sidebar Yipee!
+      #sidebar 
+        .wrapper
+          = yield :sidebar
       #footer 

@@ -6,7 +6,7 @@ class Page
   include Mongoid::Tree::Ordering
   cache
 
-  before_save :set_slug, :set_path, :set_grouping
+  before_save :set_slug, :set_path, :set_grouping, :set_block_positions
   after_rearrange :set_path, :set_grouping
 
   field :title 
@@ -17,13 +17,44 @@ class Page
   field :level, :type => Integer
   field :group, :type => Integer
 
-  embeds_many :blocks
+  embeds_many :blocks, :default_order => :position.asc
+  #reflect_on_association(:blocks).options[:default_order] = :position.asc
 
   validates_presence_of :title
+  validates_presence_of :position
 
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
   scope :sorted_as_tree, order_by(:group.asc, :level.asc, :position.asc)
+
+
+  def move_block_to_top(block)
+    blocks.move_to_front(block)
+  end
+
+  def move_block_to_bottom(block)
+    blocks.move_to_back(block)
+  end
+
+  def move_block_up(block)
+    blocks.move_forward(block)
+  end
+
+  def move_block_down(block)
+    blocks.move_back(block)   
+  end
+
+  def block_is_first?(block)
+    blocks.first?(block)
+  end
+
+  def block_is_last?(block)
+    blocks.last?(block)
+  end
+
+  def assign_block_positions
+    blocks.each_with_index{|block, index| block.position = index }
+  end
 
   private
 
@@ -40,5 +71,8 @@ class Page
       self.group = self.root? ? self.position : self.root.position
     end
 
+    def set_block_positions
+      blocks.each_with_index{|block, index| block.position = index }
+    end
 
 end
