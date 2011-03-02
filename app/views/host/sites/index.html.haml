@@ -1,0 +1,14 @@
+%table
+  %tr
+    %td Name
+    %td Subdomain
+    %td Domain
+    %td Actions
+  - @sites.each do |site|
+    %tr
+      %td #{site.name}
+      %td #{site.subdomain}
+      %td #{site.domain}
+      %td Edit | Delete
+
+
