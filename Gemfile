@@ -21,7 +21,6 @@ gem 'delayed_job'
 gem 'compass', ">= 0.10.6"
 #gem 'carrierwave'
 
-gem 'core', :path => "vendor/engines/core"
 gem 'league', :path => "vendor/engines/league"
 gem 'pages', :path => "vendor/engines/pages"
 

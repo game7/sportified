@@ -16,11 +16,6 @@ GIT
       will_paginate (~> 3.0.pre)
 
 PATH
-  remote: vendor/engines/core
-  specs:
-    core (0.0.1)
-
-PATH
   remote: vendor/engines/league
   specs:
     league (0.0.1)
@@ -208,7 +203,6 @@ DEPENDENCIES
   bson_ext (= 1.2)
   capybara
   compass (>= 0.10.6)
-  core!
   cucumber
   cucumber-rails
   delayed_job
