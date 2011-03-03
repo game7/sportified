@@ -4,8 +4,7 @@ class Site
   cache
 
   field :name
-  field :subdomain
-  field :domain
+  field :host
   field :description
   field :analytics_id
   field :analytics_vendor
@@ -17,8 +16,7 @@ class Site
 
   validates_presence_of :name, :domain
 
-  scope :with_domain, lambda { |d| { :where => { :domain => d } } }
-  scope :with_subdomain, lambda { |s| { :where => { :subdomain => s } } }
+  scope :for_host, lambda { |h| { :where => { :host => h } } }
 
   class << self
     def current

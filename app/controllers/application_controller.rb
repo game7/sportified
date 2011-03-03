@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
   end
 
   def find_site
-    subdomains = request.subdomains
-    subdomains.delete("www")
-    Site.with_domain(request.domain).with_subdomain(subdomains.join(".")).first
+    #subdomains = request.subdomains
+    #subdomains.delete("www")
+    Site.for_host(request.host).first
   end
 
   def add_stylesheets
