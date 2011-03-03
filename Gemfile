@@ -16,6 +16,7 @@ gem 'mongoid-tree', :git => 'https://github.com/benedikt/mongoid-tree', :branch 
 #gem 'mongoid_slug', :require => 'mongoid/slug'
 gem 'haml'
 gem 'devise'
+gem 'cancan'
 gem 'formtastic', '~> 1.1.0'
 gem 'delayed_job'
 gem 'compass', ">= 0.10.6"
