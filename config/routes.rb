@@ -8,6 +8,11 @@
 
   namespace :host do
     resources :sites
+    resources :users
+  end
+
+  namespace :admin do
+    resources :users
   end
 
 

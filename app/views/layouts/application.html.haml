@@ -17,7 +17,7 @@
   %body.bp.two-col
     #container
       #hat
-        #site-name #{current_site.name if current_site}
+        #site-name #{Site.current.name if Site.current}
         %ul.user-tasks
           = render "devise/menu/login_items"
           = render "devise/menu/user_items"

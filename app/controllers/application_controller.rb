@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :layout
 
+  before_filter :set_current_site
   before_filter :add_stylesheets
 
   def initialize
@@ -9,16 +10,15 @@ class ApplicationController < ActionController::Base
     @stylesheets = []
   end
 
+  def set_current_site
+    Site.current ||= find_site
+  end
+
   def find_site
     subdomains = request.subdomains
     subdomains.delete("www")
     Site.with_domain(request.domain).with_subdomain(subdomains.join(".")).first
   end
-
-  def current_site
-    @current_site ||= find_site
-  end
-  helper_method :current_site
 
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails

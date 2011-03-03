@@ -1,0 +1,10 @@
+%table
+  %tr
+    %td Name
+    %td Email
+    %td Actions
+  - @users.each do |user|
+    %tr
+      %td #{user.name}
+      %td #{user.email}
+      %td Edit | Delete
