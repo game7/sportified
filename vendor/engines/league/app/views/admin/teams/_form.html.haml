@@ -1,0 +1,12 @@
+= semantic_form_for [:admin, @team] do |f|
+  = f.inputs do
+    = f.input :division_id, :as => :select, :collection => @divisions
+    = f.input :season_id, :as => :select, :collection => @seasons
+    = f.input :name
+    = f.input :short_name
+    = f.input :show_in_standings, :as => :boolean
+  = f.buttons do
+    = f.commit_button
+    %li #{ link_to 'Cancel', session[:return_to] }
+
+

@@ -2,7 +2,7 @@ class Team
   include Mongoid::Document
   cache
 
-  attr_accessible :_id, :name, :short_name, :season_id
+  attr_accessible :_id, :name, :short_name, :season_id, :division_id
   
   field :name
   field :short_name
@@ -17,8 +17,8 @@ class Team
   references_one :record, :class_name => "TeamRecord", :dependent => :delete
 
   validates_presence_of :name
-  validates_presence_of :division
-  validates_presence_of :season
+  validates_presence_of :division_id
+  validates_presence_of :season_id
 
   before_save :set_slug
   before_save :ensure_short_name
@@ -27,8 +27,12 @@ class Team
 
   class << self
     def for_season(season)
-      season = season.id if season.class == Season
-      where(:season_id => season)
+      season_id = ( season.class == Season ? season.id : season )
+      where(:season_id => season_id)
+    end
+    def for_division(division)
+      division_id = ( division.class == Division ? division.id : division )
+      where(:division_id => division_id)
     end
   end
   scope :with_slug, lambda { |slug| where(:slug => slug) }

@@ -1,0 +1,19 @@
+- title "League Overiew"
+
+%h3 Divisions
+%table
+  %tr
+    %td Name
+    %td Related
+  - @divisions.each do |division|
+    %tr
+      %td #{division.name}
+      %td Games | Teams
+
+%h3 Seasons
+%table
+  - @seasons.each do |season|
+    %tr
+      %td #{season.name}
+
+

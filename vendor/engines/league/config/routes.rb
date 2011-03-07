@@ -17,8 +17,10 @@
   match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly, :via => :get
 
   namespace :admin do
+    resource :league, :only => :show
     resources :divisions
     resources :seasons
+    resources :teams
   end
 
   namespace :league do
