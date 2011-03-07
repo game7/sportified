@@ -14,7 +14,7 @@ class Site
 
   embeds_many :blocks
 
-  validates_presence_of :name, :domain
+  validates_presence_of :name, :host
 
   scope :for_host, lambda { |h| { :where => { :host => h } } }
 

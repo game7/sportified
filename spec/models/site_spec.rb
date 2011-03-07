@@ -13,8 +13,8 @@ describe Site do
       @site.valid?.should == false
     end
 
-    it "should have a domain" do
-      @site.domain = nil
+    it "should have a host" do
+      @site.host = nil
       @site.valid?.should == false
     end
 
