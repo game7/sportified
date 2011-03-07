@@ -1,0 +1,20 @@
+- title "Seasons"
+%table{ :border => "1", :cellpadding => "5", :style => "border-collapse: collapse;" }
+  %tr
+    %th Name
+    %th Starts on
+    %th Related
+    %th Actions
+  - @seasons.each do |season|
+    %tr
+      %td #{season.name}
+      %td #{season.starts_on}
+      %td
+      %td
+        = link_to 'Show', [:admin, season]
+        = " | "
+        = link_to 'Edit', edit_admin_season_path(season)
+        = " | "
+        = link_to 'Destroy', [:admin, season], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Season', new_admin_season_path(@division)
