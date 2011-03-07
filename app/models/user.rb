@@ -10,12 +10,18 @@ class User
   field :name
   key :name
   index :email, :unique => true
+  
   references_and_referenced_in_many :sites
+  embeds_many :roles, :class_name => "UserRole"
 
   validates_presence_of :name
   validates_uniqueness_of :email, :case_sensitive => false
 
   attr_accessible :name, :email, :password, :password_confirmation
+
+  def role?(role)
+    return !!(self.roles.find_by_name(role.to_s).first)
+  end
   
   class << self
     def for_site(s)

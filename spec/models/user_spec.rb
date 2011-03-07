@@ -26,4 +26,25 @@ describe User do
 
   end
 
+  describe "when checking for a role" do
+
+    before(:each) do
+      @user.roles.build( :name => "site_admin" )
+    end
+
+    it "should match requested role name if assigned" do
+      @user.role? "site_admin"
+    end
+
+    it "should not match if role not assigned" do
+      @user.role? "tool"
+    end  
+
+    it "should return roles with matching name" do
+      2.times{ @user.roles.build( :name => "site_admin" ) }
+      @user.roles.find_by_name(:site_admin).count.should == 3
+    end
+
+  end
+
 end

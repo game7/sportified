@@ -15,6 +15,7 @@ User.blueprint do
   email { Sham.email }
 end
 
-SiteUser.blueprint do
-  
+UserRole.blueprint do
+  name { "Role"}
 end
+

@@ -1,0 +1,7 @@
+= semantic_form_for @site, :url => admin_site_path do |f|
+  = f.inputs do
+    = f.input :name
+  = f.buttons do
+    = f.commit_button
+    %li #{ link_to 'Cancel', session[:return_to] }
+%p Referrer: #{request.env["HTTP_REFERER"]}

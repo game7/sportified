@@ -1,9 +1,16 @@
 class ApplicationController < ActionController::Base
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
   protect_from_forgery
   helper :layout
 
   before_filter :set_current_site
   before_filter :add_stylesheets
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
 
   def initialize
     super
@@ -34,6 +41,10 @@ class ApplicationController < ActionController::Base
 
   def return_to_last_point(response_status = {})
     redirect_to(session[:return_to], response_status)
+  end
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user, Site.current ? Site.current.id : nil)
   end
 
 end

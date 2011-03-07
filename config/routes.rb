@@ -13,6 +13,7 @@
 
   namespace :admin do
     resources :users
+    resource :site#, :only => [ :edit, :update ]
   end
 
 
