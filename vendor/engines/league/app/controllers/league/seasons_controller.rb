@@ -1,4 +1,4 @@
-class League::SeasonsController < League::BaseSeasonController
+class League::SeasonsController < League::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]    
   before_filter :load_for_season, :only => [:show, :edit]
@@ -49,7 +49,7 @@ class League::SeasonsController < League::BaseSeasonController
   # GET /seasons/new.xml
   def new
 
-    @season = @division.seasons.build
+    @season = Season.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -65,8 +65,7 @@ class League::SeasonsController < League::BaseSeasonController
   # POST /seasons
   # POST /seasons.xml
   def create
-    @division = Division.find(params[:division_id])
-    @season = @division.seasons.build(params[:season])
+    @season = Season.new(params[:season])
 
     respond_to do |format|
       if @season.save
@@ -99,7 +98,6 @@ class League::SeasonsController < League::BaseSeasonController
   # DELETE /seasons/1.xml
   def destroy
     @season = Season.find(params[:id])
-    @division = @season.division
     @season.destroy
 
     respond_to do |format|

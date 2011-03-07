@@ -1,0 +1,6 @@
+.season-card
+  %strong #{link_to season.name, league_season_path(season)}
+  .action.block
+    .season_edit #{link_to 'Edit', edit_league_season_path(season)}
+    .season_delete #{link_to 'Delete', [:league, season], :confirm => 'Are you sure?', :method => :delete}
+
