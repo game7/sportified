@@ -18,7 +18,7 @@ module League::StandingsHelper
   end
 
   def get_standings_season_options(division)
-    division.seasons.desc(:starts_on).collect do |s| 
+    division.seasons.desc(:starts_on).entries.collect do |s| 
       [ s.name, get_standings_season_url(division.slug, s.id == division.current_season_id ? nil : s.slug) ]
     end
   end

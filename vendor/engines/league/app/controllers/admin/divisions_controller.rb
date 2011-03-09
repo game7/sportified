@@ -50,6 +50,10 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   # POST /divisions
   def create
     @division = Division.new(params[:division])
+    params[:division][:seasons].each do |id|
+      season = Season.find(id)
+      @division.seasons << season if season
+    end
 
     respond_to do |format|
       if @division.save

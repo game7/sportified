@@ -1,6 +1,5 @@
 class Division
   include Mongoid::Document
-  include ActiveModel::Observing
   cache
  
   field :name

@@ -10,7 +10,11 @@ class Team
   field :show_in_standings, :type => Boolean, :default => true
 
   referenced_in :division
+  field :division_name
+
   referenced_in :season
+  field :season_name
+
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
@@ -23,7 +27,13 @@ class Team
   before_save :set_slug
   before_save :ensure_short_name
   before_save :ensure_record
+  before_save :get_division_name
+  before_save :get_season_name
   after_create :raise_team_created_event
+
+  def fullname
+    "#{name} (#{division_name}-#{season_name})"
+  end
 
   class << self
     def for_season(season)
@@ -53,6 +63,14 @@ class Team
       if self.short_name.nil? || self.short_name.empty?
         self.short_name = self.name
       end
+    end
+
+    def get_season_name
+      self.season_name = self.season_id ? self.season.name : nil
+    end
+
+    def get_division_name
+      self.division_name = self.division_id ? self.division.name : nil
     end
 
     def ensure_record

@@ -4,7 +4,7 @@ class League::DivisionsController < League::BaseDivisionController
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def load_for_division
-    @division = params[:division_slug] ? Division.with_slug(params[:division_slug]).first : Division.find(params[:id])  
+    @division = Division.with_slug("a").first
     add_new_breadcrumb @division.name
     load_area_navigation @division
   end

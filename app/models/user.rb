@@ -22,7 +22,7 @@ class User
   def role?(role)
     return !!(self.roles.find_by_name(role.to_s).first)
   end
-  
+ 
   class << self
     def for_site(s)
       id = s.class.to_s == "Site" ? s.id : s

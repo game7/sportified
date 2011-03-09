@@ -70,10 +70,8 @@ class League::SeasonsController < League::BaseLeagueController
     respond_to do |format|
       if @season.save
         format.html { return_to_last_point(:notice => 'Season was successfully created.') }
-        format.xml  { render :xml => @season, :status => :created, :location => @season }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @season.errors, :status => :unprocessable_entity }
       end
     end
   end

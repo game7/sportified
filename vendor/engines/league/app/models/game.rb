@@ -28,8 +28,10 @@ class Game
       where(:season_id => id)
     end
     def for_division(d)
-      id = d.class == Division ? d.id : d
-      where(:division_id => id)
+      # TODO: perhaps map-reduce would be useful here
+      division = d.class == Division ? d : Division.find(d)
+      team_ids = division.teams.collect{|team| team.id}
+      any_of( { :left_team_id.in => team_ids }, { :right_team_id.in => team_ids })
     end
   end
 

@@ -7,7 +7,8 @@
   .right
     - #TODO: Wire-up season and team selectors
     - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-    = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
+    - if @team_links
+      = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
   .clear
 
 .mod-container.mod-table.mod-no-header-footer
@@ -37,24 +38,8 @@
           %td #{game.starts_on.strftime("%l:%M %p")}
           %td Location
         - last_date = game.starts_on.to_date
-//  - @rowspans = get_rowspans @games
-//  - @games.each_with_index do |game, i|
-//    %tr
-//      - if @rowspans[i]
-//        %td{ :rowspan => "#{@rowspans[i].to_s}" } #{game.starts_on.strftime("%a %m/%d/%y")}
-//      %td #{game.starts_on.strftime("%I:%M %p")}
-//      %td 
-//        = game.left_team.name
-//        = game.result.left_team_score if game.has_result?
-//      %td 
-//        = game.right_team.name
-//        = game.result.right_team_score if game.has_result?
-//      %td
-//      %td
-//        = link_to 'Edit', edit_league_game_path(game)
-//        = link_to 'Delete', [:league, game], :confirm => 'Are you sure?', :method => :delete
 .controls.left
   = render "date_selector"
 .clear
 .action
-  .calendar_add #{link_to 'Add Game', new_league_division_game_path(@division)}
+  .calendar_add #{link_to 'Add Game', new_admin_game_path}

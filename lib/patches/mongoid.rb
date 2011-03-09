@@ -25,7 +25,6 @@ module Mongoid #:nodoc:
         def <<(*args)
           options = default_options(args)
           super(args)
-          base.save(:validate => false) if base.persisted? && !options[:binding]
         end
       end
     end

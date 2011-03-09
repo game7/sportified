@@ -3,7 +3,7 @@
   match "league" => "league/home#index", :as => :league, :via => :get
   match "league/:division_slug/home" => "league/divisions#show", :as => :league_division_friendly, :via => :get
 
-  match 'league/:division_slug/schedule' => 'league/games#index', :as => :league_division_schedule_friendly, :via => :get
+  match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
 
   match 'league/:division_slug/scoreboard' => 'league/scoreboard#index', :as => :league_division_scoreboard_friendly, :via => :get
   
@@ -21,6 +21,7 @@
     resources :divisions
     resources :seasons
     resources :teams
+    resources :games
   end
 
   namespace :league do

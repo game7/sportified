@@ -60,18 +60,16 @@ class Admin::TeamsController < Admin::BaseLeagueController
   #  end   
   #end
 
-  # GET /teams
-  # GET /teams.xml
-  
   def index
     @teams = Team.all
     @teams = @teams.for_division(@division) if @division
     @teams = @teams.for_season(@season) if @season
-    @teams = @teams.asc(:name).entries
+    @teams = @teams.asc(:division_name).asc(:name).entries
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @teams }
+      format.json { render :json => @teams }
     end
   end
 

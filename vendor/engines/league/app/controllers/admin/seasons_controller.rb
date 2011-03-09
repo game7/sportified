@@ -3,9 +3,14 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
   before_filter :add_seasons_breadcrumb  
   before_filter :load_season, :only => [:show, :edit]
+  before_filter :load_division_options, :only => [:new, :edit]
 
   def add_seasons_breadcrumb
     add_new_breadcrumb 'Seasons', admin_seasons_path    
+  end
+
+  def load_division_options
+    @division_options = Division.all.asc(:name).entries    
   end
 
   def load_season
@@ -51,7 +56,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   # GET /seasons/1/edit
   def edit
-
+    
   end
 
   # POST /seasons
@@ -63,6 +68,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
       if @season.save
         format.html { return_to_last_point(:notice => 'Season was successfully created.') }
       else
+        load_division_options
         format.html { render :action => "new" }
       end
     end
@@ -76,6 +82,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
       if @season.update_attributes(params[:season])
         format.html { return_to_last_point(:notice => 'Season was successfully updated.') }
       else
+        load_division_options        
         format.html { render :action => "edit" }
       end
     end

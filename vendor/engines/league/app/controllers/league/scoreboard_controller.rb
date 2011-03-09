@@ -25,7 +25,7 @@ class League::ScoreboardController < League::BaseDivisionController
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
-      @games = @division.games.between(@start_date, @end_date).desc(:starts_on).entries
+      @games = Game.between(@start_date, @end_date).for_division(@division).desc(:starts_on).entries
     end
 
   end

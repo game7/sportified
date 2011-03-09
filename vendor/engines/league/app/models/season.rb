@@ -1,16 +1,12 @@
 class Season
   include Mongoid::Document
   cache
-
-  attr_accessible :name, :starts_on
-  accepts_nested_attributes_for :standings_columns
-  
+ 
   field :name  
   field :slug
   field :starts_on, :type => Date
 
   references_and_referenced_in_many :divisions
-  references_many :divisions
   references_many :games
   references_many :teams
 
