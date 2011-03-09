@@ -1,33 +1,37 @@
 class League::ScoreboardController < League::BaseDivisionController
   
-  before_filter :load_for_division
+  before_filter :load_division
+  before_filter :set_breadcrumbs
+  before_filter :set_navigation
+  before_filter :get_dates
 
-  def load_for_division
-    
+  def load_division  
     @division = Division.with_slug(params[:division_slug]).first 
+  end
 
-    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+  def set_breadcrumbs
+    add_new_breadcrumb( @division.name, league_division_path(@division.slug) ) if @division  
+    add_new_breadcrumb "Scoreboard"  
+  end
 
-    load_area_navigation @division
- 
+  def set_navigation
+    load_area_navigation @division if @division    
+  end
+
+  def get_dates
+    date = params[:date] ? Date.parse(params[:date]) : Date.current
+    @days_in_future = 0
+    @days_in_past = 14
+    @start_date = date - @days_in_past - 1
+    @end_date = date + @days_in_future + 1
+    @next_date = date + @days_in_future + @days_in_past
+    @prev_date = date - @days_in_future - @days_in_past    
   end
 
   def index
-    
-    if params[:season_slug]
-      @season = @division.seasons.with_slug(params[:season_slug]).first
-      @games = @division.games.for_season(@season).desc(:starts_on).entries
-    else
-      @date = params[:date] ? Date.parse(params[:date]) : Date.current
-      @days_in_future = 0
-      @days_in_past = 14
-      @start_date = @date - @days_in_past - 1
-      @end_date = @date + @days_in_future + 1
-      @next_date = @date + @days_in_future + @days_in_past
-      @prev_date = @date - @days_in_future - @days_in_past
-      @games = Game.between(@start_date, @end_date).for_division(@division).desc(:starts_on).entries
-    end
-
+    @games = Game.between(@start_date, @end_date)
+    @games = @games.for_division(@division) if @division
+    @games = @games.desc(:starts_on).entries
   end
 
 end

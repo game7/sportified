@@ -11,7 +11,7 @@ module League::TeamsHelper
   end
 
   def get_team_season_url(division_slug, season_slug)
-    league_division_teams_friendly_path(division_slug, season_slug)
+    league_teams_path(division_slug, season_slug)
   end
 
   def display_result(team, game)

@@ -22,7 +22,7 @@ class League::ScheduleController < League::BaseDivisionController
   end
 
   def set_breadcrumbs
-    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug) if @division
+    add_new_breadcrumb @division.name, league_division_path(@division.slug) if @division
     add_new_breadcrumb "Schedule"    
   end
 

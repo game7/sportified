@@ -24,7 +24,7 @@ module League::StandingsHelper
   end
 
   def get_standings_season_url(division_slug, season_slug)
-    league_division_standings_friendly_path(division_slug, season_slug)
+    league_standings_path(division_slug, season_slug)
   end
 
 end
