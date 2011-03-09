@@ -1,4 +1,5 @@
 - title "Teams"
+- last_division = ""
 
 .controls
   .left
@@ -12,6 +13,10 @@
     %th Season
     %th Actions
   - @teams.each do |team|
+    - if team.division_name != last_division
+      %tr
+        %td{ :colspan => 4} #{team.division_name} Division
+      - last_division = team.division_name
     %tr
       %td #{team.name}
       %td #{team.division.name}

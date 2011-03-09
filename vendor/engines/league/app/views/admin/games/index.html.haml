@@ -1,0 +1,19 @@
+- title 'Games'
+
+%table
+  %tr
+    %td Date
+    %td Time
+    %td 
+    %td
+    %td
+    %td Actions
+  - @games.each do |game|
+    %tr
+      %td #{game.starts_on.strftime('%a %b %e, %Y')}
+      %td #{game.starts_on.strftime('%l:%M %p')}
+      %td #{game.left_team_name}
+      %td vs.
+      %td #{game.right_team_name}
+      %td #{link_to "Edit", edit_admin_game_path(game)} | #{link_to "Delete", [:admin, game], :confirm => 'Are you sure?', :method => :delete}
+= link_to "New Game", new_admin_game_path

@@ -1,7 +1,14 @@
-= semantic_form_for [:league, @season] do |f|
+= semantic_form_for [:admin, @season] do |f|
   = f.inputs do
     = f.input :name
     = f.input :starts_on
+    %li{ :class => 'checkboxes optional', :id => 'season_divisions_input' }
+      %label{ :for => 'season_divisions' } Divisions
+      %ol
+        - @division_options.each_with_index do |s, i|
+          %li
+            = check_box_tag "season[divisions][]", s.id, @season.division_ids.include?(s.id)
+            = s.name
   = f.buttons do
     = f.commit_button
     %li #{link_to 'Cancel', admin_seasons_path}
