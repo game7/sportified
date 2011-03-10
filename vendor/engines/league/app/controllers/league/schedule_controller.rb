@@ -1,10 +1,4 @@
 class League::ScheduleController < League::BaseDivisionController
-  
-  before_filter :load_division
-  before_filter :load_season
-  before_filter :set_breadcrumbs
-  before_filter :set_navigation
-
 
   def links_to_team_schedule(division, season)
     teams = division.teams.for_season(season).asc(:name)
@@ -13,21 +7,9 @@ class League::ScheduleController < League::BaseDivisionController
     end   
   end
 
-  def load_division
-    @division = Division.with_slug(params[:division_slug]).first
-  end
-
-  def load_season
-    @season = @division.current_season if @division    
-  end
-
   def set_breadcrumbs
-    add_new_breadcrumb @division.name, league_division_path(@division.slug) if @division
-    add_new_breadcrumb "Schedule"    
-  end
-
-  def set_navigation
-    load_area_navigation @division if @division    
+    super
+    add_new_breadcrumb "Schedule"
   end
 
   # GET /games

@@ -1,21 +1,10 @@
 class League::ScoreboardController < League::BaseDivisionController
   
-  before_filter :load_division
-  before_filter :set_breadcrumbs
-  before_filter :set_navigation
   before_filter :get_dates
 
-  def load_division  
-    @division = Division.with_slug(params[:division_slug]).first 
-  end
-
   def set_breadcrumbs
-    add_new_breadcrumb( @division.name, league_division_path(@division.slug) ) if @division  
-    add_new_breadcrumb "Scoreboard"  
-  end
-
-  def set_navigation
-    load_area_navigation @division if @division    
+    super
+    add_new_breadcrumb "Scoreboard"
   end
 
   def get_dates

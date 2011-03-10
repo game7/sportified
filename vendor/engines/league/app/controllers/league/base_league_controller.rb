@@ -1,10 +1,20 @@
 class League::BaseLeagueController < ApplicationController
+  
+  before_filter :load_objects
+  before_filter :set_breadcrumbs
+  before_filter :set_area_navigation
 
-  before_filter :set_area_info
+  def load_objects
+    
+  end
 
-  def set_area_info
+  def set_breadcrumbs
     @breadcrumbs = []
     @breadcrumbs << { :title => "League", :url => league_path}
+  end
+
+  def set_area_navigation
+    
   end
 
   def add_new_breadcrumb(title, url = nil)
