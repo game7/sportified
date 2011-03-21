@@ -13,7 +13,13 @@
 
   namespace :admin do
     resource :league, :only => :show
-    resources :divisions
+    resources :divisions do
+      get 'standings', :on => :member
+      resources :standings_columns do
+        post 'push_left', :on => :member
+        post 'push_right', :on => :member
+      end
+    end
     resources :seasons
     resources :teams, :shallow => true do
       resources :players
@@ -23,26 +29,7 @@
     end
   end
 
-  #namespace :league do
-  #  resources :seasons
-  #  resources :divisions, :shallow => true do
-  #    resources :games do
-  #      resource :result, :controller => "game_result"
-  #    end
-  #    resources :teams do
-  #      resources :players
-  #    end
-  #  end
-  #end
 
-  namespace :league do
-    resources :divisions, :only => [] do
-      resources :standings_columns do
-        post 'push_left', :on => :member
-        post 'push_right', :on => :member
-      end
-    end
-  end
 
 end
 
