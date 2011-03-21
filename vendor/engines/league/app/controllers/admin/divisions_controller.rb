@@ -1,7 +1,7 @@
 class Admin::DivisionsController < Admin::BaseLeagueController
   
   before_filter :add_divisions_breadcrumb
-  before_filter :load_division, :only => [:show, :edit]
+  before_filter :load_division, :only => [:show, :edit, :standings]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def add_divisions_breadcrumb
@@ -11,10 +11,8 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   def load_division
     @division = Division.find(params[:id])  
     add_new_breadcrumb @division.name
-    #load_area_navigation @division
   end
 
-  # GET /divisions
   def index
     @divisions = Division.asc(:name)
 
@@ -23,7 +21,6 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     end
   end
 
-  # GET /divisions/1
   def show
     @seasons = @division.seasons
 
@@ -32,7 +29,14 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     end
   end
 
-  # GET /divisions/new
+  def standings
+    @columns = @division.standings_columns.asc(:order).entries
+
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+
   def new
     @division = Division.new
     @all_seasons = Season.all.desc(:starts_on).entries
@@ -42,12 +46,10 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     end
   end
 
-  # GET /divisions/1/edit
   def edit
     @all_seasons = Season.all.desc(:starts_on).entries
   end
 
-  # POST /divisions
   def create
     @division = Division.new(params[:division])
     if params[:division][:seasons]
@@ -66,7 +68,6 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     end
   end
 
-  # PUT /divisions/1
   def update
     @division = Division.find(params[:id])
     # clear out season_ids so that non selected items are removed (because not re-added below)
@@ -80,7 +81,6 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     end
   end
 
-  # DELETE /divisions/1
   def destroy
     @division = Division.find(params[:id])
     @division.destroy

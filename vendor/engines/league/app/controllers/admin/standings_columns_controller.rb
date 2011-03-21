@@ -1,17 +1,14 @@
-class League::StandingsColumnsController < League::BaseDivisionController
+class Admin::StandingsColumnsController < Admin::BaseLeagueController
   
   def get_columns(division)
     division.standings_columns.asc(:order).entries
   end
-  def get_records(division)
-    division.team_records.for_season(division.default_season).desc(:pts).entries
-  end
+
   
   def create
     @division = Division.find(params[:division_id])
     @standings_column = @division.standings_columns.build(params[:standings_column])
     @standings_column.order = @division.standings_columns.count - 1
-    @team_records = get_records(@division)
     if @standings_column.save
       flash[:notice] = "Column Added"
       @columns = get_columns(@division)
@@ -25,7 +22,6 @@ class League::StandingsColumnsController < League::BaseDivisionController
     @columns = get_columns(@division)
     col = @division.standings_columns.find(params[:id])
     index = @columns.index(col)
-    @team_records = get_records(@division)
     if index == 0
       flash[:error] = "Cannot push column left" 
     else     
@@ -44,7 +40,6 @@ class League::StandingsColumnsController < League::BaseDivisionController
     @columns = get_columns(@division)
     col = @division.standings_columns.find(params[:id])
     index = @columns.index(col)
-    @team_records = get_records(@division)
     if index == @columns.count - 1
       flash[:error] = "Cannot push column right" 
     else 
@@ -63,7 +58,6 @@ class League::StandingsColumnsController < League::BaseDivisionController
     @division.standings_columns.find(params[:id]).delete
     flash[:notice] = "Column has been removed"
     @columns = get_columns(@division)
-    @team_records = get_records(@division)
   end
 
 end

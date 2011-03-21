@@ -1,0 +1,21 @@
+#standings
+  %table
+    %tr
+      %th Field
+      %th Title
+      %th Description
+      %th Actions
+    - columns.each_with_index do |column, index|
+      %tr
+        %td #{column.field_name}
+        %td #{column.title}
+        %td #{column.description}
+        %td 
+          - if index > 0
+            = link_to 'Up', push_left_admin_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the left'
+            = ' | '
+          - if index < columns.count - 1
+            = link_to 'Down', push_right_admin_division_standings_column_path(@division, column), :remote => true, :method => :post, :title => 'Push to the right'
+            = ' | '
+          = link_to 'Delete', admin_division_standings_column_path(@division, column), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Remove this column'
+

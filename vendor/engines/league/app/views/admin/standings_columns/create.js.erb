@@ -6,7 +6,6 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").show(300);
-  $("#standings").html("<%= escape_javascript( render(:partial => "/league/standings/standings_table", :locals => { :team_records => @team_records, :columns => @columns } ) )%>");
-  $("#standings-glossary").html("<%= escape_javascript( render(:partial => "/league/standings/standings_glossary", :locals => { :columns => @columns } ) )%>");
+  $("#standings").html("<%= escape_javascript( render(:partial => "/admin/divisions/standings_column_table", :locals => { :team_records => @team_records, :columns => @columns } ) )%>");
   clearForm($("form.standings_column"));
 <% end %>
