@@ -32,14 +32,10 @@
                 #{game.left_team_name} #{game.result.left_team_score}, #{game.right_team_name} #{game.result.right_team_score} 
             - else
               #{game.left_team_name} vs. #{game.right_team_name} 
-              .action.right
-                .calendar_edit #{link_to 'Edit', edit_admin_game_path(game)}
-                .calendar_delete #{link_to 'Delete', [:admin, game], :confirm => 'Are you sure?', :method => :delete}
           %td #{game.starts_on.strftime("%l:%M %p")}
           %td Location
         - last_date = game.starts_on.to_date
 .controls.left
   = render "date_selector"
 .clear
-.action
-  .calendar_add #{link_to 'Add Game', new_admin_game_path}
+
