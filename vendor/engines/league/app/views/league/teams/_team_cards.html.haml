@@ -2,16 +2,14 @@
   .team-box
     .team-logo
     .team-name 
-      #{link_to team.name, league_team_friendly_path(@division.slug, @season.slug, team.slug)}
+      #{team.name}
     .team-nav
-      = link_to 'Schedule', league_team_schedule_friendly_path(@division.slug, @season.slug, team.slug)
+      = link_to 'Home', league_team_path(@division.slug, @season.slug, team.slug)
       = " | "
-      = link_to 'Roster', league_team_roster_friendly_path(@division.slug, @season.slug, team.slug)
+      = link_to 'Schedule', league_team_schedule_path(@division.slug, @season.slug, team.slug)
+      = " | "
+      = link_to 'Roster', league_team_roster_path(@division.slug, @season.slug, team.slug)
       = " | "
       Stats
-//    .team-actions
-//      = link_to 'Edit', edit_league_team_path(team)
-//      = " | "
-//      = link_to 'Delete', [:league, team], :confirm => 'Are you sure?', :method => :delete, :remote => true
 .clear
 

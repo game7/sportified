@@ -1,0 +1,9 @@
+= semantic_form_for [:admin, @team, @player] do |f|
+  - f.inputs do
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :jersey_number
+  = f.buttons do
+    = f.commit_button
+    %li #{link_to 'Cancel', session[:return_to]}
+

@@ -7,16 +7,17 @@
   match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_standings, :via => :get
   match 'league/:division_slug(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
 
-  match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team_friendly, :via => :get
-  match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule_friendly, :via => :get
-
-  match 'league/:division_slug/:season_slug/:team_slug/roster' => 'league/players#index', :as => :league_team_roster_friendly, :via => :get
+  match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team, :via => :get
+  match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule, :via => :get
+  match 'league/:division_slug/:season_slug/teams/:team_slug/roster' => 'league/teams#roster', :as => :league_team_roster, :via => :get
 
   namespace :admin do
     resource :league, :only => :show
     resources :divisions
     resources :seasons
-    resources :teams
+    resources :teams, :shallow => true do
+      resources :players
+    end
     resources :games do
       resource :result, :controller => "game_result"
     end

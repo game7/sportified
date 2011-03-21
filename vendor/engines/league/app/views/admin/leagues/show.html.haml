@@ -15,6 +15,9 @@
           %td
             - division.teams.for_season(season.id).asc(:name).each do |team|
               = team.name
+              = "("
+              = link_to "Roster", admin_team_players_path(team)
+              = ")"
               %br/
     
 
