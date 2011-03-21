@@ -15,5 +15,11 @@
         = link_to "Edit", edit_admin_game_path(game)
         = " | "
         = link_to "Delete", [:admin, game], :confirm => 'Are you sure?', :method => :delete
+        - if game.can_add_result?
+          = " | "
+          = link_to "Post Score", new_admin_game_result_path(game)
+        - if game.can_delete_result?
+          = " | "
+          = link_to "Drop Score", admin_game_result_path(game), :confirm => 'Are you sure?', :method => :delete
         
 = link_to "New Game", new_admin_game_path
