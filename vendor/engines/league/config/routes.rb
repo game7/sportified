@@ -17,7 +17,9 @@
     resources :divisions
     resources :seasons
     resources :teams
-    resources :games
+    resources :games do
+      resource :result, :controller => "game_result"
+    end
   end
 
   #namespace :league do
