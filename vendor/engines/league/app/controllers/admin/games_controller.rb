@@ -54,7 +54,7 @@ class Admin::GamesController < Admin::BaseLeagueController
     @games = Game.all    
     @games = @games.for_division(@division) if @division
     @games = @games.for_season(@season) if @season
-    @games = @games.between(@start_date, @end_date)
+    @games = @games.between(@start_date, @end_date) unless @division && @season
     @games = @games.asc(:starts_on)
    
     respond_to do |format|
