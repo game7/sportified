@@ -1,17 +1,7 @@
 - title "League"
 
-%h3 Divisions
 %div
   - @divisions.each do |division|
     = render :partial => "division_card", :locals => { :division => division }
 .clear
-%p
-  .action.division_add #{link_to 'Add Division', new_admin_division_path}
-%h3 Seasons
-%div
-  - @seasons.each do |season|
-    = render :partial => "season_card", :locals => { :season => season }
-.clear
-%p
-  .action.season_add #{link_to 'Add Season', new_admin_season_path}
 

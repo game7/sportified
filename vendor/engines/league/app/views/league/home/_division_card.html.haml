@@ -1,6 +1,10 @@
 .division-card
-  %strong #{link_to division.name, league_division_path(division.slug)}
-  .action.block
-    .division_edit #{link_to 'Edit', edit_admin_division_path(division)}
-    .division_delete #{link_to 'Delete', [:admin, division], :confirm => 'Are you sure?', :method => :delete}
+  %strong #{division.name} Division
+  %ul
+    %li #{link_to 'Home', league_division_path(division.slug)}
+    %li #{link_to 'Schedule', league_schedule_path(division.slug)}
+    %li #{link_to 'Scoreboard', league_scoreboard_path(division.slug)}
+    %li #{link_to 'Standings', league_standings_path(division.slug)}
+    %li #{link_to 'Teams', league_teams_path(division.slug)}
+
 
