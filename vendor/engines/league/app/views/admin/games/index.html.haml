@@ -27,4 +27,4 @@
           = " | "
           = link_to "Drop Score", admin_game_result_path(game), :confirm => 'Are you sure?', :method => :delete
         
-= link_to "New Game", new_admin_game_path
+= link_to "New Game", new_admin_game_path(:season_id => params[:season_id])
