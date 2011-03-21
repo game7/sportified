@@ -1,19 +1,21 @@
 - title "League Overiew"
 
-%h3 Divisions
-%table
-  %tr
-    %td Name
-    %td Related
-  - @divisions.each do |division|
-    %tr
-      %td #{division.name}
-      %td Games | Teams
-
-%h3 Seasons
-%table
-  - @seasons.each do |season|
-    %tr
-      %td #{season.name}
+- @divisions.each do |division|
+  .division
+    %h5 #{division.name + " Division"}
+    - division.seasons.each do |season|
+      %table
+        %tr
+          %td{:colspan => 2} #{season.name}
+        %tr
+          %td{:valign => 'top'}
+            = link_to "Schedule", admin_games_path(:division_id => division.id, :season_id => season.id)
+            %br/
+            Standings
+          %td
+            - division.teams.for_season(season.id).asc(:name).each do |team|
+              = team.name
+              %br/
+    
 
 

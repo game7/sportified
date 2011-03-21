@@ -2,16 +2,27 @@ class Admin::GamesController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_games_breadcrumb
-  before_filter :load_season_options, :only => [:new, :edit]
+  before_filter :load_season_options, :only => [:index, :new, :edit]
+  before_filter :load_division_options, :only => [:index]
   before_filter :load_team_options, :only => [:new, :edit]
   before_filter :load_game, :only => [:show, :edit]
+  before_filter :load_division, :only => [:index]
+  before_filter :load_season, :only => [:index]
 
-  def add_games_breadcrumb
-    add_new_breadcrumb 'Games', admin_games_path  
+  def load_division
+    @division = Division.find(params[:division_id]) if params[:division_id]
+  end
+
+  def load_season
+    @season = Season.find(params[:season_id]) if params[:season_id]    
+  end
+
+  def load_division_options
+    @divisions = Division.all.asc(:name).entries
   end
 
   def load_season_options
-    @seasons = Season.all.desc(:starts_on).entries    
+    @seasons = Season.all.desc(:starts_on).entries
   end
 
   def load_team_options
@@ -20,17 +31,13 @@ class Admin::GamesController < Admin::BaseLeagueController
     end
   end
 
+  def add_games_breadcrumb
+    add_new_breadcrumb 'Games', admin_games_path  
+  end
+
+
   def load_game
-
-    @game = Game.find(params[:id])
-    #@season = @game.season
-    #@division = @game.division
-#
-    #add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
-    #add_new_breadcrumb @season.name
-
-    #load_area_navigation @division
-        
+    @game = Game.find(params[:id])        
   end
 
   # GET /games
@@ -43,7 +50,12 @@ class Admin::GamesController < Admin::BaseLeagueController
     @end_date = @date + @days_in_future + 1
     @next_date = @date + @days_in_future + @days_in_past
     @prev_date = @date - @days_in_future - @days_in_past
-    @games = Game.between(@start_date, @end_date).asc(:starts_on)
+
+    @games = Game.all    
+    @games = @games.for_division(@division) if @division
+    @games = @games.for_season(@season) if @season
+    @games = @games.between(@start_date, @end_date)
+    @games = @games.asc(:starts_on)
    
     respond_to do |format|
       format.html
