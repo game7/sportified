@@ -1,0 +1,7 @@
+%td 
+  = game.left_team_name
+%td vs.
+%td 
+  = game.right_team_name
+  - if game.has_result?
+    = game.result.right_team_score

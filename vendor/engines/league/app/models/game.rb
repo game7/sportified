@@ -36,7 +36,7 @@ class Game
   end
 
   before_save :update_team_names
-  
+
   def has_result?
     !self.result.nil?
   end
