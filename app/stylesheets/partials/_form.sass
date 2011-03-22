@@ -6,8 +6,6 @@
 //  @include blueprint-form; }
 
 form
-  :background #eee
-  :border 1px solid #DEDEDE
   // <li> Field wrappers
   li
     :padding 5px 0px
@@ -19,8 +17,10 @@ form
   // Fieldsets
   //--------------------------------------------------------
   fieldset
-    //:background #eee
-    :margin-top 20px
+    :margin-top 5px
+    &.inputs
+      :border 1px solid #DEDEDE
+
   // Be sure to override styling for nested fieldsets
   li
     fieldset
@@ -28,9 +28,13 @@ form
   //--------------------------------------------------------
   // Legend & Labels
   //--------------------------------------------------------
-  legend, label
+  legend
     // Set color to override IE's stupid coloring rules for legends
     :color #333
+    :padding 1px 5px
+    :margin-left 10px
+    //:border-left 1px solid #DEDEDE
+    //:border-right 1px solid #DEDEDE
   label, .label
     :padding-bottom 0px
     :display block
@@ -43,7 +47,7 @@ form
     :font-size 13px
   legend
     span
-      :font-size 1.4em
+      :font-size 1.2em
       // Set lineheight for dumb IE
       :line-height 1em
       &.label
@@ -98,10 +102,13 @@ form
   // Submit Buttons
   //--------------------------------------------------------
   .buttons
-    :padding-top 8px
-    :padding-bottom 8px
+    :padding-top 5px
+    :padding-bottom 5px
     :margin-top 0
     li
-      :padding-right 0.5em
+      :padding-right 1em
+      :float left
+      :height 32px
+      :line-height 32px
     input
       :border 1px solid #999
