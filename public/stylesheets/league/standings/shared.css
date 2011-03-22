@@ -1,6 +1,0 @@
-table#standings td, table#standings th {
-  width: 50px;
-  text-align: center; }
-table#standings td.team_name, table#standings th.team_name {
-  width: auto;
-  text-align: left; }

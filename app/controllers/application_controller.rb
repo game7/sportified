@@ -29,10 +29,13 @@ class ApplicationController < ActionController::Base
 
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails
-    ["#{controller_path}/shared", "#{controller_path}/#{action_name}"].each do |stylesheet|
-      #TODO - dirty hack added below -- need more reliable file path
-      @stylesheets << stylesheet if File.exists? "#{RAILS_ROOT}/vendor/engines/core/public/stylesheets/#{stylesheet}.css"
+    ["compiled/#{controller_path}/shared", "compiled/#{controller_path}/#{action_name}"].each do |stylesheet|
+      @stylesheets << stylesheet if File.exists? "#{RAILS_ROOT}/tmp/stylesheets/#{stylesheet}.css"
     end
+  end
+
+  def stylesheets
+    @stylesheets
   end
 
   def mark_return_point
