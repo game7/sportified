@@ -1,4 +1,4 @@
-class Admin::BaseLeagueController < ApplicationController
+class Admin::BaseLeagueController < Admin::AdminController
 
   before_filter :set_area_info
 
