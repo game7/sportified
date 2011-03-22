@@ -2,6 +2,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   
   before_filter :add_divisions_breadcrumb
   before_filter :load_division, :only => [:show, :edit, :standings]
+  before_filter :load_seasons, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def add_divisions_breadcrumb
@@ -11,6 +12,10 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   def load_division
     @division = Division.find(params[:id])  
     add_new_breadcrumb @division.name
+  end
+
+  def load_seasons
+    @all_seasons = Season.all.desc(:starts_on).entries    
   end
 
   def index
@@ -39,7 +44,6 @@ class Admin::DivisionsController < Admin::BaseLeagueController
 
   def new
     @division = Division.new
-    @all_seasons = Season.all.desc(:starts_on).entries
 
     respond_to do |format|
       format.html # new.html.erb
@@ -47,7 +51,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def edit
-    @all_seasons = Season.all.desc(:starts_on).entries
+
   end
 
   def create
@@ -63,6 +67,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
       if @division.save
         format.html { return_to_last_point(:notice => 'Division was successfully created.') }
       else
+        load_seasons
         format.html { render :action => "new" }
       end
     end
@@ -76,6 +81,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
       if @division.update_attributes(params[:division])
         format.html { return_to_last_point(:notice => 'Division was successfully updated.') }
       else
+        load_seasons
         format.html { render :action => "edit" }
       end
     end
