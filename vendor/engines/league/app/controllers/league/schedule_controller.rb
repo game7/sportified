@@ -1,9 +1,14 @@
 class League::ScheduleController < League::BaseDivisionController
 
+  def links_to_division()
+    links = Division.all.asc(:name).each.collect{ |d| [d.name + " Division", league_schedule_path(d.slug)] }
+    links.insert(0, ['All Divisions', league_schedule_path])
+  end
+
   def links_to_team_schedule(division, season)
     teams = division.teams.for_season(season).asc(:name)
     teams.each.collect do |t|
-      [t.name, league_team_schedule_friendly_path(division.slug, season.slug, t.slug)] 
+      [t.name, league_team_schedule_path(division.slug, season.slug, t.slug)] 
     end   
   end
 
@@ -16,7 +21,8 @@ class League::ScheduleController < League::BaseDivisionController
   # GET /games.xml
   def index
 
-    @team_links = links_to_team_schedule(@division, @season) if @division
+    @division_links = links_to_division
+    @team_links = links_to_team_schedule(@division, @division.default_season) if @division
     
     if params[:season_slug]
       @season = @division.seasons.with_slug(params[:season_slug]).first
