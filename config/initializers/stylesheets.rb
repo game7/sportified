@@ -13,7 +13,7 @@ Sass::Plugin.on_updating_stylesheet do |template, css|
 end
 
 # watch local engines
-Rails::Application.railties.engines.each do |engine|
+Sportified::Application.railties.engines.each do |engine|
   if engine.config.root.to_s.starts_with?(Rails.root)
     Sass::Plugin.add_template_location(engine.config.root + "app/stylesheets", Rails.root + 'tmp/stylesheets/compiled')
   end
