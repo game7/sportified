@@ -38,6 +38,7 @@ class User
 
     def capture_site
       if Site.current
+        self.site_ids =|| []
         self.site_ids << Site.current.id unless site_ids.include?(Site.current.id)
       end
     end

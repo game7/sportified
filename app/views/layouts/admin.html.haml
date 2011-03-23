@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+    //= stylesheet_link_tag 'compiled/application'
+    = stylesheet_link_tag 'compiled/screen', :media => 'screen'
+    = stylesheet_link_tag 'compiled/print', :media => 'print'
+    / [if lt IE 8]
+      = stylesheet_link_tag 'compiled/ie'
+    = stylesheet_link_tag *(@stylesheets)
+    = javascript_include_tag 'jquery-1.4.3.min.js'
+    = javascript_include_tag 'rails'
+    = javascript_include_tag 'application'
+    = csrf_meta_tag
+    = yield(:head)
+  %body.bp.two-col
+    #container
+      #hat
+        #site-name #{Site.current.name if Site.current}
+        %ul.user-tasks
+          = render "devise/menu/login_items"
+          = render "devise/menu/user_items"
+        .clear
+      #header
+        #title
+          %a{ :href => "" } [ADMIN SKIN]
+      #site-nav 
+        %nav #{render "layouts/site_navigation"}
+      #breadcrumbs #{render "layouts/breadcrumbs"}
+      #content
+        #area-nav 
+          %nav #{render "layouts/area_navigation"}  
+        #page_header
+          = content_tag :h1, yield(:title) if show_title?
+        - unless flash[:notice]
+          #flash_notice.hidden
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
+        .wrapper
+          = yield
+      #footer 
