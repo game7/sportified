@@ -13,6 +13,10 @@ class Game
   referenced_in :right_team, :class_name => "Team"
   embeds_one :result, :class_name => "GameResult"
 
+  validates_presence_of :starts_on
+  validates_presence_of :division
+  validates_presence_of :season
+
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
   scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
   scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }

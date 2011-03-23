@@ -17,3 +17,16 @@ Team.blueprint do
   division { Division.make }
   season { Season.make }
 end
+
+Game.blueprint do
+  division { Division.make }
+  season { Season.make }
+  starts_on { DateTime.now }
+  left_team { Team.make }
+  right_team { Team.make }
+end
+
+GameResult.blueprint do
+  left_team_score { rand(5) }
+  right_team_score { rand(5) }
+end
