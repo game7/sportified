@@ -8,14 +8,11 @@ describe Season do
 
   describe "validations" do
     
-    it "should have a name" do
-      @season.name = ""
-      @season.valid?.should == false
-    end
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:starts_on) }
 
-    it "should have a starts on date" do
-      @season.starts_on = nil
-      @season.valid?.should == false
+    it "should otherwise be valid" do
+      @season.valid?.should == true      
     end
 
   end

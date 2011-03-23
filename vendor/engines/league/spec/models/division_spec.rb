@@ -8,9 +8,10 @@ describe Division do
 
   describe "validations" do
     
-    it "should have a name" do
-      @division.name = ""
-      @division.valid?.should == false
+    it { should validate_presence_of(:name) }
+
+    it "should otherwise be valid" do
+      @division.valid?.should == true      
     end
 
   end
