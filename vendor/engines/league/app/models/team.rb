@@ -2,7 +2,7 @@ class Team
   include Mongoid::Document
   cache
 
-  attr_accessible :_id, :name, :short_name, :season_id, :division_id
+  attr_accessible :_id, :name, :short_name, :season, :division
   
   field :name
   field :short_name
@@ -21,8 +21,8 @@ class Team
   references_one :record, :class_name => "TeamRecord", :dependent => :delete
 
   validates_presence_of :name
-  validates_presence_of :division_id
-  validates_presence_of :season_id
+  validates_presence_of :division
+  validates_presence_of :season
 
   before_save :set_slug
   before_save :ensure_short_name
