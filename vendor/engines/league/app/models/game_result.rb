@@ -11,6 +11,9 @@ class GameResult
   field :right_team_score, :type => Integer
   field :note, :default => ''
 
+  validates_numericality_of :left_team_score, :only_integer => true
+  validates_numericality_of :right_team_score, :only_integer => true
+
   after_create :raise_created_event
   after_destroy :raise_deleted_event
 

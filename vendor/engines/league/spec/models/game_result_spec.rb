@@ -9,6 +9,9 @@ describe GameResult do
 
   describe "validations" do
     
+    it { should validate_numericality_of(:left_team_score) }
+    it { should validate_numericality_of(:right_team_score) }
+    
   end
 
   describe "when created" do
