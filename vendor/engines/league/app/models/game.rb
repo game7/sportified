@@ -13,7 +13,7 @@ class Game
   embeds_one :result, :class_name => "GameResult"
 
   validates_presence_of :starts_on
-  validates_presence_of :season
+  validates_presence_of :season_id
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
   scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
