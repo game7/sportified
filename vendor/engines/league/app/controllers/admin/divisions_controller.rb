@@ -1,7 +1,8 @@
 class Admin::DivisionsController < Admin::BaseLeagueController
   
   before_filter :add_divisions_breadcrumb
-  before_filter :load_division, :only => [:show, :edit, :standings]
+  before_filter :load_division, :only => [:show, :edit, :destroy, :standings]
+  before_filter :load_divisions, :only => [:index]
   before_filter :load_seasons, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -10,17 +11,19 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def load_division
-    @division = Division.find(params[:id])  
+    @division = Division.for_site(Site.current).find(params[:id])  
     add_new_breadcrumb @division.name
   end
 
+  def load_divisions
+    @divisions = Division.for_site(Site.current).asc(:name)    
+  end
+
   def load_seasons
-    @all_seasons = Season.all.desc(:starts_on).entries    
+    @all_seasons = Season.for_site(Site.current).desc(:starts_on).entries    
   end
 
   def index
-    @divisions = Division.asc(:name)
-
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -56,6 +59,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
 
   def create
     @division = Division.new(params[:division])
+    @division.site = Site.current
     if params[:division][:seasons]
       params[:division][:seasons].each do |id|
         season = Season.find(id)
@@ -88,7 +92,6 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def destroy
-    @division = Division.find(params[:id])
     @division.destroy
 
     respond_to do |format|

@@ -2,9 +2,16 @@ require 'sham'
 require 'faker'
 
 Sham.name { Faker::Company.name }
+Sham.host { Faker::Internet.domain_name }
+
+Site.blueprint do
+  name { Sham.name }
+  host { Sham.host }  
+end
 
 Division.blueprint do
   name { Sham.name }
+  site { Site.make }
 end
 
 Season.blueprint do

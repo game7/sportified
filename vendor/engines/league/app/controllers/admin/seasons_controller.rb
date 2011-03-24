@@ -2,7 +2,8 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
   before_filter :add_seasons_breadcrumb  
-  before_filter :load_season, :only => [:show, :edit]
+  before_filter :load_season, :only => [:show, :edit, :delete]
+  before_filter :load_seasons, :only => [:index]
   before_filter :load_division_options, :only => [:new, :edit]
 
   def add_seasons_breadcrumb
@@ -10,24 +11,21 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def load_division_options
-    @division_options = Division.all.asc(:name).entries    
+    @division_options = Division.for_site(Site.current).asc(:name).entries    
   end
 
   def load_season
-    @season = Season.find(params[:id])
-
+    @season = Season.for_site(Site.current).find(params[:id])
     add_new_breadcrumb @season.name
+  end
 
-    #load_area_navigation @division, @season
-
+  def load_seasons
+    @seasons = Season.for_site(Site.current).asc(:name)
   end
 
  
   # GET /seasons
   def index
-    
-    @seasons = Season.all
-
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -63,7 +61,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   # POST /seasons.xml
   def create
     @season = Season.new(params[:season])
-
+    @season.site = Site.current
     respond_to do |format|
       if @season.save
         format.html { return_to_last_point(:notice => 'Season was successfully created.') }
@@ -90,7 +88,6 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   # DELETE /seasons/1
   def destroy
-    @season = Season.find(params[:id])
     @season.destroy
 
     respond_to do |format|
