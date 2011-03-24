@@ -95,6 +95,8 @@ class Admin::GamesController < Admin::BaseLeagueController
       if @game.save
         format.html { return_to_last_point(:notice => 'Game was successfully created.') }
       else
+        load_season_options
+        load_team_options
         format.html { render :action => "new" }
       end
     end
@@ -108,6 +110,8 @@ class Admin::GamesController < Admin::BaseLeagueController
       if @game.update_attributes(params[:game])
         format.html { return_to_last_point(:notice => 'Game was successfully updated.') }
       else
+        load_season_options
+        load_team_options        
         format.html { render :action => "edit" }
       end
     end
