@@ -6,6 +6,7 @@
   resources :users, :only => :show
 
   namespace :host do
+    root :to => "dashboard#index"    
     resources :sites
     resources :users
   end
