@@ -8,9 +8,10 @@ describe Team do
 
   describe "validations" do
     
+    it { should validate_presence_of(:site_id) }
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:season) }
-    it { should validate_presence_of(:division) }
+    it { should validate_presence_of(:season_id) }
+    it { should validate_presence_of(:division_id) }
 
     it "should otherwise be valid" do
       @team.valid?.should == true      

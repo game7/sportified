@@ -23,6 +23,7 @@ Team.blueprint do
   name { Sham.name }
   division { Division.make }
   season { Season.make }
+  site { Site.make }
 end
 
 Game.blueprint do

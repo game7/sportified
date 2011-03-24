@@ -4,33 +4,41 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :add_teams_breadcrumb
   before_filter :load_division, :only => [:index]
   before_filter :load_season, :only => [:index]
+  before_filter :load_teams, :only => [:index]
   before_filter :load_division_options, :only => [:index, :new, :edit]
   before_filter :load_season_options, :only => [:index, :new, :edit]
-  before_filter :load_team, :only => [:show, :edit, :schedule]
+  before_filter :load_team, :only => [:show, :edit, :destroy]
 
   def add_teams_breadcrumb
     add_new_breadcrumb 'Teams', admin_teams_path  
   end
 
   def load_division
-    @division = Division.find(params[:division_id]) if params[:division_id]
+    @division = Division.for_site(Site.current).find(params[:division_id]) if params[:division_id]
   end
 
   def load_season
-    @season = Season.find(params[:season_id]) if params[:season_id]    
+    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]    
   end
 
   def load_division_options
-    @divisions = Division.all.asc(:name).entries
+    @divisions = Division.for_site(Site.current).asc(:name).entries
   end
 
   def load_season_options
-    @seasons = Season.all.desc(:starts_on).entries
+    @seasons = Season.for_site(Site.current).desc(:starts_on).entries
+  end
+
+  def load_teams
+    @teams = Team.for_site(Site.current)
+    @teams = @teams.for_division(@division) if @division
+    @teams = @teams.for_season(@season) if @season
+    @teams = @teams.asc(:division_name).asc(:name).entries    
   end
 
   def load_team
     
-    @team = Team.find(params[:id])
+    @team = Team.for_site(Site.current).find(params[:id])
     @division = @team.division
     @season = @team.season
 
@@ -41,30 +49,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
     #load_area_navigation @division
   end
 
-  #def load_for_division
-  #  
-  #  @division = params[:division_id] ? Division.find(params[:division_id]) : Division.with_slug(params[:division_slug]).first
-  #  @season = params[:season_slug] ? @division.seasons.with_slug(params[:season_slug]).first : @division.default_season
-#
-  #  add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
-  #  add_new_breadcrumb @season.name if @season#, league_season_friendly_path(@division.slug, @season.slug)
-#
-  #  load_area_navigation @division
-  #  
-  #end
-#
-  #def links_to_team_schedule(division, season)
-  #  teams = division.teams.for_season(season).asc(:name)
-  #  teams.each.collect do |t|
-  #    [t.name, league_team_schedule_friendly_path(division.slug, season.slug, t.slug)] 
-  #  end   
-  #end
-
   def index
-    @teams = Team.all
-    @teams = @teams.for_division(@division) if @division
-    @teams = @teams.for_season(@season) if @season
-    @teams = @teams.asc(:division_name).asc(:name).entries
 
     respond_to do |format|
       format.html # index.html.erb
@@ -73,8 +58,6 @@ class Admin::TeamsController < Admin::BaseLeagueController
     end
   end
 
-  # GET /teams/1
-  # GET /teams/1.xml
   def show
     @team ||= Team.find(params[:id])
 
@@ -104,7 +87,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   # POST /teams
   def create
     @team = Team.new(params[:team])
-
+    @team.site = Site.current
     respond_to do |format|
       if @team.save
         format.html { return_to_last_point(:notice => 'Team was successfully created.') }
@@ -132,7 +115,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   # DELETE /teams/1
   def destroy
-    @team = Team.find(params[:id])
+
     @team.destroy
 
     respond_to do |format|
