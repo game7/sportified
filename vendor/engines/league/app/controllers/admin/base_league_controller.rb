@@ -4,7 +4,7 @@ class Admin::BaseLeagueController < Admin::AdminController
 
   def set_area_info
     @breadcrumbs = []
-    @breadcrumbs << { :title => "Admin"}
+    @breadcrumbs << { :title => "Admin", :url => admin_root_path}
     @breadcrumbs << { :title => "League", :url => admin_league_path}
   end
 

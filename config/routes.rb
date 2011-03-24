@@ -1,8 +1,7 @@
 ::Sportified::Application.routes.draw do
 
-  match "home/index" => "home#index", :via => :get
-
   root :to => "welcome#index"
+  
   devise_for :users
   resources :users, :only => :show
 
@@ -12,6 +11,7 @@
   end
 
   namespace :admin do
+    root :to => "dashboard#index"
     resources :users
     resource :site#, :only => [ :edit, :update ]
   end
