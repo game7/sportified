@@ -10,7 +10,6 @@ describe Game do
     
     it { should validate_presence_of(:starts_on) }
     it { should validate_presence_of(:season) }
-    it { should validate_presence_of(:division) }
 
     it "should otherwise be valid" do
       @game.valid?.should == true      

@@ -7,14 +7,12 @@ class Game
   field :left_team_name
   field :right_team_name
 
-  referenced_in :division
   referenced_in :season
   referenced_in :left_team, :class_name => "Team"
   referenced_in :right_team, :class_name => "Team"
   embeds_one :result, :class_name => "GameResult"
 
   validates_presence_of :starts_on
-  validates_presence_of :division
   validates_presence_of :season
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }

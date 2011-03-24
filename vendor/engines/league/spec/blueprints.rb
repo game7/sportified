@@ -19,7 +19,6 @@ Team.blueprint do
 end
 
 Game.blueprint do
-  division { Division.make }
   season { Season.make }
   starts_on { DateTime.now }
   left_team { Team.make }
