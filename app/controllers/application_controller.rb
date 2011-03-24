@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails
     ["compiled/#{controller_path}/shared", "compiled/#{controller_path}/#{action_name}"].each do |stylesheet|
-      @stylesheets << stylesheet if File.exists? "#{RAILS_ROOT}/tmp/stylesheets/#{stylesheet}.css"
+      @stylesheets << stylesheet if File.exists? "#{::Rails.root.to_s}/tmp/stylesheets/#{stylesheet}.css"
     end
   end
 
