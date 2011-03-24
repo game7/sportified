@@ -11,7 +11,7 @@ class Season
   references_many :games
   references_many :teams
 
-  validates_presence_of :name, :starts_on
+  validates_presence_of :name, :starts_on, :site_id
 
   class << self
     def for_site(s)

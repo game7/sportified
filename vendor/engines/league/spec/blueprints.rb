@@ -17,6 +17,7 @@ end
 Season.blueprint do
   name { Sham.name }
   starts_on { 1.day.ago }
+  site { Site.make }
 end
 
 Team.blueprint do
