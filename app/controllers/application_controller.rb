@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_site
-    Site.current ||= find_site
+    Site.current = find_site
   end
 
   def find_site
