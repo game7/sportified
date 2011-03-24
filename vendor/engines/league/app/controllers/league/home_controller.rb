@@ -1,8 +1,8 @@
 class League::HomeController < League::BaseLeagueController
   
   def index
-    @divisions = Division.all.asc(:name).entries
-    @seasons = Season.all.desc(:starts_on).entries
+    @divisions = Division.for_site(Site.current).asc(:name).entries
+    @seasons = Season.for_site(Site.current).desc(:starts_on).entries
   end
 
 end

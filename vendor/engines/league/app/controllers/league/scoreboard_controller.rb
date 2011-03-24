@@ -18,7 +18,7 @@ class League::ScoreboardController < League::BaseDivisionController
   end
 
   def index
-    @games = Game.between(@start_date, @end_date)
+    @games = Game.for_site(Site.current).between(@start_date, @end_date)
     @games = @games.for_division(@division) if @division
     @games = @games.desc(:starts_on).entries
   end

@@ -1,7 +1,7 @@
 class League::ScheduleController < League::BaseDivisionController
 
   def links_to_division()
-    links = Division.all.asc(:name).each.collect{ |d| [d.name + " Division", league_schedule_path(d.slug)] }
+    links = Division.for_site(Site.current).asc(:name).each.collect{ |d| [d.name + " Division", league_schedule_path(d.slug)] }
     links.insert(0, ['All Divisions', league_schedule_path])
   end
 
@@ -27,10 +27,6 @@ class League::ScheduleController < League::BaseDivisionController
     if params[:season_slug]
       @season = @division.seasons.with_slug(params[:season_slug]).first
       @games = @division.games.for_season(@season).asc(:starts_on)
-      if params[:team_slug]
-        @team = @season.teams.with_slug(params[:team_slug])
-        @games = @games.for_team(@team.id)
-      end
     else
       @date = params[:date] ? Date.parse(params[:date]) : Date.current
       @days_in_future = 14
@@ -39,7 +35,7 @@ class League::ScheduleController < League::BaseDivisionController
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
-      @games = Game.between(@start_date, @end_date)
+      @games = Game.for_site(Site.current).between(@start_date, @end_date)
       @games = @games.for_division(@division) if @division
       @games = @games.asc(:starts_on).entries
     end

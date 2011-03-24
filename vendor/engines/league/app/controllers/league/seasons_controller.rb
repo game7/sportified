@@ -6,10 +6,10 @@ class League::SeasonsController < League::BaseLeagueController
   def load_for_season
     
     if params[:id]
-      @season = Season.find(params[:id])
+      @season = Season.for_site(Site.current).find(params[:id])
       @division = @season.division
     else
-      @division = Division.with_slug(params[:division_slug]).first
+      @division = Division.for_site(Site.current).with_slug(params[:division_slug]).first
       @season = @division.seasons.with_slug(params[:season_slug]).first
     end
 
@@ -25,7 +25,7 @@ class League::SeasonsController < League::BaseLeagueController
   # GET /seasons.xml
   def index
 
-    @seasons = Season.all
+    @seasons = Season.for_site(Site.current)
 
     respond_to do |format|
       format.html # index.html.erb

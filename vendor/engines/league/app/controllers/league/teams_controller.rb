@@ -37,7 +37,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
 
   def schedule
     add_new_breadcrumb "Schedule"
-    @games = Game.for_team(@team).asc(:starts_on)
+    @games = Game.for_site(Site.current).for_team(@team).asc(:starts_on)
     @team_links = links_to_team_schedule(@division, @season)
   end
 

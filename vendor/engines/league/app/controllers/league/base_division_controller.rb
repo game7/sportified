@@ -2,7 +2,7 @@ class League::BaseDivisionController < League::BaseLeagueController
   
   def load_objects
     super
-    @division = Division.with_slug(params[:division_slug]).first if params[:division_slug]
+    @division = Division.for_site(Site.current).with_slug(params[:division_slug]).first if params[:division_slug]
   end
 
   def set_breadcrumbs
