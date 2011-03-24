@@ -8,15 +8,8 @@ describe Site do
 
   context "when validating" do
     
-    it "should have a name" do
-      @site.name = ""
-      @site.valid?.should == false
-    end
-
-    it "should have a host" do
-      @site.host = nil
-      @site.valid?.should == false
-    end
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:host) }
 
   end
 

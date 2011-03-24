@@ -12,8 +12,6 @@ class Site
 
   references_and_referenced_in_many :users
 
-  embeds_many :blocks
-
   validates_presence_of :name, :host
 
   scope :for_host, lambda { |h| { :where => { :host => h } } }
