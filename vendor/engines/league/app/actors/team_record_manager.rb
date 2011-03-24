@@ -19,6 +19,13 @@ class TeamRecordManager
 
   end
 
+  def update_power_rankings_from_game(game)
+    left_division = game.left_team.division_id
+    right_division = game.right_team.division_id
+    update_power_rankings(left_division, game.season_id)
+    update_power_rankings(right_division, game.season_id) if left_division != right_division    
+  end
+
   def update_power_rankings(division_id, season_id)
     
     records = Hash.new
@@ -98,7 +105,7 @@ class TeamRecordManager
     game = Game.find(event.data[:game_id])
     manager = TeamRecordManager.new
     manager.post_result_to_team_records!(game)
-    manager.update_power_rankings(game.division_id, game.season_id)
+    manager.update_power_rankings_from_game(game)
 
   end
 
@@ -112,7 +119,7 @@ class TeamRecordManager
     right.cancel_result_for_game(game)
     right.save
     manager = TeamRecordManager.new
-    manager.update_power_rankings(game.division_id, game.season_id)
+    manager.update_power_rankings_from_game(game)
 
   end
 
