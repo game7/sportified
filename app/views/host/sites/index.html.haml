@@ -1,14 +1,12 @@
 %table
   %tr
     %td Name
-    %td Subdomain
-    %td Domain
+    %td Host
     %td Actions
   - @sites.each do |site|
     %tr
       %td #{site.name}
-      %td #{site.subdomain}
-      %td #{site.domain}
+      %td #{site.host}
       %td Edit | Delete
 
 
