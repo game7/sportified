@@ -10,6 +10,7 @@ describe Game do
     
     it { should validate_presence_of(:starts_on) }
     it { should validate_presence_of(:season_id) }
+    it { should validate_presence_of(:site_id) }
 
     it "should otherwise be valid" do
       @game.valid?.should == true      

@@ -32,6 +32,7 @@ Game.blueprint do
   starts_on { DateTime.now }
   left_team { Team.make }
   right_team { Team.make }
+  site { Site.make }
 end
 
 GameResult.blueprint do

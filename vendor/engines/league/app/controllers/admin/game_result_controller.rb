@@ -1,18 +1,23 @@
 class Admin::GameResultController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :destroy]
+  before_filter :load_game
+  before_filter :get_season
+
+  def load_game
+    @game = Game.for_site(Site.current).find(params[:game_id])    
+  end
+  
+  def get_season
+    @season = @game.season    
+  end
 
   def new
-    @game = Game.find(params[:game_id])
-    @season = @game.season
     @game.build_result
-
   end
 
   def create
-    @game = Game.find(params[:game_id])
     @game.build_result(params[:game_result])
-    @season = @game.season
 
     respond_to do |format|
       if @game.result.save
@@ -24,10 +29,8 @@ class Admin::GameResultController < Admin::BaseLeagueController
   end
 
   def destroy
-    @game = Game.find(params[:game_id])
     @game.result.destroy
     @game.save
-    @season = @game.season
 
     respond_to do |format|
       format.html { return_to_last_point(:notice => 'Game Result has been deleted.') }

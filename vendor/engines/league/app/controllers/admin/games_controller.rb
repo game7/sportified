@@ -5,28 +5,29 @@ class Admin::GamesController < Admin::BaseLeagueController
   before_filter :load_season_options, :only => [:index, :new, :edit]
   before_filter :load_division_options, :only => [:index]
   before_filter :load_team_options, :only => [:new, :edit]
-  before_filter :load_game, :only => [:show, :edit]
+  before_filter :load_game, :only => [:show, :edit, :destroy]
+  before_filter :load_games, :only => [:index]
   before_filter :load_division, :only => [:index]
   before_filter :load_season, :only => [:index]
 
   def load_division
-    @division = Division.find(params[:division_id]) if params[:division_id]
+    @division = Division.for_site(Site.current).find(params[:division_id]) if params[:division_id]
   end
 
   def load_season
-    @season = Season.find(params[:season_id]) if params[:season_id]    
+    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]    
   end
 
   def load_division_options
-    @divisions = Division.all.asc(:name).entries
+    @divisions = Division.for_site(Site.current).asc(:name).entries
   end
 
   def load_season_options
-    @seasons = Season.all.desc(:starts_on).entries
+    @seasons = Season.for_site(Site.current).desc(:starts_on).entries
   end
 
   def load_team_options
-    @teams = Team.all.asc(:name).entries.collect do |team|
+    @teams = Team.for_site(Site.current).asc(:name).entries.collect do |team|
       [ "#{team.name} (#{team.division_name} Division)", team.id ]
     end
   end
@@ -35,14 +36,11 @@ class Admin::GamesController < Admin::BaseLeagueController
     add_new_breadcrumb 'Games', admin_games_path  
   end
 
-
   def load_game
-    @game = Game.find(params[:id])        
+    @game = Game.for_site(Site.current).find(params[:id])        
   end
 
-  # GET /games
-  def index
-    
+  def load_games
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     @days_in_future = 14
     @days_in_past = 7
@@ -51,11 +49,15 @@ class Admin::GamesController < Admin::BaseLeagueController
     @next_date = @date + @days_in_future + @days_in_past
     @prev_date = @date - @days_in_future - @days_in_past
 
-    @games = Game.all    
+    @games = Game.for_site(Site.current)    
     @games = @games.for_division(@division) if @division
     @games = @games.for_season(@season) if @season
     @games = @games.between(@start_date, @end_date) unless @division && @season
-    @games = @games.asc(:starts_on)
+    @games = @games.asc(:starts_on)    
+  end
+
+  # GET /games
+  def index
    
     respond_to do |format|
       format.html
@@ -90,7 +92,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   def create
 
     @game = Game.new(params[:game])
-
+    @game.site = Site.current
     respond_to do |format|
       if @game.save
         format.html { return_to_last_point(:notice => 'Game was successfully created.') }
@@ -120,7 +122,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   # DELETE /games/1
   # DELETE /games/1.xml
   def destroy
-    @game = Game.find(params[:id])
+
     @game.destroy
 
     respond_to do |format|
