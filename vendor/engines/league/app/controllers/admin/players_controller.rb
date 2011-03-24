@@ -5,7 +5,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   before_filter :add_team_breadcrumbs, :only => [:index]
 
   def load_team
-    @team = Team.find(params[:team_id])    
+    @team = Team.for_site(Site.current).find(params[:team_id])    
   end
 
   def add_team_breadcrumbs

@@ -1,12 +1,16 @@
 class Admin::StandingsColumnsController < Admin::BaseLeagueController
   
+  before_filter :load_division
+
+  def load_division
+    @division = Division.for_site(Site.current).find(params[:division_id])
+  end
+
   def get_columns(division)
     division.standings_columns.asc(:order).entries
   end
-
   
   def create
-    @division = Division.find(params[:division_id])
     @standings_column = @division.standings_columns.build(params[:standings_column])
     @standings_column.order = @division.standings_columns.count - 1
     if @standings_column.save
@@ -18,7 +22,6 @@ class Admin::StandingsColumnsController < Admin::BaseLeagueController
   end
 
   def push_left
-    @division = Division.find(params[:division_id])
     @columns = get_columns(@division)
     col = @division.standings_columns.find(params[:id])
     index = @columns.index(col)
@@ -36,7 +39,6 @@ class Admin::StandingsColumnsController < Admin::BaseLeagueController
   end
 
   def push_right
-    @division = Division.find(params[:division_id])
     @columns = get_columns(@division)
     col = @division.standings_columns.find(params[:id])
     index = @columns.index(col)
@@ -54,7 +56,6 @@ class Admin::StandingsColumnsController < Admin::BaseLeagueController
   end
 
   def destroy
-    @division = Division.find(params[:division_id])
     @division.standings_columns.find(params[:id]).delete
     flash[:notice] = "Column has been removed"
     @columns = get_columns(@division)
