@@ -1,0 +1,7 @@
+= semantic_form_for [:admin, @layout] do |f|
+  = f.inputs do
+    = f.input :name
+  = f.buttons do
+    = f.commit_button
+    %li
+      = link_to 'Cancel', admin_standings_layouts_path

@@ -1,0 +1,16 @@
+- title "Standings Layouts"
+
+%table
+  %tr
+    %th Name
+    %th Actions
+  - @layouts.each do |layout|
+    %tr
+      %td #{layout.name}
+      %td
+        = link_to 'Go To', [:admin, layout]
+        = link_to 'Edit', edit_admin_standings_layout_path(layout)
+        = link_to 'Columns', admin_standings_layout_standings_columns_path(layout)
+        = link_to 'Delete', [:admin, layout], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Layout', new_admin_standings_layout_path

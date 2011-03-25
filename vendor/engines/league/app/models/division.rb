@@ -8,6 +8,7 @@ class Division
   referenced_in :site
   references_and_referenced_in_many :seasons
   referenced_in :current_season, :class_name => "Season"
+  referenced_in :standings_layout
 
   references_many :games
   references_many :teams
@@ -15,8 +16,6 @@ class Division
 
   validates_presence_of :name
   validates_presence_of :site_id
-
-  embeds_many :standings_columns, :class_name => "StandingsColumn"
 
   before_save :set_slug
 

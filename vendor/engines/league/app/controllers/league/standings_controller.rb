@@ -6,9 +6,15 @@ class League::StandingsController < League::BaseDivisionSeasonController
   end
   
   def index
-    @columns = @division.standings_columns.asc(:order)
-    @team_records = @division.team_records.for_season(@season).desc(:pts).entries
-    if @columns.count == 0 then flash[:error] = "Standings layout has not been setup for this season" end
+    layout = @division.standings_layout
+    if layout
+      @columns = @division.standings_layout.columns.asc(:order)
+      @team_records = @division.team_records.for_season(@season).desc(:pts).entries
+    else 
+      @columns = []
+      @team_records = []
+      flash[:error] = "Standings layout has not been setup for this division"
+    end
   end
 
 

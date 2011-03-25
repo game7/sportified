@@ -14,6 +14,17 @@ Division.blueprint do
   site { Site.make }
 end
 
+StandingsLayout.blueprint do
+  name { Sham.name }
+  site { Site.make }
+end
+
+StandingsColumn.blueprint do
+  title { Sham.name }
+  field_name { Sham.name }
+  description { Faker::Lorem.words }
+end
+
 Season.blueprint do
   name { Sham.name }
   starts_on { 1.day.ago }

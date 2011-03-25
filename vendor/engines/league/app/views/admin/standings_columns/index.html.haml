@@ -1,0 +1,5 @@
+- title 'Standings Columns - ' + @layout.name
+
+= render :partial => 'table', :locals => { :columns => @columns }
+
+= render :partial => 'form', :locals => { :layout => @layout }

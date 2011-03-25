@@ -6,6 +6,8 @@ class StandingsColumn
   field :description
   field :order
 
-  embedded_in :parent, :inverse_of => :standings_columns
+  embedded_in :parent, :inverse_of => :columns
+
+  validates_presence_of :field_name, :title, :description
 
 end

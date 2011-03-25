@@ -4,6 +4,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   before_filter :load_division, :only => [:show, :edit, :destroy, :standings]
   before_filter :load_divisions, :only => [:index]
   before_filter :load_seasons, :only => [:new, :edit]
+  before_filter :load_standings_layouts, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def add_divisions_breadcrumb
@@ -21,6 +22,10 @@ class Admin::DivisionsController < Admin::BaseLeagueController
 
   def load_seasons
     @all_seasons = Season.for_site(Site.current).desc(:starts_on).entries    
+  end
+
+  def load_standings_layouts
+    @standings_layouts = StandingsLayout.for_site(Site.current).desc(:name).entries    
   end
 
   def index
@@ -72,6 +77,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
         format.html { return_to_last_point(:notice => 'Division was successfully created.') }
       else
         load_seasons
+        load_standings_layouts
         format.html { render :action => "new" }
       end
     end
@@ -86,6 +92,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
         format.html { return_to_last_point(:notice => 'Division was successfully updated.') }
       else
         load_seasons
+        load_standings_layouts
         format.html { render :action => "edit" }
       end
     end
