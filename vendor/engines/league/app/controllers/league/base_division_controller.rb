@@ -7,7 +7,7 @@ class League::BaseDivisionController < League::BaseLeagueController
 
   def set_breadcrumbs
     super
-    add_new_breadcrumb( "#{@division.name} Division", league_division_path(@division.slug) ) if @division
+    add_breadcrumb( "#{@division.name} Division", league_division_path(@division.slug) ) if @division
   end
 
   def set_area_navigation

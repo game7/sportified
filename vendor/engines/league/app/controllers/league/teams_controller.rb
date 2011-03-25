@@ -4,7 +4,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
 
   def set_team_breadcrumbs 
-    add_new_breadcrumb @team.name if @team
+    add_breadcrumb @team.name if @team
   end
 
   def load_team
@@ -26,7 +26,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def index
-    add_new_breadcrumb "Teams"
+    add_breadcrumb "Teams"
     @teams = @division.teams.for_season(@season).asc(:name).entries
 
     respond_to do |format|
@@ -36,13 +36,13 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def schedule
-    add_new_breadcrumb "Schedule"
+    add_breadcrumb "Schedule"
     @games = Game.for_site(Site.current).for_team(@team).asc(:starts_on)
     @team_links = links_to_team_schedule(@division, @season)
   end
 
   def roster
-    add_new_breadcrumb "Roster"
+    add_breadcrumb "Roster"
     @players = @team.players.asc(:last_name)
     @team_links = links_to_team_roster(@division, @season)
   end

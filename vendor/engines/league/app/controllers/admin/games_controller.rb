@@ -33,7 +33,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def add_games_breadcrumb
-    add_new_breadcrumb 'Games', admin_games_path  
+    add_breadcrumb 'Games', admin_games_path  
   end
 
   def load_game

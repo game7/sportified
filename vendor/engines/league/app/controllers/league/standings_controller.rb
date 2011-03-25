@@ -2,7 +2,7 @@ class League::StandingsController < League::BaseDivisionSeasonController
 
   def set_breadcrumbs
     super
-    add_new_breadcrumb "Standings" 
+    add_breadcrumb "Standings" 
   end
   
   def index

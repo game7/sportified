@@ -4,7 +4,7 @@ class League::ScoreboardController < League::BaseDivisionController
 
   def set_breadcrumbs
     super
-    add_new_breadcrumb "Scoreboard"
+    add_breadcrumb "Scoreboard"
   end
 
   def get_dates

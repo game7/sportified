@@ -7,15 +7,42 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_current_site
   before_filter :add_stylesheets
+  before_filter :load_objects
+  before_filter :set_breadcrumbs
+  before_filter :set_area_navigation
+
+  def initialize
+    super
+    @stylesheets = []
+    @breadcrumbs = []
+  end
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
 
-  def initialize
-    super
-    @stylesheets = []
+  def load_objects
+    
   end
+
+  def set_breadcrumbs
+    @breadcrumbs ||= []
+  end
+
+  def set_area_navigation
+    
+  end
+
+  def add_breadcrumb(title, url = nil)
+    @breadcrumbs ||= []
+    @breadcrumbs << { :title => title, :url => url }
+  end
+
+  def add_area_menu_item(title, url = nil)
+    @area_menu_items ||= []
+    @area_menu_items << { :title => title, :url => url }
+  end
+
 
   def set_current_site
     Site.current = find_site

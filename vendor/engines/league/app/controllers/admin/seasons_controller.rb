@@ -7,7 +7,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   before_filter :load_division_options, :only => [:new, :edit]
 
   def add_seasons_breadcrumb
-    add_new_breadcrumb 'Seasons', admin_seasons_path    
+    add_breadcrumb 'Seasons', admin_seasons_path    
   end
 
   def load_division_options
@@ -16,7 +16,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   def load_season
     @season = Season.for_site(Site.current).find(params[:id])
-    add_new_breadcrumb @season.name
+    add_breadcrumb @season.name
   end
 
   def load_seasons

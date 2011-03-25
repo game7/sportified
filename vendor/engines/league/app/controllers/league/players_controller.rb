@@ -15,9 +15,9 @@ class League::PlayersController < League::BaseDivisionSeasonController
       @team = @season.teams.with_slug(params[:team_slug]).first
     end
 
-    add_new_breadcrumb @division.name, league_division_friendly_path(@division.slug)
-    add_new_breadcrumb @season.name
-    add_new_breadcrumb @team.name
+    add_breadcrumb @division.name, league_division_friendly_path(@division.slug)
+    add_breadcrumb @season.name
+    add_breadcrumb @team.name
 
     load_area_navigation @division
   end

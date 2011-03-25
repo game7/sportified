@@ -7,12 +7,12 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def add_divisions_breadcrumb
-    add_new_breadcrumb 'Divisions', admin_divisions_path    
+    add_breadcrumb 'Divisions', admin_divisions_path    
   end
 
   def load_division
     @division = Division.for_site(Site.current).find(params[:id])  
-    add_new_breadcrumb @division.name
+    add_breadcrumb @division.name
   end
 
   def load_divisions

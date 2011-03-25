@@ -10,7 +10,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :load_team, :only => [:show, :edit, :destroy]
 
   def add_teams_breadcrumb
-    add_new_breadcrumb 'Teams', admin_teams_path  
+    add_breadcrumb 'Teams', admin_teams_path  
   end
 
   def load_division
@@ -42,9 +42,9 @@ class Admin::TeamsController < Admin::BaseLeagueController
     @division = @team.division
     @season = @team.season
 
-    add_new_breadcrumb @division.name
-    add_new_breadcrumb @season.name
-    add_new_breadcrumb @team.name
+    add_breadcrumb @division.name
+    add_breadcrumb @season.name
+    add_breadcrumb @team.name
 
     #load_area_navigation @division
   end
@@ -72,7 +72,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
     @team.division_id = params[:division_id]
     @team.season_id = params[:season_id]
 
-    add_new_breadcrumb 'New'
+    add_breadcrumb 'New'
 
     respond_to do |format|
       format.html # new.html.erb

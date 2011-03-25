@@ -8,7 +8,7 @@ class League::BaseDivisionSeasonController < League::BaseDivisionController
 
   def set_breadcrumbs
     super
-    add_new_breadcrumb "#{@season.name} Season" if @season 
+    add_breadcrumb "#{@season.name} Season" if @season 
   end
 
 end

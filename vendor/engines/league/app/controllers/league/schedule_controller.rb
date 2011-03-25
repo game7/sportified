@@ -14,7 +14,7 @@ class League::ScheduleController < League::BaseDivisionController
 
   def set_breadcrumbs
     super
-    add_new_breadcrumb "Schedule"
+    add_breadcrumb "Schedule"
   end
 
   # GET /games

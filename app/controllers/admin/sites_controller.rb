@@ -1,4 +1,5 @@
 class Admin::SitesController < Admin::AdminController
+  
   before_filter :mark_return_point, :only => :edit
   before_filter :get_site
 
@@ -7,7 +8,7 @@ class Admin::SitesController < Admin::AdminController
   end
   
   def edit
-
+    add_breadcrumb("Settings")
   end
 
   def update
