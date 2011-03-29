@@ -1,0 +1,35 @@
+- javascript("jquery-ui.min.js")
+
+= render 'admin/hockey_statsheets/scoreboard'
+
+- tabs_for do |tab|
+  - tab.create('player', 'Players') do
+    .left
+      %h5 #{@statsheet.left_team_name}
+      #players-left
+        #{render :partial => 'admin/hockey_statsheets/players', :locals => {:players => @statsheet.players.left} }
+    .left
+      %h5 #{@statsheet.right_team_name}
+      #players-right
+        #{render :partial => 'admin/hockey_statsheets/players', :locals => {:players => @statsheet.players.right} }
+    .clear
+  - tab.create('scoring', 'Scoring') do
+    #goals
+      #{render :partial => 'admin/hockey_statsheets/goals', :locals => {:goals => @statsheet.events.goals} }
+    = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true
+  - tab.create('penalties', 'Penalties') do
+    #penalties
+      #{render :partial => 'admin/hockey_statsheets/penalties', :locals => {:penalties => @statsheet.events.penalties} }
+    = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true
+  - tab.create('goaltending', 'Goaltending') do
+    #goaltenders
+      #{render :partial => 'admin/hockey_goaltenders/list', :locals => {:goaltenders => @statsheet.goaltenders} }
+    = link_to 'Add Goaltender', new_admin_hockey_statsheet_goaltender_path(@statsheet), :remote => true
+
+#dialog-modal
+
+  
+:javascript
+  $(function(){
+    $('#tabs').tabs();
+  });

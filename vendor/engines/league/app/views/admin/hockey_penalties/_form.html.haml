@@ -1,0 +1,18 @@
+= semantic_form_for( @penalty, :url => url, :remote => true ) do |f|
+  = f.inputs do
+    = f.input :per, :as => :select, :collection => HockeyGoal.periods
+    = f.input :min
+    = f.input :sec
+    = f.input :side, :as => :select, :collection => @sides
+    = f.input :plr
+    = f.input :inf
+    = f.input :dur
+    = f.input :severity, :as => :select, :collection => HockeyPenalty.severities
+    = f.input :start_per
+    = f.input :start_min
+    = f.input :start_sec
+    = f.input :end_per
+    = f.input :end_min
+    = f.input :end_sec
+  = f.buttons do
+    = f.submit

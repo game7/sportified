@@ -50,3 +50,14 @@ GameResult.blueprint do
   left_team_score { rand(5) }
   right_team_score { rand(5) }
 end
+
+HockeyGoal.blueprint do
+  per { rand(3) }
+  min { rand(15) }
+  sec { rand(60) }
+  side { 'L' }
+  plr { rand(29) }
+  a1 { rand(29) }
+  a2 { rand(29) }
+  str { 'EV' }
+end

@@ -1,0 +1,13 @@
+%table
+  %tr
+    %td GP
+    %td #
+    %td NAME
+    %td 
+  - players.each do |p|
+    %tr
+      %td #{p.played ? 'X' : ''}
+      %td #{p.num}
+      %td #{p.name}
+      %td
+        = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, p), :remote => true, :title => 'Edit this player'

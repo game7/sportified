@@ -1,0 +1,6 @@
+$("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+$("#flash_notice").show(300);
+$("#goals").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/goals", :locals => { :goals => @statsheet.events.goals } ) )%>");
+$("#left_score").html(<%= @statsheet.left_score %>);
+$("#right_score").html(<%= @statsheet.right_score %>);
+

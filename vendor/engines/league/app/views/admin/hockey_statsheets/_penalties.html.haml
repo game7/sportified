@@ -1,0 +1,27 @@
+%table
+  %tr
+    %td 
+    %td PER
+    %td TIME
+    %td TEAM
+    %td NUM
+    %td MIN
+    %td INFRACTION
+    %td START
+    %td END
+    %td
+  - penalties.sorted_by_time.each_with_index do |p, i|
+    %tr
+      %td #{(i+1).to_s}
+      %td #{p.per}
+      %td #{p.time}
+      %td #{p.side == 'L' ? @statsheet.left_team_name : @statsheet.right_team_name}
+      %td #{p.plr}
+      %td #{p.dur}
+      %td #{p.inf} (#{p.severity})
+      %td #{p.start_time}
+      %td #{p.end_time}
+      %td 
+        = link_to 'Edit', edit_admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :title => 'Edit this penalty'
+        = link_to 'Delete', admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this penalty'
+

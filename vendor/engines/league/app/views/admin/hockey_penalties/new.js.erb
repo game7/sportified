@@ -1,0 +1,15 @@
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_penalties/new" ) )%>");
+$('#dialog-modal').dialog({
+  title: 'Add Penalty',
+  height: 400,
+  width: 500,
+  modal: true,
+  buttons: {
+    Save: function() {
+      $(this).children("form").submit();
+    },
+    Cancel: function() {
+      $(this).dialog("close");
+    }
+  }
+});

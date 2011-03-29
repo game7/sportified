@@ -11,7 +11,9 @@ class Game
   referenced_in :season
   referenced_in :left_team, :class_name => "Team"
   referenced_in :right_team, :class_name => "Team"
+  
   embeds_one :result, :class_name => "GameResult"
+  referenced_in :statsheet
 
   validates_presence_of :starts_on, :season_id, :site_id
 
@@ -53,6 +55,18 @@ class Game
 
   def can_delete_result?
     self.has_result?
+  end
+
+  def has_statsheet?
+    !self.statsheet_id.nil?
+  end
+
+  def can_add_statsheet?
+    !self.has_statsheet? && self.starts_on < DateTime.now
+  end
+
+  def can_add_statsheet?
+    !self.has_statsheet? && self.starts_on < DateTime.now
   end
 
   private

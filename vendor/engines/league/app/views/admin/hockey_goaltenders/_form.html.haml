@@ -1,0 +1,18 @@
+= semantic_form_for( @goaltender, :url => url, :remote => true ) do |f|
+  = f.inputs do
+    = f.input :side, :as => :select, :collection => @sides
+    = f.input :plr
+    = f.input :min_1
+    = f.input :min_2
+    = f.input :min_3
+    = f.input :min_ot
+    = f.input :shots_1
+    = f.input :shots_2
+    = f.input :shots_3
+    = f.input :shots_ot
+    = f.input :goals_1
+    = f.input :goals_2
+    = f.input :goals_3
+    = f.input :goals_ot
+  = f.buttons do
+    = f.submit

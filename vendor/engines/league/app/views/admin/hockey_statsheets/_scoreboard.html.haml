@@ -1,0 +1,9 @@
+%table
+  %tr
+    %th #{@statsheet.left_team_name}
+    %td{ :rowspan => 2, :width => '50%' }
+      = render 'admin/hockey_statsheets/clock'
+    %th #{@statsheet.right_team_name}
+  %tr
+    %td#left_score #{@statsheet.left_score}
+    %td#right_score #{@statsheet.right_score}

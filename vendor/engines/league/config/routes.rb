@@ -27,6 +27,13 @@
     end
     resources :games do
       resource :result, :controller => "game_result"
+      resource :statsheet
+    end
+    resources :hockey_statsheet, :only => [] do
+      resources :players, :controller => "hockey_players"
+      resources :goals, :controller => "hockey_goals"
+      resources :penalties, :controller => "hockey_penalties"
+      resources :goaltenders, :controller => "hockey_goaltenders"
     end
   end
 
