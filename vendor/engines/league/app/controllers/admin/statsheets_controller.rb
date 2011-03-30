@@ -3,6 +3,8 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :destroy]
   before_filter :load_game
   before_filter :get_season
+  before_filter :add_games_breadcrumb
+  before_filter :add_stats_breadcrumb
 
   def load_game
     @game = Game.for_site(Site.current).find(params[:game_id])    
@@ -11,6 +13,17 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
   def get_season
     @season = @game.season    
   end
+
+  def add_games_breadcrumb
+    add_breadcrumb 'Games', admin_games_path  
+  end
+
+  def add_stats_breadcrumb
+    add_breadcrumb 'Statsheet'  
+  end
+
+
+
 
   def show
 

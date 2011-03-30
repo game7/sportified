@@ -65,10 +65,6 @@ class Game
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
 
-  def can_add_statsheet?
-    !self.has_statsheet? && self.starts_on < DateTime.now
-  end
-
   private
 
     def update_team_names
