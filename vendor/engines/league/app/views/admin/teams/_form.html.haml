@@ -1,10 +1,14 @@
-= semantic_form_for [:admin, @team] do |f|
+= semantic_form_for [:admin, @team], :html => {:multipart => true} do |f|
   = f.inputs do
     = f.input :division_id, :as => :select, :collection => @divisions
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :name
     = f.input :short_name
     = f.input :show_in_standings, :as => :boolean
+    - if @team.logo?
+      %li #{image_tag @team.logo_url.to_s}
+    = f.input :logo, :as => :file
+    = f.input :logo_cache, :as => :hidden
   = f.buttons do
     = f.commit_button
     %li #{ link_to 'Cancel', session[:return_to] }

@@ -3,8 +3,11 @@ class Site
   include Mongoid::Timestamps
   cache
 
+  before_create :set_slug
+
   field :name
   field :host
+  field :slug
   field :description
   field :analytics_id
   field :analytics_vendor
@@ -15,6 +18,10 @@ class Site
   validates_presence_of :name, :host
 
   scope :for_host, lambda { |h| { :where => { :host => h } } }
+
+  def set_slug
+    self.slug = name.paramaterize
+  end
 
   class << self
     def current

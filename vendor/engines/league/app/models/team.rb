@@ -6,6 +6,7 @@ class Team
   field :short_name
   field :slug
   field :show_in_standings, :type => Boolean, :default => true
+  mount_uploader :logo, TeamLogoUploader
 
   referenced_in :site
 
