@@ -23,7 +23,7 @@ gem 'compass', ">= 0.10.6"
 
 gem 'carrierwave'
 gem 'rmagick'
-
+gem 'fog'
 
 gem 'league', :path => "vendor/engines/league"
 gem 'pages', :path => "vendor/engines/pages"
