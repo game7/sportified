@@ -6,7 +6,10 @@
     = f.input :short_name
     = f.input :show_in_standings, :as => :boolean
     - if @team.logo?
-      %li #{image_tag @team.logo_url.to_s}
+      %li 
+        = image_tag @team.logo_url.to_s
+        = image_tag @team.logo.thumb.url.to_s
+        = image_tag @team.logo.tiny_thumb.url.to_s
     = f.input :logo, :as => :file
     = f.input :logo_cache, :as => :hidden
   = f.buttons do
