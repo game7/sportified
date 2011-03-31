@@ -1,12 +1,12 @@
 = semantic_form_for( @goal, :url => admin_hockey_statsheet_goals_path(@statsheet.id), :remote => true ) do |f|
   = f.inputs do
     = f.input :per, :as => :select, :collection => HockeyGoal.periods
-    = f.input :min, :input_html => { :maxlength => 2, :style => "width: 40px"}
-    = f.input :sec, :input_html => { :maxlength => 2, :style => "width: 40px"}
+    = f.input :min, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :sec, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
     = f.input :side, :as => :select, :collection => @sides
-    = f.input :plr
-    = f.input :a1
-    = f.input :a2
+    = f.input :plr, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :a1, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :a2, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
     = f.input :str, :as => :select, :collection => HockeyGoal.strengths
   = f.buttons do
     = f.submit

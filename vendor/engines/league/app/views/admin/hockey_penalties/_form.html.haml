@@ -1,18 +1,18 @@
 = semantic_form_for( @penalty, :url => url, :remote => true ) do |f|
   = f.inputs do
-    = f.input :per, :as => :select, :collection => HockeyGoal.periods
-    = f.input :min
-    = f.input :sec
+    = f.input :per, :as => :select, :collection => HockeyPenalty.periods
+    = f.input :min, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :sec, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
     = f.input :side, :as => :select, :collection => @sides
-    = f.input :plr
+    = f.input :plr, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
     = f.input :inf
-    = f.input :dur
+    = f.input :dur, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
     = f.input :severity, :as => :select, :collection => HockeyPenalty.severities
-    = f.input :start_per
-    = f.input :start_min
-    = f.input :start_sec
-    = f.input :end_per
-    = f.input :end_min
-    = f.input :end_sec
+    = f.input :start_per, :as => :select, :collection => HockeyPenalty.periods
+    = f.input :start_min, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :start_sec, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :end_per, :as => :select, :collection => HockeyPenalty.periods
+    = f.input :end_min, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
+    = f.input :end_sec, :input_html => { :maxlength => 2, :pattern => "[0-9]*", :style => "width: 40px"}
   = f.buttons do
     = f.submit
