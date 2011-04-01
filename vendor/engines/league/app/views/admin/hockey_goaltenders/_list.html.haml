@@ -1,9 +1,33 @@
 - goaltenders.each_with_index do |g, i|
-  Number: #{g.plr}
-  Shots: #{g.shots_1} | #{g.shots_2} | #{g.shots_3} | #{g.shots_ot}
-  %br/
-  = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender'
-  = " | "
-  = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender'
-  %br/
-
+  %table
+    %thead
+      %tr
+        %th #{g.side == 'L' ? @statsheet.left_team_name : @statsheet.right_team_name} ##{g.plr}
+        %th 1
+        %th 2
+        %th 3
+        %th OT
+    %tbody
+      %tr
+        %td Minutes
+        %td #{g.min_1}
+        %td #{g.min_2}
+        %td #{g.min_3}
+        %td #{g.min_1}
+      %tr
+        %td Shots
+        %td #{g.shots_1}
+        %td #{g.shots_2}
+        %td #{g.shots_3}
+        %td #{g.shots_1}
+      %tr
+        %td Goals
+        %td #{g.goals_1}
+        %td #{g.goals_2}
+        %td #{g.goals_3}
+        %td #{g.goals_1}
+      %tr
+        %td{ :colspan => 5 }
+          = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender'
+          = " | "
+          = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender'

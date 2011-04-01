@@ -1,18 +1,36 @@
-= semantic_form_for( @goaltender, :url => url, :remote => true ) do |f|
-  = f.inputs do
-    = f.input :side, :as => :select, :collection => @sides
-    = f.input :plr
-    = f.input :min_1
-    = f.input :min_2
-    = f.input :min_3
-    = f.input :min_ot
-    = f.input :shots_1
-    = f.input :shots_2
-    = f.input :shots_3
-    = f.input :shots_ot
-    = f.input :goals_1
-    = f.input :goals_2
-    = f.input :goals_3
-    = f.input :goals_ot
-  = f.buttons do
-    = f.submit
+= form_for( @goaltender, :url => url, :remote => true ) do |f|
+  .row
+    .field
+      = f.label :side, 'Team'
+      = select :hockey_goaltender, :side, @sides, :include_blank => 'Choose Team', :selected => @goaltender.side
+    .field
+      = f.label :plr, 'Player'
+      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*"
+  .row
+    %table
+      %tr
+        %th
+        %th 1
+        %th 2
+        %th 3
+        %th OT
+      %tr
+        %td Minutes
+        %td #{f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*" }
+      %tr
+        %td Shots
+        %td #{f.text_field :shots_1, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :shots_2, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :shots_3, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :shots_ot, :maxlength => 2, :pattern => "[0-9]*" }
+      %tr
+        %td Goals
+        %td #{f.text_field :goals_1, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :goals_2, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :goals_3, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :goals_ot, :maxlength => 2, :pattern => "[0-9]*" }
+
+
