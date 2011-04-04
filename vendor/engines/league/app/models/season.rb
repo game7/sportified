@@ -18,6 +18,9 @@ class Season
       id = s.class == Site ? s.id : s
       where(:site_id => id)
     end
+    def most_recent()
+      where(:starts_on.lt => DateTime.now).desc(:starts_on).first
+    end
   end
 
   scope :with_name, lambda { |name| where(:name => name) }

@@ -3,7 +3,8 @@
 
 .controls
   .left
-    .season Season: #{render 'season_select'}
+    .season Season: #{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+  .right
     .division Division: #{render 'division_select'}
 .clear
 - @teams.each do |team|

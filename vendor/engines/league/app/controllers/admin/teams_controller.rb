@@ -2,11 +2,12 @@ class Admin::TeamsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_teams_breadcrumb
-  before_filter :load_division, :only => [:index]
   before_filter :load_season, :only => [:index]
   before_filter :load_teams, :only => [:index]
+  before_filter :load_division, :only => [:index]
   before_filter :load_division_options, :only => [:index, :new, :edit]
   before_filter :load_season_options, :only => [:index, :new, :edit]
+  before_filter :load_season_links, :only => [:index]
   before_filter :load_team, :only => [:show, :edit, :destroy]
 
   def add_teams_breadcrumb
@@ -18,7 +19,8 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def load_season
-    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]    
+    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]   
+    @season ||= Season.for_site(Site.current).most_recent()
   end
 
   def load_division_options
@@ -27,6 +29,12 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def load_season_options
     @seasons = Season.for_site(Site.current).desc(:starts_on).entries
+  end
+
+  def load_season_links
+    @season_links = @seasons.each.collect do |s|
+      [s.name, admin_teams_path(:season_id => s.id)]
+    end
   end
 
   def load_teams
@@ -50,6 +58,8 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def index
+    
+    @season_links = 
 
     respond_to do |format|
       format.html # index.html.erb
