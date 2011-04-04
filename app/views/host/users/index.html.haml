@@ -1,10 +1,12 @@
 %table
-  %tr
-    %td Name
-    %td Email
-    %td Actions
-  - @users.each do |user|
+  %thead
     %tr
-      %td #{user.name}
-      %td #{user.email}
-      %td Edit | Delete
+      %th{:scope => 'col'} Name
+      %th{:scope => 'col'} Email
+      %th{:scope => 'col'} Actions
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td #{user.name}
+        %td #{user.email}
+        %td #{link_to 'Show', [:host, user]}

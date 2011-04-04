@@ -13,7 +13,9 @@
 
   namespace :admin do
     root :to => "dashboard#index"
-    resources :users
+    resources :users do
+      resources :user_roles, :only => [ :create, :destroy ]
+    end
     resource :site#, :only => [ :edit, :update ]
   end
 

@@ -1,0 +1,34 @@
+- title @user.name
+%table
+  %tbody
+    %tr
+      %th{:scope => 'row'} Id
+      %td #{@user.id}
+    %tr
+      %th{:scope => 'row'} Name
+      %td #{@user.name}
+    %tr
+      %th{:scope => 'row'} Email
+      %td #{@user.email}
+    %tr
+      %th{:scope => 'row'} Sign In Cont
+      %td #{@user.sign_in_count}
+    %tr
+      %th{:scope => 'row'} Last Sign In
+      %td #{@user.last_sign_in_at}
+
+%table
+  %caption Roles
+  %thead
+    %tr
+      %th{:scope => 'col'} Title
+      %th{:scope => 'col'} Site
+      %th{:scope => 'col'} Subject
+      %th{:scope => 'col'} Action
+  %tbody
+    - @user.roles.each do |role|
+      %tr
+        %td #{role.title}
+        %td #{role.site_id}
+        %td #{role.subject_id}
+        %td Delete

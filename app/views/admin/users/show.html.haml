@@ -1,0 +1,21 @@
+- title @user.name
+%table
+  %tbody
+    %tr
+      %th{:scope => 'row'} Id
+      %td #{@user.id}
+    %tr
+      %th{:scope => 'row'} Name
+      %td #{@user.name}
+    %tr
+      %th{:scope => 'row'} Email
+      %td #{@user.email}
+    %tr
+      %th{:scope => 'row'} Sign In Cont
+      %td #{@user.sign_in_count}
+    %tr
+      %th{:scope => 'row'} Last Sign In
+      %td #{@user.last_sign_in_at}
+#user_roles
+  = render :partial => 'admin/user_roles/grid', :locals => { :user => @user }
+= link_to "Add Site Admin Role", admin_user_user_roles_path(@user), :remote => true, :method => :post

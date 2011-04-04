@@ -1,4 +1,4 @@
 - unless flash[:notice]
-  #flash_notice.hidden
+  #flash_notice.notice.hidden
 - flash.each do |name, msg|
-  = content_tag :div, msg, :id => "flash_#{name}", :class => "#{name}"
+  = content_tag :div, msg, {:id => "flash_#{name}", :class => "#{name}"}
