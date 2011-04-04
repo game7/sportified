@@ -10,7 +10,6 @@ class Site
   field :slug
   field :description
   field :analytics_id
-  field :analytics_vendor
   field :has_custom_analytics
 
   references_and_referenced_in_many :users
@@ -20,7 +19,7 @@ class Site
   scope :for_host, lambda { |h| { :where => { :host => h } } }
 
   def set_slug
-    self.slug = name.paramaterize
+    self.slug = name.parameterize
   end
 
   class << self

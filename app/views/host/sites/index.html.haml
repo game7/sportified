@@ -1,3 +1,4 @@
+- title 'Sites'
 %table
   %tr
     %td Name
@@ -7,6 +8,6 @@
     %tr
       %td #{site.name}
       %td #{site.host}
-      %td Edit | Delete
-
+      %td #{link_to 'Edit', edit_host_site_path(site)} | #{link_to 'Delete', [:host, site], :confirm => 'Are you sure?', :method => :delete}
+#{link_to 'Add New Site', new_host_site_path}
 

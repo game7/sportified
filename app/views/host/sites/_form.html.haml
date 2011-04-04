@@ -1,0 +1,12 @@
+= semantic_form_for [:host, @site] do |f|
+  = f.inputs do
+    = f.input :name
+    = f.input :host
+    = f.input :description
+    = f.input :has_custom_analytics, :as => :boolean
+    = f.input :analytics_id
+  = f.buttons do
+    = f.commit_button
+    %li #{ link_to 'Cancel', session[:return_to] }
+
+
