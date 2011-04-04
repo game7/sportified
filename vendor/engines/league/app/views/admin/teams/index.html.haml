@@ -9,7 +9,10 @@
 - @teams.each do |team|
   - if team.division_name != last_division
     .clear
-    .division{ :style => 'margin: 2px; width: 100%; background-color: #CCC; padding: 2px 5px;'} #{team.division_name} Division
+    .division{ :style => 'margin: 2px; width: 100%; background-color: #CCC; padding: 2px 5px;'} 
+      #{team.division_name} Division
+      .right 
+        = link_to 'Add Team', new_admin_team_path(:season_id => params[:season_id], :division_id => team.division_id)
     -last_division = team.division_name
   .team_card.left{ :style => 'width: 200px; border: 1px solid #CCC; margin: 2px; height: 56px'}
     .left{ :style => 'padding: 2px;'} #{image_tag team.logo.tiny_thumb.url.to_s if team.logo?}
