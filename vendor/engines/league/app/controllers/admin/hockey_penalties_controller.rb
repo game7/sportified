@@ -3,6 +3,7 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   before_filter :load_statsheet
   before_filter :load_penalty, :only => [:edit, :update, :destroy]
   before_filter :prepare_sides
+  before_filter :load_infractions
 
   def load_statsheet
     @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
@@ -14,6 +15,10 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
 
   def prepare_sides
     @sides = [ [@statsheet.left_team_name, 'L'], [@statsheet.right_team_name, 'R'] ]    
+  end
+
+  def load_infractions
+    @infractions = HockeyPenalty.infractions.collect{|i| i.humanize}
   end
   
   def new

@@ -46,4 +46,11 @@
     .field
       = f.label :end_sec, 'Sec'
       = f.text_field :end_sec, :maxlength => 2, :pattern => "[0-9]*"
+:javascript
+  $(function() {
+    var penalties = #{@infractions.to_json};
+    $('#hockey_penalty_inf').autocomplete({
+      source: penalties
+    });
+  });
 

@@ -1,6 +1,9 @@
 class HockeyPenalty < HockeyEvent
 
-  SEVERITY = %w[MNR MJR MSC GMSC]
+  SEVERITIES = %w[MNR MJR MSC GMSC]
+  INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing 
+                  fighting holding_the_stick hooking interference kneeing roughing slashing 
+                  spearing tripping]
 
   field :inf
   field :dur
@@ -14,7 +17,10 @@ class HockeyPenalty < HockeyEvent
 
   class << self
     def severities
-      SEVERITY
+      SEVERITIES
+    end
+    def infractions
+      INFRACTIONS
     end
   end
 
