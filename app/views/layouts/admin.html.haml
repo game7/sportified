@@ -34,6 +34,6 @@
         #page_header
           = content_tag :h1, yield(:title) if show_title?
         .wrapper
-          = render 'flash'
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
       #footer 
