@@ -33,11 +33,8 @@
           %nav #{render "layouts/area_navigation"}  
         #page_header
           = content_tag :h1, yield(:title) if show_title?
-        - unless flash[:notice]
-          #flash_notice.hidden
-        - flash.each do |name, msg|
-          = content_tag :div, msg, :id => "flash_#{name}"
         .wrapper
+          = render 'flash'
           = yield
       #sidebar 
         .wrapper
