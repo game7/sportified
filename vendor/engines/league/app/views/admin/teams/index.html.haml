@@ -21,6 +21,8 @@
       #{team.name}
       %br/
       #{ link_to "Edit", edit_admin_team_path(team)} | #{link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete}
+      %br/
+      #{ link_to "Players", admin_team_players_path(team) }
       .clear
 .clear
 = link_to 'New Team', new_admin_team_path(:season_id => params[:season_id], :division_id => params[:division_id])

@@ -9,9 +9,9 @@ class Admin::PlayersController < Admin::BaseLeagueController
   end
 
   def add_team_breadcrumbs
-    add_breadcrumb @team.division_name
-    add_breadcrumb @team.season_name
-    add_breadcrumb @team.name
+    add_breadcrumb "Teams", admin_teams_path
+    add_breadcrumb "#{@team.name} (#{@team.division_name}-#{@team.season_name})"
+    add_breadcrumb "Players", admin_team_players_path(@team)
   end
 
   # GET /players
