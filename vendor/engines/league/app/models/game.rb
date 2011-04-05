@@ -45,6 +45,11 @@ class Game
 
   before_save :update_team_names
 
+  after_initialize :fix_time_zone
+  def fix_time_zone
+    self.starts_on = self.starts_on.getlocal if self.starts_on
+  end
+
   def has_result?
     !self.result.nil?
   end

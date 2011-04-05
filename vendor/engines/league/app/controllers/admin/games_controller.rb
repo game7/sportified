@@ -37,7 +37,8 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def load_game
-    @game = Game.for_site(Site.current).find(params[:id])        
+    @game = Game.for_site(Site.current).find(params[:id])  
+    @game.starts_on.localtime   
   end
 
   def load_games

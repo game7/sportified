@@ -12,6 +12,7 @@
     %td{:colspan => 3} Description
     %td Actions
   - @games.each do |game|
+  - game.starts_on.localtime
     %tr
       %td #{game.starts_on.strftime('%a %b %e, %Y')}
       %td #{game.starts_on.strftime('%l:%M %p')}

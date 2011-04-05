@@ -7,6 +7,7 @@
 - last_date = @games[0].starts_on.to_date unless @games.count == 0
 
 - @games.each_with_index do |game, i|  
+- game.starts_on.localtime
   - if i == 0 || game.starts_on.to_date < last_date
     .clear
     .group-head #{game.starts_on.to_date.strftime("%A, %B %e %Y")}
