@@ -15,7 +15,10 @@ gem 'bson_ext', '1.2.4'
 gem 'mongoid-tree', :git => 'https://github.com/benedikt/mongoid-tree', :branch => 'mongoid-2.0.0', :require => 'mongoid/tree'
 #gem 'mongoid_slug', :require => 'mongoid/slug'
 gem 'haml'
+
 gem 'devise'
+gem 'oa-oauth', :require => 'omniauth/oauth'
+
 gem 'cancan'
 gem 'formtastic', '~> 1.1.0'
 gem 'delayed_job'

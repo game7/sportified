@@ -2,8 +2,10 @@
 
   root :to => "welcome#index"
   
+  match 'users/auth/:provider/callback' => 'authentications#create'
   devise_for :users
   resources :users, :only => :show
+  resources :authentications
 
   namespace :host do
     root :to => "dashboard#index"    

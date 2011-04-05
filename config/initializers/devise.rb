@@ -14,6 +14,10 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
 
+  config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
+
+  config.case_insensitive_keys = [:email]
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -69,10 +73,10 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length
-  # config.password_length = 6..20
+  config.password_length = 6..20
 
   # Regex to use to validate the email address
-  # config.email_regexp = /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i
+  config.email_regexp = /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
