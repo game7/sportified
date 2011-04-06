@@ -1,0 +1,25 @@
+= form_for( [:admin, @statsheet], :remote => true ) do |f|
+  .row
+    = hidden_field(:form, 'goals_sum')
+    %table
+      %tr
+        %th
+        %th 1
+        %th 2
+        %th 3
+        %th OT
+      %tr
+        %td #{@statsheet.left_team_name}
+        %td #{f.text_field :left_goals_1, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :left_goals_2, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :left_goals_3, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :left_goals_ot, :maxlength => 2, :pattern => "[0-9]*" }
+      %tr
+        %td #{@statsheet.right_team_name}
+        %td #{f.text_field :right_goals_1, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :right_goals_2, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :right_goals_3, :maxlength => 2, :pattern => "[0-9]*" }
+        %td #{f.text_field :right_goals_ot, :maxlength => 2, :pattern => "[0-9]*" }
+
+
+

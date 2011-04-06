@@ -1,0 +1,4 @@
+%h5 Shots
+#shots_sum
+  = render :partial => 'admin/hockey_statsheets/shots_sum_table'
+= link_to 'Edit Shots', edit_admin_hockey_statsheet_path(@statsheet, :form => 'shots_sum'), :remote => true

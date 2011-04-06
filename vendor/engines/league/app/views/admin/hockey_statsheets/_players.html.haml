@@ -1,13 +1,9 @@
-%table
-  %tr
-    %td GP
-    %td #
-    %td NAME
-    %td 
-  - players.each do |p|
-    %tr
-      %td #{p.played ? 'X' : ''}
-      %td #{p.num}
-      %td #{p.name}
-      %td
-        = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, p), :remote => true, :title => 'Edit this player'
+.left{ :style => 'width: 48%; padding: 5px' }
+  %strong #{@statsheet.left_team_name}
+  = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.left}
+.left{ :style => 'width: 48%; padding: 5px' }
+  %strong #{@statsheet.right_team_name}
+  = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.right}
+.clear
+= link_to 'Reload Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'Are you sure?', :method => :post
+

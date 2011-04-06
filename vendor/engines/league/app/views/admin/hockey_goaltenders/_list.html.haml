@@ -7,27 +7,31 @@
         %th 2
         %th 3
         %th OT
+        %th ALL
     %tbody
       %tr
         %td Minutes
         %td #{g.min_1}
         %td #{g.min_2}
         %td #{g.min_3}
-        %td #{g.min_1}
+        %td #{g.min_ot}
+        %td #{g.min_total}
       %tr
         %td Shots
         %td #{g.shots_1}
         %td #{g.shots_2}
         %td #{g.shots_3}
-        %td #{g.shots_1}
+        %td #{g.shots_ot}
+        %td #{g.shots_total}
       %tr
         %td Goals
         %td #{g.goals_1}
         %td #{g.goals_2}
         %td #{g.goals_3}
-        %td #{g.goals_1}
+        %td #{g.goals_ot}
+        %td #{g.goals_total}
       %tr
-        %td{ :colspan => 5 }
+        %td{ :colspan => 6 }
           = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender'
           = " | "
           = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender'

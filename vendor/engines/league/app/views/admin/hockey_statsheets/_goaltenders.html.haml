@@ -1,0 +1,3 @@
+#goaltenders
+  = render :partial => 'admin/hockey_goaltenders/list', :locals => {:goaltenders => @statsheet.goaltenders}
+= link_to 'Add Goaltender', new_admin_hockey_statsheet_goaltender_path(@statsheet), :remote => true

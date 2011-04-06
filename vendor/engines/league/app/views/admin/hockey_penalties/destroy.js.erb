@@ -1,4 +1,4 @@
 $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
 $("#flash_notice").show(300);
-$("#penalties").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/penalties", :locals => { :penalties => @statsheet.events.penalties } ) )%>");
+$("#penalties").html("<%= escape_javascript( render(:partial => "admin/hockey_penalties/table", :locals => { :penalties => @statsheet.events.penalties } ) )%>");
 

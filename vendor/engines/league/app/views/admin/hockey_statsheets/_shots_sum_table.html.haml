@@ -1,0 +1,24 @@
+%table
+  %thead
+    %tr
+      %th{:scope => 'col'} TEAM
+      %th{:scope => 'col'} 1
+      %th{:scope => 'col'} 2
+      %th{:scope => 'col'} 3
+      %th{:scope => 'col'} OT
+      %th{:scope => 'col'} ALL
+  %tbody
+    %tr
+      %td #{@statsheet.left_team_name}
+      %td #{@statsheet.left_shots_1}
+      %td #{@statsheet.left_shots_2}
+      %td #{@statsheet.left_shots_3}
+      %td #{@statsheet.left_shots_ot}
+      %td #{@statsheet.left_shots_total}
+    %tr
+      %td #{@statsheet.right_team_name}
+      %td #{@statsheet.right_shots_1}
+      %td #{@statsheet.right_shots_2}
+      %td #{@statsheet.right_shots_3}
+      %td #{@statsheet.right_shots_ot}
+      %td #{@statsheet.right_shots_total}

@@ -9,10 +9,74 @@ class HockeyStatsheet < Statsheet
   field :latest_min, :type => Integer
   field :latest_sec, :type => Integer
 
-  field :min_1, :type => Integer
-  field :min_2, :type => Integer
-  field :min_3, :type => Integer
-  field :min_ot, :type => Integer
+  field :min_1, :type => Integer, :default => 0
+  field :min_2, :type => Integer, :default => 0
+  field :min_3, :type => Integer, :default => 0
+  field :min_ot, :type => Integer, :default => 0
+
+  # goal summary
+  # ---------------------------------------------------
+
+  field :left_goals_1, :type => Integer, :default => 0
+  field :left_goals_2, :type => Integer, :default => 0
+  field :left_goals_3, :type => Integer, :default => 0
+  field :left_goals_ot, :type => Integer, :default => 0
+  field :right_goals_1, :type => Integer, :default => 0
+  field :right_goals_2, :type => Integer, :default => 0
+  field :right_goals_3, :type => Integer, :default => 0
+  field :right_goals_ot, :type => Integer, :default => 0
+
+  def left_goals_total
+    left_goals_1 + left_goals_2 + left_goals_3 + left_goals_ot 
+  end
+  def right_goals_total
+    right_goals_1 + right_goals_2 + right_goals_3 + right_goals_ot    
+  end
+
+  def clear_goals
+    ['left', 'right'].each do |side|
+      ['1','2','3','ot'].each do |per|
+        self["#{side}_goals_#{per}"] = 0
+      end
+    end
+  end
+
+  def calculate_goals
+    clear_goals
+    events.goals.each do |g|
+      att = g.side.upcase == 'L' ? "left_goals_#{g.per.downcase}" : "right_goals_#{g.per.downcase}"
+      self[att] += 1
+    end
+  end
+
+  # goal summary
+  # ---------------------------------------------------
+
+  field :left_shots_1, :type => Integer, :default => 0
+  field :left_shots_2, :type => Integer, :default => 0
+  field :left_shots_3, :type => Integer, :default => 0
+  field :left_shots_ot, :type => Integer, :default => 0
+  field :right_shots_1, :type => Integer, :default => 0
+  field :right_shots_2, :type => Integer, :default => 0
+  field :right_shots_3, :type => Integer, :default => 0
+  field :right_shots_ot, :type => Integer, :default => 0
+
+  def left_shots_total
+    left_shots_1 + left_shots_2 + left_shots_3 + left_shots_ot 
+  end
+  def right_shots_total
+    right_shots_1 + right_shots_2 + right_shots_3 + right_shots_ot    
+  end
+
+  def clear_shots
+    ['left', 'right'].each do |side|
+      ['1','2','3','ot'].each do |per|
+        self["#{side}_shots_#{per}"] = 0
+      end
+    end
+  end  
+
+
 
   embeds_many :players, :class_name => "HockeyPlayer"
   embeds_many :events, :class_name => "HockeyEvent", :before_add => :event_created
@@ -25,8 +89,7 @@ class HockeyStatsheet < Statsheet
     super
     if self.game
       set_team_names(self.game)
-      load_players(self.game.left_team, "L")
-      load_players(self.game.right_team, "R")
+      load_players(self.game)
     end
   end
 
@@ -35,7 +98,12 @@ class HockeyStatsheet < Statsheet
     self.right_team_name = game.right_team_name    
   end
 
-  def load_players(team, side)
+  def load_players(game)
+    load_team_players(game.left_team, "L")
+    load_team_players(game.right_team, "R")    
+  end
+
+  def load_team_players(team, side)
     team.players.each{|p| players.build.from_player(p, side)} if team
   end
 
@@ -62,5 +130,9 @@ class HockeyStatsheet < Statsheet
     self.latest_sec = event.sec    
   end
 
+  def reload_players
+    self.players = []
+    load_players(self.game)
+  end
 
 end

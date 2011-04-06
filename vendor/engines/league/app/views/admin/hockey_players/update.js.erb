@@ -7,8 +7,8 @@
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").show(300);
   <% if @player.side == 'L' %>
-    $("#players-left").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/players", :locals => { :players => @statsheet.players.left } ) )%>");
+    $("#players-left").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.left } ) )%>");
   <% else %>
-    $("#players-right").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/players", :locals => { :players => @statsheet.players.right } ) )%>");
+    $("#players-right").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.right } ) )%>");
   <% end %>
 <% end %>

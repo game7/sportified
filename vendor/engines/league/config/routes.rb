@@ -27,10 +27,12 @@
     end
     resources :games do
       resource :result, :controller => "game_result"
-      resource :statsheet
+      resource :statsheet, :only => [:edit]
     end
-    resources :hockey_statsheet, :only => [] do
-      resources :players, :controller => "hockey_players"
+    resources :hockey_statsheets, :only => [:edit, :update] do
+      resources :players, :controller => "hockey_players" do
+        post 'reload', :on => :collection
+      end
       resources :goals, :controller => "hockey_goals"
       resources :penalties, :controller => "hockey_penalties"
       resources :goaltenders, :controller => "hockey_goaltenders"

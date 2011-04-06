@@ -1,0 +1,9 @@
+
+<% if @statsheet.errors.any? %>
+  $("#flash_notice").hide(300);
+<% else %>
+  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").show(300);
+  $("#players-left").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.left } ) )%>");
+  $("#players-right").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.right } ) )%>");
+<% end %>
