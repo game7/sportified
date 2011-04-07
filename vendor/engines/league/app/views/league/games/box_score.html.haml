@@ -1,0 +1,62 @@
+- title 'Box Score'
+.box-score
+  .status-bar
+    .game-state FINAL
+  %h1.matchup
+    .team.left
+      .logo
+      .team-info
+        %h3 
+          #{@stats.left_team_name}
+          %span.score #{@stats.left_goals_total}
+        %p.record (1-1-1, 3 pts)
+    .team.right
+      .logo
+      .team-info
+        %h3 
+          #{@stats.right_team_name}
+          %span.score #{@stats.right_goals_total}
+        %p.record (1-1-1, 3 pts)
+  .game-actions
+  .game-summary
+    .game-logistics
+      %p #{@game.starts_on}
+      %p Location
+    .clear
+  .game-score
+    = render 'line_score_table'
+    .clear
+  
+  .main-container
+    
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Team Statistical Comparison
+      .mod-content
+        = render 'team_statistics_table'
+
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Game Activity
+      .mod-content
+        = render 'activity_table'
+
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Player Summary
+      .mod-content
+        Data Here
+
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Goaltender Summary
+      .mod-content
+        Data Here
+
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Shots On Goal
+      .mod-content
+        Data Here
+
+    

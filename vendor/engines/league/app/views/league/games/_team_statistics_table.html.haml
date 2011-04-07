@@ -1,0 +1,68 @@
+%table
+  %thead
+    %tr
+      %th{ :colspan => 4 }
+  %tbody
+    %tr
+      %td
+        %table
+          %tbody
+            %tr
+              %td{ :colspan => 2} Total Shots
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
+                #{@stats.left_shots_total}
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
+                #{@stats.right_shots_total}
+      %td
+        %table
+          %tbody
+            %tr
+              %td{ :colspan => 2} PIM
+            %tr
+              %td
+              %td
+                - pim = @stats.left_pim_total
+                %span.bar{ :style => "width: #{pim}px;"}
+                #{pim}
+            %tr
+              %td
+              %td
+                - pim = @stats.right_pim_total
+                %span.bar{ :style => "width: #{pim}px;"}
+                #{pim}
+      %td
+        %table
+          %tbody
+            %tr
+              %td{ :colspan => 2} Total Shots
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
+                #{@stats.left_shots_total}
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
+                #{@stats.right_shots_total}
+      %td
+        %table
+          %tbody
+            %tr
+              %td{ :colspan => 2} Total Shots
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
+                #{@stats.left_shots_total}
+            %tr
+              %td
+              %td
+                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
+                #{@stats.right_shots_total}

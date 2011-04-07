@@ -17,6 +17,7 @@
     %ul.game-info
       %li.status #{game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")}
     .clear
+  = link_to 'Box Score', league_game_box_score_path(game)
 //  .game-actions
 //    .action
 //      .add

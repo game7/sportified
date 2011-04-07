@@ -76,7 +76,20 @@ class HockeyStatsheet < Statsheet
     end
   end  
 
+  def left_pim_total
+    events.penalties.left.sum(:dur)
+  end
+  def right_pim_total
+    events.penalties.left.sum(:dur)    
+  end
 
+  def overtime?
+    min_ot > 0
+  end
+
+  def shootout?
+    false
+  end
 
   embeds_many :players, :class_name => "HockeyPlayer"
   embeds_many :events, :class_name => "HockeyEvent", :before_add => :event_created

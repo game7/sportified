@@ -1,0 +1,6 @@
+%table.activities
+  = render :partial => 'activity_period_summary', :locals => { :title => '1st Period Summary', :period => '1', :stats => @stats }
+  = render :partial => 'activity_period_summary', :locals => { :title => '2nd Period Summary', :period => '2', :stats => @stats }
+  = render :partial => 'activity_period_summary', :locals => { :title => '3rd Period Summary', :period => '3', :stats => @stats }
+  - if @stats.overtime?
+    = render :partial => 'activity_period_summary', :locals => { :title => 'Overtime Summary', :period => 'OT', :stats => @stats }

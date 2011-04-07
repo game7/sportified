@@ -1,0 +1,17 @@
+%table.penalties
+  %thead
+    %tr
+      %th.time Time
+      %th.team Team
+      %th.penalty Penalty Detail
+  %tbody
+    - if penalties.count == 0
+      %tr
+        %td{ :colspan => '3' } No penalties this period
+    - else
+      - penalties.each do |penalty|
+        %tr
+          %td.time #{penalty.time}
+          %td.team #{penalty.side == 'L' ? stats.left_team_name : stats.right_team_name}
+          %td.penalty #{penalty.plr} - #{penalty.inf}
+    

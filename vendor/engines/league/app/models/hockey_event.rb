@@ -17,6 +17,7 @@ class HockeyEvent
   scope :goals, :where => { :_type => 'HockeyGoal' }
   scope :penalties, :where => { :_type => 'HockeyPenalty' }
   scope :sorted_by_time, order_by(:per.asc, :min.desc, :sec.desc)
+  scope :for_period, lambda { |period| { :where => { :per => period } } }
 
   validates_presence_of :side, :per, :min, :sec, :plr
   validates_numericality_of :min, :sec

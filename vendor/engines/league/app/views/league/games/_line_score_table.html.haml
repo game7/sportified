@@ -1,0 +1,26 @@
+%table.line-score
+  %tbody
+    %tr
+      %th.team 
+      %th.period 1
+      %th.period 2
+      %th.period 3
+      - if @stats.overtime?
+        %th.period OT
+      %th.total T
+    %tr
+      %td.team #{@stats.left_team_name}
+      %td.period #{@stats.left_goals_1}
+      %td.period #{@stats.left_goals_2}
+      %td.period #{@stats.left_goals_3}
+      - if @stats.overtime?
+        %td.period #{@stats.left_goals_ot}
+      %td.total #{@stats.left_goals_total}
+    %tr
+      %td.team #{@stats.right_team_name}
+      %td.period #{@stats.right_goals_1}
+      %td.period #{@stats.right_goals_2}
+      %td.period #{@stats.right_goals_3}
+      - if @stats.overtime?
+        %td.period #{@stats.right_goals_ot}
+      %td.total #{@stats.right_goals_total}

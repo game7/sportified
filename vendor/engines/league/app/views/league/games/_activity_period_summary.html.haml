@@ -1,0 +1,45 @@
+%thead
+  %tr
+    %th.period{ :colspan => 3} #{title}
+  %tr
+    %th.time Time
+    %th.team Team
+    %th.goal Scoring Detail
+%tbody
+  - goals = stats.events.goals.for_period(period).sorted_by_time
+  - if goals.count == 0
+    %tr
+      %td{ :colspan => '3' } No scoring this period
+  - else
+    - goals.each do |goal|
+      %tr
+        %td.time #{goal.time}
+        %td.team #{goal.side == 'L' ? stats.left_team_name : stats.right_team_name}
+        %td.goal 
+          = "##{goal.plr} #{show_player_name(stats, goal.side, goal.plr)}"
+          .assists
+            - unless goal.a1.blank?
+              Assists: 
+              = "##{goal.a1} #{show_player_name(stats, goal.side, goal.a1)}"
+              - unless goal.a2.blank?
+                = ", ##{goal.a2} #{show_player_name(stats, goal.side, goal.a2)}"
+            - else
+              Unassisted
+%thead
+  %tr
+    %th.time Time
+    %th.team Team
+    %th.penalty Penalty Detail
+%tbody
+  - penalties = stats.events.penalties.for_period(period).sorted_by_time.each
+  - if penalties.count == 0
+    %tr
+      %td{ :colspan => '3' } No penalties this period
+  - else
+    - penalties.each do |penalty|
+      %tr
+        %td.time #{penalty.time}
+        %td.team #{penalty.side == 'L' ? stats.left_team_name : stats.right_team_name}
+        %td.penalty ##{penalty.plr} #{show_player_name(stats, penalty.side, penalty.plr)}: #{penalty.dur} Minutes for #{penalty.inf}
+
+

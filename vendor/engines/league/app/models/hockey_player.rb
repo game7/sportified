@@ -13,6 +13,7 @@ class HockeyPlayer
 
   scope :left, :where => { :side => 'L' }
   scope :right, :where => { :side => 'R' }
+  scope :with_num, lambda { |n| { :where => { :num => n } } }
 
   def from_player(player, side)
     self.side = side

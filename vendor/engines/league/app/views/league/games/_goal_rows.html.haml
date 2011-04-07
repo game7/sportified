@@ -1,0 +1,17 @@
+%table.goals
+  %thead
+    %tr
+      %th.time Time
+      %th.team Team
+      %th.goal Scoring Detail
+  %tbody
+    - if goals.count == 0
+      %tr
+        %td{ :colspan => '3' } No scoring this period
+    - else
+      - goals.each do |goal|
+        %tr
+          %td.time #{goal.time}
+          %td.team #{goal.side == 'L' ? stats.left_team_name : stats.right_team_name}
+          %td.goal #{goal.plr}
+    
