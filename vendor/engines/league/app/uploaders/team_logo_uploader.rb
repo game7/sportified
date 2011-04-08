@@ -2,7 +2,9 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
 
   def store_dir
-    "uploads/#{Site.current.slug}/league/team_logos/"
+    @site = Site.current
+    @site ||= model.site
+    "uploads/#{@site.slug}/league/team_logos/"
   end
 
   def cache_dir
@@ -10,6 +12,10 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
   end
 
   process :resize_to_limit => [400,400]
+
+  version :micro_thumb do
+    process :resize_to_limit => [25, 25]
+  end
 
   version :tiny_thumb do
     process :resize_to_limit => [50, 50]
