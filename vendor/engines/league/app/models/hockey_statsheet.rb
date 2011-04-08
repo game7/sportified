@@ -49,7 +49,7 @@ class HockeyStatsheet < Statsheet
     end
   end
 
-  # goal summary
+  # shots summary
   # ---------------------------------------------------
 
   field :left_shots_1, :type => Integer, :default => 0
