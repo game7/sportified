@@ -1,0 +1,27 @@
+%table.stats.shots-summary
+  %thead
+    %tr.columns
+      %th TEAM
+      %th 1
+      %th 2
+      %th 3
+      - if @stats.overtime?
+        %th OT
+      %th TOTAL
+  %tbody
+    %tr.odd
+      %td #{@stats.left_team_name}
+      %td #{@stats.left_shots_1}
+      %td #{@stats.left_shots_2}
+      %td #{@stats.left_shots_3}
+      - if @stats.overtime?
+        %td #{@stats.left_shots_ot}
+      %td #{@stats.left_shots_total}
+    %tr.even
+      %td #{@stats.right_team_name}
+      %td #{@stats.right_shots_1}
+      %td #{@stats.right_shots_2}
+      %td #{@stats.right_shots_3}
+      - if @stats.overtime?
+        %td #{@stats.right_shots_ot}
+      %td #{@stats.right_shots_total}

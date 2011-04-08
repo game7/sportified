@@ -9,6 +9,8 @@ class League::GamesController < League::BaseDivisionSeasonController
 
   def box_score
     @stats = @game.statsheet
+    @left_team = @game.left_team
+    @right_team = @game.right_team
   end
 
 end
