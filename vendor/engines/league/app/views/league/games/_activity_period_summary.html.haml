@@ -15,7 +15,11 @@
     - goals.each do |goal|
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{goal.time}
-        %td.team #{goal.side == 'L' ? stats.left_team_name : stats.right_team_name}
+        %td.team 
+          - if goal.side == 'L'
+            #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
+          - else
+            #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
         %td.goal 
           = "##{goal.plr} #{show_player_name(stats, goal.side, goal.plr)}"
           .assists
@@ -41,7 +45,11 @@
       - reset_cycle
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{penalty.time}
-        %td.team #{penalty.side == 'L' ? stats.left_team_name : stats.right_team_name}
+        %td.team
+          - if penalty.side == 'L'
+            #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
+          - else
+            #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
         %td.penalty ##{penalty.plr} #{show_player_name(stats, penalty.side, penalty.plr)}: #{penalty.dur} Minutes for #{penalty.inf}
 
 

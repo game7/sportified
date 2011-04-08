@@ -12,6 +12,10 @@
       - goals.each do |goal|
         %tr
           %td.time #{goal.time}
-          %td.team #{goal.side == 'L' ? stats.left_team_name : stats.right_team_name}
+          %td.team 
+            - if goal.side == 'L'
+              #{image_tag @left_team.logo.tiny_thumb.url.to_s if @left_team.logo?}
+            - else
+              #{image_tag @right_team.logo.tiny_thumb.url.to_s if @right_team.logo?}
           %td.goal #{goal.plr}
     
