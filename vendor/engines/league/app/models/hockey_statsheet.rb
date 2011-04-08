@@ -91,9 +91,41 @@ class HockeyStatsheet < Statsheet
     false
   end
 
-  embeds_many :players, :class_name => "HockeyPlayer"
-  embeds_many :events, :class_name => "HockeyEvent", :before_add => :event_created
-  embeds_many :goaltenders, :class_name => "HockeyGoaltender"
+  embeds_many :players, :class_name => "HockeyPlayer" do
+    def build(attributes = {}, type = nil, &block)
+      super
+    end
+    def <<(*args)
+      super
+    end
+    def delete(document)
+      super
+    end    
+  end
+
+  embeds_many :events, :class_name => "HockeyEvent" do
+    def build(attributes = {}, type = nil, &block)
+      super
+    end
+    def <<(*args)
+      super
+    end
+    def delete(document)
+      super
+    end
+  end
+
+  embeds_many :goaltenders, :class_name => "HockeyGoaltender" do
+    def build(attributes = {}, type = nil, &block)
+      super
+    end
+    def <<(*args)
+      super
+    end
+    def delete(document)
+      super
+    end
+  end    
 
   before_save :capture_latest_event
   before_save :update_team_scores
@@ -134,7 +166,7 @@ class HockeyStatsheet < Statsheet
   end
 
   def is_latest?(event)
-    latest_per.blank? || (latest_per.to_s < event.per && latest_min > event.min && latest_sec > event.sec)
+    latest_per.blank? || (latest_per.to_s < event.per.to_s && latest_min > event.min && latest_sec > event.sec)
   end
 
   def set_latest_event_time(event)
@@ -147,5 +179,6 @@ class HockeyStatsheet < Statsheet
     self.players = []
     load_players(self.game)
   end
+
 
 end

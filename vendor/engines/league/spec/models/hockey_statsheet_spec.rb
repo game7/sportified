@@ -40,4 +40,23 @@ describe HockeyStatsheet do
     
   end
 
+  describe "when summarizing goals" do
+    
+    before(:each) do
+      @statsheet = HockeyStatsheet.new
+      ['L','R'].each do |side|
+        ['1','2','3','OT'].each do |period|
+          @statsheet.events << HockeyGoal.make_unsaved(:per => period, :side => side)          
+        end
+      end
+      @statsheet.calculate_goals      
+    end
+
+    it "should provide the total number of goals" do
+      @statsheet.left_goals_total.should == 4
+      @statsheet.right_goals_total.should == 4
+    end
+    
+  end
+
 end

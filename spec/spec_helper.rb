@@ -32,7 +32,7 @@ RSpec.configure do |config|
 
   config.before :each do
     Sham.reset(:before_all)
-    Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
+    #Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
   end
 
 end
