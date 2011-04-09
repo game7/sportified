@@ -6,7 +6,7 @@
           %td.winner #{'>' if game.result && game.result.left_team_is_winner?}
           %td.team-name 
             - team = game.left_team
-            = image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
+            //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
             = game.left_team.name
           %td.team-score #{game.result.left_team_score if game.result}
         %tr
@@ -15,7 +15,7 @@
           %td.winner #{'>' if game.result && game.result.right_team_is_winner?}
           %td.team-name 
             - team = game.right_team
-            = image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
+            //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
             = game.right_team.name
           %td.team-score #{game.result.right_team_score if game.result}
         %tr
@@ -23,11 +23,37 @@
     %ul.game-info
       %li.status #{game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")}
     .clear
-  = link_to 'Box Score', league_game_box_score_path(game)
-//  .game-actions
-//    .action
-//      .add
-//        = link_to "Post Score", new_admin_game_result_path(game) if game.can_add_result?
-//      .delete
-//        = link_to "Drop Score", admin_game_result_path(game), :confirm => 'Are you sure?', :method => :delete if game.has_result?
+  - stats = game.statsheet
+  - if stats
+    .game-links
+      = link_to 'Box Score', league_game_box_score_path(game)
+    .game-details
+      %table
+        %thead
+          %tr
+            %th
+            %th 1
+            %th 2
+            %th 3
+            - if stats.overtime?
+              %th OT
+            %th T
+        %tbody
+          %tr
+            %td #{stats.left_team_name}
+            %td #{stats.left_goals_1}
+            %td #{stats.left_goals_2}
+            %td #{stats.left_goals_3}
+            - if stats.overtime?
+              %td #{stats.left_goals_ot}
+            %td #{stats.left_goals_total}
+          %tr
+            %td #{stats.right_team_name}
+            %td #{stats.right_goals_1}
+            %td #{stats.right_goals_2}
+            %td #{stats.right_goals_3}
+            - if stats.overtime?
+              %td #{stats.right_goals_ot}
+            %td #{stats.right_goals_total}
+          
 

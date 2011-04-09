@@ -2,7 +2,7 @@
 
 .controls
   .left
-    = render "date_selector"
+    = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
   .right
     - if @division_links
       = render :partial => "league/shared/select_division", :locals => { :division_options => @division_links }

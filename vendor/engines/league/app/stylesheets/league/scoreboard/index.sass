@@ -15,33 +15,58 @@
   :padding-bottom 3px
   :border-bottom 1px solid #C2C2C2
 
-table.game-header-table
-  :border-right #C2C2C2 1px solid
-  :float left
-  :margin 2px
-  td
-    &.winner
-      :width 15px
-      :font-size 16px
-      :font-weight 700
-    &.team-name, &.team-score
-      :font-size 16px
-      :font-weight 700
-    &.team-name
-      :width 120px
-    &.team-score
-      :text-align right
-      :padding-right 4px
-      :width 30px
-ul.game-info
-  li
-    :line-height 30px!important
-    :min-height 30px!important
-  li.status
-    :text-indent 5px
+.game-box
+  .game-header-table
+    :border-right #C2C2C2 1px solid
+    :float left
+    :margin 2px
+    :width auto
+    :border 0
+    :border-right solid 1px #C2C2C2
+    td
+      :border 0
+      &.winner
+        :width 15px
+        :font-size 16px
+        :font-weight 700
+      &.team-name, &.team-score
+        :font-size 16px
+        :font-weight 700
+      &.team-name
+        :width 120px
+      &.team-score
+        :text-align right
+        :padding-right 12px
+        :width 30px
+  ul.game-info
+    :list-style-type none
+    li
+      :font-weight bold
+      :line-height 30px!important
+      :min-height 30px!important
+    li.status
+      :text-indent 5px
 
-.game-actions
+.game-links
   :border-bottom 1px solid #C2C2C2
   :font-size 10px
   :line-height 14px
   :padding 5px
+.game-box
+  .game-details
+    :padding 5px
+    :border-bottom 1px solid #C2C2C2
+    table, td, th
+      :border 0
+      :background-color white
+      :font-size 10px
+      :color #555
+      :padding 0
+      :margin 0
+      :line-height 13px
+    td, th
+      :width 30px
+      :text-align center
+    td:first-child, th:first-child
+      :width auto  
+      :text-align left  
