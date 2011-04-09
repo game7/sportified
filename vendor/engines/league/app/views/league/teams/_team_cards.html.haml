@@ -1,6 +1,7 @@
 - @teams.each do |team|
   .team-box
     .team-logo
+      #{image_tag team.logo.tiny_thumb.url.to_s if team.logo?}
     .team-name 
       #{team.name}
     .team-nav
