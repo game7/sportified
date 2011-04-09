@@ -6,7 +6,7 @@
     = render "date_selector"
   .right
     - if @division_links
-      = render "select_division"
+      = render :partial => "league/shared/select_division", :locals => { :division_options => @division_links }
     - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
     - if @team_links
       = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
