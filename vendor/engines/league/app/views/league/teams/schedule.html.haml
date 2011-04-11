@@ -2,6 +2,9 @@
 - last_month = nil
 - last_future = false
 
+= content_for :banner do
+  = render :partial => 'team_banner', :locals => { :team => @team }
+
 .controls.left
   Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
 .controls.right

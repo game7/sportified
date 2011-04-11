@@ -1,4 +1,8 @@
 - title @team.name
+
+= content_for :banner do
+  = render :partial => 'team_banner', :locals => { :team => @team }
+
 %p
   %strong Name:
   = @team.name

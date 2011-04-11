@@ -30,7 +30,9 @@
       #breadcrumbs #{render "layouts/breadcrumbs"}
       #content
         #area-nav 
-          %nav #{render "layouts/area_navigation"}  
+          %nav #{render "layouts/area_navigation"} 
+        #banner
+          .wrapper #{yield :banner}
         #page_header
           = content_tag :h1, yield(:title) if show_title?
         .wrapper

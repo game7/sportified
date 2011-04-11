@@ -1,5 +1,8 @@
 - title @team.name + ' Roster - ' + @season.name
 
+= content_for :banner do
+  = render :partial => 'team_banner', :locals => { :team => @team }
+
 .controls.left
   Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
 .controls.right

@@ -5,6 +5,10 @@
     = f.input :name
     = f.input :short_name
     = f.input :show_in_standings, :as => :boolean
+    = f.input :primary_color, :default => '#999'
+    = f.input :accent_color, :default => '#000'
+    = f.input :text_color, :default => '#FFF'
+    = f.input :link_color, :default => '#003'
     - if @team.logo?
       %li 
         = image_tag @team.logo_url.to_s

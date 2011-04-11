@@ -1,0 +1,20 @@
+
+:css
+  .team { border: 2px solid #{team.accent_color}; background-color: #{team.primary_color} }
+  .name { color: #{team.text_color}; }
+  .links { color: #{team.text_color}; }
+  .links a:link, .links a:visited, .links a:active { color: #{team.link_color}; }
+  .links a:hover { color: #{team.text_color}; }
+
+
+.banner.team
+  .other.left{ :style => "border: 1px solid gray; height: 50px; width: 50px; margin: 4px; background-image: url(#{team.logo.thumb.url.to_s}); background-position: center;" }
+  .name.left{ :style => "margin: 4px; font-size: 45px; line-height: 50px; font-weight: bold; font-style: italic;"}
+    #{team.name}
+  .links.right{ :style => "margin: 4px 8px; font-size: 12px;"}
+    = link_to 'Home', league_team_path(team.division_slug, team.season_slug, team.slug)
+    = " | "
+    = link_to 'Schedule', league_team_schedule_path(team.division_slug, team.season_slug, team.slug)
+    = " | "
+    = link_to 'Roster', league_team_roster_path(team.division_slug, team.season_slug, team.slug)
+  .clear

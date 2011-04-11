@@ -6,6 +6,10 @@ class Team
   field :short_name
   field :slug
   field :show_in_standings, :type => Boolean, :default => true
+  field :primary_color, :default => '#666'
+  field :accent_color, :default => '#000'
+  field :text_color, :default => '#FFF'
+  field :link_color, :default => '#000033'
   mount_uploader :logo, TeamLogoUploader
 
   referenced_in :site
