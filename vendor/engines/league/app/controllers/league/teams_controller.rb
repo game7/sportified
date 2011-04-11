@@ -25,9 +25,26 @@ class League::TeamsController < League::BaseDivisionSeasonController
     end   
   end
 
+  def links_to_season
+    seasons = Season.for_site(Site.current).desc(:starts_on)
+    current = find_current_season
+    links = seasons.each.collect{ |s| [s.name + " Season", league_teams_path(:season_slug => s == current ? nil : s.slug, :division_slug => params[:division_slug])] }
+  end
+
+  def links_to_division
+    links = Division.for_site(Site.current).asc(:name).each.collect{ |d| [d.name + " Division", league_teams_path(:division_slug => d.slug, :season_slug => params[:season_slug])] }
+    links.insert(0, ['All Divisions', league_teams_path])
+  end
+
   def index
     add_breadcrumb "Teams"
-    @teams = @division.teams.for_season(@season).asc(:name).entries
+
+    @division_options = links_to_division
+    @season_options = links_to_season
+
+    @teams = Team.for_season(@season)
+    @teams = @teams.for_division(@division) if @division
+    @teams = @teams.asc(:division_name).asc(:name).entries
 
     respond_to do |format|
       format.html # index.html.erb

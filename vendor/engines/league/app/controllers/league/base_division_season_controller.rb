@@ -2,8 +2,16 @@ class League::BaseDivisionSeasonController < League::BaseDivisionController
   
   def load_objects
     super
-    @season = Season.for_site(Site.current).with_slug(params[:division_slug]).first if params[:season_slug]
-    @season ||= @division.current_season_id ? @division.current_season : @division.seasons.desc(:starts_on).first if @division
+    # load specific season if slug is specified
+    @season = Season.for_site(Site.current).with_slug(params[:season_slug]).first if params[:season_slug]
+    @season ||= find_current_season
+  end
+
+  def find_current_season
+    # load current season for division if specified
+    season = @division.current_season_id ? @division.current_season : @division.seasons.desc(:starts_on).first if @division
+    # otherwise just grab the most current season for the current site
+    season ||= Season.for_site(Site.current).desc(:starts_on).first
   end
 
   def set_breadcrumbs

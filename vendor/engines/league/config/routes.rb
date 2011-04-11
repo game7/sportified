@@ -5,7 +5,7 @@
   match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
   match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
   match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_standings, :via => :get
-  match 'league/:division_slug(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
+  match 'league(/:division_slug)(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
 
   match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team, :via => :get
   match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule, :via => :get

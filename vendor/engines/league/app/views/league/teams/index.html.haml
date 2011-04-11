@@ -2,7 +2,8 @@
 
 .controls
   .left
-    Season: #{team_season_select(@division)}
+    #{render :partial => 'league/shared/select_division', :locals => { :division_options => @division_options } }
+    #{render :partial => 'league/shared/select_season', :locals => { :season_options => @season_options } }
 .clear
 
 = render :partial => "team_cards"

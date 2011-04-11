@@ -12,9 +12,11 @@ class Team
 
   referenced_in :division
   field :division_name
+  field :division_slug
 
   referenced_in :season
   field :season_name
+  field :season_slug
 
   references_many :players  
   references_many :games, :inverse_of => :home_team
@@ -29,8 +31,8 @@ class Team
   before_save :set_slug
   before_save :ensure_short_name
   before_save :ensure_record
-  before_save :get_division_name
-  before_save :get_season_name
+  before_save :get_division_name_and_slug
+  before_save :get_season_name_and_slug
   after_create :raise_team_created_event
 
   def fullname
@@ -71,12 +73,16 @@ class Team
       end
     end
 
-    def get_season_name
-      self.season_name = self.season_id ? self.season.name : nil
+    def get_season_name_and_slug
+      season = self.season
+      self.season_name = season ? season.name : nil
+      self.season_slug = season ? season.slug : nil
     end
 
-    def get_division_name
-      self.division_name = self.division_id ? self.division.name : nil
+    def get_division_name_and_slug
+      division = self.division
+      self.division_name = division ? division.name : nil
+      self.division_slug = division ? division.slug : nil
     end
 
     def ensure_record
