@@ -1,5 +1,5 @@
 
 - content_for :sidebar do
   %ul
-    %li New Page
+    %li #{link_to 'Add New Page', new_page_path}
 = render :partial => 'pages_list', :locals => { :pages => @pages }
