@@ -7,7 +7,7 @@
       - last_division_name = team.division_name
   .team-box
     .team-logo
-      #{image_tag team.logo.tiny_thumb.url.to_s if team.logo?}
+      = render :partial => 'shared/team_thumb', :locals => { :team => team }
     .team-name 
       #{team.name}
     .team-nav
