@@ -1,3 +1,7 @@
+.header
+  .right
+    = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true
+  .clear
 #penalties
   = render :partial => 'admin/hockey_penalties/table', :locals => {:penalties => @statsheet.events.penalties}
-= link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true
+

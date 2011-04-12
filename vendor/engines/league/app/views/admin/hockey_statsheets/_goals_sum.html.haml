@@ -1,5 +1,10 @@
-%h5 Goals
+.header
+  .left
+    %h5 Goals
+  .right
+    = link_to 'Edit Goals', edit_admin_hockey_statsheet_path(@statsheet, :form => 'goals_sum'), :remote => true
+  .clear
 #goals_sum
   = render :partial => 'admin/hockey_statsheets/goals_sum_table'
-= link_to 'Edit Goals', edit_admin_hockey_statsheet_path(@statsheet, :form => 'goals_sum'), :remote => true
+
 

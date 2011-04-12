@@ -1,3 +1,7 @@
+.header
+  .right
+    = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true
+  .clear
 #goals 
   = render :partial => 'admin/hockey_goals/table', :locals => {:goals => @statsheet.events.goals}
-= link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true
+

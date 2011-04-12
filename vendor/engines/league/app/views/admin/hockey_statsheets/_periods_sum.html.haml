@@ -1,5 +1,10 @@
-%h5 Periods
+.header
+  .left
+    %h5 Periods
+  .right
+    = link_to 'Edit Periods', edit_admin_hockey_statsheet_path(@statsheet, :form => 'periods_sum'), :remote => true
+  .clear
 #periods_sum
   = render :partial => 'admin/hockey_statsheets/periods_sum_table'
-= link_to 'Edit Periods', edit_admin_hockey_statsheet_path(@statsheet, :form => 'periods_sum'), :remote => true
+
 
