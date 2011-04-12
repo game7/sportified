@@ -1,0 +1,9 @@
+
+<% if @statsheet.errors.any? %>
+  $("#flash_notice").hide(300);
+<% else %>
+  $('#dialog-modal').dialog("close");
+  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").show(300);
+  $("#periods_sum").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/periods_sum_table" ) )%>");
+<% end %>

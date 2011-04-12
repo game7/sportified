@@ -2,6 +2,7 @@
 
 - tabs_for do |tab|
   - tab.create('summary_tab', 'Summary') do
+    = render 'admin/hockey_statsheets/periods_sum'
     = render 'admin/hockey_statsheets/goals_sum'
     = render 'admin/hockey_statsheets/shots_sum'
   - tab.create('players_tab', 'Players') do

@@ -13,6 +13,9 @@ class HockeyStatsheet < Statsheet
   field :min_2, :type => Integer, :default => 0
   field :min_3, :type => Integer, :default => 0
   field :min_ot, :type => Integer, :default => 0
+  def min_total
+    min_1 + min_2 + min_3 + min_ot
+  end
 
   # goal summary
   # ---------------------------------------------------
