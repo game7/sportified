@@ -1,6 +1,6 @@
 %thead
   %tr.title
-    %th{ :colspan => 6} 
+    %th{ :colspan => 6 } 
       = side == 'L' ? @stats.left_team_name : @stats.right_team_name
   %tr.columns
     %th.player Player
@@ -10,16 +10,21 @@
     %th.pen PEN
     %th.pim PIM
 %tbody
-  - reset_cycle
-  - @stats.players.for_side(side).each do |player|
-    %tr{ :class => "#{cycle('odd', 'even')}" }
-      %td.player 
-        = player.name
-        = "##{player.num}" unless player.num.blank?
-      %td.goal #{player.g}
-      %td.assists #{player.a}
-      %td.points #{player.pts}
-      %td.pen #{player.pen}
-      %td.pim #{player.pim}
+  - players = @stats.players.for_side(side).entries
+  - if players.count > 0
+    - reset_cycle
+    - players.each do |player|
+      %tr{ :class => "#{cycle('odd', 'even')}" }
+        %td.player 
+          = player.name
+          = "##{player.num}" unless player.num.blank?
+        %td.goal #{player.g}
+        %td.assists #{player.a}
+        %td.points #{player.pts}
+        %td.pen #{player.pen}
+        %td.pim #{player.pim}
+  - else
+    %tr
+      %td{ :colpsan => 6 } No player data has been maintained
 
     

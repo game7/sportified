@@ -1,0 +1,30 @@
+%thead
+  %tr.title
+    %th{ :colspan => 7 } 
+      = side == 'L' ? @stats.left_team_name : @stats.right_team_name
+  %tr.columns
+    %th.player Player
+    %th.minutes MIN
+    %th.shots SA
+    %th.goals GA
+    %th.saves Saves
+    %th.save_pct SV%
+    %th.pim PIM
+%tbody
+  - goalies = @stats.goaltenders.for_side(side).entries
+  - if goalies.count > 0
+    - reset_cycle
+    - goalies.each do |goalie|
+      %tr{ :class => "#{cycle('odd', 'even')}" }
+        %td.player 
+          = show_player_name(@stats, goalie.side, goalie.plr)
+          = "##{goalie.plr}" unless goalie.plr.blank?
+        %td.minutes #{goalie.min_total}
+        %td.shots #{goalie.shots_total}
+        %td.goals #{goalie.goals_total}
+        %td.saves #{goalie.saves_total}
+        %td.save_pct #{goalie.save_percentage}
+        %td.pim 0
+  - else
+    %tr
+      %td{ :colpsan => 7 } No goaltender data has been maintained
