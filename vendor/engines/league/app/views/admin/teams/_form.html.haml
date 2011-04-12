@@ -1,23 +1,125 @@
+- javascript("jquery-ui.min.js")
 = semantic_form_for [:admin, @team], :html => {:multipart => true} do |f|
-  = f.inputs do
+  = f.inputs 'General Info' do
     = f.input :division_id, :as => :select, :collection => @divisions
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :name
     = f.input :short_name
     = f.input :show_in_standings, :as => :boolean
-    = f.input :primary_color, :default => '#999'
-    = f.input :accent_color, :default => '#000'
-    = f.input :text_color, :default => '#FFF'
-    = f.input :link_color, :default => '#003'
+  = f.inputs 'Logo' do
     - if @team.logo?
-      %li 
-        = image_tag @team.logo_url.to_s
+      %li
         = image_tag @team.logo.thumb.url.to_s
-        = image_tag @team.logo.tiny_thumb.url.to_s
     = f.input :logo, :as => :file
     = f.input :logo_cache, :as => :hidden
+  - if @team.logo?
+    = f.inputs 'Thumbnail' do
+      %li
+        #banner
+          #banner_thumb
+            #draggable
+              = image_tag @team.logo.thumb.url.to_s
+          #banner_name #{@team.name}
+          #banner_links
+            = link_to 'Link', 'javascript: void;'
+            = " | "
+            = link_to 'Link', 'javascript: void;'
+            = " | "
+            = link_to 'Link', 'javascript: void;'
+          .clear
+        #image_sizer
+          = link_to 'Image Bigger', '#', :id => 'bigger'
+          = " | "
+          = link_to 'Image Smaller', '#', :id => 'smaller'
+      = f.input :primary_color
+      = f.input :accent_color
+      = f.input :text_color
+      = f.input :link_color 
+      = f.input :thumb_color
+      = f.input :thumb_top, :as => :hidden
+      = f.input :thumb_left, :as => :hidden
+      = f.input :thumb_height, :as => :hidden
+      = f.input :thumb_width, :as => :hidden
   = f.buttons do
     = f.commit_button
     %li #{ link_to 'Cancel', session[:return_to] }
+
+:css
+  #image_sizer { font-size: 12px; }
+  #banner_thumb { float: left; width: 50px; height: 50px; border: 1px solid gray; overflow: hidden; margin: 4px; }
+  #banner_name { float: left; margin: 4px; font-size: 45px; line-height: 50px; font-weight: bold; font-style: italic; }
+  #banner_links { float: right; margin: 4px 8px; font-size: 12px; }
+
+  #banner { border: 2px solid #{@team.accent_color}; background-color: #{@team.primary_color} }
+  #banner_thumb { border: 1px solid #{@team.accent_color}; }
+  #banner_name { color: #{@team.text_color}; }  
+  #banner_links { color: #{@team.text_color}; }
+  #banner_links a:link, .links a:visited, .links a:active { color: #{@team.link_color}; }
+  #banner_links a:hover { color: #{@team.text_color}; }
+
+:javascript
+  function resize_thumb(i) {
+    thumb = $('#draggable img');
+    thumb.width(thumb.width() + i);
+    thumb.css('height', 'auto')
+    $('#team_thumb_height').val(thumb.height());
+    $('#team_thumb_width').val(thumb.width());
+  }
+  function set_starting_thumb_size() {
+    height = #{@team.thumb_height};
+    width = #{@team.thumb_width};
+    thumb = $('#draggable img');
+    if (height > 0) { 
+      thumb.css('height', height)
+    }
+    else {
+      $('#team_thumb_height').val(thumb.height());
+    }
+    if (width > 0) { 
+      thumb.css('width', width) 
+    }
+    else {
+      $('#team_thumb_height').val(thumb.height());      
+    }
+  }
+  $(function() {
+    $( "#bigger" ).click(function(){
+      resize_thumb(5);
+      return false;
+    });
+    $( "#smaller" ).click(function(){
+      resize_thumb(-5);
+      return false;
+    });
+    $( "#draggable" ).draggable({
+      stop: function(event, ui) {
+        $('#team_thumb_top').val(ui.position.top);
+        $('#team_thumb_left').val(ui.position.left);
+      }
+    });
+    $( "#team_thumb_color" ).change(function(){
+      $( "#banner_thumb" ).css('background-color', $(this).val());
+    });
+    $( "#frame").css('background-color', '#{@team.thumb_color}');
+    $( "#draggable" ).css('top', #{@team.thumb_top});
+    $( "#draggable" ).css('left', #{@team.thumb_left});
+    set_starting_thumb_size();
+    $( "#team_primary_color").change(function(){
+      $("#banner").css('background-color', $(this).val());
+    });
+    $( "#team_accent_color").change(function(){
+      $("#banner").css('border-color', $(this).val());
+      $("#banner_thumb").css('border-color', $(this).val());      
+    });
+    $( "#team_text_color").change(function(){
+      $("#banner_name").css('color', $(this).val());  
+      $("#banner_links").css('color', $(this).val()); 
+    });  
+    $( "#team_link_color").change(function(){
+      $("#banner_links a").css('color', $(this).val()); 
+      $("#banner_links a:link").css('color', $(this).val()); 
+      $("#banner_links a:hover").css('color', $(this).val()); 
+    }); 
+  });
 
 

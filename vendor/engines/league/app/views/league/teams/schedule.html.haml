@@ -8,7 +8,7 @@
 .controls.left
   Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
 .controls.right
-  .action.icalendar #{link_to 'iCalendar', params.merge(:format => :ics)}
+  //.action.icalendar #{link_to 'iCalendar', params.merge(:format => :ics)}
 .clear
 
 .mod-container.mod-table.mod-no-header-footer

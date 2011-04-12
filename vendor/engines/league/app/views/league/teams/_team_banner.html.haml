@@ -1,5 +1,6 @@
 
 :css
+  .team-thumb { margin: 4px; border: 1px solid #{team.accent_color}; }
   .team { border: 2px solid #{team.accent_color}; background-color: #{team.primary_color} }
   .name { color: #{team.text_color}; }
   .links { color: #{team.text_color}; }
@@ -8,7 +9,8 @@
 
 
 .banner.team
-  .other.left{ :style => "border: 1px solid gray; height: 50px; width: 50px; margin: 4px; background-image: url(#{team.logo.thumb.url.to_s}); background-position: center;" }
+  .team-thumb.left
+    = render :partial => 'shared/team_thumb', :locals => { :team => team }
   .name.left{ :style => "margin: 4px; font-size: 45px; line-height: 50px; font-weight: bold; font-style: italic;"}
     #{team.name}
   .links.right{ :style => "margin: 4px 8px; font-size: 12px;"}

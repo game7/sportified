@@ -10,6 +10,13 @@ class Team
   field :accent_color, :default => '#000'
   field :text_color, :default => '#FFF'
   field :link_color, :default => '#000033'
+  
+  field :thumb_color, :default => '#FFFFFF'
+  field :thumb_top, :type => Integer, :default => -25
+  field :thumb_left, :type => Integer, :default => -25
+  field :thumb_height, :type=> Integer, :default => 100
+  field :thumb_width, :type => Integer, :default => 100
+
   mount_uploader :logo, TeamLogoUploader
 
   referenced_in :site
@@ -96,5 +103,6 @@ class Team
     def set_slug
       self.slug = self.name.parameterize
     end
+
 
 end

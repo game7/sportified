@@ -1,0 +1,7 @@
+
+:css
+  .thumbnail { height: 50px; width: 50px; overflow: hidden; }
+
+.thumbnail{ :style => "background-color: #{team.thumb_color};" }
+  .inner{ :style => "position: relative; top: #{team.thumb_top}px; left: #{team.thumb_left}px;"}
+    = image_tag team.logo.thumb.url.to_s, :style =>  "width: #{team.thumb_width}px", :alt => team.name
