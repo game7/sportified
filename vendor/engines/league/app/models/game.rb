@@ -1,5 +1,6 @@
 class Game
   include Mongoid::Document
+  include Context::Site
 
   TEAM_ALIGNMENT = %w[home away]
  
@@ -7,7 +8,6 @@ class Game
   field :left_team_name
   field :right_team_name
 
-  referenced_in :site
   referenced_in :season
   referenced_in :left_team, :class_name => "Team"
   referenced_in :right_team, :class_name => "Team"
@@ -15,18 +15,14 @@ class Game
   embeds_one :result, :class_name => "GameResult"
   referenced_in :statsheet
 
-  validates_presence_of :starts_on, :season_id, :site_id
+  validates_presence_of :starts_on, :season_id
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
   scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
   scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
   scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
 
-  class << self
-    def for_site(s)
-      id = s.class == Site ? s.id : s
-      where(:site_id => id)
-    end    
+  class << self  
     def for_team(t)
       id = t.class == Team ? t.id : t
       any_of( { "left_team_id" => id }, { "right_team_id" => id } )

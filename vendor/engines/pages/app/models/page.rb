@@ -4,6 +4,7 @@ class Page
   include Mongoid::Tree
   include Mongoid::Tree::Traversal
   include Mongoid::Tree::Ordering
+  include Context::Site
   cache
 
   before_save :set_slug, :set_path, :set_grouping, :set_block_positions
@@ -26,7 +27,6 @@ class Page
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
   scope :sorted_as_tree, order_by(:group.asc, :level.asc, :position.asc)
-
 
   def move_block_to_top(block)
     blocks.move_to_front(block)

@@ -1,5 +1,6 @@
 class Team
   include Mongoid::Document
+  include Context::Site
   cache
  
   field :name
@@ -19,8 +20,6 @@ class Team
 
   mount_uploader :logo, TeamLogoUploader
 
-  referenced_in :site
-
   referenced_in :division
   field :division_name
   field :division_slug
@@ -37,7 +36,6 @@ class Team
   validates_presence_of :name
   validates_presence_of :division_id
   validates_presence_of :season_id
-  validates_presence_of :site_id
 
   before_save :set_slug
   before_save :ensure_short_name
@@ -51,10 +49,6 @@ class Team
   end
 
   class << self
-    def for_site(s)
-      id = s.class == Site ? s.id : s
-      where(:site_id => id)
-    end
     def for_season(season)
       season_id = ( season.class == Season ? season.id : season )
       where(:season_id => season_id)

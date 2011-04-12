@@ -1,23 +1,19 @@
 class Season
   include Mongoid::Document
+  include Context::Site
   cache
  
   field :name  
   field :slug
   field :starts_on, :type => Date
 
-  referenced_in :site
   references_and_referenced_in_many :divisions
   references_many :games
   references_many :teams
 
-  validates_presence_of :name, :starts_on, :site_id
+  validates_presence_of :name, :starts_on
 
   class << self
-    def for_site(s)
-      id = s.class == Site ? s.id : s
-      where(:site_id => id)
-    end
     def most_recent()
       where(:starts_on.lt => DateTime.now).desc(:starts_on).first
     end
