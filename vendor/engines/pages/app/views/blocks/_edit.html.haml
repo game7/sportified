@@ -2,14 +2,11 @@
   .chrome 
     .left #{block.name}
     .right 
-      %a.edit.toggle{ :rel => "editor-"+block.id.to_s, :href => "#" } Edit
-      = " | "
+      = render :partial => block.class.to_s.pluralize.underscore+"/edit_links", :locals => { :page => @page, :block => block }
       #{ link_to("Move Up", move_up_page_block_path(@page, block), :remote => true, :method => :post) + " | " unless block.at_top? }
       #{ link_to("Move Down", move_down_page_block_path(@page, block), :remote => true, :method => :post) + " | " unless block.at_bottom? }
       #{ link_to "Delete", page_block_path(@page, block), :remote => true, :confirm => 'Are you sure?', :method => :delete }
     .clear
   .block
     = render :partial => "blocks/show", :locals => { :block => block }
-  .editor.hidden{ :id => "editor-"+block.id.to_s }
-    .errors{ :id => "errors-"+block.id.to_s }
-    = render :partial => block.class.to_s.pluralize.underscore+"/edit", :locals => { :block => block }
+

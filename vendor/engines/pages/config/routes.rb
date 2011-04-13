@@ -10,7 +10,7 @@
       post 'move_top', :on => :member
       post 'move_bottom', :on => :member
     end
-    resources :text_blocks, :only => [ :create, :update ]
+    resources :text_blocks, :only => [ :create, :edit, :update ]
   end
 
 end

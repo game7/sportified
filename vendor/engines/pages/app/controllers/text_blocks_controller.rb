@@ -14,6 +14,10 @@ class TextBlocksController < ApplicationController
     end
   end
 
+  def edit
+    @block = @page.blocks.find(params[:id])    
+  end
+
   def update
     @block = @page.blocks.find(params[:id])
     if @block.update_attributes(params[:text_block])

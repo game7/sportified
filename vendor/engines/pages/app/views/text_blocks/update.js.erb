@@ -5,6 +5,6 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").slideDown();
+  $('#dialog-modal').dialog("close");
   $("#edit-<%= @block.id %> .block").html("<%= escape_javascript( render(:partial => "/blocks/show", :locals => { :block => @block } ) )%>");
-  $("#edit-<%= @block.id %> .editor").slideUp();
 <% end %>
