@@ -1,6 +1,6 @@
 class StandingsLayout
   include Mongoid::Document
-  include Context::Site
+  include Sportified::SiteContext
  
   field :name
   validates_presence_of :name
