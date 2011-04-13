@@ -15,29 +15,35 @@
 .mod-container.mod-table.mod-no-header-footer
   .mod-content
     %table.stat#schedule{ :cellspacing => "1" }
-      - @games.each do |game|
-      - game.starts_on.localtime
-        - if game.starts_on.to_date != last_date
-          - reset_cycle()
-          %tr.group-head
-            %td{ :colspan => "3" } #{game.starts_on.to_date.strftime("%A, %B %e %Y")}
-          %tr.col-head
-            %td.teams TEAMS
-            %td.time TIME
-            %td.location LOCATION
-        %tr{ :class => cycle("odd","even") }
-          %td
-            - if game.has_result?
-              - if game.result.right_team_is_winner?
-                #{game.right_team_name} #{game.result.right_team_score} , #{game.left_team_name} #{game.result.left_team_score}
+      - if @games.count == 0
+        %tr
+          %td No games scheduled
+      - else
+        - @games.each do |game|
+          - game.starts_on.localtime
+          - if game.starts_on.to_date != last_date
+            - reset_cycle()
+            %tr.group-head
+              %td{ :colspan => "3" } #{game.starts_on.to_date.strftime("%A, %B %e %Y")}
+            %tr.col-head
+              %td.teams TEAMS
+              %td.time TIME
+              %td.location LOCATION
+          %tr{ :class => cycle("odd","even") }
+            %td
+              - if game.has_result?
+                - if game.result.right_team_is_winner?
+                  #{game.right_team_name} #{game.result.right_team_score} , #{game.left_team_name} #{game.result.left_team_score}
+                - else
+                  #{game.left_team_name} #{game.result.left_team_score}, #{game.right_team_name} #{game.result.right_team_score} 
               - else
-                #{game.left_team_name} #{game.result.left_team_score}, #{game.right_team_name} #{game.result.right_team_score} 
-            - else
-              #{game.left_team_name} vs. #{game.right_team_name} 
-          %td #{game.starts_on.strftime("%l:%M %p")}
-          %td Location
-        - last_date = game.starts_on.to_date
-.controls.left
-  = render "date_selector"
-.clear
+                #{game.left_team_name} vs. #{game.right_team_name} 
+            %td #{game.starts_on.strftime("%l:%M %p")}
+            %td Location
+          - last_date = game.starts_on.to_date
+- if @games.count > 0
+  .controls
+    .left
+      = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+    .clear
 

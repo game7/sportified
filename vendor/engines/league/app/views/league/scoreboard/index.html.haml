@@ -19,7 +19,8 @@
   = render :partial => "score_card", :locals => { :game => game }
 .clear
 .group-end
-.controls.left
-  = render "date_selector"
-.clear
+- if @games.count > 0
+  .controls.left
+    = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+  .clear
 
