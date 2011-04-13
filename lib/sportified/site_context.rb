@@ -1,5 +1,5 @@
-module Context
-  module Site
+module Sportified
+  module SiteContext
     extend ActiveSupport::Concern
     
     included do

@@ -1,6 +1,6 @@
 class Game
   include Mongoid::Document
-  include Context::Site
+  include Sportified::SiteContext
 
   TEAM_ALIGNMENT = %w[home away]
  

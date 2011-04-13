@@ -1,6 +1,6 @@
 class Team
   include Mongoid::Document
-  include Context::Site
+  include Sportified::SiteContext
   cache
  
   field :name

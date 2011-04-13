@@ -4,7 +4,7 @@ class Page
   include Mongoid::Tree
   include Mongoid::Tree::Traversal
   include Mongoid::Tree::Ordering
-  include Context::Site
+  include Sportified::SiteContext
   cache
 
   before_save :set_slug, :set_path, :set_grouping, :set_block_positions
