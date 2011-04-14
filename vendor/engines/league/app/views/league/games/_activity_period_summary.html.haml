@@ -18,8 +18,10 @@
         %td.team 
           - if goal.side == 'left'
             #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
+            #{@stats.left_team_name}
           - else
             #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
+            #{@stats.right_team_name}
         %td.goal 
           = "##{goal.plr} #{show_player_name(stats, goal.side, goal.plr)}"
           .assists
@@ -48,8 +50,10 @@
         %td.team
           - if penalty.side == 'left'
             #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
+            #{@stats.left_team_name}
           - else
             #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
+            #{@stats.left_team_name}
         %td.penalty ##{penalty.plr} #{show_player_name(stats, penalty.side, penalty.plr)}: #{penalty.dur} Minutes for #{penalty.inf}
 
 
