@@ -1,8 +1,10 @@
+- edit_mode = ['edit','update'].index(params[:action]) ? true : false
+= edit_mode
 = form_for( @penalty, :url => url, :remote => true ) do |f|
   .row
     .field
       = f.label :per
-      = select :hockey_penalty, :per, HockeyPenalty.periods , :selected => @penalty.per
+      = select :hockey_penalty, :per, HockeyPenalty.periods , { :selected => @penalty.per }
     .field
       = f.label :min
       = f.text_field :min, :maxlength => 2, :pattern => "[0-9]*"
@@ -12,20 +14,20 @@
   .row
     .field
       = f.label :side, 'Team'
-      = select :hockey_penalty, :side, @sides, :include_blank => 'Choose Team', :selected => @penalty.side
+      = select :hockey_penalty, :side, @sides, {:include_blank => 'Choose Team', :selected => @penalty.side}, {:disabled => edit_mode}
     .field
       = f.label :plr, 'Player'
-      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*"
+      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
   .row
     .field
       = f.label :inf, 'Infraction'
       = f.text_field :inf
     .field
       = f.label :dur, 'Duration'
-      = f.text_field :dur, :maxlength => 2, :pattern => "[0-9]*"
+      = f.text_field :dur, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
     .field
       = f.label :severity, 'Severity'
-      = select :hockey_penalty, :severity, HockeyPenalty.severities, :selected => @penalty.severity
+      = select :hockey_penalty, :severity, HockeyPenalty.severities, {:selected => @penalty.severity}, {:disabled => edit_mode}
   .row
     .field
       = f.label :start_per, 'Period'
