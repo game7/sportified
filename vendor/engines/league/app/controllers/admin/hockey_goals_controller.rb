@@ -8,7 +8,7 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   end
 
   def prepare_sides
-    @sides = [ [@statsheet.left_team_name, 'L'], [@statsheet.right_team_name, 'R'] ]    
+    @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
   end
   
   def new

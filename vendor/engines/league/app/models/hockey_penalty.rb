@@ -1,6 +1,6 @@
 class HockeyPenalty < HockeyEvent
 
-  SEVERITIES = %w[MNR MJR MSC GMSC]
+  SEVERITIES = %w[minor major misconduct game_misconduct]
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing 
                   fighting holding_the_stick hooking interference kneeing roughing slashing 
                   spearing tripping]

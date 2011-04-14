@@ -19,7 +19,7 @@
           %td #{(i+1).to_s}
           %td #{p.per}
           %td #{p.time}
-          %td #{p.side == 'L' ? @statsheet.left_team_name : @statsheet.right_team_name}
+          %td #{p.side == 'left' ? @statsheet.left_team_name : @statsheet.right_team_name}
           %td #{p.plr}
           %td #{p.dur}
           %td #{p.inf} (#{p.severity})

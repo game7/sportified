@@ -1,9 +1,7 @@
 class HockeyPlayer
   include Mongoid::Document
+  include League::Sides
 
-  SIDE = %w[L R]
-
-  field :side
   field :played, :type => Boolean, :default => true
   field :name
   field :num
@@ -16,9 +14,6 @@ class HockeyPlayer
   referenced_in :player
   embedded_in :hockey_statsheet
 
-  scope :left, :where => { :side => 'L' }
-  scope :right, :where => { :side => 'R' }
-  scope :for_side, lambda { |side| { :where => { :side => side } } }
   scope :with_num, lambda { |n| { :where => { :num => n } } }
 
   def from_player(player, side)

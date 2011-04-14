@@ -1,9 +1,7 @@
 class HockeyGoaltender
   include Mongoid::Document
+  include League::Sides
 
-  SIDE = %w[L R]
-
-  field :side
   field :plr
 
   field :min_1, :type => Integer, :default => 0
@@ -40,12 +38,8 @@ class HockeyGoaltender
 
   embedded_in :hockey_scoresheet
 
-  validates_presence_of :side, :plr
-  validates_numericality_of :min_1, :min_2
-
-  scope :left, :where => { :side => 'L' }
-  scope :right, :where => { :side => 'R' }
-  scope :for_side, lambda { |side| { :where => { :side => side } } }
+  validates_presence_of :plr
+  validates_numericality_of :min_1, :min_2, :min_3, :min_ot
 
 
 end

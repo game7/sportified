@@ -47,7 +47,7 @@ class HockeyStatsheet < Statsheet
   def calculate_goals
     clear_goals
     events.goals.each do |g|
-      att = g.side.upcase == 'L' ? "left_goals_#{g.per.downcase}" : "right_goals_#{g.per.downcase}"
+      att = "#{g.side}_goals_#{g.per.downcase}"
       self[att] += 1
     end
   end
@@ -147,8 +147,8 @@ class HockeyStatsheet < Statsheet
   end
 
   def load_players(game)
-    load_team_players(game.left_team, "L")
-    load_team_players(game.right_team, "R")    
+    load_team_players(game.left_team, "left")
+    load_team_players(game.right_team, "right")    
   end
 
   def load_team_players(team, side)
@@ -163,8 +163,8 @@ class HockeyStatsheet < Statsheet
     self.left_score = 0
     self.right_score = 0
     events.goals.each do |g|
-      self.left_score += 1 if g.side == 'L'
-      self.right_score += 1 if g.side == 'R'
+      self.left_score += 1 if g.side == 'left'
+      self.right_score += 1 if g.side == 'right'
     end
   end
 
