@@ -12,11 +12,5 @@ module League
       scope :for_side, lambda { |side| { :where => { :side => side } } }
     end
 
-    module ClassMethods
-      def for_site(s)
-        id = s.class == Site ? s.id : s
-        where(:site_id => id)
-      end      
-    end 
   end
 end
