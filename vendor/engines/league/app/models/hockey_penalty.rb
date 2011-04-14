@@ -6,7 +6,7 @@ class HockeyPenalty < HockeyEvent
                   spearing tripping]
 
   field :inf
-  field :dur
+  field :dur, :type => Integer
   field :severity
   field :start_per
   field :start_min, :type => Integer

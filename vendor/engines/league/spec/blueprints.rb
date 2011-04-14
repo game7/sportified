@@ -55,9 +55,25 @@ HockeyGoal.blueprint do
   per { rand(3) }
   min { rand(15) }
   sec { rand(60) }
-  side { 'L' }
+  side { 'left' }
   plr { rand(29) }
   a1 { rand(29) }
   a2 { rand(29) }
   str { 'EV' }
+end
+
+HockeyPenalty.blueprint do
+  per { rand(3) }
+  min { rand(15) }
+  sec { rand(60) }
+  side { 'left' }
+  plr { rand(29) }
+  dur { 2 }
+  inf { HockeyPenalty.infractions[rand(10)] }
+  severity { 'minor' }  
+end
+
+HockeyPlayer.blueprint do
+  num { rand(29) }
+  name { Sham.name }
 end

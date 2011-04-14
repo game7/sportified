@@ -108,13 +108,18 @@ class HockeyStatsheet < Statsheet
 
   embeds_many :events, :class_name => "HockeyEvent" do
     def build(attributes = {}, type = nil, &block)
-      super
+      event = super
+      base.event_created(event)
+      event
     end
     def <<(*args)
-      super
+      events = super
+      args.each{ |event| base.event_created(event) }
+      events
     end
     def delete(document)
       super
+      base.event_deleted(document)
     end
   end
 
@@ -130,7 +135,6 @@ class HockeyStatsheet < Statsheet
     end
   end    
 
-  before_save :capture_latest_event
   before_save :update_team_scores
 
   def load_game_info
@@ -155,10 +159,6 @@ class HockeyStatsheet < Statsheet
     team.players.each{|p| players.build.from_player(p, side)} if team
   end
 
-  def capture_latest_event
-    events.each{|e| set_latest_event_time(e) if e.new_record? && is_latest?(e) }
-  end
-
   def update_team_scores
     self.left_score = 0
     self.right_score = 0
@@ -169,7 +169,18 @@ class HockeyStatsheet < Statsheet
   end
 
   def is_latest?(event)
-    latest_per.blank? || (latest_per.to_s < event.per.to_s && latest_min > event.min && latest_sec > event.sec)
+    if latest_per.blank? || latest_per.to_s < event.per.to_s 
+      result = true
+    elsif latest_per.to_s == event.per.to_s
+      if latest_min > event.min 
+        result = true
+      elsif latest_min == event.min
+        if latest_sec > event.sec
+          result = true
+        end
+      end
+    end
+    result ||= false
   end
 
   def set_latest_event_time(event)
@@ -183,6 +194,83 @@ class HockeyStatsheet < Statsheet
     load_players(self.game)
   end
 
+  def event_created(event)
+    
+    set_latest_event_time(event) if is_latest?(event)    
+    
+    case event.class.to_s
+      when 'HockeyGoal'
+        goal_created(event)
+      when 'HockeyPenalty'
+        penalty_created(event)
+    end
 
+  end
+
+  def event_deleted(event)
+    
+    latest = events.sorted_by_time.last
+    set_latest_event_time(latest) if latest
+    
+    case event.class.to_s
+      when 'HockeyGoal'
+        goal_deleted(event)
+      when 'HockeyPenalty'
+        penalty_deleted(event)
+    end
+
+  end
+
+  def goal_created(goal)
+    increment_goals_for_player(goal.side, goal.plr, 1)
+    increment_assists_for_player(goal.side, goal.a1, 1)
+    increment_assists_for_player(goal.side, goal.a2, 1)
+  end
+
+  def goal_deleted(goal)
+    increment_goals_for_player(goal.side, goal.plr, -1)
+    increment_assists_for_player(goal.side, goal.a1, -1)
+    increment_assists_for_player(goal.side, goal.a2, -1)
+  end
+
+  def penalty_created(pen)
+    increment_penalties_for_player(pen.side, pen.plr, 1, pen.dur)
+  end
+
+  def penalty_deleted(pen)
+    increment_penalties_for_player(pen.side, pen.plr, -1, -pen.dur)
+  end
+
+  def increment_goals_for_player(side, num, i)
+    plr = players.for_side(side).with_num(num).first
+    plr.g += i    if plr
+    plr.pts += i  if plr
+  end
+
+  def increment_assists_for_player(side, num, i)
+    plr = players.for_side(side).with_num(num).first
+    plr.a += i    if plr
+    plr.pts += i  if plr
+  end
+
+  def increment_penalties_for_player(side, num, i, min)
+    plr = players.for_side(side).with_num(num).first
+    plr.pen += i    if plr
+    plr.pim += min  if plr
+  end
+
+  def calculate_player_stats
+    clear_player_stats
+    events.goals.each{|goal| goal_created(goal)}
+    events.penalties.each{|pen| penalty_created(pen)}
+  end
+
+  def clear_player_stats
+    players.each do |plr|
+      ['g','a','pts','pen','pim'].each do |att| 
+        plr[att] = 0
+      end
+    end
+  end
 
 end
