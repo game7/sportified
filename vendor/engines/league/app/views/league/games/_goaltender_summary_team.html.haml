@@ -1,7 +1,7 @@
 %thead
   %tr.title
     %th{ :colspan => 7 } 
-      = side == 'L' ? @stats.left_team_name : @stats.right_team_name
+      = side == 'left' ? @stats.left_team_name : @stats.right_team_name
   %tr.columns
     %th.player Player
     %th.minutes MIN
