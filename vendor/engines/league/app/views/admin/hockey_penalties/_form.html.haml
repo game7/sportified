@@ -1,5 +1,4 @@
 - edit_mode = ['edit','update'].index(params[:action]) ? true : false
-= edit_mode
 = form_for( @penalty, :url => url, :remote => true ) do |f|
   .row
     .field
