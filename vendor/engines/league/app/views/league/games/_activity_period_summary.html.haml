@@ -16,7 +16,7 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{goal.time}
         %td.team 
-          - if goal.side == 'L'
+          - if goal.side == 'left'
             #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
           - else
             #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
@@ -46,7 +46,7 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{penalty.time}
         %td.team
-          - if penalty.side == 'L'
+          - if penalty.side == 'left'
             #{image_tag @left_team.logo.micro_thumb.url.to_s if @left_team.logo?}
           - else
             #{image_tag @right_team.logo.micro_thumb.url.to_s if @right_team.logo?}
