@@ -1,11 +1,12 @@
+- edit_mode = ['edit','update'].index(params[:action]) ? true : false
 = form_for( @goaltender, :url => url, :remote => true ) do |f|
   .row
     .field
       = f.label :side, 'Team'
-      = select :hockey_goaltender, :side, @sides, :include_blank => 'Choose Team', :selected => @goaltender.side
+      = select :hockey_goaltender, :side, @sides, {:include_blank => 'Choose Team', :selected => @goaltender.side}, {:disabled => edit_mode}
     .field
       = f.label :plr, 'Player'
-      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*"
+      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
   .row
     %table
       %tr
