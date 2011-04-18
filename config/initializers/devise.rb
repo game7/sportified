@@ -14,7 +14,8 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/mongoid'
 
-  config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
+  # config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
+  config.omniauth :facebook, nil, nil, :setup => true
 
   config.case_insensitive_keys = [:email]
 

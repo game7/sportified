@@ -2,6 +2,7 @@
 
   root :to => "welcome#index"
   
+  match 'users/auth/facebook/setup' => 'sessions#setup'
   match 'users/auth/:provider/callback' => 'authentications#create'
   devise_for :users
   resources :users, :only => :show
