@@ -1,7 +1,7 @@
 ::Sportified::Application.routes.draw do
 
   match "league" => "league/home#index", :as => :league, :via => :get
-  match "league/:division_slug/home" => "league/divisions#show", :as => :league_division, :via => :get
+  match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
   match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
   match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
   match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_standings, :via => :get
