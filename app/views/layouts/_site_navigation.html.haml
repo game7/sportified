@@ -1,10 +1,5 @@
 %ul
-  %li 
-    %a{ :href => "/" } [ TAB ]
-  %li
-    %a{ :href => "/"} [ TAB ]
-  %li 
-    %a{ :href => "/league" } League
-  %li
-    %a{ :href => "/"} [ TAB ]
+  - @site_menu_items.each do |item|
+    %li 
+      %a{ :href => "#{item[:url]}" } #{item[:title]}
 .clear

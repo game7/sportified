@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_site
   before_filter :add_stylesheets
   before_filter :load_objects
+  before_filter :set_site_navigation
   before_filter :set_breadcrumbs
   before_filter :set_area_navigation
 
@@ -27,6 +28,19 @@ class ApplicationController < ActionController::Base
 
   def set_breadcrumbs
     @breadcrumbs ||= []
+  end
+
+  def set_site_navigation
+    @site_menu_items ||= []
+    pages = Page.for_site(Site.current).top_level.in_menu.live.asc(:position)
+    pages.each do |page|
+      @site_menu_items << { :title => page.title, :url => get_page_url(page) }    
+    end
+  end
+
+  def get_page_url(page)
+    url = page.link_url unless page.link_url.blank?
+    url ||= page_friendly_path(page.path)
   end
 
   def set_area_navigation
