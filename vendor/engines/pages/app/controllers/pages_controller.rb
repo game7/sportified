@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   
   before_filter :load_page, :only => [:show, :edit, :update, :design]
+  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :design]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -11,6 +12,12 @@ class PagesController < ApplicationController
   def load_parent_options
     @parent_options = Page.for_site(Site.current).sorted_as_tree.entries.collect do |page|
       [ page.level.times.collect{"-"}.to_s + page.title, page.id ]
+    end
+  end
+
+  def set_page_breadcrumbs
+    @page.ancestors_and_self.each do |p|
+      add_breadcrumb(p.title, page_friendly_path(p.path))
     end
   end
   

@@ -7,6 +7,7 @@ class Page
   include Sportified::SiteContext
   cache
 
+  before_create :set_position
   before_save :set_slug, :set_path, :set_grouping, :set_block_positions
   after_rearrange :set_path, :set_grouping
 
@@ -66,6 +67,12 @@ class Page
     blocks.each_with_index{|block, index| block.position = index }
   end
 
+  class << self
+    def max_position(site)
+      Page.for_site(site).max(:position).to_i
+    end
+  end
+
   private
 
     def set_slug
@@ -74,6 +81,14 @@ class Page
 
     def set_path
       self.path = self.ancestors_and_self.collect(&:slug).join('/')
+    end
+
+    def set_position
+      if self.parent_id.blank?
+        self.position = Page.max_position(self.site_id) + 1
+      else
+        self.position = self.siblings.max(:position).to_i + 1
+      end
     end
 
     def set_grouping
