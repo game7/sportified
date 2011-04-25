@@ -1,5 +1,9 @@
 %ul
   - @site_menu_items.each do |item|
     %li 
-      %a{ :href => "#{item[:url]}" } #{item[:title]}
+      - if request.url.include?(item[:url])
+        %a.selected{ :href => "#{item[:url]}" } #{item[:title]}
+      - else
+        %a{ :href => "#{item[:url]}" } #{item[:title]}
 .clear
+

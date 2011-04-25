@@ -118,9 +118,12 @@ ul.user-tasks
     :color white
     :border-left solid 1px #6699AA
     :border-right solid 1px #334433
-    &:hover
+    &.selected
+      :background #6699AA
+    &:hover, &.selected:hover
       :background #AABBBB
       :color #334433
+
 
 #area-nav
   nav
