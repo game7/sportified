@@ -35,6 +35,8 @@ class Page
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
   scope :sorted_as_tree, order_by(:group.asc, :level.asc, :position.asc)
+  scope :live, :where => { :draft => false }
+  scope :in_menu, :where => { :show_in_menu => true }
 
   def move_block_to_top(block)
     blocks.move_to_front(block)
