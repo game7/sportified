@@ -1,27 +1,2 @@
-- javascript("jquery-ui.min.js")
-- javascript("wymeditor/jquery.wymeditor")
-:javascript
-  $(function() {
-    $("#blocks").sortable({
-      revert: "true",
-      handle: "div.chrome",
-      axis: "y",
-      placeholder: "ui-state-highlight"
-    });
-  });
-
-- content_for :sidebar do
-  %ul
-    %li #{link_to 'Show this Page', page_path(@page.path)}
-    %li 
-      Add 
-      %ul
-        %li #{ link_to "Text Block", page_text_blocks_path(@page), :remote => true, :method => :post }
-
-%h1 #{ @page.title }
-#blocks
-  - @page.blocks.each do |b| 
-    = render :partial => "blocks/edit", :locals => { :block => b }
-
-
-#dialog-modal
+- title 'Edit Page'
+= render 'form'

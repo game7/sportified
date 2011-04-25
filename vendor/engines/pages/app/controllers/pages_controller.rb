@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  before_filter :load_page, :only => [:show, :edit]
+  before_filter :load_page, :only => [:show, :edit, :update, :design]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def load_page
@@ -20,6 +20,14 @@ class PagesController < ApplicationController
     
   end
 
+  def update
+    if @page.update_attributes(params[:page])
+      return_to_last_point(:notice => 'Page has been updated')
+    else
+      render :action => "edit"
+    end    
+  end
+
   def new
     @page = Page.new
   end
@@ -29,7 +37,7 @@ class PagesController < ApplicationController
     @page.position = 0
     @page.site = Site.current
     if @page.save
-      return_to_last_point(:notice => 'Division was successfully created.')
+      return_to_last_point(:notice => 'Page was successfully created.')
     else
       render :action => "new"
     end
