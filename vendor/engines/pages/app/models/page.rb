@@ -13,8 +13,16 @@ class Page
   field :title 
   field :slug
   field :path
+  
   field :meta_keywords
   field :meta_description
+  
+  field :link_url
+  field :show_in_menu, :type => Boolean, :default => true
+  field :skip_to_first_child, :type => Boolean, :default => false
+
+  field :draft, :type => Boolean, :default => false
+  
   field :level, :type => Integer
   field :group, :type => Integer
 
@@ -68,7 +76,7 @@ class Page
 
     def set_grouping
       self.level = self.root? ? 0 : self.parent.level + 1
-      self.group = self.root? ? self.position : self.root.position
+      self.group = self.root? ? self.position : self.root.group
     end
 
     def set_block_positions

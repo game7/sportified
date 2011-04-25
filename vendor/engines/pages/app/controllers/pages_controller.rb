@@ -1,10 +1,17 @@
 class PagesController < ApplicationController
   
   before_filter :load_page, :only => [:show, :edit, :update, :design]
+  before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def load_page
     @page = params[:id] ? Page.find(params[:id]) : Page.with_path(params[:path]).first
+  end
+
+  def load_parent_options
+    @parent_options = Page.for_site(Site.current).sorted_as_tree.entries.collect do |page|
+      [ page.level.times.collect{"-"}.to_s + page.title, page.id ]
+    end
   end
   
   def index

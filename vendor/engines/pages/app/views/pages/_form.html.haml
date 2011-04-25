@@ -1,8 +1,16 @@
 = semantic_form_for [@page] do |f|
-  = f.inputs do
+  = f.inputs 'Basic' do
     = f.input :title
+    = f.input :draft, :as => :boolean
+  = f.inputs 'Positioning' do
+    = f.input :parent_id, :collection => @parent_options
+    = f.input :show_in_menu, :as => :boolean
+  = f.inputs 'Navigation' do
+    = f.input :skip_to_first_child, :as => :boolean
+    = f.input :link_url
+  = f.inputs 'Search Engine Optimzation' do
     = f.input :meta_keywords
     = f.input :meta_description
   = f.buttons do
     = f.commit_button
-    %li #{link_to 'Cancel', admin_seasons_path}
+    %li #{link_to 'Cancel', session[:return_to]}
