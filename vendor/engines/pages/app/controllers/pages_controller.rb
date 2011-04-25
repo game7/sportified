@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
-  before_filter :load_page, :only => [:show, :edit, :update, :design]
-  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :design]
+  before_filter :load_page, :only => [:show, :edit, :update, :manage]
+  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :manage]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -28,6 +28,10 @@ class PagesController < ApplicationController
 
   def show
 
+  end
+
+  def manage
+    
   end
 
   def edit

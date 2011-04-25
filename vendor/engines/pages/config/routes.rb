@@ -4,7 +4,7 @@
   get '/pages/-/*path', :to => 'pages#show', :as => :page_friendly
 
   resources :pages do
-    get 'design', :on => :member
+    get 'manage', :on => :member
     resources :blocks, :only => [ :destroy ] do
       post 'move_up', :on => :member
       post 'move_down', :on => :member
