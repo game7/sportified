@@ -23,7 +23,7 @@ class PagesController < ApplicationController
   
   def index
 #    @pages = Page.top_level
-    @pages = Page.all.sorted_as_tree
+    @pages = Page.sorted_as_tree
   end
 
   def show
