@@ -23,10 +23,14 @@ class PagesController < ApplicationController
   
   def index
 #    @pages = Page.top_level
-    @pages = Page.sorted_as_tree
+    @pages = Page.for_site(Site.current).sorted_as_tree
   end
 
   def show
+    
+    if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
+      redirect_to first_live_child.url
+    end
 
   end
 
@@ -52,7 +56,6 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(params[:page])
-    @page.position = 0
     @page.site = Site.current
     if @page.save
       return_to_last_point(:notice => 'Page was successfully created.')

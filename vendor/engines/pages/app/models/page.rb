@@ -7,9 +7,10 @@ class Page
   include Sportified::SiteContext
   cache
 
-  before_create :set_position
-  before_save :set_slug, :set_path, :set_grouping, :set_block_positions
-  after_rearrange :set_path, :set_grouping
+  default_scope
+
+  before_save :set_slug, :set_path, :set_block_positions, :set_tree
+  after_rearrange :set_path
 
   field :title 
   field :slug
@@ -23,25 +24,31 @@ class Page
   field :skip_to_first_child, :type => Boolean, :default => false
 
   field :draft, :type => Boolean, :default => false
-  
-  field :level, :type => Integer
-  field :group, :type => Integer
+
+  field :tree 
 
   embeds_many :blocks, :default_order => :position.asc
   #reflect_on_association(:blocks).options[:default_order] = :position.asc
 
   validates_presence_of :title
-  validates_presence_of :position
 
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
   class << self
     def sorted_as_tree
-      unscoped.ascending(:group, :position, :depth)
+      unscoped.ascending(:tree )
     end
   end
   scope :live, :where => { :draft => false }
   scope :in_menu, :where => { :show_in_menu => true }
+
+  def url
+    if self.link_url.present?
+      self.link_url
+    else
+      {:controller => "/pages", :action => "show", :path => self.path}
+    end
+  end
 
   def move_block_to_top(block)
     blocks.move_to_front(block)
@@ -71,13 +78,11 @@ class Page
     blocks.each_with_index{|block, index| block.position = index }
   end
 
-  class << self
-    def max_position(site)
-      Page.for_site(site).max(:position).to_i
-    end
-  end
-
   private
+
+    def set_tree
+      self.tree = (parent ? parent.tree : "") + self.position.to_i.to_s
+    end
 
     def set_slug
       self.slug = self.title.parameterize
@@ -85,19 +90,6 @@ class Page
 
     def set_path
       self.path = self.ancestors_and_self.collect(&:slug).join('/')
-    end
-
-    def set_position
-      if self.parent_id.blank?
-        self.position = Page.max_position(self.site_id) + 1
-      else
-        self.position = self.siblings.max(:position).to_i + 1
-      end
-    end
-
-    def set_grouping
-      self.level = self.root? ? 0 : self.parent.level + 1
-      self.group = self.root? ? self.position : self.root.group
     end
 
     def set_block_positions
