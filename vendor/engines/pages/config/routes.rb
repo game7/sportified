@@ -1,7 +1,7 @@
 ::Sportified::Application.routes.draw do
   
   #get '/pages/:id', :to => 'pages#show', :as => :page, :constraints => { :id => /[a-f0-9]{24}/ }
-  get '/pages/-/*path', :to => 'pages#show', :as => :page_friendly
+  get '/p/*path', :to => 'pages#show', :as => :page_friendly
 
   resources :pages do
     get 'manage', :on => :member
