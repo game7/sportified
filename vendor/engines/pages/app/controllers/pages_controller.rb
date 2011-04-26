@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 
   def set_page_breadcrumbs
     @page.ancestors_and_self.each do |p|
-      add_breadcrumb(p.title, page_friendly_path(p.path))
+      add_breadcrumb(p.title, p.skip_to_first_child ? nil : p.url)
     end
   end
   
