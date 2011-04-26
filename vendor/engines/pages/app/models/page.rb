@@ -35,7 +35,11 @@ class Page
 
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
-  scope :sorted_as_tree, order_by(:group.asc, :level.asc, :position.asc)
+  class << self
+    def sorted_as_tree
+      unscoped.ascending(:group, :position, :depth)
+    end
+  end
   scope :live, :where => { :draft => false }
   scope :in_menu, :where => { :show_in_menu => true }
 
