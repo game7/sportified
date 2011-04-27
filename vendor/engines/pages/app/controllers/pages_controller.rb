@@ -11,7 +11,7 @@ class PagesController < ApplicationController
 
   def load_parent_options
     @parent_options = Page.for_site(Site.current).sorted_as_tree.entries.collect do |page|
-      [ page.level.times.collect{"-"}.to_s + page.title, page.id ]
+      [ ("-- " * page.depth) + page.title, page.id ]
     end
   end
 

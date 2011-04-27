@@ -2,7 +2,7 @@
 = Site.current.name
 %br/
 - pages.each do |page|
-  != (("|&nbsp;&nbsp;&nbsp;&nbsp;") * page.level) + "|---"
+  != (("|&nbsp;&nbsp;&nbsp;&nbsp;") * page.depth) + "|---"
   = link_to page.title, page.url #page_friendly_path(page.path)
   (#{link_to "Edit Settings", edit_page_path(page.id)} | #{link_to "Manage Content", manage_page_path(page.id)})
   %br/

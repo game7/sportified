@@ -42,3 +42,4 @@
         .wrapper
           = yield :sidebar
       #footer 
+      = render 'layouts/google_analytics' if Site.current.analytics_id.present?
