@@ -30,6 +30,8 @@ class Page
   embeds_many :blocks, :default_order => :position.asc
   #reflect_on_association(:blocks).options[:default_order] = :position.asc
 
+  embeds_many :layouts, :default_order => :position.asc
+
   validates_presence_of :title
 
   scope :top_level, :where => { :parent_id => nil }

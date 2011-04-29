@@ -1,0 +1,13 @@
+- id ||= layout.id
+- height ||= 100
+- levels = 1
+- columns = layout.get_columns
+- columns.each{|col| levels = 2 if col[:columns] }
+.layout{ :id => id, :format => layout.format, :style => "min-height: #{levels * height}px; margin-bottom: 4px; padding: 2px; border: 1px solid gray;"}
+  - columns.each do |col|
+    .panel.left{ :style => "width: #{col[:width]}%; border: 1px dashed gray; min-height: #{levels * height}px; margin: -1px; text-align: center;" }
+      - if col[:columns]
+        - col[:columns].each do |sub|
+          .panel.left{ :style => "width: #{sub[:width]}%; border: 1px dashed gray; min-height: #{height}px; margin: -1px; text-align: center;" }
+        .clear
+  .clear

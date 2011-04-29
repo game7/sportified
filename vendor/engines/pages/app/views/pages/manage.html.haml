@@ -2,13 +2,39 @@
 - javascript("wymeditor/jquery.wymeditor")
 :javascript
   $(function() {
-    $("#blocks").sortable({
+    //$("#blocks > div").draggable({ revert: "invalid" });
+    //$(".draggable").draggable({ revert: "invalid" });
+    $(".blocks").sortable({
       revert: "true",
       handle: "div.chrome",
-      axis: "y",
-      placeholder: "ui-state-highlight"
+      opacity: 0.7,
+      connectWith: $('.blocks'),
+      placeholder: "ui-state-highlight",
+      update: function( event, ui ) {
+        var order = $(this).sortable('toArray').toString();
+        alert($(this).attr("id") + ' :: ' + order);
+      }
     });
+    //$(".droppable").droppable({
+    //  drop: function( event, ui ) {
+    //    moveBlock(ui.draggable, $(this));
+    //  }
+    //});
+    //$(".droppable").sortable({
+    //  revert: "true",
+    //  handle: "div.chrome",
+    //  placeholder: "ui-state-highlight"
+    //});
+    function moveBlock( $block, $target )  {
+      $block.fadeOut(function() {
+        $block.appendTo($target);
+        $block.css("position", "static");
+        $block.fadeIn();
+      });
+    }
   });
+
+
 
 - content_for :sidebar do
   %ul
@@ -19,10 +45,53 @@
       %ul
         %li #{ link_to "Text Block", page_text_blocks_path(@page), :remote => true, :method => :post }
 
+- layouts = []
+- layouts << '60|40R|30|30'
+- layouts << '40|60|30R|30R'
+- layouts << '25|75'
+- layouts << '40|60'
+- layouts << '50|50'
+- layouts << '60|40'
+- layouts << '75|25'
+- layouts << '33|34|33'
+- layouts << '25|50|25'
+- layouts << '50|25|25'
+- layouts << '25|25|50'
+
+
+
 %h1 #{ @page.title }
-#blocks
+.blocks
   - @page.blocks.each do |b| 
     = render :partial => "blocks/edit", :locals => { :block => b }
+.clear
+- layouts.each_with_index do |layout, id|
+  - cols = layout.split('|')
+  - cols.each_with_index do |col, i|
+    -if col.end_with?('R')
+      .right.blocks{ :id => "#{BSON::ObjectId.new.to_s}", :style => "width: #{col.sub('R','')}%" }
+    -else
+      .left.blocks{ :id => "#{BSON::ObjectId.new.to_s}", :style => "width: #{col}%" }
+  .clear
 
+//.blocks{ :style => "width: 50%;"}
+//.blocks{ :style => "width: 50%;"}
+//.clear
+//.left{ :style => "width: 60%;" }
+//  .blocks{ :style => "width: 100%;"}
+//  .clear
+//  .blocks{ :style => "width: 50%;"}
+//  .blocks{ :style => "width: 50%;"}
+//.blocks{ :style => "width: 40%;"}
+//.clear
+//.blocks{ :style => "width: 50%;"}
+//.blocks{ :style => "width: 50%;"}
+//.clear
 
 #dialog-modal
+
+:css
+  .layout { clear: both; padding: 0;}
+  .blocks { min-height: 100px; margin: -1px; border: 1px dashed gray; }
+  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+

@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
-  before_filter :load_page, :only => [:show, :edit, :update, :manage]
-  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :manage]
+  before_filter :load_page, :only => [:show, :edit, :update, :manage, :layout]
+  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :manage, :layout]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -20,6 +20,7 @@ class PagesController < ApplicationController
       add_breadcrumb(p.title, p.skip_to_first_child ? nil : p.url)
     end
   end
+
   
   def index
 #    @pages = Page.top_level
@@ -36,6 +37,10 @@ class PagesController < ApplicationController
 
   def manage
     
+  end
+
+  def layout
+
   end
 
   def edit
