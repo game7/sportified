@@ -54,15 +54,11 @@
 
 - content_for :sidebar do
   = render 'shared/page_options'
-  %ul
-    %li 
-      Add 
-      %ul
-        %li #{ link_to "Text Block", page_text_blocks_path(@page), :remote => true, :method => :post }
+  %strong Add Content
   #catalog
     .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
       .chrome Text
-    .item
+    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
       .chrome Horizontal Line
 
 %h1 #{ @page.title }
