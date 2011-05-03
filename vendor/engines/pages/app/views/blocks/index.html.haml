@@ -58,8 +58,8 @@
   #catalog
     .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
       .chrome Text
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
-      .chrome Horizontal Line
+    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DividerBlock' }
+      .chrome Divider
 
 %h1 #{ @page.title }
 .blocks

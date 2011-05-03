@@ -1,0 +1,3 @@
+class DividerBlock < Block
+
+end
