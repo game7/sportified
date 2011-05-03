@@ -1,9 +1,7 @@
 - title @page.title
 
 - content_for :sidebar do
-  %ul
-    %li #{link_to 'Edit Page Settings', edit_page_path(@page)}
-    %li #{link_to 'Manage Page Content', manage_page_path(@page)}
+  = render 'shared/page_options'
 
 #blocks
   - @page.blocks.each do |b| 

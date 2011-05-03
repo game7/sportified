@@ -1,6 +1,7 @@
 class BlocksController < ApplicationController
   
-  before_filter :load_page, :load_block
+  before_filter :load_page
+  before_filter :load_block, :only => [:destroy]
 
   def load_page
     @page = Page.find(params[:page_id])
@@ -10,24 +11,28 @@ class BlocksController < ApplicationController
     @block = @page.blocks.find(params[:id])   
   end
 
-  def move_top
-    @block.move_to_top
-    @page.save
+
+  def index
+    @blocks_for_panel = @page.blocks_grouped_by_panel
   end
 
-  def move_up
-    @block.move_up
+  def position
+    
+    @page.blocks.each do |block|
+      if params['block'] && pos = params['block'].index(block.id.to_s)
+        block.position = pos
+        block.layout_id = params['layout_id']
+        block.panel_id = params['panel_id']
+      end
+    end    
     @page.save
+    render :nothing => true
+
   end
 
-  def move_down
-    @block.move_down
-    @page.save    
-  end
-
-  def move_bottom
-    @block.move_to_bottom
-    @page.save
+  def create
+    @block = @page.blocks.create({:layout_id => params[:layout_id], :panel_id => params[:panel_id]}, params[:block_type].constantize) 
+    flash[:notice] = "Block Added"
   end
 
   

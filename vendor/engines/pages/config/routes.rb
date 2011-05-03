@@ -4,15 +4,11 @@
   get '/p/*path', :to => 'pages#show', :as => :page_friendly
 
   resources :pages do
-    get 'manage', :on => :member
     resources :layouts, :only => [ :index, :create ] do
       post 'position', :on => :collection
     end
-    resources :blocks, :only => [ :destroy ] do
-      post 'move_up', :on => :member
-      post 'move_down', :on => :member
-      post 'move_top', :on => :member
-      post 'move_bottom', :on => :member
+    resources :blocks, :only => [ :index, :create, :destroy ] do
+      post 'position', :on => :collection
     end
     resources :text_blocks, :only => [ :create, :edit, :update ]
 

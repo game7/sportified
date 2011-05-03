@@ -1,0 +1,5 @@
+.block-content
+  - if block.title
+    %h3 #{block.title}
+  .body
+    = render :partial => block.class.to_s.pluralize.underscore+"/show", :locals => { :block => block }

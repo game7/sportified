@@ -9,7 +9,7 @@ class Page
 
   default_scope
 
-  before_save :set_slug, :set_path, :set_block_positions, :set_tree
+  before_save :set_slug, :set_path, :set_tree
   after_rearrange :set_path
 
   field :title 
@@ -52,32 +52,19 @@ class Page
     end
   end
 
-  def move_block_to_top(block)
-    blocks.move_to_front(block)
-  end
-
-  def move_block_to_bottom(block)
-    blocks.move_to_back(block)
-  end
-
-  def move_block_up(block)
-    blocks.move_forward(block)
-  end
-
-  def move_block_down(block)
-    blocks.move_back(block)   
-  end
-
-  def block_is_first?(block)
-    blocks.first?(block)
-  end
-
-  def block_is_last?(block)
-    blocks.last?(block)
-  end
-
-  def assign_block_positions
-    blocks.each_with_index{|block, index| block.position = index }
+  def blocks_grouped_by_panel
+    panels = { :default => [] }
+    layouts.each do |layout|
+      layout.panel_ids.each{|id| panels[id.to_s] = [] }
+    end
+    blocks.asc(:position).each do |block|
+      if panels.has_key?(block.panel_id)
+        panels[block.panel_id] << block
+      else
+        panels[:default] << block
+      end
+    end
+    panels
   end
 
   private
@@ -92,10 +79,6 @@ class Page
 
     def set_path
       self.path = self.ancestors_and_self.collect(&:slug).join('/')
-    end
-
-    def set_block_positions
-      blocks.each_with_index{|block, index| block.position = index }
     end
 
 end

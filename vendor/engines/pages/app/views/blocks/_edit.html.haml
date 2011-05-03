@@ -1,12 +1,9 @@
-.edit_block{ :id => "edit-"+block.id.to_s }
-  .chrome 
-    .left #{block.name}
-    .right 
-      = render :partial => block.class.to_s.pluralize.underscore+"/edit_links", :locals => { :page => @page, :block => block }
-      #{ link_to("Move Up", move_up_page_block_path(@page, block), :remote => true, :method => :post) + " | " unless block.at_top? }
-      #{ link_to("Move Down", move_down_page_block_path(@page, block), :remote => true, :method => :post) + " | " unless block.at_bottom? }
-      #{ link_to "Delete", page_block_path(@page, block), :remote => true, :confirm => 'Are you sure?', :method => :delete }
-    .clear
-  .block
-    = render :partial => "blocks/show", :locals => { :block => block }
+.block{ :id => "block_"+block.id.to_s, :block => block.class.to_s }
+  .block-frame
+    .block-chrome 
+      .block-name #{block.name}
+      .block-functions 
+        = render :partial => block.class.to_s.pluralize.underscore+"/edit_links", :locals => { :page => @page, :block => block }
+      .clear
+    = render :partial => "blocks/content", :locals => { :block => block }
 

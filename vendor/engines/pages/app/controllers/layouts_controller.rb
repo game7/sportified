@@ -11,8 +11,7 @@ class LayoutsController < ApplicationController
   end
 
   def create
-    layout = @page.layouts.build( :format => params[:format].sub("-","|") )
-    if @page.save
+    if layout = @page.layouts.create( :format => params[:format] )
       render :json => layout
     end
   end

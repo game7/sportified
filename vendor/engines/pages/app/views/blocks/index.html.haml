@@ -1,0 +1,90 @@
+- javascript("jquery-ui.min.js")
+- javascript("wymeditor/jquery.wymeditor")
+:javascript
+  $(function() {
+    $("#catalog > .item").draggable({
+      revert: "invalid",
+      helper: "clone",
+      opacity: 0.7,
+      connectToSortable: ".layout-panel"        
+    });
+    $(".layout-panel").sortable({
+      revert: "true",
+      handle: ".block-chrome",
+      opacity: 0.7,
+      connectWith: $('.layout-panel'),
+      placeholder: "ui-state-highlight",
+      update: function( event, ui ) {   
+        temp_id = ui.item.attr('id');
+        var items = $(this).sortable('toArray');
+        /* if subject is a new item */
+        if(temp_id.indexOf('new_block') == 0) {
+          layout_id = $('#' + temp_id).closest('.layout').attr('id').replace('layout_','');
+          panel_id = $('#' + temp_id).closest('.layout-panel').attr('id').replace('panel_','');
+          $.ajax({
+            type: 'post',
+            data: 'temp_id='+temp_id+'&block_type='+ui.item.attr("block") + '&position='+items.indexOf(temp_id) + '&layout_id='+layout_id + '&panel_id='+panel_id,
+            dataType: 'script',
+            async: false,
+            success: function(msg){
+              /*$('#' + temp_id).attr('id', 'block_'+msg['_id']);*/
+            },
+            url: '#{page_blocks_path(@page)}'
+          });
+        }
+        /* if items to update position */
+        if(items.length > 0) {
+          layout_id = $('#' + items[0]).closest('.layout').attr('id').replace('layout_','');
+          panel_id = $('#' + items[0]).closest('.layout-panel').attr('id').replace('panel_','');
+          $.ajax({
+            type: 'post',
+            data: $(this).sortable('serialize') + '&layout_id='+layout_id + '&panel_id='+panel_id,
+            dataType: 'json',
+            success: function(msg){
+              alert('done');
+            },
+            url: '#{position_page_blocks_path(@page)}'
+          }); 
+        } 
+      }   
+    });
+  });
+
+
+
+- content_for :sidebar do
+  = render 'shared/page_options'
+  %ul
+    %li 
+      Add 
+      %ul
+        %li #{ link_to "Text Block", page_text_blocks_path(@page), :remote => true, :method => :post }
+  #catalog
+    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
+      .chrome Text
+    .item
+      .chrome Horizontal Line
+
+%h1 #{ @page.title }
+.blocks
+  .panel{ :style => "width: 100%;"}
+    - @blocks_for_panel[:default].each do |b| 
+      = render :partial => "blocks/edit", :locals => { :block => b }
+  - @page.layouts.each do |layout|
+    = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel }
+.clear
+
+#dialog-modal
+
+:css
+  .layout { margin-bottom: 4px; padding: 2px; border: 1px solid gray; }
+  .layout-panel { float: left; border: 1px dashed gray; margin: -1px; }
+  .layout-holder { float: left; border: 1px dashed gray; margin: -1px; }
+  .block { margin: 5px;}
+  .block-frame { border: 1px solid gray; }
+  .block-chrome { padding: 5px; background-color: gray; }
+  .block-name { float: left; }
+  .block-functions { float: right; }
+  .block-content { padding: 3px; }
+  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+

@@ -1,13 +1,23 @@
 - id ||= layout.id
 - height ||= 100
-- levels = 1
-- columns = layout.get_columns
-- columns.each{|col| levels = 2 if col[:columns] }
-.layout{ :id => id, :format => layout.format, :style => "min-height: #{levels * height}px; margin-bottom: 4px; padding: 2px; border: 1px solid gray;"}
-  - columns.each do |col|
-    .panel.left{ :style => "width: #{col[:width]}%; border: 1px dashed gray; min-height: #{levels * height}px; margin: -1px; text-align: center;" }
-      - if col[:columns]
-        - col[:columns].each do |sub|
-          .panel.left{ :style => "width: #{sub[:width]}%; border: 1px dashed gray; min-height: #{height}px; margin: -1px; text-align: center;" }
+- blocks ||= {}
+- max_depth = 1
+- panels = layout.panels
+- panels.each { |panel| max_depth = 2 if panel.children.length > 0 }
+.layout{ :id => "layout_#{id.to_s}", :format => layout.format, :style => "min-height: #{max_depth * height}px;"}
+  - panels.each do |panel|
+    - if panel.children.length > 0
+      .layout-holder{ :style => "width: #{panel.width}%; min-height: #{max_depth * height}px;"}      
+        - panel.children.each do |child|
+          .layout-panel{ :id => "panel_#{child.id}", :style => "width: #{child.width}%; min-height: #{height}px;"}
+            - if blocks && blocks.has_key?(child.id.to_s)
+              - blocks[child.id.to_s].each do |block|
+                = render :partial => "blocks/edit", :locals => { :block => block }
         .clear
+    - else
+      .layout-panel{ :id => "panel_#{panel.id}", :style => "width: #{panel.width}%; min-height: #{max_depth * height}px;" }
+        - if blocks && blocks.has_key?(panel.id.to_s)
+          - blocks[panel.id.to_s].each do |block|
+            = render :partial => "blocks/edit", :locals => { :block => block }
   .clear
+

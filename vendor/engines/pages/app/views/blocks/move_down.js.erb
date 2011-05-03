@@ -1,9 +1,0 @@
-<% if @block.errors.any? %>
-  $("#flash_notice").slideUp();
-  $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
-  $("#errors-<%= @block.id %>").slideDown();
-<% else %>
-  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
-  $("#flash_notice").slideDown();
-  $("#edit-<%= @block.id %>").fadeOut();
-<% end %>
