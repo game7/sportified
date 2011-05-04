@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
-  before_filter :load_page, :only => [:show, :edit, :update, :manage, :layout]
-  before_filter :set_page_breadcrumbs, :only => [:show, :edit, :manage, :layout]
+  before_filter :load_page, :only => [:show, :edit, :update, :destroy]
+  before_filter :set_page_breadcrumbs, :only => [:show, :edit]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -59,6 +59,11 @@ class PagesController < ApplicationController
     else
       render :action => "new"
     end
+  end
+
+  def destroy
+    @page.delete
+    flash[:notice] = "Page Deleted"    
   end
 
 end
