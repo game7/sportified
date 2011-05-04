@@ -45,6 +45,8 @@
 
 - content_for :sidebar do
   = render 'shared/page_options'
+  %strong Add Panels
+  (Drag & Drop)
   #catalog
     - Layout.prototypes.each_with_index do |layout, i|
       = render :partial => "wireframe", :locals => { :id => "new-#{i}", :layout => layout, :height => 20 }
