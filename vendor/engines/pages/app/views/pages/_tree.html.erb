@@ -1,0 +1,21 @@
+<% last_depth = 0 %>
+<ul>
+<% @pages.each do |page| %>
+  <% diff = page.depth - last_depth %>
+  <% if diff > 0 %>
+    <% diff.times do %>
+      <ul>
+    <% end %>
+  <% else %>
+    </li>
+    <% if diff < 0 %>
+      <% (diff*-1).times do %>
+        </ul></li>
+      <% end %>
+    <% end %>
+  <% end %>
+  <li id="page_<%= page.id %>"><%= page.title %>
+  <% last_depth = page.depth %>
+<% end %>
+</li>
+</ul>
