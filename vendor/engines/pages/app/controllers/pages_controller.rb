@@ -35,14 +35,6 @@ class PagesController < ApplicationController
 
   end
 
-  def manage
-    
-  end
-
-  def layout
-
-  end
-
   def edit
     
   end
