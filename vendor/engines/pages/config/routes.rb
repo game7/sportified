@@ -11,7 +11,8 @@
     resources :blocks, :only => [ :index, :create, :destroy ] do
       post 'position', :on => :collection
     end
-    resources :text_blocks, :only => [ :create, :edit, :update ]
+    resources :text_blocks, :only => [ :edit, :update ]
+    resources :contact_blocks, :only => [ :edit, :update ]
 
   end
 

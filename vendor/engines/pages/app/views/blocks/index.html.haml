@@ -83,13 +83,15 @@
       .chrome Text
     .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DividerBlock' }
       .chrome Divider
+    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ContactBlock' }
+      .chrome Contact
 
 %h1 #{ @page.title }
 .blocks
   .panel{ :style => "width: 100%;"}
     - @blocks_for_panel[:default].each do |b| 
       = render :partial => "blocks/edit", :locals => { :block => b }
-  - @page.layouts.each do |layout|
+  - @page.layouts.asc(:position).each do |layout|
     = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel, :edit => true }
 .clear
 

@@ -1,0 +1,15 @@
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "contact_blocks/form" ) )%>");
+$('#dialog-modal').dialog({
+  title: 'Edit Contact Block',
+  height: 500,
+  width: 600,
+  modal: true,
+  buttons: {
+    Save: function() {
+      $(this).children("form").submit();
+    },
+    Cancel: function() {
+      $(this).dialog("close");
+    }
+  }
+}); 

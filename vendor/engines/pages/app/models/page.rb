@@ -11,6 +11,7 @@ class Page
 
   before_save :set_slug, :set_path, :set_tree
   after_rearrange :set_path
+  before_destroy :delete_descendants
 
   field :title 
   field :slug

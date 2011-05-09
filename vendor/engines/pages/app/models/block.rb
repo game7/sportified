@@ -9,7 +9,7 @@ class Block
 
   embedded_in :page
 
-  def name
+  def class_name
     self.class.to_s.titlecase
   end
 

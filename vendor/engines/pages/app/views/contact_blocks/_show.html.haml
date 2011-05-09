@@ -1,0 +1,8 @@
+.contact
+  %h3.name #{block.first} #{block.last}
+  .description #{block.description}
+  .phone #{block.phone}
+  - if block.show_email
+    .email #{block.email}
+  - if block.email.present?
+    %a{ :href => "#", :onclick => "alert('boo'); false;"} Click to email #{block.first}
