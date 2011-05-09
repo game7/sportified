@@ -2,7 +2,6 @@ class Block
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :title
   field :layout_id
   field :panel_id
   field :position, :type => Integer
