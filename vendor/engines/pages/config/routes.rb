@@ -4,6 +4,7 @@
   get '/p/*path', :to => 'pages#show', :as => :page_friendly
 
   resources :pages do
+    post 'position', :on => :collection
     resources :layouts, :only => [ :index, :create ] do
       post 'position', :on => :collection
     end

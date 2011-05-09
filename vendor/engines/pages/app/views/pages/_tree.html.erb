@@ -18,6 +18,7 @@
     <li id="page_<%= page.id %>">
       <div>
         <%= page.title %>
+        <% if page.draft %> <em>(draft)</em><% end %>
         <% unless page.show_in_menu %> <em>(hidden)</em><% end %>
         <span class="actions">
           <%= link_to "Show", page_friendly_path(page.path) %> | 

@@ -66,4 +66,15 @@ class PagesController < ApplicationController
     flash[:notice] = "Page '#{@page.title}' has been deleted"    
   end
 
+  def position
+    params['page'].each_with_index do |id, i|
+      page = Page.find(id);
+      if page
+        page.position = i
+        page.save
+      end
+    end  
+    render :nothing => true
+  end
+
 end
