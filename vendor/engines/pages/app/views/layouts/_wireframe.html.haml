@@ -2,6 +2,8 @@
 - height ||= 100
 - blocks ||= {}
 - max_depth = 1
+- edit ||= false
+- block_partial = edit ? 'blocks/edit' : 'blocks/show'
 - panels = layout.panels
 - panels.each { |panel| max_depth = 2 if panel.children.length > 0 }
 .layout{ :id => "layout_#{id.to_s}", :format => layout.format, :style => "min-height: #{max_depth * height}px;"}
@@ -12,12 +14,12 @@
           .layout-panel{ :id => "panel_#{child.id}", :style => "width: #{child.width}%; min-height: #{height}px;"}
             - if blocks && blocks.has_key?(child.id.to_s)
               - blocks[child.id.to_s].each do |block|
-                = render :partial => "blocks/edit", :locals => { :block => block }
+                = render :partial => block_partial, :locals => { :block => block }
         .clear
     - else
       .layout-panel{ :id => "panel_#{panel.id}", :style => "width: #{panel.width}%; min-height: #{max_depth * height}px;" }
         - if blocks && blocks.has_key?(panel.id.to_s)
           - blocks[panel.id.to_s].each do |block|
-            = render :partial => "blocks/edit", :locals => { :block => block }
+            = render :partial => block_partial, :locals => { :block => block }
   .clear
 

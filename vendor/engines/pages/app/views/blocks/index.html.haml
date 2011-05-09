@@ -75,6 +75,7 @@
   %p
     %strong Display: 
     %a#toggle_edit{ :href => '#' } Preview
+  %p #{ link_to 'Go to page', page_friendly_path(@page.path) }
   %strong Add Content
   (Drag & Drop)
   #catalog
@@ -89,7 +90,7 @@
     - @blocks_for_panel[:default].each do |b| 
       = render :partial => "blocks/edit", :locals => { :block => b }
   - @page.layouts.each do |layout|
-    = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel }
+    = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel, :edit => true }
 .clear
 
 #dialog-modal

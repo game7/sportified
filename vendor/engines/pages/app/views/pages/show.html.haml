@@ -3,9 +3,19 @@
 - content_for :sidebar do
   = render 'shared/page_options'
 
+.blocks
+  .panel{ :style => "width: 100%;"}
+    - @blocks_for_panel[:default].each do |b| 
+      = render :partial => "blocks/show", :locals => { :block => b }
+  - @page.layouts.each do |layout|
+    = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel }
+.clear
+
 #blocks
   - @page.blocks.each do |b| 
     = render :partial => "blocks/show", :locals => { :block => b }
 
+:css
+  .layout-panel { float: left; }
 
 

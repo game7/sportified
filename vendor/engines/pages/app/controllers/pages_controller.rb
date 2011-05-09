@@ -31,6 +31,8 @@ class PagesController < ApplicationController
     
     if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
       redirect_to first_live_child.url
+    else
+      @blocks_for_panel = @page.blocks_grouped_by_panel
     end
 
   end
