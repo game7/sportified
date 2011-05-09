@@ -63,7 +63,7 @@ class PagesController < ApplicationController
 
   def destroy
     @page.delete
-    flash[:notice] = "Page Deleted"    
+    flash[:notice] = "Page '#{@page.title}' has been deleted"    
   end
 
 end
