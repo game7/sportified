@@ -85,6 +85,8 @@
       .chrome Divider
     .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ContactBlock' }
       .chrome Contact
+    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DocumentBlock' }
+      .chrome Document
 
 %h1 #{ @page.title }
 .blocks

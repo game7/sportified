@@ -13,6 +13,7 @@
     end
     resources :text_blocks, :only => [ :edit, :update ]
     resources :contact_blocks, :only => [ :edit, :update ]
+    resources :document_blocks, :only => [ :edit, :update ]
 
   end
 
