@@ -1,4 +1,5 @@
 = semantic_form_for [@page, @block], :remote => true do |f|
   = f.inputs do
+    = f.input :title
     = f.input :body, :as => :text, :input_html => { :class => 'wymeditor' }
 
