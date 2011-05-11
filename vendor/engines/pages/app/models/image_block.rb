@@ -1,5 +1,9 @@
 class ImageBlock < Block
   
-  #mount_uploader :image, ImageUploader
+  field :link_url 
+  field :image_height
+  field :image_width
+  mount_uploader :image, ImageUploader
+  
 
 end

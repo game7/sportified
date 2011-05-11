@@ -3,7 +3,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
   def store_dir
     @site = Site.current
     @site ||= model.site
-    "uploads/#{@site.slug}/documents/"
+    "uploads/#{@site.slug}/pages/#{model.page.id}/documents/"
   end
 
   def cache_dir

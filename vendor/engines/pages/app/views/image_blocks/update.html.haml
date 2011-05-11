@@ -1,0 +1,7 @@
+:javascript
+  with(window.parent) {
+    $("#flash_notice").html("#{escape_javascript( flash.delete(:notice) )}");
+    $("#flash_notice").slideDown();
+    $('#dialog-modal').dialog("close");
+    $("#block_#{@block.id} .block-content").replaceWith("#{escape_javascript( render(:partial => "/blocks/content", :locals => { :block => @block } ) )}");
+  }

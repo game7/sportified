@@ -14,6 +14,7 @@
     resources :text_blocks, :only => [ :edit, :update ]
     resources :contact_blocks, :only => [ :edit, :update ]
     resources :document_blocks, :only => [ :edit, :update ]
+    resources :image_blocks, :only => [ :edit, :update ]
 
   end
 
