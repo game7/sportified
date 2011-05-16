@@ -9,6 +9,7 @@ class Site
   field :host
   field :slug
   field :description
+  field :theme, :default => 'default'
   field :analytics_id
   field :has_custom_analytics
 

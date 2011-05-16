@@ -3,8 +3,7 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-    //= stylesheet_link_tag 'compiled/application'
-    = stylesheet_link_tag 'compiled/screen', :media => 'screen'
+    = stylesheet_link_tag "compiled/themes/#{theme}/screen", :media => 'screen'
     = stylesheet_link_tag 'compiled/print', :media => 'print'
     / [if lt IE 8]
       = stylesheet_link_tag 'compiled/ie'
@@ -28,18 +27,18 @@
       #site-nav 
         %nav #{render "layouts/site_navigation"}
       #breadcrumbs #{render "layouts/breadcrumbs"}
-      #content
+      #sidebar 
+        .wrapper
+          = yield :sidebar
+      #main
         #area-nav 
           %nav #{render "layouts/area_navigation"} 
         #banner
           .wrapper #{yield :banner}
-        #page_header
+        #page-header
           = content_tag :h1, yield(:title) if show_title?
         .wrapper
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-      #sidebar 
-        .wrapper
-          = yield :sidebar
       #footer 
       = render 'layouts/google_analytics' if Site.current.analytics_id.present?

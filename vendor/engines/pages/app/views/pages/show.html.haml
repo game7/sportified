@@ -1,7 +1,17 @@
 - title @page.title
 
 - content_for :sidebar do
+  %strong #{@page.title}
+  %ul
+    - @page.children.asc(:position).each do |child|
+      %li #{link_to child.title, get_page_url(child)}
+  - if @page.parent_id.present?
+    %strong Related Pages
+    %ul
+      - @page.siblings.asc(:position).each do |sibling|
+        %li #{link_to sibling.title, get_page_url(sibling)}
   = render 'shared/page_options'
+
 
 .blocks
   .panel{ :style => "width: 100%;"}

@@ -1,3 +1,4 @@
+
 // This import applies a global reset to any page that imports this stylesheet.
 @import "blueprint/reset";
 
@@ -6,12 +7,14 @@
 
 // Import all the default blueprint modules so that we can access their mixins.
 @import "blueprint";
-
 @import "compass/css3/gradient";
 @import "compass/css3/border-radius";
 @import "compass/layout/stretching";
 @import "compass/utilities";
 @import "compass/css3";
+
+// mixins
+@import "partials/colors";
 
 // Combine the partials into a single screen stylesheet.
 @import "partials/page";
@@ -22,13 +25,9 @@
 @import "partials/table";
 @import "partials/mod";
 @import "partials/block";
-@import "partials/colors";
-
-@import "partials/header";
-@import "partials/container";
+@import "themes/dyha/header";
+@import "themes/dyha/container";
 @import "partials/content";
 @import "partials/footer";
 
 @import "partials/jquery_ui";
-
-

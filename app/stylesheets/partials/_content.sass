@@ -1,0 +1,69 @@
+
+
+#main
+  $content-columns: ceil(3 * $blueprint-grid-columns / 4)
+  @include column($content-columns, false)
+  :background-color white
+  :float left
+  .wrapper
+    :margin 10px 10px
+
+#sidebar
+  $sidebar-columns: floor($blueprint-grid-columns / 4)
+  @include column($sidebar-columns, true)
+  :float right
+  :background #DEDEDE
+  :min-height 400px
+  .wrapper
+    :padding 8px
+
+#breadcrumbs
+  //$breadcrumb-columns: ceil(4 * $blueprint-grid-columns / 5)
+  //@include column($breadcrumb-columns, true)
+  @include column($blueprint-grid-columns)
+  :border-bottom 1px solid gray
+  li, a
+    :font-size 12px
+  ul
+    :margin 0 10px
+    :padding 0
+  li
+    :list-style-type none
+    :float left
+    :padding 3px
+
+#area-nav
+  nav
+    :width 100%
+    :display table
+  ul
+    :display table-row
+  li
+    :display table-cell
+    :text-align center
+    :height 24px
+  a
+    :display block
+    :margin 4px 2px
+    :padding 3px 15px
+    :text-decoration none
+    :font-weight 700
+    :color #334433
+    :border solid 1px #6699AA
+    :background #AABBBB
+    &:hover
+      :background #778877
+      :color #FFF
+  li:first-child
+    a
+      :margin-left 4px
+  li:last-child
+    a
+      :margin-right 4px
+
+#page-header
+  :margin-top 10px
+  :margin-left 10px
+
+
+

@@ -1,0 +1,74 @@
+
+#hat, #header, #site-nav
+  @include column($blueprint-grid-columns)
+
+#hat
+  :background #3366aa
+  :height 30px
+
+ul.user-tasks
+  :float right
+  :list-style none
+  :padding 0
+  :margin 0!important
+  li
+    :display block
+    :float left
+    :height 30px
+    :padding 0
+    a
+      :display block
+      :border-left 1px solid #69A
+      :border-right 1px solid #343
+      :height 30px
+      :color #FFF
+      :text-decoration none
+      :padding 0 10px
+      :line-height 30px
+      &:visited
+        :color #FFF
+      &:hover
+        :background #69A
+
+#header
+  :height 80px
+
+#site-nav
+  :height 24px
+  :background #3366aa
+  :height 30px
+  nav
+    :width 100%
+    :display table
+  ul
+    :display table-row
+  li
+    :display table-cell
+    :text-align center
+  a
+    :display block
+    :padding 0 15px
+    :line-height 30px
+    :text-decoration none
+    :font-weight 700
+    :color white
+    :border-left solid 1px #6699AA
+    :border-right solid 1px #334433
+    &.selected
+      :background #6699AA
+    &:hover, &.selected:hover
+      :background #AABBBB
+      :color #334433
+
+
+#site-name
+  :display block
+  :float left
+  :line-height 30px
+  :font-size 18px
+  :font-family verdana, helvetica, arial, sans-serif
+  :font-weight bold
+  :color #FFF
+  :margin-left 10px
+
+

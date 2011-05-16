@@ -8,4 +8,9 @@ module ApplicationHelper
     image_tag "../images/icons/#{name}.png", opts
   end
 
+  def theme
+    site = Site.current
+    site.theme.present? ? site.theme : 'default'
+  end
+
 end

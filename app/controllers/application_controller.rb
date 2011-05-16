@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
     url = page.link_url unless page.link_url.blank?
     url ||= page_friendly_path(page.path)
   end
+  helper_method :get_page_url
 
   def set_area_navigation
     

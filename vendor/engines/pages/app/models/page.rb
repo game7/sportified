@@ -45,14 +45,6 @@ class Page
   scope :live, :where => { :draft => false }
   scope :in_menu, :where => { :show_in_menu => true }
 
-  def url
-    if self.link_url.present?
-      self.link_url
-    else
-      {:controller => "/pages", :action => "show", :path => self.path}
-    end
-  end
-
   def blocks_grouped_by_panel
     panels = { :default => [] }
     layouts.each do |layout|
