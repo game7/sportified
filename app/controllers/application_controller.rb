@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_site_navigation
   before_filter :set_breadcrumbs
   before_filter :set_area_navigation
+  
+  before_filter do |c|
+    puts c.class.to_s
+  end
+
+
 
   def initialize
     super

@@ -32,16 +32,18 @@
       opacity: 0.7,
       connectWith: $('.layout-panel'),
       placeholder: "ui-state-highlight",
-      update: function( event, ui ) {   
+      update: function( event, ui ) {
         temp_id = ui.item.attr('id');
         var items = $(this).sortable('toArray');
         /* if subject is a new item */
         if(temp_id.indexOf('new_block') == 0) {
-          layout_id = $('#' + temp_id).closest('.layout').attr('id').replace('layout_','');
-          panel_id = $('#' + temp_id).closest('.layout-panel').attr('id').replace('panel_','');
+          panel = $('#' + this.id).closest('.layout-panel');
+          panel_id = panel.attr('id').replace('panel_','');
+          layout_id = panel.closest('.layout').attr('id').replace('layout_','');
+          ui.item.attr('id', 'create_block')
           $.ajax({
             type: 'post',
-            data: 'temp_id='+temp_id+'&block_type='+ui.item.attr("block") + '&position='+items.indexOf(temp_id) + '&layout_id='+layout_id + '&panel_id='+panel_id,
+            data: 'temp_id=create_block&block_type='+ui.item.attr("block") + '&position='+items.indexOf(temp_id) + '&layout_id='+layout_id + '&panel_id='+panel_id,
             dataType: 'script',
             async: false,
             success: function(msg){
