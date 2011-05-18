@@ -4,6 +4,7 @@
       .block-name #{block.class_name}
       .block-functions 
         = render :partial => block.class.to_s.pluralize.underscore+"/edit_links", :locals => { :page => @page, :block => block }
+        = link_to 'Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true
       .clear
     = render :partial => "blocks/content", :locals => { :block => block }
 

@@ -5,5 +5,5 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").slideDown();
-  $("#edit-<%= @block.id %>").fadeOut();
+  $("#block_<%= @block.id %>").fadeOut();
 <% end %>
