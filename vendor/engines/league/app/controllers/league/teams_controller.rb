@@ -1,14 +1,28 @@
 class League::TeamsController < League::BaseDivisionSeasonController
   
-  before_filter :load_team, :only => [:show, :schedule, :roster]
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
 
   def set_team_breadcrumbs 
     add_breadcrumb @team.name if @team
   end
 
-  def load_team
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
+  def set_area_navigation
+    if action_name == "index"
+      super
+    else
+      add_area_ancestor("League", league_path)      
+      add_area_ancestor("#{@division.name} Division", league_division_path(@division.slug) )
+      add_area_ancestor("#{@season.name} Season" )
+      add_area_ancestor("#{@team.name}" )
+      add_area_descendant('Home', league_team_path(@team.division_slug, @team.season_slug, @team.slug))
+      add_area_descendant('Schedule', league_team_schedule_path(@team.division_slug, @team.season_slug, @team.slug))
+      add_area_descendant('Roster', league_team_roster_path(@team.division_slug, @team.season_slug, @team.slug))
+      end
+  end
+
+  def load_objects
+    super
+    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first unless action_name == "index"
   end
 
   def links_to_team_schedule(division, season)

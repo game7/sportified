@@ -35,31 +35,46 @@
 #area-nav
   nav
     :width 100%
-    :display table
   ul
-    :display table-row
+    :list-style-type none
+    :margin 0
+    :padding 0
+    :border 1px solid #666666
   li
-    :display table-cell
-    :text-align center
-    :height 24px
-  a
+    :margin 0
+  a, .title
     :display block
-    :margin 4px 2px
-    :padding 3px 15px
+    :padding 2px 6px
     :text-decoration none
+  .ancestor
     :font-weight 700
+    :border-top solid 1px #DEDEDE
+    :border-bottom solid 1px #333
     :color #334433
-    :border solid 1px #6699AA
+    :color #FFF
     :background #AABBBB
+    a
+      &:hover
+        :background #778877
+        :color #FFF
+  .ancestor.selected a
+    :background #778877
+    :color #FFF    
+  .descendant
+    :border-bottom dashed 1px #999
+    &:last-child
+      :border-bottom 0
+    a
+      :color #334433
+      :background #DEDEDE
+      &:hover
+        :background #CCC
+  .descendant.selected a
+    :background #CCC
+    :color #3366aa
+    :font-weight 700
     &:hover
-      :background #778877
-      :color #FFF
-  li:first-child
-    a
-      :margin-left 4px
-  li:last-child
-    a
-      :margin-right 4px
+      :font-weight 700
 
 #page-header
   :margin-top 10px

@@ -58,13 +58,20 @@ class ApplicationController < ActionController::Base
     @area_menu_items << { :title => title, :url => url }
   end
 
-  def add_area_ancestor(title, url = nil, selected = false)
+  def add_area_ancestor(title, url = nil, selected = nil)
     @area_ancestors ||= []
+    selected ||= url_current?(url)
     @area_ancestors << { :title => title, :url => url, :selected => selected }
   end
-  def add_area_descendant(title, url = nil, selected = false)
+
+  def add_area_descendant(title, url = nil, selected = nil)
     @area_descendants ||= []
+    selected ||= url_current?(url)
     @area_descendants << { :title => title, :url => url, :selected => selected }
+  end
+
+  def url_current?(url)
+    url.present? && ( url == request.path || url == request.url )
   end
 
 

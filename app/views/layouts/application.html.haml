@@ -29,10 +29,10 @@
       #breadcrumbs #{render "layouts/breadcrumbs"}
       #sidebar 
         .wrapper
+          #area-nav
+            %nav #{render "layouts/area_navigation"}
           = yield :sidebar
       #main
-        #area-nav 
-          %nav #{render "layouts/area_navigation"} 
         #banner
           .wrapper #{yield :banner}
         #page-header
