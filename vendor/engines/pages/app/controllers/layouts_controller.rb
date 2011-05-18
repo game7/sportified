@@ -23,5 +23,11 @@ class LayoutsController < ApplicationController
     @page.save
     render :nothing => true
   end
+
+  def destroy
+    layout = @page.layouts.find(params[:id])
+    layout.delete
+    render :nothing => true
+  end
   
 end

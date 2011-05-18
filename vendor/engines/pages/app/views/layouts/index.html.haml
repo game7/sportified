@@ -7,9 +7,31 @@
       opacity: 0.7,
       connectToSortable: '#layouts'
     });
+    $("#trash").sortable({
+      revert: "true",
+      opacity: 0.7,
+      placeholder: "ui-state-highlight", 
+      update: function( event, ui ) {  
+        var id = ui.item.attr('id').replace('layout_','');
+        var url = '#{page_layout_path(:page_id => @page.id, :id => "~" )}'.replace('~',id);
+        $.ajax({
+          type: 'delete',
+          dataType: 'script',
+          async: false,
+            success: function(msg){
+              alert('layout deleted');
+            },
+          url: url
+        });
+        $('#layout_'+id).fadeOut('slow', function(){
+          $('#layout_'+id).remove();
+        });
+      }     
+    });
     $("#layouts").sortable({
       revert: "true",
       opacity: 0.7,
+      connectWith: '#trash',
       placeholder: "ui-state-highlight",
       update: function( event, ui ) {     
         old_id = ui.item.attr('id');
@@ -51,7 +73,8 @@
     - Layout.prototypes.each_with_index do |layout, i|
       = render :partial => "wireframe", :locals => { :id => "new-#{i}", :layout => layout, :height => 20 }
     .clear
-
+#trash
+  <span>TRASH
 #layouts
   - @page.layouts.asc(:position).each do |layout|
     = render :partial => "wireframe", :locals => { :layout => layout, :height => 20 }
@@ -61,6 +84,16 @@
 #dialog-modal
 
 :css
+  #trash { 
+    height: 50px; 
+    width: 100%; 
+    border: 1px dashed #CCC; 
+    background-color: #EEE; 
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #CCC
+  }
   #layouts { min-height: 200px; width: 100%; border: 1px dashed gray; }
   .layout { margin-bottom: 4px; padding: 2px; border: 1px solid gray; }
   .layout-panel { float: left; border: 1px dashed gray; margin: -1px; }

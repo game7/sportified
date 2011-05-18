@@ -5,7 +5,7 @@
 
   resources :pages do
     post 'position', :on => :collection
-    resources :layouts, :only => [ :index, :create ] do
+    resources :layouts, :only => [ :index, :create, :destroy ] do
       post 'position', :on => :collection
     end
     resources :blocks, :only => [ :index, :create, :destroy ] do
