@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   
   before_filter :load_page, :only => [:show, :edit, :update, :destroy]
   before_filter :set_page_breadcrumbs, :only => [:show, :edit]
+  before_filter :set_area_navigation, :only => [:show]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
@@ -18,6 +19,34 @@ class PagesController < ApplicationController
   def set_page_breadcrumbs
     @page.ancestors_and_self.each do |p|
       add_breadcrumb( p.title, p.skip_to_first_child ? nil : get_page_url(p) )
+    end
+  end
+
+  def set_area_navigation
+    if @page.root?
+      unless @page.leaf?
+        add_area_ancestor( @page.title, get_page_url(@page), true )
+        @page.children.each do |p|
+          add_area_descendant( p.title, get_page_url(p) )
+        end
+      end
+    else 
+      if @page.leaf?
+        @page.ancestors.each do |p|
+          add_area_ancestor( p.title, get_page_url(p) )
+          puts p.title
+        end          
+        @page.siblings_and_self.each do |p|
+          add_area_descendant( p.title, get_page_url(p), @page == p)
+        end
+      else
+        @page.ancestors_and_self.each do |p|
+          add_area_ancestor( p.title, get_page_url(p), @page == p )
+        end          
+        @page.children.each do |d|
+          add_area_descendant( d.title, get_page_url(d), @page == d)
+        end
+      end  
     end
   end
 

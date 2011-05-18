@@ -58,6 +58,15 @@ class ApplicationController < ActionController::Base
     @area_menu_items << { :title => title, :url => url }
   end
 
+  def add_area_ancestor(title, url = nil, selected = false)
+    @area_ancestors ||= []
+    @area_ancestors << { :title => title, :url => url, :selected => selected }
+  end
+  def add_area_descendant(title, url = nil, selected = false)
+    @area_descendants ||= []
+    @area_descendants << { :title => title, :url => url, :selected => selected }
+  end
+
 
   def set_current_site
     Site.current = find_site

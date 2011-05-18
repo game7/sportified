@@ -17,7 +17,7 @@
   <% end %>
     <li id="page_<%= page.id %>">
       <div>
-        <%= page.title %>
+        <%= page.title %>(<%= page.leaf? %>)
         <% if page.draft %> <em>(draft)</em><% end %>
         <% unless page.show_in_menu %> <em>(hidden)</em><% end %>
         <span class="actions">
