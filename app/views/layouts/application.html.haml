@@ -29,8 +29,9 @@
       #breadcrumbs #{render "layouts/breadcrumbs"}
       #sidebar 
         .wrapper
-          #area-nav
-            %nav #{render "layouts/area_navigation"}
+          - if @area_ancestors || @area_descendants
+            #area-nav
+              %nav #{render "layouts/area_navigation"}
           = yield :sidebar
       #main
         #banner
