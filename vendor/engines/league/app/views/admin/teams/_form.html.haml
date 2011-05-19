@@ -1,4 +1,5 @@
 - javascript("jquery-ui.min.js")
+
 = semantic_form_for [:admin, @team], :html => {:multipart => true} do |f|
   = f.inputs 'General Info' do
     = f.input :division_id, :as => :select, :collection => @divisions
@@ -56,70 +57,69 @@
   #banner_links { color: #{@team.text_color}; }
   #banner_links a:link, .links a:visited, .links a:active { color: #{@team.link_color}; }
   #banner_links a:hover { color: #{@team.text_color}; }
-
-:javascript
-  function resize_thumb(i) {
-    thumb = $('#draggable img');
-    thumb.width(thumb.width() + i);
-    thumb.css('height', 'auto')
-    $('#team_thumb_height').val(thumb.height());
-    $('#team_thumb_width').val(thumb.width());
-  }
-  function set_starting_thumb_size() {
-    height = #{@team.thumb_height};
-    width = #{@team.thumb_width};
-    thumb = $('#draggable img');
-    if (height > 0) { 
-      thumb.css('height', height)
-    }
-    else {
+- content_for :javascript do
+  :javascript
+    function resize_thumb(i) {
+      thumb = $('#draggable img');
+      thumb.width(thumb.width() + i);
+      thumb.css('height', 'auto')
       $('#team_thumb_height').val(thumb.height());
+      $('#team_thumb_width').val(thumb.width());
     }
-    if (width > 0) { 
-      thumb.css('width', width) 
-    }
-    else {
-      $('#team_thumb_height').val(thumb.height());      
-    }
-  }
-  $(function() {
-    $( "#bigger" ).click(function(){
-      resize_thumb(5);
-      return false;
-    });
-    $( "#smaller" ).click(function(){
-      resize_thumb(-5);
-      return false;
-    });
-    $( "#draggable" ).draggable({
-      stop: function(event, ui) {
-        $('#team_thumb_top').val(ui.position.top);
-        $('#team_thumb_left').val(ui.position.left);
+    function set_starting_thumb_size() {
+      height = #{@team.thumb_height};
+      width = #{@team.thumb_width};
+      thumb = $('#draggable img');
+      if (height > 0) { 
+        thumb.css('height', height)
       }
+      else {
+        $('#team_thumb_height').val(thumb.height());
+      }
+      if (width > 0) { 
+        thumb.css('width', width) 
+      }
+      else {
+        $('#team_thumb_height').val(thumb.height());      
+      }
+    }
+    $(function() {
+      $( "#bigger" ).click(function(){
+        resize_thumb(5);
+        return false;
+      });
+      $( "#smaller" ).click(function(){
+        resize_thumb(-5);
+        return false;
+      });
+      $( "#draggable" ).draggable({
+        stop: function(event, ui) {
+          $('#team_thumb_top').val(ui.position.top);
+          $('#team_thumb_left').val(ui.position.left);
+        }
+      });
+      $( "#team_thumb_color" ).change(function(){
+        $( "#banner_thumb" ).css('background-color', $(this).val());
+      });
+      $( "#frame").css('background-color', '#{@team.thumb_color}');
+      $( "#draggable" ).css('top', #{@team.thumb_top});
+      $( "#draggable" ).css('left', #{@team.thumb_left});
+      set_starting_thumb_size();
+      $( "#team_primary_color").change(function(){
+        $("#banner").css('background-color', $(this).val());
+      });
+      $( "#team_accent_color").change(function(){
+        $("#banner").css('border-color', $(this).val());
+        $("#banner_thumb").css('border-color', $(this).val());      
+      });
+      $( "#team_text_color").change(function(){
+        $("#banner_name").css('color', $(this).val());  
+        $("#banner_links").css('color', $(this).val()); 
+      });  
+      $( "#team_link_color").change(function(){
+        $("#banner_links a").css('color', $(this).val()); 
+        $("#banner_links a:link").css('color', $(this).val()); 
+        $("#banner_links a:hover").css('color', $(this).val()); 
+      }); 
     });
-    $( "#team_thumb_color" ).change(function(){
-      $( "#banner_thumb" ).css('background-color', $(this).val());
-    });
-    $( "#frame").css('background-color', '#{@team.thumb_color}');
-    $( "#draggable" ).css('top', #{@team.thumb_top});
-    $( "#draggable" ).css('left', #{@team.thumb_left});
-    set_starting_thumb_size();
-    $( "#team_primary_color").change(function(){
-      $("#banner").css('background-color', $(this).val());
-    });
-    $( "#team_accent_color").change(function(){
-      $("#banner").css('border-color', $(this).val());
-      $("#banner_thumb").css('border-color', $(this).val());      
-    });
-    $( "#team_text_color").change(function(){
-      $("#banner_name").css('color', $(this).val());  
-      $("#banner_links").css('color', $(this).val()); 
-    });  
-    $( "#team_link_color").change(function(){
-      $("#banner_links a").css('color', $(this).val()); 
-      $("#banner_links a:link").css('color', $(this).val()); 
-      $("#banner_links a:hover").css('color', $(this).val()); 
-    }); 
-  });
-
 

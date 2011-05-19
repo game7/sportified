@@ -1,69 +1,71 @@
+- title "#{ @page.title } - Layout"
+
 - javascript("jquery-ui.min.js")
-:javascript
-  $(function() {
-    $("#catalog .layout").draggable({ 
-      revert: "invalid", 
-      helper: "clone",
-      opacity: 0.7,
-      connectToSortable: '#layouts'
-    });
-    $("#trash").sortable({
-      revert: "true",
-      opacity: 0.7,
-      placeholder: "ui-state-highlight", 
-      update: function( event, ui ) {  
-        var id = ui.item.attr('id').replace('layout_','');
-        var url = '#{page_layout_path(:page_id => @page.id, :id => "~" )}'.replace('~',id);
-        $.ajax({
-          type: 'delete',
-          dataType: 'script',
-          async: false,
-            success: function(msg){
-              alert('layout deleted');
-            },
-          url: url
-        });
-        $('#layout_'+id).fadeOut('slow', function(){
-          $('#layout_'+id).remove();
-        });
-      }     
-    });
-    $("#layouts").sortable({
-      revert: "true",
-      opacity: 0.7,
-      connectWith: '#trash',
-      placeholder: "ui-state-highlight",
-      update: function( event, ui ) {     
-        old_id = ui.item.attr('id');
-        var order = $(this).sortable('toArray');
-        if(old_id.indexOf('layout_new') == 0) {
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+      $("#catalog .layout").draggable({ 
+        revert: "invalid", 
+        helper: "clone",
+        opacity: 0.7,
+        connectToSortable: '#layouts'
+      });
+      $("#trash").sortable({
+        revert: "true",
+        opacity: 0.7,
+        placeholder: "ui-state-highlight", 
+        update: function( event, ui ) {  
+          var id = ui.item.attr('id').replace('layout_','');
+          var url = '#{page_layout_path(:page_id => @page.id, :id => "~" )}'.replace('~',id);
+          $.ajax({
+            type: 'delete',
+            dataType: 'script',
+            async: false,
+              success: function(msg){
+                alert('layout deleted');
+              },
+            url: url
+          });
+          $('#layout_'+id).fadeOut('slow', function(){
+            $('#layout_'+id).remove();
+          });
+        }     
+      });
+      $("#layouts").sortable({
+        revert: "true",
+        opacity: 0.7,
+        connectWith: '#trash',
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {     
+          old_id = ui.item.attr('id');
+          var order = $(this).sortable('toArray');
+          if(old_id.indexOf('layout_new') == 0) {
+            $.ajax({
+              type: 'post',
+              data: 'format='+ui.item.attr("format")+'&position='+order.indexOf(old_id),
+              dataType: 'json',
+              async: false,
+              success: function(msg){
+                $('#' + old_id).attr('id', 'layout_'+msg['_id']);
+              },
+              url: '#{page_layouts_path(@page)}'
+            });
+          }
           $.ajax({
             type: 'post',
-            data: 'format='+ui.item.attr("format")+'&position='+order.indexOf(old_id),
+            data: $('#layouts').sortable('serialize') ,
             dataType: 'json',
-            async: false,
             success: function(msg){
-              $('#' + old_id).attr('id', 'layout_'+msg['_id']);
+              alert('done');
             },
-            url: '#{page_layouts_path(@page)}'
-          });
+            url: '#{position_page_layouts_path(@page)}'
+          });     
+
         }
-        $.ajax({
-          type: 'post',
-          data: $('#layouts').sortable('serialize') ,
-          dataType: 'json',
-          success: function(msg){
-            alert('done');
-          },
-          url: '#{position_page_layouts_path(@page)}'
-        });     
+      });
 
-      }
     });
-
-  });
-
-- title "#{ @page.title } - Layout"
 
 - content_for :sidebar do
   = render 'shared/page_options'
@@ -73,13 +75,13 @@
     - Layout.prototypes.each_with_index do |layout, i|
       = render :partial => "wireframe", :locals => { :id => "new-#{i}", :layout => layout, :height => 20 }
     .clear
+
 #trash
   <span>TRASH
+
 #layouts
   - @page.layouts.asc(:position).each do |layout|
     = render :partial => "wireframe", :locals => { :layout => layout, :height => 20 }
-
-
 
 #dialog-modal
 

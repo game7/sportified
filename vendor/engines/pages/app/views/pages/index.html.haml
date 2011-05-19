@@ -2,23 +2,24 @@
 
 - javascript("jquery-ui.min.js")
 
-:javascript
-  $(function() {
-    $("#pages ul").sortable({
-      revert: "true",
-      opacity: 0.7,
-      placeholder: "ui-state-highlight",
-      update: function( event, ui ) {  
-        var items = $(this).sortable('serialize');
-        $.ajax({
-          type: 'post',
-          data: items ,
-          dataType: 'json',
-          url: '#{position_pages_path(@page)}'
-        }); 
-      }
-    });   
-  });
+- content_for :javascript do
+  :javascript
+    $(function() {
+      $("#pages ul").sortable({
+        revert: "true",
+        opacity: 0.7,
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {  
+          var items = $(this).sortable('serialize');
+          $.ajax({
+            type: 'post',
+            data: items ,
+            dataType: 'json',
+            url: '#{position_pages_path(@page)}'
+          }); 
+        }
+      });   
+    });
 - content_for :sidebar do
   %ul
     %li #{link_to 'Add New Page', new_page_path}
