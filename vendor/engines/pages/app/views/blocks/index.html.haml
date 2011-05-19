@@ -18,11 +18,11 @@
     });
     $("#toggle_editor").click(function(){
       if ($(this).text() == 'Hide') {
-        $('.layout-panel .block-frame').addClass('hidden');
+        $('.layout-panel .block-frame').addClass('no-border');
         $('.layout-panel .block-chrome').addClass('hidden');
         $(this).text('Show');
       } else {
-        $('.layout-panel .block-frame').removeClass('hidden');
+        $('.layout-panel .block-frame').removeClass('no-border');
         $('.layout-panel .block-chrome').removeClass('hidden');
         $(this).text('Hide');
       }
@@ -150,15 +150,15 @@
   //.layout-panel.hidden { border: none; }
   .layout-holder { float: left; border: 1px dashed gray; margin: -1px; }
   //.layout-holder.hidden { border: none; }
-  .no-border { border: none; }
   .block { margin: 5px;}
   .block-frame { border: 1px solid gray; }
   //.block-frame.hidden { border: none; }
-  .block-chrome { display: block; padding: 5px; background-color: gray; }
+  .block-chrome { padding: 5px; background-color: gray; }
   //.block-chrome.hidden { display: none; }
   .block-name { float: left; }
   .block-functions { float: right; }
   .block-content { padding: 3px; }
   //.block-content.hidden { display: none; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+  .no-border { border: none; }
 
