@@ -2,6 +2,42 @@
 - javascript("wymeditor/jquery.wymeditor")
 :javascript
   $(function() {
+    $("#toggle_layout").click(function(){
+      if ($(this).text() == 'Hide') {
+        $('.layout').addClass('no-border');
+        $('.layout-holder').addClass('no-border');
+        $('.layout-panel').addClass('no-border');
+        $(this).text('Show');
+      } else {
+        $('.layout').removeClass('no-border');
+        $('.layout-holder').removeClass('no-border');
+        $('.layout-panel').removeClass('no-border');
+        $(this).text('Hide');
+      }
+      return false;      
+    });
+    $("#toggle_editor").click(function(){
+      if ($(this).text() == 'Hide') {
+        $('.layout-panel .block-frame').addClass('hidden');
+        $('.layout-panel .block-chrome').addClass('hidden');
+        $(this).text('Show');
+      } else {
+        $('.layout-panel .block-frame').removeClass('hidden');
+        $('.layout-panel .block-chrome').removeClass('hidden');
+        $(this).text('Hide');
+      }
+      return false;      
+    });
+    $("#toggle_content").click(function(){
+       if ($(this).text() == 'Hide') {
+        $('.layout-panel .block-content').addClass('hidden');
+        $(this).text('Show');
+      } else {
+        $('.layout-panel .block-content').removeClass('hidden');
+        $(this).text('Hide');
+      }
+      return false;       
+    });
     $("#toggle_edit").click(function(){
       if ($(this).text() == 'Preview') {
         $('.layout').addClass('preview');
@@ -75,8 +111,14 @@
 - content_for :sidebar do
   = render 'shared/page_options'
   %p
-    %strong Display: 
-    %a#toggle_edit{ :href => '#' } Preview
+    %strong Layout: 
+    %a#toggle_layout{ :href => '#' } Hide
+    %br/
+    %strong Editor: 
+    %a#toggle_editor{ :href => '#' } Hide
+    %br/
+    %strong Content: 
+    %a#toggle_content{ :href => '#' } Hide
   %p #{ link_to 'Go to page', page_friendly_path(@page.path) }
   %strong Add Content
   (Drag & Drop)
@@ -105,16 +147,18 @@
   .layout { margin-bottom: 4px; padding: 2px; border: 1px solid gray; }
   .layout.preview { border: none; }
   .layout-panel { float: left; border: 1px dashed gray; margin: -1px; }
-  .layout-panel.preview { border: none; }
+  //.layout-panel.hidden { border: none; }
   .layout-holder { float: left; border: 1px dashed gray; margin: -1px; }
-  .layout-holder.preview { border: none; }
+  //.layout-holder.hidden { border: none; }
+  .no-border { border: none; }
   .block { margin: 5px;}
   .block-frame { border: 1px solid gray; }
-  .block-frame.preview { border: none; }
+  //.block-frame.hidden { border: none; }
   .block-chrome { display: block; padding: 5px; background-color: gray; }
-  .block-chrome.preview { display: none; }
+  //.block-chrome.hidden { display: none; }
   .block-name { float: left; }
   .block-functions { float: right; }
   .block-content { padding: 3px; }
+  //.block-content.hidden { display: none; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
 
