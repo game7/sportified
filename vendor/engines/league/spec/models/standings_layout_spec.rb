@@ -9,7 +9,6 @@ describe StandingsLayout do
   describe "validations" do
     
     it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:site_id) }
 
     it "should otherwise be valid" do
       @layout.valid?.should == true      
