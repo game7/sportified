@@ -94,9 +94,7 @@
 
 %h1 #{ @page.title }
 .blocks
-  .panel{ :style => "width: 100%;"}
-    - @blocks_for_panel[:default].each do |b| 
-      = render :partial => "blocks/edit", :locals => { :block => b }
+  = render :partial => 'layouts/default', :locals => { :height => 100, :blocks => @blocks_for_panel[:default], :edit => true }
   - @page.layouts.asc(:position).each do |layout|
     = render :partial => 'layouts/wireframe', :locals => { :layout => layout, :height => 100, :blocks => @blocks_for_panel, :edit => true }
 .clear
