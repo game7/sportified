@@ -31,7 +31,7 @@ class Page
   embeds_many :blocks, :default_order => :position.asc
   embeds_many :layouts, :default_order => :position.asc
 
-  validates_presence_of :title
+  validates_presence_of :title, :position
 
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }

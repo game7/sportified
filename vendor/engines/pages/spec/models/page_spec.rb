@@ -19,32 +19,8 @@ describe Page do
       @page.valid?.should == false
     end
 
-  end
-
-  context "when moving blocks" do
-    
-    it "should be able to move a block up/forward" do
-      block = @page.blocks[3]
-      block.move_up
-      block.should == @page.blocks[2]
-    end
-
-    it "should be able to move a block down/back" do
-      block = @page.blocks[1]
-      block.move_down
-      block.should == @page.blocks[2]
-    end
-
-    it "should be able to move a block to the top/front" do
-      block = @page.blocks[3]
-      block.move_to_top
-      block.should == @page.blocks[0]
-    end
-
-    it "should be able to move a block to the bottom/back" do
-      block = @page.blocks[1]
-      block.move_to_bottom
-      block.should == @page.blocks[4]      
+    it "should otherwise be valid" do
+      @page.valid?.should == true
     end
 
   end
@@ -63,22 +39,16 @@ describe Page do
       @page.path.should == @page.ancestors_and_self.collect(&:slug).join("/")
     end
 
-    it "should assign a group and level based on the tree" do
+    it "should generate a tree value for sorting" do
       root = Page.make
       parent = Page.make
-      root.children << parent
-      parent.children << @page
+      parent.parent = root
+      parent.save
+      @page.parent = parent
       @page.save
-      @page.group.should == root.group
-      @page.level.should == 2
+      @page.tree.should == root.position.to_s << parent.position.to_s << @page.position.to_s
     end
 
-    it "should update the position of all blocks" do
-      @page.blocks[2].move_to_top
-      @page.blocks[1].move_to_bottom
-      @page.save
-      @page.blocks.each_with_index{ |block, index| block.position.should == index }
-    end
     
   end
 
