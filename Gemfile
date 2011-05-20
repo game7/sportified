@@ -14,6 +14,7 @@ gem 'bson_ext', '1.3.0'
 #gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid-tree', :git => 'https://github.com/benedikt/mongoid-tree', :branch => 'mongoid-2.0.0', :require => 'mongoid/tree'
 #gem 'mongoid_slug', :require => 'mongoid/slug'
+gem 'mongoid_state_machine', :require => 'mongoid/state_machine'
 gem 'haml'
 
 gem 'devise'
