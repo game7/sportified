@@ -1,4 +1,5 @@
 - title 'Games'
+- javascript("jquery-ui.min.js")
 
 .controls
   .left
@@ -12,24 +13,11 @@
     %td Date
     %td Time
     %td{:colspan => 3} Description
+    %td Status
     %td Actions
-  - @games.each do |game|
-  - game.starts_on.localtime
-    %tr
-      %td #{game.starts_on.strftime('%a %b %e, %Y')}
-      %td #{game.starts_on.strftime('%l:%M %p')}
-      = render :partial => 'game_description', :locals => { :game => game }
-      %td 
-        = link_to "Edit", edit_admin_game_path(game)
-        = " | "
-        = link_to "Delete", [:admin, game], :confirm => 'Are you sure?', :method => :delete
-        - if game.can_add_result?
-          = " | "
-          = link_to "Post Score", new_admin_game_result_path(game)
-        - if game.can_delete_result?
-          = " | "
-          = link_to "Drop Score", admin_game_result_path(game), :confirm => 'Are you sure?', :method => :delete
-        = " | "
-        = link_to "Stats", edit_admin_game_statsheet_path(game)
+  = render :partial => 'game', :collection => @games
         
 = link_to "New Game", new_admin_game_path(:season_id => params[:season_id], :division_id => params[:division_id])
+
+#dialog-modal
+

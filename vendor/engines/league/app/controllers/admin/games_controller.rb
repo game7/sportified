@@ -5,7 +5,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   before_filter :load_season_options, :only => [:index, :new, :edit]
   before_filter :load_division_options, :only => [:index]
   before_filter :load_team_options, :only => [:new, :edit]
-  before_filter :load_game, :only => [:show, :edit, :destroy]
+  before_filter :load_game, :only => [:show, :edit, :destroy, :transition]
   before_filter :load_games, :only => [:index]
   before_filter :load_division, :only => [:index]
   before_filter :load_season, :only => [:index]
@@ -38,7 +38,6 @@ class Admin::GamesController < Admin::BaseLeagueController
 
   def load_game
     @game = Game.for_site(Site.current).find(params[:id])  
-    @game.starts_on.localtime   
   end
 
   def load_games

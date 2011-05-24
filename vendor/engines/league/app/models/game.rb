@@ -1,18 +1,81 @@
 class Game
   include Mongoid::Document
+  include Mongoid::StateMachine
   include Sportified::SiteContext
 
-  TEAM_ALIGNMENT = %w[home away]
- 
+  field :state
+  state_machine :initial => :pending
+  state :pending
+  state :active
+  state :completed
+  state(:final, :enter => :enter_final, :exit => :exit_final)
+
+  event :start do
+    transitions :to => :active, :from => :pending
+  end
+  event :complete do
+    transitions :to => :completed, :from => [:pending,:active,:final]
+  end
+  event :finalize do
+    transitions :to => :final, :from => [:completed, :active, :pending], :guard => :has_result?
+  end
+
+  def available_actions(state = nil)
+    state ||= self.state
+    result = []
+    self.class.read_inheritable_attribute(:transition_table).each do |key, event|
+      event.each do |t|
+        if t.from == state.to_s
+          result << key.to_s
+          break
+        end
+      end
+    end
+    result
+  end
+
+  def available_transitions(state = nil)
+    state ||= self.state
+    result = []
+    self.class.read_inheritable_attribute(:transition_table).each do |key, event|
+      event.each do |t|
+        if ([] << t.from).index(state.to_s)
+          result << [t.to.humanize, key.to_s]
+          break
+        end
+      end
+    end
+    result
+  end
+
   field :starts_on, :type => DateTime
-  field :left_team_name
-  field :right_team_name
 
   referenced_in :season
-  referenced_in :left_team, :class_name => "Team"
-  referenced_in :right_team, :class_name => "Team"
   
-  embeds_one :result, :class_name => "GameResult"
+  referenced_in :left_team, :class_name => "Team"
+  field :left_custom_name, :type => Boolean
+  field :left_team_name
+  field :left_team_score, :type => Integer, :default => 0
+  validates_numericality_of :left_team_score, :only_integer => true
+  def left_team_is_winner?
+    return left_team_score > right_team_score
+  end
+
+  referenced_in :right_team, :class_name => "Team"
+  field :right_team_name
+  field :right_custom_name, :type => Boolean
+  field :right_team_score, :type => Integer, :default => 0
+  validates_numericality_of :right_team_score, :only_integer => true
+  def right_team_is_winner?
+    return left_team_score < right_team_score
+  end
+
+  COMPLETED_IN = %w[regulation overtime shootout forfeit]
+  def self.completed_in_options
+    COMPLETED_IN.collect{|o| [o.humanize, o] }
+  end
+  field :completed_in
+
   referenced_in :statsheet
 
   validates_presence_of :starts_on, :season_id
@@ -41,21 +104,12 @@ class Game
 
   before_save :update_team_names
 
-  after_initialize :fix_time_zone
-  def fix_time_zone
-    self.starts_on = self.starts_on.getlocal if self.starts_on
-  end
-
   def has_result?
-    !self.result.nil?
+    self.completed_in.present?
   end
 
-  def can_add_result?
-    !self.has_result? && self.starts_on < DateTime.now
-  end
-
-  def can_delete_result?
-    self.has_result?
+  def display_score?
+    self.active? || self.completed? || self.final?
   end
 
   def has_statsheet?
@@ -69,8 +123,28 @@ class Game
   private
 
     def update_team_names
-      self.left_team_name = self.left_team.name if self.left_team
-      self.right_team_name = self.right_team.name if self.right_team
+      if self.left_team
+        self.left_team_name = self.left_team.name unless left_custom_name
+      else
+        self.left_team_name = '' unless left_custom_name
+      end
+      if self.right_team
+        self.right_team_name = self.right_team.name unless right_custom_name
+      else
+        self.right_team_name = '' unless right_custom_name
+      end
+    end
+
+    def enter_final
+      @event = Event.new(:game_finalized)
+      @event.data[:game_id] = self.id
+      EventBus.current.publish(@event)       
+    end
+
+    def exit_final
+      @event = Event.new(:game_finalized)
+      @event.data[:game_id] = self.id
+      EventBus.current.publish(@event)       
     end
 
 end

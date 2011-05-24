@@ -1,0 +1,16 @@
+= semantic_form_for [:admin, edit], :remote => true do |f|
+  = f.input :left_team_score, :label => edit.left_team_name
+  = f.input :right_team_score, :label => edit.right_team_name
+  = f.input :completed_in, :collection => Game.completed_in_options
+  = f.input :state, :label => 'Status', :input_html => { :disabled => true }
+  = f.input :transition_to, :label => 'Status To', :collection => edit.available_transitions
+
+
+:css
+  #game_result_left_team_score,
+  #game_result_right_team_score
+  {
+    width: 25px;
+    text-align: center;
+  }
+

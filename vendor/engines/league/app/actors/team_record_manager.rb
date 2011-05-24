@@ -11,7 +11,7 @@ class TeamRecordManager
 
     # then repost the results
     Game.for_division(division_id).for_season(season_id).each do |game|
-      post_result_to_team_records!(game) if game.has_result?
+      post_result_to_team_records!(game) if game.final?
     end
 
     #then update power rankings
@@ -100,7 +100,7 @@ class TeamRecordManager
     
   end
   
-  on :game_result_posted do |event|
+  on :game_finalized do |event|
     
     game = Game.find(event.data[:game_id])
     manager = TeamRecordManager.new
@@ -109,7 +109,7 @@ class TeamRecordManager
 
   end
 
-  on :game_result_deleted do |event|
+  on :game_unfinalized do |event|
     
     game = Game.find(event.data[:game_id])
     left = game.left_team.record

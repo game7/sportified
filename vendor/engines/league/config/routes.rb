@@ -28,9 +28,9 @@
       resources :players
     end
     resources :games do
-      resource :result, :controller => "game_result"
       resource :statsheet, :only => [:edit]
     end
+    resources :game_results
     resources :hockey_statsheets, :only => [:edit, :update] do
       resources :players, :controller => "hockey_players" do
         post 'reload', :on => :collection

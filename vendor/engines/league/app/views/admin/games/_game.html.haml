@@ -1,0 +1,13 @@
+%tr{ :id => "game_#{game.id.to_s}" }
+  %td #{game.starts_on.strftime('%a %m/%e/%y')}
+  %td #{game.starts_on.strftime('%l:%M %p')}
+  = render :partial => 'admin/games/game_description', :locals => { :game => game }
+  %td #{game.state.humanize}
+  %td 
+    = link_to "Edit", edit_admin_game_path(game)
+    = " | "
+    = link_to 'Score', edit_admin_game_result_path(game.id), :remote => true
+    = " | "
+    = link_to "Delete", [:admin, game], :confirm => 'Are you sure?', :method => :delete
+    = " | "
+    = link_to "Stats", edit_admin_game_statsheet_path(game)

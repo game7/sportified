@@ -20,7 +20,6 @@
           %td No games scheduled
       - else
         - @games.each do |game|
-          - game.starts_on.localtime
           - if game.starts_on.to_date != last_date
             - reset_cycle()
             %tr.group-head
@@ -32,10 +31,10 @@
           %tr{ :class => cycle("odd","even") }
             %td
               - if game.has_result?
-                - if game.result.right_team_is_winner?
-                  #{game.right_team_name} #{game.result.right_team_score} , #{game.left_team_name} #{game.result.left_team_score}
+                - if game.right_team_is_winner?
+                  #{game.right_team_name} #{game.right_team_score} , #{game.left_team_name} #{game.left_team_score}
                 - else
-                  #{game.left_team_name} #{game.result.left_team_score}, #{game.right_team_name} #{game.result.right_team_score} 
+                  #{game.left_team_name} #{game.left_team_score}, #{game.right_team_name} #{game.right_team_score} 
               - else
                 #{game.left_team_name} vs. #{game.right_team_name} 
             %td #{game.starts_on.strftime("%l:%M %p")}

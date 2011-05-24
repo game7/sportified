@@ -3,21 +3,21 @@
     %table.game-header-table
       %tbody
         %tr
-          %td.winner #{'>' if game.result && game.result.left_team_is_winner?}
+          %td.winner #{'>' if game.has_result? && game.left_team_is_winner?}
           %td.team-name 
             - team = game.left_team
             //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
             = game.left_team.name
-          %td.team-score #{game.result.left_team_score if game.result}
+          %td.team-score #{game.left_team_score if game.has_result?}
         %tr
           %td{ :colspan => "4", :class => "team-record" }
         %tr
-          %td.winner #{'>' if game.result && game.result.right_team_is_winner?}
+          %td.winner #{'>' if game.has_result? && game.right_team_is_winner?}
           %td.team-name 
             - team = game.right_team
             //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
             = game.right_team.name
-          %td.team-score #{game.result.right_team_score if game.result}
+          %td.team-score #{game.right_team_score if game.has_result?}
         %tr
           %td{ :colspan => "4", :class => "team-record" }
     %ul.game-info

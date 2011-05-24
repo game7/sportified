@@ -1,42 +1,40 @@
 class GameResult
-  include Mongoid::Document
-  include Mongoid::Timestamps
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+  extend Forwardable
 
-  COMPLETED_IN = %w[regulation overtime shootout forfeit]
+  attr_accessor :transition_to
 
-  embedded_in :game, :inverse_of => :result
-  
-  field :completed_in
-  field :left_team_score, :type => Integer
-  field :right_team_score, :type => Integer
-  field :note, :default => ''
+  def_delegators :game, 
+    :id, :state,
+    :left_team_name, :right_team_name,
+    :left_team_score, :left_team_score=,
+    :right_team_score, :right_team_score=,
+    :completed_in, :completed_in=,
+    :errors, :valid?, :save, :persisted?,
+    :available_transitions
 
-  validates_numericality_of :left_team_score, :only_integer => true
-  validates_numericality_of :right_team_score, :only_integer => true
-
-  after_create :raise_created_event
-  after_destroy :raise_deleted_event
-
-  def left_team_is_winner?
-    return left_team_score > right_team_score
+  def initialize(game)
+    @game = game
   end
 
-  def right_team_is_winner?
-    return left_team_score < right_team_score
+  def game
+    @game
   end
 
-  private
-
-    def raise_created_event
-      @event = Event.new(:game_result_posted)
-      @event.data[:game_id] = self.game.id
-      EventBus.current.publish(@event)
+  def update_attributes(params)
+    params.each_pair do |attribute, value|
+      self.send :"#{attribute}=", value
+    end unless params.nil?
+    if params[:transition_to].present?
+      game.send "#{params[:transition_to]}!"
+    else
+      self.save
     end
+  end
 
-    def raise_deleted_event
-      @event = Event.new(:game_result_deleted)
-      @event.data[:game_id] = self.game.id
-      EventBus.current.publish(@event)      
-    end
+  def self.find(param)
+    new(Game.find(param))
+  end
 
 end
