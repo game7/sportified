@@ -17,35 +17,6 @@ describe Game do
 
   end
 
-  describe "when asking about game result" do
-    
-    it "should not allow result to be added when game has not yet occurred" do
-      @game.starts_on = @game.starts_on + 1
-      @game.can_add_result?.should == false
-    end
-
-    it "should allow result to be added when game has already occurred" do
-      @game.starts_on = @game.starts_on - 1
-      @game.can_add_result?.should == true
-    end
-
-    it "should not allow result to be added when a result already exists" do
-      @game.starts_on = @game.starts_on - 1
-      @game.result = GameResult.make_unsaved
-      @game.can_add_result?.should == false
-    end
-
-    it "should not allow game result to be deleted when it does not exist" do
-      @game.can_delete_result?.should == false
-    end
- 
-    it "should allow result to be deleted when it exists" do
-      @game.result = GameResult.make_unsaved
-      @game.can_delete_result?.should == true
-    end
-   
-  end
-
   describe "when saving" do
     
     it "should update the left team name" do
@@ -60,6 +31,37 @@ describe Game do
       @game.right_team_name.should == @game.right_team.name
     end
 
+  end
+
+  describe "when transitioning to final" do
+    
+    it "should publish a message" do
+      @game.save
+      @game.completed_in = "regulation"
+      EventBus.current.should_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should == :game_finalized
+        message.data[:game_id].should == @game.id
+        true
+      end
+      @game.finalize!
+    end
+    
+  end
+
+  describe "when transitioning from final" do
+    
+    it "should publish a message" do
+      @game.save
+      @game.state = "final"
+      EventBus.current.should_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should == :game_unfinalized
+        message.data[:game_id].should == @game.id
+        true
+      end
+      @game.complete!      
+    end
   end
 
 end

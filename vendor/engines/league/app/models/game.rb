@@ -1,3 +1,4 @@
+
 class Game
   include Mongoid::Document
   include Mongoid::StateMachine
@@ -142,7 +143,7 @@ class Game
     end
 
     def exit_final
-      @event = Event.new(:game_finalized)
+      @event = Event.new(:game_unfinalized)
       @event.data[:game_id] = self.id
       EventBus.current.publish(@event)       
     end
