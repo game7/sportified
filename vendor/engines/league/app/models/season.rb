@@ -22,12 +22,17 @@ class Season
   scope :with_name, lambda { |name| where(:name => name) }
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 
-  before_save :set_slug
+  before_save do |season|
+    season.slug = season.name.parameterize    
+  end
+  before_save do |season|
+    if season.name_changed?
+      event = Event.new(:season_renamed)
+      event.data[:season_id] = season.id
+      event.data[:new_name] = season.name
+      EventBus.current.publish(event)       
+    end   
+  end
 
-  private
-
-    def set_slug
-      self.slug = self.name.parameterize
-    end
 
 end
