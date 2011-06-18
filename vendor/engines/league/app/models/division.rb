@@ -17,7 +17,7 @@ class Division
   validates_presence_of :name
 
   before_save do |division|
-    self.slug = self.name.parameterize
+    division.slug = division.name.parameterize
   end
   before_save do |division|
     if division.name_changed?
