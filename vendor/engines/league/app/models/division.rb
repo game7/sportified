@@ -23,7 +23,8 @@ class Division
     if division.persisted? && division.name_changed?
       event = Event.new(:division_renamed)
       event.data[:division_id] = division.id
-      event.data[:new_name] = division.name
+      event.data[:division_name] = division.name
+      event.data[:division_slug] = division.slug
       EventBus.current.publish(event)       
     end
   end
