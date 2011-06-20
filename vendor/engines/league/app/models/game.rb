@@ -3,6 +3,7 @@ class Game
   include Mongoid::Document
   include Mongoid::StateMachine
   include Sportified::SiteContext
+  include Sportified::PublishesMessages
 
   field :state
   state_machine :initial => :pending
@@ -137,15 +138,15 @@ class Game
     end
 
     def enter_final
-      @event = Event.new(:game_finalized)
-      @event.data[:game_id] = self.id
-      EventBus.current.publish(@event)       
+      msg = Event.new(:game_finalized)
+      msg.data[:game_id] = self.id
+      enqueue_message msg
     end
 
     def exit_final
-      @event = Event.new(:game_unfinalized)
-      @event.data[:game_id] = self.id
-      EventBus.current.publish(@event)       
+      msg = Event.new(:game_unfinalized)
+      msg.data[:game_id] = self.id
+      enqueue_message msg
     end
 
 end

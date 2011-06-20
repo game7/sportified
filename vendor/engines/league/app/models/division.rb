@@ -20,8 +20,8 @@ class Division
   before_save do |division|
     division.slug = division.name.parameterize
   end
-  before_save :set_division_renamed_message
-  def set_division_renamed_message
+  before_save :prepare_division_renamed_message
+  def prepare_division_renamed_message
     if self.persisted? && self.name_changed?
       msg = Event.new(:division_renamed)
       msg.data[:division_id] = self.id

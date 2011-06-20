@@ -1,6 +1,7 @@
 class Season
   include Mongoid::Document
   include Sportified::SiteContext
+  include Sportified::PublishesMessages
   cache
  
   field :name  
@@ -27,11 +28,11 @@ class Season
   end
   before_save do |season|
     if season.persisted? && season.name_changed?
-      event = Event.new(:season_renamed)
-      event.data[:season_id] = season.id
-      event.data[:season_name] = season.name
-      event.data[:season_slug] = season.slug
-      EventBus.current.publish(event)       
+      msg = Event.new(:season_renamed)
+      msg.data[:season_id] = season.id
+      msg.data[:season_name] = season.name
+      msg.data[:season_slug] = season.slug
+      enqueue_message msg     
     end   
   end
 

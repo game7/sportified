@@ -1,6 +1,7 @@
 class Team
   include Mongoid::Document
   include Sportified::SiteContext
+  include Sportified::PublishesMessages
   cache
  
   field :name
@@ -68,22 +69,22 @@ class Team
     self.division_slug = division ? division.slug : nil
   end
 
-  before_save :publish_team_renamed_message
-  def publish_team_renamed_message
+  before_save :prepare_team_renamed_message
+  def prepare_team_renamed_message
     if self.persisted? && self.name_changed?
-      @message = Event.new(:team_renamed)
-      @message.data[:team_id] = self.id
-      @message.data[:new_team_name] = self.name
-      EventBus.current.publish(@message) 
+      msg = Event.new(:team_renamed)
+      msg.data[:team_id] = self.id
+      msg.data[:new_team_name] = self.name
+      enqueue_message msg
     end
   end
 
-  after_create :publish_team_created_message
-  def publish_team_created_message
-    @event = Event.new(:team_created)
-    @event.data[:team_id] = self.id
-    @event.data[:team_name] = self.name
-    EventBus.current.publish(@event)      
+  after_create :prepare_team_created_message
+  def prepare_team_created_message
+    msg = Event.new(:team_created)
+    msg.data[:team_id] = self.id
+    msg.data[:team_name] = self.name
+    enqueue_message msg
   end
 
   def fullname
