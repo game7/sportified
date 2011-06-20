@@ -1,6 +1,7 @@
 class Division
   include Mongoid::Document
   include Sportified::SiteContext
+  include Sportified::PublishesMessages
   cache
  
   field :name
@@ -19,13 +20,14 @@ class Division
   before_save do |division|
     division.slug = division.name.parameterize
   end
-  before_save do |division|
-    if division.persisted? && division.name_changed?
-      event = Event.new(:division_renamed)
-      event.data[:division_id] = division.id
-      event.data[:division_name] = division.name
-      event.data[:division_slug] = division.slug
-      EventBus.current.publish(event)       
+  before_save :set_division_renamed_message
+  def set_division_renamed_message
+    if self.persisted? && self.name_changed?
+      msg = Event.new(:division_renamed)
+      msg.data[:division_id] = self.id
+      msg.data[:division_name] = self.name
+      msg.data[:division_slug] = self.slug
+      enqueue_message msg
     end
   end
 

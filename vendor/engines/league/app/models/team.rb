@@ -54,14 +54,14 @@ class Team
     self.record ||= TeamRecord.new
   end
 
-  before_save :get_division_name_and_slug
+  before_create :get_division_name_and_slug
   def get_season_name_and_slug
     season = self.season
     self.season_name = season ? season.name : nil
     self.season_slug = season ? season.slug : nil
   end
 
-  before_save :get_season_name_and_slug
+  before_create :get_season_name_and_slug
   def get_division_name_and_slug
     division = self.division
     self.division_name = division ? division.name : nil

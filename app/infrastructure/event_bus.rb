@@ -28,6 +28,6 @@ class InProcessEventBus
 end
 
 # specifiy event bus
-EventBus.current = InProcessEventBus.new
+#EventBus.current = InProcessEventBus.new
 # auto-subscribe handlers
-TeamRecordManager
+#TeamRecordManager
