@@ -29,7 +29,8 @@ class Season
     if season.persisted? && season.name_changed?
       event = Event.new(:season_renamed)
       event.data[:season_id] = season.id
-      event.data[:new_name] = season.name
+      event.data[:season_name] = season.name
+      event.data[:season_slug] = season.slug
       EventBus.current.publish(event)       
     end   
   end
