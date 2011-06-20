@@ -16,6 +16,20 @@ describe Division do
 
   end
 
+  describe "when created" do
+    
+    it "should not publish message that the name has been changed" do
+      EventBus.current.should_not_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should_not == :division_renamed
+        true
+      end
+      @division.save
+      
+    end
+
+  end
+
   describe "when saving" do
     
     it "should publish message if the name has been changed" do

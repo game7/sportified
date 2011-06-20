@@ -17,7 +17,21 @@ describe Season do
 
   end
 
-  describe "when saving" do
+  describe "when created" do
+    
+    it "should not publish message that the name has been changed" do
+      EventBus.current.should_not_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should_not == :season_renamed
+        true
+      end
+      @season.save
+      
+    end
+
+  end
+
+  describe "when saved" do
     
     it "should publish message if the name has been changed" do
       @season.save

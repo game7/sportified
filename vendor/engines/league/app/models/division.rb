@@ -20,7 +20,7 @@ class Division
     division.slug = division.name.parameterize
   end
   before_save do |division|
-    if division.name_changed?
+    if division.persisted? && division.name_changed?
       event = Event.new(:division_renamed)
       event.data[:division_id] = division.id
       event.data[:new_name] = division.name

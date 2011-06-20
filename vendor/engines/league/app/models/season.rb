@@ -26,7 +26,7 @@ class Season
     season.slug = season.name.parameterize    
   end
   before_save do |season|
-    if season.name_changed?
+    if season.persisted? && season.name_changed?
       event = Event.new(:season_renamed)
       event.data[:season_id] = season.id
       event.data[:new_name] = season.name

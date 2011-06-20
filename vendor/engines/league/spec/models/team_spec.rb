@@ -42,6 +42,35 @@ describe Team do
       @team.record.class.should == TeamRecord
     end
 
+    it "should publish a message if the name has been changed" do
+      @team.save
+      new_name = "new team name"
+      @team.name = new_name
+      EventBus.current.should_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should == :team_renamed
+        message.data[:team_id].should == @team.id
+        message.data[:new_team_name].should == new_name
+        true
+      end
+      @team.save      
+    end
+
+  end
+
+  describe 'when created' do
+    
+    it "should publish a message" do
+      EventBus.current.should_receive(:publish).with do |*args|
+        message = args.pop
+        message.name.should == :team_created
+        message.data[:team_id].should == @team.id
+        message.data[:team_name].should == @team.name
+        true
+      end
+      @team.save      
+    end
+    
   end
 
 end

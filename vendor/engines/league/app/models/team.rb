@@ -38,11 +38,53 @@ class Team
   validates_presence_of :season_id
 
   before_save :set_slug
+  def set_slug
+    self.slug = self.name.parameterize
+  end
+
   before_save :ensure_short_name
+  def ensure_short_name
+    if self.short_name.nil? || self.short_name.empty?
+      self.short_name = self.name
+    end
+  end
+  
   before_save :ensure_record
+  def ensure_record
+    self.record ||= TeamRecord.new
+  end
+
   before_save :get_division_name_and_slug
+  def get_season_name_and_slug
+    season = self.season
+    self.season_name = season ? season.name : nil
+    self.season_slug = season ? season.slug : nil
+  end
+
   before_save :get_season_name_and_slug
-  after_create :raise_team_created_event
+  def get_division_name_and_slug
+    division = self.division
+    self.division_name = division ? division.name : nil
+    self.division_slug = division ? division.slug : nil
+  end
+
+  before_save :publish_team_renamed_message
+  def publish_team_renamed_message
+    if self.persisted? && self.name_changed?
+      @message = Event.new(:team_renamed)
+      @message.data[:team_id] = self.id
+      @message.data[:new_team_name] = self.name
+      EventBus.current.publish(@message) 
+    end
+  end
+
+  after_create :publish_team_created_message
+  def publish_team_created_message
+    @event = Event.new(:team_created)
+    @event.data[:team_id] = self.id
+    @event.data[:team_name] = self.name
+    EventBus.current.publish(@event)      
+  end
 
   def fullname
     "#{name} (#{division_name}-#{season_name})"
@@ -60,43 +102,15 @@ class Team
   end
   scope :with_slug, lambda { |slug| where(:slug => slug) }
 
-  private
 
-    def raise_team_created_event
-      @event = Event.new(:team_created)
-      @event.data[:division_id] = self.division_id
-      @event.data[:season_id] = self.season_id
-      @event.data[:team_id] = self.id
-      @event.data[:team_name] = self.name
-      @event.data[:team_short_name] = self.short_name
-      EventBus.current.publish(@event)      
-    end
 
-    def ensure_short_name
-      if self.short_name.nil? || self.short_name.empty?
-        self.short_name = self.name
-      end
-    end
 
-    def get_season_name_and_slug
-      season = self.season
-      self.season_name = season ? season.name : nil
-      self.season_slug = season ? season.slug : nil
-    end
 
-    def get_division_name_and_slug
-      division = self.division
-      self.division_name = division ? division.name : nil
-      self.division_slug = division ? division.slug : nil
-    end
 
-    def ensure_record
-      self.record ||= TeamRecord.new
-    end
 
-    def set_slug
-      self.slug = self.name.parameterize
-    end
+
+
+
 
 
 end
