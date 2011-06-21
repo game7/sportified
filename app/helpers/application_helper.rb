@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def theme
     site = Site.current
-    site.theme.present? ? site.theme : 'default'
+    site.present? && site.theme.present? ? site.theme : 'default'
   end
 
 end

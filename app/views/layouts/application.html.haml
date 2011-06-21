@@ -42,6 +42,6 @@
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
       #footer 
-    = render 'layouts/google_analytics' if Site.current.analytics_id.present?
+    = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
     = yield :javascript
 
