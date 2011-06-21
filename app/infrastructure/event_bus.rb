@@ -2,6 +2,11 @@ module EventBus
   class << self
     attr_accessor :current
     delegate :publish, :subscribe, :wait_for_events, :start, :purge, :stop, :to => :current
+
+    def init
+      EventBus.current = Rails.configuration.event_bus.constantize.new
+      Rails.configuration.event_subscribers.each(&:constantize)
+    end
   end
 end
 
@@ -10,6 +15,11 @@ class InProcessEventBus
     subscriptions(event.name).each do |subscription|
       subscription.call(event)
     end
+  end
+
+  def events
+    @subscriptions ||= Hash.new
+    @subscriptions.keys || []
   end
 
   def subscriptions(event_name)
@@ -27,7 +37,3 @@ class InProcessEventBus
   def stop; end
 end
 
-# specifiy event bus
-#EventBus.current = InProcessEventBus.new
-# auto-subscribe handlers
-#TeamRecordManager

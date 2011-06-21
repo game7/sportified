@@ -12,7 +12,9 @@
     root :to => "dashboard#index"    
     resources :sites
     resources :users
+    match 'status' => 'dashboard#status'
   end
+  
 
   namespace :admin do
     root :to => "dashboard#index"

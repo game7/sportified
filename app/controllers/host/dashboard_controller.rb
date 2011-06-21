@@ -4,4 +4,8 @@ class Host::DashboardController < Host::HostController
     
   end
 
+  def status
+    
+  end
+
 end

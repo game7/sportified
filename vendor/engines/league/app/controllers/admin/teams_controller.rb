@@ -80,7 +80,11 @@ class Admin::TeamsController < Admin::BaseLeagueController
   def new
     @team = Team.new
     @team.division_id = params[:division_id]
-    @team.season_id = params[:season_id]
+    if params[:season_id]
+      @team.season_id = params[:season_id]
+    else
+      @team.season = Season.latest
+    end
 
     add_breadcrumb 'New'
 
