@@ -1,5 +1,5 @@
 %tr{ :id => "game_#{game.id.to_s}" }
-  %td #{game.starts_on.strftime('%a %m/%e/%y')}
+  %td #{game.starts_on.strftime('%a %m/%d/%y')}
   %td #{game.starts_on.strftime('%l:%M %p')}
   = render :partial => 'admin/games/game_description', :locals => { :game => game }
   %td #{game.state.humanize}
