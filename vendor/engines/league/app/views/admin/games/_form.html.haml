@@ -6,12 +6,10 @@
     = f.input :left_team_id, :collection => @teams
     = f.input :left_custom_name, :as => :boolean
     = f.input :left_team_name
-    = f.input :left_team_score
   = f.inputs :name => "Home Team" do
     = f.input :right_team_id, :collection => @teams
     = f.input :right_custom_name, :as => :boolean
     = f.input :right_team_name
-    = f.input :right_team_score
   = f.buttons do
     = f.commit_button
     %li #{link_to 'Cancel', session[:return_to]}
