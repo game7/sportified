@@ -18,7 +18,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   # GET /players.xml
   def index
 
-    @players = @team.players.desc(:last_name)
+    @players = @team.players.asc(:last_name)
 
     respond_to do |format|
       format.html # index.html.erb

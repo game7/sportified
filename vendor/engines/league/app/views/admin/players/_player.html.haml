@@ -1,0 +1,7 @@
+%tr{ :class => cycle("odd","even") }
+  %td #{player.jersey_number}
+  %td
+    = player.full_name
+    .action.right
+      #{link_to 'Edit', edit_admin_player_path(player)} | 
+      #{link_to 'Delete', [:admin, player], :confirm => 'Are you sure?', :method => :delete}
