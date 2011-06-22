@@ -7,13 +7,9 @@ gem 'rails', '3.0.3'
 
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-#gem 'mongoid', '2.0.0.beta.20'
-#gem 'bson_ext', '1.1.5'
-gem 'mongoid', :git => 'https://github.com/mongoid/mongoid.git'
-gem 'bson_ext', '1.3.0'
-#gem 'mongoid-tree', :require => 'mongoid/tree'
-gem 'mongoid-tree', :git => 'https://github.com/benedikt/mongoid-tree', :branch => 'mongoid-2.0.0', :require => 'mongoid/tree'
-#gem 'mongoid_slug', :require => 'mongoid/slug'
+gem 'mongoid', '~> 2.0'
+gem 'bson_ext', '~> 1.3'
+gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_state_machine', :require => 'mongoid/state_machine'
 gem 'haml'
 
