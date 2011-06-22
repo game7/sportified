@@ -1,7 +1,6 @@
 class League::TeamsController < League::BaseDivisionSeasonController
   
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
-
   def set_team_breadcrumbs 
     add_breadcrumb @team.name if @team
   end
@@ -13,6 +12,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
       add_area_ancestor("League", league_path)      
       add_area_ancestor("#{@division.name} Division", league_division_path(@division.slug) )
       add_area_ancestor("#{@season.name} Season" )
+      add_area_ancestor("Teams",  league_teams_path(@division.slug) )
       add_area_ancestor("#{@team.name}" )
       add_area_descendant('Home', league_team_path(@team.division_slug, @team.season_slug, @team.slug))
       add_area_descendant('Schedule', league_team_schedule_path(@team.division_slug, @team.season_slug, @team.slug))
