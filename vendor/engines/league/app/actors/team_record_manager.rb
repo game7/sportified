@@ -1,5 +1,5 @@
 class TeamRecordManager
-  extend EventHandler
+  extend MessageHandler
 
   def recalculate(division_id, season_id)
     
@@ -92,26 +92,26 @@ class TeamRecordManager
     
   end
 
-  on :team_created do |event|
+  on :team_created do |message|
     
-    team = Team.find(event.data[:team_id])
+    team = Team.find(message.data[:team_id])
     manager = TeamRecordManager.new
     manager.create_record_for_team! team
     
   end
   
-  on :game_finalized do |event|
+  on :game_finalized do |message|
     
-    game = Game.find(event.data[:game_id])
+    game = Game.find(message.data[:game_id])
     manager = TeamRecordManager.new
     manager.post_result_to_team_records!(game)
     manager.update_power_rankings_from_game(game)
 
   end
 
-  on :game_unfinalized do |event|
+  on :game_unfinalized do |message|
     
-    game = Game.find(event.data[:game_id])
+    game = Game.find(message.data[:game_id])
     left = game.left_team.record
     left.cancel_result_for_game(game)
     left.save

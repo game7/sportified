@@ -23,7 +23,7 @@ class Division
   before_save :prepare_division_renamed_message
   def prepare_division_renamed_message
     if self.persisted? && self.name_changed?
-      msg = Event.new(:division_renamed)
+      msg = Message.new(:division_renamed)
       msg.data[:division_id] = self.id
       msg.data[:division_name] = self.name
       msg.data[:division_slug] = self.slug

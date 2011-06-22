@@ -31,7 +31,7 @@ class Season
   end
   before_save do |season|
     if season.persisted? && season.name_changed?
-      msg = Event.new(:season_renamed)
+      msg = Message.new(:season_renamed)
       msg.data[:season_id] = season.id
       msg.data[:season_name] = season.name
       msg.data[:season_slug] = season.slug

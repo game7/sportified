@@ -1,4 +1,4 @@
-class Event
+class Message
   
   def initialize(name, data={})
     @name = name

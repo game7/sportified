@@ -1,5 +1,5 @@
 class TeamNameManager
-  extend EventHandler
+  extend MessageHandler
 
   on :division_renamed do |message|
     Team.for_division(message.data[:division_id]).each do |team|

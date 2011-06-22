@@ -12,7 +12,7 @@ module Sportified
     end
 
     def publish_messages
-      while msg = @messages.shift do EventBus.current.publish(msg) end if @messages
+      while msg = @messages.shift do MessageBus.publish(msg) end if @messages
     end
 
   end

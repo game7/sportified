@@ -2,10 +2,10 @@
 
 %h3 Message Bus
 %strong Bus: 
-= EventBus.current ? EventBus.current.class : 'NULL'
+= MessageBus.current ? MessageBus.current.class : 'NULL'
 %br/
 %strong Handles:
 %ul
-  - EventBus.current.events.collect{|x| x.to_s}.sort.each do |e|
+  - MessageBus.messages.collect{|x| x.to_s}.sort.each do |e|
     %li #{e}
 

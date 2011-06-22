@@ -138,13 +138,13 @@ class Game
     end
 
     def enter_final
-      msg = Event.new(:game_finalized)
+      msg = Message.new(:game_finalized)
       msg.data[:game_id] = self.id
       enqueue_message msg
     end
 
     def exit_final
-      msg = Event.new(:game_unfinalized)
+      msg = Message.new(:game_unfinalized)
       msg.data[:game_id] = self.id
       enqueue_message msg
     end

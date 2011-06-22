@@ -72,7 +72,7 @@ class Team
   before_save :prepare_team_renamed_message
   def prepare_team_renamed_message
     if self.persisted? && self.name_changed?
-      msg = Event.new(:team_renamed)
+      msg = Message.new(:team_renamed)
       msg.data[:team_id] = self.id
       msg.data[:new_team_name] = self.name
       enqueue_message msg
@@ -81,7 +81,7 @@ class Team
 
   after_create :prepare_team_created_message
   def prepare_team_created_message
-    msg = Event.new(:team_created)
+    msg = Message.new(:team_created)
     msg.data[:team_id] = self.id
     msg.data[:team_name] = self.name
     enqueue_message msg
