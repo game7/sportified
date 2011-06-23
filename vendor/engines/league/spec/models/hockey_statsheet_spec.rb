@@ -23,9 +23,9 @@ describe HockeyStatsheet do
       @statsheet.min_3 = 15
     end
     
-    it "should return an item for each minute of game time" do
+    it "should return an item for each minute of game time plus 1 minute per period" do
       score_by_minute = @statsheet.score_by_minute
-      score_by_minute.length.should == 45
+      score_by_minute.length.should == 48
     end
   end
 
@@ -165,7 +165,7 @@ describe HockeyStatsheet do
       @offender.pim.should == 2
     end
 
-    it "should update teh correct players when a penalty is deleted" do
+    it "should update the correct players when a penalty is deleted" do
       g = @statsheet.events << @penalty
       @statsheet.events.delete(@penalty)
       @offender.pen.should == 0
