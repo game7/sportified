@@ -34,6 +34,7 @@
     resources :game_results
     resources :hockey_statsheets, :only => [:edit, :update] do
       resources :players, :controller => "hockey_players" do
+        post 'load', :on => :collection        
         post 'reload', :on => :collection
       end
       resources :goals, :controller => "hockey_goals"

@@ -6,9 +6,5 @@
   $('#dialog-modal').dialog("close");
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").show(300);
-  <% if @player.side == 'L' %>
-    $("#players-left").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.left } ) )%>");
-  <% else %>
-    $("#players-right").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.right } ) )%>");
-  <% end %>
+  $("#player_<%= @player.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/player", :object => @player) )%>");  
 <% end %>

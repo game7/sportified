@@ -1,20 +1,20 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController
   
   before_filter :load_statsheet
-  before_filter :load_player, :only => [:edit, :update, :destroy]
-  before_filter :prepare_sides
-
   def load_statsheet
     @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
   end
 
+  before_filter :load_player, :only => [:edit, :update, :destroy]
   def load_player
     @player = @statsheet.players.find(params['id'])
   end
 
+  before_filter :prepare_sides
   def prepare_sides
     @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
   end
+
   
   def new
     @player = HockeyPlayer.new
@@ -46,6 +46,12 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
 
   end
 
+  def load
+    @statsheet.reload_players
+    if @statsheet.save
+      flash[:notice] = "Players have been loaded from team rosters"
+    end    
+  end
   def reload
     @statsheet.reload_players
     if @statsheet.save

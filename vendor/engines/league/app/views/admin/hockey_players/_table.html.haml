@@ -10,10 +10,5 @@
       %tr
         %td{ :colspan => 4 } No players have been loaded
     - else
-      - players.each do |p|
-        %tr
-          %td #{p.played ? 'X' : ''}
-          %td #{p.num}
-          %td #{p.name}
-          %td
-            = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, p), :remote => true, :title => 'Edit this player'
+      = render :partial => 'admin/hockey_players/player', :collection => players
+

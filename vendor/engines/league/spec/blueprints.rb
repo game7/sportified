@@ -3,6 +3,8 @@ require 'faker'
 
 Sham.name { Faker::Company.name }
 Sham.host { Faker::Internet.domain_name }
+Sham.first { Faker::Name.first_name }
+Sham.last { Faker::Name.last_name }
 
 Site.blueprint do
   name { Sham.name }
@@ -36,6 +38,12 @@ Team.blueprint do
   division { Division.make }
   season { Season.make }
   site { Site.make }
+end
+
+Player.blueprint do
+  first_name { Sham.first }
+  last_name { Sham.last }
+  jersey_number { rand(50) }
 end
 
 Game.blueprint do

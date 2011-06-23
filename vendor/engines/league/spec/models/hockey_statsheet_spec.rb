@@ -88,6 +88,69 @@ describe HockeyStatsheet do
     
   end
 
+  describe "when loading players" do
+    
+    before(:each) do
+      @statsheet = HockeyStatsheet.new
+      @statsheet.game = Game.make
+      (0..2).each do |i|
+        @statsheet.game.left_team.players << Player.make(:jersey_number => i.to_s)
+      end
+      (0..4).each do |i|
+        @statsheet.game.right_team.players << Player.make(:jersey_number => i.to_s)
+      end
+      @statsheet.save
+    end
+
+    it "should load the correct number of players to the correct team" do
+      @statsheet.players.left.count.should == 3      
+      @statsheet.players.right.count.should == 5  
+    end
+
+    it "should incrementally add new players without reloading existing players" do
+      @statsheet.game.left_team.players.each_with_index do |plr, i|
+        plr.jersey_number = (20 + i).to_s
+      end
+      @statsheet.game.left_team.players << Player.make(:jersey_number => 3.to_s)
+      @statsheet.save
+      @statsheet.load_players
+      @statsheet.save
+      @statsheet.players.left.count.should == 4
+      @statsheet.players.left.each_with_index do |plr, i|
+        plr.num.should == i.to_s
+      end
+    end
+
+  end
+
+  describe "when reloading players" do
+    
+    before(:each) do
+      @statsheet = HockeyStatsheet.new
+      @statsheet.game = Game.make
+      (0..2).each do |i|
+        @statsheet.game.left_team.players << Player.make(:jersey_number => i.to_s)
+      end
+      (0..4).each do |i|
+        @statsheet.game.right_team.players << Player.make(:jersey_number => i.to_s)
+      end
+      @statsheet.save
+    end
+
+    it "should restore the full set of players" do
+      @statsheet.players.left.each_with_index do |plr, i|
+        plr.num = (10 + i).to_s
+      end
+      @statsheet.save
+      @statsheet.reload_players
+      @statsheet.save
+      @statsheet.players.left.each_with_index do |plr, i|
+        plr.num.should == i.to_s
+      end
+    end
+
+  end
+
   describe "when a goal is created or deleted" do
     
     before(:each) do

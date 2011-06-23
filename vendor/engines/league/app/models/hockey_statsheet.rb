@@ -158,16 +158,17 @@ class HockeyStatsheet < Statsheet
     self.right_team_name = game.right_team_name    
   end
 
-  def load_players(game)
+  def load_players(game = self.game)
     load_team_players(game.left_team, "left")
     load_team_players(game.right_team, "right")    
   end
 
   def load_team_players(team, side)
-    team.players.each{|p| players.build.from_player(p, side)} if team
+    player_ids = self.players.entries.collect{ |plr| plr.player_id }
+    team.players.each do |team_player|
+      players.build.from_player(team_player, side) unless player_ids.index(team_player.id)
+    end if team
   end
-
-
 
   def is_latest?(event)
     if latest_per.blank? || latest_per.to_s < event.per.to_s 
@@ -189,6 +190,7 @@ class HockeyStatsheet < Statsheet
     self.latest_min = event.min
     self.latest_sec = event.sec    
   end
+
 
   def reload_players
     self.players = []
