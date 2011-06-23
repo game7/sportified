@@ -279,16 +279,16 @@ class HockeyStatsheet < Statsheet
     result = []
     self.min_1.downto(0) do |i|
       result << { :period => '1', :minute => i, :left => 0, :right => 0 }
-    end
+    end if self.min_1 > 0
     self.min_2.downto(0) do |i|
       result << { :period => '2', :minute => i, :left => 0, :right => 0 }
-    end
+    end if self.min_2 > 0
     self.min_3.downto(0) do |i|
       result << { :period => '3', :minute => i, :left => 0, :right => 0 }
-    end
+    end if self.min_3 > 0
     self.min_ot.downto(0) do |i|
       result << { :period => 'ot', :minute => i, :left => 0, :right => 0 }
-    end
+    end if self.min_ot > 0
 
     goals = self.events.goals.sorted_by_time.entries
     
