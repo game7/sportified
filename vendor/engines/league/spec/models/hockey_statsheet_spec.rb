@@ -14,6 +14,21 @@ describe HockeyStatsheet do
 
   end
 
+  describe "when requesting the score by minute" do
+    
+    before(:each) do
+      @statsheet = HockeyStatsheet.new
+      @statsheet.min_1 = 15
+      @statsheet.min_2 = 15
+      @statsheet.min_3 = 15
+    end
+    
+    it "should return an item for each minute of game time" do
+      score_by_minute = @statsheet.score_by_minute
+      score_by_minute.length.should == 45
+    end
+  end
+
   describe "when creating or deleting events" do
     
     before(:each) do

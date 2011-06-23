@@ -136,6 +136,14 @@ class HockeyStatsheet < Statsheet
   end    
 
   before_save :update_team_scores
+  def update_team_scores
+    self.left_score = 0
+    self.right_score = 0
+    events.goals.each do |g|
+      self.left_score += 1 if g.side == 'left'
+      self.right_score += 1 if g.side == 'right'
+    end
+  end
 
   def load_game_info
     super
@@ -159,14 +167,7 @@ class HockeyStatsheet < Statsheet
     team.players.each{|p| players.build.from_player(p, side)} if team
   end
 
-  def update_team_scores
-    self.left_score = 0
-    self.right_score = 0
-    events.goals.each do |g|
-      self.left_score += 1 if g.side == 'left'
-      self.right_score += 1 if g.side == 'right'
-    end
-  end
+
 
   def is_latest?(event)
     if latest_per.blank? || latest_per.to_s < event.per.to_s 
@@ -271,6 +272,47 @@ class HockeyStatsheet < Statsheet
         plr[att] = 0
       end
     end
+  end
+
+  def score_by_minute
+    
+    result = []
+    self.min_1.downto(1) do |i|
+      result << { :period => '1', :minute => i, :left => 0, :right => 0 }
+    end
+    self.min_2.downto(1) do |i|
+      result << { :period => '2', :minute => i, :left => 0, :right => 0 }
+    end
+    self.min_3.downto(1) do |i|
+      result << { :period => '3', :minute => i, :left => 0, :right => 0 }
+    end
+    self.min_ot.downto(1) do |i|
+      result << { :period => 'ot', :minute => i, :left => 0, :right => 0 }
+    end
+
+    goals = self.events.goals.sorted_by_time.entries
+    
+    next_goal = goals.shift
+    left = 0
+    right = 0
+    result.each do |minute|
+      while next_goal.present?
+        if next_goal.min == minute[:minute]
+          if next_goal.side == 'left'
+            left += 1
+          else
+            right += 1
+          end
+          next_goal = goals.shift
+        else
+          break
+        end
+      end
+      minute[:left] = left
+      minute[:right] = right
+    end
+
+    result
   end
 
 end

@@ -1,4 +1,35 @@
 - title 'Box Score'
+- javascript("https://www.google.com/jsapi")
+- content_for :javascript do
+  :javascript
+    var left_team_name = '#{@stats.left_team_name}';
+    var right_team_name = '#{@stats.right_team_name}';
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Minute');
+      data.addColumn('number', left_team_name);
+      data.addColumn('number', right_team_name);
+      
+      var minutes = jQuery.parseJSON($("#data_div").text());
+
+      data.addRows(minutes.length);
+      for (var i = 0; i < minutes.length; i++) {
+        data.setValue(i, 0, 'Per '+minutes[i].period+', '+minutes[i].minute+':00');
+        data.setValue(i, 1, minutes[i].left);
+        data.setValue(i, 2, minutes[i].right);
+      }
+
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 700, height: 240,
+        vAxis: {title: 'Score'},
+        hAxis: {title: 'Minute'},
+        legend: 'bottom'
+      });
+    }
+
 .box-score
   .status-bar
     .game-state FINAL
@@ -34,6 +65,14 @@
         %h4 Team Statistical Comparison
       .mod-content
         = render 'team_statistics_table'
+
+    .mod-container.mod-no-footer
+      .mod-header
+        %h4 Minute By Minute
+      .mod-content
+        - minutes = @stats.score_by_minute.to_json
+        #data_div{ :style => "display: none;"} #{minutes}
+        #chart_div
 
     .mod-container.mod-no-footer
       .mod-header
