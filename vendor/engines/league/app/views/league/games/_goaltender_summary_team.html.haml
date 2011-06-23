@@ -23,7 +23,7 @@
         %td.shots #{goalie.shots_total}
         %td.goals #{goalie.goals_total}
         %td.saves #{goalie.saves_total}
-        %td.save_pct #{goalie.save_percentage}
+        %td.save_pct #{goalie.save_percentage.round(3)}
         %td.pim 0
   - else
     %tr

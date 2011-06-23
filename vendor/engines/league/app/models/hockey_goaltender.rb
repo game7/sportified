@@ -33,7 +33,7 @@ class HockeyGoaltender
   end
 
   def save_percentage
-    shots_total / saves_total
+    saves_total.to_f / shots_total.to_f
   end
 
   embedded_in :hockey_scoresheet
