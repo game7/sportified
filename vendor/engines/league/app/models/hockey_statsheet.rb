@@ -277,16 +277,16 @@ class HockeyStatsheet < Statsheet
   def score_by_minute
     
     result = []
-    self.min_1.downto(1) do |i|
+    self.min_1.downto(0) do |i|
       result << { :period => '1', :minute => i, :left => 0, :right => 0 }
     end
-    self.min_2.downto(1) do |i|
+    self.min_2.downto(0) do |i|
       result << { :period => '2', :minute => i, :left => 0, :right => 0 }
     end
-    self.min_3.downto(1) do |i|
+    self.min_3.downto(0) do |i|
       result << { :period => '3', :minute => i, :left => 0, :right => 0 }
     end
-    self.min_ot.downto(1) do |i|
+    self.min_ot.downto(0) do |i|
       result << { :period => 'ot', :minute => i, :left => 0, :right => 0 }
     end
 
