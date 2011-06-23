@@ -1,68 +1,58 @@
 %table.team_stats
   %thead
     %tr
-      %th{ :colspan => 4 }
+      %th{ :colspan => 3 }
   %tbody
     %tr
       %td
+        - left_goals = @stats.left_goals_total
+        - right_goals = @stats.right_goals_total
+        - left_width = left_goals * 150  / (left_goals + right_goals)
+        - right_width = right_goals * 150 / (left_goals + right_goals)
         %table
           %tbody
             %tr
-              %td{ :colspan => 2} Total Shots
+              %td Goals
             %tr
               %td
-              %td
-                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
-                #{@stats.left_shots_total}
+                %span.bar{ :style => "width: #{left_width}px;"}
+                #{left_goals}
             %tr
               %td
-              %td
-                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
-                #{@stats.right_shots_total}
+                %span.bar{ :style => "width: #{right_width}px"}
+                #{right_goals}
       %td
+        - left_shots = @stats.left_shots_total
+        - right_shots = @stats.right_shots_total
+        - left_width = left_shots * 150  / (left_shots + right_shots)
+        - right_width = right_shots * 150 / (left_shots + right_shots)
         %table
           %tbody
             %tr
-              %td{ :colspan => 2} PIM
+              %td Shots
             %tr
               %td
-              %td
-                - pim = @stats.left_pim_total
-                %span.bar{ :style => "width: #{pim}px;"}
-                #{pim}
+                %span.bar{ :style => "width: #{left_width}px;"}
+                #{left_shots}
             %tr
               %td
-              %td
-                - pim = @stats.right_pim_total
-                %span.bar{ :style => "width: #{pim}px;"}
-                #{pim}
+                %span.bar{ :style => "width: #{right_width}px"}
+                #{right_shots}
       %td
+        - left_pim = @stats.left_pim_total
+        - right_pim = @stats.right_pim_total
+        - left_width = left_pim * 150  / (left_pim + right_pim)
+        - right_width = right_pim * 150 / (left_pim + right_pim)
         %table
           %tbody
             %tr
-              %td{ :colspan => 2} Total Shots
+              %td PIM
             %tr
               %td
-              %td
-                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
-                #{@stats.left_shots_total}
+                %span.bar{ :style => "width: #{left_width}px;"}
+                #{left_pim}
             %tr
               %td
-              %td
-                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
-                #{@stats.right_shots_total}
-      %td
-        %table
-          %tbody
-            %tr
-              %td{ :colspan => 2} Total Shots
-            %tr
-              %td
-              %td
-                %span.bar{ :style => "width: #{@stats.left_shots_total}px;"}
-                #{@stats.left_shots_total}
-            %tr
-              %td
-              %td
-                %span.bar{ :style => "width: #{@stats.right_shots_total}px"}
-                #{@stats.right_shots_total}
+                %span.bar{ :style => "width: #{right_width}px;"}
+                #{right_pim}
+

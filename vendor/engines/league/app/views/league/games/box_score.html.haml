@@ -51,8 +51,7 @@
   .game-actions
   .game-summary
     .game-logistics
-      %p #{@game.starts_on}
-      %p Location
+      %p #{@game.starts_on.strftime('%a, %b %e %l:%M %p')}
     .clear
   .game-score
     = render 'line_score_table'

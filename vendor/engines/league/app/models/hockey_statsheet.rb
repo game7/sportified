@@ -83,7 +83,7 @@ class HockeyStatsheet < Statsheet
     events.penalties.left.sum(:dur)
   end
   def right_pim_total
-    events.penalties.left.sum(:dur)    
+    events.penalties.right.sum(:dur)    
   end
 
   def overtime?
