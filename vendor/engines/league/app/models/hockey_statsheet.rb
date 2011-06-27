@@ -198,7 +198,7 @@ class HockeyStatsheet < Statsheet
   end
 
   def event_created(event)
-    
+
     set_latest_event_time(event) if is_latest?(event)    
     
     case event.class.to_s
@@ -245,21 +245,24 @@ class HockeyStatsheet < Statsheet
   end
 
   def increment_goals_for_player(side, num, i)
-    plr = players.for_side(side).with_num(num).first
-    plr.g += i    if plr
-    plr.pts += i  if plr
+    if num != '' && plr = players.for_side(side).with_num(num).first
+      plr.g += i
+      plr.pts += i
+    end
   end
 
   def increment_assists_for_player(side, num, i)
-    plr = players.for_side(side).with_num(num).first
-    plr.a += i    if plr
-    plr.pts += i  if plr
+    if num != '' && plr = players.for_side(side).with_num(num).first
+      plr.a += i
+      plr.pts += i 
+    end
   end
 
   def increment_penalties_for_player(side, num, i, min)
-    plr = players.for_side(side).with_num(num).first
-    plr.pen += i    if plr
-    plr.pim += min  if plr
+    if num != '' && plr = players.for_side(side).with_num(num).first
+      plr.pen += i
+      plr.pim += min
+    end
   end
 
   def calculate_player_stats

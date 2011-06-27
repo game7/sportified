@@ -237,4 +237,45 @@ describe HockeyStatsheet do
 
   end
 
+  describe "when player statistics are recalculated" do
+    
+    before(:each) do
+      @statsheet = HockeyStatsheet.new
+      (1..3).each do |i|
+        @statsheet.players << HockeyPlayer.make_unsaved(:side => 'left', :num => i.to_s, :g => 1, :a => 1, :pts => 2, :pen => 1, :pim => 2)
+      end
+      (1..3).each do |i|
+        @statsheet.players << HockeyPlayer.make_unsaved(:side => 'right', :num => i.to_s, :g => 1, :a => 1, :pts => 2, :pen => 1, :pim => 2)
+      end
+      @statsheet.save
+    end
+
+    it "should clear each player's player's previous stats" do
+      @statsheet.calculate_player_stats
+      @statsheet.players.each do |plr|
+        plr.g.should == 0
+        plr.a.should == 0
+        plr.pts.should == 0
+        plr.pim.should == 0
+      end
+    end
+
+    it "should properly calculate stats for a goal" do
+      @statsheet.events.build({:side => 'left', :plr => "1", :a1 => "2", :a2 => "3"}, HockeyGoal)
+      @statsheet.save
+      @statsheet.calculate_player_stats
+      @statsheet.save
+      scorer = @statsheet.players.left.with_num("1").first
+      assist1 = @statsheet.players.left.with_num("2").first
+      assist2 = @statsheet.players.left.with_num("3").first
+      scorer.g.should == 1
+      scorer.pts.should == 1
+      assist1.a.should == 1
+      assist1.pts.should == 1
+      assist2.a.should == 1
+      assist2.pts.should ==	 1
+    end
+    
+  end
+
 end
