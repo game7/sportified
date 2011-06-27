@@ -7,17 +7,17 @@ describe Page do
     5.times { Block.make_unsaved(:page => @page) }
   end
 
-  context "validations" do
+  context "when validating" do
     
     it "should have a name" do
       @page.title = ""
       @page.valid?.should == false
     end
 
-    it "should have a position" do
-      @page.position = nil
-      @page.valid?.should == false
-    end
+    #it "should have a position" do
+    #  @page.position = nil
+    #  @page.valid?.should == false
+    #end
 
     it "should otherwise be valid" do
       @page.valid?.should == true
@@ -32,7 +32,7 @@ describe Page do
       @page.slug.should == @page.title.parameterize
     end
 
-    it "should datermine the path based on the tree" do
+    it "should determine the path based on the tree" do
       @parent = Page.make
       @page.parent = @parent
       @page.save
