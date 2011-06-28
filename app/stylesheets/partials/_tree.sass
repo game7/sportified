@@ -1,0 +1,22 @@
+.tree
+  ul
+    :margin-left 0px
+    :padding-left 0px
+  .trunk > li:first-child
+    :background-image url(/images/branch-start.gif)
+  ul li
+    :margin 0
+    :padding 4px 0px 0px 40px
+    :background url(/images/branch.gif) no-repeat 15px 0px
+  li
+    :line-height 25px
+    :display block
+    :position relative
+  ul li.branch_start
+    :background-image url(/images/branch-start.gif)
+  ul li:last-child
+    :background-image url(/images/branch-end.gif)
+  ul li > div:hover
+    :background-color #EAEAEA
+  .actions
+    :float right
