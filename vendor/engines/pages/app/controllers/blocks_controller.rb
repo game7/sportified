@@ -1,12 +1,7 @@
-class BlocksController < ApplicationController
+class BlocksController < BasePagesController
   
-  before_filter :load_page
+
   before_filter :load_block, :only => [:destroy]
-
-  def load_page
-    @page = Page.find(params[:page_id])
-  end
-
   def load_block
     @block = @page.blocks.find(params[:id])   
   end

@@ -1,11 +1,5 @@
-class ImageBlocksController < ApplicationController
+class ImageBlocksController < BasePagesController
   
-  before_filter :load_page
-
-  def load_page
-    @page = Page.find(params[:page_id])
-  end
-
   def edit
     @block = @page.blocks.find(params[:id])    
   end

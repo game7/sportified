@@ -1,11 +1,5 @@
-class LayoutsController < ApplicationController
+class LayoutsController < BasePagesController
   
-  before_filter :load_page
-
-  def load_page
-    @page = Page.find(params[:page_id])
-  end
-
   def index
     
   end

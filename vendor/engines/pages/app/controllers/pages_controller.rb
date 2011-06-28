@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   
+  authorize_resource :class => false, :except => [:show]
+  
   before_filter :load_page, :only => [:show, :edit, :update, :destroy]
   before_filter :set_page_breadcrumbs, :only => [:show, :edit]
   before_filter :set_area_navigation, :only => [:show]
