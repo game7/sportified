@@ -1,8 +1,8 @@
 - title @page.title
 
 - content_for :sidebar do
-  - if can? :edit, @page
-    = render 'shared/page_options'
+  = render 'navigation'
+  = render 'shared/page_options' if can? :edit, @page
 
 
 .blocks

@@ -52,6 +52,18 @@ class PagesController < ApplicationController
     end
   end
 
+  def add_area_ancestor(title, url = nil, selected = nil)
+    @area_ancestors ||= []
+    selected ||= url_current?(url)
+    @area_ancestors << { :title => title, :url => url, :selected => selected }
+  end
+
+  def add_area_descendant(title, url = nil, selected = nil)
+    @area_descendants ||= []
+    selected ||= url_current?(url)
+    @area_descendants << { :title => title, :url => url, :selected => selected }
+  end
+
   
   def index
 #    @pages = Page.top_level

@@ -24,16 +24,19 @@
       #header
         #title
           %a{ :href => "" } [Site Name]
-      #site-nav 
-        %nav #{render "layouts/site_navigation"}
-      #breadcrumbs #{render "layouts/breadcrumbs"}
-      #sidebar 
-        .wrapper
-          - if @area_ancestors || @area_descendants
-            #area-nav
-              %nav #{render "layouts/area_navigation"}
-          = yield :sidebar
-      #main
+      - if @site_menu_items
+        #site-nav 
+          %nav #{render "layouts/site_navigation"}
+      - if @area_menu_items
+        #area-nav
+          %nav #{render "layouts/area_navigation"}
+      - if @breadcrumbs
+        #breadcrumbs #{render "layouts/breadcrumbs"}
+      - if content_for?(:sidebar)
+        #sidebar 
+          .wrapper
+            = yield :sidebar
+      #main{ :class => content_for?(:sidebar) ? 'with_sidebar' : nil}
         #banner
           .wrapper #{yield :banner}
         #page-header

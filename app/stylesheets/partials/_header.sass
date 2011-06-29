@@ -1,5 +1,5 @@
 
-#hat, #header, #site-nav
+#hat, #header, #site-nav, #area-nav
   @include column($blueprint-grid-columns)
 
 #hat
@@ -34,6 +34,33 @@ ul.user-tasks
   :height 80px
 
 #site-nav
+  :height 24px
+  :background #3366aa
+  :height 30px
+  nav
+    :width 100%
+    :display table
+  ul
+    :display table-row
+  li
+    :display table-cell
+    :text-align center
+  a
+    :display block
+    :padding 0 15px
+    :line-height 30px
+    :text-decoration none
+    :font-weight 700
+    :color white
+    :border-left solid 1px #6699AA
+    :border-right solid 1px #334433
+    &.selected
+      :background #6699AA
+    &:hover, &.selected:hover
+      :background #AABBBB
+      :color #334433
+
+#area-nav
   :height 24px
   :background #3366aa
   :height 30px

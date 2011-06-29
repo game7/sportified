@@ -1,12 +1,16 @@
 
 
 #main
-  $content-columns: ceil(3 * $blueprint-grid-columns / 4)
+  $content-columns: ceil(4 * $blueprint-grid-columns / 4)
   @include column($content-columns, false)
   :background-color white
   :float left
   .wrapper
     :margin 10px 10px
+
+#main.with_sidebar
+  $content-columns: ceil(3 * $blueprint-grid-columns / 4)
+  @include column($content-columns, false)
 
 #sidebar
   $sidebar-columns: floor($blueprint-grid-columns / 4)
@@ -39,9 +43,8 @@
     :float left
     :padding 3px
 
-#area-nav
-  nav
-    :width 100%
+nav.side
+  :width 100%
   ul
     :list-style-type none
     :margin 0

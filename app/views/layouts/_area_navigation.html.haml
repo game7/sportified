@@ -1,15 +1,5 @@
 %ul
-  - if @area_ancestors
-    - @area_ancestors.each do |a|
-      %li{ :class => "ancestor #{a[:selected] ? 'selected' : ''}" }
-        - if a[:url].present?
-          = link_to a[:title], a[:url]
-        - else
-          %span.title #{a[:title]}
-  - if @area_descendants
-    - @area_descendants.each do |a|
-      %li{ :class => "descendant #{a[:selected] ? 'selected' : ''}" }
-        - if a[:url].present?
-          = link_to a[:title], a[:url]
-        - else
-          %span.title #{a[:title]}
+  - @area_menu_items.each do |item|
+    %li 
+      %a{ :href => "#{item[:url]}" } #{item[:title]}
+.clear
