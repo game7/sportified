@@ -110,11 +110,33 @@
       });
     });
 
+#edit-panel
+  Edit
+#layout-panel
+  Layout
+
+:css
+  #edit-panel, #layout-panel {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    width: 8em;
+    margin-top: -2.5em;
+    height: 50px;
+    width: 400px;
+    background-color: green;
+  }
+  #edit-panel {
+    margin-top: -140px;
+  }
+  #layout-panel {
+    
+  }
 
 
 - content_for :sidebar do
   = render 'shared/page_options'
-  %p
+  .side-box
     %strong Layout: 
     %a#toggle_layout{ :href => '#' } Hide
     %br/
@@ -123,20 +145,22 @@
     %br/
     %strong Content: 
     %a#toggle_content{ :href => '#' } Hide
-  %p #{ link_to 'Go to page', page_friendly_path(@page.path) }
-  %strong Add Content
-  (Drag & Drop)
-  #catalog
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
-      .chrome Text
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DividerBlock' }
-      .chrome Divider
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ContactBlock' }
-      .chrome Contact
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DocumentBlock' }
-      .chrome Document
-    .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ImageBlock' }
-      .chrome Image
+    %br/
+    #{ link_to 'Go to page', page_friendly_path(@page.path) }
+  .side-box
+    %strong Add Content
+    (Drag & Drop)
+    #catalog
+      .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'TextBlock' }
+        .chrome Text
+      .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DividerBlock' }
+        .chrome Divider
+      .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ContactBlock' }
+        .chrome Contact
+      .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'DocumentBlock' }
+        .chrome Document
+      .item.frame{ :id => "new_block_#{BSON::ObjectId.new}", :block => 'ImageBlock' }
+        .chrome Image
 
 %h1 #{ @page.title }
 .blocks

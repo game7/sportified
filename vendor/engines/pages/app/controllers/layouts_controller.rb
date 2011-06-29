@@ -6,7 +6,7 @@ class LayoutsController < BasePagesController
 
   def create
     if layout = @page.layouts.create( :format => params[:format] )
-      render :json => layout
+      render :nothing => true
     end
   end
 
