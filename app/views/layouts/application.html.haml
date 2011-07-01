@@ -22,8 +22,6 @@
           = render "devise/menu/user_items"
         .clear
       #header
-        #title
-          %a{ :href => "" } [Site Name]
       - if @site_menu_items
         #site-nav 
           %nav #{render "layouts/site_navigation"}
@@ -44,7 +42,7 @@
         .wrapper
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-      #footer 
+      #footer
     = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
     = yield :javascript
 

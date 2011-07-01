@@ -1,0 +1,10 @@
+%table.mod-data
+  %thead
+    %tr
+      %th{ :scope => "col"} TEAM
+      %th{ :scope => "col"} W
+      %th{ :scope => "col"} L
+      %th{ :scope => "col"} SOL
+      %th{ :scope => "col"} PTS
+  %tbody
+    = render :partial => 'record', :collection => @team_records

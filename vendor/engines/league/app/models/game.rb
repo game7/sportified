@@ -83,6 +83,7 @@ class Game
   validates_presence_of :starts_on, :season_id
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
+  scope :in_the_future, :where => { :starts_on.gt => DateTime.now }
   scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
   scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
   scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }

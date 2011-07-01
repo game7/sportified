@@ -1,0 +1,16 @@
+.mod-container.mod-game.next
+  %h4 
+    #{next_game.starts_on.strftime('%a') if next_game}
+    %span #{next_game.starts_on.strftime('%b %e') if next_game}
+  .mod-content
+    .overview
+      .home-away vs
+      %a{ :href => '#'}
+        .logo
+      .venue
+        %span #{next_game.starts_on.strftime('%l:%M %p') if next_game}
+      .city #{next_game.left_team_name if next_game}            
+    .stats
+      %ul.stats
+        %li Conversation
+        %li link

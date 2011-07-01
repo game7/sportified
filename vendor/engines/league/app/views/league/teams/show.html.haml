@@ -2,42 +2,26 @@
 
 = content_for :banner do
   = render :partial => 'team_banner', :locals => { :team => @team }
-
-:css
-  #left-col, #right-col {
-    float: left;
-    margin-right: 6px;
-  }
-  #left-col {
-    width: 614px;
-  }
-  #right-col { 
-    width: 304px;
-  }
-  
+ 
 #left-col
-  This is the left
+  #season
+    Season
+  #current-game
+    = render :partial => 'current_game', :object => @current_game
+  #next-game
+    = render :partial => 'next_game', :object => @next_game
+  #team-feed
+    News Feed
+  #team-roster
+    = render :partial => 'small_roster', :locals => { :title => "#{@team.season_name} #{@team.division_name} Roster", :players => @players }
+      
 #right-col
   .mod-container.mod-no-footer.mod-data-table
     .mod-header
       %h4
         = "#{@team.season_name} #{@team.division_name} Division Standings"
     .mod-content
-      %table.mod-data
-        %thead
-          %tr
-            %th{ :scope => "col"} TEAM
-            %th{ :scope => "col"} W
-            %th{ :scope => "col"} L
-            %th{ :scope => "col"} SOL
-            %th{ :scope => "col"} PTS
-        %tbody
-          %tr
-            %td Kings
-            %td 10
-            %td 2
-            %td 0
-            %td 20
+      = render 'records'
   .mod-container.mod-no-footer.mod-data-table
     .mod-header
       %h4 Team History

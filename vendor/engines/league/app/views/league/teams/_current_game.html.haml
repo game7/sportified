@@ -1,0 +1,22 @@
+.mod-container.mod-no-footer.mod-game.current
+  %h4 
+    #{current_game.starts_on.strftime('%a %b %e') if current_game}
+    %span #{current_game.starts_on.strftime('%l:%M %p') if current_game}
+  .mod-content
+    .gradient-container
+      .game-details
+        .time AT OCEANSIDE ICE ARENA
+      .overview
+        .team.team-left
+          %a{ :href => '#'}
+            .logo
+          .record
+            %h6 #{current_game.left_team_name if current_game}
+        .team.team-right
+          %a{ :href => '#'}
+            .logo
+          .record
+            %h6 #{current_game.right_team_name if current_game}
+        .symbol vs
+        %p.links
+          %a{ :href => '#'} Conversation

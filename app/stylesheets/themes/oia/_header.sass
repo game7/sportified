@@ -3,10 +3,8 @@
   @include column($blueprint-grid-columns)
 
 #hat
-  :background #14234C
+  :background #757575
   :height 30px
-  +border-top-left-radius(7px)  
-  +border-top-right-radius(7px)  
 
 ul.user-tasks
   :float right
@@ -20,8 +18,7 @@ ul.user-tasks
     :padding 0
     a
       :display block
-      :border-left 1px solid #69A
-      :border-right 1px solid #343
+      :border-left 1px solid #000
       :height 30px
       :color #FFF
       :text-decoration none
@@ -31,18 +28,14 @@ ul.user-tasks
         :color #FFF
       &:hover
         :background #69A
-  li:last-child
-    +border-top-right-radius(7px) 
-    a
-      +border-top-right-radius(7px) 
 
 #header
-  :height 80px
+  :height 120px
+  +background-image(image-url("themes/oia/oia_masthead_950x120.jpg"))
 
 #site-nav
-  :height 24px
-  :background #d11f2d
-  :height 30px
+  +background-image(linear-gradient(#515252, #282827))
+  :height 42px
   nav
     :width 100%
     :display table
@@ -54,17 +47,18 @@ ul.user-tasks
   a
     :display block
     :padding 0 15px
-    :line-height 30px
+    :line-height 42px
+    :font-family Tahoma,Verdana
+    :font-size 9px
+    :font-weight bold
+    :font-variant normal
     :text-decoration none
-    :font-weight 700
     :color white
-    :border-left solid 1px #6699AA
-    :border-right solid 1px #334433
-    &.selected
-      :background #6699AA
-    &:hover, &.selected:hover
-      :background #AABBBB
-      :color #334433
+    :border-right solid 1px #000
+    &.selected, &.selected:hover
+      +background-image(linear-gradient(#167593, #282827))
+    &:hover
+      +background-image(linear-gradient(#717272, #282827))
 
 #area-nav
   :height 24px
@@ -96,8 +90,8 @@ ul.user-tasks
   :display block
   :float left
   :line-height 30px
-  :font-size 18px
-  :font-family verdana, helvetica, arial, sans-serif
+  :font-size 16px
+  :font-family tahoma, verdana, helvetica, arial, sans-serif
   :font-weight bold
   :color #FFF
   :margin-left 10px

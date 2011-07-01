@@ -1,0 +1,13 @@
+.mod-container.mod-no-footer.mod-data-table
+  .mod-header
+    %h4 #{title}
+  .mod-content
+    %table.mod-data
+      %thead
+        %tr
+          %th{ :scope => "col"} Num
+          %th{ :scope => "col"} Name
+      %tbody
+        - players.each do |player|
+          %td #{player.jersey_number}
+          %td #{player.full_name}
