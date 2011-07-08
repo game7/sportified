@@ -14,10 +14,15 @@ class Team
   field :link_color, :default => '#000033'
   
   field :thumb_color, :default => '#FFFFFF'
-  field :thumb_top, :type => Integer, :default => -25
-  field :thumb_left, :type => Integer, :default => -25
-  field :thumb_height, :type=> Integer, :default => 100
-  field :thumb_width, :type => Integer, :default => 100
+  
+  field :crop_x, :type => Integer, :default => 0
+  field :crop_y, :type => Integer, :default => 0
+  field :crop_h, :type=> Integer, :default => 0
+  field :crop_w, :type => Integer, :default => 0
+
+  def cropping?
+    crop_w > 0 && crop_h > 0
+  end
 
   mount_uploader :logo, TeamLogoUploader
 
@@ -85,6 +90,10 @@ class Team
     msg.data[:team_id] = self.id
     msg.data[:team_name] = self.name
     enqueue_message msg
+  end
+
+  after_update do |team|
+    team.logo.recreate_versions!
   end
 
   def fullname

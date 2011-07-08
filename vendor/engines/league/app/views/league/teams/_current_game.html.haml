@@ -10,11 +10,13 @@
         .team.team-left
           %a{ :href => '#'}
             .logo
+              = image_tag current_game.left_team.logo.thumb.url.to_s if current_game.left_team && current_game.left_team.logo.thumb.url
           .record
             %h6 #{current_game.left_team_name if current_game}
         .team.team-right
           %a{ :href => '#'}
             .logo
+              = image_tag current_game.right_team.logo.thumb.url.to_s if current_game.right_team && current_game.right_team.logo.thumb.url
           .record
             %h6 #{current_game.right_team_name if current_game}
         .symbol vs

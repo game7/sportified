@@ -35,14 +35,14 @@
     .game-state FINAL
   %h1.matchup
     .team.left
-      .logo #{ render :partial => 'shared/team_thumb', :locals => { :team => @left_team } }
+      .logo #{image_tag(@left_team.logo.tiny.url.to_s, :alt => @left_team.name) if @left_team.logo.tiny.url}
       .team-info
         %h3 
           #{@stats.left_team_name}
           %span.score #{@stats.left_goals_total}
         %p.record (1-1-1, 3 pts)
     .team.right
-      .logo #{ render :partial => 'shared/team_thumb', :locals => { :team => @right_team } }
+      .logo #{image_tag(@right_team.logo.tiny.url.to_s, :alt => @right_team.name) if @right_team.logo.tiny.url}
       .team-info
         %h3 
           #{@stats.right_team_name}

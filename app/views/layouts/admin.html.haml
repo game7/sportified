@@ -27,12 +27,10 @@
       #site-nav 
         %nav #{render "layouts/site_navigation"}
       #breadcrumbs #{render "layouts/breadcrumbs"}
-      #sidebar 
-        .wrapper
-          - if @area_ancestors || @area_descendants
-            #area-nav
-              %nav #{render "layouts/area_navigation"}
-          = yield :sidebar
+      - if content_for?(:sidebar)
+        #sidebar 
+          .wrapper
+            = yield :sidebar
       #main
         #banner
           .wrapper #{yield :banner}
