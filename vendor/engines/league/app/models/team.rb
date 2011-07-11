@@ -24,6 +24,10 @@ class Team
     crop_w > 0 && crop_h > 0
   end
 
+  def crop_changed?
+    crop_x_changed? || crop_y_changed? || crop_h_changed? || crop_w_changed?
+  end
+
   mount_uploader :logo, TeamLogoUploader
 
   referenced_in :division
@@ -93,7 +97,7 @@ class Team
   end
 
   after_update do |team|
-    team.logo.recreate_versions!
+    team.logo.recreate_versions! if crop_changed?
   end
 
   def fullname

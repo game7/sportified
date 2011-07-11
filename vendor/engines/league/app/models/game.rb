@@ -88,6 +88,18 @@ class Game
   scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
   scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
 
+  def opponent_id(team_id)
+    team_id == self.left_team_id ? self.right_team_id : self.left_team_id
+  end
+
+  def opponent_name(team_id)
+    team_id == self.left_team_id ? self.right_team_name : self.left_team_name
+  end
+
+  def opponent(team_id)
+    team_id == self.left_team_id ? self.right_team : self.left_team
+  end
+
   class << self  
     def for_team(t)
       id = t.class == Team ? t.id : t

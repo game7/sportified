@@ -20,7 +20,7 @@ describe Season do
   describe "when created" do
     
     it "should not publish message that the name has been changed" do
-      EventBus.current.should_not_receive(:publish).with do |*args|
+      MessageBus.current.should_not_receive(:publish).with do |*args|
         message = args.pop
         message.name.should_not == :season_renamed
         true
@@ -38,7 +38,7 @@ describe Season do
       new_name = "new season name"
       @season.name = new_name
       new_slug = new_name.parameterize
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :season_renamed
         message.data[:season_id].should == @season.id

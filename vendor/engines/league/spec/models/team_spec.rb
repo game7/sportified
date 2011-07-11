@@ -46,7 +46,7 @@ describe Team do
       @team.save
       new_name = "new team name"
       @team.name = new_name
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :team_renamed
         message.data[:team_id].should == @team.id
@@ -61,7 +61,7 @@ describe Team do
   describe 'when created' do
     
     it "should publish a message" do
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :team_created
         message.data[:team_id].should == @team.id

@@ -19,7 +19,7 @@ describe Division do
   describe "when created" do
     
     it "should not publish message that the name has been changed" do
-      EventBus.current.should_not_receive(:publish).with do |*args|
+      MessageBus.current.should_not_receive(:publish).with do |*args|
         message = args.pop
         message.name.should_not == :division_renamed
         true
@@ -37,7 +37,7 @@ describe Division do
       new_name = "new division name"
       new_slug = new_name.parameterize
       @division.name = new_name
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :division_renamed
         message.data[:division_id].should == @division.id

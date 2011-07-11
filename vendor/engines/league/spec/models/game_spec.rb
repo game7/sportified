@@ -38,7 +38,7 @@ describe Game do
     it "should publish a message" do
       @game.save
       @game.completed_in = "regulation"
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :game_finalized
         message.data[:game_id].should == @game.id
@@ -54,7 +54,7 @@ describe Game do
     it "should publish a message" do
       @game.save
       @game.state = "final"
-      EventBus.current.should_receive(:publish).with do |*args|
+      MessageBus.current.should_receive(:publish).with do |*args|
         message = args.pop
         message.name.should == :game_unfinalized
         message.data[:game_id].should == @game.id
@@ -62,6 +62,27 @@ describe Game do
       end
       @game.complete!      
     end
+  end
+
+
+  describe 'when finding opponent for a team' do
+    
+    it "should correctly return the opponent's id" do
+      @game.opponent_id(@game.left_team_id).should == @game.right_team_id
+      @game.opponent_id(@game.right_team_id).should == @game.left_team_id
+    end
+
+    it "should correctly return the opponent's name" do
+      @game.opponent_name(@game.left_team_id).should == @game.right_team_name
+      @game.opponent_name(@game.right_team_id).should == @game.left_team_name      
+    end
+
+    it "should correctly return the opponent" do
+      @game.opponent(@game.left_team_id).should == @game.right_team
+      @game.opponent(@game.right_team_id).should == @game.left_team      
+    end
+
+    
   end
 
 end
