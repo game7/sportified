@@ -22,28 +22,5 @@
         = "#{@team.season_name} #{@team.division_name} Division Standings"
     .mod-content
       = render 'records'
-  .mod-container.mod-no-footer.mod-data-table
-    .mod-header
-      %h4 Team History
-    .mod-content
-      %table.mod-data
-        %thead
-          %tr
-            %th{ :scope => "col"} Season
-            %th{ :scope => "col"} W
-            %th{ :scope => "col"} L
-            %th{ :scope => "col"} SOL
-            %th{ :scope => "col"} PTS
-        %tbody
-          %tr
-            %td Summer 2011
-            %td 10
-            %td 2
-            %td 0
-            %td 20
-          %tr
-            %td Winter 2010
-            %td 10
-            %td 2
-            %td 0
-            %td 20
+  #related-teams
+    = render(:partial => 'related_teams', :object => @related_teams) if @related_teams

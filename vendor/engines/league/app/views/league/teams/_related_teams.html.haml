@@ -1,0 +1,21 @@
+.mod-container.mod-no-footer.mod-data-table
+  .mod-header
+    %h4 Team History
+  .mod-content
+    %table.mod-data
+      %thead
+        %tr
+          %th{ :scope => "col"} Season
+          %th{ :scope => "col"} W
+          %th{ :scope => "col"} L
+          %th{ :scope => "col"} SOL
+          %th{ :scope => "col"} PTS
+      %tbody
+        - related_teams.each do |team|
+          %tr
+            %td #{team.season_name}
+            %td [W]
+            %td [L]
+            %td [SOL]
+            %td [PTS]
+
