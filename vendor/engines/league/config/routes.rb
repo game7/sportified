@@ -25,6 +25,7 @@
     resource :league, :only => :show
     resources :divisions
     resources :seasons
+    resources :clubs
     resources :teams, :shallow => true do
       resources :players
     end

@@ -40,6 +40,11 @@ Team.blueprint do
   site { Site.make }
 end
 
+Club.blueprint do
+  name { Sham.name }
+  site { Site.make }
+end
+
 Player.blueprint do
   first_name { Sham.first }
   last_name { Sham.last }

@@ -38,6 +38,8 @@ class Team
   field :season_name
   field :season_slug
 
+  referenced_in :club
+
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
@@ -96,8 +98,13 @@ class Team
     enqueue_message msg
   end
 
-  after_update do |team|
-    team.logo.recreate_versions! if crop_changed?
+  before_save :prepare_crop_changed_message
+  def prepare_crop_changed_message
+    if crop_changed?
+      msg = Message.new(:team_crop_changed)
+      msg.data[:team_id] = self.id
+    end
+    enqueue_message msg
   end
 
   def fullname

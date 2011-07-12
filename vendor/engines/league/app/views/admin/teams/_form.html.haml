@@ -8,6 +8,7 @@
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :name
     = f.input :short_name
+    = f.input :club_id, :as => :select, :collection => @clubs
     = f.input :show_in_standings, :as => :boolean
   = f.inputs 'Logo' do
     - if @team.logo?

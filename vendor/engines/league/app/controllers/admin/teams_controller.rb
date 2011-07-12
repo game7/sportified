@@ -7,6 +7,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :load_division, :only => [:index]
   before_filter :load_division_options, :only => [:index, :new, :edit]
   before_filter :load_season_options, :only => [:index, :new, :edit]
+  before_filter :load_club_options, :only => [ :new, :edit ]
   before_filter :load_season_links, :only => [:index]
   before_filter :load_team, :only => [:show, :edit, :destroy]
 
@@ -29,6 +30,10 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def load_season_options
     @seasons = Season.for_site(Site.current).desc(:starts_on).entries
+  end
+
+  def load_club_options
+    @clubs = Club.for_site(Site.current).asc(:name).entries
   end
 
   def load_season_links
@@ -106,8 +111,9 @@ class Admin::TeamsController < Admin::BaseLeagueController
       if @team.save
         format.html { return_to_last_point(:notice => 'Team was successfully created.') }
       else
-        self.load_division_options
-        self.load_season_options
+        load_division_options
+        load_season_options
+        load_club_options
         format.html { render :action => "new" }
       end
     end
@@ -120,8 +126,9 @@ class Admin::TeamsController < Admin::BaseLeagueController
       if @team.update_attributes(params[:team])
         format.html { return_to_last_point(:notice => 'Team was successfully updated.') }
       else
-        self.load_division_options
-        self.load_season_options
+        load_division_options
+        load_season_options
+        load_club_options
         format.html { render :action => "edit" }
       end
     end
