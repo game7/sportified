@@ -65,7 +65,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def show
-    @team_records = @division.team_records.for_season(@season).desc(:pts)
+    @teams = @division.teams.for_season(@season).desc(:pts)
     @current_game = Game.for_team(@team).in_the_future().desc(:starts_on).first
     @next_game = Game.for_team(@team).in_the_future().desc(:starts_on).skip(1).first
     @related_teams = Team.for_club(@team.club_id).asc(:season_name) if @team.club_id

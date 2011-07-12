@@ -58,19 +58,5 @@ describe Team do
 
   end
 
-  describe 'when created' do
-    
-    it "should publish a message" do
-      MessageBus.current.should_receive(:publish).with do |*args|
-        message = args.pop
-        message.name.should == :team_created
-        message.data[:team_id].should == @team.id
-        message.data[:team_name].should == @team.name
-        true
-      end
-      @team.save      
-    end
-    
-  end
 
 end

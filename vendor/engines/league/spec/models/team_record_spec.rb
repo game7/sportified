@@ -13,10 +13,11 @@ describe TeamRecord do
   describe 'when posting game results' do
     
     def setup_results(left_score, right_score, completed_in = 'regulation') 
-      @game = Game.make
-      @game.result = GameResult.make_unsaved(:left_team_score => left_score, :right_team_score => right_score, :completed_in => completed_in)
+      @game = Game.make(:left_team_score => left_score, :right_team_score => right_score, :completed_in => completed_in)
       @left = @game.left_team.record
       @right = @game.right_team.record
+      @left.post_result_from_game(@game)
+      @right.post_result_from_game(@game)
     end   
     
     it "should be able to correctly update the scoring" do

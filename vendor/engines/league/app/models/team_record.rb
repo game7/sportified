@@ -1,7 +1,6 @@
 class TeamRecord
   include Mongoid::Document
 
-  field :team_name
   field :gp, :type => Integer, :default => 0
   field :w, :type => Integer, :default => 0
   field :l, :type => Integer, :default => 0
@@ -29,24 +28,8 @@ class TeamRecord
   field :sos, :type => Float, :default => 0.00
   field :rpi, :type => Float, :default => 0.00
 
-
-  referenced_in :division
-  referenced_in :season
-  referenced_in :team
+  embedded_in :team
   embeds_many :results, :class_name => 'TeamGameResult'
-
-  scope :for_team_id, lambda { |team_id| where(:team_id => team_id)}
-
-  class << self
-    def for_season(s)
-      s = s.id if s.class == Season
-      where(:season_id => s)
-    end
-    def for_division(d)
-      d = d.id if d.class == d
-      where(:division_id => d)
-    end
-  end
 
   def self.list_fields
     fields = []
@@ -89,7 +72,7 @@ class TeamRecord
 
     raise 'Game already posted to team record' if is_game_posted?(game)
 
-    @team_game_result = TeamGameResult.new(:team => self.team_id, :game => game)
+    @team_game_result = TeamGameResult.new(:team => self.team.id, :game => game)
     apply_team_game_result(@team_game_result)
     
   end

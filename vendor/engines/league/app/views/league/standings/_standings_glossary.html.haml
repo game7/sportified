@@ -1,9 +1,0 @@
-#standings-glossary
-  - rows = 3
-  - lists = ( columns.count / rows )
-  - for i in 0..lists do
-    %ul
-      - columns[i * rows, rows].each do |column|
-        %li 
-          %strong #{column.title + ":"}
-          #{column.description}

@@ -3,7 +3,7 @@
 .clear
 .mod-container.mod-table.mod-no-header
   .mod-content
-    = render :partial => "standings_table", :locals => { :team_records => @team_records, :columns => @columns }
+    = render :partial => "standings_table", :locals => { :teams => @teams, :columns => @columns }
   .mod-footer
     .foot-header.group-head Glossary
     .foot-content

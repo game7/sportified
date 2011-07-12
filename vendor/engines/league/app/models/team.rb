@@ -43,7 +43,7 @@ class Team
   references_many :players  
   references_many :games, :inverse_of => :home_team
   references_many :games, :inverse_of => :away_team
-  references_one :record, :class_name => "TeamRecord", :dependent => :delete
+  embeds_one :record, :class_name => "TeamRecord"
 
   validates_presence_of :name
   validates_presence_of :division_id
@@ -88,14 +88,6 @@ class Team
       msg.data[:new_team_name] = self.name
       enqueue_message msg
     end
-  end
-
-  after_create :prepare_team_created_message
-  def prepare_team_created_message
-    msg = Message.new(:team_created)
-    msg.data[:team_id] = self.id
-    msg.data[:team_name] = self.name
-    enqueue_message msg
   end
 
   before_save :prepare_crop_changed_message

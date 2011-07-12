@@ -4,9 +4,9 @@ class TeamRecordManager
   def recalculate(division_id, season_id)
     
     # first clear them all
-    TeamRecord.for_division(division_id).for_season(season_id).each do |record|
-      record.reset!
-      record.save
+    Team.for_division(division_id).for_season(season_id).each do |team|
+      team.record = TeamRecord.new
+      team.save
     end   
 
     # then repost the results
@@ -28,36 +28,38 @@ class TeamRecordManager
 
   def update_power_rankings(division_id, season_id)
     
-    records = Hash.new
+    teams = Hash.new
 
     # make hash of team records
-    TeamRecord.for_division(division_id).for_season(season_id).each do |record|
-      records[record.team_id] = record
+    Team.for_division(division_id).for_season(season_id).each do |team|
+      teams[team.id] = team
     end
 
     # first update opponent's winning percentage
-    records.each do |team_id, record|
+    teams.each do |id, team|
+      record = team.record
       count = 0
       owp = 0.0
       record.results.each do |result|
-        opponent = records[result.opponent_id]
+        opponent = teams[result.opponent_id]
         if opponent
           count += 1
-          owp += opponent.pct
+          owp += opponent.record.pct
         end
       end
       record.owp = count > 0 ? owp / count : 0.0   
     end
 
     #then update opponent's opponent's win percentage, sos and rpi
-    records.each do |team_id, record|
+    teams.each do |id, team|
+      record = team.record
       count = 0
       oowp = 0.0
       record.results.each do |result|
-        opponent = records[result.opponent_id]
+        opponent = teams[result.opponent_id]
         if opponent
           count += 1
-          oowp += opponent.owp
+          oowp += opponent.record.owp
         end
       end
       record.oowp = count > 0 ? oowp / count : 0.0  
@@ -66,7 +68,7 @@ class TeamRecordManager
     end
 
     # save each team's record
-    records.each{ |team_id, record| record.save }
+    teams.each{ |id, team| team.save }
        
   end
 
@@ -81,24 +83,6 @@ class TeamRecordManager
    
   end
 
-  def create_record_for_team!(team)
-
-    record = TeamRecord.new
-    record.division_id = team.division_id
-    record.season_id = team.season_id
-    record.team_id = team.id
-    record.team_name = team.name
-    record.save
-    
-  end
-
-  on :team_created do |message|
-    
-    team = Team.find(message.data[:team_id])
-    manager = TeamRecordManager.new
-    manager.create_record_for_team! team
-    
-  end
   
   on :game_finalized do |message|
     

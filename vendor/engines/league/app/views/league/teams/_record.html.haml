@@ -1,6 +1,6 @@
-%tr{ :class => @team && @team.id == record.team_id ? 'highlight' : nil}
-  %td #{record.team_name}
-  %td #{record.w}
-  %td #{record.l}
-  %td #{record.sol}
-  %td #{record.pts}
+%tr{ :class => @team && @team.id == record.id ? 'highlight' : nil}
+  %td #{team.record.team_name}
+  %td #{team.record.w}
+  %td #{team.record.l}
+  %td #{team.record.sol}
+  %td #{team.record.pts}

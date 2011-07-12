@@ -9,10 +9,10 @@ class League::StandingsController < League::BaseDivisionSeasonController
     layout = @division.standings_layout
     if layout
       @columns = @division.standings_layout.columns.asc(:order)
-      @team_records = @division.team_records.for_season(@season).desc(:pts).entries
+      @teams = @division.teams.for_season(@season).desc('record.pts').entries
     else 
       @columns = []
-      @team_records = []
+      @teams = []
       flash[:error] = "Standings layout has not been setup for this division"
     end
   end
