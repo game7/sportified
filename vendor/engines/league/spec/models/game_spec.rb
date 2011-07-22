@@ -31,6 +31,14 @@ describe Game do
       @game.right_team_name.should == @game.right_team.name
     end
 
+    it "should update the venue names" do
+      @game.venue = Venue.make(:short_name => 'shorty')
+      @game.venue_name.should == nil
+      @game.save
+      @game.venue_name.should == @game.venue.name
+      @game.venue_short_name.should == @game.venue.short_name
+    end
+
   end
 
   describe "when transitioning to final" do

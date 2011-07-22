@@ -26,6 +26,7 @@
     resources :divisions
     resources :seasons
     resources :clubs
+    resources :venues
     resources :teams, :shallow => true do
       resources :players
     end

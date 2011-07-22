@@ -1,0 +1,14 @@
+- title "Venues"
+
+%table
+  %tr
+    %th Name
+    %th Actions
+  - @venues.each do |venue|
+    %tr
+      %td #{venue.name}
+      %td
+        = link_to 'Edit', edit_admin_venue_path(venue)
+        = link_to 'Destroy', [:admin, venue], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Venue', new_admin_venue_path

@@ -72,6 +72,15 @@ class Game
     return left_team_score < right_team_score
   end
 
+  referenced_in :venue
+  field :venue_name
+  field :venue_short_name
+  before_save do |game|
+    venue = game.venue
+    game.venue_name = venue ? venue.name : ''
+    game.venue_short_name = venue ? venue.short_name : ''
+  end
+
   COMPLETED_IN = %w[regulation overtime shootout forfeit]
   def self.completed_in_options
     COMPLETED_IN.collect{|o| [o.humanize, o] }

@@ -8,7 +8,6 @@
     %tr
       %td #{club.name}
       %td
-        = link_to 'Go To', [:admin, club]
         = link_to 'Edit', edit_admin_club_path(club)
         = link_to 'Destroy', [:admin, club], :confirm => 'Are you sure?', :method => :delete
 %br/

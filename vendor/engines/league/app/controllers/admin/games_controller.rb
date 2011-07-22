@@ -17,6 +17,11 @@ class Admin::GamesController < Admin::BaseLeagueController
     @divisions = Division.for_site(Site.current).asc(:name).entries
   end
 
+  before_filter :load_venue_options, :only => [:new, :edit]
+  def load_venue_options
+    @venues = Venue.for_site(Site.current).asc(:name).entries
+  end
+
   before_filter :load_team_options, :only => [:new, :edit]
   def load_team_options
     @teams = Team.for_site(Site.current).asc(:name).entries.collect do |team|
@@ -100,6 +105,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       else
         load_season_options
         load_team_options
+        load_venue_options
         format.html { render :action => "new" }
       end
     end
@@ -114,7 +120,8 @@ class Admin::GamesController < Admin::BaseLeagueController
         format.html { return_to_last_point(:notice => 'Game was successfully updated.') }
       else
         load_season_options
-        load_team_options        
+        load_team_options
+        load_venue_options     
         format.html { render :action => "edit" }
       end
     end

@@ -45,6 +45,12 @@ Club.blueprint do
   site { Site.make }
 end
 
+
+Venue.blueprint do
+  name { Sham.name }
+  site { Site.make }
+end
+
 Player.blueprint do
   first_name { Sham.first }
   last_name { Sham.last }
@@ -85,3 +91,5 @@ HockeyPlayer.blueprint do
   num { rand(29) }
   name { Sham.name }
 end
+
+  

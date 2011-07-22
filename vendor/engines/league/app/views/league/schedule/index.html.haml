@@ -38,7 +38,7 @@
               - else
                 #{game.left_team_name} vs. #{game.right_team_name} 
             %td #{game.starts_on.strftime("%l:%M %p")}
-            %td Location
+            %td #{game.venue_name}
           - last_date = game.starts_on.to_date
 - if @games.count > 0
   .controls
