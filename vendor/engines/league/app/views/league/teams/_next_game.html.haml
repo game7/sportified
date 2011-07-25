@@ -8,7 +8,7 @@
       %a{ :href => '#'}
         .logo
           - if next_game && opponent = next_game.opponent(@team.id)
-            = image_tag opponent.logo.small.url.to_s
+            = image_tag opponent.logo.tiny.url.to_s if opponent.logo.tiny.url
       .venue
         %span #{next_game.starts_on.strftime('%l:%M %p') if next_game}
       .city #{next_game.opponent_name(@team.id) if next_game}            
