@@ -16,6 +16,8 @@ gem 'haml'
 gem 'devise'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 
+gem 'icalendar'
+
 gem 'cancan'
 gem 'formtastic', '~> 1.1.0'
 gem 'delayed_job'

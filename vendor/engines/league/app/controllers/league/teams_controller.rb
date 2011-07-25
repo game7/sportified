@@ -1,3 +1,5 @@
+require 'icalendar'
+
 class League::TeamsController < League::BaseDivisionSeasonController
   
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
@@ -53,9 +55,30 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def schedule
-    add_breadcrumb "Schedule"
     @games = Game.for_site(Site.current).for_team(@team).asc(:starts_on)
+    add_breadcrumb "Schedule"
     @team_links = links_to_team_schedule(@division, @season)
+
+    respond_to do |format|
+      format.html
+      format.ics { to_ical(@games) }
+    end    
+
+  end
+
+  def to_ical(games)
+    calendar = Icalendar::Calendar.new
+    games.each do |game|
+      event = Icalendar::Event.new
+      event.start = game.starts_on
+      event.end = game.starts_on
+      event.summary = "#{game.left_team_name} vs. #{game.right_team_name}"
+      event.location = game.venue_name
+      calendar.add event
+    end
+    calendar.publish
+    headers["Content-Type"] = "text/calendar; charset=UTF-8"
+    render :text => calendar.to_ical, :layout => false
   end
 
   def roster
