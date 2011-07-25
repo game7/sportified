@@ -9,5 +9,6 @@
           %th{ :scope => "col"} Name
       %tbody
         - players.each do |player|
-          %td #{player.jersey_number}
-          %td #{player.full_name}
+          %tr
+            %td #{player.jersey_number}
+            %td #{player.full_name}
