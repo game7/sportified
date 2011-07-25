@@ -1,6 +1,5 @@
 - title @team.name + ' Schedule - ' + @season.name
 - last_month = nil
-- last_future = false
 
 = content_for :banner do
   = render :partial => 'team_banner', :locals => { :team => @team }
@@ -19,15 +18,12 @@
       - @games.each do |game|
         - month = game.starts_on.strftime('%B')
         - future = game.starts_on.future?
-        - if month != last_month || last_future != future
+        - if month != last_month
           - reset_cycle()
           %tr.col-head
             %td.month #{month}
             %td.opponent OPPONENT
-            - if future
-              %td.time TIME
-            - else
-              %td.result RESULT
+            %td.time TIME / RESULT
             %td.location LOCATION
           - last_month = month
           - last_future = future
