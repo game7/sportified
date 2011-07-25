@@ -67,7 +67,7 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def to_ical(games)
-    calendar = Icalendar::Calendar.new
+    cal = Icalendar::Calendar.new
     games.each do |game|
       event = Icalendar::Event.new
       event.uid = game.id.to_s
@@ -75,11 +75,10 @@ class League::TeamsController < League::BaseDivisionSeasonController
       event.end = game.ends_on
       event.summary = "#{game.left_team_name} vs. #{game.right_team_name}"
       event.location = game.venue_name
-      calendar.add event
+      cal.add event
     end
-    calendar.publish
-    headers["Content-Type"] = "text/calendar; charset=UTF-8"
-    render :text => calendar.to_ical, :layout => false
+    cal.publish
+    send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season_slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season_slug}-schedule.ics")
   end
 
   def roster
