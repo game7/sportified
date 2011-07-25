@@ -70,8 +70,9 @@ class League::TeamsController < League::BaseDivisionSeasonController
     calendar = Icalendar::Calendar.new
     games.each do |game|
       event = Icalendar::Event.new
+      event.uid = game.id.to_s
       event.start = game.starts_on
-      event.end = game.starts_on
+      event.end = game.ends_on
       event.summary = "#{game.left_team_name} vs. #{game.right_team_name}"
       event.location = game.venue_name
       calendar.add event

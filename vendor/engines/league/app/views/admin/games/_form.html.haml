@@ -2,6 +2,7 @@
   = f.inputs :name => "Logistics" do
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
+    = f.input :duration
     = f.input :venue_id, :as => :select, :collection => @venues
   = f.inputs :name => "Away Team" do
     = f.input :left_team_id, :collection => @teams

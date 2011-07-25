@@ -51,6 +51,16 @@ class Game
   end
 
   field :starts_on, :type => DateTime
+  field :duration, :type => Integer, :default => 75
+  validates_presence_of :duration
+  validates_numericality_of :duration, :only_integer => true
+
+  field :ends_on, :type => DateTime
+  
+  before_save :set_ends_on
+  def set_ends_on
+    self.ends_on = self.starts_on.advance(:minutes => self.duration)
+  end
 
   referenced_in :season
   

@@ -60,6 +60,7 @@ end
 Game.blueprint do
   season { Season.make }
   starts_on { DateTime.now }
+  duration { 90 }
   left_team { Team.make }
   right_team { Team.make }
   site { Site.make }

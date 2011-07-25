@@ -10,6 +10,7 @@ describe Game do
     
     it { should validate_presence_of(:starts_on) }
     it { should validate_presence_of(:season_id) }
+    it { should validate_presence_of(:duration) }
 
     it "should otherwise be valid" do
       @game.valid?.should == true      
@@ -18,6 +19,11 @@ describe Game do
   end
 
   describe "when saving" do
+    
+    it "should update the end time" do
+      @game.save
+      @game.ends_on.should == @game.starts_on.advance(:minutes => @game.duration)
+    end
     
     it "should update the left team name" do
       @game.left_team_name.should == nil
