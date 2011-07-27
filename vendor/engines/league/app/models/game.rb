@@ -1,9 +1,6 @@
 
-class Game
-  include Mongoid::Document
+class Game < Event
   include Mongoid::StateMachine
-  include Sportified::SiteContext
-  include Sportified::PublishesMessages
 
   field :state
   state_machine :initial => :pending
@@ -50,20 +47,6 @@ class Game
     result
   end
 
-  field :starts_on, :type => DateTime
-  field :duration, :type => Integer, :default => 75
-  validates_presence_of :duration
-  validates_numericality_of :duration, :only_integer => true
-
-  field :ends_on, :type => DateTime
-  
-  before_save :set_ends_on
-  def set_ends_on
-    self.ends_on = self.starts_on.advance(:minutes => self.duration)
-  end
-
-  referenced_in :season
-  
   referenced_in :left_team, :class_name => "Team"
   field :left_custom_name, :type => Boolean
   field :left_team_name
@@ -82,15 +65,6 @@ class Game
     return left_team_score < right_team_score
   end
 
-  referenced_in :venue
-  field :venue_name
-  field :venue_short_name
-  before_save do |game|
-    venue = game.venue
-    game.venue_name = venue ? venue.name : ''
-    game.venue_short_name = venue ? venue.short_name : ''
-  end
-
   COMPLETED_IN = %w[regulation overtime shootout forfeit]
   def self.completed_in_options
     COMPLETED_IN.collect{|o| [o.humanize, o] }
@@ -99,44 +73,57 @@ class Game
 
   referenced_in :statsheet
 
-  validates_presence_of :starts_on, :season_id
-
-  scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
-  scope :in_the_future, :where => { :starts_on.gt => DateTime.now }
-  scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
-  scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
-  scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lt => to } } }
-
-  def opponent_id(team_id)
-    team_id == self.left_team_id ? self.right_team_id : self.left_team_id
+  def has_team?(team)
+    id = team.class == Team ? team.id : team
+    id == left_team_id || id == right_team_id
   end
 
-  def opponent_name(team_id)
-    team_id == self.left_team_id ? self.right_team_name : self.left_team_name
+  def opponent_id(team)
+    throw :team_not_present unless has_team?(team)
+    id == left_team_id ? right_team_id : left_team_id
   end
 
-  def opponent(team_id)
-    team_id == self.left_team_id ? self.right_team : self.left_team
+  def opponent_name(team)
+    throw :team_not_present unless has_team?(team)  
+    id = team.class == Team ? team.id : team  
+    id == left_team_id ? right_team_name : left_team_name
   end
 
-  class << self  
-    def for_team(t)
-      id = t.class == Team ? t.id : t
-      any_of( { "left_team_id" => id }, { "right_team_id" => id } )
+  def opponent(team)
+    throw :team_not_present unless has_team?(teamd) 
+    id = team.class == Team ? team.id : team   
+    id == left_team_id ? right_team : left_team
+  end
+
+  before_save :cleanup_division_ids
+  def cleanup_division_ids
+    division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
+  end
+
+  before_save :update_team_info
+  def update_team_info
+    self.team_ids = []
+    self.division_ids ||= []
+    if team = self.left_team
+      self.left_team_name = team.name unless left_custom_name
+      team_ids << team.id
+      division_ids << team.division_id unless division_ids.include?(team.division_id)
+    else
+      self.left_team_name = '' unless left_custom_name
     end
-    def for_season(s)
-      id = s.class == Season ? s.id : s
-      where(:season_id => id)
-    end
-    def for_division(d)
-      # TODO: perhaps map-reduce would be useful here
-      division = d.class == Division ? d : Division.find(d)
-      team_ids = division.teams.collect{|team| team.id}
-      any_of( { :left_team_id.in => team_ids }, { :right_team_id.in => team_ids })
+    if team = self.right_team
+      self.right_team_name = team.name unless right_custom_name
+      team_ids << team.id
+      division_ids << team.division_id unless division_ids.include?(team.division_id)
+    else
+      self.right_team_name = '' unless right_custom_name
     end
   end
 
-  before_save :update_team_names
+  before_save :update_summary
+  def update_summary
+    self.summary = "#{left_team_name} vs. #{right_team_name}"
+  end
 
   def has_result?
     self.completed_in.present?
@@ -155,19 +142,6 @@ class Game
   end
 
   private
-
-    def update_team_names
-      if self.left_team
-        self.left_team_name = self.left_team.name unless left_custom_name
-      else
-        self.left_team_name = '' unless left_custom_name
-      end
-      if self.right_team
-        self.right_team_name = self.right_team.name unless right_custom_name
-      else
-        self.right_team_name = '' unless right_custom_name
-      end
-    end
 
     def enter_final
       msg = Message.new(:game_finalized)

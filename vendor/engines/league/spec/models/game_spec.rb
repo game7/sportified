@@ -18,6 +18,19 @@ describe Game do
 
   end
 
+  describe "when checking the status" do
+    
+    it "should indicate whether a particular team is involved" do
+      @game.has_team?(@game.left_team).should == true
+      @game.has_team?(@game.left_team).should == true
+    end
+
+    it "should indicate whether a particular team is not involved" do
+      @game.has_team?(Team.make_unsaved).should == false
+    end
+
+  end
+
   describe "when saving" do
     
     it "should update the end time" do
@@ -80,6 +93,18 @@ describe Game do
 
 
   describe 'when finding opponent for a team' do
+    
+    it "should raise an error when requesting opponent id for a team that is not present" do
+      lambda{@game.opponent_id(Team.make_unsaved)}.should throw_symbol(:team_not_present)
+    end
+
+    it "should raise an error when requesting opponent name for a team that is not present" do
+      lambda{@game.opponent_name(Team.make_unsaved)}.should throw_symbol(:team_not_present)
+    end
+
+    it "should raise an error when requesting opponent for a team that is not present" do
+      lambda{@game.opponent(Team.make_unsaved)}.should throw_symbol(:team_not_present)
+    end
     
     it "should correctly return the opponent's id" do
       @game.opponent_id(@game.left_team_id).should == @game.right_team_id

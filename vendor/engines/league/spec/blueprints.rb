@@ -57,6 +57,13 @@ Player.blueprint do
   jersey_number { rand(50) }
 end
 
+Event.blueprint do
+  season { Season.make }
+  starts_on { DateTime.now }
+  duration { 90 }
+  site { Site.make }
+end
+
 Game.blueprint do
   season { Season.make }
   starts_on { DateTime.now }

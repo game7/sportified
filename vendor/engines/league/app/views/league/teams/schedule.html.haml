@@ -29,6 +29,7 @@
           - last_future = future
         %tr{ :class => cycle("odd","even") }
           %td #{ game.starts_on.strftime('%a, %b %e') }
-          %td #{ game.left_team_id == @team.id ? game.right_team_name : game.left_team_name }
-          %td #{ future ? game.starts_on.strftime('%l:%M %p') : display_result(@team, game) }
+          %td
+            = game.has_team?(@team) ? "vs. #{game.opponent_name(@team)}" : game.summary
+          %td #{ game.has_result? && game.has_team?(@team) ? display_result(@team, game) : game.starts_on.strftime('%l:%M %p') }
           %td #{ game.venue_name }

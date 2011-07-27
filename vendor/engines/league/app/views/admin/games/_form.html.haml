@@ -12,6 +12,15 @@
     = f.input :right_team_id, :collection => @teams
     = f.input :right_custom_name, :as => :boolean
     = f.input :right_team_name
+  = f.inputs :name => "Visibility (optional)" do
+    %li{ :class => 'checkboxes optional', :id => 'game_division_ids_input' }
+      %label{ :for => 'game_division_ids' } Divisions
+      %ol
+        - @divisions.each_with_index do |d, i|
+          %li
+            = check_box_tag "game[division_ids][]", d.id, @game.division_ids.include?(d.id)
+            = d.name
+    = f.input :show_for_all_teams, :as => :boolean
   = f.buttons do
     = f.commit_button
     %li #{link_to 'Cancel', session[:return_to]}

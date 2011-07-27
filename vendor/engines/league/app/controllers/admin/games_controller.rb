@@ -12,7 +12,7 @@ class Admin::GamesController < Admin::BaseLeagueController
     @seasons = Season.for_site(Site.current).desc(:starts_on).entries
   end
   
-  before_filter :load_division_options, :only => [:index]
+  before_filter :load_division_options, :only => [:index, :new, :edit]
   def load_division_options
     @divisions = Division.for_site(Site.current).asc(:name).entries
   end
@@ -99,6 +99,11 @@ class Admin::GamesController < Admin::BaseLeagueController
 
     @game = Game.new(params[:game])
     @game.site = Site.current
+#    if params[:game][:division_ids]
+#      params[:game][:division_ids].each do |id|
+#        @game.division_ids << BSON::ObjectId(id)
+#      end
+#    end
     respond_to do |format|
       if @game.save
         format.html { return_to_last_point(:notice => 'Game was successfully created.') }
@@ -106,6 +111,7 @@ class Admin::GamesController < Admin::BaseLeagueController
         load_season_options
         load_team_options
         load_venue_options
+        load_division_options
         format.html { render :action => "new" }
       end
     end
@@ -114,7 +120,11 @@ class Admin::GamesController < Admin::BaseLeagueController
   # PUT /games/1
   def update
     @game = Game.find(params[:id])
-
+#    if params[:game][:division_ids]
+#      params[:game][:division_ids].each do |id|
+#        @game.division_ids << BSON::ObjectId(id)
+#      end
+#    end
     respond_to do |format|
       if @game.update_attributes(params[:game])
         format.html { return_to_last_point(:notice => 'Game was successfully updated.') }
@@ -122,6 +132,7 @@ class Admin::GamesController < Admin::BaseLeagueController
         load_season_options
         load_team_options
         load_venue_options     
+        load_division_options
         format.html { render :action => "edit" }
       end
     end
