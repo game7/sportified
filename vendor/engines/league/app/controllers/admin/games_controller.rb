@@ -90,13 +90,13 @@ class Admin::GamesController < Admin::BaseLeagueController
   def update
     @game = Game.find(params[:id])
     if @game.update_attributes(params[:game])
-      format.html { return_to_last_point(:notice => 'Game was successfully updated.') }
+      return_to_last_point(:notice => 'Game was successfully updated.')
     else
       load_season_options
       load_team_options
       load_venue_options     
       load_division_options
-      format.html { render :action => "edit" }
+      render :action => "edit"
     end
   end
 
