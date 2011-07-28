@@ -17,4 +17,10 @@ namespace :league do
     end
   end
 
+  task :fix_corrupted_starts_on => :environment do
+    Event.all.each do |e|
+      e.starts_on = e.ends_on
+      e.starts_on.advance(:minute => (-1 * e.duration) )
+  end
+
 end

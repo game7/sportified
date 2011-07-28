@@ -8,7 +8,7 @@ class Event
   validates_presence_of :starts_on, :season_id
   before_save :set_starts_on
   def set_starts_on
-    self.starts_on = starts_on.change(:hour => 0)
+    self.starts_on = starts_on.change(:hour => 0) if all_day
   end
   
   field :duration, :type => Integer, :default => 75
