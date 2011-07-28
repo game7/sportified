@@ -12,7 +12,7 @@ namespace :league do
   desc "Convert all events to type = Game"
   task :set_events_to_game => :environment do
     Event.all.each do |e|
-      e[_type] = "Game"
+      e["_type"] = "Game"
       e.save
     end
   end
