@@ -55,26 +55,26 @@ class League::TeamsController < League::BaseDivisionSeasonController
   end
 
   def schedule
-    @games = Game.for_site(Site.current).for_team(@team).asc(:starts_on)
+    @events = Event.for_site(Site.current).for_team(@team).asc(:starts_on)
     add_breadcrumb "Schedule"
     @team_links = links_to_team_schedule(@division, @season)
 
     respond_to do |format|
       format.html
-      format.ics { to_ical(@games) }
+      format.ics { to_ical(@events) }
     end    
 
   end
 
-  def to_ical(games)
+  def to_ical(events)
     cal = Icalendar::Calendar.new
-    games.each do |game|
+    events.each do |e|
       event = Icalendar::Event.new
-      event.uid = game.id.to_s
-      event.start = game.starts_on
-      event.end = game.ends_on
-      event.summary = "#{game.left_team_name} vs. #{game.right_team_name}"
-      event.location = game.venue_name
+      event.uid = e.id.to_s
+      event.start = e.starts_on
+      event.end = e.ends_on
+      event.summary = e.summary
+      event.location = e.venue_name
       cal.add event
     end
     cal.publish

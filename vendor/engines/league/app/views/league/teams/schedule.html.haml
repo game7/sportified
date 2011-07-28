@@ -15,21 +15,20 @@
     %table.stat#schedule{ :cellspacing => "1" }
       %tr.group-head
         %td{ :colspan => "4" } #{@season.name + ' ' + @division.name + ' Schedule'}
-      - @games.each do |game|
-        - month = game.starts_on.strftime('%B')
-        - future = game.starts_on.future?
+      - @events.each do |event|
+        - month = event.starts_on.strftime('%B')
+        - future = event.starts_on.future?
         - if month != last_month
           - reset_cycle()
           %tr.col-head
             %td.month #{month}
-            %td.opponent OPPONENT
+            %td.opponent EVENT
             %td.time TIME / RESULT
             %td.location LOCATION
           - last_month = month
           - last_future = future
         %tr{ :class => cycle("odd","even") }
-          %td #{ game.starts_on.strftime('%a, %b %e') }
-          %td
-            = game.has_team?(@team) ? "vs. #{game.opponent_name(@team)}" : game.summary
-          %td #{ game.has_result? && game.has_team?(@team) ? display_result(@team, game) : game.starts_on.strftime('%l:%M %p') }
-          %td #{ game.venue_name }
+          %td #{ event.starts_on.strftime('%a, %b %e') }
+          %td #{ display_event_summary(event, @team) }
+          %td #{ display_time_or_result(event, @team) }
+          %td #{ event.venue_name }

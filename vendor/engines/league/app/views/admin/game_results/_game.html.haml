@@ -1,0 +1,9 @@
+%tr{ :id => "game_#{game.id.to_s}" }
+  %td #{game.starts_on.strftime('%a %m/%d/%y')}
+  %td #{game.starts_on.strftime('%l:%M %p')}
+  %td #{game.summary}
+  %td #{game.state.humanize}
+  %td 
+    = link_to 'Score', edit_admin_game_result_path(game.id), :remote => true
+    = " | "
+    = link_to "Statsheet", edit_admin_game_statsheet_path(game)

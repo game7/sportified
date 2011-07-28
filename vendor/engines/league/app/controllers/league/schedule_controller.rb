@@ -17,16 +17,13 @@ class League::ScheduleController < League::BaseDivisionController
     add_breadcrumb "Schedule"
   end
 
-  # GET /games
-  # GET /games.xml
   def index
-
     @division_links = links_to_division
     @team_links = links_to_team_schedule(@division, @division.default_season) if @division
     
     if params[:season_slug]
       @season = @division.seasons.with_slug(params[:season_slug]).first
-      @games = @division.games.for_season(@season).asc(:starts_on)
+      @events = @division.games.for_season(@season).asc(:starts_on)
     else
       @date = params[:date] ? Date.parse(params[:date]) : Date.current
       @days_in_future = 14
@@ -35,9 +32,9 @@ class League::ScheduleController < League::BaseDivisionController
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
-      @games = Game.for_site(Site.current).between(@start_date, @end_date)
-      @games = @games.for_division(@division) if @division
-      @games = @games.asc(:starts_on).entries
+      @events = Event.for_site(Site.current).between(@start_date, @end_date)
+      @events = @events.for_division(@division) if @division
+      @events = @events.asc(:starts_on).entries
     end
 
     respond_to do |format|

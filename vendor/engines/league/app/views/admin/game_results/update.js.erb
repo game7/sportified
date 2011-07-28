@@ -4,6 +4,6 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
   $("#flash_notice").show(300);
-  $("#game_<%= @result.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/games/game", :object => @result.game ) )%>");
+  $("#game_<%= @result.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/game_results/game", :object => @result.game ) )%>");
   $('#dialog-modal').dialog("close");
 <% end %>

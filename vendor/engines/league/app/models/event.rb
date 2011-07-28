@@ -6,15 +6,23 @@ class Event
 
   field :starts_on, :type => DateTime
   validates_presence_of :starts_on, :season_id
+  before_save :set_starts_on
+  def set_starts_on
+    self.starts_on = starts_on.change(:hour => 0)
+  end
   
   field :duration, :type => Integer, :default => 75
   validates_presence_of :duration
   validates_numericality_of :duration, :only_integer => true
+  before_save :set_duration
+  def set_duration
+    self.duration = 24 * 60 if all_day
+  end
 
   field :ends_on, :type => DateTime
   before_save :set_ends_on
   def set_ends_on
-    self.ends_on = self.starts_on.advance(:minutes => self.duration)
+    self.ends_on = all_day ? self.starts_on.change(:day => starts_on.day + 1) : self.starts_on.advance(:minutes => self.duration)
   end
 
   field :all_day, :type => Boolean
@@ -47,10 +55,7 @@ class Event
   class << self  
     def for_team(t)
       id = t.class == Team ? t.id : t
-      #where( :team_ids => id )
-      #any_in( :team_ids => [id] )
       any_of( { :team_ids => t.id}, { :division_ids => t.division_id, :show_for_all_teams => true })
-      #any_of( { "left_team_id" => id }, { "right_team_id" => id } )
     end
     def for_season(s)
       id = s.class == Season ? s.id : s
@@ -60,6 +65,12 @@ class Event
       id = d.class == Division ? d.id : d
       any_in( :division_ids => [id])
     end
+  end
+
+  before_save :cleanup_division_ids
+  def cleanup_division_ids
+    division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
+    division_ids.uniq!
   end
 
 end

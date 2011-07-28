@@ -90,15 +90,12 @@ class Game < Event
   end
 
   def opponent(team)
-    throw :team_not_present unless has_team?(teamd) 
+    throw :team_not_present unless has_team?(team) 
     id = team.class == Team ? team.id : team   
     id == left_team_id ? right_team : left_team
   end
 
-  before_save :cleanup_division_ids
-  def cleanup_division_ids
-    division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
-  end
+  scope :without_final_result, :where => { :state.ne => 'final' }
 
   before_save :update_team_info
   def update_team_info
@@ -122,7 +119,28 @@ class Game < Event
 
   before_save :update_summary
   def update_summary
-    self.summary = "#{left_team_name} vs. #{right_team_name}"
+    puts 'updating game summary'
+    unless state == 'pending'
+      tag = ''
+      if state == 'final'
+        case completed_in
+          when 'overtime' 
+            tag = ' (OT)'
+          when 'shootout' 
+            tag = ' (SO)'
+          when 'forfeit' 
+            tag = ' (FORFEIT)'
+        end
+      end
+      if left_team_score > right_team_score
+        summary = "#{left_team_name} #{left_team_score}, #{right_team_name} #{right_team_score}#{tag}"
+      else
+        summary = "#{right_team_name} #{right_team_score}, #{left_team_name} #{left_team_score}#{tag}"
+      end
+    else
+      summary = "#{left_team_name} vs. #{right_team_name}"
+    end
+    self.summary = summary
   end
 
   def has_result?
