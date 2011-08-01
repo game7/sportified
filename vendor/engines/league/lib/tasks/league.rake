@@ -17,4 +17,19 @@ namespace :league do
     end
   end
 
+  desc "Recalculate all team records"
+  task :recalculate_team_records => :environment do
+    manager = TeamRecordManager.new
+    Season.all.each do |season|
+      Division.all.each do |division|
+        manager.recalculate(division.id, season.id)
+      end
+    end
+  end
+
+  desc "Drop all Games"
+  task :destroy_all_games => :environment do
+    Game.all.each{|g| g.delete}
+  end
+
 end
