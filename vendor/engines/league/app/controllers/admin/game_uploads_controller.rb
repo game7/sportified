@@ -1,4 +1,6 @@
 require 'csv'
+require 'open-uri'
+
 class Admin::GameUploadsController < Admin::BaseLeagueController
   
   before_filter :add_games_breadcrumb
@@ -46,7 +48,7 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
 
   def edit
     add_breadcrumb 'Edit'    
-    @game_data = CSV.read(@game_upload.file.path)
+    @game_data = CSV.parse(open(@game_upload.file.path).read)
   end
 
   def update

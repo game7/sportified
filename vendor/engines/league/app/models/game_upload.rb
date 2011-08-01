@@ -1,4 +1,5 @@
 require 'csv'
+require 'open-uri'
 
 class GameUpload
   include Mongoid::Document
@@ -28,7 +29,7 @@ class GameUpload
 
   before_create :load_mappings_from_file
   def load_mappings_from_file
-    load_mappings(CSV.read(self.file.path))
+    load_mappings(CSV.parse(open(self.file.path).read))
   end
 
   before_save :set_readiness
