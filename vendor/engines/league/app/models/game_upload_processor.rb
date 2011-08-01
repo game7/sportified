@@ -9,7 +9,7 @@ class GameUploadProcessor
   
   def build_games!
     puts "the columns are #{@upload.columns.join('|')}"
-    rows = CSV.parse(open(@upload.file.path).read)
+    rows = CSV.parse(open(@upload.file.url).read)
     rows.shift #drop title row
     rows.each do |row|
       g = Game.new(:site => Site.current)

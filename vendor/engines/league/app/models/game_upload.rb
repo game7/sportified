@@ -29,7 +29,7 @@ class GameUpload
 
   before_create :load_mappings_from_file
   def load_mappings_from_file
-    load_mappings(CSV.parse(open(self.file.path).read))
+    load_mappings(CSV.parse(open(self.file.url).read))
   end
 
   before_save :set_readiness
