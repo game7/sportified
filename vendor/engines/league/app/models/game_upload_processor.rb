@@ -18,6 +18,14 @@ class GameUploadProcessor
       g.duration = get_column(:duration, row)
       g.left_team_id = get_column(:left_team, row)
       g.right_team_id = get_column(:right_team, row)
+      if left_score = get_column(:left_score, row)
+        if right_score = get_column(:right_score, row)
+          puts "==> LEFT: #{left_score}, RIGHT: #{right_score}"
+          g.left_team_score = left_score
+          g.right_team_score = right_score
+          g.completed_in = get_column(:completed_in, row)
+        end
+      end
       g.venue_id = get_column(:venue, row)
       @games << g
     end
@@ -29,7 +37,8 @@ class GameUploadProcessor
 
   def complete!
     @games.each do |g|
-      puts "  Errors: #{g.errors}" unless g.save
+      g.save
+      g.finalize! if g.has_result?
     end
     @upload.completed = true
     @upload.save
@@ -43,6 +52,7 @@ class GameUploadProcessor
       puts "   which should be at position #{i}"
       puts "   from row with: #{row.join('|')}"
       val = row[i]
+      puts "   and the result is: #{val}"
       case label
         when :left_team
           @upload.find_team_id(val)
@@ -50,6 +60,19 @@ class GameUploadProcessor
           @upload.find_team_id(val)
         when :venue
           @upload.find_venue_id(val)
+        when :completed_in
+          case val
+            when 'so', 'shootout'
+              'shootout'
+            when 'ot', 'overtime'
+              'overtime'
+            when 'fft', 'forfeit'
+              'forfeit'
+            when 'reg', 'regulation'
+              'regulation'
+            else
+              val
+          end
         else
           val
       end
