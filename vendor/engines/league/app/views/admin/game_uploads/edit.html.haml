@@ -13,7 +13,10 @@
 
 .data
   %table
-    - rows = CSV.read(@game_upload.file.path)
+    - if Rails.env.production?
+      - rows = CSV.read(@game_upload.file.url)
+    - else
+      - rows = CSV.read(@game_upload.file.path)
     - rows.each do |row|
       %tr
         - row.each do |col|
