@@ -13,10 +13,12 @@
 
 .data
   %table
-    - CSV.open(@game_upload.file.path, 'r').each do |row|
+    - rows = CSV.read(@game_upload.file.path)
+    - rows.each do |row|
       %tr
         - row.each do |col|
           %td #{col}
+
 
 
     
