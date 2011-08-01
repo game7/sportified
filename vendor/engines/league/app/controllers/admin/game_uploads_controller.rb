@@ -47,8 +47,9 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
   end
 
   def edit
-    add_breadcrumb 'Edit'    
-    @game_data = CSV.parse(open(@game_upload.file.url).read)
+    add_breadcrumb 'Edit'   
+    path = Rails.env.production? ? @game_upload.file.url : @game_upload.file.path
+    @game_data = CSV.parse(open(path).read)
   end
 
   def update
