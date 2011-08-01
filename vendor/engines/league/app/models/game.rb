@@ -119,8 +119,7 @@ class Game < Event
 
   before_save :update_summary
   def update_summary
-    puts 'updating game summary'
-    unless state == 'pending'
+    unless state == 'pending' || state == nil
       tag = ''
       if state == 'final'
         case completed_in

@@ -1,0 +1,8 @@
+- title "New Game Upload"
+= semantic_form_for [:admin, @game_upload], :html => {:multipart => true} do |f|
+  = f.inputs do
+    = f.input :season_id, :as => :select, :collection => @season_options
+    = f.input :file, :as => :file
+  = f.buttons do
+    = f.commit_button
+    %li #{ link_to 'Cancel', admin_game_uploads_path }

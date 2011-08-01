@@ -34,6 +34,9 @@
     resources :games do
       resource :statsheet, :only => [:edit]
     end
+    resources :game_uploads do
+      post 'complete', :on => :member
+    end
     resources :game_results, :only => [:index, :edit, :update]
     resources :hockey_statsheets, :only => [:edit, :update] do
       resources :players, :controller => "hockey_players" do

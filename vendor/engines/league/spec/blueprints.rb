@@ -73,6 +73,9 @@ Game.blueprint do
   site { Site.make }
 end
 
+GameUpload.blueprint do
+end
+
 HockeyGoal.blueprint do
   per { rand(3) }
   min { rand(15) }

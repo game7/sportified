@@ -1,5 +1,10 @@
 class Admin::GameResultsController < Admin::BaseLeagueController
   
+  before_filter :add_game_results_breadcrumb
+  def add_game_results_breadcrumb
+    add_breadcrumb 'Game Results', admin_game_results_path
+  end
+
   before_filter :load_game_result, :only => [:edit, :update]
   def load_game_result  
     @result = GameResult.find(params[:id])
