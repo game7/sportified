@@ -1,3 +1,4 @@
+require 'csv'
 class Admin::GameUploadsController < Admin::BaseLeagueController
   
   before_filter :add_games_breadcrumb
@@ -45,6 +46,7 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
 
   def edit
     add_breadcrumb 'Edit'    
+    @game_data = CSV.read(@game_upload.file.path)
   end
 
   def update
