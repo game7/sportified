@@ -4,27 +4,30 @@ describe GameUpload do
   
   before(:each) do
     @game_upload = GameUpload.make_unsaved
+    @game_upload.contents = [1]
   end
 
   describe "validations" do
-    
-    it { should validate_presence_of(:file) }
+      
+    it { should validate_presence_of(:contents) }
     it { should validate_presence_of(:season_id) }
 
-    it "should otherwise be valid"
+    it "should otherwise be valid" do
+      @game_upload.valid?.should == true
+    end
 
   end
 
   describe "when mapping the uploaded file" do
     
     before(:each) do
-      @game_upload.load_mappings(file_data)
-      @data = file_data
+      @game_upload.contents = file_data
+      @game_upload.map_contents
     end
     
     it "should correctly capture the columns" do
-      @data[0].each_with_index do |col, i|
-        @game_upload.columns[i].should == col
+      @game_upload.contents[0].each_with_index do |col, i|
+        @game_upload.columns[i].should == col.to_sym
       end
     end
 
@@ -44,7 +47,7 @@ describe GameUpload do
 
   def file_data
     data = []
-    data << %w[date time duration left right venue]
+    data << %w[date time duration left_team right_team venue]
     data << ["8/1/11", "8:00pm", "75", "A", "B", "OIA"]
     data << ["8/1/11", "9:35:00pm", "75", "C", "D", "OIA"]
     data << ["8/8/11", "8:00:00pm", "75", "", "A", ""]

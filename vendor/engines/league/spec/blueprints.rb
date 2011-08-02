@@ -74,6 +74,9 @@ Game.blueprint do
 end
 
 GameUpload.blueprint do
+  title { "#{Sham.name} Upload"}
+  season { Season.make }
+  site { Site.make }
 end
 
 HockeyGoal.blueprint do

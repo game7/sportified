@@ -37,10 +37,15 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
   end
 
   def create
+    if params[:game_upload][:contents]
+      contents = CSV.parse(params[:game_upload][:contents].read)
+      params[:game_upload].delete :contents
+    end
     @game_upload = GameUpload.new(params[:game_upload])
+    @game_upload.contents = contents if contents
     @game_upload.site = Site.current
     if @game_upload.save
-      redirect_to edit_admin_game_upload_path(@game_upload.id)
+      redirect_to edit_admin_game_upload_path(@game_upload.id), :notice => "Game Upload has been created."
     else
       render :action => "new"
     end
@@ -48,8 +53,6 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
 
   def edit
     add_breadcrumb 'Edit'   
-    path = Rails.env.production? ? @game_upload.file.url : @game_upload.file.path
-    @game_data = CSV.parse(open(path).read)
   end
 
   def update

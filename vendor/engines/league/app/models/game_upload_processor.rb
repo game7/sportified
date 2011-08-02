@@ -1,5 +1,3 @@
-require 'csv'
-
 class GameUploadProcessor
    
   def initialize(upload)
@@ -8,11 +6,8 @@ class GameUploadProcessor
   end
   
   def build_games!
-    puts "the columns are #{@upload.columns.join('|')}"
-    path = Rails.env.production? ? @upload.file.url : @upload.file.path
-    rows = CSV.parse(open(path).read)
-    rows.shift #drop title row
-    rows.each do |row|
+    @upload.contents.each_with_index do |row, i|
+      next if i == 0
       g = Game.new(:site => Site.current)
       g.season_id = @upload.season_id
       g.starts_on = "#{get_column(:date, row)} #{get_column(:time, row)}"
