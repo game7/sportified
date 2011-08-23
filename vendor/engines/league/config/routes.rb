@@ -31,7 +31,7 @@
       resources :players
     end
     resources :events
-    resources :games do
+    resources :games, :only => [:new, :create, :edit, :update]  do
       resource :statsheet, :only => [:edit]
     end
     resources :game_uploads do
