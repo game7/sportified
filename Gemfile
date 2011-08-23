@@ -19,7 +19,7 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'icalendar'
 
 gem 'cancan'
-gem 'formtastic', '~> 1.1.0'
+gem 'formtastic', '~> 1.2.3'
 gem 'delayed_job'
 gem 'compass', ">= 0.10.6"
 
