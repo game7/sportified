@@ -23,6 +23,7 @@ gem 'cancan'
 gem 'formtastic', '~> 1.2.3'
 gem 'delayed_job'
 gem 'compass', ">= 0.10.6"
+gem "less-rails-bootstrap"
 
 gem 'carrierwave'
 gem 'fog'

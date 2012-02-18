@@ -73,6 +73,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    commonjs (0.2.0)
+      therubyracer (~> 0.9.9)
     compass (0.11.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -137,6 +139,15 @@ GEM
     json_pure (1.6.5)
     launchy (2.0.5)
       addressable (~> 2.2.6)
+    less (2.0.9)
+      commonjs (~> 0.2.0)
+      therubyracer (~> 0.9.9)
+    less-rails (2.1.6)
+      actionpack (>= 3.1)
+      less (~> 2.0.7)
+    less-rails-bootstrap (2.0.5)
+      less-rails (~> 2.1.0)
+    libv8 (3.3.10.4)
     machinist (1.0.6)
     machinist_mongo (1.2.0)
       machinist (~> 1.0.6)
@@ -245,6 +256,8 @@ GEM
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
     term-ansicolor (1.0.7)
+    therubyracer (0.9.10)
+      libv8 (~> 3.3.10)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -288,6 +301,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   league!
+  less-rails-bootstrap
   machinist_mongo
   mongoid (~> 2.0)
   mongoid-tree
