@@ -21,8 +21,9 @@ module Sportified
     config.mongoid.logger = Logger.new($stdout, :warn)
 
     config.generators do |g|
-      g.test_framework :rspec
-      g.fixture_replacement :factory_girl, :dir => "spec/factories"
+      g.orm :mongoid
+      g.test_framework :rspec, :fixture => true, :views => false
+      g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
 
 
