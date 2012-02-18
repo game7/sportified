@@ -44,6 +44,7 @@ group :test do
   gem 'rspec-rails', '>= 2.0.1'
   gem "remarkable_mongoid", ">= 0.5.0"
   gem 'machinist_mongo', :require => 'machinist/mongoid'
+  gem 'factory_girl_rails'
   gem 'faker'
   gem 'webrat'
   gem 'cucumber-rails'
