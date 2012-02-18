@@ -19,7 +19,7 @@ Sportified::Application.railties.engines.each do |engine|
   end
 end
 
-Rails.configuration.middleware.insert_before('Rack::Sendfile', 'Rack::Static',
-                                             :urls => ['/stylesheets'],
-                                             :root => "#{Rails.root}/tmp")
+#Rails.configuration.middleware.insert_before('Rack::Sendfile', 'Rack::Static',
+#                                             :urls => ['/stylesheets'],
+#                                             :root => "#{Rails.root}/tmp")
 
