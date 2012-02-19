@@ -1,7 +1,5 @@
-= link_to("Previous #{range} Days", {:date => prev_date, :division_slug => params[:division_slug]})
-= " | " 
-= start_date.strftime("%b %e")
-= " - "
-= end_date.strftime("%b %e")
-= " | "
-= link_to("Next #{range} Days", {:date => next_date, :division_slug => params[:division_slug]})
+.pagination
+  %ul
+    %li= link_to "← Previous #{range} Days", {:date => prev_date, :division_slug => params[:division_slug]}
+    %li.active= link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#"
+    %li= link_to "Next #{range} Days →", {:date => next_date, :division_slug => params[:division_slug]}
