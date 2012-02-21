@@ -1,17 +1,13 @@
-= semantic_form_for [:admin, @division] do |f|
-  = f.inputs do
-    = f.input :name
-    %li{ :class => 'checkboxes optional', :id => 'division_seasons_input' }
-      %label{ :for => 'division_seasons' } Seasons
-      %ol
-        - @all_seasons.each_with_index do |s, i|
-          %li
-            = check_box_tag "division[seasons][]", s.id, @division.season_ids.include?(s.id)
-            = s.name
-    = f.input :current_season_id, :as => :select, :collection => @all_seasons
-    = f.input :standings_layout_id, :as => :select, :collection => @standings_layouts
-  = f.buttons do
-    = f.commit_button
-    %li
-      = link_to 'Cancel', admin_divisions_path
+= simple_form_for [:admin, @division] do |f|
+  = f.input :name
+  %li{ :class => 'checkboxes optional', :id => 'division_seasons_input' }
+    %label{ :for => 'division_seasons' } Seasons
+    %ol
+      - @all_seasons.each_with_index do |s, i|
+        %li
+          = check_box_tag "division[seasons][]", s.id, @division.season_ids.include?(s.id)
+          = s.name
+  = f.input :current_season_id, :as => :select, :collection => @all_seasons
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
 

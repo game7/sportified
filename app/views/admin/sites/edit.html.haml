@@ -1,4 +1,4 @@
-= semantic_form_for @site, :url => admin_site_path do |f|
+= simple_form_for @site, :url => admin_site_path, :html => { :class => 'form-horizontal' } do |f|
   = f.inputs do
     = f.input :name
   = f.buttons do

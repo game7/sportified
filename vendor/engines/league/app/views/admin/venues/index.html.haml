@@ -1,14 +1,15 @@
 - title "Venues"
 
-%table
-  %tr
-    %th Name
-    %th Actions
-  - @venues.each do |venue|
+%table.table.table-striped.table-bordered
+  %thead
     %tr
-      %td #{venue.name}
-      %td
-        = link_to 'Edit', edit_admin_venue_path(venue)
-        = link_to 'Destroy', [:admin, venue], :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Venue', new_admin_venue_path
+      %th Name
+      %th Actions
+  %tbody
+    - @venues.each do |venue|
+      %tr
+        %td #{venue.name}
+        %td
+          = link_to 'Edit', edit_admin_venue_path(venue)
+          = link_to 'Destroy', [:admin, venue], :confirm => 'Are you sure?', :method => :delete
+= link_to 'New Venue', new_admin_venue_path, :class => "btn"

@@ -1,13 +1,17 @@
 - title 'Sites'
-%table
-  %tr
-    %td Name
-    %td Host
-    %td Actions
-  - @sites.each do |site|
+%table.table.table-striped.table-bordered
+  %thead
     %tr
-      %td #{site.name}
-      %td #{site.host}
-      %td #{link_to 'Edit', edit_host_site_path(site)} | #{link_to 'Delete', [:host, site], :confirm => 'Are you sure?', :method => :delete}
-#{link_to 'Add New Site', new_host_site_path}
+      %th Name
+      %th Host
+      %th Actions
+  %tbody
+    - @sites.each do |site|
+      %tr
+        %td #{site.name}
+        %td #{site.host}
+        %td 
+          = link_to 'Edit', edit_host_site_path(site), :class => 'btn'
+          = link_to 'Delete', [:host, site], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger'
+= link_to 'Add New Site', new_host_site_path, :class => "btn"
 

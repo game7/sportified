@@ -3,43 +3,39 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-    = stylesheet_link_tag "compiled/themes/#{theme}/screen", :media => 'screen'
-    = stylesheet_link_tag 'compiled/print', :media => 'print'
-    / [if lt IE 8]
-      = stylesheet_link_tag 'compiled/ie'
-    = stylesheet_link_tag *(@stylesheets)
-    = javascript_include_tag 'jquery-1.4.3.min.js'
-    = javascript_include_tag 'rails'
-    = javascript_include_tag 'application'
+    = #stylesheet_link_tag "compiled/themes/#{theme}/screen", :media => 'screen'
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
     = csrf_meta_tag
     = yield(:head)
-  %body.bp.two-col
-    #container
-      #hat
-        #site-name #{Site.current.name if Site.current}
-        %ul.user-tasks
-          = render "devise/menu/login_items"
-          = render "devise/menu/user_items"
-        .clear
-      #header
-        #title
-          %a{ :href => "" } [Site Name]
-      #site-nav 
-        %nav #{render "layouts/site_navigation"}
-      #breadcrumbs #{render "layouts/breadcrumbs"}
+  %body{ :style => "padding-top: 90px;"}
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          link_to "#{Site.current.name if Site.current}", "#", :class => "brand"
+          %ul.nav.pull-right
+            = render "devise/menu/login_items"
+            = render "devise/menu/user_items"  
+    .container{ :style => "height: 800px;"}
+      %header
+        = content_tag :h1, yield(:title) if show_title?
+        %p.lead A descriptive paragraph here
+        = render "layouts/site_navigation" if @site_menu_items
+        = render "layouts/area_navigation" if @area_menu_items
+        = render "layouts/breadcrumbs" if @breadcrumbs
       - if content_for?(:sidebar)
         #sidebar 
           .wrapper
             = yield :sidebar
-      #main
+      #main{ :class => content_for?(:sidebar) ? 'with_sidebar' : nil}
         #banner
           .wrapper #{yield :banner}
         #page-header
-          = content_tag :h1, yield(:title) if show_title?
+
         .wrapper
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-      #footer 
-    = render 'layouts/google_analytics' if Site.current.analytics_id.present?
+      #footer
+    = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
     = yield :javascript
 

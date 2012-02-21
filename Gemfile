@@ -21,11 +21,12 @@ gem 'icalendar'
 
 gem 'cancan'
 gem 'formtastic', '~> 1.2.3'
+gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'delayed_job'
 gem 'compass', ">= 0.10.6"
 gem "less-rails-bootstrap"
 
-gem 'carrierwave'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
 

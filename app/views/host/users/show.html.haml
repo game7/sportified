@@ -1,5 +1,5 @@
 - title @user.name
-%table
+%table.table.table-bordered
   %tbody
     %tr
       %th{:scope => 'row'} Id
@@ -11,14 +11,13 @@
       %th{:scope => 'row'} Email
       %td #{@user.email}
     %tr
-      %th{:scope => 'row'} Sign In Cont
+      %th{:scope => 'row'} Sign In Count
       %td #{@user.sign_in_count}
     %tr
       %th{:scope => 'row'} Last Sign In
       %td #{@user.last_sign_in_at}
-
-%table
-  %caption Roles
+%h3 Roles
+%table.table.table-striped.table-bordered
   %thead
     %tr
       %th{:scope => 'col'} Title
