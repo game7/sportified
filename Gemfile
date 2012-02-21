@@ -10,7 +10,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'mongoid', '~> 2.0'
 gem 'bson_ext', '~> 1.3'
 gem 'mongoid-tree', :require => 'mongoid/tree'
-gem 'mongoid_state_machine', :require => 'mongoid/state_machine'
 gem 'haml'
 
 gem 'devise'

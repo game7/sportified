@@ -1,51 +1,5 @@
 
 class Game < Event
-  include Mongoid::StateMachine
-
-  field :state
-  state_machine :initial => :pending
-  state :pending
-  state :active
-  state :completed
-  state(:final, :enter => :enter_final, :exit => :exit_final)
-
-  event :start do
-    transitions :to => :active, :from => :pending
-  end
-  event :complete do
-    transitions :to => :completed, :from => [:pending,:active,:final]
-  end
-  event :finalize do
-    transitions :to => :final, :from => [:completed, :active, :pending], :guard => :has_result?
-  end
-
-  def available_actions(state = nil)
-    state ||= self.state
-    result = []
-    self.class.read_inheritable_attribute(:transition_table).each do |key, event|
-      event.each do |t|
-        if t.from == state.to_s
-          result << key.to_s
-          break
-        end
-      end
-    end
-    result
-  end
-
-  def available_transitions(state = nil)
-    state ||= self.state
-    result = []
-    self.class.read_inheritable_attribute(:transition_table).each do |key, event|
-      event.each do |t|
-        if ([] << t.from).index(state.to_s)
-          result << [t.to.humanize, key.to_s]
-          break
-        end
-      end
-    end
-    result
-  end
 
   referenced_in :left_team, :class_name => "Team"
   field :left_custom_name, :type => Boolean
@@ -94,8 +48,6 @@ class Game < Event
     id = team.class == Team ? team.id : team   
     id == left_team_id ? right_team : left_team
   end
-
-  scope :without_final_result, :where => { :state.ne => 'final' }
 
   before_save :update_team_info
   def update_team_info
@@ -157,19 +109,5 @@ class Game < Event
   def can_add_statsheet?
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
-
-  private
-
-    def enter_final
-      msg = Message.new(:game_finalized)
-      msg.data[:game_id] = self.id
-      enqueue_message msg
-    end
-
-    def exit_final
-      msg = Message.new(:game_unfinalized)
-      msg.data[:game_id] = self.id
-      enqueue_message msg
-    end
 
 end
