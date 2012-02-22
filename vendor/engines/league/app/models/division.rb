@@ -6,9 +6,8 @@ class Division
   field :name
   field :slug
 
-  belongs_to :seasons
-  referenced_in :current_season, :class_name => "Season"
-  referenced_in :standings_layout
+  belongs_to :season
+
 
   references_many :teams
 

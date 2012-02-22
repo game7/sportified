@@ -44,7 +44,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   private
   
   def add_divisions_breadcrumb
-    add_breadcrumb 'Divisions', admin_divisions_path    
+    add_breadcrumb 'Divisions', admin_season_divisions_path(@season)   
   end
 
   def find_season
