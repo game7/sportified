@@ -23,8 +23,9 @@
       end      
     end
     resource :league, :only => :show
-    resources :divisions
-    resources :seasons
+    resources :seasons do
+      resources :divisions
+    end
     resources :clubs
     resources :venues
     resources :teams, :shallow => true do

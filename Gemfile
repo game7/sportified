@@ -7,8 +7,8 @@ gem 'rails', '3.2.1'
 
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'mongoid', '~> 2.0'
-gem 'bson_ext', '~> 1.3'
+gem 'mongoid'
+gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'haml'
 

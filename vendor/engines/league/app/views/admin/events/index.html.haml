@@ -8,19 +8,21 @@
     .season Season: #{render 'select_season'}
     .division Division: #{render 'select_division'}
 .clear
-%table
-  %tr
-    %td Date
-    %td Time
-    %td Type
-    %td Description
-    %td Venue
-    %td Actions
-  = render :partial => 'event', :collection => @events
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %td Date
+      %td Time
+      %td Type
+      %td Description
+      %td Venue
+      %td Actions
+    %tbody
+      = render :partial => 'event', :collection => @events
 
-= link_to "New Event", new_admin_event_path(:season_id => params[:season_id], :division_id => params[:division_id])        
-= link_to "New Game", new_admin_game_path(:season_id => params[:season_id], :division_id => params[:division_id])
-= link_to "Upload Games From File", admin_game_uploads_path
+= link_to "New Event", new_admin_event_path(:season_id => params[:season_id], :division_id => params[:division_id]), :class => "btn"
+= link_to "New Game", new_admin_game_path(:season_id => params[:season_id], :division_id => params[:division_id]), :class => "btn"
+= link_to "Upload Games From File", admin_game_uploads_path, :class => "btn"
 
 #dialog-modal
 

@@ -1,19 +1,16 @@
 class Division
   include Mongoid::Document
-  include Sportified::SiteContext
   include Sportified::PublishesMessages
   cache
  
   field :name
   field :slug
 
-  references_and_referenced_in_many :seasons
+  belongs_to :seasons
   referenced_in :current_season, :class_name => "Season"
   referenced_in :standings_layout
 
-  references_many :games
   references_many :teams
-  references_many :team_records
 
   validates_presence_of :name
 
