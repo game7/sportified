@@ -10,6 +10,6 @@
       %tr
         %td #{venue.name}
         %td
-          = link_to 'Edit', edit_admin_venue_path(venue)
-          = link_to 'Destroy', [:admin, venue], :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Edit', edit_admin_venue_path(venue), :class => 'btn btn-mini'
+          = link_to 'Destroy', [:admin, venue], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
 = link_to 'New Venue', new_admin_venue_path, :class => "btn"
