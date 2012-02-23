@@ -34,22 +34,24 @@ class Admin::VenuesController < Admin::BaseLeagueController
     @venue = Venue.new(params[:venue])
     @venue.site = Site.current
     if @venue.save
-      return_to_last_point(:notice => 'Venue was successfully created.')
+      return_to_last_point :success => 'Venue was successfully created.'
     else
+      flash[:error] = "Venue could not be created"
       render :action => "new"
     end
   end
 
   def update
     if @venue.update_attributes(params[:venue])
-      return_to_last_point(:notice => 'Venue was successfully updated.')
+      return_to_last_point :success => 'Venue was successfully updated.'
     else
+      flash[:error] = "Venue could not be updated"
       render :action => "edit"
     end
   end
 
   def destroy
     @venue.destroy
-    return_to_last_point(:notice => 'Venue has been deleted.')
+    return_to_last_point :success => 'Venue has been deleted.'
   end
 end
