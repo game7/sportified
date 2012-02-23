@@ -30,19 +30,19 @@ class Team
 
   mount_uploader :logo, TeamLogoUploader
 
-  referenced_in :division
+  belongs_to :division
   field :division_name
   field :division_slug
 
-  referenced_in :season
+  belongs_to :season
   field :season_name
   field :season_slug
 
-  referenced_in :club
+  belongs_to :club
 
-  references_many :players  
-  references_many :games, :inverse_of => :home_team
-  references_many :games, :inverse_of => :away_team
+  has_many :players  
+  has_many :games, :inverse_of => :home_team
+  has_many :games, :inverse_of => :away_team
   embeds_one :record, :class_name => "TeamRecord"
 
   validates_presence_of :name
@@ -80,24 +80,24 @@ class Team
     self.division_slug = division ? division.slug : nil
   end
 
-  before_save :prepare_team_renamed_message
-  def prepare_team_renamed_message
-    if self.persisted? && self.name_changed?
-      msg = Message.new(:team_renamed)
-      msg.data[:team_id] = self.id
-      msg.data[:new_team_name] = self.name
-      enqueue_message msg
-    end
-  end
-
-  before_save :prepare_crop_changed_message
-  def prepare_crop_changed_message
-    if crop_changed?
-      msg = Message.new(:team_crop_changed)
-      msg.data[:team_id] = self.id
-    end
-    enqueue_message msg
-  end
+  #before_save :prepare_team_renamed_message
+  #def prepare_team_renamed_message
+  #  if self.persisted? && self.name_changed?
+  #    msg = Message.new(:team_renamed)
+  #    msg.data[:team_id] = self.id
+  #    msg.data[:new_team_name] = self.name
+  #    enqueue_message msg
+  #  end
+  #end
+  #
+  #before_save :prepare_crop_changed_message
+  #def prepare_crop_changed_message
+  #  if crop_changed?
+  #    msg = Message.new(:team_crop_changed)
+  #    msg.data[:team_id] = self.id
+  #  end
+  #  enqueue_message msg
+  #end
 
   def fullname
     "#{name} (#{division_name}-#{season_name})"

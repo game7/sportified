@@ -2,42 +2,37 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   
   before_filter :find_season, :only => [:create, :new]
   before_filter :find_division, :only => [:edit, :update, :destroy]
-  before_filter :mark_return_point, :only => [:new, :edit]
+  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
 
   def new
     @division = @season.divisions.build
   end
 
   def edit
-
   end
 
   def create
     @division = @season.divisions.build(params[:division])
     if @division.save
-      return_to_last_point(:notice => 'Division was successfully created.')
+      return_to_last_point :success => 'Division was successfully created.'
     else
+      flash[:error] = "Division could not be created"
       render :action => "new"
     end
   end
 
   def update
-    @division = Division.find(params[:id])
-      if @division.update_attributes(params[:division])
-        return_to_last_point(:notice => 'Division was successfully updated.')
-      else
-        load_seasons
-        load_standings_layouts
-        format.html { render :action => "edit" }
-      end
+    if @division.update_attributes(params[:division])
+      return_to_last_point :success => 'Division was successfully updated.'
+    else
+      flash[:error] = "Division could not be updated"
+      render :action => "edit"
+    end
   end
 
   def destroy
-    return_url = admin_season_path(@division.season_id)
     @division.destroy
-    respond_to do |format|
-      format.html { redirect_to(return_url) }
-    end
+    return_to_last_point :success => 'Division was successfully deleted.'
   end
   
   private

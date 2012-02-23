@@ -1,28 +1,20 @@
 - title "Teams"
 - last_division = ""
 
-.controls
-  .left
-    .season Season: #{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-  .right
-    .division Division: #{render 'division_select'}
-.clear
-- @teams.each do |team|
-  - if team.division_name != last_division
-    .clear
-    .division{ :style => 'margin: 2px; width: 100%; background-color: #CCC; padding: 2px 5px;'} 
-      #{team.division_name} Division
-      .right 
-        = link_to 'Add Team', new_admin_team_path(:season_id => params[:season_id], :division_id => team.division_id)
-    -last_division = team.division_name
-  .team_card.left{ :style => 'width: 200px; border: 1px solid #CCC; margin: 2px; height: 56px'}
-    .left{ :style => 'padding: 2px;'} #{image_tag team.logo.tiny.url.to_s if team.logo?}
-    .left{ :style => 'padding: 2px 5px;'} 
-      #{team.name}
-      %br/
-      #{ link_to "Edit", edit_admin_team_path(team)} | #{link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete}
-      %br/
-      #{ link_to "Players", admin_team_players_path(team) }
-      .clear
-.clear
-= link_to 'New Team', new_admin_team_path(:season_id => params[:season_id], :division_id => params[:division_id])
+#{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+- @season.divisions.asc(:name).each do |division|
+  %h2
+    = division.name + " Division"
+    = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :division_id => division.id), :class => 'btn btn-mini'
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th Name
+        %th Actions
+    %tbody
+      - division.teams.asc(:name).each do |team|
+        %tr
+          %td= team.name
+          %td
+            = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-mini'
+            = link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'

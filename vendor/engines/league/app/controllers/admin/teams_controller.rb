@@ -2,70 +2,14 @@ class Admin::TeamsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_teams_breadcrumb
-  before_filter :load_season, :only => [:index]
+  before_filter :find_season, :only => [:index, :new, :create]
   before_filter :load_teams, :only => [:index]
-  before_filter :load_division, :only => [:index]
-  before_filter :load_division_options, :only => [:index, :new, :edit]
-  before_filter :load_season_options, :only => [:index, :new, :edit]
-  before_filter :load_club_options, :only => [ :new, :edit ]
+  before_filter :load_division_options, :only => [:new, :edit]
+  before_filter :load_club_options, :only => [:new, :edit]
   before_filter :load_season_links, :only => [:index]
-  before_filter :load_team, :only => [:show, :edit, :destroy]
-
-  def add_teams_breadcrumb
-    add_breadcrumb 'Teams', admin_teams_path  
-  end
-
-  def load_division
-    @division = Division.for_site(Site.current).find(params[:division_id]) if params[:division_id]
-  end
-
-  def load_season
-    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]   
-    @season ||= Season.for_site(Site.current).most_recent()
-  end
-
-  def load_division_options
-    @divisions = Division.for_site(Site.current).asc(:name).entries
-  end
-
-  def load_season_options
-    @seasons = Season.for_site(Site.current).desc(:starts_on).entries
-  end
-
-  def load_club_options
-    @clubs = Club.for_site(Site.current).asc(:name).entries
-  end
-
-  def load_season_links
-    @season_links = @seasons.each.collect do |s|
-      [s.name, admin_teams_path(:season_id => s.id)]
-    end
-  end
-
-  def load_teams
-    @teams = Team.for_site(Site.current)
-    @teams = @teams.for_division(@division) if @division
-    @teams = @teams.for_season(@season) if @season
-    @teams = @teams.asc(:division_name).asc(:name).entries    
-  end
-
-  def load_team
-    
-    @team = Team.for_site(Site.current).find(params[:id])
-    @division = @team.division
-    @season = @team.season
-
-    add_breadcrumb @division.name
-    add_breadcrumb @season.name
-    add_breadcrumb @team.name
-
-    #load_area_navigation @division
-  end
+  before_filter :find_team, :only => [:show, :edit, :update, :destroy]
 
   def index
-    
-    @season_links = 
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @teams }
@@ -75,77 +19,86 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def show
     @team ||= Team.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @team }
-    end
   end
 
   def new
-    @team = Team.new
+    @team = @season.teams.build
     @team.division_id = params[:division_id]
-    if params[:season_id]
-      @team.season_id = params[:season_id]
-    else
-      @team.season = Season.latest
-    end
-
     add_breadcrumb 'New'
-
-    respond_to do |format|
-      format.html # new.html.erb
-    end
   end
 
-  # GET /teams/1/edit
   def edit
-
   end
 
-  # POST /teams
   def create
-    @team = Team.new(params[:team])
+    @team = @season.teams.build params[:team]
     @team.site = Site.current
-    respond_to do |format|
-      if @team.save
-        format.html { return_to_last_point(:notice => 'Team was successfully created.') }
-      else
-        load_division_options
-        load_season_options
-        load_club_options
-        format.html { render :action => "new" }
-      end
+    if @team.save
+      return_to_last_point :success => 'Team was successfully created.'
+    else
+      flash[:error] = "Team could not be created."
+      load_division_options
+      load_club_options
+      render :action => "new"
     end
   end
 
-  # PUT /teams/1
   def update
-    @team = Team.find(params[:id])
-    respond_to do |format|
-      if @team.update_attributes(params[:team])
-        format.html { return_to_last_point(:notice => 'Team was successfully updated.') }
-      else
-        load_division_options
-        load_season_options
-        load_club_options
-        format.html { render :action => "edit" }
-      end
+    if @team.update_attributes(params[:team])
+      return_to_last_point :success => 'Team was successfully updated.'
+    else
+      flash[:error] = "Team could not be updated."
+      load_division_options
+      load_club_options
+      render :action => "edit"
     end
   end
 
-  # DELETE /teams/1
   def destroy
-
     @team.destroy
+    return_to_last_point :success => 'Team has been deleted.'
+  end
+  
+  private
 
-    respond_to do |format|
-      format.js do
-        @season = @team.season
-        @division = @team.division
-        @teams = @division.teams.for_season(@team.season_id).asc(:name).entries
-      end
-      format.html { return_to_last_point(:notice => 'Team has been deleted.') }
+  def load_teams
+    @teams = Team.for_site(Site.current)
+    @teams = @teams.for_division(@division) if @division
+    @teams = @teams.for_season(@season) if @season
+    @teams = @teams.asc(:division_name).asc(:name).entries    
+  end
+
+  def find_team    
+    @team = Team.for_site(Site.current).find(params[:id])
+    @season = @team.season
+    @division = @team.division
+    add_breadcrumb @season.name
+    add_breadcrumb @division.name    
+    add_breadcrumb @team.name
+  end  
+  
+  def add_teams_breadcrumb
+    add_breadcrumb 'Teams', admin_teams_path  
+  end
+
+  def find_season
+    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]   
+    @season ||= Season.for_site(Site.current).most_recent()
+  end
+  
+  def load_division_options
+    season = @season
+    season ||= @team.season
+    @divisions = season.divisions.asc(:name)
+  end
+
+  def load_club_options
+    @clubs = Club.for_site(Site.current).asc(:name).entries
+  end
+
+  def load_season_links
+    @season_links = Season.for_site.each.collect do |s|
+      [s.name, admin_teams_path(:season_id => s.id)]
     end
   end
 end

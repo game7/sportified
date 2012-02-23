@@ -26,10 +26,12 @@
     resources :seasons, :shallow => true do
       resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
       end
+      resources :teams, :except => :index do
+      end
     end
     resources :clubs
     resources :venues
-    resources :teams, :shallow => true do
+    resources :teams, :only => [:index], :shallow => true do
       resources :players
     end
     resources :events

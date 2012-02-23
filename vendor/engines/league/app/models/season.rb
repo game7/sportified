@@ -9,6 +9,7 @@ class Season
   field :starts_on, :type => Date
 
   has_many :divisions
+  has_many :teams
   has_many :games
 
   validates_presence_of :name, :starts_on
