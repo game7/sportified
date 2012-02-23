@@ -34,7 +34,7 @@ class Admin::ClubsController < Admin::BaseLeagueController
     @club = Club.new(params[:club])
     @club.site = Site.current
     if @club.save
-      return_to_last_point :flash => { :success => 'Club was successfully created.' }
+      return_to_last_point :success => 'Club was successfully created.'
     else
       flash[:error] = "Club could not be created"
       render :action => "new"
@@ -43,7 +43,7 @@ class Admin::ClubsController < Admin::BaseLeagueController
 
   def update
     if @club.update_attributes(params[:club])
-      return_to_last_point :flash => { :success => 'Club was successfully updated.' }
+      return_to_last_point :success => 'Club was successfully updated.'
     else
       flash[:error] = "Club could not be updated"
       render :action => "edit"
@@ -52,6 +52,6 @@ class Admin::ClubsController < Admin::BaseLeagueController
 
   def destroy
     @club.destroy
-    return_to_last_point :flash => { :success => 'Club has been deleted.' } 
+    return_to_last_point :success => 'Club has been deleted.'
   end
 end

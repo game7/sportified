@@ -91,6 +91,7 @@ class ApplicationController < ActionController::Base
   end
 
   def return_to_last_point(response_status = {})
+    response_status = {:flash => response_status} unless response_status[:flash]
     redirect_to(session[:return_to], response_status)
   end
 
