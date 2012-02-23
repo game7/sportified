@@ -23,8 +23,9 @@
       end      
     end
     resource :league, :only => :show
-    resources :seasons do
-      resources :divisions
+    resources :seasons, :shallow => true do
+      resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
+      end
     end
     resources :clubs
     resources :venues

@@ -1,8 +1,7 @@
 class Admin::DivisionsController < Admin::BaseLeagueController
   
-  before_filter :find_season
-  before_filter :add_divisions_breadcrumb
-  before_filter :load_division, :only => [:edit, :update, :destroy]
+  before_filter :find_season, :only => [:create, :new]
+  before_filter :find_division, :only => [:edit, :update, :destroy]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def new
@@ -34,26 +33,24 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def destroy
+    return_url = admin_season_path(@division.season_id)
     @division.destroy
-
     respond_to do |format|
-      format.html { redirect_to(admin_divisions_url) }
+      format.html { redirect_to(return_url) }
     end
   end
   
   private
-  
-  def add_divisions_breadcrumb
-    add_breadcrumb 'Divisions', admin_season_divisions_path(@season)   
-  end
 
   def find_season
     @season = Season.find(params[:season_id])
     add_breadcrumb @season.name, admin_season_path(@season)
   end
   
-  def load_division
-    @division = @season.divisions.find(params[:division_id]) 
+  def find_division
+    @division = Division.find(params[:id]) 
+    season = @division.season
+    add_breadcrumb season.name, admin_season_path(season)
     add_breadcrumb @division.name
   end
 

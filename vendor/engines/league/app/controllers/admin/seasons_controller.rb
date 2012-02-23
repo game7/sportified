@@ -34,7 +34,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   # GET /seasons/1
   def show
 
-    @teams = @season.teams
+    @divisions = @season.divisions
 
     respond_to do |format|
       format.html # show.html.erb

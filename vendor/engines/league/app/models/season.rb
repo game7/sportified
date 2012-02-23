@@ -8,9 +8,8 @@ class Season
   field :slug
   field :starts_on, :type => Date
 
-  references_many :divisions
-  references_many :games
-  references_many :teams
+  has_many :divisions
+  has_many :games
 
   validates_presence_of :name, :starts_on
 
