@@ -1,6 +1,6 @@
 class Club
   include Mongoid::Document
-  include Sportified::SiteContext
+  include Sportified::TenantScoped
 
   field :name
   validates_presence_of :name

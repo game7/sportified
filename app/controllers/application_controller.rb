@@ -3,18 +3,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :layout
 
-  before_filter :set_current_site
+  before_filter :find_current_tenant
   before_filter :add_stylesheets
   before_filter :load_objects
   before_filter :set_site_navigation
   before_filter :set_breadcrumbs
   before_filter :set_area_navigation
-  
-  before_filter do |c|
-    puts c.class.to_s
-  end
-
-
 
   def initialize
     super
@@ -25,6 +19,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
+  
+  private
 
   def load_objects
     
@@ -66,13 +62,8 @@ class ApplicationController < ActionController::Base
     url.present? && ( url == request.path || url == request.url )
   end
 
-
-  def set_current_site
-    Site.current = find_site
-  end
-
-  def find_site
-    Site.for_host( request.host.gsub("www.","") ).first
+  def find_current_tenant
+    Tenant.current = Tenant.find_or_create_by( :host => request.host.gsub("www.","") )
   end
 
   def add_stylesheets

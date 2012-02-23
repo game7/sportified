@@ -1,6 +1,6 @@
 class Venue
   include Mongoid::Document
-  include Sportified::SiteContext
+  include Sportified::TenantScoped
   include Sportified::PublishesMessages
 
   field :name

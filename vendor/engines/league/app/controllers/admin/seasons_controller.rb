@@ -21,7 +21,6 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   def create
     @season = Season.new(params[:season])
-    @season.site = Site.current
     if @season.save
       return_to_last_point :success => 'Season was successfully created.'
     else
@@ -51,11 +50,11 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def find_season
-    @season = Season.for_site(Site.current).find(params[:id])
+    @season = Season.find(params[:id])
     add_breadcrumb @season.name
   end
 
   def find_seasons
-    @seasons = Season.for_site(Site.current).asc(:name)
+    @seasons = Season.asc(:name)
   end
 end

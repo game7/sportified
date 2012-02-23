@@ -1,8 +1,6 @@
 class Team
   include Mongoid::Document
-  include Sportified::SiteContext
-  include Sportified::PublishesMessages
-  cache
+  include Sportified::TenantScoped
  
   field :name
   field :short_name

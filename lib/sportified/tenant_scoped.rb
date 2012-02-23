@@ -4,12 +4,12 @@ module Sportified
     
     included do
       belongs_to :tenant, class_name: "::Tenant"
-      before_validation { self.tenant ||= Liga::Tenant.current }
+      before_validation { self.tenant ||= Tenant.current }
     end
     
     module ClassMethods
       def tenant_scope
-        { :where => { :tenant_id => ::Tenant.current.id } } if ::Tenant.current
+        { :where => { :tenant_id => Tenant.current.id } } if ::Tenant.current
       end
       def criteria(embedded = false, scoped = true)
         (scope_stack.last || Mongoid::Criteria.new(self, embedded)).tap do |crit|

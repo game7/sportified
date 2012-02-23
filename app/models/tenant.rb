@@ -6,9 +6,11 @@ class Tenant
   
   validates :host, presence: true
   
+  scope :for_host, lambda { |host| { :where => { :host => host } } }
+  
   class << self
     def current
-      Thread.current[:current_tenant] ||= Liga::Tenant.find_or_create_by(:host => '')
+      Thread.current[:current_tenant] ||= Tenant.find_or_create_by(:host => '')
     end
     def current=(tenant)
       Thread.current[:current_tenant] = tenant

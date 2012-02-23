@@ -1,24 +1,14 @@
 class Admin::ClubsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-
   before_filter :add_clubs_breadcrumb
-  def add_clubs_breadcrumb
-    add_breadcrumb 'Clubs', admin_clubs_path  
-  end
-
   before_filter :load_club, :only => [:show, :edit, :update, :destroy]
-  def load_club
-    @club = Club.for_site(Site.current).find(params[:id])
-    add_breadcrumb @club.name
-  end
 
   def index
-    @clubs = Club.for_site(Site.current).asc(:name)
+    @clubs = Club.asc(:name)
   end
 
   def show
-
   end
 
   def new
@@ -27,12 +17,10 @@ class Admin::ClubsController < Admin::BaseLeagueController
   end
 
   def edit
-
   end
 
   def create
     @club = Club.new(params[:club])
-    @club.site = Site.current
     if @club.save
       return_to_last_point :success => 'Club was successfully created.'
     else
@@ -54,4 +42,16 @@ class Admin::ClubsController < Admin::BaseLeagueController
     @club.destroy
     return_to_last_point :success => 'Club has been deleted.'
   end
+  
+  private
+  
+  def add_clubs_breadcrumb
+    add_breadcrumb 'Clubs', admin_clubs_path  
+  end
+
+  def load_club
+    @club = Club.find(params[:id])
+    add_breadcrumb @club.name
+  end
+  
 end

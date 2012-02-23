@@ -3,18 +3,12 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_teams_breadcrumb
   before_filter :find_season, :only => [:index, :new, :create]
-  before_filter :load_teams, :only => [:index]
-  before_filter :load_division_options, :only => [:new, :edit]
-  before_filter :load_club_options, :only => [:new, :edit]
   before_filter :load_season_links, :only => [:index]
   before_filter :find_team, :only => [:show, :edit, :update, :destroy]
+  before_filter :load_division_options, :only => [:new, :edit]
+  before_filter :load_club_options, :only => [:new, :edit]
 
   def index
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @teams }
-      format.json { render :json => @teams }
-    end
   end
 
   def show
@@ -32,7 +26,6 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def create
     @team = @season.teams.build params[:team]
-    @team.site = Site.current
     if @team.save
       return_to_last_point :success => 'Team was successfully created.'
     else
@@ -61,18 +54,10 @@ class Admin::TeamsController < Admin::BaseLeagueController
   
   private
 
-  def load_teams
-    @teams = Team.for_site(Site.current)
-    @teams = @teams.for_division(@division) if @division
-    @teams = @teams.for_season(@season) if @season
-    @teams = @teams.asc(:division_name).asc(:name).entries    
-  end
-
   def find_team    
-    @team = Team.for_site(Site.current).find(params[:id])
-    @season = @team.season
+    @team = Team.find(params[:id])
     @division = @team.division
-    add_breadcrumb @season.name
+    add_breadcrumb @team.season_name
     add_breadcrumb @division.name    
     add_breadcrumb @team.name
   end  
@@ -82,8 +67,8 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def find_season
-    @season = Season.for_site(Site.current).find(params[:season_id]) if params[:season_id]   
-    @season ||= Season.for_site(Site.current).most_recent()
+    @season = Season.find(params[:season_id]) if params[:season_id]   
+    @season ||= Season.most_recent()
   end
   
   def load_division_options
@@ -93,11 +78,11 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def load_club_options
-    @clubs = Club.for_site(Site.current).asc(:name).entries
+    @clubs = Club.asc(:name).entries
   end
 
   def load_season_links
-    @season_links = Season.for_site.each.collect do |s|
+    @season_links = Season.all.desc(:starts_on).each.collect do |s|
       [s.name, admin_teams_path(:season_id => s.id)]
     end
   end

@@ -1,6 +1,6 @@
 class Season
   include Mongoid::Document
-  include Sportified::SiteContext
+  include Sportified::TenantScoped
   include Sportified::PublishesMessages
   cache
  
