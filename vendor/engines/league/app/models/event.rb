@@ -1,8 +1,8 @@
 
 class Event
   include Mongoid::Document
-  include Sportified::SiteContext
-  include Sportified::PublishesMessages
+  include Sportified::TenantScoped
+  #include Sportified::PublishesMessages
 
   field :starts_on, :type => DateTime
   validates_presence_of :starts_on, :season_id
@@ -67,10 +67,10 @@ class Event
     end
   end
 
-  before_save :cleanup_division_ids
-  def cleanup_division_ids
-    division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
-    division_ids.uniq!
-  end
+  #before_save :cleanup_division_ids
+  #def cleanup_division_ids
+  #  division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
+  #  division_ids.uniq!
+  #end
 
 end

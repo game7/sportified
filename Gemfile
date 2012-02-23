@@ -17,6 +17,7 @@ gem 'omniauth'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 
 gem 'icalendar'
+gem 'chronic'
 
 gem 'cancan'
 gem 'formtastic', '~> 1.2.3'
