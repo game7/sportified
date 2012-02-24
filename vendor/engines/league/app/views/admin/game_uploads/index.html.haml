@@ -1,20 +1,21 @@
 - title "Game Uploads"
 
-%table
-  %tr
-    %th Date
-    %th Season
-    %th Ready
-    %th Processed
-    %th Actions
-  - @game_uploads.each do |upload|
+%table.table.table-striped.table-bordered
+  %thead
     %tr
-      %td #{upload.created_at}
-      %td #{upload.season_name}
-      %td #{upload.ready}
-      %td #{upload.completed}
-      %td
-        = link_to 'Edit', edit_admin_game_upload_path(upload) unless upload.completed
-        = link_to 'Complete', complete_admin_game_upload_path(upload), :method => :post if upload.ready && !upload.completed
-        /= link_to 'Destroy', [:admin, club], :confirm => 'Are you sure?', :method => :delete
-= link_to 'New Game Upload', new_admin_game_upload_path
+      %th Date
+      %th Season
+      %th Ready
+      %th Processed
+      %th Actions
+  %tbody  
+    - @game_uploads.each do |upload|
+      %tr
+        %td #{upload.created_at}
+        %td #{upload.season_name}
+        %td #{upload.ready}
+        %td #{upload.completed}
+        %td
+          = link_to 'Edit', edit_admin_game_upload_path(upload), :class => 'btn btn-mini' unless upload.completed
+          = link_to 'Complete', complete_admin_game_upload_path(upload), :method => :post, :class => 'btn btn-mini' if upload.ready && !upload.completed
+= link_to 'New Game Upload', new_admin_game_upload_path, :class => 'btn'

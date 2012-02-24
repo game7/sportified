@@ -71,26 +71,26 @@ class Game < Event
 
   before_save :update_summary
   def update_summary
-    unless state == 'pending' || state == nil
-      tag = ''
-      if state == 'final'
-        case completed_in
-          when 'overtime' 
-            tag = ' (OT)'
-          when 'shootout' 
-            tag = ' (SO)'
-          when 'forfeit' 
-            tag = ' (FORFEIT)'
-        end
-      end
-      if left_team_score > right_team_score
-        summary = "#{left_team_name} #{left_team_score}, #{right_team_name} #{right_team_score}#{tag}"
-      else
-        summary = "#{right_team_name} #{right_team_score}, #{left_team_name} #{left_team_score}#{tag}"
-      end
-    else
+    #unless state == 'pending' || state == nil
+    #  tag = ''
+    #  if state == 'final'
+    #    case completed_in
+    #      when 'overtime' 
+    #        tag = ' (OT)'
+    #      when 'shootout' 
+    #        tag = ' (SO)'
+    #      when 'forfeit' 
+    #        tag = ' (FORFEIT)'
+    #    end
+    #  end
+    #  if left_team_score > right_team_score
+    #    summary = "#{left_team_name} #{left_team_score}, #{right_team_name} #{right_team_score}#{tag}"
+    #  else
+    #    summary = "#{right_team_name} #{right_team_score}, #{left_team_name} #{left_team_score}#{tag}"
+    #  end
+    #else
       summary = "#{left_team_name} vs. #{right_team_name}"
-    end
+    #end
     self.summary = summary
   end
 

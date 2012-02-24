@@ -6,13 +6,7 @@
   = f.input :venue_id, :as => :select, :collection => @venues
   = f.input :summary
   = f.input :description, :as => :text
-  %li{ :class => 'checkboxes optional', :id => 'event_division_ids_input' }
-    %label{ :for => 'event_division_ids' } Divisions
-    %ol
-      - @divisions.each_with_index do |d, i|
-        %li
-          = check_box_tag "event[division_ids][]", d.id, @event.division_ids.include?(d.id)
-          = d.name
+  = f.association :divisions, :as => :check_boxes, :collection => @divisions
   = f.input :show_for_all_teams, :as => :boolean
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'

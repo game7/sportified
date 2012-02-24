@@ -42,9 +42,9 @@ class Event
   referenced_in :season
   validates_presence_of :season_id
 
-  field :division_ids, :type => Array, :default => []
+  has_and_belongs_to_many :divisions
+  has_and_belongs_to_many :teams
   field :show_for_all_teams, :type => Boolean
-  field :team_ids, :type => Array, :default => []
 
   scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
   scope :in_the_future, :where => { :starts_on.gt => DateTime.now }

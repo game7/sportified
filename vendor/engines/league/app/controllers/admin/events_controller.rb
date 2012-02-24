@@ -3,7 +3,8 @@ class Admin::EventsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_events_breadcrumb
   before_filter :load_event, :only => [:edit, :update, :destroy]
-  before_filter :load_season_options, :only => [:index, :new, :edit]
+  before_filter :load_season_options, :only => [:new, :edit]
+  before_filter :load_season_links, :only => [:index, :new, :edit]
   before_filter :load_division_options, :only => [:index, :new, :edit]  
   before_filter :load_venue_options, :only => [:new, :edit]  
   before_filter :load_division, :only => [:index]
@@ -51,7 +52,7 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   def destroy
     @event.destroy
-    flash[:notice] = "Event has been deleted"
+    return_to_last_point :success => 'Event has been deleted.'
   end
   
   
@@ -65,6 +66,13 @@ class Admin::EventsController < Admin::BaseLeagueController
     @event = Event.find(params[:id])   
   end
 
+  def load_season_links
+    @season_links = Season.all.desc(:starts_on).each.collect do |s|
+      [s.name, admin_events_path(:season_id => s.id, :date => params[:date])]
+    end
+    @season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
+  end
+  
   def load_season_options
     @seasons = Season.desc(:starts_on).entries
   end
@@ -86,13 +94,16 @@ class Admin::EventsController < Admin::BaseLeagueController
   end
 
   def load_events
-    @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    @days_in_future = 14
-    @days_in_past = 7
-    @start_date = @date - @days_in_past - 1
-    @end_date = @date + @days_in_future + 1
-    @next_date = @date + @days_in_future + @days_in_past
-    @prev_date = @date - @days_in_future - @days_in_past
+    
+    unless @season
+      @date = params[:date] ? Date.parse(params[:date]) : Date.current
+      @days_in_future = 14
+      @days_in_past = 7
+      @start_date = @date - @days_in_past - 1
+      @end_date = @date + @days_in_future + 1
+      @next_date = @date + @days_in_future + @days_in_past
+      @prev_date = @date - @days_in_future - @days_in_past
+    end
 
     @events = Event.all    
     @events = @events.for_division(@division) if @division

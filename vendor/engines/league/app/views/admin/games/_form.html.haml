@@ -1,40 +1,38 @@
-= semantic_form_for [:admin, @game] do |f|
-  = f.inputs :name => "Logistics" do
+= simple_form_for [:admin, @game] do |f|
+  %fieldset 
+    %legend Logistics
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
     = f.input :duration
     = f.input :venue_id, :as => :select, :collection => @venues
-  = f.inputs :name => "Away Team" do
-    = f.input :left_team_id, :collection => @teams
-    = f.input :left_custom_name, :as => :boolean
-    = f.input :left_team_name
-  = f.inputs :name => "Home Team" do
-    = f.input :right_team_id, :collection => @teams
-    = f.input :right_custom_name, :as => :boolean
-    = f.input :right_team_name
-  = f.inputs :name => "Visibility (optional)" do
-    %li{ :class => 'checkboxes optional', :id => 'game_division_ids_input' }
-      %label{ :for => 'game_division_ids' } Divisions
-      %ol
-        - @divisions.each_with_index do |d, i|
-          %li
-            = check_box_tag "game[division_ids][]", d.id, @game.division_ids.include?(d.id)
-            = d.name
+  .row-fluid
+    %fieldset.span6
+      %legend Away Team
+      = f.input :left_team_id, :collection => @teams
+      = f.input :left_custom_name, :as => :boolean
+      = f.input :left_team_name
+    %fieldset.span6
+      %legend Home Team
+      = f.input :right_team_id, :collection => @teams
+      = f.input :right_custom_name, :as => :boolean
+      = f.input :right_team_name
+  %fieldset 
+    %legend Visibility (optional)
+    = f.input :division_ids, :as => :check_boxes, :collection => @divisions, :label => 'Divisions', :checked => @game.division_ids
     = f.input :show_for_all_teams, :as => :boolean
-  = f.buttons do
-    = f.commit_button
-    %li #{link_to 'Cancel', session[:return_to]}
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
 
 - content_for :javascript do
   :javascript
     $(document).ready(function(){
-      if( !$('#game_left_custom_name').attr('checked') ) { $('#game_left_team_name_input').hide() }
-      if( !$('#game_right_custom_name').attr('checked') ) { $('#game_right_team_name_input').hide() }
+      if( !$('#game_left_custom_name').attr('checked') ) { $('#game_left_team_name').closest('.control-group').hide() }
+      if( !$('#game_right_custom_name').attr('checked') ) { $('#game_right_team_name').closest('.control-group').hide() }
       $('#game_left_custom_name').change(function(){ 
-        $('#game_left_team_name_input').slideToggle('slow');
+        $('#game_left_team_name').closest('.control-group').slideToggle('slow');
       });
       $('#game_right_custom_name').change(function(){ 
-        $('#game_right_team_name_input').slideToggle('slow');
+        $('#game_right_team_name').closest('.control-group').slideToggle('slow');
       });
     });
     $(document).ready(function(){

@@ -1,3 +1,5 @@
+require 'chronic'
+
 class GameUploadProcessor
    
   def initialize(upload)
@@ -10,7 +12,7 @@ class GameUploadProcessor
       next if i == 0
       g = Game.new(:site => Site.current)
       g.season_id = @upload.season_id
-      g.starts_on = "#{get_column(:date, row)} #{get_column(:time, row)}"
+      g.starts_on = Chronic.parse "#{get_column(:date, row)} #{get_column(:time, row)}"
       g.duration = get_column(:duration, row)
       g.left_team_id = get_column(:left_team, row)
       g.right_team_id = get_column(:right_team, row)
@@ -47,6 +49,7 @@ class GameUploadProcessor
       puts "- Get column labeled: #{label}"
       puts "   which should be at position #{i}"
       puts "   from row with: #{row.join('|')}"
+      return unless i
       val = row[i]
       puts "   and the result is: #{val}"
       case label

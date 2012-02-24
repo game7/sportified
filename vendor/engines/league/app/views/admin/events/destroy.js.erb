@@ -1,7 +1,0 @@
-$("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
-$("#flash_notice").show(300);
-$("#event_<%= @event.id %>").slideUp('slow', function() {
-  $(this).remove();
-});
-
-

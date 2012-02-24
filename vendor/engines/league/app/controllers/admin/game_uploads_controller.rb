@@ -4,32 +4,10 @@ require 'open-uri'
 class Admin::GameUploadsController < Admin::BaseLeagueController
   
   before_filter :add_games_breadcrumb
-  def add_games_breadcrumb
-    add_breadcrumb 'Events', admin_events_path  
-    add_breadcrumb 'Game Uploads', admin_game_uploads_path
-  end
-
-  before_filter :load_game_upload, :only => [:edit, :update, :complete]
-  def load_game_upload
-    @game_upload = GameUpload.find(params[:id])
-  end
-
-  before_filter :load_season_options, :only => [:new, :create]
-  def load_season_options
-    @season_options = Season.for_site(Site.current).desc(:starts_on)
-  end
-
+  before_filter :find_game_upload, :only => [:edit, :update, :complete]
+  before_filter :load_season_options, :only => [:new, :create]    
   before_filter :load_team_options, :only => [:edit, :update]
-  def load_team_options
-    @team_options = Team.for_season(@game_upload.season_id).asc(:name).entries.collect do |team|
-      [ "#{team.name} (#{team.division_name} Division)", team.id ]
-    end
-  end
-
-  before_filter :load_venue_options, :only => [:edit, :update]
-  def load_venue_options
-    @venue_options = Venue.for_site(Site.current).asc(:name)
-  end
+  before_filter :load_venue_options, :only => [:edit, :update]  
 
   def new
     add_breadcrumb 'New'
@@ -43,10 +21,10 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
     end
     @game_upload = GameUpload.new(params[:game_upload])
     @game_upload.contents = contents if contents
-    @game_upload.site = Site.current
     if @game_upload.save
-      redirect_to edit_admin_game_upload_path(@game_upload.id), :notice => "Game Upload has been created."
+      redirect_to edit_admin_game_upload_path(@game_upload.id), :success => "Game Upload has been created."
     else
+      flash[:error] = "Game Upload could not be created."
       render :action => "new"
     end
   end
@@ -71,14 +49,38 @@ class Admin::GameUploadsController < Admin::BaseLeagueController
       processor = GameUploadProcessor.new(@game_upload)
       processor.build_games!
       processor.complete!
-      flash.now[:error] = 'Game Upload is not ready for completion'
-      redirect_to admin_game_uploads_path, :notice => "#{processor.games.length} Games successfully uploaded"
+      redirect_to admin_game_uploads_path, :success => "#{processor.games.length} Games have been successfully uploaded"
     end
 
   end
 
   def index
-    @game_uploads = GameUpload.for_site(Site.current).desc(:created_at)
+    @game_uploads = GameUpload.desc(:created_at)
+  end
+  
+  private
+  
+  def add_games_breadcrumb
+    add_breadcrumb 'Events', admin_events_path  
+    add_breadcrumb 'Game Uploads', admin_game_uploads_path
+  end
+  
+  def find_game_upload
+    @game_upload = GameUpload.find(params[:id])
+  end
+
+  def load_season_options
+    @season_options = Season.desc(:starts_on)
+  end
+
+  def load_team_options
+    @team_options = Team.asc(:name).entries.collect do |team|
+      [ "#{team.name} (#{team.division_name} Division)", team.id ]
+    end
+  end
+
+  def load_venue_options
+    @venue_options = Venue.asc(:name)
   end
 
 

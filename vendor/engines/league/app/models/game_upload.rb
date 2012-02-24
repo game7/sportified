@@ -1,7 +1,7 @@
 class GameUpload
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Sportified::SiteContext
+  include Sportified::TenantScoped
 
   field :contents, :type => Array
   validates_presence_of :contents
@@ -95,6 +95,7 @@ class GameUpload
         teams << row[r]
       end
     end
+    teams.collect! {|x| x.strip!}
     puts "#{teams.uniq.length} unique teams"
     teams.uniq.each{|team| self.team_maps.build(:name => team)}
   end
