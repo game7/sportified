@@ -24,6 +24,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def create
+    params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
     @game = Game.new(params[:game])
     if @game.save
       return_to_last_point :success => 'Game was successfully created.'

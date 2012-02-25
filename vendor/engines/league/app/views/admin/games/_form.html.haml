@@ -3,19 +3,21 @@
     %legend Logistics
     = f.input :season_id, :as => :select, :collection => @seasons
     = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
+    = f.input :date
+    = f.input :time
     = f.input :duration
     = f.input :venue_id, :as => :select, :collection => @venues
   .row-fluid
     %fieldset.span6
       %legend Away Team
-      = f.input :left_team_id, :collection => @teams
-      = f.input :left_custom_name, :as => :boolean
-      = f.input :left_team_name
+      = f.input :away_team_id, :collection => @teams
+      = f.input :away_custom_name, :as => :boolean
+      = f.input :away_team_name
     %fieldset.span6
       %legend Home Team
-      = f.input :right_team_id, :collection => @teams
-      = f.input :right_custom_name, :as => :boolean
-      = f.input :right_team_name
+      = f.input :home_team_id, :collection => @teams
+      = f.input :home_custom_name, :as => :boolean
+      = f.input :home_team_name
   %fieldset 
     %legend Visibility (optional)
     = f.input :division_ids, :as => :check_boxes, :collection => @divisions, :label => 'Divisions', :checked => @game.division_ids
@@ -26,13 +28,13 @@
 - content_for :javascript do
   :javascript
     $(document).ready(function(){
-      if( !$('#game_left_custom_name').attr('checked') ) { $('#game_left_team_name').closest('.control-group').hide() }
-      if( !$('#game_right_custom_name').attr('checked') ) { $('#game_right_team_name').closest('.control-group').hide() }
-      $('#game_left_custom_name').change(function(){ 
-        $('#game_left_team_name').closest('.control-group').slideToggle('slow');
+      if( !$('#game_away_custom_name').attr('checked') ) { $('#game_away_team_name').closest('.control-group').hide() }
+      if( !$('#game_home_custom_name').attr('checked') ) { $('#game_home_team_name').closest('.control-group').hide() }
+      $('#game_away_custom_name').change(function(){ 
+        $('#game_away_team_name').closest('.control-group').slideToggle('slow');
       });
-      $('#game_right_custom_name').change(function(){ 
-        $('#game_right_team_name').closest('.control-group').slideToggle('slow');
+      $('#game_home_custom_name').change(function(){ 
+        $('#game_home_team_name').closest('.control-group').slideToggle('slow');
       });
     });
     $(document).ready(function(){

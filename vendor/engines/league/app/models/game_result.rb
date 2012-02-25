@@ -1,40 +1,20 @@
 class GameResult
-  include ActiveModel::Conversion
-  extend ActiveModel::Naming
-  extend Forwardable
+  include Mongoid::Document
 
-  attr_accessor :transition_to
-
-  def_delegators :game, 
-    :id, :state,
-    :left_team_name, :right_team_name,
-    :left_team_score, :left_team_score=,
-    :right_team_score, :right_team_score=,
-    :completed_in, :completed_in=,
-    :errors, :valid?, :save, :persisted?,
-    :available_transitions
-
-  def initialize(game)
-    @game = game
-  end
-
-  def game
-    @game
-  end
-
-  def update_attributes(params)
-    params.each_pair do |attribute, value|
-      self.send :"#{attribute}=", value
-    end unless params.nil?
-    if params[:transition_to].present?
-      game.send "#{params[:transition_to]}!"
-    else
-      self.save
-    end
-  end
-
-  def self.find(param)
-    new(Game.find(param))
-  end
+  embedded_in :game
+  
+  field :home_score, type: Integer, default: 0
+  validates :home_score, presence: true
+  
+  field :away_score, type: Integer, default: 0
+  validates :away_score, presence: true
+  
+  COMPLETED_IN = %w[regulation overtime shootout forfeit]
+  def self.completed_in_options
+    COMPLETED_IN.collect{|o| [o.humanize, o] }
+  end  
+  
+  field :completed_in
+  validates :completed_in, presence: true
 
 end

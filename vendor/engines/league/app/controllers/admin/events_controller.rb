@@ -1,3 +1,4 @@
+require "chronic"
 class Admin::EventsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
@@ -30,7 +31,6 @@ class Admin::EventsController < Admin::BaseLeagueController
     else
       flash[:error] = 'Event could not be created.'
       load_season_options
-      load_team_options
       load_venue_options
       load_division_options
       render :action => "new"
@@ -39,11 +39,12 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   def update
     @event = Event.find(params[:id])
+    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
     if @event.update_attributes(params[:event])
       return_to_last_point(:notice => 'Event was successfully updated.')
     else
+      flash[:error] = 'Event could not be updated.'      
       load_season_options
-      load_team_options
       load_venue_options     
       load_division_options
       render :action => "edit"
