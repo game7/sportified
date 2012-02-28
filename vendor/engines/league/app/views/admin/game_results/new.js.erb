@@ -1,8 +1,8 @@
-$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/game_results/edit", :object => @result ) )%>");
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/game_results/new", :object => @result ) )%>");
 $('#dialog-modal').dialog({
-  title: 'Edit Game Result',
-  height: 400,
-  width: 500,
+  title: 'Post Game Result',
+  height: 300,
+  width: 400,
   modal: true,
   buttons: {
     Save: function() {

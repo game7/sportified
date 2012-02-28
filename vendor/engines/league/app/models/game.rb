@@ -104,5 +104,7 @@ class Game < Event
   def can_add_statsheet?
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
+  
+  scope :without_result, where(result: nil)
 
 end

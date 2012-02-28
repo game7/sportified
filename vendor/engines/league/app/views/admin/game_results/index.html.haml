@@ -1,20 +1,15 @@
 - title 'Game Results'
 - javascript("jquery-ui.min.js")
 
-.controls
-  .left
-
-  .right
-
-.clear
-%table
-  %tr
-    %td Date
-    %td Time
-    %td Description
-    %td Status
-    %td Actions
-  = render :partial => 'game', :collection => @games
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %td Date
+      %td Time
+      %td Description
+      %td Actions
+  %tbody
+    = render :partial => 'game', :collection => @games
 
 #dialog-modal
 

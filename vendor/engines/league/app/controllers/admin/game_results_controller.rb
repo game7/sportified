@@ -1,29 +1,35 @@
 class Admin::GameResultsController < Admin::BaseLeagueController
   
   before_filter :add_game_results_breadcrumb
-  def add_game_results_breadcrumb
-    add_breadcrumb 'Game Results', admin_game_results_path
-  end
-
-  before_filter :load_game_result, :only => [:edit, :update]
-  def load_game_result  
-    @result = GameResult.find(params[:id])
-  end
+  before_filter :find_game, :only => [:new, :create, :destroy]
 
   def index
     @games = Game.all
-    @games = @games.in_the_past.without_final_result
+    @games = @games.in_the_past.without_result
     @games = @games.desc(:starts_on)
   end
 
-  def edit
-  
+  def new
+    @game_result = @game.build_result
   end
 
-  def update
-    if @result.update_attributes(params[:game_result])
-      flash[:notice] = 'Game Result has been updated.'
+  def create
+    @game_result = @game.build_result(params[:game_result])
+    if @game_result.save
+      flash[:success] = "Game Result has been posted."
+    else
+      flash[:error] = "Game Result could not be posted."
     end  
+  end
+  
+  private
+
+  def add_game_results_breadcrumb
+    add_breadcrumb 'Game Results', admin_game_results_path
+  end
+  
+  def find_game
+    @game = Game.find(params[:game_id])
   end
 
 end

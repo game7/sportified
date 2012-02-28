@@ -37,11 +37,12 @@
     resources :events
     resources :games, :only => [:new, :create, :edit, :update]  do
       resource :statsheet, :only => [:edit]
+      resource :game_result, :only => [:new, :create, :destroy]
     end
     resources :game_uploads do
       post 'complete', :on => :member
     end
-    resources :game_results, :only => [:index, :edit, :update]
+    resources :game_results, :only => [:index]
     resources :hockey_statsheets, :only => [:edit, :update] do
       resources :players, :controller => "hockey_players" do
         post 'load', :on => :collection        
