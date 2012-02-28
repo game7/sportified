@@ -1,0 +1,11 @@
+%tr{ :id => "event_#{event.id.to_s}" }
+  %td #{event.starts_on.strftime('%a %m/%d/%y')}
+  %td #{event.starts_on.strftime('%l:%M %p')}
+  %td #{event.class.name}
+  %td #{event.summary}
+  %td #{event.venue_name}
+  %td 
+    - edit_url = event.class.to_s == 'Game' ? edit_league_admin_game_path(event) : edit_league_admin_event_path(event)
+    = link_to "Edit", edit_url, :class => 'btn btn-mini'
+    = link_to "Delete", league_admin_event_path(event), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+

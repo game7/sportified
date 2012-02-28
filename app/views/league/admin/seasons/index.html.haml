@@ -1,0 +1,17 @@
+- title "Seasons"
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Starts on
+      %th Actions
+  %tbody
+    - @seasons.each do |season|
+      %tr
+        %td #{season.name}
+        %td #{season.starts_on}
+        %td
+          = link_to 'Show', [:league, :admin, season], :class => "btn btn-mini"        
+          = link_to 'Edit', edit_league_admin_season_path(season), :class => "btn btn-mini"
+          = link_to 'Destroy', [:league, :admin, season], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-mini"
+= link_to 'New Season', new_league_admin_season_path(@division), :class => "btn"

@@ -1,0 +1,25 @@
+- title 'Events'
+- javascript("jquery-ui.min.js")
+
+- if @date
+  = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+= select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %td Date
+      %td Time
+      %td Type
+      %td Description
+      %td Venue
+      %td Actions
+    %tbody
+      = render :partial => 'event', :collection => @events
+
+= link_to "New Event", new_league_admin_event_path(:season_id => params[:season_id], :division_id => params[:division_id]), :class => "btn"
+= link_to "New Game", new_league_admin_game_path(:season_id => params[:season_id], :division_id => params[:division_id]), :class => "btn"
+= link_to "Upload Games From File", league_admin_game_uploads_path, :class => "btn"
+
+#dialog-modal
+

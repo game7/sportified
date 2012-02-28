@@ -1,0 +1,71 @@
+= simple_form_for [:league, :admin, @game] do |f|
+  %fieldset 
+    %legend Logistics
+    = f.input :season_id, :as => :select, :collection => @seasons
+    = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
+    = f.input :duration
+    = f.input :venue_id, :as => :select, :collection => @venues
+  .row-fluid
+    %fieldset.span6
+      %legend Away Team
+      = f.input :away_team_id, :collection => @teams
+      = f.input :away_custom_name, :as => :boolean
+      = f.input :away_team_name
+    %fieldset.span6
+      %legend Home Team
+      = f.input :home_team_id, :collection => @teams
+      = f.input :home_custom_name, :as => :boolean
+      = f.input :home_team_name
+  %fieldset 
+    %legend Visibility (optional)
+    = f.input :division_ids, :as => :check_boxes, :collection => @divisions, :label => 'Divisions', :checked => @game.division_ids
+    = f.input :show_for_all_teams, :as => :boolean
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+
+- content_for :javascript do
+  :javascript
+    $(document).ready(function(){
+      if( !$('#game_away_custom_name').attr('checked') ) { $('#game_away_team_name').closest('.control-group').hide() }
+      if( !$('#game_home_custom_name').attr('checked') ) { $('#game_home_team_name').closest('.control-group').hide() }
+      $('#game_away_custom_name').change(function(){ 
+        $('#game_away_team_name').closest('.control-group').slideToggle('slow');
+      });
+      $('#game_home_custom_name').change(function(){ 
+        $('#game_home_team_name').closest('.control-group').slideToggle('slow');
+      });
+    });
+    $(document).ready(function(){
+        $("select#game_season_id").change(function(){
+            var id_value_string = $(this).val();
+            if (id_value_string == "") { 
+                // if the id is empty remove all the sub_selection options from being selectable and do not do any ajax
+                $("select[id$='team_id'] option").remove();
+                var row = "<option value=\"" + "" + "\">" + "" + "</option>";
+                $(row).appendTo("select[id$='team_id']");
+            }
+            else {
+              $.ajax({
+                  dataType: "json",
+                  cache: false,
+                  url: '#{league_admin_teams_path}?season_id=' + id_value_string,
+                  timeout: 2000,
+                  error: function(XMLHttpRequest, errorTextStatus, error){
+                      alert("Failed to submit : "+ errorTextStatus+" ;"+error);
+                  },
+                  success: function(data){  
+                      $("select[id$='team_id'] option").remove();
+                      var row = "<option value=\"" + "" + "\">" + "" + "</option>";
+                      $(row).appendTo("select[id$='team_id']"); 
+                      $.each(data, function(i, j){
+                          row = "<option value=\"" + j._id + "\">" + j.name + " (" + j.division_name + " Division)</option>";
+                          $(row).appendTo("select[id$='team_id']");
+                      });
+                   }
+              });
+            };
+        });
+    });
+
+
+

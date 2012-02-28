@@ -1,0 +1,6 @@
+- title "New Game Upload"
+= simple_form_for [:league, :admin, @game_upload], :html => {:multipart => true} do |f|
+  = f.input :season_id, :as => :select, :collection => @season_options
+  = f.input :contents, :as => :file
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'

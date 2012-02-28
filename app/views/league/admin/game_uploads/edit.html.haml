@@ -1,0 +1,24 @@
+- title 'Edit Game Upload'
+= simple_form_for [:league, :admin, @game_upload], :html => {:multipart => true} do |f|
+  %fieldset
+    %legend Teams
+    = f.simple_fields_for :team_maps do |t|
+      = t.input :team_id, :as => :select, :collection => @team_options, :label => t.object.name
+  %fieldset
+    %legend Venues
+    = f.simple_fields_for :venue_maps do |t|
+      = t.input :venue_id, :as => :select, :collection => @venue_options, :label => t.object.name
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+
+.data
+  %table.table.table-striped.table-bordered
+    %tbody
+      - @game_upload.contents.each do |row|
+        %tr
+          - row.each do |col|
+            %td #{col}
+
+
+
+    

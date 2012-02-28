@@ -1,0 +1,7 @@
+%tr{ :id => "game_#{game.id.to_s}" }
+  %td #{game.starts_on.strftime('%a %m/%d/%y')}
+  %td #{game.starts_on.strftime('%l:%M %p')}
+  %td #{game.summary}
+  %td 
+    = link_to 'Post Result', new_league_admin_game_game_result_path(game.id), :remote => true, :class => "btn btn-mini"
+    = link_to "Statsheet", edit_league_admin_game_statsheet_path(game), :class => "btn btn-mini"

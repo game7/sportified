@@ -1,0 +1,5 @@
+= simple_form_for [:league, :admin, @venue] do |f|
+  = f.input :name
+  = f.input :short_name
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'

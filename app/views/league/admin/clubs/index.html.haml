@@ -1,0 +1,15 @@
+- title "Clubs"
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Actions
+  %tbody
+    - @clubs.each do |club|
+      %tr
+        %td #{club.name}
+        %td
+          = link_to 'Edit', edit_league_admin_club_path(club), :class => 'btn btn-mini'
+          = link_to 'Delete', [:league, :admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+= link_to 'New Club', new_league_admin_club_path, :class => "btn"

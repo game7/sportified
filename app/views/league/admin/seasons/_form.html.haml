@@ -1,0 +1,7 @@
+= simple_form_for [:league, :admin, @season] do |f|
+  = f.input :name
+  = f.input :starts_on
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+
+

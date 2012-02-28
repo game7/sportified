@@ -25,60 +25,61 @@
   end
 
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
+  match "league" => "league/home#index", :as => :league, :via => :get
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
+  match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
+  match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_standings, :via => :get
+  match 'league(/:division_slug)(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
+  match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team, :via => :get
+  match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule, :via => :get
+  match 'league/:division_slug/:season_slug/teams/:team_slug/roster' => 'league/teams#roster', :as => :league_team_roster, :via => :get
 
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+  match 'league/games/box_score/:id' => 'league/games#box_score', :as => :league_game_box_score, :via => :get
 
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+  namespace :league do
+    namespace :admin do
+      resources :standings_layouts do
+        get 'columns', :on => :member
+        resources :standings_columns do
+          post 'push_left', :on => :member
+          post 'push_right', :on => :member
+        end      
+      end
+      resource :league, :only => :show
+      resources :seasons, :shallow => true do
+        resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
+        end
+        resources :teams, :except => :index do
+        end
+      end
+      resources :clubs
+      resources :venues
+      resources :teams, :only => [:index], :shallow => true do
+        resources :players
+      end
+      resources :events
+      resources :games, :only => [:new, :create, :edit, :update]  do
+        resource :statsheet, :only => [:edit]
+        resource :game_result, :only => [:new, :create, :destroy]
+      end
+      resources :game_uploads do
+        post 'complete', :on => :member
+      end
+      resources :game_results, :only => [:index]
+      resources :hockey_statsheets, :only => [:edit, :update] do
+        resources :players, :controller => "hockey_players" do
+          post 'load', :on => :collection        
+          post 'reload', :on => :collection
+        end
+        resources :goals, :controller => "hockey_goals"
+        resources :penalties, :controller => "hockey_penalties"
+        resources :goaltenders, :controller => "hockey_goaltenders"
+      end
+    end
+  end
 
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end
