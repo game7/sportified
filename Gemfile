@@ -19,7 +19,6 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'icalendar'
 gem 'chronic'
 
-gem 'cancan'
 gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'delayed_job'

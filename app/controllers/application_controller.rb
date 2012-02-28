@@ -86,8 +86,16 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to], response_status)
   end
 
-  def current_ability
-    @current_ability ||= Ability.new(current_user, Site.current ? Site.current.id : nil)
+  
+  def current_user_is_host?
+    current_user and current_user.role? :super_admin
+  end
+  
+  def current_user_is_admin?
+    current_tenant_id = Tenant.current.id
+    current_user and current_user.roles.find_by_name(:admin).each do |role|
+      return true if role.tenant_id == current_tenant_id
+    end
   end
 
 end
