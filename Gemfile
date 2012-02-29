@@ -59,6 +59,7 @@ group :test do
 end
 
 group :development do
+  gem 'haml-rails'
   gem 'nifty-generators'  
 end
 
