@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+  require File.expand_path('../boot', __FILE__)
 
 #require 'rails/all'
 require "action_controller/railtie"
@@ -21,6 +21,7 @@ module Sportified
     config.mongoid.logger = Logger.new($stdout, :warn)
 
     config.generators do |g|
+      g.template_engine :haml
       g.orm :mongoid
       g.test_framework :rspec, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
