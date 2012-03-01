@@ -1,6 +1,11 @@
-class GameResult
+class Game::Result
   include Mongoid::Document
-
+  extend ActiveModel::Naming
+  
+  def self.model_name
+    ActiveModel::Name.new(self, Team)
+  end
+  
   embedded_in :game
   
   field :home_score, type: Integer, default: 0

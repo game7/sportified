@@ -19,7 +19,7 @@ class Game < Event
     return away_team_score < home_team_score
   end
 
-  embeds_one :result, class_name: "GameResult", cascade_callbacks: true
+  embeds_one :result, class_name: "Game::Result", cascade_callbacks: true
   has_one :statsheet
 
   def has_team?(team)

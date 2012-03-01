@@ -68,7 +68,7 @@
         resource :statsheet, :only => [:edit]
         resource :game_result, :only => [:new, :create, :destroy]
       end
-      resources :game_uploads do
+      resources :game_imports do
         post 'complete', :on => :member
       end
       resources :game_results, :only => [:index]

@@ -1,4 +1,4 @@
-class TeamMap
+class Map::Team
   include Mongoid::Document
 
   field :name

@@ -1,4 +1,4 @@
-class VenueMap
+class Map::Venue
   include Mongoid::Document
 
   field :name
