@@ -1,4 +1,4 @@
-class HockeyGoaltender
+class Statsheet::Hockey::Goaltender
   include Mongoid::Document
   include League::Sides
 

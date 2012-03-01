@@ -1,4 +1,4 @@
-class HockeyEvent
+class Statsheet::Hockey::Event
   include Mongoid::Document
   include League::Sides
 

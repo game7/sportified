@@ -1,4 +1,4 @@
-class HockeyPlayer
+class Statsheet::Hockey::Player
   include Mongoid::Document
   include League::Sides
 

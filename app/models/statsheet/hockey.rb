@@ -1,4 +1,4 @@
-class HockeyStatsheet < Statsheet
+class Statsheet::Hockey < Statsheet
   
   field :left_team_name
   field :right_team_name

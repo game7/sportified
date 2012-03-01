@@ -1,4 +1,4 @@
-class HockeyPenalty < HockeyEvent
+class Statsheet::Hockey::Penalty < Statsheet::Hockey::Event
 
   SEVERITIES = %w[minor major misconduct game_misconduct]
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing 
