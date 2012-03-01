@@ -5,8 +5,7 @@ class League::Admin::GamesController < League::Admin::BaseLeagueController
   before_filter :add_games_breadcrumb
   before_filter :load_season_options, :only => [:index, :new, :edit]
   before_filter :load_division_options, :only => [:index, :new, :edit]  
-  before_filter :load_venue_options, :only => [:new, :edit]  
-  before_filter :load_team_options, :only => [:new, :edit]
+  before_filter :load_venue_options, :only => [:new, :edit] 
   before_filter :find_game, :only => [:show, :edit, :update, :destroy]  
   before_filter :load_division, :only => [:index]
   before_filter :load_season, :only => [:index] 
@@ -19,9 +18,11 @@ class League::Admin::GamesController < League::Admin::BaseLeagueController
     @game = Game.new
     @game.season_id = params[:season_id]
     @game.venue_id = @venues[0].id if @venues.count
+    load_team_options
   end
 
   def edit
+    load_team_options @game.season
   end
 
   def create
@@ -71,9 +72,12 @@ class League::Admin::GamesController < League::Admin::BaseLeagueController
     @venues = Venue.asc(:name).entries
   end
 
-  def load_team_options
-    @teams = Team.asc(:name).entries.collect do |team|
-      [ "#{team.name} (#{team.division_name} Division)", team.id ]
+  def load_team_options(season = nil)
+    @teams = []
+    if season
+      @teams = season.teams.asc(:name).entries.collect do |team|
+        [ "#{team.name} (#{team.division_name} Division)", team.id ]
+      end
     end
   end
 

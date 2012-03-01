@@ -26,6 +26,8 @@ module Sportified
       g.test_framework :rspec, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
+    
+    config.mongoid.observers = :game_result_observer
 
 
     # Settings in config/environments/* take precedence over those specified here.

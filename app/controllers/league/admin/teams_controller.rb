@@ -9,6 +9,14 @@ class League::Admin::TeamsController < League::Admin::BaseLeagueController
   before_filter :load_club_options, :only => [:new, :edit]
 
   def index
+    @teams = Team.all
+    @teams = @teams.for_season(@season) if @season
+    @teams = @teams.for_division(@division) if @division    
+    @teams = @teams.asc(:name).entries
+    respond_to do |format|
+      format.html
+      format.json { render :json => @teams }
+    end
   end
 
   def show
@@ -83,7 +91,7 @@ class League::Admin::TeamsController < League::Admin::BaseLeagueController
 
   def load_season_links
     @season_links = Season.all.desc(:starts_on).each.collect do |s|
-      [s.name, admin_teams_path(:season_id => s.id)]
+      [s.name, league_admin_teams_path(:season_id => s.id)]
     end
   end
 end

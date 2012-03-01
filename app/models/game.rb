@@ -19,7 +19,7 @@ class Game < Event
     return away_team_score < home_team_score
   end
 
-  embeds_one :result, :class_name => "GameResult"
+  embeds_one :result, class_name: "GameResult", cascade_callbacks: true
   has_one :statsheet
 
   def has_team?(team)
@@ -66,31 +66,29 @@ class Game < Event
 
   before_save :update_summary
   def update_summary
-    #unless state == 'pending' || state == nil
-    #  tag = ''
-    #  if state == 'final'
-    #    case completed_in
-    #      when 'overtime' 
-    #        tag = ' (OT)'
-    #      when 'shootout' 
-    #        tag = ' (SO)'
-    #      when 'forfeit' 
-    #        tag = ' (FORFEIT)'
-    #    end
-    #  end
-    #  if away_team_score > home_team_score
-    #    summary = "#{away_team_name} #{away_team_score}, #{home_team_name} #{home_team_score}#{tag}"
-    #  else
-    #    summary = "#{home_team_name} #{home_team_score}, #{away_team_name} #{away_team_score}#{tag}"
-    #  end
-    #else
+    if has_result?
+      tag = ''
+      case result.completed_in
+        when 'overtime' 
+          tag = ' (OT)'
+        when 'shootout' 
+          tag = ' (SO)'
+        when 'forfeit' 
+          tag = ' (FORFEIT)'
+      end
+      if result.away_score > result.home_score
+        summary = "#{away_team_name} #{result.away_score}, #{home_team_name} #{result.home_score}#{tag}"
+      else
+        summary = "#{home_team_name} #{result.home_score}, #{away_team_name} #{result.away_score}#{tag}"
+      end
+    else
       summary = "#{away_team_name} vs. #{home_team_name}"
-    #end
+    end
     self.summary = summary
   end
 
   def has_result?
-    self.completed_in.present?
+    !self.result.nil?
   end
 
   def display_score?
