@@ -1,5 +1,10 @@
-class TeamRecord
+class Team::Record
   include Mongoid::Document
+  extend ActiveModel::Naming
+  
+  def self.model_name
+    ActiveModel::Name.new(self, Team)
+  end
 
   field :gp, :type => Integer, :default => 0
   field :w, :type => Integer, :default => 0

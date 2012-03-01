@@ -41,7 +41,7 @@ class Team
   has_many :players  
   has_many :games, :inverse_of => :home_team
   has_many :games, :inverse_of => :away_team
-  embeds_one :record, :class_name => "TeamRecord"
+  embeds_one :record, :class_name => "Team::Record"
 
   validates_presence_of :name
   validates_presence_of :division_id
@@ -61,7 +61,7 @@ class Team
   
   before_save :ensure_record
   def ensure_record
-    self.record ||= TeamRecord.new
+    self.record ||= Team::Record.new
   end
 
   before_create :get_division_name_and_slug

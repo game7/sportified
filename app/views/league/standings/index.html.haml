@@ -1,14 +1,20 @@
 - title 'Standings'
-.controls.left Season: #{standings_season_select(@division)}
-.clear
-.mod-container.mod-table.mod-no-header
-  .mod-content
-    = render :partial => "standings_table", :locals => { :teams => @teams, :columns => @columns }
-  .mod-footer
-    .foot-header.group-head Glossary
-    .foot-content
-      = render :partial => "standings_glossary", :locals => { :columns => @columns }
-    .foot-footer 
-      %p Standings are updated with the posting of each game's final result
-
+- @season.divisions.asc(:name).each do |division|
+  %h2= division.name
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th TEAM
+        %th GP
+        %th W
+        %th L
+        %th PTS
+      %tbody
+        - division.teams.asc(:name).each do |team|
+          %tr
+            %td= team.name
+            %td= team.record.gp
+            %td= team.record.w
+            %td= team.record.l
+            %td= team.record.pts
 
