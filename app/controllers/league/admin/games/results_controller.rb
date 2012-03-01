@@ -1,21 +1,15 @@
-class League::Admin::GameResultsController < League::Admin::BaseLeagueController
+class League::Admin::Games::ResultsController < League::Admin::BaseLeagueController
   
   before_filter :add_game_results_breadcrumb
   before_filter :find_game, :only => [:new, :create, :destroy]
-
-  def index
-    @games = Game.all
-    @games = @games.in_the_past.without_result
-    @games = @games.desc(:starts_on)
-  end
 
   def new
     @game_result = @game.build_result
   end
 
   def create
-    @game_result = @game.build_result(params[:game_result])
-    if @game_result.save
+    @result = @game.build_result(params[:game_result])
+    if @game.save
       flash[:success] = "Game Result has been posted."
     else
       flash[:error] = "Game Result could not be posted."
