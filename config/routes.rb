@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get "dashboard/index"
+
   root :to => "welcome#index"
   
   match 'users/auth/facebook/setup' => 'sessions#setup'
@@ -32,7 +34,7 @@
   match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
   match 'league/:division_slug(/:season_slug)/standings' => 'league/standings#index', :as => :league_standings, :via => :get
   match 'league(/:division_slug)(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
-  match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
+  #match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
 
   match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team, :via => :get
   match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule, :via => :get
@@ -42,6 +44,7 @@
 
   namespace :league do
     namespace :admin do
+      root :to => "dashboard#show"
       resources :standings_layouts do
         get 'columns', :on => :member
         resources :standings_columns do
@@ -49,7 +52,6 @@
           post 'push_right', :on => :member
         end      
       end
-      resource :league, :only => :show
       resources :seasons, :shallow => true do
         resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
         end
