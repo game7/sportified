@@ -1,2 +1,0 @@
-module League::SeasonsHelper
-end

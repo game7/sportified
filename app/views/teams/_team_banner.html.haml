@@ -1,0 +1,22 @@
+
+:css
+  .team-thumb { margin: 4px; border: 1px solid #{team.accent_color}; }
+  .banner.team { border: 2px solid #{team.accent_color}; background-color: #{team.primary_color} }
+  .name { color: #{team.text_color}; }
+  .links { color: #{team.text_color}; }
+  .links a:link, .links a:visited, .links a:active { color: #{team.link_color}; }
+  .links a:hover { color: #{team.text_color}; }
+
+
+.banner.team
+  .team-thumb.left
+    = render :partial => 'shared/team_thumb', :locals => { :team => team }
+  .name.left{ :style => "margin: 4px; font-size: 45px; line-height: 50px; font-weight: bold; font-style: italic;"}
+    #{team.name}
+  .links.right{ :style => "margin: 4px 8px; font-size: 12px;"}
+    = link_to 'Home', team_path(team.division_slug, team.season_slug, team.slug)
+    = " | "
+    = link_to 'Schedule', team_schedule_path(team.division_slug, team.season_slug, team.slug)
+    = " | "
+    = link_to 'Roster', team_roster_path(team.division_slug, team.season_slug, team.slug)
+  .clear

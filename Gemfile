@@ -30,7 +30,6 @@ gem 'fog'
 gem 'rmagick'
 
 
-gem 'league', :path => "vendor/engines/league"
 gem 'pages', :path => "vendor/engines/pages"
 
 # gem 'aws-s3', :require => 'aws/s3'

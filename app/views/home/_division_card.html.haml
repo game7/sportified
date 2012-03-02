@@ -1,0 +1,10 @@
+.division-card
+  %strong #{division.name} Division
+  %ul
+    %li #{link_to 'Home', division_path(division.slug)}
+    %li #{link_to 'Schedule', schedule_path(division.slug)}
+    %li #{link_to 'Scoreboard', scoreboard_path(division.slug)}
+    %li #{link_to 'Standings', standings_path(division.slug)}
+    %li #{link_to 'Teams', teams_path(division.slug)}
+
+

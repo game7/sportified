@@ -1,0 +1,59 @@
+.game-box
+  .game-header
+    %table.game-header-table
+      %tbody
+        %tr
+          %td.winner #{'>' if game.has_result? && game.left_team_is_winner?}
+          %td.team-name 
+            - team = game.left_team
+            //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
+            = game.left_team.name
+          %td.team-score #{game.left_team_score if game.has_result?}
+        %tr
+          %td{ :colspan => "4", :class => "team-record" }
+        %tr
+          %td.winner #{'>' if game.has_result? && game.right_team_is_winner?}
+          %td.team-name 
+            - team = game.right_team
+            //= image_tag team.logo.micro_thumb.url.to_s if team && team.logo?
+            = game.right_team.name
+          %td.team-score #{game.right_team_score if game.has_result?}
+        %tr
+          %td{ :colspan => "4", :class => "team-record" }
+    %ul.game-info
+      %li.status #{game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")}
+    .clear
+  - stats = game.statsheet
+  - if stats
+    .game-links
+      = link_to 'Box Score', game_box_score_path(game)
+    .game-details
+      %table
+        %thead
+          %tr
+            %th
+            %th 1
+            %th 2
+            %th 3
+            - if stats.overtime?
+              %th OT
+            %th T
+        %tbody
+          %tr
+            %td #{stats.left_team_name}
+            %td #{stats.left_goals_1}
+            %td #{stats.left_goals_2}
+            %td #{stats.left_goals_3}
+            - if stats.overtime?
+              %td #{stats.left_goals_ot}
+            %td #{stats.left_goals_total}
+          %tr
+            %td #{stats.right_team_name}
+            %td #{stats.right_goals_1}
+            %td #{stats.right_goals_2}
+            %td #{stats.right_goals_3}
+            - if stats.overtime?
+              %td #{stats.right_goals_ot}
+            %td #{stats.right_goals_total}
+          
+
