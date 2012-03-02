@@ -4,7 +4,7 @@ class Page
   include Mongoid::Tree
   include Mongoid::Tree::Traversal
   include Mongoid::Tree::Ordering
-  include Sportified::SiteContext
+  include Sportified::TenantScoped
   cache
 
   default_scope

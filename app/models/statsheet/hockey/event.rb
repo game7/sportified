@@ -1,6 +1,6 @@
 class Statsheet::Hockey::Event
   include Mongoid::Document
-  include League::Sides
+  include Statsheet::Sides
 
   PER = %w[1 2 3 OT]
 

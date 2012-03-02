@@ -1,6 +1,6 @@
 class Statsheet::Hockey::Player
   include Mongoid::Document
-  include League::Sides
+  include Statsheet::Sides
 
   field :played, :type => Boolean, :default => true
   field :name

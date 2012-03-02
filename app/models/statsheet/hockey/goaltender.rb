@@ -1,6 +1,6 @@
 class Statsheet::Hockey::Goaltender
   include Mongoid::Document
-  include League::Sides
+  include Statsheet::Sides
 
   field :plr
 
