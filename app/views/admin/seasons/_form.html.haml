@@ -1,6 +1,7 @@
-= simple_form_for [:league, :admin, @season] do |f|
+= simple_form_for [:admin, @season] do |f|
   = f.input :name
   = f.input :starts_on
+  = f.association :leagues, :collection => League.all.asc(:name), :as => :check_boxes
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'
 

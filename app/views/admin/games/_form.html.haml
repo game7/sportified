@@ -1,4 +1,4 @@
-= simple_form_for [:league, :admin, @game] do |f|
+= simple_form_for [:admin, @game] do |f|
   %fieldset 
     %legend Logistics
     = f.input :season_id, :as => :select, :collection => @seasons

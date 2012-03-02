@@ -1,4 +1,4 @@
-= simple_form_for [:league, :admin, @season, @team] do |f|
+= simple_form_for [:admin, @season, @team] do |f|
   = f.input :division_id, :as => :select, :collection => @divisions
   = f.input :name
   = f.input :short_name

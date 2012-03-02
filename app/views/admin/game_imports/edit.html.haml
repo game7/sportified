@@ -1,5 +1,5 @@
 - title 'Edit Game Import'
-= simple_form_for [:league, :admin, @game_import], :html => {:multipart => true} do |f|
+= simple_form_for [:admin, @game_import], :html => {:multipart => true} do |f|
   %fieldset
     %legend Teams
     = f.simple_fields_for :teams do |t|

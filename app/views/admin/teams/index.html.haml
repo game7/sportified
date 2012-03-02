@@ -17,4 +17,4 @@
           %td= team.name
           %td
             = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-mini'
-            = link_to 'Delete', [:league, :admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+            = link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'

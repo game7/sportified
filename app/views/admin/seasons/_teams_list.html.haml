@@ -10,7 +10,7 @@
     %td #{team.short_name}
     %td #{link_to 'Roster', team_players_path(team)}
     %td 
-      = link_to 'Show', [:league, team]
+      = link_to 'Show', [team]
       = link_to 'Edit', edit_team_path(team)
-      = link_to 'Destroy', [:league, team], :confirm => 'Are you sure?', :method => :delete
+      = link_to 'Destroy', [team], :confirm => 'Are you sure?', :method => :delete
 = link_to 'New Team', new_season_team_path(@season)

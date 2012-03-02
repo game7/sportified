@@ -11,5 +11,5 @@
         %td #{club.name}
         %td
           = link_to 'Edit', edit_admin_club_path(club), :class => 'btn btn-mini'
-          = link_to 'Delete', [:league, :admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+          = link_to 'Delete', [:admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
 = link_to 'New Club', new_admin_club_path, :class => "btn"

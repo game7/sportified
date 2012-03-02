@@ -1,5 +1,11 @@
 ::Sportified::Application.routes.draw do
 
+  get "leagues/index"
+
+  get "leagues/new"
+
+  get "leagues/edit"
+
   get "dashboard/index"
 
   root :to => "welcome#index"
@@ -43,6 +49,7 @@
   #match 'league/games/box_score/:id' => 'league/games#box_score', :as => :league_game_box_score, :via => :get
 
   namespace :admin do
+    resources :leagues
     resources :standings_layouts do
       get 'columns', :on => :member
       resources :standings_columns do

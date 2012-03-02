@@ -3,6 +3,8 @@ class Team
   include Sportified::TenantScoped
  
   field :name
+  validates :name, presence: true
+  
   field :short_name
   field :slug
   field :show_in_standings, :type => Boolean, :default => true
@@ -28,13 +30,19 @@ class Team
 
   mount_uploader :logo, TeamLogoUploader
 
+  belongs_to :league
+  validates_presence_of :league_id  
+  field :league_name
+  field :league_slug
+
+  belongs_to :season
+  validates_presence_of :season_id
+  field :season_name
+  field :season_slug
+
   belongs_to :division
   field :division_name
   field :division_slug
-
-  belongs_to :season
-  field :season_name
-  field :season_slug
 
   belongs_to :club
 
@@ -42,10 +50,6 @@ class Team
   has_many :games, :inverse_of => :home_team
   has_many :games, :inverse_of => :away_team
   embeds_one :record, :class_name => "Team::Record"
-
-  validates_presence_of :name
-  validates_presence_of :division_id
-  validates_presence_of :season_id
 
   before_save :set_slug
   def set_slug
@@ -62,6 +66,13 @@ class Team
   before_save :ensure_record
   def ensure_record
     self.record ||= Team::Record.new
+  end
+  
+  before_create :get_league_name_and_slug
+  def get_league_name_and_slug
+    league = self.league
+    self.league_name = league ? league.name : nil
+    self.league_slug = league ? league.slug : nil
   end
 
   before_create :get_division_name_and_slug
