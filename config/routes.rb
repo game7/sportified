@@ -42,44 +42,41 @@
   #
   #match 'league/games/box_score/:id' => 'league/games#box_score', :as => :league_game_box_score, :via => :get
 
-  namespace :league do
-    namespace :admin do
-      root :to => "dashboard#show"
-      resources :standings_layouts do
-        get 'columns', :on => :member
-        resources :standings_columns do
-          post 'push_left', :on => :member
-          post 'push_right', :on => :member
-        end      
+  namespace :admin do
+    resources :standings_layouts do
+      get 'columns', :on => :member
+      resources :standings_columns do
+        post 'push_left', :on => :member
+        post 'push_right', :on => :member
+      end      
+    end
+    resources :seasons, :shallow => true do
+      resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
       end
-      resources :seasons, :shallow => true do
-        resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
-        end
-        resources :teams, :except => :index do
-        end
+      resources :teams, :except => :index do
       end
-      resources :clubs
-      resources :venues
-      resources :teams, :only => [:index], :shallow => true do
-        resources :players
+    end
+    resources :clubs
+    resources :venues
+    resources :teams, :only => [:index], :shallow => true do
+      resources :players
+    end
+    resources :events
+    resources :games, :only => [:new, :create, :edit, :update]  do
+      resource :statsheet, :only => [:edit]
+      resource :result, :only => [:new, :create, :destroy], :module => :games
+    end
+    resources :game_imports do
+      post 'complete', :on => :member
+    end
+    resources :hockey_statsheets, :only => [:edit, :update] do
+      resources :players, :controller => "hockey_players" do
+        post 'load', :on => :collection        
+        post 'reload', :on => :collection
       end
-      resources :events
-      resources :games, :only => [:new, :create, :edit, :update]  do
-        resource :statsheet, :only => [:edit]
-        resource :result, :only => [:new, :create, :destroy], :module => :games
-      end
-      resources :game_imports do
-        post 'complete', :on => :member
-      end
-      resources :hockey_statsheets, :only => [:edit, :update] do
-        resources :players, :controller => "hockey_players" do
-          post 'load', :on => :collection        
-          post 'reload', :on => :collection
-        end
-        resources :goals, :controller => "hockey_goals"
-        resources :penalties, :controller => "hockey_penalties"
-        resources :goaltenders, :controller => "hockey_goaltenders"
-      end
+      resources :goals, :controller => "hockey_goals"
+      resources :penalties, :controller => "hockey_penalties"
+      resources :goaltenders, :controller => "hockey_goaltenders"
     end
   end
 

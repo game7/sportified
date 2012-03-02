@@ -1,7 +1,4 @@
-class Admin::DashboardController < Admin::AdminController
-
-  def index
-    
+class Admin::DashboardController < Admin::BaseLeagueController
+  def show
   end
-
 end
