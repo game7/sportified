@@ -7,11 +7,6 @@ GIT
       activemodel (~> 3.0)
 
 PATH
-  remote: vendor/engines/league
-  specs:
-    league (0.0.1)
-
-PATH
   remote: vendor/engines/pages
   specs:
     pages (0.0.1)
@@ -321,7 +316,6 @@ DEPENDENCIES
   icalendar
   jquery-rails
   launchy
-  league!
   less-rails-bootstrap
   machinist_mongo
   mongoid
