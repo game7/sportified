@@ -1,7 +1,6 @@
 class Season
   include Mongoid::Document
   include Sportified::TenantScoped
-  include Sportified::PublishesMessages
   cache
  
   field :name  
@@ -29,15 +28,5 @@ class Season
   before_save do |season|
     season.slug = season.name.parameterize    
   end
-  before_save do |season|
-    if season.persisted? && season.name_changed?
-      msg = Message.new(:season_renamed)
-      msg.data[:season_id] = season.id
-      msg.data[:season_name] = season.name
-      msg.data[:season_slug] = season.slug
-      enqueue_message msg     
-    end   
-  end
-
 
 end
