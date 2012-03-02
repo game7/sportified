@@ -10,7 +10,7 @@ class Season
 
   has_many :divisions
   has_many :teams
-  has_many :games
+  has_many :events
 
   validates_presence_of :name, :starts_on
 

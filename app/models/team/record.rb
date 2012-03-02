@@ -34,7 +34,7 @@ class Team::Record
   field :rpi, :type => Float, :default => 0.00
 
   embedded_in :team
-  embeds_many :results, :class_name => 'TeamGameResult'
+  embeds_many :results, :class_name => 'Team::Record::Result'
 
   def self.list_fields
     fields = []
@@ -77,16 +77,16 @@ class Team::Record
 
     raise 'Game already posted to team record' if is_game_posted?(game)
 
-    @team_game_result = TeamGameResult.new(:team => self.team.id, :game => game)
-    apply_team_game_result(@team_game_result)
+    result = Team::Record::Result.new(:team => self.team.id, :game => game)
+    apply_result(result)
     
   end
 
   def cancel_result_for_game(game)
-    @result = self.results.where( :game_id => game.id ).first
-    if @result
-      @result.delete      
-      remove_team_game_result(@result)
+    result = self.results.where( :game_id => game.id ).first
+    if result
+      result.delete      
+      remove_result(result)
     end
   end
 
@@ -125,7 +125,7 @@ class Team::Record
     end
   end
 
-  def apply_team_game_result(result)
+  def apply_result(result)
     
     self.gp += 1
     self.apply_decision(result.decision, result.completed_in, 1)
@@ -141,7 +141,7 @@ class Team::Record
     self.update_streak!  
   end
 
-  def remove_team_game_result(result)
+  def remove_result(result)
     self.gp -= 1
     self.apply_decision(result.decision, result.completed_in, -1)
     self.update_points!

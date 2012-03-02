@@ -4,7 +4,7 @@ class League::Admin::Games::ResultsController < League::Admin::BaseLeagueControl
   before_filter :find_game, :only => [:new, :create, :destroy]
 
   def new
-    @game_result = @game.build_result
+    @result = @game.build_result
   end
 
   def create
