@@ -1,7 +1,8 @@
 = simple_form_for [:admin, @season, @team] do |f|
-  = f.input :division_id, :as => :select, :collection => @divisions
+  = f.input :league_id, :as => :select, :collection => @leagues if %w{new create}.include? params[:action]
   = f.input :name
   = f.input :short_name
+  = f.input :division_id, :as => :select, :collection => @divisions  
   = f.input :club_id, :as => :select, :collection => @clubs
   = f.input :show_in_standings, :as => :boolean
   .form-actions

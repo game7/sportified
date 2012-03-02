@@ -2,14 +2,10 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
   before_filter :add_seasons_breadcrumb  
-  before_filter :find_season, :only => [:show, :edit, :update, :delete]
+  before_filter :find_season, :only => [:edit, :update, :delete]
   before_filter :find_seasons, :only => [:index]
 
   def index
-  end
-
-  def show
-    @teams = @season.teams.asc(:name)
   end
 
   def new

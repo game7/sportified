@@ -1,4 +1,4 @@
-class Admin::LeaguesController < ApplicationController
+class Admin::LeaguesController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
   before_filter :add_breadcrumbs
   before_filter :find_league, :only => [:edit, :update, :destroy]

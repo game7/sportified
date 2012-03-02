@@ -1,7 +1,0 @@
-<% title @season.name %>
-<% @season.leagues.each do |league| %>
-	<%= render :partial => 'league', :object => league, :locals => { :season => @season, :teams => @teams } %>
-<% end %>
-
-
-

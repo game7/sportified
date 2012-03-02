@@ -113,6 +113,10 @@ class Team
   end
 
   class << self
+    def for_league(league)
+      league_id = ( league.class == League ? league.id : league )
+      where(:league_id => league_id)      
+    end
     def for_season(season)
       season_id = ( season.class == Season ? season.id : season )
       where(:season_id => season_id)

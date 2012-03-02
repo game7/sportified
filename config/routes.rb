@@ -58,16 +58,17 @@
       end      
     end
     resources :seasons, :shallow => true do
-      resources :divisions, :only => [:new, :create, :edit, :update, :destroy] do
-      end
+      resources :divisions, :only => [:new, :create, :edit, :update, :destroy]
       resources :teams, :except => :index do
-      end
+        resources :players      
+      end 
     end
+    resources :teams, :only => :index
+    
+  
+
     resources :clubs
     resources :venues
-    resources :teams, :only => [:index], :shallow => true do
-      resources :players
-    end
     resources :events
     resources :games, :only => [:new, :create, :edit, :update]  do
       resource :statsheet, :only => [:edit]
