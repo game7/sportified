@@ -1,17 +1,7 @@
 <% title @season.name %>
-<% @divisions.each_with_index do |division, i| %>
-	<% if i % 3 == 0 %>
-		<div class="row">
-	<% end%>
-			<div class="span4">
-				<%= render :partial => "division", :object => division %>
-			</div>
-	<% if i % 3 == 2 %>
-		</div>
-	<% end %>
+<% @season.leagues.each do |league| %>
+	<%= render :partial => 'league', :object => league, :locals => { :season => @season, :teams => @teams } %>
 <% end %>
-<div class="row"><div class="span12"></div></div>
-<%= link_to 'New Division', new_admin_season_division_path(@season), :class => "btn" %>
 
 
 

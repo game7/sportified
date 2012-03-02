@@ -9,7 +9,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def show
-    @divisions = @season.divisions.asc(:name)
+    @teams = @season.teams.asc(:name)
   end
 
   def new
