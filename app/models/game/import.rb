@@ -12,6 +12,13 @@ class Game::Import
    before_save do |import|
      import.season_name = import.season.name
    end
+   
+   referenced_in :league
+   field :league_name
+   validates_presence_of :league_id
+   before_save do |import|
+     import.league_name = import.league.name
+   end   
 
    field :columns, :type => Array, :default => []
 

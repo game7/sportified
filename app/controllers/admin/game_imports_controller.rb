@@ -5,7 +5,8 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   
   before_filter :add_games_breadcrumb
   before_filter :find_game_import, :only => [:edit, :update, :complete]
-  before_filter :load_season_options, :only => [:new, :create]    
+  before_filter :load_season_options, :only => [:new]
+  before_filter :load_league_options, :only => [:new]
   before_filter :load_team_options, :only => [:edit, :update]
   before_filter :load_venue_options, :only => [:edit, :update]  
 
@@ -25,12 +26,29 @@ class Admin::GameImportsController < Admin::BaseLeagueController
       redirect_to edit_admin_game_import_path(@game_import.id), :success => "Game Upload has been created."
     else
       flash[:error] = "Game Upload could not be created."
+      find_season
+      load_season_options
+      load_league_options
       render :action => "new"
     end
   end
 
   def edit
-    add_breadcrumb 'Edit'   
+    add_breadcrumb 'Edit'
+    #set defaults
+    @game_import.teams.each do |map|
+      @team_options.each do |option|
+        if map.team_id == nil
+          if map.name.include? option[0] or option[0].include? map.name
+            map.team_id = option[1]
+            break
+          end
+        end
+      end
+    end
+    @game_import.venues.each do |venue|
+      venue.venue_id = @venue_options[0].id if @venue_options.count == 1 and venue.venue_id == nil
+    end
   end
 
   def update
@@ -68,19 +86,31 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   def find_game_import
     @game_import = Game::Import.find(params[:id])
   end
+  
+  def find_season
+    @season = @game_import.season if @game_import
+  end
 
   def load_season_options
     @season_options = Season.desc(:starts_on)
   end
+  
+  def load_league_options
+    @league_options = []
+    @league_options = @season.leagues.desc(:starts_on) if @season
+  end  
 
   def load_team_options
-    @team_options = Team.asc(:name).entries.collect do |team|
-      [ "#{team.name} (#{team.division_name} Division)", team.id ]
+    @team_options = []
+    if @game_import
+      @team_options = Team.for_season(@game_import.season_id).for_league(@game_import.league_id).asc(:name).entries.collect do |team|
+        [ team.name, team.id ]
+      end
     end
   end
 
   def load_venue_options
-    @venue_options = Venue.asc(:name)
+    @venue_options = Venue.asc(:name).entries
   end
 
 
