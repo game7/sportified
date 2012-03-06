@@ -38,9 +38,12 @@ class Event
     event.venue_name = venue ? venue.name : ''
     event.venue_short_name = venue ? venue.short_name : ''
   end
+  
+  belongs_to :league
+  validates :league_id, presence: true
 
-  referenced_in :season
-  validates_presence_of :season_id
+  belongs_to :season
+  validates :season_id, presence: true
 
   has_and_belongs_to_many :divisions
   has_and_belongs_to_many :teams

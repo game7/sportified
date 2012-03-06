@@ -5,6 +5,11 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   
   def index
     @leagues = League.all.asc(:name)
+    @leagues = @leagues.for_season(params[:season_id]) if params[:season_id]
+    respond_to do |format|
+      format.html
+      format.json { render :json => @leagues.entries }
+    end    
   end
 
   def new

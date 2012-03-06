@@ -1,24 +1,25 @@
 = simple_form_for [:admin, @game] do |f|
   %fieldset 
     %legend Logistics
-    = f.input :season_id, :as => :select, :collection => @seasons
+    - if %w{new create}.include? params['action']
+      = f.input :season_id, :as => :select, :collection => @season_options 
+      = f.input :league_id, :as => :select, :collection => @league_options 
     = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
     = f.input :duration
-    = f.input :venue_id, :as => :select, :collection => @venues
+    = f.input :venue_id, :as => :select, :collection => @venue_options
   .row-fluid
     %fieldset.span6
       %legend Away Team
-      = f.input :away_team_id, :collection => @teams
+      = f.input :away_team_id, :collection => @team_options
       = f.input :away_custom_name, :as => :boolean
       = f.input :away_team_name
     %fieldset.span6
       %legend Home Team
-      = f.input :home_team_id, :collection => @teams
+      = f.input :home_team_id, :collection => @team_options
       = f.input :home_custom_name, :as => :boolean
       = f.input :home_team_name
   %fieldset 
-    %legend Visibility (optional)
-    = f.input :division_ids, :as => :check_boxes, :collection => @divisions, :label => 'Divisions', :checked => @game.division_ids
+    %legend Visibility
     = f.input :show_for_all_teams, :as => :boolean
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'
@@ -36,8 +37,40 @@
       });
     });
     $(document).ready(function(){
-        $("select#game_season_id").change(function(){
+      $(document).ready(function(){
+          $("select#game_season_id").change(function(){
+              var id_value_string = $(this).val();
+              if (id_value_string == "") { 
+                  // if the id is empty remove all the sub_selection options from being selectable and do not do any ajax
+                  $("select[id$='league_id'] option").remove();
+                  var row = "<option value=\"" + "" + "\">" + "" + "</option>";
+                  $(row).appendTo("select[id$='league_id']");
+              }
+              else {
+                $.ajax({
+                    dataType: "json",
+                    cache: false,
+                    url: '#{admin_leagues_path}?season_id=' + id_value_string,
+                    timeout: 2000,
+                    error: function(XMLHttpRequest, errorTextStatus, error){
+                        alert("Failed to submit : "+ errorTextStatus+" ;"+error);
+                    },
+                    success: function(data){  
+                        $("select[id$='league_id'] option").remove();
+                        var row = "<option value=\"" + "" + "\">" + "" + "</option>";
+                        $(row).appendTo("select[id$='league_id']"); 
+                        $.each(data, function(i, j){
+                            row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
+                            $(row).appendTo("select[id$='league_id']");
+                        });
+                     }
+                });
+              };
+          });
+      });      
+        $("select#game_league_id").change(function(){
             var id_value_string = $(this).val();
+            var season_value_string = $("select#game_season_id").val();
             if (id_value_string == "") { 
                 // if the id is empty remove all the sub_selection options from being selectable and do not do any ajax
                 $("select[id$='team_id'] option").remove();
@@ -48,7 +81,7 @@
               $.ajax({
                   dataType: "json",
                   cache: false,
-                  url: '#{admin_teams_path}?season_id=' + id_value_string,
+                  url: '#{admin_teams_path}?season_id=' + season_value_string + '&league_id=' + id_value_string,
                   timeout: 2000,
                   error: function(XMLHttpRequest, errorTextStatus, error){
                       alert("Failed to submit : "+ errorTextStatus+" ;"+error);
@@ -58,7 +91,7 @@
                       var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                       $(row).appendTo("select[id$='team_id']"); 
                       $.each(data, function(i, j){
-                          row = "<option value=\"" + j._id + "\">" + j.name + " (" + j.division_name + " Division)</option>";
+                          row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
                           $(row).appendTo("select[id$='team_id']");
                       });
                    }

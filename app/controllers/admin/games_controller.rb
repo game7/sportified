@@ -3,26 +3,21 @@ class Admin::GamesController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit]  
   before_filter :add_games_breadcrumb
-  before_filter :load_season_options, :only => [:index, :new, :edit]
-  before_filter :load_division_options, :only => [:index, :new, :edit]  
+  before_filter :find_game, :only => [:edit, :update]   
+  before_filter :find_season, :only => [:new, :edit]
+  before_filter :load_season_options, :only => [:new, :edit]
+  before_filter :load_league_options, :only => [:new, :edit]
+  before_filter :load_team_options, :only => [:new, :edit]
   before_filter :load_venue_options, :only => [:new, :edit] 
-  before_filter :find_game, :only => [:show, :edit, :update, :destroy]  
-  before_filter :load_division, :only => [:index]
-  before_filter :load_season, :only => [:index] 
-  before_filter :load_games, :only => [:index]
-
-  def index
-  end
+ 
 
   def new
     @game = Game.new
-    @game.season_id = params[:season_id]
-    @game.venue_id = @venues[0].id if @venues.count
-    load_team_options
+    @game.season = @season if @season
+    @game.venue_id = @venue_options[0].id if @venue_options.count == 1
   end
 
   def edit
-    load_team_options @game.season
   end
 
   def create
@@ -32,10 +27,11 @@ class Admin::GamesController < Admin::BaseLeagueController
       return_to_last_point :success => 'Game was successfully created.'
     else
       flash[:error] = "Game could not be created."
+      find_season
       load_season_options
+      load_league_options
       load_team_options
       load_venue_options
-      load_division_options
       render :action => "new"
     end
   end
@@ -46,10 +42,11 @@ class Admin::GamesController < Admin::BaseLeagueController
       return_to_last_point :success => 'Game was successfully updated.'
     else
       flash[:error] = "Game could not be updated."
+      find_season
       load_season_options
+      load_league_options
       load_team_options
       load_venue_options     
-      load_division_options
       render :action => "edit"
     end
   end
@@ -61,22 +58,24 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def load_season_options
-    @seasons = Season.desc(:starts_on).entries
+    @season_options = Season.desc(:starts_on)
   end
-
-  def load_division_options
-    @divisions = Division.asc(:name).entries
-  end
+  
+  def load_league_options
+    @league_options = []    
+    @league_options = @season.leagues.asc(:name) if @season
+  end  
 
   def load_venue_options
-    @venues = Venue.asc(:name).entries
+    @venue_options = Venue.asc(:name).entries
   end
 
-  def load_team_options(season = nil)
-    @teams = []
-    if season
-      @teams = season.teams.asc(:name).entries.collect do |team|
-        [ "#{team.name} (#{team.division_name} Division)", team.id ]
+  def load_team_options
+    @team_options = []
+    if @season and @game and @game.league_id
+      puts 'TEAMS!!!'
+      @team_options = @season.teams.for_league(@game.league_id).asc(:name).entries.collect do |team|
+        [ team.name, team.id ]
       end
     end
   end
@@ -85,28 +84,10 @@ class Admin::GamesController < Admin::BaseLeagueController
     @game = Game.find(params[:id])  
   end
 
-  def load_division
-    @division = Division.find(params[:division_id]) if params[:division_id]
+  def find_season
+    @season = @game.season if @game
+    @season ||= Season.find(params[:season_id]) if params[:season_id]
+    @season ||= Season.most_recent 
   end
-
-  def load_season
-    @season = Season.find(params[:season_id]) if params[:season_id]    
-  end
-
-  def load_games
-    @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    @days_in_future = 14
-    @days_in_past = 7
-    @start_date = @date - @days_in_past - 1
-    @end_date = @date + @days_in_future + 1
-    @next_date = @date + @days_in_future + @days_in_past
-    @prev_date = @date - @days_in_future - @days_in_past
-
-    @games = Game.all  
-    @games = @games.for_division(@division) if @division
-    @games = @games.for_season(@season) if @season
-    @games = @games.between(@start_date, @end_date) unless @division.present? || @season.present?
-    @games = @games.asc(:starts_on)    
-  end  
 
 end

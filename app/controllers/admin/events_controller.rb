@@ -2,23 +2,21 @@ require "chronic"
 class Admin::EventsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_events_breadcrumb
+  before_filter :add_events_breadcrumb  
   before_filter :load_event, :only => [:edit, :update, :destroy]
+  before_filter :find_season, :only => [:index, :new, :create]
   before_filter :load_season_options, :only => [:new, :edit]
-  before_filter :load_season_links, :only => [:index, :new, :edit]
-  before_filter :load_division_options, :only => [:index, :new, :edit]  
-  before_filter :load_venue_options, :only => [:new, :edit]  
-  before_filter :load_division, :only => [:index]
-  before_filter :load_season, :only => [:index]  
+  before_filter :load_league_options, :only => [:new, :edit]
+  before_filter :load_venue_options, :only => [:new, :edit]     
+  before_filter :load_season_links, :only => [:index]
   before_filter :load_events, :only => [:index]
 
   def index
   end
 
   def new
-    @event = Event.new
-    @event.season_id = params[:season_id]
-    @event.venue_id = @venues[0].id if @venues.count
+    @event = Event.new(:season => @season, :league_id => params[:league_id])
+    @event.venue_id = @venue_options[0].id if @venue_options.count
   end
 
   def edit
@@ -31,8 +29,8 @@ class Admin::EventsController < Admin::BaseLeagueController
     else
       flash[:error] = 'Event could not be created.'
       load_season_options
+      load_league_options
       load_venue_options
-      load_division_options
       render :action => "new"
     end
   end
@@ -43,10 +41,10 @@ class Admin::EventsController < Admin::BaseLeagueController
     if @event.update_attributes(params[:event])
       return_to_last_point(:notice => 'Event was successfully updated.')
     else
-      flash[:error] = 'Event could not be updated.'      
+      flash[:error] = 'Event could not be updated.'
       load_season_options
+      load_league_options      
       load_venue_options     
-      load_division_options
       render :action => "edit"
     end
   end
@@ -71,27 +69,25 @@ class Admin::EventsController < Admin::BaseLeagueController
     @season_links = Season.all.desc(:starts_on).each.collect do |s|
       [s.name, admin_events_path(:season_id => s.id, :date => params[:date])]
     end
-    @season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
+    #@season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
   end
   
   def load_season_options
-    @seasons = Season.desc(:starts_on).entries
-  end
+    @season_options = Season.desc(:starts_on)
+  end  
 
-  def load_division_options
-    @divisions = Division.asc(:name).entries
+  def load_league_options
+    @league_options = @season.leagues.asc(:name) if @season
+    @league_options ||= []
   end
 
   def load_venue_options
-    @venues = Venue.asc(:name).entries
+    @venue_options = Venue.asc(:name).entries
   end
 
-  def load_division
-    @division = Division.find(params[:division_id]) if params[:division_id]
-  end
-
-  def load_season
-    @season = Season.find(params[:season_id]) if params[:season_id]    
+  def find_season
+    @season = Season.find(params[:season_id]) if params[:season_id]
+    @season ||= Season.most_recent()
   end
 
   def load_events
@@ -107,7 +103,6 @@ class Admin::EventsController < Admin::BaseLeagueController
     end
 
     @events = Event.all    
-    @events = @events.for_division(@division) if @division
     @events = @events.for_season(@season) if @season
     @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
     @events = @events.asc(:starts_on)    

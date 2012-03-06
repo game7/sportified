@@ -1,11 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-  get "leagues/index"
-
-  get "leagues/new"
-
-  get "leagues/edit"
-
   get "dashboard/index"
 
   root :to => "welcome#index"
@@ -50,42 +44,44 @@
 
   namespace :admin do
     resources :leagues
-    resources :standings_layouts do
-      get 'columns', :on => :member
-      resources :standings_columns do
-        post 'push_left', :on => :member
-        post 'push_right', :on => :member
-      end      
-    end
+
     resources :seasons, :shallow => true do
       resources :divisions, :only => [:new, :create, :edit, :update, :destroy]
       resources :teams, :except => :index do
         resources :players      
-      end 
+      end
     end
     resources :teams, :only => :index
-    
-  
+    resources :events
+    resources :games do
+      resource :statsheet, :only => [:edit]
+      resource :result, :only => [:new, :create, :destroy], :module => :games
+    end
 
     resources :clubs
     resources :venues
     resources :events
-    resources :games, :only => [:new, :create, :edit, :update]  do
-      resource :statsheet, :only => [:edit]
-      resource :result, :only => [:new, :create, :destroy], :module => :games
-    end
     resources :game_imports do
       post 'complete', :on => :member
     end
-    resources :hockey_statsheets, :only => [:edit, :update] do
-      resources :players, :controller => "hockey_players" do
-        post 'load', :on => :collection        
-        post 'reload', :on => :collection
-      end
-      resources :goals, :controller => "hockey_goals"
-      resources :penalties, :controller => "hockey_penalties"
-      resources :goaltenders, :controller => "hockey_goaltenders"
-    end
+    
+    #resources :hockey_statsheets, :only => [:edit, :update] do
+    #  resources :players, :controller => "hockey_players" do
+    #    post 'load', :on => :collection        
+    #    post 'reload', :on => :collection
+    #  end
+    #  resources :goals, :controller => "hockey_goals"
+    #  resources :penalties, :controller => "hockey_penalties"
+    #  resources :goaltenders, :controller => "hockey_goaltenders"
+    #end
+    
+    #resources :standings_layouts do
+    #  get 'columns', :on => :member
+    #  resources :standings_columns do
+    #    post 'push_left', :on => :member
+    #    post 'push_right', :on => :member
+    #  end      
+    #end
   end
 
 end

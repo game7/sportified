@@ -13,4 +13,11 @@ class League
     league.slug = league.name.parameterize    
   end
   
+  class << self
+    def for_season(season)
+      season_id = ( season.class == Season ? season.id : season )
+      where(:season_ids => season_id)
+    end
+  end  
+  
 end
