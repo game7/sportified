@@ -4,6 +4,8 @@ class Player
   field :first_name
   field :last_name
   field :jersey_number
+  field :birthdate, type: Date
+  field :email
 
   field :slug
 
@@ -13,6 +15,10 @@ class Player
 
   def full_name
     [first_name, last_name].join(' ')
+  end
+  
+  def age
+    ((Date.today - birthdate) / 365).floor
   end
 
   private

@@ -1,6 +1,7 @@
 %tr{ :class => cycle("odd","even") }
   %td= player.jersey_number
   %td= player.full_name
+  %td= player.age
   %td
     = link_to 'Edit', edit_admin_player_path(player), :class => 'btn btn-mini'
     = link_to 'Delete', [:admin, player], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
