@@ -1,13 +1,11 @@
 - title 'Player Roster'
 
-.mod-container.mod-table.mod-no-header-footer
-  .mod-content
-    %table.stat#roster{ :cellspacing => "1" }
-      %thead
-        %tr.col-head
-          %td NUM
-          %td NAME
-      %tbody
-        = render :partial => "player", :collection => @players
-.action
-  .player_add #{link_to 'Add Player', new_admin_team_player_path(@team)}
+%table.table.table-striped.table-bordered
+  %thead
+    %tr.col-head
+      %th NUM
+      %th NAME
+      %th ACTIONS
+  %tbody
+    = render :partial => "player", :collection => @players
+= link_to 'Add Player', new_admin_team_player_path(@team), :class => 'btn'
