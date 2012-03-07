@@ -35,7 +35,7 @@
         .wrapper
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-      #footer
+      #footer{ :style => 'height: 100px'}
     = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
     = yield :javascript
     :javascript

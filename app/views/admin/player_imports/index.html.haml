@@ -1,0 +1,23 @@
+- title "Player Imports"
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Date
+      %th Season
+      %th League      
+      %th Ready
+      %th Processed
+      %th Actions
+  %tbody  
+    - @player_imports.each do |import|
+      %tr
+        %td= import.created_at
+        %td= import.season_name
+        %td= import.league_name
+        %td= import.ready
+        %td= import.completed
+        %td
+          = link_to 'Edit', edit_admin_player_import_path(import), :class => 'btn btn-mini' unless import.completed
+          = link_to 'Complete', complete_admin_player_import_path(import), :method => :post, :class => 'btn btn-mini' if import.ready && !import.completed
+= link_to 'New Player Import', new_admin_player_import_path, :class => 'btn'

@@ -22,3 +22,4 @@
               = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-mini'
               = link_to "Roster", admin_team_players_path(team), :class => 'btn btn-mini'
               = link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+= link_to 'Import Players from File', new_admin_player_import_path, :class => "btn"

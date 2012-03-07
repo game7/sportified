@@ -1,5 +1,11 @@
 ::Sportified::Application.routes.draw do
 
+  get "player_imports/new"
+
+  get "player_imports/edit"
+
+  get "player_imports/index"
+
   get "dashboard/index"
 
   root :to => "welcome#index"
@@ -64,6 +70,9 @@
     resources :game_imports do
       post 'complete', :on => :member
     end
+    resources :player_imports do
+      post 'complete', :on => :member
+    end    
     
     #resources :hockey_statsheets, :only => [:edit, :update] do
     #  resources :players, :controller => "hockey_players" do

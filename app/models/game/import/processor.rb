@@ -10,7 +10,7 @@ class Game::Import::Processor
   def build_games!
     @import.contents.each_with_index do |row, i|
       next if i == 0
-      g = Game.new(:site => Site.current)
+      g = Game.new
       g.season_id = @import.season_id
       g.league_id = @import.league_id
       g.starts_on = Chronic.parse "#{get_column(:date, row)} #{get_column(:time, row)}"

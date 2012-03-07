@@ -1,0 +1,19 @@
+- title 'Edit Player Import'
+= simple_form_for [:admin, @player_import], :html => {:multipart => true} do |f|
+  %fieldset
+    %legend Teams
+    = f.simple_fields_for :teams do |t|
+      = t.input :team_id, :as => :select, :collection => @team_options, :label => t.object.name
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+.data
+  %table.table.table-striped.table-bordered
+    %tbody
+      - @player_import.contents.each do |row|
+        %tr
+          - row.each do |col|
+            %td= col
+
+
+
+    

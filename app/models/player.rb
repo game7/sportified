@@ -9,7 +9,8 @@ class Player
 
   field :slug
 
-  referenced_in :team
+  belongs_to :team
+  validates :team_id, presence: true
 
   before_save :set_slug
 
@@ -18,7 +19,7 @@ class Player
   end
   
   def age
-    ((Date.today - birthdate) / 365).floor
+    ((Date.today - birthdate) / 365).floor if birthdate
   end
 
   private
