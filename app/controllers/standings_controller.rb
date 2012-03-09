@@ -1,9 +1,5 @@
-class StandingsController < BaseDivisionSeasonController
-
-  def set_breadcrumbs
-    super
-    add_breadcrumb "Standings" 
-  end
+class StandingsController < BaseLeagueController
+  before_filter :find_season
   
   def index
     #layout = @division.standings_layout
@@ -15,8 +11,19 @@ class StandingsController < BaseDivisionSeasonController
     #  @teams = []
     #  flash[:error] = "Standings layout has not been setup for this division"
     #end
-    @season = Season.find(params[:season_id]) if params[:season_id]   
-    @season ||= Season.most_recent()    
+    @teams = @league.teams.for_season(@season).desc('record.pts')
+  end
+  
+  private
+
+  def set_breadcrumbs
+    super
+    add_breadcrumb "Standings" 
+  end 
+  
+  def find_season
+    @season = Season.find(params[:season_id]) if params[:season_id]
+    @season = Season.most_recent
   end
 
 

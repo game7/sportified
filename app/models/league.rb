@@ -8,10 +8,13 @@ class League
   field :slug, :type => String
   
   has_and_belongs_to_many :seasons
+  has_many :teams
   
   before_save do |league|
     league.slug = league.name.parameterize    
   end
+  
+  scope :with_slug, lambda { |slug| where(:slug => slug) }
   
   class << self
     def for_season(season)

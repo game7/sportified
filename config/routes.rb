@@ -34,11 +34,12 @@
 
 
 
+  match "programs/:league_slug/standings" => 'standings#index', :as => :standings, :via => :get
   #match "league" => "league/home#index", :as => :league, :via => :get
   #
   #match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
   #match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
-  match 'league/standings' => 'league/standings#index', :as => :league_standings, :via => :get
+  #match 'league/standings' => 'league/standings#index', :as => :league_standings, :via => :get
   #match 'league(/:division_slug)(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
   ##match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
   #

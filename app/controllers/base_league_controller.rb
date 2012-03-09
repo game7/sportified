@@ -1,4 +1,7 @@
 class BaseLeagueController < ApplicationController
+  before_filter :find_league
+
+  private
 
   def set_breadcrumbs
     super
@@ -14,5 +17,9 @@ class BaseLeagueController < ApplicationController
     ## TODO: add_area_menu_item('Statistics')
     #add_area_menu_item('Teams', teams_path)      
   end
+  
+  def find_league
+    @league = League.with_slug(params[:league_slug]).first
+  end  
 
 end
