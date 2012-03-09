@@ -16,7 +16,7 @@ class BaseLeagueController < ApplicationController
     add_area_menu_item('Scoreboard', "#")
     add_area_menu_item 'Standings', standings_path(@league)
     add_area_menu_item 'Statistics', "#"
-    add_area_menu_item 'Teams', "#"
+    add_area_menu_item 'Teams', teams_path(@league)
     add_area_menu_item 'Players', "#"    
   end
   
