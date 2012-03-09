@@ -1,37 +1,34 @@
 - edit_mode = ['edit','update'].index(params[:action]) ? true : false
-= form_for( @goaltender, :url => url, :remote => true ) do |f|
-  .row
-    .field
-      = f.label :side, 'Team'
-      = select :hockey_goaltender, :side, @sides, {:include_blank => 'Choose Team', :selected => @goaltender.side}, {:disabled => edit_mode}
-    .field
-      = f.label :plr, 'Player'
-      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
-  .row
-    %table
+= simple_form_for( @goaltender, :url => url, :remote => true ) do |f|
+  = f.input :side, :collection => @sides, :disabled => edit_mode, :label => 'Team'
+  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :label => 'Player Number', :input_html => {:class => "span1"}
+  %table.table.table-bordered
+    %thead
       %tr
-        %th
-        %th 1
-        %th 2
-        %th 3
-        %th OT
+        %th Period
+        %th Minutes
+        %th Shots
+        %th Goals
+    %tbody
       %tr
-        %td Minutes
-        %td #{f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*" }
+        %td 1
+        %td= f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :goals_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %tr
-        %td Shots
-        %td #{f.text_field :shots_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :shots_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :shots_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :shots_ot, :maxlength => 2, :pattern => "[0-9]*" }
+        %td 2
+        %td= f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :goals_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %tr
-        %td Goals
-        %td #{f.text_field :goals_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :goals_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :goals_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :goals_ot, :maxlength => 2, :pattern => "[0-9]*" }
+        %td 3
+        %td= f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :goals_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %tr
+        %td OT
+        %td= f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+        %td= f.text_field :goals_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"       
 
 

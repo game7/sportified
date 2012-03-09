@@ -1,6 +1,6 @@
-$("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+$("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
 $("#flash_notice").show(300);
 $("#goals").html("<%= escape_javascript( render(:partial => "admin/hockey_goals/table", :locals => { :goals => @statsheet.events.goals } ) )%>");
-$("#left_score").html(<%= @statsheet.left_score %>);
-$("#right_score").html(<%= @statsheet.right_score %>);
+$("#away_score").html(<%= @statsheet.away_score %>);
+$("#home_score").html(<%= @statsheet.home_score %>);
 

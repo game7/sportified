@@ -1,14 +1,14 @@
 %tr{ :id => "event_#{event.id.to_s}" }
-  %td #{event.starts_on.strftime('%a %m/%d/%y')}
-  %td #{event.starts_on.strftime('%l:%M %p')}
-  %td #{event.class.name}
-  %td #{event.summary}
-  %td #{event.venue_name}
+  %td= event.starts_on.strftime('%a %m/%d/%y')
+  %td= event.starts_on.strftime('%l:%M %p')
+  %td= event.class.name
+  %td= event.summary
+  %td= event.venue_short_name
   %td 
     - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
     = link_to "Edit", edit_url, :class => 'btn btn-mini'
     - if event.class.to_s == 'Game'
-      = link_to 'Post Result', new_admin_game_result_path(event.id), :remote => true, :class => "btn btn-mini"
-      - #link_to "Statsheet", edit_admin_game_statsheet_path(event.id), :class => "btn btn-mini"
+      = link_to 'Result', new_admin_game_result_path(event.id), :remote => true, :class => "btn btn-mini"
+      = link_to "Stats", edit_admin_game_statsheet_path(event.id), :class => "btn btn-mini"
     = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
 

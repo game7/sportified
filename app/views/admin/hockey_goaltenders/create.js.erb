@@ -3,7 +3,7 @@
   $("#flash_notice").hide(300);
   $('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_goaltenders/new" ) )%>");
 <% else %>
-  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
   $("#goaltenders").html("<%= escape_javascript( render(:partial => "admin/hockey_goaltenders/list", :locals => { :goaltenders => @statsheet.goaltenders } ) )%>");
   $('#dialog-modal').dialog("close");

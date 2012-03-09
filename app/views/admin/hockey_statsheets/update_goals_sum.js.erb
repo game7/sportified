@@ -3,7 +3,7 @@
   $("#flash_notice").hide(300);
 <% else %>
   $('#dialog-modal').dialog("close");
-  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
   $("#goals_sum").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/goals_sum_table" ) )%>");
 <% end %>

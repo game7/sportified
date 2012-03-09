@@ -3,7 +3,7 @@ class Statsheet
 
   before_create :load_game_info
 
-  references_one :game
+  belongs_to :game
   validates_presence_of :game
 
   def load_game_info

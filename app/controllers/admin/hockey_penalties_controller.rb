@@ -3,26 +3,9 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   before_filter :load_statsheet
   before_filter :load_penalty, :only => [:edit, :update, :destroy]
   before_filter :prepare_sides
-  before_filter :load_infractions
-
-  def load_statsheet
-    @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
-  end
-
-  def load_penalty
-    @penalty = @statsheet.events.penalties.find(params['id'])
-  end
-
-  def prepare_sides
-    @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
-  end
-
-  def load_infractions
-    @infractions = HockeyPenalty.infractions.collect{|i| i.humanize}
-  end
   
   def new
-    @penalty = HockeyPenalty.new
+    @penalty = Hockey::Penalty.new
   end
 
   def edit
@@ -30,7 +13,7 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
 
   def create
-    @penalty = @statsheet.events.build(params['hockey_penalty'], HockeyPenalty)
+    @penalty = @statsheet.events.build(params['hockey_penalty'], Hockey::Penalty)
     if @statsheet.save
       @statsheet.reload
       flash[:notice] = "Penalty Added"
@@ -45,11 +28,21 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
 
   def destroy
-    
-    if @penalty.delete 
-      flash[:notice] = "Penalty has been deleted"
-    end
+    flash[:notice] = "Penalty has been deleted" if @penalty.delete
+  end
+  
+  private
 
+  def load_statsheet
+    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
+  end
+
+  def load_penalty
+    @penalty = @statsheet.events.penalties.find(params['id'])
+  end
+
+  def prepare_sides
+    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
   end
 
 end

@@ -2,7 +2,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   
   before_filter :load_statsheet
   def load_statsheet
-    @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
+    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
   end
 
   before_filter :load_player, :only => [:edit, :update, :destroy]
@@ -12,12 +12,12 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
 
   before_filter :prepare_sides
   def prepare_sides
-    @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
+    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
   end
 
   
   def new
-    @player = HockeyPlayer.new
+    @player = Hockey::Player.new
   end
 
   def edit

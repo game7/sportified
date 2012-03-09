@@ -1,17 +1,16 @@
-= form_for( [:admin, @statsheet], :remote => true ) do |f|
-  .row
-    = hidden_field(:form, 'periods_sum')
-    %table
-      %tr
-        %th
-        %th 1
-        %th 2
-        %th 3
-        %th OT
-      %tr
-        %td Duration
-        %td #{f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*" }
+= form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
+  = hidden_field_tag(:form, 'periods_sum')
+  %table.table.table-bordered
+    %tr
+      %th
+      %th 1
+      %th 2
+      %th 3
+      %th OT
+    %tr
+      %td Duration
+      %td= f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
 

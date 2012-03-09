@@ -4,19 +4,19 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   before_filter :prepare_sides
 
   def load_statsheet
-    @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
+    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
   end
 
   def prepare_sides
-    @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
+    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
   end
   
   def new
-    @goal = HockeyGoal.new
+    @goal = Hockey::Goal.new
   end
 
   def create
-    @goal = @statsheet.events.build(params['hockey_goal'], HockeyGoal)
+    @goal = @statsheet.events.build(params['hockey_goal'], Hockey::Goal)
     if @statsheet.save
       @statsheet.reload
       flash[:notice] = "Goal Added"

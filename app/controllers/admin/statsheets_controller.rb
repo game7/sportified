@@ -1,16 +1,33 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :destroy]
-  before_filter :load_game
-  before_filter :get_season
+  before_filter :find_game
+  before_filter :find_season
   before_filter :add_games_breadcrumb
   before_filter :add_stats_breadcrumb
 
-  def load_game
-    @game = Game.for_site(Site.current).find(params[:game_id])    
+  def show
+
+  end
+
+  def edit
+    unless @game.has_statsheet?
+      puts "game: #{@game.id}"
+      @statsheet = Hockey::Statsheet.new
+      @statsheet.game = @game
+      @statsheet.save
+    else
+      @statsheet = @game.statsheet
+    end
+  end
+
+  private
+
+  def find_game
+    @game = Game.find(params[:game_id])    
   end
   
-  def get_season
+  def find_season
     @season = @game.season    
   end
 
@@ -20,26 +37,7 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
 
   def add_stats_breadcrumb
     add_breadcrumb 'Statsheet'  
-  end
-
-
-
-
-  def show
-
-  end
-
-  def edit
-    unless @game.has_statsheet?
-      @statsheet = HockeyStatsheet.new
-      @game.statsheet = @statsheet
-      @statsheet.save
-      @game.save
-    else
-      @statsheet = @game.statsheet
-    end
-  end
-
+  end  
 
 
 end

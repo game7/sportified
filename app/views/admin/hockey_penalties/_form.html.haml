@@ -1,55 +1,22 @@
-- edit_mode = ['edit','update'].index(params[:action]) ? true : false
-= form_for( @penalty, :url => url, :remote => true ) do |f|
-  .row
-    .field
-      = f.label :per
-      = select :hockey_penalty, :per, HockeyPenalty.periods , { :selected => @penalty.per }
-    .field
-      = f.label :min
-      = f.text_field :min, :maxlength => 2, :pattern => "[0-9]*"
-    .field
-      = f.label :sec
-      = f.text_field :sec, :maxlength => 2, :pattern => "[0-9]*"
-  .row
-    .field
-      = f.label :side, 'Team'
-      = select :hockey_penalty, :side, @sides, {:include_blank => 'Choose Team', :selected => @penalty.side}, {:disabled => edit_mode}
-    .field
-      = f.label :plr, 'Player'
-      = f.text_field :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
-  .row
-    .field
-      = f.label :inf, 'Infraction'
-      = f.text_field :inf
-    .field
-      = f.label :dur, 'Duration'
-      = f.text_field :dur, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode
-    .field
-      = f.label :severity, 'Severity'
-      = select :hockey_penalty, :severity, HockeyPenalty.severities, {:selected => @penalty.severity}, {:disabled => edit_mode}
-  .row
-    .field
-      = f.label :start_per, 'Period'
-      = select :hockey_penalty, :start_per, HockeyPenalty.periods, :selected => @penalty.start_per
-    .field
-      = f.label :start_min, 'Min'
-      = f.text_field :start_min, :maxlength => 2, :pattern => "[0-9]*"
-    .field
-      = f.label :start_sec, 'Sec'
-      = f.text_field :start_sec, :maxlength => 2, :pattern => "[0-9]*"
-  .row
-    .field
-      = f.label :end_per, 'Period'
-      = select :hockey_penalty, :end_per, HockeyPenalty.periods, :selected => @penalty.end_per
-    .field
-      = f.label :end_min, 'Min'
-      = f.text_field :end_min, :maxlength => 2, :pattern => "[0-9]*"
-    .field
-      = f.label :end_sec, 'Sec'
-      = f.text_field :end_sec, :maxlength => 2, :pattern => "[0-9]*"
+- edit_mode = %w{edit update}.include?(params[:action]) ? true : false
+= simple_form_for( @penalty, :url => url, :remote => true ) do |f|
+  = f.input :per, :collection => Hockey::Penalty.periods, :disabled => edit_mode, :input_html => {:class => "span1"}
+  = f.input :min, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :input_html => {:class => "span1"}
+  = f.input :sec, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :input_html => {:class => "span1"}
+  = f.input :side, :collection => @sides, :include_blank => 'Choose Team', :disabled => edit_mode
+  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :input_html => {:class => "span1"}
+  = f.input :inf
+  = f.input :dur, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :input_html => {:class => "span1"}
+  = f.input :severity, :collection => Hockey::Penalty.severities, :disabled => edit_mode, :input_html => {:class => "span2"}
+  = f.input :start_per, :collection => Hockey::Penalty.periods, :input_html => {:class => "span1"}
+  = f.input :start_min, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
+  = f.input :start_sec, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
+  = f.input :end_per, :collection => Hockey::Penalty.periods, :input_html => {:class => "span1"}
+  = f.input :end_min, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
+  = f.input :end_sec, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
 :javascript
   $(function() {
-    var penalties = #{@infractions.to_json};
+    var penalties = #{Hockey::Penalty.infractions.to_json};
     $('#hockey_penalty_inf').autocomplete({
       source: penalties
     });

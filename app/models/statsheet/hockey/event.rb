@@ -1,3 +1,4 @@
+require 'statsheet/hockey/event'
 class Statsheet::Hockey::Event
   include Mongoid::Document
   include Statsheet::Sides
@@ -9,14 +10,14 @@ class Statsheet::Hockey::Event
   field :sec, :type => Integer
   field :plr
 
-  embedded_in :parent, :inverse_of => :events, :class_name => 'HockeyStatsheet'
+  embedded_in :parent, :inverse_of => :events, :class_name => 'Statsheet::Hockey'
 
-  scope :goals, :where => { :_type => 'HockeyGoal' }
-  scope :penalties, :where => { :_type => 'HockeyPenalty' }
+  scope :goals, :where => { :_type => 'Statsheet::Hockey::Goal' }
+  scope :penalties, :where => { :_type => 'Statsheet::Hockey::Penalty' }
   scope :sorted_by_time, order_by(:per.asc, :min.desc, :sec.desc)
   scope :for_period, lambda { |period| { :where => { :per => period } } }
 
-  validates_presence_of :per, :min, :sec, :plr
+  validates_presence_of :per, :min, :sec
   validates_numericality_of :min, :sec
 
   def time

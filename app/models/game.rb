@@ -96,7 +96,7 @@ class Game < Event
   end
 
   def has_statsheet?
-    !self.statsheet_id.nil?
+    self.statsheet
   end
 
   def can_add_statsheet?

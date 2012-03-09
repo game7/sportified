@@ -4,7 +4,7 @@
   $('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_players/edit" ) )%>");
 <% else %>
   $('#dialog-modal').dialog("close");
-  $("#flash_notice").html("<%= escape_javascript( flash.delete(:notice) )%>");
+  $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
   $("#player_<%= @player.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/player", :object => @player) )%>");  
 <% end %>

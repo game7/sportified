@@ -1,22 +1,27 @@
 - javascript("jquery-ui.min.js")
 
-- tabs_for do |tab|
-  - tab.create('summary_tab', 'Summary') do
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active= link_to 'Summary', '#1', "data-toggle" => 'tab'
+    %li= link_to 'Players', '#2', "data-toggle" => 'tab'
+    %li= link_to 'Goals', '#3', "data-toggle" => 'tab'
+    %li= link_to 'Penalties', '#4', "data-toggle" => 'tab'
+    %li= link_to 'Goaltending', '#5', "data-toggle" => 'tab'
+.tab-content
+  #1.tab-pane.active
     = render 'admin/hockey_statsheets/periods_sum'
     = render 'admin/hockey_statsheets/goals_sum'
-    = render 'admin/hockey_statsheets/shots_sum'
-  - tab.create('players_tab', 'Players') do
-    = render 'admin/hockey_statsheets/players'
-  - tab.create('goals_tab', 'Goals') do
-    = render 'admin/hockey_statsheets/goals'
-  - tab.create('penalties_tab', 'Penalties') do
-    = render 'admin/hockey_statsheets/penalties'
-  - tab.create('goaltending_tab', 'Goaltending') do
-    = render 'admin/hockey_statsheets/goaltenders'
+    = render 'admin/hockey_statsheets/shots_sum'  
+  #2.tab-pane
+    = render 'admin/hockey_statsheets/players'  
+  #3.tab-pane
+    = render 'admin/hockey_statsheets/goals'  
+  #4.tab-pane
+    = render 'admin/hockey_statsheets/penalties'  
+  #5.tab-pane
+    = render 'admin/hockey_statsheets/goaltenders'  
 
 #dialog-modal
 
-:javascript
-  $(function(){
-    $('#tabs').tabs();
-  });
+
+

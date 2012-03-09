@@ -5,7 +5,7 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   before_filter :prepare_sides
 
   def load_statsheet
-    @statsheet = HockeyStatsheet.find(params['hockey_statsheet_id'])
+    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
   end
 
   def load_goaltender
@@ -13,11 +13,11 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   end
 
   def prepare_sides
-    @sides = [ [@statsheet.left_team_name, 'left'], [@statsheet.right_team_name, 'right'] ]    
+    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
   end
   
   def new
-    @goaltender = HockeyGoaltender.new
+    @goaltender = Hockey::Goaltender.new
   end
 
   def edit
@@ -39,11 +39,7 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   end
 
   def destroy
-    
-    if @goaltender.delete 
-      flash[:notice] = "Goaltender has been deleted"
-    end
-
+    flash[:notice] = "Goaltender has been deleted" if @goaltender.delete 
   end
 
 end

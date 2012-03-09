@@ -1,4 +1,4 @@
-%table
+%table.table.table-bordered
   %thead
     %tr
       %th{:scope => 'col'} TEAM
@@ -9,16 +9,16 @@
       %th{:scope => 'col'} ALL
   %tbody
     %tr
-      %td #{@statsheet.left_team_name}
-      %td #{@statsheet.left_shots_1}
-      %td #{@statsheet.left_shots_2}
-      %td #{@statsheet.left_shots_3}
-      %td #{@statsheet.left_shots_ot}
-      %td #{@statsheet.left_shots_total}
+      %td= @statsheet.away_team_name
+      %td= @statsheet.away_shots_1
+      %td= @statsheet.away_shots_2
+      %td= @statsheet.away_shots_3
+      %td= @statsheet.away_shots_ot
+      %td= @statsheet.away_shots_total
     %tr
-      %td #{@statsheet.right_team_name}
-      %td #{@statsheet.right_shots_1}
-      %td #{@statsheet.right_shots_2}
-      %td #{@statsheet.right_shots_3}
-      %td #{@statsheet.right_shots_ot}
-      %td #{@statsheet.right_shots_total}
+      %td= @statsheet.home_team_name
+      %td= @statsheet.home_shots_1
+      %td= @statsheet.home_shots_2
+      %td= @statsheet.home_shots_3
+      %td= @statsheet.home_shots_ot
+      %td= @statsheet.home_shots_total

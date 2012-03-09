@@ -1,25 +1,24 @@
-= form_for( [:admin, @statsheet], :remote => true ) do |f|
-  .row
-    = hidden_field(:form, 'shots_sum')
-    %table
-      %tr
-        %th
-        %th 1
-        %th 2
-        %th 3
-        %th OT
-      %tr
-        %td #{@statsheet.left_team_name}
-        %td #{f.text_field :left_shots_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :left_shots_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :left_shots_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :left_shots_ot, :maxlength => 2, :pattern => "[0-9]*" }
-      %tr
-        %td #{@statsheet.right_team_name}
-        %td #{f.text_field :right_shots_1, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :right_shots_2, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :right_shots_3, :maxlength => 2, :pattern => "[0-9]*" }
-        %td #{f.text_field :right_shots_ot, :maxlength => 2, :pattern => "[0-9]*" }
+= form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
+  = hidden_field_tag(:form, 'shots_sum')
+  %table.table.table-bordered
+    %tr
+      %th
+      %th 1
+      %th 2
+      %th 3
+      %th OT
+    %tr
+      %td= @statsheet.away_team_name
+      %td= f.text_field :away_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :away_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :away_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :away_shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+    %tr
+      %td= @statsheet.home_team_name
+      %td= f.text_field :home_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :home_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :home_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+      %td= f.text_field :home_shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
 
 
 

@@ -1,10 +1,10 @@
-#players-left.left{ :style => 'width: 48%; padding: 5px' }
-  %strong #{@statsheet.left_team_name}
-  = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.left}
-#players-right.left{ :style => 'width: 48%; padding: 5px' }
-  %strong #{@statsheet.right_team_name}
-  = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.right}
-.clear
-= link_to 'Load Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :method => :post
-= link_to 'Reload Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will overwrite current player rosters on this statsheet. Are you sure?', :method => :post
+.row
+  #players-away.span6
+    %h3 #{@statsheet.away_team_name}
+    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.away}
+  #players-home.span6
+    %h3 #{@statsheet.home_team_name}
+    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.home}
+= link_to 'Load Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :method => :post, :class => 'btn'    
+= link_to 'Reload Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will overwrite current player rosters on this statsheet. Are you sure?', :method => :post, :class => 'btn'
 

@@ -74,15 +74,15 @@
       post 'complete', :on => :member
     end    
     
-    #resources :hockey_statsheets, :only => [:edit, :update] do
-    #  resources :players, :controller => "hockey_players" do
-    #    post 'load', :on => :collection        
-    #    post 'reload', :on => :collection
-    #  end
-    #  resources :goals, :controller => "hockey_goals"
-    #  resources :penalties, :controller => "hockey_penalties"
-    #  resources :goaltenders, :controller => "hockey_goaltenders"
-    #end
+    resources :hockey_statsheets, :only => [:edit, :update] do
+      resources :players, :controller => "hockey_players" do
+        post 'load', :on => :collection        
+        post 'reload', :on => :collection
+      end
+      resources :goals, :controller => "hockey_goals"
+      resources :penalties, :controller => "hockey_penalties"
+      resources :goaltenders, :controller => "hockey_goaltenders"
+    end
     
     #resources :standings_layouts do
     #  get 'columns', :on => :member
