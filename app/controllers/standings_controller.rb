@@ -1,5 +1,4 @@
 class StandingsController < BaseLeagueController
-  before_filter :find_season
   
   def index
     #layout = @division.standings_layout
@@ -20,11 +19,5 @@ class StandingsController < BaseLeagueController
     super
     add_breadcrumb "Standings" 
   end 
-  
-  def find_season
-    @season = Season.find(params[:season_id]) if params[:season_id]
-    @season = Season.most_recent
-  end
-
 
 end

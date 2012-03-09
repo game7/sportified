@@ -1,5 +1,6 @@
 class BaseLeagueController < ApplicationController
   before_filter :find_league
+  before_filter :find_season
 
   private
 
@@ -20,6 +21,11 @@ class BaseLeagueController < ApplicationController
   
   def find_league
     @league = League.with_slug(params[:league_slug]).first
-  end  
+  end
+  
+  def find_season
+    @season = @league.seasons.with_slug(params[:season_slug]).first if params[:season_slug]
+    @season ||= @league.seasons.most_recent
+  end
 
 end

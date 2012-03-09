@@ -1,41 +1,28 @@
-- title 'Game Schedule'
+- title 'Schedule'
 - last_date = nil
 
-.controls
-  .left
-    = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-  .right
-    - if @division_links
-      = render :partial => "league/shared/select_division", :locals => { :division_options => @division_links }
-    - #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-    - if @team_links
-      = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
-  .clear
+= render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+- if false
+  = render :partial => "shared/select_season", :locals => { :season_options => @season_links }
+- #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
+- if false
+  = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
 
-.mod-container.mod-table.mod-no-header-footer
-  .mod-content
-    %table.stat#schedule{ :cellspacing => "1" }
-      - if @events.count == 0
-        %tr
-          %td No events scheduled
-      - else
-        - @events.each do |event|
-          - if event.starts_on.to_date != last_date
-            - reset_cycle()
-            %tr.group-head
-              %td{ :colspan => "3" } #{event.starts_on.to_date.strftime("%A, %B %e %Y")}
-            %tr.col-head
-              %td.teams EVENT
-              %td.time TIME
-              %td.location LOCATION
-          %tr{ :class => cycle("odd","even") }
-            %td #{event.summary}
-            %td #{event.all_day ? "All Day" : event.starts_on.strftime("%l:%M %p")}
-            %td #{event.venue_name}
-          - last_date = event.starts_on.to_date
+%table.table.table-striped.table-bordered
+  - if @events.count == 0
+    %tr
+      %td No events scheduled
+  - else
+    - @events.each do |event|
+      - if event.starts_on.to_date != last_date
+        - reset_cycle()
+        %tr.group-head
+          %th{ :colspan => "3" }= event.starts_on.to_date.strftime("%A, %B %e %Y")
+      %tr
+        %td= event.summary
+        %td= event.all_day ? "All Day" : event.starts_on.strftime("%l:%M %p")
+        %td= event.venue_name
+      - last_date = event.starts_on.to_date
 - if @events.count > 0
-  .controls
-    .left
-      = render :partial => "league/shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-    .clear
+  = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
 

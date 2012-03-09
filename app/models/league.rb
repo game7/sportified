@@ -9,6 +9,7 @@ class League
   
   has_and_belongs_to_many :seasons
   has_many :teams
+  has_many :events
   
   before_save do |league|
     league.slug = league.name.parameterize    
