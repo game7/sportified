@@ -11,12 +11,13 @@ class BaseLeagueController < ApplicationController
 
   def set_area_navigation
     super
-    #add_area_menu_item('Home', path)
-    #add_area_menu_item('Schedule', schedule_path)
-    #add_area_menu_item('Scoreboard', scoreboard_path)
-    ##add_area_descendant('Standings', standings_path)
-    ## TODO: add_area_menu_item('Statistics')
-    #add_area_menu_item('Teams', teams_path)      
+    add_area_menu_item('Home', "#")
+    add_area_menu_item 'Schedule', schedule_path(@league)
+    add_area_menu_item('Scoreboard', "#")
+    add_area_menu_item 'Standings', standings_path(@league)
+    add_area_menu_item 'Statistics', "#"
+    add_area_menu_item 'Teams', "#"
+    add_area_menu_item 'Players', "#"    
   end
   
   def find_league
