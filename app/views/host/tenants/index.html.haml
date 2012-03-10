@@ -1,0 +1,17 @@
+- title 'Tenants'
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Host
+      %th Actions
+  %tbody
+    - @tenants.each do |tenant|
+      %tr
+        %td #{tenant.name}
+        %td #{tenant.host}
+        %td 
+          = link_to 'Edit', edit_host_tenant_path(tenant), :class => 'btn'
+          = link_to 'Delete', [:host, tenant], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger'
+= link_to 'Add New Tenant', new_host_tenant_path, :class => "btn"
+

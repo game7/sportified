@@ -18,7 +18,7 @@
 
   namespace :host do
     root :to => "dashboard#index"    
-    resources :sites
+    resources :tenants
     resources :users
     match 'status' => 'dashboard#status'
   end

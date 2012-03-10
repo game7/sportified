@@ -1,5 +1,6 @@
 class Tenant
   include Mongoid::Document
+  field :name, :type => String
   field :host, :type => String
   field :description, :type => String
   field :analytics_id, :type => String

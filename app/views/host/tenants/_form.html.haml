@@ -1,0 +1,9 @@
+= simple_form_for [:host, @tenant] do |f|
+  = f.input :name
+  = f.input :host
+  = f.input :analytics_id
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+
+
+
