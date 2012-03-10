@@ -1,4 +1,4 @@
-require 'Chronic'
+require 'chronic'
 class Admin::PlayersController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
