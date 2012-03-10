@@ -98,5 +98,11 @@
     #  end      
     #end
   end
+  
+  namespace :admin do
+    resources :pages do
+      post 'position', :on => :collection
+    end    
+  end
 
 end

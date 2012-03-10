@@ -30,7 +30,7 @@ gem 'fog'
 gem 'rmagick'
 
 
-gem 'pages', :path => "vendor/engines/pages"
+#gem 'pages', :path => "vendor/engines/pages"
 
 # gem 'aws-s3', :require => 'aws/s3'
 

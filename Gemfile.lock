@@ -6,11 +6,6 @@ GIT
       actionpack (~> 3.0)
       activemodel (~> 3.0)
 
-PATH
-  remote: vendor/engines/pages
-  specs:
-    pages (0.0.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -323,7 +318,6 @@ DEPENDENCIES
   nifty-generators
   oa-oauth
   omniauth
-  pages!
   rails (= 3.2.1)
   remarkable_mongoid (>= 0.5.0)
   rmagick

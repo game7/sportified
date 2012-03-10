@@ -1,14 +1,18 @@
 = semantic_form_for [@page] do |f|
-  = f.inputs 'Basic' do
+  %fieldset
+    %legend Basic
     = f.input :title
     = f.input :draft, :as => :boolean
-  = f.inputs 'Positioning' do
+    %fieldset
+      %legend Positioning    
     = f.input :parent_id, :collection => @parent_options
     = f.input :show_in_menu, :as => :boolean
-  = f.inputs 'Navigation' do
+    %fieldset
+      %legend Navigation
     = f.input :skip_to_first_child, :as => :boolean
     = f.input :link_url
-  = f.inputs 'Search Engine Optimzation' do
+    %fieldset
+      %legend Search Engine Optimization
     = f.input :meta_keywords
     = f.input :meta_description
   = f.buttons do

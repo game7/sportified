@@ -1,0 +1,30 @@
+- title 'Pages'
+
+- javascript("jquery-ui.min.js")
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+      $("#pages ul").sortable({
+        revert: "true",
+        opacity: 0.7,
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {  
+          var items = $(this).sortable('serialize');
+          $.ajax({
+            type: 'post',
+            data: items ,
+            dataType: 'json',
+            url: '#{position_admin_pages_path(@page)}'
+          }); 
+        }
+      });   
+    });
+
+%section#pages.tree
+  = render 'tree'
+  
+= link_to 'Add New Page', new_admin_page_path, :class => 'btn'
+
+:css
+  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }

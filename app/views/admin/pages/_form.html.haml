@@ -1,0 +1,19 @@
+= simple_form_for [:admin, @page] do |f|
+  %fieldset
+    %legend Basic
+    = f.input :title
+    = f.input :draft, :as => :boolean
+    %fieldset
+      %legend Positioning    
+      = f.input :parent_id, :collection => @parent_options
+      = f.input :show_in_menu, :as => :boolean
+    %fieldset
+      %legend Navigation
+      = f.input :skip_to_first_child, :as => :boolean
+      = f.input :link_url
+    %fieldset
+      %legend Search Engine Optimization
+      = f.input :meta_keywords
+      = f.input :meta_description
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
