@@ -1,9 +1,10 @@
-%ul
-  - @site_menu_items.each do |item|
-    %li 
-      - if request.url.include?(item[:url])
-        %a.selected{ :href => "#{item[:url]}" } #{item[:title]}
-      - else
-        %a{ :href => "#{item[:url]}" } #{item[:title]}
-.clear
+.subnav{ :style => "background-color: #EEE;"}
+  %ul.nav.nav-pills
+    - @site_menu_items.each do |item|
+      %li 
+        - if request.url.include?(item[:url])
+          %a.active{ :href => "#{item[:url]}" } #{item[:title]}
+        - else
+          %a{ :href => "#{item[:url]}" } #{item[:title]}
+  .clear
 

@@ -99,6 +99,8 @@
     #end
   end
   
+  get '/pages/*path', :to => 'pages#show', :as => :page_friendly  
+  
   namespace :admin do
     resources :pages do
       post 'position', :on => :collection
