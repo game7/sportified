@@ -1,4 +1,4 @@
-class ScoreboardController < BaseDivisionController
+class ScoreboardController < BaseLeagueController
   
   before_filter :get_dates
   def get_dates

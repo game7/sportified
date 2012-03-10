@@ -1,4 +1,4 @@
-class GamesController < BaseDivisionSeasonController
+class GamesController < BaseLeagueController
 
   before_filter :load_game, :only => [:box_score]
   
