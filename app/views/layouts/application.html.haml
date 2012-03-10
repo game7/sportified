@@ -12,7 +12,7 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          =link_to "OCEANSIDE ICE ARENA", "#", :class => "brand"
+          =link_to Tenant.current.name, root_url, :class => "brand"
           %ul.nav.pull-right
             %li.dropdown
               %a.dropdown-toggle{ :href => "#", "data-toggle" => "dropdown"}
