@@ -17,7 +17,7 @@ class BaseLeagueController < ApplicationController
     add_area_menu_item 'Standings', standings_path(@league)
     add_area_menu_item 'Statistics', "#"
     add_area_menu_item 'Teams', teams_path(@league)
-    add_area_menu_item 'Players', "#"    
+    add_area_menu_item 'Players', players_path(@league)    
   end
   
   def find_league

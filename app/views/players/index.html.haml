@@ -1,20 +1,13 @@
-- title 'Player Roster'
+- title 'Players'
 
-.mod-container.mod-table.mod-no-header-footer
-  .mod-content
-    %table.stat#roster{ :cellspacing => "1" }
-      %thead
-        %tr.col-head
-          %td NUM
-          %td NAME
-      %tbody
-        - @players.each do |player|
-          %tr{ :class => cycle("odd","even") }
-            %td #{player.jersey_number}
-            %td
-              = player.full_name
-              .action.right
-                #{link_to 'Edit', edit_player_path(player)}
-                #{link_to 'Delete', [:league, player], :confirm => 'Are you sure?', :method => :delete}
-.action
-  .player_add #{link_to 'Add Player', new_team_player_path(@team)}
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th NUM
+      %th NAME
+  %tbody
+    - @players.each do |player|
+      %tr
+        %td #{player.jersey_number}
+        %td
+          = player.full_name

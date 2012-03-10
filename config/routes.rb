@@ -38,6 +38,8 @@
   match "programs/:league_slug/standings" => "standings#index", :as => :standings, :via => :get
   
   match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
+  match "programs/:league_slug/players" => "players#index", :as => :players, :via => :get
+  
   #match "league" => "league/home#index", :as => :league, :via => :get
   #
   #match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
