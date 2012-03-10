@@ -3,6 +3,7 @@
 //= require_self
 //= require twitter/bootstrap/tab
 //= require twitter/bootstrap/button
+//= require twitter/bootstrap/dropdown
 //= require_tree .
 
 
