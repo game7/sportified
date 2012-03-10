@@ -26,8 +26,8 @@
         = content_tag :h1, yield(:title) if show_title?
         %p.lead A descriptive paragraph here
         = render "layouts/site_navigation" if @site_menu_items
-        = render "layouts/area_navigation" if @area_menu_items
         = render "layouts/breadcrumbs" if @breadcrumbs
+        = render "layouts/area_navigation" if @area_menu_items        
       - if content_for?(:sidebar)
         #sidebar 
           .wrapper

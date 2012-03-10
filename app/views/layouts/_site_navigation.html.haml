@@ -1,10 +1,10 @@
-.subnav{ :style => "background-color: #EEE;"}
-  %ul.nav.nav-pills
-    - @site_menu_items.each do |item|
-      %li 
-        - if request.url.include?(item[:url])
-          %a.active{ :href => "#{item[:url]}" } #{item[:title]}
-        - else
-          %a{ :href => "#{item[:url]}" } #{item[:title]}
-  .clear
+.navbar
+  .navbar-inner
+    .container
+      %ul.nav
+        - Page.top_level.in_menu.live.asc(:position).each do |page|
+          - url = get_page_url(page)
+          %li{ :class => request.url.include?(url) ? "active" : nil }
+            %a{ :href => url }= page.title
 
+              

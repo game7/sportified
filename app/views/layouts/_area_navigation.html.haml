@@ -1,6 +1,5 @@
-.subnav{ :style => "background-color: #EEE;"}
-  %ul.nav.nav-pills
-    - @area_menu_items.each do |item|
-      %li 
-        %a{ :href => "#{item[:url]}" } #{item[:title]}
-  .clear
+%ul.nav.nav-tabs
+  - @area_menu_items.each do |item|
+    %li{ :class => request.url.include?(item[:url]) ? "active" : nil }
+      %a{ :href => item[:url] }= item[:title]
+
