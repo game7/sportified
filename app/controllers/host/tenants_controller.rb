@@ -47,7 +47,7 @@ class Host::TenantsController < Host::HostController
   
   def set_breadcrumbs
     super
-    add_breadcrumb( "Sites", host_sites_path )
+    add_breadcrumb( "Tenants", host_tenants_path )
   end
 
 end
