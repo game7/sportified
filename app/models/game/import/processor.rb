@@ -17,13 +17,12 @@ class Game::Import::Processor
       g.duration = get_column(:duration, row)
       g.away_team_id = get_column(:away_team, row)
       g.home_team_id = get_column(:home_team, row)
-      if away_score = get_column(:away_score, row)
-        if home_score = get_column(:home_score, row)
-          puts "==> AWAY: #{away_score}, HOME: #{home_score}"
-          g.away_team_score = away_score
-          g.home_team_score = home_score
-          g.completed_in = get_column(:completed_in, row)
-        end
+      if completed_in = get_column(:completed_in, row) and away_score = get_column(:away_score, row) and home_score = get_column(:home_score, row)
+        puts "==> AWAY: #{away_score}, HOME: #{home_score}"
+        result = g.build_result
+        result.away_score = away_score
+        result.home_score = home_score
+        result.completed_in = completed_in
       end
       g.venue_id = get_column(:venue, row)
       @games << g
@@ -37,7 +36,6 @@ class Game::Import::Processor
   def complete!
     @games.each do |g|
       g.save
-      g.finalize! if g.has_result?
     end
     @import.completed = true
     @import.save
@@ -47,12 +45,8 @@ class Game::Import::Processor
 
     def get_column(label, row)
       i = @import.columns.index(label)
-      puts "- Get column labeled: #{label}"
-      puts "   which should be at position #{i}"
-      puts "   from row with: #{row.join('|')}"
       return unless i
       val = row[i]
-      puts "   and the result is: #{val}"
       case label
         when :away_team
           @import.find_team_id(val)

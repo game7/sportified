@@ -119,8 +119,7 @@ class Game::Import
      venue_names = []
      contents.each_with_index do |row, i| 
        venue_names << row[v] if i > 0
-     end
-     venue_names.uniq.each{|n| puts n }
+     end if v
      venue_names.uniq.each{|name| self.venues.build(:name => name)}
    end
 
