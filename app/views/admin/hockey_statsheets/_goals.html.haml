@@ -2,4 +2,5 @@
   = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-mini'
 #goals 
   = render :partial => 'admin/hockey_goals/table', :locals => {:goals => @statsheet.events.goals}
+  = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-mini' if  @statsheet.events.goals.count > 10
 
