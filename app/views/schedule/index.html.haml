@@ -19,8 +19,8 @@
         %tr.group-head
           %th{ :colspan => "3" }= event.starts_on.to_date.strftime("%A, %B %e %Y")
       %tr
+        %td.span2= event.all_day ? "All Day" : event.starts_on.strftime("%l:%M %p")      
         %td= event.summary
-        %td= event.all_day ? "All Day" : event.starts_on.strftime("%l:%M %p")
         %td= event.venue_name
       - last_date = event.starts_on.to_date
 - if @events.count > 0

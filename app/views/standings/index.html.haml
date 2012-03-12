@@ -3,13 +3,14 @@
   %thead
     %tr
       %th TEAM
-      %th GP
-      %th W
-      %th L
-      %th PTS
-      %th GS
-      %th GA
-      %th +/-
+      %th.span1 GP
+      %th.span1 W
+      %th.span1 L
+      %th.span1 PTS
+      %th.span1 GS
+      %th.span1 GA
+      %th.span1 +/-
+      %th.span2 STREAK
     %tbody
       - @teams.each do |team|
         %tr
@@ -21,4 +22,5 @@
           %td= team.record.scored
           %td= team.record.allowed
           %td= team.record.margin
+          %td= team.record.stk
 
