@@ -64,9 +64,9 @@ class Event
       id = s.class == Season ? s.id : s
       where(:season_id => id)
     end
-    def for_division(d)
-      id = d.class == Division ? d.id : d
-      any_in( :division_ids => [id])
+    def for_league(l)
+      id = l.class == League ? l.id : l
+      where( :league_id => id)
     end
   end
 

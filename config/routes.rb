@@ -36,7 +36,7 @@
 
   match "programs/:league_slug/schedule(/:season_slug)" => "schedule#index", :as => :schedule, :via => :get
   match "programs/:league_slug/standings" => "standings#index", :as => :standings, :via => :get
-  
+  match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
   match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
   match "programs/:league_slug/players" => "players#index", :as => :players, :via => :get
   

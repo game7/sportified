@@ -35,7 +35,10 @@ class Game::Import::Processor
 
   def complete!
     @games.each do |g|
-      g.save
+      unless g.save
+        puts 'ERRORS SAVING IMPORTED GAME:'
+        g.errors.each{|e| puts "  #{e}" }
+      end
     end
     @import.completed = true
     @import.save

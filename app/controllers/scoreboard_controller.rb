@@ -16,18 +16,10 @@ class ScoreboardController < BaseLeagueController
     add_breadcrumb "Scoreboard"
   end
 
-  def links_to_division()
-    links = Division.for_site(Site.current).asc(:name).each.collect{ |d| [d.name + " Division", scoreboard_path(d.slug)] }
-    links.insert(0, ['All Divisions', scoreboard_path])
-  end
-
-
   def index
     
-    @division_links = links_to_division
-
-    @games = Game.for_site(Site.current).between(@start_date, @end_date)
-    @games = @games.for_division(@division) if @division
+    @games = Game.between(@start_date, @end_date)
+    @games = @games.for_league(@league) if @league
     @games = @games.desc(:starts_on).entries
 
   end

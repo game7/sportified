@@ -7,7 +7,7 @@ class Game < Event
   field :away_team_score, :type => Integer, :default => 0
   validates_numericality_of :away_team_score, :only_integer => true
   def away_team_is_winner?
-    return away_team_score > home_team_score
+    return result.away_score > result.home_score if result
   end
 
   belongs_to :home_team, :class_name => "Team"
@@ -16,7 +16,7 @@ class Game < Event
   field :home_team_score, :type => Integer, :default => 0
   validates_numericality_of :home_team_score, :only_integer => true
   def home_team_is_winner?
-    return away_team_score < home_team_score
+    return result.away_score < result.home_score if result
   end
 
   embeds_one :result, class_name: "Game::Result", cascade_callbacks: true
