@@ -75,7 +75,7 @@ class Team::Record
 
   def post_result_from_game(game)
 
-    raise 'Game already posted to team record' if is_game_posted?(game)
+    cancel_result_for_game(game) if is_game_posted?(game)
 
     result = Team::Record::Result.new(:team => self.team.id, :game => game)
     apply_result(result)
