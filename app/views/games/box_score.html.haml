@@ -2,23 +2,23 @@
 - javascript("https://www.google.com/jsapi")
 - content_for :javascript do
   :javascript
-    var left_team_name = '#{@stats.left_team_name}';
-    var right_team_name = '#{@stats.right_team_name}';
+    var away_team_name = '#{@stats.away_team_name}';
+    var home_team_name = '#{@stats.home_team_name}';
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Minute');
-      data.addColumn('number', left_team_name);
-      data.addColumn('number', right_team_name);
+      data.addColumn('number', away_team_name);
+      data.addColumn('number', home_team_name);
       
       var minutes = jQuery.parseJSON($("#data_div").text());
 
       data.addRows(minutes.length);
       for (var i = 0; i < minutes.length; i++) {
         data.setValue(i, 0, 'Per '+minutes[i].period+', '+minutes[i].minute+':00');
-        data.setValue(i, 1, minutes[i].left);
-        data.setValue(i, 2, minutes[i].right);
+        data.setValue(i, 1, minutes[i].away);
+        data.setValue(i, 2, minutes[i].home);
       }
 
 
@@ -30,71 +30,51 @@
       });
     }
 
-.box-score
-  .status-bar
-    .game-state FINAL
-  %h1.matchup
-    .team.left
-      .logo #{image_tag(@left_team.logo.tiny.url.to_s, :alt => @left_team.name) if @left_team.logo.tiny.url}
-      .team-info
-        %h3 
-          #{@stats.left_team_name}
-          %span.score #{@stats.left_goals_total}
-        %p.record (1-1-1, 3 pts)
-    .team.right
-      .logo #{image_tag(@right_team.logo.tiny.url.to_s, :alt => @right_team.name) if @right_team.logo.tiny.url}
-      .team-info
-        %h3 
-          #{@stats.right_team_name}
-          %span.score #{@stats.right_goals_total}
-        %p.record (1-1-1, 3 pts)
-  .game-actions
-  .game-summary
-    .game-logistics
-      %p #{@game.starts_on.strftime('%a, %b %e %l:%M %p')}
-    .clear
-  .game-score
-    = render 'line_score_table'
-    .clear
-  
-  .main-container
-    
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Team Statistical Comparison
-      .mod-content
-        = render 'team_statistics_table'
-
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Minute By Minute
-      .mod-content
-        - minutes = @stats.score_by_minute.to_json
-        #data_div{ :style => "display: none;"} #{minutes}
-        #chart_div
-
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Game Activity
-      .mod-content
-        = render 'activity_table'
-
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Player Summary
-      .mod-content
-        = render 'player_summary_table'
-
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Goaltender Summary
-      .mod-content
-        = render 'goaltender_summary_table'
-
-    .mod-container.mod-no-footer
-      .mod-header
-        %h4 Shots On Goal
-      .mod-content
-        = render 'shots_summary_table'
+.boxscore
+  .row
+    .summary
+      .status= "FINAL"
+      .matchup
+        .team.away
+          %h3 
+            = @stats.away_team_name
+            %span.score= @stats.away_goals_total
+          %p.record (1-1-1, 3 pts)
+        .team.home
+          %h3 
+            = @stats.home_team_name
+            %span.score= @stats.home_goals_total
+          %p.record (1-1-1, 3 pts)
+      .logistics
+        %p #{@game.starts_on.strftime('%a, %b %e %l:%M %p')}
+  .row
+    .linescore
+      = render 'line_score_table'
+  %h4 Team Statistical Comparison
+  .row
+    .teamstats
+      = render 'team_statistics_table'
+  %h4 Minute By Minute
+  .row
+    .minute-by-minute
+      - minutes = @stats.score_by_minute.to_json
+      #data_div{ :style => "display: none;"} #{minutes}
+      #chart_div
+  %h4 Game Activity
+  .row
+    .game-activity
+      = render 'activity_table'
+  %h4 Player Summary
+  .row
+    .player-summary
+      = render 'player_summary_table'
+  %h4 Goaltender Summary
+  .row
+    .goaltender-summary
+      = render 'goaltender_summary_table'
+  %h4 Shots On Goal
+  .row
+    .shots-on-goal
+      = render 'shots_summary_table'
 
     

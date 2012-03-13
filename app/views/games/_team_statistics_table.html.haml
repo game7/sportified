@@ -1,58 +1,60 @@
-%table.team_stats
-  %thead
-    %tr
-      %th{ :colspan => 3 }
-  %tbody
-    %tr
-      %td
-        - left_goals = @stats.left_goals_total
-        - right_goals = @stats.right_goals_total
-        - left_width = left_goals * 150  / (left_goals + right_goals)
-        - right_width = right_goals * 150 / (left_goals + right_goals)
-        %table
-          %tbody
-            %tr
-              %td Goals
-            %tr
-              %td
-                %span.bar{ :style => "width: #{left_width}px;"}
-                #{left_goals}
-            %tr
-              %td
-                %span.bar{ :style => "width: #{right_width}px"}
-                #{right_goals}
-      %td
-        - left_shots = @stats.left_shots_total
-        - right_shots = @stats.right_shots_total
-        - left_width = left_shots * 150  / (left_shots + right_shots)
-        - right_width = right_shots * 150 / (left_shots + right_shots)
-        %table
-          %tbody
-            %tr
-              %td Shots
-            %tr
-              %td
-                %span.bar{ :style => "width: #{left_width}px;"}
-                #{left_shots}
-            %tr
-              %td
-                %span.bar{ :style => "width: #{right_width}px"}
-                #{right_shots}
-      %td
-        - left_pim = @stats.left_pim_total
-        - right_pim = @stats.right_pim_total
-        - left_width = left_pim * 150  / (left_pim + right_pim)
-        - right_width = right_pim * 150 / (left_pim + right_pim)
-        %table
-          %tbody
-            %tr
-              %td PIM
-            %tr
-              %td
-                %span.bar{ :style => "width: #{left_width}px;"}
-                #{left_pim}
-            %tr
-              %td
-                %span.bar{ :style => "width: #{right_width}px;"}
-                #{right_pim}
+- bar_width = 200
+.stat
+  .goals
+    - away_goals = @stats.away_goals_total
+    - home_goals = @stats.home_goals_total
+    - away_width = away_goals * bar_width  / (away_goals + home_goals)
+    - home_width = home_goals * bar_width / (away_goals + home_goals)
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Goals
+      %tbody
+        %tr
+          %td
+            %span.bar{ :style => "width: #{away_width}px;"}
+            = away_goals
+        %tr
+          %td
+            %span.bar{ :style => "width: #{home_width}px"}
+            = home_goals
+.stat
+  .shots
+    - away_shots = @stats.away_shots_total
+    - home_shots = @stats.home_shots_total
+    - away_width = away_shots * bar_width  / (away_shots + home_shots)
+    - home_width = home_shots * bar_width / (away_shots + home_shots)
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Shots
+      %tbody
+        %tr
+          %td
+            %span.bar{ :style => "width: #{away_width}px;"}
+            = away_shots
+        %tr
+          %td
+            %span.bar{ :style => "width: #{home_width}px"}
+            = home_shots
+.stat
+  .pim
+    - away_pim = @stats.away_pim_total
+    - home_pim = @stats.home_pim_total
+    - away_width = away_pim * bar_width  / (away_pim + home_pim)
+    - home_width = home_pim * bar_width / (away_pim + home_pim)
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th PIM
+      %tbody
+        %tr
+          %td
+            %span.bar{ :style => "width: #{away_width}px;"}
+            = away_pim
+        %tr
+          %td
+            %span.bar{ :style => "width: #{home_width}px;"}
+            = home_pim
+
 

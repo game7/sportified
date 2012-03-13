@@ -39,6 +39,7 @@
   match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
   match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
   match "programs/:league_slug/players" => "players#index", :as => :players, :via => :get
+  match "programs/:league_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
   
   #match "league" => "league/home#index", :as => :league, :via => :get
   #

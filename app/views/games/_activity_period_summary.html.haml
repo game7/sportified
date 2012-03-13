@@ -16,12 +16,12 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{goal.time}
         %td.team 
-          - if goal.side == 'left'
-            #{image_tag @left_team.logo.micro.url.to_s if @left_team.logo?}
-            #{@stats.left_team_name}
+          - if goal.side == 'away'
+            -#image_tag @away_team.logo.micro.url.to_s if @away_team.logo?
+            = @stats.away_team_name
           - else
-            #{image_tag @right_team.logo.micro.url.to_s if @right_team.logo?}
-            #{@stats.right_team_name}
+            -#image_tag @home_team.logo.micro.url.to_s if @home_team.logo?
+            = @stats.home_team_name
         %td.goal 
           = "##{goal.plr} #{show_player_name(stats, goal.side, goal.plr)}"
           .assists
@@ -48,12 +48,12 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{penalty.time}
         %td.team
-          - if penalty.side == 'left'
-            #{image_tag @left_team.logo.micro.url.to_s if @left_team.logo?}
-            #{@stats.left_team_name}
+          - if penalty.side == 'away'
+            -#image_tag @away_team.logo.micro.url.to_s if @away_team.logo?
+            = @stats.away_team_name
           - else
-            #{image_tag @right_team.logo.micro.url.to_s if @right_team.logo?}
-            #{@stats.right_team_name}
+            -#image_tag @home_team.logo.micro.url.to_s if @home_team.logo?
+            = @stats.home_team_name
         %td.penalty ##{penalty.plr} #{show_player_name(stats, penalty.side, penalty.plr)}: #{penalty.dur} Minutes for #{penalty.inf}
 
 

@@ -1,0 +1,65 @@
+@import "twitter/bootstrap";
+
+.boxscore .status {
+  background-color: @grayLighter;
+  padding: 5px;
+}
+
+.boxscore .summary {
+  .makeColumn(12);  
+  .matchup {
+    padding: 5px;
+  }
+  .team {
+    float: left;
+    width: 200px;    
+  }
+  .logistics {
+    clear: both;  
+  }
+}
+
+.boxscore .linescore {
+  .makeColumn(4);
+}
+
+
+.boxscore .teamstats {
+  .stat {
+    .makeColumn(4);
+  }
+  table {
+    margin-bottom: 0;
+  }
+  .goals, .shots, .pim {
+    border: 1px solid #ddd;
+    padding: 4px;
+  }
+  span.bar {
+    float: left;
+    margin-right: 10px;
+    display: block;
+    height: 18px;
+    background-color: @grayLight;
+  }
+}
+
+.boxscore .minute-by-minute {
+  .makeColumn(12)
+}
+
+.boxscore .game-activity {
+  .makeColumn(12)
+}
+
+.boxscore .player-summary {
+  .makeColumn(12)
+}
+
+.boxscore .goaltender-summary {
+  .makeColumn(12)
+}
+
+.boxscore .shots-on-goal {
+  .makeColumn(12)
+}

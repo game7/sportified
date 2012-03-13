@@ -1,3 +1,4 @@
-%table.stats.goaltender-summary
-  = render :partial => 'goaltender_summary_team', :locals => { :side => 'left'}
-  = render :partial => 'goaltender_summary_team', :locals => { :side => 'right'}
+%table.table.table-striped.table-bordered
+  = render :partial => 'goaltender_summary_team', :locals => { :side => 'away'}
+%table.table.table-striped.table-bordered  
+  = render :partial => 'goaltender_summary_team', :locals => { :side => 'home'}

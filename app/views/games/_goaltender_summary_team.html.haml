@@ -1,7 +1,7 @@
 %thead
-  %tr.title
+  %tr.team
     %th{ :colspan => 7 } 
-      = side == 'left' ? @stats.left_team_name : @stats.right_team_name
+      = side == 'away' ? @stats.away_team_name : @stats.home_team_name
   %tr.columns
     %th.player Player
     %th.minutes MIN
@@ -15,7 +15,7 @@
   - if goalies.count > 0
     - reset_cycle
     - goalies.each do |goalie|
-      %tr{ :class => "#{cycle('odd', 'even')}" }
+      %tr
         %td.player 
           = show_player_name(@stats, goalie.side, goalie.plr)
           = "##{goalie.plr}" unless goalie.plr.blank?
@@ -27,4 +27,4 @@
         %td.pim 0
   - else
     %tr
-      %td{ :colpsan => 7 } No goaltender data has been maintained
+      %td{ :colpsan => 14 } xNo goaltender data has been maintained

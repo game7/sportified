@@ -1,16 +1,16 @@
 class GamesController < BaseLeagueController
-
-  before_filter :load_game, :only => [:box_score]
-  
-  def load_game
-    @game = Game.find(params[:id])
-  end
-
+  before_filter :find_game, :only => [:box_score]
 
   def box_score
     @stats = @game.statsheet
-    @left_team = @game.left_team
-    @right_team = @game.right_team
+    @home_team = @game.home_team
+    @away_team = @game.away_team
+  end
+  
+  private
+  
+  def find_game
+    @game = Game.find(params[:id])
   end
 
 end

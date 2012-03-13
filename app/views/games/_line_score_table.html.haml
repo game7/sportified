@@ -1,4 +1,4 @@
-%table.line-score
+%table.table.table-bordered
   %tbody
     %tr
       %th.team 
@@ -9,18 +9,18 @@
         %th.period OT
       %th.total T
     %tr
-      %td.team #{@stats.left_team_name}
-      %td.period #{@stats.left_goals_1}
-      %td.period #{@stats.left_goals_2}
-      %td.period #{@stats.left_goals_3}
+      %td.team= @stats.away_team_name
+      %td.period= @stats.away_goals_1
+      %td.period= @stats.away_goals_2
+      %td.period= @stats.away_goals_3
       - if @stats.overtime?
-        %td.period #{@stats.left_goals_ot}
-      %td.total #{@stats.left_goals_total}
+        %td.period= @stats.away_goals_ot
+      %td.total= @stats.away_goals_total
     %tr
-      %td.team #{@stats.right_team_name}
-      %td.period #{@stats.right_goals_1}
-      %td.period #{@stats.right_goals_2}
-      %td.period #{@stats.right_goals_3}
+      %td.team= @stats.home_team_name
+      %td.period= @stats.home_goals_1
+      %td.period= @stats.home_goals_2
+      %td.period= @stats.home_goals_3
       - if @stats.overtime?
-        %td.period #{@stats.right_goals_ot}
-      %td.total #{@stats.right_goals_total}
+        %td.period= @stats.home_goals_ot
+      %td.total= @stats.home_goals_total

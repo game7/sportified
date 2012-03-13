@@ -15,7 +15,7 @@
     - stats = game.statsheet
     - if stats
       .game-links
-        = link_to 'Box Score', "javascript:alert('coming soon');" #game_box_score_path(game)
+        = link_to 'Box Score', game_box_score_path(@league.slug, game.id)
       .line-score
         %table.table
           %thead
