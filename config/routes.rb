@@ -100,6 +100,8 @@
     #end
   end
   
+  match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
+  
   get '/pages/*path', :to => 'pages#show', :as => :page_friendly  
   
   namespace :admin do

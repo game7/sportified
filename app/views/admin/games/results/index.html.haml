@@ -1,12 +1,16 @@
 - title 'Game Results'
 - javascript("jquery-ui.min.js")
 
+= select("season", :id, @season_links, { :selected => admin_game_results_path(:season_id => @season.id) }, { :class => "redirect_to" })
+= select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to" })
 %table.table.table-striped.table-bordered
   %thead
     %tr
       %td Date
       %td Time
       %td Description
+      %td Result
+      %td Stats
       %td Actions
   %tbody
     = render :partial => 'game', :collection => @games

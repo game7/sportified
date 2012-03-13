@@ -12,7 +12,7 @@ class Admin::BaseLeagueController < Admin::AdminController
       add_area_menu_item "Clubs", admin_clubs_path
       add_area_menu_item "Teams", admin_teams_path
       add_area_menu_item "Schedule", admin_events_path
-
+      add_area_menu_item "Results", admin_game_results_path
   end  
 
 end
