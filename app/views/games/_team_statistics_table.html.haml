@@ -3,8 +3,8 @@
   .goals
     - away_goals = @stats.away_goals_total
     - home_goals = @stats.home_goals_total
-    - away_width = away_goals * bar_width  / (away_goals + home_goals)
-    - home_width = home_goals * bar_width / (away_goals + home_goals)
+    - away_width = away_goals > 0 ? away_goals * bar_width  / (away_goals + home_goals) : 0
+    - home_width = home_goals > 0 ? home_goals * bar_width / (away_goals + home_goals) : 0
     %table.table.table-bordered
       %thead
         %tr
@@ -22,8 +22,8 @@
   .shots
     - away_shots = @stats.away_shots_total
     - home_shots = @stats.home_shots_total
-    - away_width = away_shots * bar_width  / (away_shots + home_shots)
-    - home_width = home_shots * bar_width / (away_shots + home_shots)
+    - away_width = away_shots > 0 ? away_shots * bar_width  / (away_shots + home_shots) : 0
+    - home_width = home_shots > 0 ? home_shots * bar_width / (away_shots + home_shots) : 0
     %table.table.table-bordered
       %thead
         %tr
@@ -41,8 +41,8 @@
   .pim
     - away_pim = @stats.away_pim_total
     - home_pim = @stats.home_pim_total
-    - away_width = away_pim * bar_width  / (away_pim + home_pim)
-    - home_width = home_pim * bar_width / (away_pim + home_pim)
+    - away_width = away_pim > 0 ? away_pim * bar_width  / (away_pim + home_pim) : 0
+    - home_width = home_pim > 0 ? home_pim * bar_width / (away_pim + home_pim) : 0
     %table.table.table-bordered
       %thead
         %tr
