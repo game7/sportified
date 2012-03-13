@@ -1,5 +1,9 @@
 @import "twitter/bootstrap";
 
+.boxscore h4 {
+  margin-bottom: 20px;
+}
+
 .boxscore .status {
   background-color: @grayLighter;
   padding: 5px;
@@ -12,10 +16,22 @@
   }
   .team {
     float: left;
-    width: 200px;    
+    width: 200px;
+    .logo {
+      float: left;
+      height: 50px;
+      width: 50px;
+      margin-right: 10px;
+      border: 1px solid @grayLighter;
+      .border-radius(5px);
+    } 
   }
   .logistics {
+    padding: 5px;
     clear: both;  
+  }
+  .clear {
+    clear: both;
   }
 }
 
@@ -25,6 +41,7 @@
 
 
 .boxscore .teamstats {
+  margin-bottom: 18px;
   .stat {
     .makeColumn(4);
   }
