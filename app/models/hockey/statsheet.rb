@@ -81,10 +81,10 @@ module Hockey
     end  
 
     def away_pim_total
-      events.penalties.away.sum(:dur)
+      events.penalties.away.sum(:dur) || 0
     end
     def home_pim_total
-      events.penalties.home.sum(:dur)    
+      events.penalties.home.sum(:dur) || 0
     end
 
     def overtime?
