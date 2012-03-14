@@ -1,7 +1,7 @@
 - edit_mode = ['edit','update'].index(params[:action]) ? true : false
 = simple_form_for( @goaltender, :url => url, :remote => true ) do |f|
   = f.input :side, :collection => @sides, :disabled => edit_mode, :label => 'Team'
-  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :label => 'Player Number', :input_html => {:class => "span1"}
+  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :label => 'Player Number', :input_html => {:class => "span1"}
   %table.table.table-bordered
     %thead
       %tr

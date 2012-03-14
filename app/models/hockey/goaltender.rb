@@ -39,7 +39,6 @@ module Hockey
 
     embedded_in :hockey_scoresheet
 
-    validates_presence_of :plr
     validates_numericality_of :min_1, :min_2, :min_3, :min_ot
   end
   

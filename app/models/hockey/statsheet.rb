@@ -197,6 +197,20 @@ module Hockey
       self.players = []
       load_players(self.game)
     end
+    
+    def autoload_goaltenders
+      home = goaltenders.build(:side => 'home')
+      away = goaltenders.build(:side => 'away')
+      
+      %w{home away}.each do |side|
+        %w{1 2 3 ot}.each do |per|
+          eval("#{side}.min_#{per} = self.min_#{per}")
+          %w{shots goals}.each do |stat|
+            eval("#{side}.#{stat}_#{per} = self.#{side == "home" ? "away" : "home"}_#{stat}_#{per}")
+          end
+        end
+      end
+    end
 
     def event_created(event)
 

@@ -1,5 +1,6 @@
 %h2
   = link_to 'Add Goaltender', new_admin_hockey_statsheet_goaltender_path(@statsheet), :remote => true, :class => 'btn btn-mini'
+  = link_to 'Auto Load Goaltenders', autoload_admin_hockey_statsheet_goaltenders_path(@statsheet), :method => :post, :remote => true, :class => 'btn btn-mini'
 #goaltenders
   = render :partial => 'admin/hockey_goaltenders/list', :locals => {:goaltenders => @statsheet.goaltenders}
 

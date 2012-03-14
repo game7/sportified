@@ -88,7 +88,9 @@
       end
       resources :goals, :controller => "hockey_goals"
       resources :penalties, :controller => "hockey_penalties"
-      resources :goaltenders, :controller => "hockey_goaltenders"
+      resources :goaltenders, :controller => "hockey_goaltenders" do
+        post 'autoload', :on => :collection
+      end
     end
     
     #resources :standings_layouts do
