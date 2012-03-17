@@ -2,8 +2,8 @@
 - javascript("https://www.google.com/jsapi")
 - content_for :javascript do
   :javascript
-    var away_team_name = '#{@stats.away_team_name}';
-    var home_team_name = '#{@stats.home_team_name}';
+    var away_team_name = "#{@stats.away_team_name}";
+    var home_team_name = "#{@stats.home_team_name}";
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
