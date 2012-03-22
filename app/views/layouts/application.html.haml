@@ -10,7 +10,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tag
     = yield(:head)
-  %body{ :style => "padding-top: 90px;"}
+  %body
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -23,23 +23,16 @@
               %ul.dropdown-menu
                 = render "devise/menu/login_items"
                 = render "devise/menu/user_items"  
-    .container{ :style => "height: 800px;"}
+    #wrapper.container
       %header
         = content_tag :h1, yield(:title) if show_title?
-        %p.lead A descriptive paragraph here
         = render "layouts/site_navigation" if @site_menu_items
         = render "layouts/breadcrumbs" if @breadcrumbs
         = render "layouts/area_navigation" if @area_menu_items        
-      - if content_for?(:sidebar)
-        #sidebar 
-          .wrapper
-            = yield :sidebar
-      #main{ :class => content_for?(:sidebar) ? 'with_sidebar' : nil}
+      #main
         #banner
-          .wrapper #{yield :banner}
+          #{yield :banner}
         #page-header
-
-        .wrapper
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
       #footer
