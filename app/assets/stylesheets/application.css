@@ -1,8 +1,7 @@
 /*
 *= require_self
-*= require twitter/bootstrap
 *= require jquery-ui-1.8.11.custom
-*= require_tree .
+*= require base
 */
 .subnav-fixed {
   position: fixed;

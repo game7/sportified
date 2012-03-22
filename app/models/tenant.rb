@@ -4,6 +4,7 @@ class Tenant
   field :host, :type => String
   field :description, :type => String
   field :analytics_id, :type => String
+  field :theme, :type => String
   
   validates :host, presence: true
   

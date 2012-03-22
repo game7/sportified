@@ -4,7 +4,8 @@
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
     = #stylesheet_link_tag "compiled/themes/#{theme}/screen", :media => 'screen'
-    = stylesheet_link_tag "application"
+    = theme = Tenant.current.theme
+    = stylesheet_link_tag theme ? "themes/#{theme}/application" : "application"
     = javascript_include_tag "application"
     = csrf_meta_tag
     = yield(:head)
