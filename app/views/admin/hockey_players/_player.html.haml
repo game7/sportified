@@ -2,6 +2,6 @@
   %td
     = player.played ? 'X' : ''
   %td= player.num
-  %td= player.name
+  %td= "#{player.last_name}, #{player.first_name}"
   %td
     = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), :remote => true, :title => 'Edit this player', :class => 'btn btn-mini'

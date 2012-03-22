@@ -1,10 +1,10 @@
 .row
   #players-away.span6
     %h3 #{@statsheet.away_team_name}
-    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.away}
+    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.away.asc(:last_name)}
   #players-home.span6
     %h3 #{@statsheet.home_team_name}
-    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.home}
+    = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.home.asc(:last_name)}
 = link_to 'Load Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :method => :post, :class => 'btn'    
 = link_to 'Reload Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will overwrite current player rosters on this statsheet. Are you sure?', :method => :post, :class => 'btn'
 
