@@ -2,16 +2,13 @@ module Hockey
   class Player
     include Mongoid::Document
     include Sides
+    include Stats
+    before_save :set_games_played
 
     field :played, :type => Boolean, :default => true
     field :first_name
     field :last_name
     field :num
-    field :g, :type => Integer, :default => 0
-    field :a, :type => Integer, :default => 0
-    field :pts, :type => Integer, :default => 0
-    field :pen, :type => Integer, :default => 0
-    field :pim, :type => Integer, :default => 0
     
     def name
       "#{first_name} #{last_name}"
@@ -28,6 +25,10 @@ module Hockey
       self.first_name = player.first_name
       self.last_name = player.last_name
       self.num = player.jersey_number
+    end
+    
+    def set_games_played
+      self.gp = self.played == true ? 1 : 0
     end
 
   end
