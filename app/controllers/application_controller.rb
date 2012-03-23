@@ -74,8 +74,13 @@ class ApplicationController < ActionController::Base
   end
 
   def mark_return_point
-    session[:return_to] = request.env["HTTP_REFERER"]
+    session[:return_to] = params[:return_to] || request.env["HTTP_REFERER"]
   end
+  
+  def return_url
+    session[:return_to]
+  end
+  helper_method :return_url
 
   def return_to_last_point(response_status = {})
     response_status = {:flash => response_status} unless response_status[:flash]

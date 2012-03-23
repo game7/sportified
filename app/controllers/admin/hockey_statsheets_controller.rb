@@ -1,5 +1,5 @@
 class Admin::HockeyStatsheetsController < Admin::BaseLeagueController
-  
+  before_filter :mark_return_point, :only => [:edit]   
   before_filter :load_statsheet
 
   def edit
@@ -16,11 +16,13 @@ class Admin::HockeyStatsheetsController < Admin::BaseLeagueController
   def post
     Hockey::Statsheet::Processor.post @statsheet
     flash[:success] = "Statsheet Posted"
+    redirect_to edit_admin_game_statsheet_path(@statsheet.game, :return_to => return_url)
   end
   
   def unpost
     Hockey::Statsheet::Processor.unpost @statsheet
     flash[:success] = "Statsheet Unposted"
+    redirect_to edit_admin_game_statsheet_path(@statsheet.game, :return_to => return_url)
   end
   
   private

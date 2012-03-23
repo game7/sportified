@@ -22,6 +22,9 @@ module Hockey
     def min_total
       min_1 + min_2 + min_3 + min_ot
     end
+    def completed_in
+      min_ot > 0 ? 'overtime' : 'regulation'
+    end
 
     # goal summary
     # ---------------------------------------------------
@@ -257,45 +260,84 @@ module Hockey
     end
 
     def penalty_created(pen)
-      increment_penalties_for_player(pen.side, pen.plr, 1, pen.dur)
+      increment_penalties_for_player(pen.side, pen.plr, 1, pen.dur, pen.severity)
     end
 
     def penalty_deleted(pen)
-      increment_penalties_for_player(pen.side, pen.plr, -1, -pen.dur)
+      increment_penalties_for_player(pen.side, pen.plr, -1, -pen.dur, pen.severity)
     end
 
     def increment_goals_for_player(side, num, i)
       if num != '' && plr = players.for_side(side).with_num(num).first
         plr.g += i
         plr.pts += i
+        check_and_set_hat_trick plr
+        check_and_set_gordie_howe plr
       end
     end
 
     def increment_assists_for_player(side, num, i)
       if num != '' && plr = players.for_side(side).with_num(num).first
         plr.a += i
-        plr.pts += i 
+        plr.pts += i
+        check_and_set_playmaker plr
+        check_and_set_gordie_howe plr
       end
     end
 
-    def increment_penalties_for_player(side, num, i, min)
+    def increment_penalties_for_player(side, num, i, min, severity)
       if num != '' && plr = players.for_side(side).with_num(num).first
         plr.pen += i
         plr.pim += min
+        case severity
+          when 'minor'
+            plr.pen_minor += i
+          when 'major'
+            plr.pen_major += i
+          when 'misconduct'
+            plr.pen_misc += i
+          when 'game_misconduct'
+            plr.men_game += i
+        end
+        check_and_set_gordie_howe plr
       end
+    end
+    
+    def check_and_set_hat_trick player
+      player.hat = player.g >= 3 ? 1 : 0
+    end
+    
+    def check_and_set_playmaker player
+      player.hat = player. >= 3 ? 1 : 0
+    end
+    
+    def check_and_set_gordie_howe player
+      gordie = 0
+      gordie = 1 if player.g > 1 and player.a > 1 and player.pen > 1
+      player.gordie = gordie
+    end
+    
+    def set_goalie_stats goalie
+      if goalie.plr != '' && plr = players.for_side(goalie.side).with_num(goalie.plr).first
+        plr.g_gp = 1
+        plr.g_toi = goalie.min_total
+        plr.g_sa = goalie.shots_total
+        plr.g_ga = goalie.goals_total
+        plr.g_sv = goalie.saves_total
+        plr.g_svp = goalie.save_percentage
+      end      
     end
 
     def calculate_player_stats
       clear_player_stats
       events.goals.each{|goal| goal_created(goal)}
       events.penalties.each{|pen| penalty_created(pen)}
+      goaltenders.each{|goalie| set_goalie_stats(goalie)}
     end
 
     def clear_player_stats
       players.each do |plr|
-        ['g','a','pts','pen','pim'].each do |att| 
-          plr[att] = 0
-        end
+        plr.clear_stats
       end
     end
 

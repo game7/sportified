@@ -1,6 +1,6 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
   
-  before_filter :mark_return_point, :only => [:new, :destroy]
+  before_filter :mark_return_point, :only => [:edit]
   before_filter :find_game
   before_filter :find_season
   before_filter :add_games_breadcrumb
@@ -12,7 +12,6 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
 
   def edit
     unless @game.has_statsheet?
-      puts "game: #{@game.id}"
       @statsheet = Hockey::Statsheet.new
       @statsheet.game = @game
       @statsheet.save

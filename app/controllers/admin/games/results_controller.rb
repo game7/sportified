@@ -13,11 +13,6 @@ class Admin::Games::ResultsController < Admin::BaseLeagueController
   def new
     current = @game.result.clone if @game.result
     @result = @game.build_result
-    if current
-      puts @result.home_score = current.home_score
-      puts @result.away_score = current.away_score
-      puts @result.completed_in = current.completed_in
-    end 
   end
 
   def create
