@@ -1,5 +1,5 @@
 - javascript("jquery-ui.min.js")
-
+%h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
 .tabbable
   %ul.nav.nav-tabs
     %li.active= link_to 'Summary', '#1', "data-toggle" => 'tab'

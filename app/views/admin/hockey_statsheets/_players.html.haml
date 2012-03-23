@@ -1,3 +1,6 @@
+.well
+  = link_to 'Get Missing Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => "This will add from each team's league roster all players who are currently not on the statsheet roster.  Are you sure?", :method => :post, :class => 'btn btn-small'    
+  = link_to 'Reload All Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => "This will clear the rosters on this statsheet and replace with each team's league roster. Are you sure?", :method => :post, :class => 'btn btn-small'
 .row
   #players-away.span6
     %h3 #{@statsheet.away_team_name}
@@ -5,6 +8,4 @@
   #players-home.span6
     %h3 #{@statsheet.home_team_name}
     = render :partial => 'admin/hockey_players/table', :locals => {:players => @statsheet.players.home.asc(:last_name)}
-= link_to 'Load Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :method => :post, :class => 'btn'    
-= link_to 'Reload Players', reload_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will overwrite current player rosters on this statsheet. Are you sure?', :method => :post, :class => 'btn'
 

@@ -82,6 +82,8 @@
     end    
     
     resources :hockey_statsheets, :only => [:edit, :update] do
+      post 'post', :on => :member
+      post 'unpost', :on => :member
       resources :players, :controller => "hockey_players" do
         post 'load', :on => :collection        
         post 'reload', :on => :collection

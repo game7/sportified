@@ -15,7 +15,7 @@ module Hockey
     end
 
     belongs_to :player
-    embedded_in :hockey_statsheet
+    embedded_in :statsheet, :class_name => "Hockey::Statsheet"
 
     scope :with_num, lambda { |n| { :where => { :num => n } } }
 
@@ -29,6 +29,12 @@ module Hockey
     
     def set_games_played
       self.gp = self.played == true ? 1 : 0
+    end
+    
+    def to_result
+      result = Hockey::Player::Result.new
+      result.load(statsheet.game, self)
+      result
     end
 
   end

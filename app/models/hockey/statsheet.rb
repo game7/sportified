@@ -1,5 +1,10 @@
 module Hockey
   class Statsheet < ::Statsheet
+    
+    field :is_posted, :type => Boolean, :default => false
+    def posted?
+      is_posted
+    end
 
     field :away_team_name
     field :home_team_name

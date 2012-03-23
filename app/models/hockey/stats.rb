@@ -10,6 +10,24 @@ module Hockey
       field :pen, :type => Integer, :default => 0
       field :pim, :type => Integer, :default => 0
     end
-     
+    
+    def add_stats stats
+      self.gp += stats.gp
+      self.g += stats.gp
+      self.a += stats.a
+      self.pts += stats.pts
+      self.pen += stats.pen
+      self.pim += stats.pim
+    end
+    
+    def subtract_stats stats
+      self.gp -= stats.gp
+      self.g -= stats.gp
+      self.a -= stats.a
+      self.pts -= stats.pts
+      self.pen -= stats.pen
+      self.pim -= stats.pim
+    end
+    
   end
 end
