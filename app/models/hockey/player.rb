@@ -17,7 +17,9 @@ module Hockey
     belongs_to :player
     embedded_in :statsheet, :class_name => "Hockey::Statsheet"
 
-    scope :with_num, lambda { |n| { :where => { :num => n } } }
+    def self.with_num num
+      where(:num => num).where(:num.ne => "")
+    end
 
     def from_player(player, side)
       self.side = side
