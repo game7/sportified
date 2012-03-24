@@ -1,0 +1,76 @@
+- title "Statistics"
+
+.row
+  .span4
+    %h3 Goals
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th GOALS
+        %tbody
+          - @goal_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= player.record.g
+  .span4
+    %h3 Assists
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th ASSISTS
+        %tbody
+          - @assist_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= player.record.a
+  .span4
+    %h3 Points
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th POINTS
+        %tbody
+          - @point_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= player.record.pts
+.row
+  .span4
+    %h3 Save Percentage
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th SAVE PCT
+        %tbody
+          - @save_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= number_with_precision(player.record.g_svp, :precision => 3)
+  .span4
+    %h3 Saves
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th SAVES
+        %tbody
+          - @save_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= player.record.g_sv
+  .span4
+    %h3 Shutouts
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th PLAYER
+          %th SO
+        %tbody
+          - @shutout_leaders.each do |player|
+            %tr
+              %td= player.full_name
+              %td= player.record.g_so

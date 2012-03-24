@@ -37,9 +37,14 @@
   match "programs/:league_slug/schedule(/:season_slug)" => "schedule#index", :as => :schedule, :via => :get
   match "programs/:league_slug/standings" => "standings#index", :as => :standings, :via => :get
   match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
-  match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
+
   match "programs/:league_slug/players" => "players#index", :as => :players, :via => :get
   match "programs/:league_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
+  
+  match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
+  
+  match "programs/:league_slug/statistics" => "statistics#index", :as => :statistics, :via => :get
+  match "programs/:league_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
   
   #match "league" => "league/home#index", :as => :league, :via => :get
   #

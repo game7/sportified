@@ -1,0 +1,45 @@
+- title 'Statistics'
+%h3 Player Statistics
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th NAME
+      %th.span1 GP
+      %th.span1 G
+      %th.span1 A
+      %th.span1 PTS
+      %th.span1 PEN
+      %th.span1 PIM
+    %tbody
+      - @players.each do |player|
+        %tr
+          %td= [player.first_name, player.last_name].join(" ")
+          %td= player.record.gp
+          %td= player.record.g
+          %td= player.record.a
+          %td= player.record.pts
+          %td= player.record.pen
+          %td= player.record.pim
+
+%h3 Goaltending Statistics
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th NAME
+      %th.span1 GP
+      %th.span1 TOI
+      %th.span1 SA
+      %th.span1 GA
+      %th.span1 SV
+      %th.span1 SV%
+    %tbody
+      - @goalies.each do |player|
+        %tr
+          %td= [player.first_name, player.last_name].join(" ")
+          %td= player.record.g_gp
+          %td= player.record.g_toi
+          %td= player.record.g_sa
+          %td= player.record.g_ga
+          %td= player.record.g_sv
+          %td= number_with_precision player.record.g_svp, :precision => 3
+

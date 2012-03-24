@@ -308,7 +308,7 @@ module Hockey
     end
     
     def check_and_set_playmaker player
-      player.hat = player. >= 3 ? 1 : 0
+      player.hat = player.a >= 3 ? 1 : 0
     end
     
     def check_and_set_gordie_howe player
@@ -338,6 +338,7 @@ module Hockey
     def clear_player_stats
       players.each do |plr|
         plr.clear_stats
+        plr.gp = 1 if plr.played
       end
     end
 

@@ -4,8 +4,11 @@
   %thead
     %tr
       %th TEAM
+      %th
     %tbody
       - @teams.each do |team|
         %tr
           %td= team.name
+          %td
+            = link_to "Statistics", team_statistics_path(@league.slug, team.season_slug, team.slug)
 

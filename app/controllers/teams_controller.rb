@@ -31,6 +31,13 @@ class TeamsController < BaseLeagueController
     @players = @team.players.asc(:last_name)
     @team_links = links_to_team_roster(@division, @season)
   end
+  
+  def statistics
+    @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first unless action_name == "index"    
+    add_breadcrumb "Statistics"
+    @players = @team.players.desc(:"record.pts")
+    @goalies = @team.players.where(:"record.g_gp".gt => 0).desc(:"record.g_svp")
+  end
 
   def show
     @teams = @division.teams.for_season(@season).desc("record.pts")
@@ -48,7 +55,7 @@ class TeamsController < BaseLeagueController
 
   def load_objects
     super
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first unless action_name == "index"
+    
   end
 
   def links_to_team_schedule(division, season)
