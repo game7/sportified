@@ -31,7 +31,7 @@ namespace :league do
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
       Game.all.includes(:statsheet).each do |game|
-        puts "NEXT GAME..."
+        puts "NEXT GAME: #{game.summary} (#{game.starts_on.strftime('%m/%d/%y')})"
         if game.has_statsheet?
           puts "-- HAS STATSHEET"
           unless game.statsheet.posted?
