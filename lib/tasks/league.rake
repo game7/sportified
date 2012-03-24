@@ -24,6 +24,29 @@ namespace :league do
       end
     end
   end
+  
+  desc "Update all player stats"
+  task :update_all_statistics => :environment do
+    Tenant.all.each do |tenant|
+      Tenant.current = tenant
+      puts "TENANT = #{tenant.host}"
+      Game.all.includes(:statsheet).each do |game|
+        puts "NEXT GAME..."
+        if game.has_statsheet?
+          puts "-- HAS STATSHEET"
+          unless game.statsheet.posted?
+            puts "---- IT'S POSTED"
+            puts "---- UNPOSTING..."
+            Hockey::Statsheet::Processor.unpost game.statsheet
+            puts "---- DONE UNPOSTING"
+            puts "---- RE-POSTING..."
+            Hockey::Statsheet::Processor.post @statsheet
+            puts "---- DONE RE-POSTING"
+          end
+        end
+      end
+    end
+  end  
 
 
 end
