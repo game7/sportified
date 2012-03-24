@@ -268,7 +268,8 @@ module Hockey
     end
 
     def increment_goals_for_player(side, num, i)
-      if num != '' && plr = players.for_side(side).with_num(num).first
+      return if num.nil? || num.empty?
+      if plr = players.for_side(side).with_num(num).first
         plr.g += i
         plr.pts += i
         check_and_set_hat_trick plr
@@ -277,7 +278,8 @@ module Hockey
     end
 
     def increment_assists_for_player(side, num, i)
-      if num != '' && plr = players.for_side(side).with_num(num).first
+      return if num.nil? || num.empty?
+      if plr = players.for_side(side).with_num(num).first
         plr.a += i
         plr.pts += i
         check_and_set_playmaker plr
@@ -286,7 +288,8 @@ module Hockey
     end
 
     def increment_penalties_for_player(side, num, i, min, severity)
-      if num != '' && plr = players.for_side(side).with_num(num).first
+      return if num.nil? || num.empty?
+      if plr = players.for_side(side).with_num(num).first
         plr.pen += i
         plr.pim += min
         case severity
@@ -318,6 +321,7 @@ module Hockey
     end
     
     def set_goalie_stats goalie
+      return if goalie.plr.nil? || goalie.plr.empty?
       if goalie.plr != '' && plr = players.for_side(goalie.side).with_num(goalie.plr).first
         plr.g_gp = 1
         plr.g_toi = goalie.min_total
@@ -326,7 +330,7 @@ module Hockey
         plr.g_sv = goalie.saves_total
         plr.g_svp = goalie.save_percentage
         plr.g_so = plr.g_ga == 0 ? 1 : 0
-      end      
+      end
     end
 
     def calculate_player_stats
