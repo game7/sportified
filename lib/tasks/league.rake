@@ -30,17 +30,18 @@ namespace :league do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
-      Game.all.includes(:statsheet).each do |game|
+      Game.all.each do |game|
         puts "NEXT GAME: #{game.summary} (#{game.starts_on.strftime('%m/%d/%y')})"
-        if game.has_statsheet?
+        statsheet = game.statsheet
+        if statsheet
           puts "-- HAS STATSHEET"
-          unless game.statsheet.posted?
+          unless statsheet.posted?
             puts "---- IT'S POSTED"
             puts "---- UNPOSTING..."
-            Hockey::Statsheet::Processor.unpost game.statsheet
+            Hockey::Statsheet::Processor.unpost statsheet
             puts "---- DONE UNPOSTING"
             puts "---- RE-POSTING..."
-            Hockey::Statsheet::Processor.post @statsheet
+            Hockey::Statsheet::Processor.post statsheet
             puts "---- DONE RE-POSTING"
           end
         end

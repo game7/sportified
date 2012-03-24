@@ -74,6 +74,7 @@ module Hockey
     end
     
     def add_stats stats
+      return if stats.nil?
       self.gp         += stats.gp
       self.g          += stats.g
       self.a          += stats.a
@@ -109,6 +110,7 @@ module Hockey
     end
     
     def subtract_stats stats
+      return if stats.nil?
       self.gp         -= stats.gp
       self.g          -= stats.g
       self.a          -= stats.a
