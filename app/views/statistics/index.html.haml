@@ -3,74 +3,110 @@
 .row
   .span4
     %h3 Goals
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th GOALS
+          %th.player PLAYER
+          %th.stat GOALS
         %tbody
+          - data_exists = false
           - @goal_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= player.record.g
+              %td.player= player.full_name
+              %td.stat= player.record.g
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No goals have been recorded... yet              
   .span4
     %h3 Assists
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th ASSISTS
+          %th.player PLAYER
+          %th.stat ASSISTS
         %tbody
+          - data_exists = false
           - @assist_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= player.record.a
+              %td.player= player.full_name
+              %td.stat= player.record.a
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No assists have been recorded... yet
   .span4
     %h3 Points
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th POINTS
+          %th.player PLAYER
+          %th.stat POINTS
         %tbody
+          - data_exists = false
           - @point_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= player.record.pts
+              %td.player= player.full_name
+              %td.stat= player.record.pts
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No points have been recorded... yet              
 .row
   .span4
     %h3 Save Percentage
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th SAVE PCT
+          %th.player PLAYER
+          %th.stat SAVE PCT
         %tbody
+          - data_exists = false
           - @save_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= number_with_precision(player.record.g_svp, :precision => 3)
+              %td.player= player.full_name
+              %td.stat= number_with_precision(player.record.g_svp, :precision => 3)
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No saves have been recorded... yet
   .span4
     %h3 Saves
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th SAVES
+          %th.player PLAYER
+          %th.stat SAVES
         %tbody
+          - data_exists = false
           - @save_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= player.record.g_sv
+              %td.player= player.full_name
+              %td.stat= player.record.g_sv
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No saves have been recorded... yet              
   .span4
     %h3 Shutouts
-    %table.table.table-striped.table-bordered
+    %table.table.table-striped.table-bordered.leaders
       %thead
         %tr
-          %th PLAYER
-          %th SO
+          %th.player PLAYER
+          %th.stat SO
         %tbody
+          - data_exists = false
           - @shutout_leaders.each do |player|
+            - data_exists = true
             %tr
-              %td= player.full_name
-              %td= player.record.g_so
+              %td.player= player.full_name
+              %td.stat= player.record.g_so
+          - unless data_exists
+            %tr
+              %td{:colspan => 2} 
+                %em No shutouts have been recorded... yet
