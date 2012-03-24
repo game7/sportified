@@ -325,6 +325,7 @@ module Hockey
         plr.g_ga = goalie.goals_total
         plr.g_sv = goalie.saves_total
         plr.g_svp = goalie.save_percentage
+        plr.g_so = plr.g_ga == 0 ? 1 : 0
       end      
     end
 
