@@ -13,7 +13,7 @@ module Hockey
     end
 
     def cancel_result_for_game game_id
-      result = results.where(:game_id => game_id).first
+      return unless result = results.where(:game_id => game_id).first
       subtract_stats result
       result.delete
     end
