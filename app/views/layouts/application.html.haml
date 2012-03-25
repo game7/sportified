@@ -21,6 +21,7 @@
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
             = link_to Tenant.current.name, root_url, :class => "brand"
+          = render "layouts/site_navigation" if @site_menu_items            
           %ul.nav.pull-right
             %li.dropdown
               %a.dropdown-toggle{ :href => "#", "data-toggle" => "dropdown"}
@@ -34,15 +35,15 @@
         %h1
           = yield(:title)
           = content_tag :small, yield(:title_small) if content_for?(:title_small)
-        = render "layouts/site_navigation" if @site_menu_items
+        = render "layouts/area_navigation" if @area_menu_items  
         = render "layouts/breadcrumbs" if @breadcrumbs
-        = render "layouts/area_navigation" if @area_menu_items        
+              
       #main
         #banner
           #{yield :banner}
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
-          = yield
+        = yield
       #footer
     = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
     = yield :javascript

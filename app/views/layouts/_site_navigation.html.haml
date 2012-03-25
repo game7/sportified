@@ -1,10 +1,7 @@
-.navbar
-  .navbar-inner
-    .container
-      %ul.nav
-        - Page.top_level.in_menu.live.asc(:position).each do |page|
-          - url = get_page_url(page)
-          %li{ :class => request.url.include?(url) ? "active" : nil }
-            %a{ :href => url }= page.title
+%ul.nav
+  - Page.top_level.in_menu.live.asc(:position).each do |page|
+    - url = get_page_url(page)
+    %li{ :class => request.url.include?(url) ? "active" : nil }
+      %a{ :href => url }= page.title
 
               
