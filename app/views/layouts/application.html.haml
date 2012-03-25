@@ -5,8 +5,9 @@
       = content_for?(:title) ? yield(:title) : 'Untitled'
     = #stylesheet_link_tag "compiled/themes/#{theme}/screen", :media => 'screen'
     = stylesheet_link_tag "application" 
-    - theme = Tenant.current.theme    
-    = stylesheet_link_tag theme ? "themes/#{theme}/theme" : "theme"
+    - theme = Tenant.current.theme
+    - if theme and !theme.empty?
+      = stylesheet_link_tag "/assets/themes/#{theme}/theme"
     = javascript_include_tag "application"
     = csrf_meta_tag
     = yield(:head)
@@ -14,7 +15,12 @@
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          =link_to Tenant.current.name, root_url, :class => "brand"
+          #site_logo
+            = link_to "/", :class => "brand" do
+              %div
+            =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
+          #site_name
+            = link_to Tenant.current.name, root_url, :class => "brand"
           %ul.nav.pull-right
             %li.dropdown
               %a.dropdown-toggle{ :href => "#", "data-toggle" => "dropdown"}
