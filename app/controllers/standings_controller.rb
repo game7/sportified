@@ -10,14 +10,9 @@ class StandingsController < BaseLeagueController
     #  @teams = []
     #  flash[:error] = "Standings layout has not been setup for this division"
     #end
+    add_breadcrumb "Standings"
+    add_breadcrumb @season.name if @season
     @teams = @league.teams.for_season(@season).desc('record.pts')
   end
   
-  private
-
-  def set_breadcrumbs
-    super
-    add_breadcrumb "Standings" 
-  end 
-
 end

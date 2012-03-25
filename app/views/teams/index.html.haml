@@ -1,4 +1,4 @@
-- title "Teams"
+- title "Teams", :small => "#{@league.name} / #{@season.name}"
 
 %table.table.table-striped.table-bordered
   %thead
@@ -10,5 +10,9 @@
         %tr
           %td= team.name
           %td
+            = link_to "Schedule", team_schedule_path(@league.slug, team.season_slug, team.slug)
+            = " | "
+            = link_to "Roster", team_roster_path(@league.slug, team.season_slug, team.slug)
+            = " | "
             = link_to "Statistics", team_statistics_path(@league.slug, team.season_slug, team.slug)
 

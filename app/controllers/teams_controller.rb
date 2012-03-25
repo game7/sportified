@@ -15,9 +15,10 @@ class TeamsController < BaseLeagueController
   end
 
   def schedule
-    @events = Event.for_site(Site.current).for_team(@team).asc(:starts_on)
+    @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first
+    @events = Event.for_team(@team).asc(:starts_on)
     add_breadcrumb "Schedule"
-    @team_links = links_to_team_schedule(@division, @season)
+    @team_links = links_to_team_schedule(@league, @season)
 
     respond_to do |format|
       format.html
@@ -28,12 +29,13 @@ class TeamsController < BaseLeagueController
 
   def roster
     add_breadcrumb "Roster"
+    @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first    
     @players = @team.players.asc(:last_name)
-    @team_links = links_to_team_roster(@division, @season)
+    @team_links = links_to_team_roster(@league, @season)
   end
   
   def statistics
-    @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first unless action_name == "index"    
+    @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first   
     add_breadcrumb "Statistics"
     @players = @team.players.desc(:"record.pts")
     @goalies = @team.players.where(:"record.g_gp".gt => 0).desc(:"record.g_svp")
@@ -49,7 +51,7 @@ class TeamsController < BaseLeagueController
   
   private
   def set_team_breadcrumbs 
-    add_breadcrumb "Teams", teams_path(@division.slug) 
+    add_breadcrumb "Teams", teams_path(@league.slug) 
     add_breadcrumb @team.name if @team
   end
 
@@ -58,18 +60,18 @@ class TeamsController < BaseLeagueController
     
   end
 
-  def links_to_team_schedule(division, season)
-    teams = division.teams.for_season(season).asc(:name)
+  def links_to_team_schedule(league, season)
+    teams = @league.teams.for_season(season).asc(:name)
     teams.each.collect do |t|
-      [t.name, team_schedule_path(division.slug, season.slug, t.slug)] 
+      [t.name, team_schedule_path(league.slug, season.slug, t.slug)] 
     end   
   end
 
-  def links_to_team_roster(division, season)
-    teams = division.teams.for_season(season).asc(:name)
+  def links_to_team_roster(league, season)
+    teams = @league.teams.for_season(season).asc(:name)
     teams.each.collect do |t|
-      [t.name, team_roster_path(division.slug, season.slug, t.slug)] 
-    end   
+      [t.name, team_roster_path(league.slug, season.slug, t.slug)] 
+    end
   end
 
   def links_to_season

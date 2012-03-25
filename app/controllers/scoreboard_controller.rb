@@ -11,12 +11,9 @@ class ScoreboardController < BaseLeagueController
     @prev_date = date - @days_in_future - @days_in_past    
   end
 
-  def set_breadcrumbs
-    super
-    add_breadcrumb "Scoreboard"
-  end
-
   def index
+    
+    add_breadcrumb("Scoreboard")
     
     @games = Game.between(@start_date, @end_date)
     @games = @games.for_league(@league) if @league

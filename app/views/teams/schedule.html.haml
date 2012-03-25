@@ -1,34 +1,28 @@
-- title @team.name + ' Schedule - ' + @season.name
+- title "#{@team.name} #{@season.name} Schedule"
 - last_month = nil
 
-= content_for :banner do
-  = render :partial => 'team_banner', :locals => { :team => @team }
+.row
+  .span3
+    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
+  .span3.offset6{ :style => "text-align: right;"}
+    = link_to 'Download as iCal', params.merge(:format => :ics), :class => "btn btn-info"
 
-.controls.left
-  Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-.controls.right
-  #{link_to 'iCalendar', params.merge(:format => :ics)}
-.clear
+%table.table.table-striped.table-bordered
+  - @events.each do |event|
+    - month = event.starts_on.strftime('%B')
+    - future = event.starts_on.future?
+    - if month != last_month
+      - reset_cycle()
+      %tr
+        %th= month
+        %th EVENT
+        %th TIME / RESULT
+        %th LOCATION
+      - last_month = month
+      - last_future = future
+    %tr
+      %td.span2= event.starts_on.strftime('%a, %b %e')
+      %td.span4= display_event_summary(event, @team)
+      %td.span3= display_time_or_result(event, @team)
+      %td.span3= event.venue_name
 
-.mod-container.mod-table.mod-no-header-footer
-  .mod-content
-    %table.stat#schedule{ :cellspacing => "1" }
-      %tr.group-head
-        %td{ :colspan => "4" } #{@season.name + ' ' + @division.name + ' Schedule'}
-      - @events.each do |event|
-        - month = event.starts_on.strftime('%B')
-        - future = event.starts_on.future?
-        - if month != last_month
-          - reset_cycle()
-          %tr.col-head
-            %td.month #{month}
-            %td.opponent EVENT
-            %td.time TIME / RESULT
-            %td.location LOCATION
-          - last_month = month
-          - last_future = future
-        %tr{ :class => cycle("odd","even") }
-          %td #{ event.starts_on.strftime('%a, %b %e') }
-          %td #{ display_event_summary(event, @team) }
-          %td #{ display_time_or_result(event, @team) }
-          %td #{ event.venue_name }

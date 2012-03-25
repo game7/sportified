@@ -1,26 +1,16 @@
-- title @team.name + ' Roster - ' + @season.name
+- title "#{@team.name} #{@season.name} Roster"
 
-= content_for :banner do
-  = render :partial => 'team_banner', :locals => { :team => @team }
-
-.controls.left
-  Team: #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-.controls.right
-
-.clear
-
-.mod-container.mod-table.mod-no-header-footer
-  .mod-content
-    %table.stat#roster{ :cellspacing => "1" }
-      %thead
-        %tr.col-head
-          %td NUM
-          %td NAME
-      %tbody
-        - @players.each do |player|
-          %tr{ :class => cycle("odd","even") }
-            %td #{player.jersey_number}
-            %td
-              = player.full_name
+#{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th NUM
+      %th NAME
+  %tbody
+    - @players.each do |player|
+      %tr{ :class => cycle("odd","even") }
+        %td.span1 #{player.jersey_number}
+        %td.span11
+          = player.full_name
 
 

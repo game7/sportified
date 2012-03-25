@@ -2,6 +2,8 @@ class StatisticsController < BaseLeagueController
   
   def index   
     add_breadcrumb "Statistics"
+    add_breadcrumb @season.name if @season
+    
     limit = 3
     @goal_leaders = Player.for_league(@league).for_season(@season).where(:"record.g".gt => 0).desc("record.g").limit(limit)
     @assist_leaders = Player.for_league(@league).for_season(@season).where(:"record.a".gt => 0).desc("record.a").limit(limit)
@@ -15,7 +17,6 @@ class StatisticsController < BaseLeagueController
 
   def set_breadcrumbs
     super
-    add_breadcrumb "Statistics" 
   end 
 
 end

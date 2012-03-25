@@ -58,7 +58,7 @@ class Event
   class << self  
     def for_team(t)
       id = t.class == Team ? t.id : t
-      any_of( { :team_ids => t.id}, { :division_ids => t.division_id, :show_for_all_teams => true })
+      any_of( { :team_ids => t.id})
     end
     def for_season(s)
       id = s.class == Season ? s.id : s

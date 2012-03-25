@@ -4,9 +4,9 @@
 #   helper :layout
 module LayoutHelper
   
-  def title(page_title, show_title = true)
+  def title(page_title, opts={})
     content_for(:title) { h(page_title.to_s) }
-    @show_title = show_title
+    content_for(:title_small) { opts[:small] } if opts[:small]
   end
 
   def breadcrumbs(crumbs)

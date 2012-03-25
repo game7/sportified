@@ -28,18 +28,18 @@ class TeamGameResult
 
     self.game_id = game.id    
     self.played_on = game.starts_on.to_date
-    self.completed_in = game.completed_in
+    self.completed_in = game.result.completed_in
 
-    if game.left_team_id == team_id
-      self.opponent_id = game.right_team_id
-      self.opponent_name = game.right_team_name
-      self.scored = game.left_team_score
-      self.allowed = game.right_team_score
-    elsif game.right_team_id == team_id
-      self.opponent_id = game.left_team_id
-      self.opponent_name = game.left_team_name
-      self.scored = game.right_team_score
-      self.allowed = game.left_team_score
+    if game.away_team_id == team_id
+      self.opponent_id = game.home_team_id
+      self.opponent_name = game.home_team_name
+      self.scored = game.result.away_score
+      self.allowed = game.result.home_score
+    elsif game.home_team_id == team_id
+      self.opponent_id = game.away_team_id
+      self.opponent_name = game.away_team_name
+      self.scored = game.result.home_score
+      self.allowed = game.result.away_score
     end
 
     self.update_decision

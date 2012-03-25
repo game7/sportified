@@ -5,7 +5,10 @@ class ScheduleController < BaseLeagueController
 
   def index
     
+    add_breadcrumb("Schedule")
+    
     if params[:season_slug]
+      add_breadcrumb(@season.name)
       @events = @league.events.for_season(@season).asc(:starts_on)
     else
       @date = params[:date] ? Date.parse(params[:date]) : Date.current
@@ -37,11 +40,6 @@ class ScheduleController < BaseLeagueController
     @team_schedule_links = teams.each.collect do |t|
       [t.name, "#"]#team_schedule_path(division.slug, season.slug, t.slug)] 
     end   
-  end
-
-  def set_breadcrumbs
-    super
-    add_breadcrumb "Schedule"
-  end  
+  end 
 
 end

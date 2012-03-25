@@ -6,7 +6,7 @@ class BaseLeagueController < ApplicationController
 
   def set_breadcrumbs
     super
-    #add_breadcrumb("League", path)
+    add_breadcrumb("Programs")
   end  
 
   def set_area_navigation
@@ -22,6 +22,7 @@ class BaseLeagueController < ApplicationController
   
   def find_league
     @league = League.with_slug(params[:league_slug]).first
+    add_breadcrumb(@league.name) if @league
   end
   
   def find_season
