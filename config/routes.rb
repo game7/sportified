@@ -1,11 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-  get "player_imports/new"
-
-  get "player_imports/edit"
-
-  get "player_imports/index"
-
   get "dashboard/index"
 
   root :to => "welcome#index"
