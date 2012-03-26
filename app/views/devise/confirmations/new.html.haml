@@ -1,0 +1,8 @@
+- title "Resend confirmation instructions"
+
+= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :put }) do |f|
+  = f.input :email
+  .form-actions
+    = f.submit "Resend confirmation instructions", :class => 'btn btn-primary'
+    = link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete, :class => "btn"
+
