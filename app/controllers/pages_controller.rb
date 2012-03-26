@@ -16,14 +16,14 @@ class PagesController < ApplicationController
   
   def set_breadcrumbs
     @page.ancestors_and_self.each do |parent|
-      add_breadcrumb parent.title, page_friendly_path(parent.path)
+      add_breadcrumb parent.title_in_menu.presence || parent.title, page_friendly_path(parent.path)
     end
   end
   
   def set_area_navigation
     #@area_name = @page.title
     @page.children.each do |child|
-      add_area_menu_item child.title, page_friendly_path(child.path)
+      add_area_menu_item child.title_in_menu.presence || child.title, page_friendly_path(child.path)
     end
   end
 end

@@ -19,6 +19,7 @@ class Page
   
   field :link_url
   field :show_in_menu, :type => Boolean, :default => true
+  field :title_in_menu
   field :skip_to_first_child, :type => Boolean, :default => false
 
   field :draft, :type => Boolean, :default => false
@@ -62,7 +63,7 @@ class Page
     end
 
     def set_slug
-      self.slug = self.title.parameterize
+      self.slug = (self.title_in_menu.presence || self.title).parameterize
     end
 
     def set_path
