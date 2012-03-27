@@ -4,6 +4,7 @@
 //= require twitter/bootstrap/tab
 //= require twitter/bootstrap/button
 //= require twitter/bootstrap/dropdown
+//= require wymeditor/jquery.wymeditor.min
 //= require_tree .
 
 
