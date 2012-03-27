@@ -1,9 +1,11 @@
 - title "Edit " + @page.title
 - javascript("jquery-ui.min.js")
 .well
-  = link_to "Show Controls", "#", :id => "toggle_editor", :class => 'btn'
-  = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :class => 'btn'
-= render :partial => "block", :collection => @page.blocks
+  = link_to "Hide Controls", "#", :id => "toggle_editor", :class => 'btn'
+  = link_to "Add Text", admin_page_blocks_path(@page.id, :block_type => 'text'), :method => :post, :remote => true, :class => 'btn'
+  = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :remote => true, :class => 'btn'
+.blocks
+  = render :partial => "block", :collection => @page.blocks
 
 #dialog-modal
 

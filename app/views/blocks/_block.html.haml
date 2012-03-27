@@ -1,0 +1,4 @@
+.block{ :id => "block_"+block.id.to_s }
+  .inner
+    .content
+      = render :partial => block.class.to_s.pluralize.underscore+"/block", :object => block

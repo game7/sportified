@@ -1,0 +1,9 @@
+<% if @block.errors.any? %>
+  $("#flash_notice").slideUp()
+  $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
+  $("#errors-<%= @block.id %>").slideDown();
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
+  $("#flash_success").slideDown();
+  $(".blocks").append("<%= escape_javascript( render(:partial => "admin/blocks/block", :locals => { :block => @block } ) )%>");
+<% end %>

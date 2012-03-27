@@ -1,0 +1,10 @@
+<% if @block.errors.any? %>
+  $("#flash_notice").slideUp()
+  $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
+  $("#errors-<%= @block.id %>").slideDown();
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
+  $("#flash_success").slideDown();
+  $('#dialog-modal').dialog("close");
+  $("#block_<%= @block.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/blocks/block", :locals => { :block => @block } ) )%>");
+<% end %>

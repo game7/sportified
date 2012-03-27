@@ -10,14 +10,12 @@ class Admin::BlocksController < Admin::AdminController
   
   def create
     @block = @page.blocks.create({}, "blocks/#{params[:block_type]}".camelize.constantize) 
-    flash[:notice] = "#{params[:block_type].humanize} has been added to Page"
-    redirect_to admin_page_blocks_path
+    flash[:success] = "#{params[:block_type].humanize} has been added to Page"
   end
   
   def destroy
     @block.delete    
-    flash[:notice] = "Block Deleted"
-    redirect_to admin_page_blocks_path
+    flash[:success] = "Block Deleted"
   end
   
   private

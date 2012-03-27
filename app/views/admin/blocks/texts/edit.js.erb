@@ -1,0 +1,36 @@
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/blocks/texts/form" ) )%>");
+$('#dialog-modal').dialog({
+  title: 'Edit Text',
+  height: 500,
+  width: 800,
+  modal: true,
+  buttons: {
+    Save: function() {
+      $.each(WYMeditor.INSTANCES, function() {
+        this.update();
+      });
+      WYMeditor.INSTANCES.length = 0;
+      $(this).children("form").submit();      
+    },
+    Cancel: function() {
+      $(this).dialog("close");
+    }
+  }
+}); 
+$(".wymeditor").wymeditor({
+  boxHtml:   "<div class='wym_box'>"
+          + "<div class='wym_area_top'>"
+          + WYMeditor.TOOLS
+          + "</div>"
+          + "<div class='wym_area_left'></div>"
+          + "<div class='wym_area_right'>"
+          + "</div>"
+          + "<div class='wym_area_main'>"
+          + WYMeditor.HTML
+          + WYMeditor.IFRAME
+          + WYMeditor.STATUS
+          + "</div>"
+          + "<div class='wym_area_bottom'>"
+          + "</div>"
+          + "</div>"
+});

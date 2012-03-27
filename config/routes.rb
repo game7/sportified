@@ -113,8 +113,9 @@
       resources :blocks, :only => [ :index, :create, :destroy ] do
         post 'position', :on => :collection
       end
-      namespace :blocks do
+      namespace :blocks, :except => [:edit, :update] do
         resources :contacts, :only => [:edit, :update]
+        resources :texts, :only => [:edit, :update]
       end
     end    
   end
