@@ -1,0 +1,24 @@
+- title "Edit " + @page.title
+- javascript("jquery-ui.min.js")
+.well
+  = link_to "Show Controls", "#", :id => "toggle_editor", :class => 'btn'
+  = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :class => 'btn'
+= render :partial => "block", :collection => @page.blocks
+
+#dialog-modal
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+      $("#toggle_editor").click(function(){
+        if ($(this).text() == 'Show Controls') {
+          $('.block').addClass('editable');
+          $(this).text('Hide Controls');
+        } else {
+          $('.block').removeClass('editable');
+          $(this).text('Show Controls');
+        }
+        return false;      
+      });      
+    });
+  

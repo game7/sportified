@@ -1,0 +1,35 @@
+
+.block {
+  margin-bottom: 10px;
+  .chrome {
+    padding: 2px;
+    background-color: @grayLighter;
+    border-bottom: 1px solid @grayLight;
+    display: none;
+    .title {
+      float: left;
+      font-weight: bold;
+    }
+    .actions {
+      float: right;
+    }
+    .clear {
+      clear: both;
+    }
+  }
+  .content {
+
+  }
+}
+
+.editable {
+  .inner {
+    border: 1px solid @grayLight;
+  }
+  .chrome {
+    display: block;
+  }
+  .content {
+    padding: 4px;
+  }
+}

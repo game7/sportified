@@ -26,7 +26,7 @@ class Page
 
   field :tree 
 
-  #embeds_many :blocks#, :default_order => :position.asc
+  embeds_many :blocks, :class_name => "Blocks::Block"#, :default_order => :position.asc
   #embeds_many :layouts#, :default_order => :position.asc
 
   validates_presence_of :title

@@ -1,0 +1,10 @@
+.block{ :id => "block_"+block.id.to_s }
+  .inner
+    .chrome
+      .title= block.friendly_name
+      .actions
+        = render :partial => "admin/"+block.class.to_s.pluralize.underscore+"/actions", :locals => { :block => block }
+        = link_to 'Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+      .clear
+    .content
+      = render :partial => "admin/"+block.class.to_s.pluralize.underscore+"/block", :object => block

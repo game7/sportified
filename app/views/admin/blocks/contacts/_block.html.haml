@@ -1,0 +1,9 @@
+.contact
+  %address
+    %strong= [block.first, " ", block.last].join
+    %br/
+    = block.title
+    - if block.phone.presence
+      %br/
+      %abbr{ :title => "Phone"} P:
+      = block.phone

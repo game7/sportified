@@ -17,4 +17,8 @@
       = f.input :meta_keywords
       = f.input :meta_description
   .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+    = f.button :submit, :class => 'btn btn-primary wymupdate'
+    
+- content_for :javascript do
+  :javascript
+    $(".wymeditor").wymeditor();

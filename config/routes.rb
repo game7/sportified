@@ -16,7 +16,6 @@
     resources :users
     match 'status' => 'dashboard#status'
   end
-  
 
   namespace :admin do
     root :to => "dashboard#index"
@@ -25,8 +24,6 @@
     end
     resource :site#, :only => [ :edit, :update ]
   end
-
-
 
   match "programs/:league_slug/schedule(/:season_slug)" => "schedule#index", :as => :schedule, :via => :get
   match "programs/:league_slug/standings" => "standings#index", :as => :standings, :via => :get
@@ -113,6 +110,12 @@
   namespace :admin do
     resources :pages do
       post 'position', :on => :collection
+      resources :blocks, :only => [ :index, :create, :destroy ] do
+        post 'position', :on => :collection
+      end
+      namespace :blocks do
+        resources :contacts, :only => [:edit, :update]
+      end
     end    
   end
 
