@@ -3,6 +3,7 @@
 .well
   = link_to "Hide Controls", "#", :id => "toggle_editor", :class => 'btn'
   = link_to "Add Text", admin_page_blocks_path(@page.id, :block_type => 'text'), :method => :post, :remote => true, :class => 'btn'
+  = link_to "Add Image", admin_page_blocks_path(@page.id, :block_type => 'image'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Divider", admin_page_blocks_path(@page.id, :block_type => 'divider'), :method => :post, :remote => true, :class => 'btn'
 .blocks

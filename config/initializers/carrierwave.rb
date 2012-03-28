@@ -1,14 +1,16 @@
 #require 'carrierwave/orm/mongoid'
 
 if Rails.env.test?  
-  CarrierWave.configure do |config|  
+  CarrierWave.configure do |config|
+    config.root = Rails.root
     config.storage = :file  
     config.enable_processing = false  
   end  
 end  
 
 if Rails.env.development?  
-  CarrierWave.configure do |config|  
+  CarrierWave.configure do |config| 
+    config.root = Rails.root 
     config.storage = :file  
     config.enable_processing = true  
   end  

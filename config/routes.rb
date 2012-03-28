@@ -116,6 +116,9 @@
       namespace :blocks, :except => [:edit, :update] do
         resources :contacts, :only => [:edit, :update]
         resources :texts, :only => [:edit, :update]
+        resources :images, :only => [:edit, :update] do
+          get 'dialog', :on => :member
+        end
       end
     end    
   end

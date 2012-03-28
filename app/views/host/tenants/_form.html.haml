@@ -1,6 +1,7 @@
 = simple_form_for [:host, @tenant] do |f|
   = f.input :name
   = f.input :host
+  = f.input :slug, :hint => "WARNING: Changing slug will break file upload paths"
   = f.input :analytics_id
   = f.input :theme
   .form-actions

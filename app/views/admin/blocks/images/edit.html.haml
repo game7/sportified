@@ -1,0 +1,6 @@
+- title 'Edit Image'
+- if @block.image?
+  .row
+    .span12{ :style => "text-align: center; margin-bottom: 20px;"}
+      = image_tag @block.image.url, :align => "center"
+= render 'admin/blocks/images/form'

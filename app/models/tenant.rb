@@ -1,6 +1,10 @@
 class Tenant
   include Mongoid::Document
+  before_save :check_and_set_slug
+  
   field :name, :type => String
+  field :slug, :type => String
+  
   field :host, :type => String
   field :description, :type => String
   field :analytics_id, :type => String
@@ -18,4 +22,9 @@ class Tenant
       Thread.current[:current_tenant] = tenant
     end
   end  
+  
+  def check_and_set_slug
+    self.slug ||= self.host.paramaterize
+  end
+  
 end
