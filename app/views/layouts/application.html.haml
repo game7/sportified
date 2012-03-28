@@ -3,6 +3,7 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
+      = " - " + Tenant.current.name
     - theme = Tenant.current.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "/assets/themes/#{theme}/theme"
@@ -45,7 +46,7 @@
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
         = yield
       #footer
-    = render 'layouts/google_analytics' if Site.current && Site.current.analytics_id.present?
+    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript
       $('.dropdown-toggle').dropdown();
