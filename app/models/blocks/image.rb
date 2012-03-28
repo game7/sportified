@@ -8,7 +8,7 @@ module Blocks
     mount_uploader :image, ImageUploader
     
     def self.alignment_options
-      ["Left","Center","Right"]
+      ["left","center","right"]
     end
     
   end

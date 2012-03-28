@@ -1,2 +1,2 @@
-%div{ :style => "text-align: #{block.alignment.downcase};"}
+%div{ :style => block.alignment.presence ? "text-align: #{block.alignment.downcase};" : "" }
   = image_tag block.image.url
