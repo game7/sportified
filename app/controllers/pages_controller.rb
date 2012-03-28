@@ -23,7 +23,7 @@ class PagesController < ApplicationController
   def set_area_navigation
     #@area_name = @page.title
     @page.children.each do |child|
-      add_area_menu_item child.title_in_menu.presence || child.title, page_friendly_path(child.path)
+      add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
     end
   end
 end
