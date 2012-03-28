@@ -1,0 +1,10 @@
+.tree ul{margin-left:0px;padding-left:0px;}
+.tree .trunk>li:first-child{background-image:url(/assets/branch-start.gif);}
+.tree ul li{margin:0;padding:4px 0px 0px 40px;background:url(/assets/branch.gif) no-repeat 15px 0px;}
+.tree li{line-height:25px;display:block;position:relative;}
+.tree ul li.branch_start{background-image:url(/assets/branch-start.gif);}
+.tree ul li:last-child{background-image:url(/assets/branch-end.gif);}
+.tree ul li>div{padding-left:5px;}
+.tree ul li>div:hover{background-color:#EAEAEA;}
+.tree .actions{float:right;display:none;}
+.tree ul li>div:hover>.actions{display:block;}
