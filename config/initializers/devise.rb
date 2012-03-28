@@ -13,11 +13,14 @@ Devise.setup do |config|
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/mongoid'
+  config.apply_schema = false
 
   # config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
   #config.omniauth :facebook, nil, nil, :setup => true
 
   config.case_insensitive_keys = [:email]
+  config.use_salt_as_remember_token = true
+  config.reset_password_within = 24.hours  
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
