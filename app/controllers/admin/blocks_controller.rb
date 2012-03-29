@@ -11,6 +11,7 @@ class Admin::BlocksController < Admin::AdminController
   def create
     @block = @page.blocks.create({}, "blocks/#{params[:block_type]}".camelize.constantize) 
     flash[:success] = "#{params[:block_type].humanize} has been added to Page"
+    puts 'block created'
   end
   
   def destroy

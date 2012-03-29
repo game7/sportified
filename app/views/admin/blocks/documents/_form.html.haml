@@ -1,0 +1,9 @@
+= simple_form_for [:admin, @page, @block], :remote => true, :multipart => true do |f|
+  = f.input :file, :as => :file
+  = f.input :file_cache, :as => :hidden
+  = f.input :title
+  = f.input :description
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+    = link_to "Return to Page", admin_page_blocks_path(@page), :class => 'btn'
+  
