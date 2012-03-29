@@ -1,4 +1,3 @@
-- javascript("jquery-ui.min.js")
 %h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
 .well
   = link_to 'Post Statistics', post_admin_hockey_statsheet_path(@statsheet), :confirm => "This post the statistcs from this game to player's record.  Are you sure?", :method => :post, :class => 'btn btn-small' unless @statsheet.posted?

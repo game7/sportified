@@ -1,5 +1,4 @@
 - title 'Game Results'
-- javascript("jquery-ui.min.js")
 
 = select("season", :id, @season_links, { :selected => admin_game_results_path(:season_id => @season.id) }, { :class => "redirect_to" })
 = select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to" })

@@ -1,6 +1,4 @@
 - title 'Events'
-- javascript("jquery-ui.min.js")
-
 - if @date
   = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
 = select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })
