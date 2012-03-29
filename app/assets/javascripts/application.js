@@ -1,11 +1,8 @@
 //= require jquery
 //= require jquery_ujs
-//= require_self
-//= require twitter/bootstrap/tab
-//= require twitter/bootstrap/button
-//= require twitter/bootstrap/dropdown
+//= require jquery-ui.min
+//= require twitter/bootstrap
 //= require wymeditor/jquery.wymeditor.min
-//= require_tree .
 
 
 function clearForm(form) {
