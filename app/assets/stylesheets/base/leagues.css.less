@@ -1,0 +1,155 @@
+
+// SCOREBOARD
+// --------------------------------
+
+.scoreboard .group-head {
+  .makeColumn(12);
+  padding: 3px 5px;
+  border-bottom: 1px solid @grayLight;
+  background-color: @grayLighter;
+  margin-bottom: 18px;
+}
+.scoreboard .group-foot {
+  clear: both;
+}
+.scorecard {
+  .makeColumn(4);
+  margin-bottom: 18px;   
+}
+.scorecard .inner {
+  border: 1px solid @grayLight;
+  padding: 2px;
+  .border-radius(5px);
+}
+.scorecard .header {
+  border-top: 2px solid #000;
+  border-bottom: 1px solid @grayLight;
+  table { 
+    #gradient > .vertical(@white, @grayLight);
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 0px; 
+    td {
+      padding: 8px;
+      line-height: 18px;
+    }
+    td.score {
+      border-right: 1px solid @grayLighter;
+    }
+  }
+}
+.scorecard {
+  td.winner { width: 10%; }
+  td.team { width: 50%; }
+  td.score { width: 10%; text-align: right; }
+  td.result { wdith: 30%; vertical-align: middle; }
+}
+
+.scorecard .game-links {
+  padding: 4px;
+  border-bottom: 1px solid @grayLight;
+  font-size: 8pt;
+}
+
+.scorecard .line-score {
+  border-bottom: 1px solid @grayLight;
+  table {
+    margin-bottom: 0;
+    td, th {
+      font-size: 8pt;
+      padding: 2px;
+    }
+    th.period, th.final, td.period, td.final {
+      text-align: center;
+      width: 25px;
+    }
+    td.final {
+      font-weight: bold;
+    }
+  }
+}
+
+// BOXSCORE
+// --------------------------------
+
+.boxscore h4 {
+  margin-bottom: 20px;
+}
+.boxscore .status {
+  background-color: @grayLighter;
+  padding: 5px;
+}
+.boxscore .summary {
+  .makeColumn(12);  
+  .matchup {
+    padding: 5px;
+  }
+  .team {
+    float: left;
+    width: 200px;
+    .logo {
+      float: left;
+      height: 50px;
+      width: 50px;
+      margin-right: 10px;
+      border: 1px solid @grayLighter;
+      .border-radius(5px);
+    } 
+  }
+  .logistics {
+    padding: 5px;
+    clear: both;  
+  }
+  .clear {
+    clear: both;
+  }
+}
+.boxscore .linescore {
+  .makeColumn(4);
+}
+.boxscore .teamstats {
+  margin-bottom: 18px;
+  .stat {
+    .makeColumn(4);
+  }
+  table {
+    margin-bottom: 0;
+  }
+  .goals, .shots, .pim {
+    border: 1px solid #ddd;
+    padding: 4px;
+  }
+  span.bar {
+    float: left;
+    margin-right: 10px;
+    display: block;
+    height: 18px;
+    background-color: @grayLight;
+  }
+}
+.boxscore .minute-by-minute {
+  .makeColumn(12)
+}
+.boxscore .game-activity {
+  .makeColumn(12)
+}
+.boxscore .player-summary {
+  .makeColumn(12)
+}
+.boxscore .goaltender-summary {
+  .makeColumn(12)
+}
+.boxscore .shots-on-goal {
+  .makeColumn(12)
+}
+
+
+// STATISTICS
+// ---------------------------------
+
+table.leaders {
+  th.stat, td.stat {
+    text-align: center;
+    width: 80px;
+  }
+}
