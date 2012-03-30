@@ -1,21 +1,8 @@
-class Admin::HockeyPlayersController < Admin::BaseLeagueController
-  
+class Admin::HockeyPlayersController < Admin::BaseLeagueController  
   before_filter :load_statsheet
-  def load_statsheet
-    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
-  end
-
   before_filter :load_player, :only => [:edit, :update, :destroy]
-  def load_player
-    @player = @statsheet.players.find(params['id'])
-  end
-
   before_filter :prepare_sides
-  def prepare_sides
-    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
-  end
 
-  
   def new
     @player = Hockey::Player.new
   end
@@ -58,5 +45,19 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
       flash[:notice] = "Players have been reloaded from team rosters"
     end
   end
+  
+  private
+  
+  def load_statsheet
+    @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
+  end
+
+  def load_player
+    @player = @statsheet.players.find(params['id'])
+  end
+
+  def prepare_sides
+    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
+  end  
 
 end
