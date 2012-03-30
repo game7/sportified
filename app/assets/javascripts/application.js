@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require jquery-ui.min
 //= require twitter/bootstrap
+//= require jquery.wymeditor.js
 
 
 function clearForm(form) {
