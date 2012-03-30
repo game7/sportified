@@ -27,7 +27,7 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
 
-gem "wymeditor-rails", :path => "../wymeditor-rails"
+gem "wymeditor-rails"
 
 
 #gem 'pages', :path => "vendor/engines/pages"

@@ -6,13 +6,6 @@ GIT
       actionpack (~> 3.0)
       activemodel (~> 3.0)
 
-PATH
-  remote: ../wymeditor-rails
-  specs:
-    wymeditor-rails (0.0.1)
-      jquery-rails
-      rails (> 3.1.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -280,6 +273,9 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
+    wymeditor-rails (0.0.1)
+      jquery-rails
+      rails (> 3.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -324,4 +320,4 @@ DEPENDENCIES
   simple_form!
   uglifier
   webrat
-  wymeditor-rails!
+  wymeditor-rails
