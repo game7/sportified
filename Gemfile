@@ -27,7 +27,7 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
 
-gem "wymeditor-rails"
+gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
 
 
 #gem 'pages', :path => "vendor/engines/pages"

@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/game7/wymeditor-rails.git
+  revision: 3353b492cc8ebaa16027dc73ebefa0285b91a62f
+  specs:
+    wymeditor-rails (0.0.1)
+      jquery-rails
+      rails (> 3.1.0)
+
+GIT
   remote: git://github.com/plataformatec/simple_form.git
   revision: f4a1ac6f832e6208a0561b214b16b741b6b92b9d
   specs:
@@ -273,9 +281,6 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
-    wymeditor-rails (0.0.1)
-      jquery-rails
-      rails (> 3.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -320,4 +325,4 @@ DEPENDENCIES
   simple_form!
   uglifier
   webrat
-  wymeditor-rails
+  wymeditor-rails!
