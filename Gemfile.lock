@@ -307,7 +307,7 @@ DEPENDENCIES
   icalendar
   jquery-rails
   launchy
-  less-rails-bootstrap
+  less-rails-bootstrap (~> 2.0.6)
   machinist_mongo
   mongoid
   mongoid-tree
