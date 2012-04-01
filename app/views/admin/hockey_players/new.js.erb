@@ -1,7 +1,7 @@
-$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_players/edit" ) )%>");
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_players/new" ) )%>");
 $('#dialog-modal').dialog({
-  title: 'Edit Player',
-  height: 300,
+  title: 'Add Player',
+  height: 325,
   width: 500,
   modal: true,
   buttons: {

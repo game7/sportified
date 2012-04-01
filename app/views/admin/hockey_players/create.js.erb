@@ -1,0 +1,13 @@
+<% if @player.errors.any? %>
+  $("#flash_notice").hide(300);
+  $('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_players/new" ) )%>");
+<% else %>
+  $('#dialog-modal').dialog("close");
+  $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
+  $("#flash_notice").show(300);
+  <% if @player.side == 'home' %>
+    $("#players-home table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.home.asc(:last_name, :first_name) } ) )%>");
+  <% else %>
+    $("#players-away table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.players.away.asc(:last_name, :first_name) } ) )%>");
+  <% end %>
+<% end %>

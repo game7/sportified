@@ -1,0 +1,4 @@
+$("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
+$("#flash_success").show(300);
+$("#player_<%= @player.id %>").remove();
+

@@ -1,10 +1,10 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController  
   before_filter :load_statsheet
   before_filter :load_player, :only => [:edit, :update, :destroy]
-  before_filter :prepare_sides
+  before_filter :prepare_sides, :only => [:new, :create]
 
   def new
-    @player = Hockey::Player.new
+    @player = @statsheet.players.build(:played => true)
   end
 
   def edit
@@ -27,8 +27,8 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
 
   def destroy
     
-    if @players.delete 
-      flash[:notice] = "Player has been deleted"
+    if @player.delete 
+      flash[:success] = "Player has been deleted"
     end
 
   end
@@ -57,7 +57,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def prepare_sides
-    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
+    @side_options = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
   end  
 
 end
