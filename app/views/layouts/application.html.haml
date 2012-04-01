@@ -11,6 +11,7 @@
       = stylesheet_link_tag "application"    
     = javascript_include_tag "application"
     = csrf_meta_tag
+    %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     = yield(:head)
   %body
     .navbar.navbar-fixed-top
@@ -22,15 +23,7 @@
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
             = link_to Tenant.current.name, root_url, :class => "brand"
-          = render "layouts/site_navigation" if @site_menu_items            
-          %ul.nav.pull-right
-            %li.dropdown
-              %a.dropdown-toggle{ :href => "#", "data-toggle" => "dropdown"}
-                Account
-                %b.caret
-              %ul.dropdown-menu
-                = render "devise/menu/login_items"
-                = render "devise/menu/user_items"  
+          = render "layouts/site_navigation" if @site_menu_items             
     #wrapper.container
       %header
         %h1

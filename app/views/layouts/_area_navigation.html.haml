@@ -1,11 +1,9 @@
-.navbar
-  .navbar-inner
-    .container
-      %ul.nav
-        - if @area_name
-          .brand= @area_name
-        - @area_menu_items.each do |item|
-          %li{ :class => request.url.include?(item[:url]) ? "active" : nil }
-            %a{ :href => item[:url] }= item[:title]
+.subnav
+  %ul.nav.nav-pills
+    - if @area_name
+      .brand= @area_name
+    - @area_menu_items.each do |item|
+      %li{ :class => request.url.include?(item[:url]) ? "active" : nil }
+        %a{ :href => item[:url] }= item[:title]
 
 
