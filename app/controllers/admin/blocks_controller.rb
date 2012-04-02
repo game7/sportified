@@ -19,6 +19,17 @@ class Admin::BlocksController < Admin::AdminController
     flash[:success] = "Block Deleted"
   end
   
+  def position
+    params['block'].each_with_index do |id, i|
+      block = @page.blocks.find(id);
+      if block
+        block.position = i
+      end
+    end  
+    @page.save
+    render :nothing => true
+  end  
+  
   private
   
   def find_page

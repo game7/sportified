@@ -6,8 +6,8 @@
   = link_to "Add Document", admin_page_blocks_path(@page.id, :block_type => 'document'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Divider", admin_page_blocks_path(@page.id, :block_type => 'divider'), :method => :post, :remote => true, :class => 'btn'
-.blocks
-  = render :partial => "block", :collection => @page.blocks
+#blocks
+  = render :partial => "block", :collection => @page.blocks.asc(:position)
 
 #dialog-modal
 
@@ -25,4 +25,20 @@
         return false;      
       });      
     });
-  
+
+    $(function() {
+      $("#blocks").sortable({
+        revert: "true",
+        opacity: 0.7,
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {  
+          var items = $(this).sortable('serialize');
+          $.ajax({
+            type: 'post',
+            data: items ,
+            dataType: 'json',
+            url: '#{position_admin_page_blocks_path(@page)}'
+          }); 
+        }
+      });   
+    });  
