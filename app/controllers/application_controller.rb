@@ -35,7 +35,10 @@ class ApplicationController < ActionController::Base
   end
 
   def get_page_url(page)
-    url = page.link_url unless page.link_url.blank?
+    if page.skip_to_first_child and child = page.children.asc(:position).first
+      url = get_page_url(child)
+    end
+    url ||= page.link_url unless page.link_url.blank?
     url ||= page_friendly_path(page.path)
   end
   helper_method :get_page_url
