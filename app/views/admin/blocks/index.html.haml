@@ -6,6 +6,7 @@
   = link_to "Add Document", admin_page_blocks_path(@page.id, :block_type => 'document'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Divider", admin_page_blocks_path(@page.id, :block_type => 'divider'), :method => :post, :remote => true, :class => 'btn'
+  = link_to "Add Markup", admin_page_blocks_path(@page.id, :block_type => 'markup'), :method => :post, :remote => true, :class => 'btn'
 #blocks
   = render :partial => "block", :collection => @page.blocks.asc(:position)
 

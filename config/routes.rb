@@ -118,6 +118,7 @@
         resources :texts, :only => [:edit, :update]
         resources :images, :only => [:edit, :update]
         resources :documents, :only => [:edit, :update]
+        resources :markups, :only => [:edit, :update]
       end
     end    
   end
