@@ -11,7 +11,8 @@ class PagesController < ApplicationController
   end
   
   def find_page
-    @page = Page.with_path(params[:path]).first    
+    @page = Page.with_path(params[:path]).first if params[:path]  
+    @page ||= Page.sorted_as_tree.first
   end
   
   def set_breadcrumbs

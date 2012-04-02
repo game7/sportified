@@ -2,7 +2,7 @@
 
   get "dashboard/index"
 
-  root :to => "welcome#index"
+  root :to => "pages#show"
   
   match 'users/auth/facebook/setup' => 'sessions#setup'
   match 'users/auth/:provider/callback' => 'authentications#create'
