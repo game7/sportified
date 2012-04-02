@@ -24,7 +24,7 @@ class Tenant
   end  
   
   def check_and_set_slug
-    self.slug ||= self.host.paramaterize
+    self.slug ||= self.host.parameterize
   end
   
 end
