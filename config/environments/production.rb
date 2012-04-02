@@ -58,7 +58,9 @@ Sportified::Application.configure do
   
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += [
-    'oia.css'
+    'oia.css',
+    "iframe/default/wymiframe.css",
+    "skins/default/skin.css"
   ]
     
 end
