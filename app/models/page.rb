@@ -7,6 +7,7 @@ class Page
   include Sportified::TenantScoped
 
   before_save :set_slug, :set_path, :set_tree
+  after_save :cascade_save
   after_rearrange :set_path
   before_destroy :delete_descendants
 
@@ -68,6 +69,10 @@ class Page
 
     def set_path
       self.path = self.ancestors_and_self.collect(&:slug).join('/')
+    end
+    
+    def cascade_save
+      self.children.all.each{|p|p.save}
     end
 
 end
