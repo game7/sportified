@@ -15,15 +15,23 @@ class PagesController < ApplicationController
   end
   
   def set_breadcrumbs
-    @page.ancestors_and_self.each do |parent|
-      add_breadcrumb parent.title_in_menu.presence || parent.title, page_friendly_path(parent.path)
+    unless @page.root?
+      @page.ancestors_and_self.each do |parent|
+        add_breadcrumb parent.title_in_menu.presence || parent.title, page_friendly_path(parent.path)
+      end
     end
   end
   
   def set_area_navigation
-    #@area_name = @page.title
+    has_children = false
     @page.children.each do |child|
+      has_children = true
       add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
+    end
+    unless @page.root? or has_children
+      @page.siblings_and_self.each do |sibling|
+        add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)        
+      end
     end
   end
 end
