@@ -1,28 +1,41 @@
-- title "Standings :: #{@season.name}"
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th TEAM
-      %th.span1 GP
-      %th.span1 W
-      %th.span1 L
-      %th.span1 SOL
-      %th.span1 PTS
-      %th.span1 GS
-      %th.span1 GA
-      %th.span1 +/-
-      %th.span2 STREAK
-    %tbody
-      - @teams.each do |team|
-        %tr
-          %td= team.name
-          %td= team.record.gp
-          %td= team.record.w
-          %td= team.record.rl
-          %td= team.record.sol
-          %td= team.record.pts
-          %td= team.record.scored
-          %td= team.record.allowed
-          %td= team.record.margin
-          %td= team.record.stk
+- title "#{@league.name} Standings"
+.visible-phone
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th TEAM
+        %th PTS
+      %tbody
+        - @teams.each do |team|
+          %tr
+            %td= team.name
+            %td= team.record.pts
+.hidden-phone
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th.span2 TEAM
+        %th.span1 GP
+        %th.span1 W
+        %th.span1 L
+        %th.span1 SOL
+        %th.span1 PTS
+        %th.span1 GS
+        %th.span1 GA
+        %th.span1 +/-
+        %th.span2 STREAK
+      %tbody
+        - @teams.each do |team|
+          %tr
+            %td= team.name
+            %td= team.record.gp
+            %td= team.record.w
+            %td= team.record.rl
+            %td= team.record.sol
+            %td= team.record.pts
+            %td= team.record.scored
+            %td= team.record.allowed
+            %td= team.record.margin
+            %td= team.record.stk
+
 
