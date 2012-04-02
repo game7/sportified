@@ -1,2 +1,2 @@
 %div{ :style => block.alignment.presence ? "text-align: #{block.alignment.downcase};" : "" }
-  = image_tag block.image.url
+  = image_tag block.image.url if image_tag.block.image
