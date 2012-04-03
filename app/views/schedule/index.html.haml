@@ -2,11 +2,6 @@
 - last_date = nil
 
 = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-- if false
-  = render :partial => "shared/select_season", :locals => { :season_options => @season_links }
-- #collection_select("season", :id, @seasons, :slug, :name, { :include_blank => 'Full Schedules' })
-- if false
-  = select("team", :id, @team_links, { :include_blank => 'Team Schedules' }, { :class => "redirect_to" })
 
 %table.table.table-striped.table-bordered
   - if @events.count == 0

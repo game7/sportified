@@ -1,7 +1,4 @@
 class ScheduleController < BaseLeagueController
-  before_filter :get_season_links
-  before_filter :get_team_schedule_links
-
 
   def index
     
@@ -27,19 +24,5 @@ class ScheduleController < BaseLeagueController
       format.xml  { render :xml => @games.entries }
     end
   end
-  
-  private
-
-  def get_season_links
-    @season_links = @league.seasons.desc(:starts_on).each.collect{ |s| [s.name, schedule_path(@league.slug, s.slug)] }
-    @season_links.insert(0, ['All Seasons', schedule_path(@league.slug)])
-  end
-
-  def get_team_schedule_links
-    teams = @league.teams.for_season(@season).asc(:name)
-    @team_schedule_links = teams.each.collect do |t|
-      [t.name, "#"]#team_schedule_path(division.slug, season.slug, t.slug)] 
-    end   
-  end 
 
 end
