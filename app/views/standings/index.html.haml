@@ -1,4 +1,5 @@
 - title "#{@league.name} Standings"
+=select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to" })
 .visible-phone
   %table.table.table-striped.table-bordered
     %thead
