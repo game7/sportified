@@ -68,36 +68,18 @@ class Team
     self.record ||= Team::Record.new
   end
   
-  before_create :get_league_name_and_slug
-  def get_league_name_and_slug
-    league = self.league
+  before_create :set_league_name_and_slug
+  def set_league_name_and_slug league = self.league
     self.league_name = league ? league.name : nil
     self.league_slug = league ? league.slug : nil
   end
 
-  before_create :get_division_name_and_slug
-  def get_season_name_and_slug
-    season = self.season
+  before_create :set_season_name_and_slug
+  def set_season_name_and_slug season = self.season
     self.season_name = season ? season.name : nil
     self.season_slug = season ? season.slug : nil
   end
 
-  before_create :get_season_name_and_slug
-  def get_division_name_and_slug
-    division = self.division
-    self.division_name = division ? division.name : nil
-    self.division_slug = division ? division.slug : nil
-  end
-
-  #before_save :prepare_team_renamed_message
-  #def prepare_team_renamed_message
-  #  if self.persisted? && self.name_changed?
-  #    msg = Message.new(:team_renamed)
-  #    msg.data[:team_id] = self.id
-  #    msg.data[:new_team_name] = self.name
-  #    enqueue_message msg
-  #  end
-  #end
   #
   #before_save :prepare_crop_changed_message
   #def prepare_crop_changed_message
@@ -120,10 +102,6 @@ class Team
     def for_season(season)
       season_id = ( season.class == Season ? season.id : season )
       where(:season_id => season_id)
-    end
-    def for_division(division)
-      division_id = ( division.class == Division ? division.id : division )
-      where(:division_id => division_id)
     end
   end
   scope :with_slug, lambda { |slug| where(:slug => slug) }
