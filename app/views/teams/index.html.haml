@@ -1,18 +1,14 @@
 - title @league.name + ' Teams'
 = render :partial => 'shared/season_options', :object => @season_options
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th TEAM
-      %th
-    %tbody
-      - @teams.each do |team|
-        %tr
-          %td= team.name
-          %td
-            = link_to "Schedule", team_schedule_path(@league.slug, team.season_slug, team.slug)
-            = " | "
-            = link_to "Roster", team_roster_path(@league.slug, team.season_slug, team.slug)
-            = " | "
-            = link_to "Statistics", team_statistics_path(@league.slug, team.season_slug, team.slug)
+.row
+  - @teams.each do |team|
+    .span6
+      .well
+        %h3= team.name
+        = link_to "Schedule", team_schedule_path(@league.slug, team.season_slug, team.slug)
+        = " | "
+        = link_to "Roster", team_roster_path(@league.slug, team.season_slug, team.slug)
+        = " | "
+        = link_to "Statistics", team_statistics_path(@league.slug, team.season_slug, team.slug)
+
 
