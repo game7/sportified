@@ -1,4 +1,4 @@
-- title "Teams", :small => "#{@league.name} / #{@season.name}"
+- title @league.name + ' Teams'
 = render :partial => 'shared/season_options', :object => @season_options
 %table.table.table-striped.table-bordered
   %thead
