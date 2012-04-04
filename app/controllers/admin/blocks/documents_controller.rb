@@ -9,7 +9,7 @@ class Admin::Blocks::DocumentsController < Admin::Blocks::BaseController
   def update
     if @block.update_attributes(params[:blocks_document])
       flash[:success] = "Document updated"
-      render 'edit'
+      redirect_to admin_page_blocks_path(@page)
     end    
   end
   

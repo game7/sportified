@@ -1,9 +1,13 @@
-.contact
+.well
   %address
-    %strong= [block.first, " ", block.last].join
-    %br/
-    = block.title
+    %h5
+      %i.icon-user
+      = [block.first, " ", block.last].join
+    - if block.title.presence
+      %h6= block.title
     - if block.phone.presence
-      %br/
-      %abbr{ :title => "Phone"} P:
-      = block.phone
+      .phone
+        =block.phone
+    - if block.email.presence
+      .email
+        %a{ :href => "mailto:#{block.email}"}= block.email

@@ -1,2 +1,4 @@
 - if block.file.present?
-  = link_to block.title, block.file.url, :target => "_blank"
+  .well
+    %i.icon-file
+    = link_to block.title, block.file.url, :target => "_blank"
