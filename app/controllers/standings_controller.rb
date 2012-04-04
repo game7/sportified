@@ -15,10 +15,4 @@ class StandingsController < BaseLeagueController
     @teams = @league.teams.for_season(@season).desc('record.pts')
   end
   
-  private
-    
-    def get_season_options
-      @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, standings_path(:season_slug => s.slug)]}
-    end
-  
 end
