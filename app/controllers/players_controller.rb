@@ -16,7 +16,7 @@ class PlayersController < BaseLeagueController
   private
   
   def get_season_options
-    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, players_path(:league_slug => @league.slug, :season_slug => s.slug)]}
+    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, players_path(:league_slug => @league.slug, :season_slug => s == @season ? nil : s.slug)]}
   end
 
 end
