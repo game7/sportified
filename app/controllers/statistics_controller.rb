@@ -1,4 +1,5 @@
 class StatisticsController < BaseLeagueController
+  before_filter :get_season_options
   
   def index   
     add_breadcrumb "Statistics"
