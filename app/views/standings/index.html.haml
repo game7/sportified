@@ -1,5 +1,5 @@
 - title "#{@league.name} Standings"
-=select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to" })
+= render :partial => 'shared/season_options', :object => @season_options
 .visible-phone
   %table.table.table-striped.table-bordered
     %thead
