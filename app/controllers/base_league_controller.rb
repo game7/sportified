@@ -29,9 +29,5 @@ class BaseLeagueController < ApplicationController
     @season = @league.seasons.with_slug(params[:season_slug]).first if params[:season_slug]
     @season ||= @league.seasons.most_recent
   end
-  
-  def get_season_options
-    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, standings_path(:season_slug => s.slug)]}
-  end
 
 end

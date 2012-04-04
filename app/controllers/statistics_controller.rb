@@ -12,9 +12,13 @@ class StatisticsController < BaseLeagueController
     @savepct_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_svp").limit(limit)
     @save_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_sv").limit(limit)
     @shutout_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_so".gt => 0).desc("record.g_so").limit(limit)
-  end
+  end  
   
   private
+  
+  def get_season_options
+    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, statistics_path(:league_slug => @league.slug, :season_slug => s.slug)]}
+  end  
 
   def set_breadcrumbs
     super

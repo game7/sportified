@@ -29,12 +29,12 @@
   match "programs/standings/:league_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
   match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
 
-  match "programs/:league_slug/players" => "players#index", :as => :players, :via => :get
+  match "programs/players/:league_slug(/:season_slug)" => "players#index", :as => :players, :via => :get
   match "programs/:league_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
   
-  match "programs/:league_slug/teams" => "teams#index", :as => :teams, :via => :get
+  match "programs/teams/:league_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
   
-  match "programs/:league_slug/statistics" => "statistics#index", :as => :statistics, :via => :get
+  match "programs/statistics/:league_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
   
   match "programs/:league_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get

@@ -2,6 +2,7 @@ require 'icalendar'
 
 class TeamsController < BaseLeagueController
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
+  before_filter :get_season_options, :only => [:index]
 
   def index
     add_breadcrumb "Teams"
@@ -59,6 +60,12 @@ class TeamsController < BaseLeagueController
     super
     
   end
+  
+  private
+  
+  def get_season_options
+    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, teams_path(:league_slug => @league.slug, :season_slug => s.slug)]}
+  end  
 
   def links_to_team_schedule(league, season)
     teams = @league.teams.for_season(season).asc(:name)
@@ -72,12 +79,6 @@ class TeamsController < BaseLeagueController
     teams.each.collect do |t|
       [t.name, team_roster_path(league.slug, season.slug, t.slug)] 
     end
-  end
-
-  def links_to_season
-    seasons = Season.desc(:starts_on)
-    current = find_current_season
-    links = seasons.each.collect{ |s| [s.name + " Season", teams_path(:season_slug => s == current ? nil : s.slug, :division_slug => params[:division_slug])] }
   end
   
   def to_ical(events)
