@@ -1,5 +1,6 @@
 = simple_form_for [:admin, @page, @block], :remote => true, :multipart => true do |f|
   = f.input :image, :as => :file
+  = f.input :remote_image_url
   = f.input :image_cache, :as => :hidden
   = f.input :alignment, :collection => Blocks::Image.alignment_options, :input_html => { :class => "span2"}
   = f.input :link_url, :hint => "Optional.  If provided clicking image will navigate to here"

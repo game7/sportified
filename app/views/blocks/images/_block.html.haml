@@ -1,3 +1,2 @@
 - if block.image && block.image.url.presence
-  %div{ :style => block.alignment.presence ? "text-align: #{block.alignment.downcase};" : "" }
-    = image_tag block.image.url
+  = image_tag block.image.url, :style => 'margin: auto; max-width: 100%; display: block;'
