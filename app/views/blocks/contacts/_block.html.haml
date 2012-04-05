@@ -1,13 +1,12 @@
 .well
-  %address
-    %h5
-      %i.icon-user
-      = [block.first, " ", block.last].join
-    - if block.title.presence
-      %h6= block.title
-    - if block.phone.presence
-      .phone
-        =block.phone
-    - if block.email.presence
-      .email
-        %a{ :href => "mailto:#{block.email}"}= block.email
+  %h5
+    %i.icon-user
+    = [block.first, " ", block.last].join
+  - if block.title.presence
+    %h6= block.title
+  - if block.phone.presence
+    .phone
+      =block.phone
+  - if block.email.presence
+    .email
+      %a{ :href => "mailto:#{block.email}"}= block.email
