@@ -1,3 +1,5 @@
 = simple_form_for [:admin, @page, @block], :remote => true do |f|
-  = f.text_area :body, :class => 'wymeditor'
+  = f.input :title, :input_html => { :style => "width: 500px;" }
+  = f.input :caption, :input_html => { :style => "width: 500px;" }
+  = f.input :body, :as => :text, :input_html => { :style => "width: 500px; height: 280px;" }
   

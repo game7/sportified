@@ -27,6 +27,7 @@ gem 'fog'
 gem 'rmagick'
 
 gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
+gem "RedCloth"
 
 
 #gem 'pages', :path => "vendor/engines/pages"
