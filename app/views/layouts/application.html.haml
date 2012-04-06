@@ -7,8 +7,9 @@
     - theme = Tenant.current.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "/assets/#{theme}"
+      = favicon_link_tag "/assets/themes/#{theme}/icon.ico"
     - else
-      = stylesheet_link_tag "application"    
+      = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = csrf_meta_tag
     %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
