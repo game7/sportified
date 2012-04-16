@@ -20,6 +20,8 @@
       = f.input :home_team_name
   %fieldset 
     %legend Visibility
+    = f.input :text_before
+    = f.input :text_after
     = f.input :show_for_all_teams, :as => :boolean
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'

@@ -21,6 +21,9 @@ class Game < Event
 
   embeds_one :result, class_name: "Game::Result", cascade_callbacks: true
   has_one :statsheet
+  
+  field :text_before
+  field :text_after
 
   def has_team?(team)
     id = team.class == Team ? team.id : team
@@ -84,6 +87,7 @@ class Game < Event
     else
       summary = "#{away_team_name} vs. #{home_team_name}"
     end
+    summary = [text_before, summary, text_after].join(" ").strip
     self.summary = summary
   end
 
