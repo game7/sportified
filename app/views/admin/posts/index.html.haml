@@ -1,0 +1,20 @@
+- title 'Posts'
+.well
+  = link_to 'New Post', new_admin_post_path(), :class => 'btn'
+.pagination
+  .ul
+    - @tags.each do |tag|
+      %li
+        =link_to tag.humanize, ''
+%table.table.table-bordered.table-striped
+  %tr
+    %th Title
+    %th 
+  - @posts.each do |post|
+    %tr
+      %td
+        %h3
+          = post.title
+        - post.tags_array.each do |tag|
+          %span.label.label-info= tag
+      %td= link_to 'Edit', edit_admin_post_path(post), :class => 'btn btn-mini'

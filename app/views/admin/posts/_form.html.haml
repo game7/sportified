@@ -1,0 +1,13 @@
+= simple_form_for [:admin, @post] do |f|
+  %fieldset
+    = f.input :title, :input_html => { :style => "width: 500px;" }
+    = f.input :summary, :as => :text, :input_html => { :style => "width: 500px; height: 70px;" }
+    = f.input :body, :as => :text, :input_html => { :style => "width: 500px; height: 280px;" }
+    = f.input :tags, :input_html => { :style => "width: 500px;" }
+    -  if @post.image_url.presence
+      = image_tag @post.image_url
+    = f.input :image, :as => :file
+    = f.input :remote_image_url
+    = f.input :image_cache, :as => :hidden    
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary wymupdate'

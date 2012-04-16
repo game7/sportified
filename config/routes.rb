@@ -120,7 +120,8 @@
         resources :documents, :only => [:edit, :update]
         resources :markups, :only => [:edit, :update]
       end
-    end    
+    end
+    resources :posts
   end
 
 end

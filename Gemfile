@@ -8,6 +8,7 @@ gem 'rails', '3.2.1'
 gem 'mongoid'
 gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'mongoid_taggable'
 gem 'haml'
 
 gem 'devise'
