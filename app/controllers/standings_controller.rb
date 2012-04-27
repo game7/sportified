@@ -12,7 +12,7 @@ class StandingsController < BaseLeagueController
     #  flash[:error] = "Standings layout has not been setup for this division"
     #end
     add_breadcrumb "Standings"
-    @teams = @league.teams.for_season(@season).desc('record.pts')
+    @teams = @league.teams.for_season(@season).desc('record.pts').desc('record.w').desc('record.margin')
   end
   
   private
