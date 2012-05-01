@@ -8,6 +8,8 @@ class Team
   field :short_name
   field :slug
   field :show_in_standings, :type => Boolean, :default => true
+  field :seed, :type => Integer
+  
   field :primary_color, :default => '#666'
   field :accent_color, :default => '#000'
   field :text_color, :default => '#FFF'

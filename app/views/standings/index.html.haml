@@ -28,7 +28,9 @@
       %tbody
         - @teams.each do |team|
           %tr
-            %td= team.name
+            %td
+              = "#{team.seed} -" if team.seed
+              = team.name
             %td= team.record.gp
             %td= team.record.w
             %td= team.record.rl
