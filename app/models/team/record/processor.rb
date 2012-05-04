@@ -78,14 +78,13 @@ class Team::Record::Processor
   #end
   #
   def self.post_game!(game)
+    update_team_record!(game.away_team, game) if game.away_team
+    update_team_record!(game.home_team, game) if game.home_team
+  end
   
-    away = game.away_team.record
-    away.post_result_from_game(game)
-    away.save
-    home = game.home_team.record
-    home.post_result_from_game(game)
-    home.save
-   
+  def self.update_team_record!(team, game)
+    team.record.post_result_from_game(game)
+    team.record.save
   end
 
   #on :game_unfinalized do |message|

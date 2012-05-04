@@ -5,12 +5,12 @@
         %tbody
           %tr
             %td.winner= '>' if game.has_result? && game.away_team_is_winner?
-            %td.team= game.away_team.name
+            %td.team= game.away_team_name
             %td.score= game.result.away_score if game.has_result?
             %td.result{:rowspan => "2"}= game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")
           %tr
             %td.winner= '>' if game.has_result? && game.home_team_is_winner?
-            %td.team= game.home_team.name
+            %td.team= game.home_team_name
             %td.score= game.result.home_score if game.has_result?          
     - stats = game.statsheet
     - if stats
