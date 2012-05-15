@@ -1,0 +1,2 @@
+module Ipad::HockeyStatsheetsHelper
+end

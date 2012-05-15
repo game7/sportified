@@ -122,5 +122,7 @@
       end
     end    
   end
+  
+  match 'ipad/hockey_statsheets' => 'ipad/hockey_statsheets#index', :as => :ipad_hockey_statsheets, :via => :get  
 
 end

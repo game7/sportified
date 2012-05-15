@@ -1,0 +1,48 @@
+.row
+  .span4
+    Kings
+  .span4{ :style => "border: 1px solid green;"}
+    .span4{ :style => "height: 100px; border: 1px solid black;" }
+      clock
+    %a.btn <- Swap Sides ->
+    %a.btn Set Clock
+  .span4
+    Coyotes
+%hr/
+.row{ :style => "height: 400px;"}
+  .span12
+    %ul.nav.nav-tabs
+      %li.active
+        = link_to "Rosters", "#"
+      %li 
+        = link_to "Scoring", "#"
+      %li 
+        = link_to "Penalties", "#"
+      %li 
+        = link_to "Goaltending", "#"
+      %li 
+        =  link_to "Summary", "#"
+%hr/
+.row
+  .span4
+    .span4{ :style => "padding: 5px;" }
+      %a.btn.btn-danger Goal
+      %a.btn.btn-danger Penalty
+    .span4{ :style => "padding: 5px;" }
+      %a.btn Offside
+      %a.btn Icing
+      %a.btn Goal
+      %a.btn Goalie Hold
+    .span4{ :style => "padding: 5px;" }
+      %a.btn Shot - Save
+      %a.btn Shot - Wide
+  .span4
+    %a.btn.span2 Stop Clock
+    %a.btn.span2 Resume Play
+  .span4
+    %a.btn Goal
+    %a.btn Offside
+    %a.btn Icing
+    %a.btn Goal
+    %a.btn Penalty
+    %a.btn Goalie Stop

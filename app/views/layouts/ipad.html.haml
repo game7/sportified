@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+      = " - " + Tenant.current.name
+    - theme = Tenant.current.theme
+    - if theme and !theme.empty?
+      = stylesheet_link_tag "/assets/#{theme}"
+      = favicon_link_tag "/assets/themes/#{theme}/icon.ico"
+    - else
+      = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tag
+    %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    = yield(:head)
+  %body         
+    #wrapper.container   
+      #main
+        #banner
+          #{yield :banner}
+        #page-header
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
+        = yield
+      #footer
+    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
+    = yield :javascript
+    :javascript
+      $('.dropdown-toggle').dropdown();
+
