@@ -21,6 +21,7 @@ gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'delayed_job'
 gem "less-rails-bootstrap"
+gem 'therubyracer', :platform => :ruby
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
