@@ -6,6 +6,7 @@ class Division
   field :slug
 
   belongs_to :season
+  belongs_to :league
 
   has_many :teams
 

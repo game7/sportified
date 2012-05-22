@@ -31,7 +31,6 @@ RSpec.configure do |config|
   #config.use_transactional_fixtures = true
 
   config.before :each do
-    Sham.reset(:before_all)
     Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
   end
 

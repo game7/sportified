@@ -21,3 +21,8 @@ UserRole.blueprint do
   name { "Role"}
 end
 
+Season.blueprint do
+  name { Sham.name }
+  starts_on { Date.today }
+end
+

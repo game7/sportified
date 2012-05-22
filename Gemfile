@@ -47,8 +47,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'webrat'
-  gem 'cucumber-rails'
-  gem 'cucumber'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
   # Autotest
