@@ -101,9 +101,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
   
   def load_division_options
-    season = @season
-    season ||= @team.season
-    @divisions = season.divisions.asc(:name)
+    @divisions = Division.for_league(@league).for_season(@season).asc(:name)
   end
 
   def load_club_options

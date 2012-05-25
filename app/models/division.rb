@@ -3,7 +3,6 @@ class Division
   include Sportified::TenantScoped
  
   field :name
-  field :slug
 
   belongs_to :season
   belongs_to :league
@@ -11,12 +10,19 @@ class Division
   has_many :teams
 
   validates :name, presence: true
-
-  before_save do |division|
-    division.slug = division.name.parameterize
-  end
+  validates :league_id, presence: true
 
   scope :with_name, lambda { |name| where(:name => name) }
-  scope :with_slug, lambda { |slug| where(:slug => slug) }
+  
+  class << self
+    def for_league(league)
+      league_id = ( league.class == League ? league.id : league )
+      where(:league_id => league_id)      
+    end
+    def for_season(season)
+      season_id = ( season.class == Season ? season.id : season )
+      where(:season_id => season_id)
+    end
+  end  
 
 end

@@ -81,6 +81,11 @@ class Team
     self.season_name = season ? season.name : nil
     self.season_slug = season ? season.slug : nil
   end
+  
+  before_save :set_division_name
+  def set_division_name division = self.division
+    self.division_name = division ? division.name : nil
+  end
 
   #
   #before_save :prepare_crop_changed_message
@@ -91,10 +96,6 @@ class Team
   #  end
   #  enqueue_message msg
   #end
-
-  def fullname
-    "#{name} (#{division_name}-#{season_name})"
-  end
 
   class << self
     def for_league(league)

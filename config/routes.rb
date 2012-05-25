@@ -44,11 +44,12 @@
     resources :leagues
 
     resources :seasons, :shallow => true do
-      resources :divisions, :only => [:new, :create, :edit, :update, :destroy]
+      resources :divisions, :except => :index
       resources :teams, :except => :index do
         resources :players      
       end
     end
+    resources :divisions, :only => :index
     resources :teams, :only => :index
     resources :events
     resources :games do
