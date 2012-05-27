@@ -36,7 +36,7 @@ class Page
   scope :with_path, lambda { |path| { :where => { :path => path } } }
   class << self
     def sorted_as_tree
-      unscoped.ascending(:tree )
+      ascending(:tree)
     end
   end
   scope :live, :where => { :draft => false }
