@@ -34,6 +34,7 @@ class Page
 
   scope :top_level, :where => { :parent_id => nil }
   scope :with_path, lambda { |path| { :where => { :path => path } } }
+  
   class << self
     def sorted_as_tree
       ascending(:tree)
@@ -41,6 +42,13 @@ class Page
   end
   scope :live, :where => { :draft => false }
   scope :in_menu, :where => { :show_in_menu => true }
+  
+  class << self
+    def find_by_path(path)
+      page = Page.with_path(path).first if path
+      page ||= Page.sorted_as_tree.first
+    end
+  end
 
   #def blocks_grouped_by_panel
   #  panels = { :default => [] }
