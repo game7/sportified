@@ -1,10 +1,6 @@
 class Host::UsersController < Host::HostController
   
-  before_filter :load_user, :only => :show
-
-  def load_user
-    @user = User.find(params[:id])
-  end
+  before_filter :find_user, :only => :show
 
   def set_breadcrumbs
     super
@@ -17,5 +13,11 @@ class Host::UsersController < Host::HostController
 
   def show
   end
+   
+  private
+  
+    def find_user
+      @user = User.find(params[:id])
+    end
 
 end
