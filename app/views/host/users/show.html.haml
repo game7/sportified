@@ -21,13 +21,13 @@
   %thead
     %tr
       %th{:scope => 'col'} Title
-      %th{:scope => 'col'} Site
+      %th{:scope => 'col'} Tenant
       %th{:scope => 'col'} Subject
       %th{:scope => 'col'} Action
   %tbody
     - @user.roles.each do |role|
       %tr
         %td #{role.title}
-        %td #{role.site_id}
+        %td #{role.tenant_id}
         %td #{role.subject_id}
         %td Delete
