@@ -37,7 +37,7 @@ class Page
   
   class << self
     def sorted_as_tree
-      ascending(:tree)
+      unscoped.fuse(tenant_scope).ascending(:tree)
     end
   end
   scope :live, :where => { :draft => false }
