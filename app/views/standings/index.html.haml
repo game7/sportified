@@ -1,5 +1,10 @@
 - title @league.name + ' Standings'
 = render :partial => 'shared/season_options', :object => @season_options
+- last_division = ''
+- @teams.each do |team|
+  = team.division_name unless team.division_name == last_division
+  - last_division = team.division_name
+  %p= team.name
 .visible-phone
   %table.table.table-striped.table-bordered
     %thead
