@@ -19,13 +19,13 @@ namespace :league do
           game = result.game
           puts "  -> Result for game on #{result.played_on.to_s} vs. #{result.opponent_name} [#{game.summary}]"
           puts "  -> #{game.away_team_id} @ #{game.home_team_id}"
+          opponent = Team.for_league(team.league_id).for_season(team.season_id).where(:name => result.opponent_name)
+          unless opponent
+            puts "    RUH-ROH - opposing team could not be found!!!!!"
+            next
+          end          
           if game.result.home_score == result.scored
             puts "    -- #{team.name} should be the HOME team"
-            opponent = Team.for_league(team.league_id).for_season(team.season_id).where(:name => result.opponent_name)
-            unless opponent
-              puts "    RUH-ROH - opposing team could not be found!!!!!"
-              next
-            end
             unless game.home_team_id == team.id
               puts "    --- but they are not so let's SET HOME TEAM to #{team.name}"
               puts "    --- #{game.home_team_id} set to #{team.id}"
