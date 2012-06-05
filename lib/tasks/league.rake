@@ -19,7 +19,7 @@ namespace :league do
           game = result.game
           puts "  -> Result for game on #{result.played_on.to_s} vs. #{result.opponent_name} [#{game.summary}]"
           puts "  -> #{game.away_team_id} @ #{game.home_team_id}"
-          opponent = Team.for_league(team.league_id).for_season(team.season_id).where(:name => result.opponent_name)
+          opponent = Team.for_league(team.league_id).for_season(team.season_id).where(:name => result.opponent_name).first
           unless opponent
             puts "    RUH-ROH - opposing team could not be found!!!!!"
             next
