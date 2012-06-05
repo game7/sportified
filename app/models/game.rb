@@ -1,7 +1,7 @@
 
 class Game < Event
 
-  belongs_to :away_team, :class_name => "Team"
+  belongs_to :away_team, :class_name => "Team", :inverse_of => :away_games
   field :away_custom_name, :type => Boolean
   field :away_team_name
   field :away_team_score, :type => Integer, :default => 0
@@ -10,7 +10,7 @@ class Game < Event
     return result.away_score > result.home_score if result
   end
 
-  belongs_to :home_team, :class_name => "Team"
+  belongs_to :home_team, :class_name => "Team", :inverse_of => :home_games
   field :home_team_name
   field :home_custom_name, :type => Boolean
   field :home_team_score, :type => Integer, :default => 0
