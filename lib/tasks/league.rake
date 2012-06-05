@@ -1,6 +1,45 @@
 
 namespace :league do
   
+  desc "Restore matchups from team records"
+  task :restore_matchups => :environment do
+    Tenant.all.each do |tenant|
+      save = ENV["SAVE"] || false
+      Tenant.current = tenant
+      puts "TENANT = #{tenant.host}"
+      Team.all.each do |team|
+        puts "  TEAM = #{team.name} (#{team.league_name} - #{team.season_name})"
+        team.record.results.each do |result|
+          dirty = false
+          game = result.game
+          if game.result.home_score == result.scored and game.home_team_id != team.id
+            game.home_team_id = team.id
+            puts "    -- assigning team to home team (was #{game.home_team_name})"
+            dirty = true
+          elsif game.result.away_score == result.scored and game.away_team_id != team.id
+            game.away_team_id = team.id
+            puts "    -- assigning team to away team (was #{game.away_team_name})"            
+            dirty = true
+          end
+          if game.result.home_score == result.allowed and game.home_team_id != result.opponent_id
+            game.home_team_id = result.opponent_id
+            puts "    -- assigning opponent to home team (was #{game.home_team_name})"            
+            dirty = true
+          elsif game.result.away_score == result.allowed and game.away_team_id != result.opponent_id
+            game.away_team_id = result.opponent_id
+            puts "    -- assigning opponent to away team (was #{game.away_team_name})"            
+            dirty = true
+          end
+          if dirty
+            puts "    ABOUT TO SAVE [#{game.summary}]"
+            game.save if save
+            puts "    SAVED" if save
+          end
+        end
+      end
+    end
+  end
+  
   desc "Update hockey statsheet player names"
   task :update_statsheet_player_names => :environment do
     Tenant.all.each do |tenant|
