@@ -8,6 +8,7 @@ namespace :league do
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
       Team.all.each do |team|
+        puts ""
         puts "  TEAM = #{team.name} (#{team.league_name} - #{team.season_name})"
         if team.season_name == '2012 Summer'
           puts "  -> SKIP"
@@ -38,6 +39,7 @@ namespace :league do
             puts "    ABOUT TO SAVE [#{game.summary}]"
             game.save if save
             puts "    SAVED" if save
+            puts "    As [#{game.summary}]"
           end
         end
       end
