@@ -18,16 +18,19 @@ namespace :league do
           dirty = false
           game = result.game
           puts "  -> Result for game on #{result.played_on.to_s} vs. #{result.opponent_name} [#{game.summary}]"
+          puts "  -> #{game.away_team_id} @ #{game.home_team_id}"
           if game.result.home_score == result.scored
             puts "    -- #{team.name} should be the HOME team"
             unless game.home_team_id == team.id
               puts "    --- but they are not so let's SET HOME TEAM to #{team.name}"
+              puts "    --- #{game.home_team_id} set to #{result.team.id}"
               game.home_team_id = team.id
               dirty = true
             end
             puts "    -- #{result.opponent_name} should be the AWAY team"
             unless game.away_team_id == result.opponent_id
               puts "    --- but they are not so let's SET AWAY TEAM to #{result.opponent_name}"
+              puts "    --- #{game.away_team_id} set to #{result.opponent_id}"
               game.away_team_id = result.opponent_id
               dirty = true              
             end
@@ -35,12 +38,14 @@ namespace :league do
             puts "    -- #{team.name} should be the AWAY team"
             unless game.away_team_id == team.id
               puts "    --- but they are not so let's SET AWAY TEAM to #{team.name}"
+              puts "    --- #{game.away_team_id} set to #{result.team.id}"
               game.away_team_id = team.id
               dirty = true
             end
             puts "    -- #{result.opponent_name} should be the HOME team"
             unless game.home_team_id == result.opponent_id
               puts "    --- but they are not so let's SET HOME TEAM to #{result.opponent_name}"
+              puts "    --- #{game.home_team_id} set to #{result.opponent_id}"
               game.home_team_id = result.opponent_id
               dirty = true              
             end            
@@ -49,8 +54,10 @@ namespace :league do
           end
           if dirty
             puts "  -> this bitch is diry and should be saved [#{game.summary}]"
+            puts "  -> #{game.away_team_id} @ #{game.home_team_id}"
             game.save if save
             puts "  -> SAVED AS [#{game.summary}]" if save
+            puts "  -> #{game.away_team_id} @ #{game.home_team_id}" if save
           end
         end
       end
