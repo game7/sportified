@@ -8,8 +8,11 @@ namespace :league do
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
       Team.all.each do |team|
-        next if team.season_name = '2012 Summer'
         puts "  TEAM = #{team.name} (#{team.league_name} - #{team.season_name})"
+        if team.season_name == '2012 Summer'
+          puts "  -> SKIP"
+          next
+        end
         team.record.results.each do |result|
           dirty = false
           game = result.game
