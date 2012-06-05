@@ -25,14 +25,14 @@ namespace :league do
             next
           end          
           if game.result.home_score == result.scored
-            puts "    -- #{team.name} should be the HOME team"
+            puts "    -- #{team.name} should be the HOME team (#{game.home_team_id} == #{team.id})"
             unless game.home_team_id == team.id
               puts "    --- but they are not so let's SET HOME TEAM to #{team.name}"
               puts "    --- #{game.home_team_id} set to #{team.id}"
               game.home_team_id = team.id
               dirty = true
             end
-            puts "    -- #{opponent.name} should be the AWAY team"
+            puts "    -- #{opponent.name} should be the AWAY team (#{game.away_team_id} == #{opponent.id})"
             unless game.away_team_id == opponent.id
               puts "    --- but they are not so let's SET AWAY TEAM to #{opponent.name}"
               puts "    --- #{game.away_team_id} set to #{opponent.id}"
@@ -40,14 +40,14 @@ namespace :league do
               dirty = true              
             end
           elsif game.result.away_score == result.scored
-            puts "    -- #{team.name} should be the AWAY team"
+            puts "    -- #{team.name} should be the AWAY team (#{game.away_team_id} == #{team.id})"
             unless game.away_team_id == team.id
               puts "    --- but they are not so let's SET AWAY TEAM to #{team.name}"
               puts "    --- #{game.away_team_id} set to #{team.id}"
               game.away_team_id = team.id
               dirty = true
             end
-            puts "    -- #{opponent.name} should be the HOME team"
+            puts "    -- #{opponent.name} should be the HOME team (#{game.home_team_id} == #{opponent.id})"
             unless game.home_team_id == opponent.id
               puts "    --- but they are not so let's SET HOME TEAM to #{opponent.name}"
               puts "    --- #{game.home_team_id} set to #{opponent.id}"
