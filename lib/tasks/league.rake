@@ -17,29 +17,40 @@ namespace :league do
         team.record.results.each do |result|
           dirty = false
           game = result.game
-          if game.result.home_score == result.scored and game.home_team_id != team.id
-            game.home_team_id = team.id
-            puts "    -- assigning team to home team (was #{game.home_team_name}, now #{team.name})"
-            dirty = true
-          elsif game.result.away_score == result.scored and game.away_team_id != team.id
-            game.away_team_id = team.id
-            puts "    -- assigning team to away team (was #{game.away_team_name}, now #{team.name})"            
-            dirty = true
-          end
-          if game.result.home_score == result.allowed and game.home_team_id != result.opponent_id
-            game.home_team_id = result.opponent_id
-            puts "    -- assigning opponent to home team (was #{game.home_team_name}, now #{result.opponent_name})"            
-            dirty = true
-          elsif game.result.away_score == result.allowed and game.away_team_id != result.opponent_id
-            game.away_team_id = result.opponent_id
-            puts "    -- assigning opponent to away team (was #{game.away_team_name}, now #{result.opponent_name})"            
-            dirty = true
+          puts "  -> Result for game on #{result.played_on.to_s} vs. #{result.opponent_name} [#{game.summary}]"
+          if game.result.home_score == result.scored
+            puts "    -- #{team.name} should be the HOME team"
+            unless game.home_team_id == team.id
+              puts "    --- but they are not so let's SET HOME TEAM to #{team.name}"
+              game.home_team_id = team.id
+              dirty = true
+            end
+            puts "    -- #{result.opponent_name} should be the AWAY team"
+            unless game.away_team_id == result.opponent_id
+              puts "    --- but they are not so let's SET AWAY TEAM to #{result.opponent_name}"
+              game.away_team_id = result.opponent_id
+              dirty = true              
+            end
+          elsif game.result.away_score == result.scored
+            puts "    -- #{team.name} should be the AWAY team"
+            unless game.away_team_id == team.id
+              puts "    --- but they are not so let's SET AWAY TEAM to #{team.name}"
+              game.away_team_id = team.id
+              dirty = true
+            end
+            puts "    -- #{result.opponent_name} should be the HOME team"
+            unless game.home_team_id == result.opponent_id
+              puts "    --- but they are not so let's SET HOME TEAM to #{result.opponent_name}"
+              game.home_team_id = result.opponent_id
+              dirty = true              
+            end            
+          else
+            "    -- RUH-ROH... this result doesn't match the game..."
           end
           if dirty
-            puts "    ABOUT TO SAVE [#{game.summary}]"
+            puts "  -> this bitch is diry and should be saved [#{game.summary}]"
             game.save if save
-            puts "    SAVED" if save
-            puts "    As [#{game.summary}]"
+            puts "  -> SAVED AS [#{game.summary}]" if save
           end
         end
       end
