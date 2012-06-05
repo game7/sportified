@@ -50,8 +50,8 @@ class Team
   belongs_to :club
 
   has_many :players  
-  has_many :games, :inverse_of => :home_team
-  has_many :games, :inverse_of => :away_team
+  has_many :home_games, :class_name => "Game", :inverse_of => :home_team
+  has_many :away_games, :class_name => "Game", :inverse_of => :away_team
   embeds_one :record, :class_name => "Team::Record"
 
   before_save :set_slug

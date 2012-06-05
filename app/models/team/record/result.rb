@@ -30,12 +30,12 @@ class Team::Record::Result
     self.played_on = game.starts_on.to_date
     self.completed_in = game.result.completed_in
 
-    if game.away_team.id == team_id
+    if game.away_team && game.away_team.id == team_id
       self.opponent_id = game.home_team_id
       self.opponent_name = game.home_team_name
       self.scored = game.result.away_score
       self.allowed = game.result.home_score
-    elsif game.home_team.id == team_id
+    elsif game.home_team && game.home_team.id == team_id
       self.opponent_id = game.away_team_id
       self.opponent_name = game.away_team_name
       self.scored = game.result.home_score
