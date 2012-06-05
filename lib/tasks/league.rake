@@ -21,17 +21,22 @@ namespace :league do
           puts "  -> #{game.away_team_id} @ #{game.home_team_id}"
           if game.result.home_score == result.scored
             puts "    -- #{team.name} should be the HOME team"
+            opponent = Team.for_league(team.league_id).for_season(team.season_id).where(:name => result.opponent_name)
+            unless opponent
+              puts "    RUH-ROH - opposing team could not be found!!!!!"
+              next
+            end
             unless game.home_team_id == team.id
               puts "    --- but they are not so let's SET HOME TEAM to #{team.name}"
               puts "    --- #{game.home_team_id} set to #{team.id}"
               game.home_team_id = team.id
               dirty = true
             end
-            puts "    -- #{result.opponent_name} should be the AWAY team"
-            unless game.away_team_id == result.opponent_id
-              puts "    --- but they are not so let's SET AWAY TEAM to #{result.opponent_name}"
-              puts "    --- #{game.away_team_id} set to #{result.opponent_id}"
-              game.away_team_id = result.opponent_id
+            puts "    -- #{opponent.name} should be the AWAY team"
+            unless game.away_team_id == opponent.id
+              puts "    --- but they are not so let's SET AWAY TEAM to #{opponent.name}"
+              puts "    --- #{game.away_team_id} set to #{opponent.id}"
+              game.away_team_id = opponent.id
               dirty = true              
             end
           elsif game.result.away_score == result.scored
@@ -42,11 +47,11 @@ namespace :league do
               game.away_team_id = team.id
               dirty = true
             end
-            puts "    -- #{result.opponent_name} should be the HOME team"
-            unless game.home_team_id == result.opponent_id
-              puts "    --- but they are not so let's SET HOME TEAM to #{result.opponent_name}"
-              puts "    --- #{game.home_team_id} set to #{result.opponent_id}"
-              game.home_team_id = result.opponent_id
+            puts "    -- #{opponent.name} should be the HOME team"
+            unless game.home_team_id == opponent.id
+              puts "    --- but they are not so let's SET HOME TEAM to #{opponent.name}"
+              puts "    --- #{game.home_team_id} set to #{opponent.id}"
+              game.home_team_id = opponent.id
               dirty = true              
             end            
           else
