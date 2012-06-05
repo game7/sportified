@@ -8,26 +8,27 @@ namespace :league do
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
       Team.all.each do |team|
+        next if team.season_name = '2012 Summer'
         puts "  TEAM = #{team.name} (#{team.league_name} - #{team.season_name})"
         team.record.results.each do |result|
           dirty = false
           game = result.game
           if game.result.home_score == result.scored and game.home_team_id != team.id
             game.home_team_id = team.id
-            puts "    -- assigning team to home team (was #{game.home_team_name})"
+            puts "    -- assigning team to home team (was #{game.home_team_name}, now #{team.name})"
             dirty = true
           elsif game.result.away_score == result.scored and game.away_team_id != team.id
             game.away_team_id = team.id
-            puts "    -- assigning team to away team (was #{game.away_team_name})"            
+            puts "    -- assigning team to away team (was #{game.away_team_name}, now #{team.name})"            
             dirty = true
           end
           if game.result.home_score == result.allowed and game.home_team_id != result.opponent_id
             game.home_team_id = result.opponent_id
-            puts "    -- assigning opponent to home team (was #{game.home_team_name})"            
+            puts "    -- assigning opponent to home team (was #{game.home_team_name}, now #{result.opponent_name})"            
             dirty = true
           elsif game.result.away_score == result.allowed and game.away_team_id != result.opponent_id
             game.away_team_id = result.opponent_id
-            puts "    -- assigning opponent to away team (was #{game.away_team_name})"            
+            puts "    -- assigning opponent to away team (was #{game.away_team_name}, now #{result.opponent_name})"            
             dirty = true
           end
           if dirty
