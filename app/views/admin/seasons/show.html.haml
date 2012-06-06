@@ -1,0 +1,30 @@
+.row
+  .span12{ :style => "border-bottom: 1px solid #ccc;"}
+    %h1.pull-left= @season.name
+    .form-inline.pull-right
+      = select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to" })
+      = link_to 'Edit', edit_admin_season_path(@season), :class => "btn"
+      = link_to 'New Season', new_admin_season_path, :class => "btn"
+      = link_to 'New League', new_admin_league_path, :class => "btn"
+.row
+  - @season.leagues.each do |league|
+    .span12{ :style => "margin-top: 5px;"}
+      .inner{ :style => "background-color: #ccc; padding: 5px;"}
+        %h4.pull-left= league.name
+        .form-inline.pull-right
+          = link_to 'Edit', edit_admin_league_path(league), :class => "btn btn-mini"
+          = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-mini'
+        .clear
+    - Team.for_league(league).for_season(@season).each do |team|
+      .span3{ :style => "margin-top: 2px;"}
+        .inner{ :style => "background-color: #dedede; border: 1px solid #999; padding: 5px; margin-top: 5px;"}
+          .pull-left{ :style => "border: 1px solid #999; height: 50px; width: 50px; margin-right: 4px;"}
+          .pull-left
+            %h4{ :style => "margin-bottom: 10px;"}
+              = team.name
+            .form-inline
+              = link_to "Settings", edit_admin_team_path(team), :class => 'btn btn-mini'
+              = link_to "Roster", admin_team_players_path(team), :class => 'btn btn-mini'
+              =# link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+          .clear
+      
