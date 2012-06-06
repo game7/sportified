@@ -18,7 +18,7 @@ class Team::Record::Processor
     end  
 
     # then repost the results
-    games = season.events.where(:_type => 'game').asc(:starts_on) if season
+    games = Game.for_season(s).asc(:starts_on) if season
     games ||= Game.all.asc(:starts_on)
     
     puts ""
