@@ -18,7 +18,7 @@ class Team::Record::Processor
     end  
 
     # then repost the results
-    games = Game.for_season(s).asc(:starts_on) if season
+    games = Game.for_season(season).asc(:starts_on) if season
     games ||= Game.all.asc(:starts_on)
     
     puts ""
