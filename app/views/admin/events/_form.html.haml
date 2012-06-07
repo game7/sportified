@@ -8,8 +8,7 @@
   = f.input :summary
   - f.input :description, :as => :text
   = f.input :show_for_all_teams, :as => :boolean
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+  = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do
   :javascript

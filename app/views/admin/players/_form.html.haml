@@ -4,6 +4,5 @@
   = f.input :jersey_number
   = f.input :birthdate
   = f.input :email
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+  = f.button :wrapped, :cancel => return_url
 

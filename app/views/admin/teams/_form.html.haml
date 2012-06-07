@@ -7,5 +7,4 @@
   = f.input :pool  
   = f.input :show_in_standings, :as => :boolean
   = f.input :seed, :input_html => { :class => 'span1' }
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+  = f.button :wrapped, :cancel => return_url

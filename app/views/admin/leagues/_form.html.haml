@@ -1,7 +1,6 @@
 = simple_form_for [:admin, @league] do |f|
   = f.input :name
   = f.association :seasons, :as => :check_boxes, :collection => Season.all.desc(:starts_on)
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+  = f.button :wrapped, :cancel => return_url
 
 
