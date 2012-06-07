@@ -84,7 +84,8 @@ class Team
   end
   
   before_save :set_division_name
-  def set_division_name division = self.division
+  def set_division_name division = nil
+    division ||= Division.find(self.division_id) if self.division_id
     self.division_name = division ? division.name : nil
   end
 
@@ -109,6 +110,7 @@ class Team
     end
   end
   scope :with_slug, lambda { |slug| where(:slug => slug) }
+  scope :without_division, where(:division_id => nil)
 
 
 
