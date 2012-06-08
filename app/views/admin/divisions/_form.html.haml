@@ -1,6 +1,5 @@
 = simple_form_for [:admin, @season, @division] do |f|
-  = f.input :league_id, :collection => @leagues
+  = f.input :league_id, :collection => @leagues if %w{new create}.include? params[:action]
   = f.input :name
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+  = f.button :wrapped, :cancel => return_url
 

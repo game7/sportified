@@ -43,7 +43,7 @@
   namespace :admin do
     resources :leagues
 
-    resources :seasons, :shallow => true do
+    resources :seasons, :only => [:create, :new, :edit, :update, :delete], :shallow => true do
       resources :divisions, :except => :index
       resources :teams, :except => :index do
         resources :players      
@@ -89,6 +89,8 @@
     #  end      
     #end
   end
+  
+  match "admin/seasons(/:id)" => "admin/seasons#show", :as => :admin_seasons, :via => :get
   
   match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
   

@@ -5,7 +5,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   before_filter :find_season, :only => [:index, :new, :create]
   before_filter :load_season_links, :only => [:index]
   before_filter :load_league_links, :only => [:index]  
-  before_filter :load_league_options, :only => [:new, :create, :edit, :update]
+  before_filter :load_league_options, :only => [:new, :create]
   before_filter :find_division, :only => [:edit, :update, :destroy]
 
 
