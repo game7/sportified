@@ -7,7 +7,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   before_filter :find_season, :only => [:new, :edit]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
-  before_filter :load_team_options, :only => [:new, :edit]
+  before_filter :load_team_options, :only => [:edit]
   before_filter :load_venue_options, :only => [:new, :edit] 
  
 
@@ -16,6 +16,7 @@ class Admin::GamesController < Admin::BaseLeagueController
     @game.season = @season if @season
     @game.league_id = @league_options[0].id if @league_options.count == 1
     @game.venue_id = @venue_options[0].id if @venue_options.count == 1
+    load_team_options
   end
 
   def edit
