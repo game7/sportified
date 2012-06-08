@@ -10,9 +10,9 @@
           %th TEAM
           %th PTS
         %tbody
-          - last_pool = ""
+          - last_pool = nil
           - division[:teams].each do |team|
-            - unless team.pool == last_pool
+            - unless team.pool.blank? or team.pool == last_pool
               %tr
                 %th{:colspan => 2}= team.pool
               - last_pool = team.pool
@@ -34,9 +34,9 @@
           %th.span1 +/-
           %th.span2 STREAK
         %tbody
-          - last_pool = ""
+          - last_pool = nil
           - division[:teams].each do |team|
-            - unless team.pool == last_pool
+            - unless team.pool.blank? or team.pool == last_pool
               %tr
                 %th{:colspan => 10}= team.pool
               - last_pool = team.pool            
