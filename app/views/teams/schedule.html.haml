@@ -2,27 +2,50 @@
 - last_month = nil
 
 .row
-  .span3
-    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
-  .span3.offset6{ :style => "text-align: right;"}
-    = link_to 'Download as iCal', params.merge(:format => :ics), :class => "btn btn-info"
+  .span12
+    .pull-left
+      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
+    .pull-right
+      %a.btn.btn-info{ :href => url_for(params.merge(:format => :ics))}
+        %i.icon-calendar.icon-white
+        Download As iCal
+    .clear
 
-%table.table.table-striped.table-bordered
-  - @events.each do |event|
-    - month = event.starts_on.strftime('%B')
-    - future = event.starts_on.future?
-    - if month != last_month
-      - reset_cycle()
+.visible-phone
+  %table.table.table-striped.table-bordered
+    - @events.each do |event|
+      - month = event.starts_on.strftime('%B')
+      - future = event.starts_on.future?
+      - if month != last_month
+        - reset_cycle()
+        %tr
+          %th= month
+        - last_month = month
+        - last_future = future
       %tr
-        %th= month
-        %th EVENT
-        %th TIME / RESULT
-        %th LOCATION
-      - last_month = month
-      - last_future = future
-    %tr
-      %td.span2= event.starts_on.strftime('%a, %b %e')
-      %td.span4= display_event_summary(event, @team)
-      %td.span3= display_time_or_result(event, @team)
-      %td.span3= event.venue_name
+        %td
+          = event.starts_on.strftime('%a, %b %e')
+          %br/
+          = display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
+          %br/
+          = event.venue_name
+.hidden-phone
+  %table.table.table-striped.table-bordered
+    - @events.each do |event|
+      - month = event.starts_on.strftime('%B')
+      - future = event.starts_on.future?
+      - if month != last_month
+        - reset_cycle()
+        %tr
+          %th.span2= month
+          %th.span4 EVENT
+          %th.span3 TIME / RESULT
+          %th.span3 LOCATION
+        - last_month = month
+        - last_future = future
+      %tr
+        %td.span2= event.starts_on.strftime('%a, %b %e')
+        %td.span4= display_event_summary(event, @team)
+        %td.span3= display_time_or_result(event, @team)
+        %td.span3= event.venue_name
 
