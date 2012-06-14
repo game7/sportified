@@ -1,6 +1,11 @@
 %tr{ :id => "player_#{player.id}" }
   %td
-    = player.played ? 'X' : ''
+    - if player.played
+      %button.played.btn.btn-mini.btn-success{ :"data-loading-text" => "..."}
+        %i.icon-none.icon-ok
+    - else
+      %button.played.btn.btn-mini
+        %i.icon-none
   %td= player.num
   %td= "#{player.last_name}, #{player.first_name}"
   %td
