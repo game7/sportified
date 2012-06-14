@@ -24,15 +24,8 @@
       %thead
         %tr
           %th.span2 TEAM
-          %th.span1 GP
-          %th.span1 W
-          %th.span1 L
-          %th.span1 SOL
-          %th.span1 PTS
-          %th.span1 GS
-          %th.span1 GA
-          %th.span1 +/-
-          %th.span2 STREAK
+          - @league.standings_array.each do |col|
+            %th.span1= t('.'+col)
         %tbody
           - last_pool = nil
           - division[:teams].each do |team|
@@ -44,14 +37,8 @@
               %td
                 = "#{team.seed} -" if team.seed
                 = team.name
-              %td= team.record.gp
-              %td= team.record.w
-              %td= team.record.rl
-              %td= team.record.sol
-              %td= team.record.pts
-              %td= team.record.scored
-              %td= team.record.allowed
-              %td= team.record.margin
-              %td= team.record.stk
+                - @league.standings_array.each do |col|
+                  %td= team.record[col]
+
 
 
