@@ -30,13 +30,9 @@
   :javascript
     $(document).ready(function(){
      $(".played").click(function(){
-       var btn = $(this);
-       btn.button('loading');
-       setTimeout(function() {
-         btn.button('reset');
-         btn.find("i").toggleClass('icon-ok');
-         btn.toggleClass('btn-success');
-       }, 2000);
+       var chk = $(this);
+       var form = chk.closest('form');
+       form.submit();
      });
     });
 
