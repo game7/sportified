@@ -4,6 +4,8 @@
       .title= block.friendly_name
       .actions
         = render :partial => "admin/"+block.class.to_s.pluralize.underscore+"/actions", :locals => { :block => block }
+        %button.btn.btn-mini.move_up Move Up
+        %button.btn.btn-mini.move_down Move Down
         = link_to 'Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini'
       .clear
     .content
