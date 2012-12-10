@@ -19,6 +19,9 @@
   #blocks .block:last-child .move_down {
     display: none;
   }
+  #blocks .block div.actions > div {
+    display: none;
+  }
 
 - content_for :javascript do
   :javascript
@@ -36,19 +39,28 @@
     });
     
     $(function() {
+      $('button.edit').click(function(){
+        toggleEditor($(this));
+      });
       $('button.move_up').click(function(){
         var $block = $(this).closest('.block');
         $block.insertBefore($block.prev());
-        update_block_positions();
+        updateBlockPositions();
       });
       $('button.move_down').click(function(){
         var $block = $(this).closest('.block');
         $block.insertAfter($block.next());
-        update_block_positions();
+        updateBlockPositions();
       });
     });
     
-    function update_block_positions() {
+    function toggleEditor($button){
+      var $block = $button.closest('.block');
+      $block.find('.content').slideToggle();
+      $block.find('div.edit').slideToggle();      
+    }
+    
+    function updateBlockPositions() {
       var items = '';
       $.each($("#blocks .block"), function(){
         var id = $(this).attr("id");
