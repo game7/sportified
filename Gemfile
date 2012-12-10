@@ -26,6 +26,7 @@ gem 'therubyracer', :platform => :ruby
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
+gem 'remotipart', '~> 0.4'
 
 #gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
 gem "RedCloth"

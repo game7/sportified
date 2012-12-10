@@ -208,6 +208,7 @@ GEM
       rspec (>= 2.0.0.alpha11)
     remarkable_mongoid (0.6.0)
       remarkable_activemodel (~> 4.0.0.alpha4)
+    remotipart (0.4.2)
     rmagick (2.13.1)
     rspec (2.11.0)
       rspec-core (~> 2.11.0)
@@ -289,6 +290,7 @@ DEPENDENCIES
   omniauth
   rails (= 3.2.1)
   remarkable_mongoid (>= 0.5.0)
+  remotipart (~> 0.4)
   rmagick
   rspec (>= 2.0.1)
   rspec-rails (>= 2.0.1)
