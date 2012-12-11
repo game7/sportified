@@ -10,7 +10,7 @@ end
 
 if Rails.env.development?  
   CarrierWave.configure do |config| 
-    config.root = Rails.root 
+    config.root = "#{Rails.root}/public"
     config.storage = :file  
     config.enable_processing = true  
   end  

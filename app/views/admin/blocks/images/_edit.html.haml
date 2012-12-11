@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @page, @block], :remote => true, :multipart => true do |f|
+= simple_form_for [:admin, @page, block], :html => { :multipart => true }, :remote => true do |f|
   = f.input :image, :as => :file
   = f.input :remote_image_url
   = f.input :image_cache, :as => :hidden
@@ -6,5 +6,8 @@
   = f.input :link_url, :hint => "Optional.  If provided clicking image will navigate to here"
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'
-    = link_to "Return to Page", admin_page_blocks_path(@page), :class => 'btn'
-  
+      
+- if block.image?
+  .row
+    .span12{ :style => "text-align: center; margin-bottom: 20px;"}
+      = image_tag block.image.url, :align => "center"
