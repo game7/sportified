@@ -74,12 +74,10 @@ class Team::Record
   end
 
   def post_result_from_game(game)
-
     cancel_result_for_game(game) if is_game_posted?(game)
-
+    return if game.result.exclude_from_team_records
     result = Team::Record::Result.new(:team => self.team.id, :game => game)
     apply_result(result)
-    
   end
 
   def cancel_result_for_game(game)

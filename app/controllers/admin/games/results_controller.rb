@@ -11,8 +11,8 @@ class Admin::Games::ResultsController < Admin::BaseLeagueController
   end
 
   def new
-    current = @game.result.clone if @game.result
-    @result = @game.build_result
+    @result = @game.result.clone if @game.result
+    @result ||= @game.build_result
   end
 
   def create

@@ -17,7 +17,13 @@
       - teams.each do |team|
         - if team.league_id == league.id
           %tr
-            %td= team.name
+            %td
+              = team.name
+              .pull-right
+                - unless team.division_name.blank?
+                  %span.label= team.division_name
+                - unless team.pool.blank?
+                  %span.label= team.pool
             %td
               = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-mini'
               = link_to "Roster", admin_team_players_path(team), :class => 'btn btn-mini'

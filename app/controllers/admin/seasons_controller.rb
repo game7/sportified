@@ -4,8 +4,15 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   before_filter :add_seasons_breadcrumb  
   before_filter :find_season, :only => [:edit, :update, :delete]
   before_filter :find_seasons, :only => [:index]
+  before_filter :get_season_options, :only => [:show]
 
   def index
+  end
+  
+  def show
+    @season = Season.find(params[:id]) if params[:id]
+    @season ||= Season.most_recent
+    add_breadcrumb @season.name    
   end
 
   def new
@@ -40,6 +47,10 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
   
   private
+
+  def get_season_options
+    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, admin_seasons_path(:id => s == @season ? nil : s.id)]}
+  end  
   
   def add_seasons_breadcrumb
     add_breadcrumb 'Seasons', admin_seasons_path    

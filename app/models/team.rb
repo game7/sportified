@@ -8,6 +8,9 @@ class Team
   field :short_name
   field :slug
   field :show_in_standings, :type => Boolean, :default => true
+  field :pool, :type => String
+  field :seed, :type => Integer
+  
   field :primary_color, :default => '#666'
   field :accent_color, :default => '#000'
   field :text_color, :default => '#FFF'
@@ -47,8 +50,8 @@ class Team
   belongs_to :club
 
   has_many :players  
-  has_many :games, :inverse_of => :home_team
-  has_many :games, :inverse_of => :away_team
+  has_many :home_games, :class_name => "Game", :inverse_of => :home_team
+  has_many :away_games, :class_name => "Game", :inverse_of => :away_team
   embeds_one :record, :class_name => "Team::Record"
 
   before_save :set_slug
@@ -79,6 +82,12 @@ class Team
     self.season_name = season ? season.name : nil
     self.season_slug = season ? season.slug : nil
   end
+  
+  before_save :set_division_name
+  def set_division_name division = nil
+    division ||= Division.find(self.division_id) if self.division_id
+    self.division_name = division ? division.name : nil
+  end
 
   #
   #before_save :prepare_crop_changed_message
@@ -89,10 +98,6 @@ class Team
   #  end
   #  enqueue_message msg
   #end
-
-  def fullname
-    "#{name} (#{division_name}-#{season_name})"
-  end
 
   class << self
     def for_league(league)
@@ -105,6 +110,7 @@ class Team
     end
   end
   scope :with_slug, lambda { |slug| where(:slug => slug) }
+  scope :without_division, where(:division_id => nil)
 
 
 

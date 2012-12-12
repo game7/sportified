@@ -1,8 +1,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui.min
+//= require jquery.form
+//= require jquery.remotipart
 //= require twitter/bootstrap
-//= require jquery.wymeditor.js
 
 
 function clearForm(form) {

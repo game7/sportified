@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  def show  
+  def show
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
   end
   
@@ -11,16 +11,14 @@ class PagesController < ApplicationController
   end
   
   def find_page
-    @page = Page.with_path(params[:path]).first if params[:path]  
-    @page ||= Page.sorted_as_tree.first
+    @page = Page.find_by_path(params[:path])
+    @page ||= Page.new(:title => 'Welcome') unless params[:path]
   end
   
   def set_breadcrumbs
-    unless @page.root?
-      @page.ancestors_and_self.each do |parent|
-        add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
-      end
-    end
+    @page.ancestors_and_self.each do |parent|
+      add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
+    end unless @page.root?
   end
   
   def set_area_navigation

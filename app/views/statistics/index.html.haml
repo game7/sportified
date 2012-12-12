@@ -65,7 +65,7 @@
           %th.stat SAVE PCT
         %tbody
           - data_exists = false
-          - @save_leaders.each do |player|
+          - @savepct_leaders.each do |player|
             - data_exists = true
             %tr
               %td.player= player.full_name

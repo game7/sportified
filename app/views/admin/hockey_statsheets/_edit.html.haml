@@ -26,5 +26,13 @@
 
 #dialog-modal
 
-
+- content_for :javascript do
+  :javascript
+    $(document).ready(function(){
+     $(".played").click(function(){
+       var chk = $(this);
+       var form = chk.closest('form');
+       form.submit();
+     });
+    });
 

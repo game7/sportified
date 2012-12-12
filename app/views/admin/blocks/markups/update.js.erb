@@ -5,6 +5,6 @@
 <% else %>
   $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_success").slideDown();
-  $('#dialog-modal').dialog("close");
-  $("#block_<%= @block.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/blocks/block", :locals => { :block => @block } ) )%>");
+  $("#block_<%= @block.id %> div.content").html("<%= escape_javascript( render(:partial => @block.class.to_s.pluralize.underscore+"/block", :locals => { :block => @block } ) )%>");
+  toggleEditor($("#block_<%= @block.id %>"));
 <% end %>

@@ -21,5 +21,7 @@ class Game::Result
   
   field :completed_in
   validates :completed_in, presence: true
+  
+  field :exclude_from_team_records, type: Boolean
 
 end

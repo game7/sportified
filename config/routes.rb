@@ -39,30 +39,17 @@
   match "programs/:league_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
-  
-  #match "league" => "league/home#index", :as => :league, :via => :get
-  #
-  #match 'league(/:division_slug)/schedule' => 'league/schedule#index', :as => :league_schedule, :via => :get
-  #match 'league(/:division_slug)/scoreboard' => 'league/scoreboard#index', :as => :league_scoreboard, :via => :get
-  #match 'league/standings' => 'league/standings#index', :as => :league_standings, :via => :get
-  #match 'league(/:division_slug)(/:season_slug)/teams/' => 'league/teams#index', :as => :league_teams, :via => :get
-  ##match "league/:division_slug" => "league/divisions#show", :as => :league_division, :via => :get
-  #
-  #match 'league/:division_slug/:season_slug/teams/:team_slug' => 'league/teams#show', :as => :league_team, :via => :get
-  #match 'league/:division_slug/:season_slug/teams/:team_slug/schedule' => 'league/teams#schedule', :as => :league_team_schedule, :via => :get
-  #match 'league/:division_slug/:season_slug/teams/:team_slug/roster' => 'league/teams#roster', :as => :league_team_roster, :via => :get
-  #
-  #match 'league/games/box_score/:id' => 'league/games#box_score', :as => :league_game_box_score, :via => :get
 
   namespace :admin do
     resources :leagues
 
-    resources :seasons, :shallow => true do
-      resources :divisions, :only => [:new, :create, :edit, :update, :destroy]
+    resources :seasons, :only => [:create, :new, :edit, :update, :delete], :shallow => true do
+      resources :divisions, :except => :index
       resources :teams, :except => :index do
         resources :players      
       end
     end
+    resources :divisions, :only => :index
     resources :teams, :only => :index
     resources :events
     resources :games do
@@ -103,6 +90,8 @@
     #end
   end
   
+  match "admin/seasons(/:id)" => "admin/seasons#show", :as => :admin_seasons, :via => :get
+  
   match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
   
   get '/pages/*path', :to => 'pages#show', :as => :page_friendly  
@@ -123,5 +112,6 @@
     end
     resources :posts
   end
+  
 
 end

@@ -63,9 +63,9 @@ class Player::Import
              self.columns << :team
            when 'jersey', 'jersey_num', 'num'
              self.columns << :jersey_num
-           when 'first', 'first_name'
+           when 'first', 'first_name', 'part_fname'
              self.columns << :first_name
-           when 'last', 'last_name'
+           when 'last', 'last_name', 'part_lname'
              self.columns << :last_name
            when 'birthdate', 'dob'
              self.columns << :birthdate 

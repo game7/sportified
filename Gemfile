@@ -18,16 +18,18 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'icalendar'
 gem 'chronic'
 
-gem 'formtastic', '~> 1.2.3'
+#gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
-gem 'delayed_job'
+#gem 'delayed_job'
 gem "less-rails-bootstrap"
+gem 'therubyracer', :platform => :ruby
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
+gem 'remotipart', '~> 0.4'
 
-gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
+#gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
 gem "RedCloth"
 
 
@@ -47,8 +49,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'webrat'
-  gem 'cucumber-rails'
-  gem 'cucumber'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
   # Autotest

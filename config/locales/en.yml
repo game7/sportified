@@ -6,3 +6,15 @@ en:
   time:
     formats:
       default: "%m/%d/%y %l:%M %p"
+  standings:
+    index:
+      gp: "GP"
+      w: "W"
+      rl: "L"
+      sol: "SOL"
+      t: "T"
+      pts: "PTS"
+      scored: "GF"
+      allowed: "GA"
+      margin: "+/-"
+      stk: "STREAK"

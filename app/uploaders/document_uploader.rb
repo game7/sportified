@@ -3,7 +3,14 @@ class DocumentUploader < CarrierWave::Uploader::Base
 
   def store_dir
     tenant = Tenant.current || model.tenant
-    "uploads/#{tenant.slug}/pages/#{model.page.id}/documents/"
+    if model.respond_to?('page')
+      klass = "pages"
+      id = model.page.id
+    else
+      klass = model.class.name.pluralize.downcase
+      id = model.id
+    end
+    "uploads/#{tenant.slug}/#{klass}/#{id}/documents/"
   end
 
   def cache_dir

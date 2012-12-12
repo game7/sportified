@@ -7,4 +7,9 @@
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
   $("#player_<%= @player.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/player", :object => @player) )%>");  
+  $("#player_<%= @player.id %> .played").click(function(){
+    var chk = $(this);
+    var form = chk.closest('form');
+    form.submit();
+  });
 <% end %>

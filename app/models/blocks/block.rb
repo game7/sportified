@@ -6,6 +6,10 @@ module Blocks
     field :position, :type => Integer
 
     embedded_in :page
+    
+    def self.actions
+      []
+    end
 
     def class_name
       self.class.to_s.titlecase

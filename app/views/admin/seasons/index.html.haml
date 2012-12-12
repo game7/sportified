@@ -10,8 +10,7 @@
       %tr
         %td #{season.name}
         %td #{season.starts_on}
-        %td
-          = link_to 'Show', [:admin, season], :class => "btn btn-mini"        
+        %td     
           = link_to 'Edit', edit_admin_season_path(season), :class => "btn btn-mini"
           = link_to 'Destroy', [:admin, season], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-mini"
 = link_to 'New Season', new_admin_season_path(@division), :class => "btn"

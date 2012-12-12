@@ -18,7 +18,7 @@ end
 module Sportified
   class Application < Rails::Application
     
-    config.mongoid.logger = Logger.new($stdout, :warn)
+    #config.mongoid.logger = Logger.new($stdout, :warn)
 
     config.generators do |g|
       g.template_engine :haml
@@ -27,7 +27,7 @@ module Sportified
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
     
-    config.mongoid.observers = :'game/result_observer', :league_observer, :season_observer
+    config.mongoid.observers = :'game/result_observer', :league_observer, :season_observer, :division_observer
 
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -41,7 +41,7 @@ module Sportified
     config.assets.initialize_on_precompile = false
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.2'    
+    config.assets.version = '1.3'    
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)

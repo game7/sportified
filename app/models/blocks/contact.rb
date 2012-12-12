@@ -1,5 +1,10 @@
 module Blocks
   class Contact < Block
+    
+    def self.actions 
+      %w{ edit }
+    end
+      
     field :first
     field :last
     field :title

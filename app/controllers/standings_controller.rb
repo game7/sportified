@@ -12,13 +12,13 @@ class StandingsController < BaseLeagueController
     #  flash[:error] = "Standings layout has not been setup for this division"
     #end
     add_breadcrumb "Standings"
-    @teams = @league.teams.for_season(@season).desc('record.pts')
+    @teams = @league.teams.for_season(@season).asc('division_name').asc('pool').asc('seed').desc('record.pts').desc('record.w').desc('record.margin')
   end
   
   private
   
   def get_season_options
-    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, standings_path(:league_slug => @league.slug, :season_slug => s == @season ? nil : s.slug)]}
+    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, standings_path(:league_slug => @league.slug, :season_slug => s == @season ? nil : s.slug)]}
   end  
   
 end

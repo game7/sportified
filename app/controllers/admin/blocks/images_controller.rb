@@ -9,7 +9,6 @@ class Admin::Blocks::ImagesController < Admin::Blocks::BaseController
   def update
     if @block.update_attributes(params[:blocks_image])
       flash[:success] = "Image updated"
-      render 'edit'
     end    
   end
   

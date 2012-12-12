@@ -2,6 +2,7 @@
   = f.input :away_score, :label => @game.away_team_name, :input_html => { :class => "span1"}
   = f.input :home_score, :label => @game.home_team_name, :input_html => { :class => "span1"}
   = f.input :completed_in, :collection => Game::Result.completed_in_options, :input_html => { :class => "span2"}
+  = f.input :exclude_from_team_records, :as => :boolean
 
 :css
   #game_result_left_team_score,

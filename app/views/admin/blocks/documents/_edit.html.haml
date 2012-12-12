@@ -1,0 +1,7 @@
+= simple_form_for [:admin, @page, block], :html => { :multipart => true }, :remote => true do |f|
+  = f.input :file, :as => :file
+  = f.input :file_cache, :as => :hidden
+  = f.input :title
+  .form-actions
+    = f.button :submit, :class => 'btn btn-primary'
+  
