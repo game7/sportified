@@ -35,7 +35,8 @@ class Admin::PostsController < Admin::AdminController
 
   def destroy
     @post.delete
-    flash[:notice] = "Post has been deleted"    
+    flash[:notice] = "Post has been deleted"
+    return_to_last_point :success => 'Post has been deleted.' 
   end
   
   private

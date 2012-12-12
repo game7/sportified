@@ -9,5 +9,4 @@
     = f.input :image, :as => :file
     = f.input :remote_image_url
     = f.input :image_cache, :as => :hidden    
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary wymupdate'
+    = f.button :wrapped, :cancel => return_url
