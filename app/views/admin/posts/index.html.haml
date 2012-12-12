@@ -2,7 +2,7 @@
 .well
   = link_to 'New Post', new_admin_post_path(), :class => 'btn'
 .pagination
-  .ul
+  %ul
     - @tags.each do |tag|
       %li
         =link_to tag.humanize, ''
@@ -13,7 +13,7 @@
   - @posts.each do |post|
     %tr
       %td
-        %h3
+        %strong
           = post.title
         - post.tags_array.each do |tag|
           %span.label.label-info= tag
