@@ -10,6 +10,7 @@ gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_taggable'
 gem 'haml'
+gem 'kaminari'
 
 gem 'devise'
 gem 'omniauth'

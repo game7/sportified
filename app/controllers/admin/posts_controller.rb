@@ -4,7 +4,7 @@ class Admin::PostsController < Admin::AdminController
   before_filter :mark_return_point, :only => [:new, :edit]
   
   def index
-    @posts = Post.all.newest_first
+    @posts = Post.all.newest_first.page(params[:page])
     @tags = Post.tags
   end
 

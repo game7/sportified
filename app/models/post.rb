@@ -3,6 +3,8 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::Taggable  
   include Sportified::TenantScoped
+  
+  paginates_per 10
 
   field :title
   field :summary
