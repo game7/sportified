@@ -1,0 +1,14 @@
+.carousel.slide{ :id => "carousel_#{block.id}" }
+  .carousel-inner
+    - count = 0
+    - block.posts.newest_first.each_with_index do |post, index|
+      - break if count >= block.post_count
+      - next unless post.image.present?
+      - count += 1
+      %div{ :class => "item#{' active' if index == 0}" }
+        = image_tag post.image.url
+        .carousel-caption
+          %h4= post.title
+          %p= post.summary
+  %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
+  %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"

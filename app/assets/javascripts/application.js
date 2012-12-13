@@ -29,6 +29,8 @@ $(document).ready(function() {
     $('#'+this.getAttribute('rel')).slideToggle(300);
     return false;
   });
+  
+  $('.carousel').carousel();
 
 });
 

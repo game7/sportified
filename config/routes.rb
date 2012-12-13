@@ -108,6 +108,7 @@
         resources :images, :only => [:edit, :update]
         resources :documents, :only => [:edit, :update]
         resources :markups, :only => [:edit, :update]
+        resources :carousels, :only => [:edit, :update]
       end
     end
     resources :posts
