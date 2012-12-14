@@ -9,5 +9,9 @@ module ApplicationHelper
     site = Site.current
     site.present? && site.theme.present? ? site.theme : 'default'
   end
+  
+  def icon(name, white = false)
+    "<i class=\"icon-#{name.to_s}#{' icon-white' if white}\"></i>".html_safe
+  end
 
 end
