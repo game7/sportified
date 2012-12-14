@@ -8,7 +8,7 @@
   = link_to "Add Divider", admin_page_blocks_path(@page.id, :block_type => 'divider'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Markup", admin_page_blocks_path(@page.id, :block_type => 'markup'), :method => :post, :remote => true, :class => 'btn'
   = link_to "Add Carousel", admin_page_blocks_path(@page.id, :block_type => 'carousel'), :method => :post, :remote => true, :class => 'btn'
-#blocks
+#blocks.row-fluid
   = render :partial => "block", :collection => @page.blocks.asc(:position)
 
 #dialog-modal
@@ -40,18 +40,21 @@
     });
     
     $(function() {
-      $('button.edit').click(function(){
+      $('a.edit').click(function(){
         toggleEditor($(this));
+        return false;
       });
-      $('button.move_up').click(function(){
+      $('a.move_up').click(function(){
         var $block = $(this).closest('.block');
         $block.insertBefore($block.prev());
         updateBlockPositions();
+        return false;
       });
-      $('button.move_down').click(function(){
+      $('a.move_down').click(function(){
         var $block = $(this).closest('.block');
         $block.insertAfter($block.next());
         updateBlockPositions();
+        return false;
       });
     });
     
