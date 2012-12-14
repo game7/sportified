@@ -4,10 +4,10 @@
       .title= block.friendly_name
       .buttons
         - block.class.actions.each do |action|
-          %button{ :class => "btn btn-mini #{action}" }= icon(action.downcase)+' '+action.humanize  
-        %button.btn.btn-mini.move_up= icon(:"arrow-up")+' Up'
-        %button.btn.btn-mini.move_down= icon(:"arrow-down")+'    Down'
-        = link_to icon(:trash)+' Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-mini'
+          %button{ :class => "btn btn-small #{action}" }= icon(action.downcase)+' '+action.humanize  
+        %button.btn.btn-small.move_up= icon(:"arrow-up")+' Up'
+        %button.btn.btn-small.move_down= icon(:"arrow-down")+'    Down'
+        = link_to icon(:trash)+' Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'btn btn-small'
       .clear
     .content
       = render :partial => block.class.to_s.pluralize.underscore+"/block", :object => block
