@@ -94,12 +94,20 @@ class ApplicationController < ActionController::Base
   def current_user_is_host?
     current_user and current_user.role? :super_admin
   end
+  helper_method :current_user_is_host?
   
   def current_user_is_admin?
-    current_tenant_id = Tenant.current.id
-    current_user and current_user.roles.find_by_name(:admin).each do |role|
-      return true if role.tenant_id == current_tenant_id
-    end
+    current_user_is_host? || lambda {
+      current_tenant_id = Tenant.current.id
+      current_user and current_user.roles.find_by_name(:admin).each do |role|
+        return true if role.tenant_id == current_tenant_id
+      end
+    }.call
   end
+  helper_method :current_user_is_admin?
+  
+  def verify_admin
+    redirect_to root_url unless current_user_is_admin?
+  end  
 
 end
