@@ -18,7 +18,7 @@ end
 module Sportified
   class Application < Rails::Application
     
-    #config.mongoid.logger = Logger.new($stdout, :warn)
+    config.mongoid.logger = Logger.new($stdout, :warn)
 
     config.generators do |g|
       g.template_engine :haml

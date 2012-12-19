@@ -18,3 +18,25 @@ en:
       allowed: "GA"
       margin: "+/-"
       stk: "STREAK"
+  blocks:
+    carousel:
+      name: "Carousel"
+      description: "A rotating display of images"
+    contact:
+      name: "Contact"
+      description: "A contact card"
+    divider:
+      name: "Divider"
+      description: "Horizontal line to provide separation between adjacent blocks"
+    document:
+      name: "Document"
+      description: "Upload a document that can viewed or downloaded by visitors"
+    image:
+      name: "Image"
+      description: "Upload an image that can be viewed by visitors"
+    markup:
+      name: "Markup"
+      description: "Raw HTML"
+    text:
+      name: "Text"
+      description: "A block of text that can be formatted using Textile markup syntax"

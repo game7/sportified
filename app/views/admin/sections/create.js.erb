@@ -1,0 +1,10 @@
+<% if @section.errors.any? %>
+  $("#flash_notice").slideUp()
+  $("#errors").html("<%= escape_javascript(error_messages_for(@section)) %>");
+  $("#errors").slideDown();
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
+  $("#flash_success").slideDown();
+  $("#sections").append("<%= escape_javascript( render(:partial => "admin/sections/section", :locals => { :section => @section } ) )%>");
+  $("#section-catalog").modal('hide');
+<% end %>

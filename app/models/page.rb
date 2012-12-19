@@ -27,8 +27,8 @@ class Page
 
   field :tree 
 
-  embeds_many :blocks, :class_name => "Blocks::Block"#, :default_order => :position.asc
-  #embeds_many :layouts#, :default_order => :position.asc
+  embeds_many :sections, :class_name => "Section"
+  embeds_many :blocks, :class_name => "Blocks::Block"
 
   validates_presence_of :title
 

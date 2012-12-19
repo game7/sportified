@@ -9,7 +9,7 @@ class Admin::BlocksController < Admin::AdminController
   end
   
   def create
-    @block = @page.blocks.create({}, "blocks/#{params[:block_type]}".camelize.constantize) 
+    @block = @page.blocks.create({ :section_id => params[:section_id], :column => params[:column] }, "blocks/#{params[:block_type]}".camelize.constantize) 
     flash[:success] = "#{params[:block_type].humanize} has been added to Page"
     puts 'block created'
   end
@@ -35,7 +35,7 @@ class Admin::BlocksController < Admin::AdminController
   def find_page
     @page = Page.find(params[:page_id])
   end
-  
+    
   def find_block
     @block = @page.blocks.find(params[:id])   
   end

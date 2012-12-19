@@ -1,26 +1,64 @@
 - title "Edit " + @page.title
-.well
-  = link_to "Hide Controls", "#", :id => "toggle_editor", :class => 'btn'
-  = link_to "Add Text", admin_page_blocks_path(@page.id, :block_type => 'text'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Image", admin_page_blocks_path(@page.id, :block_type => 'image'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Document", admin_page_blocks_path(@page.id, :block_type => 'document'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Contact", admin_page_blocks_path(@page.id, :block_type => 'contact'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Divider", admin_page_blocks_path(@page.id, :block_type => 'divider'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Markup", admin_page_blocks_path(@page.id, :block_type => 'markup'), :method => :post, :remote => true, :class => 'btn'
-  = link_to "Add Carousel", admin_page_blocks_path(@page.id, :block_type => 'carousel'), :method => :post, :remote => true, :class => 'btn'
-#blocks.row-fluid
-  = render :partial => "block", :collection => @page.blocks.asc(:position)
+
+.navbar
+  .navbar-inner
+    = link_to "Hide Controls", "#", :id => "toggle_editor", :class => 'btn'
+    = link_to icon('file')+" New Page", new_admin_page_path, :id => "add_block", :class => 'btn'
+    = link_to icon('th-list')+" Pages", admin_pages_path, :id => "add_block", :class => 'btn'
+    = link_to icon('cog')+" Settings", edit_admin_page_path(@page), :id => "add_block", :class => 'btn'
+    %a.btn{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section"
+
+#sections
+  = render :partial => "admin/sections/section", :collection => @page.sections.asc(:position)
 
 #dialog-modal
 
+#block-catalog.modal.hide.fade{ :role => "dialog"}
+  .modal-header
+    %button.close{ :"data-dismiss" => 'modal', :"aria-hidden" => 'true' }!= "&times;"
+    %h3 Add Block
+  .modal-body
+    = form_for admin_page_blocks_path(@page.id), :html => { :id => 'new_block' }, :remote => true do |f|
+      %input{ :type => :hidden, :id => :block_type, :name => :block_type }
+      %input{ :type => :hidden, :id => :page_id, :name => :page_id, :value => @page.id }
+      %input{ :type => :hidden, :id => :section_id, :name => :section_id }
+      %input{ :type => :hidden, :id => :column, :name => :column }
+      - t('blocks').each do |block|
+        %div{ :style => "border-bottom: 1px solid #dedede;"}
+          %div.pull-left{ :style => ""}
+            %button.btn.add_block{ :type => :submit, :"data-block_type" => block[0], :style => "margin-top: 5px;" }= icon('plus')+" Add"
+          %div.pull-left{ :style => "margin-left: 10px"}
+            %strong= block[1][:name]
+            %br
+            =block[1][:description]
+          .clear  
+  .modal-footer
+    
+#section-catalog.modal.hide.fade{ :role => "dialog"}
+  .modal-header
+    %button.close{ :"data-dismiss" => 'modal', :"aria-hidden" => 'true' }!= "&times;"
+    %h3 Add Section
+  .modal-body
+    - Section.patterns.each do |pattern|
+      %div{ :style => "border-bottom: 1px solid #dedede;"}
+        %div.pull-left{ :style => ""}
+          = link_to icon('plus')+" Add", admin_page_sections_path(@page.id, :pattern => pattern), :method => :post, :remote => true, :class => 'btn', :style => "margin-top: 2px; margin-bottom: 2px;"
+        %div.pull-left{ :style => "margin-left: 10px"}
+          %table{ :"cell-spacing" => 4, :border => 4, :width => "400"}
+            %tr
+              - pattern.split("|").each do |col|
+                %td{ :width => "#{col}%", :align => "center" }= "#{col}"
+        .clear  
+  .modal-footer
+
 :css
-  #blocks .block:first-child .move_up {
+  .blocks .block:first-child .move_up {
     display: none;
   }
-  #blocks .block:last-child .move_down {
+  .blocks .block:last-child .move_down {
     display: none;
   }
-  #blocks .block div.actions > div {
+  .blocks .block div.actions > div {
     display: none;
   }
 
@@ -36,27 +74,35 @@
           $(this).text('Show Controls');
         }
         return false;      
-      });      
+      });    
     });
     
     $(function() {
-      $('a.edit').click(function(){
+      $(document).on('click', '.block a.edit', function(){
         toggleEditor($(this));
         return false;
       });
-      $('a.move_up').click(function(){
+      $(document).on('click', '.block a.move_up', function(){
         var $block = $(this).closest('.block');
         $block.insertBefore($block.prev());
-        updateBlockPositions();
+        updateBlockPositions($(this));
         return false;
       });
-      $('a.move_down').click(function(){
+      $(document).on('click', '.block a.move_down', function(){
         var $block = $(this).closest('.block');
         $block.insertAfter($block.next());
-        updateBlockPositions();
+        updateBlockPositions($(this));
         return false;
       });
+      $(document).on('click', '.section a.add_block', function(){
+        $('#column').val( $(this).attr('data-column') );
+        $('#section_id').val( $(this).attr('data-section_id') );
+      });
+      $(document).on('click', '#block-catalog button.add_block', function(){
+        $('#block_type').val( $(this).attr('data-block_type') );
+      });      
     });
+
     
     function toggleEditor($button){
       var $block = $button.closest('.block');
@@ -64,9 +110,9 @@
       $block.find('div.edit').slideToggle();      
     }
     
-    function updateBlockPositions() {
+    function updateBlockPositions(button) {
       var items = '';
-      $.each($("#blocks .block"), function(){
+      $.each(button.closest(".blocks").find(".block"), function(){
         var id = $(this).attr("id");
         items += id.replace("_","[]=") + "&";
       })

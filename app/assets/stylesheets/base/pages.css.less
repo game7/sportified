@@ -2,7 +2,9 @@
 // BLOCKS
 // ---------------------------------
 
-.block {
+.block,
+.section
+{
   margin-bottom: 10px;
   .chrome {
     padding: 2px;
@@ -32,9 +34,19 @@
   .chrome {
     display: block;
   }
-  .content {
-    padding: 4px;
+}
+
+.section {
+  .chrome {
+    border: 1px solid @grayLight;
   }
+  margin-bottom: 5px;
+}
+
+.column-inner {
+  border: 1px solid @grayLight;
+  border-top: 0;
+  padding: 4px;
 }
 
 // TREE

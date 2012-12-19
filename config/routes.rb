@@ -99,8 +99,11 @@
   namespace :admin do
     resources :pages do
       post 'position', :on => :collection
+      resources :sections, :only => [ :create, :destroy ] do
+        post 'position', :on => :collection       
+      end
       resources :blocks, :only => [ :index, :create, :destroy ] do
-        post 'position', :on => :collection
+        post 'position', :on => :collection        
       end
       namespace :blocks, :except => [:edit, :update] do
         resources :contacts, :only => [:edit, :update]
@@ -109,7 +112,7 @@
         resources :documents, :only => [:edit, :update]
         resources :markups, :only => [:edit, :update]
         resources :carousels, :only => [:edit, :update]
-      end
+      end      
     end
     resources :posts
   end

@@ -3,6 +3,8 @@ module Blocks
     include Mongoid::Document
     include Mongoid::Timestamps
 
+    field :section_id, :type => BSON::ObjectId
+    field :column, :default => 0, :type => Integer
     field :position, :type => Integer
 
     embedded_in :page

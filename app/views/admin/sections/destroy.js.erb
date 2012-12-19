@@ -1,0 +1,11 @@
+<% if @section.errors.any? %>
+  $("#flash_notice").slideUp()
+  $("#errors").html("<%= escape_javascript(error_messages_for(@section)) %>");
+  $("#errors").slideDown();
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
+  $("#flash_success").slideDown();
+  $("#section_<%= @section.id %>").slideUp('slow', function() {
+    $(this).remove();
+  });
+<% end %>
