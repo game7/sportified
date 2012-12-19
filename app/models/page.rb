@@ -28,7 +28,7 @@ class Page
   field :tree 
 
   embeds_many :sections, :class_name => "Section"
-  embeds_many :blocks, :class_name => "Blocks::Block"
+  embeds_many :blocks, :class_name => "Block"
 
   validates_presence_of :title
 
@@ -79,8 +79,12 @@ class Page
       self.path = self.ancestors_and_self.collect(&:slug).join('/')
     end
     
+    def tree_slug_or_path_changed?
+      self.changes.include?("tree") || self.changed.include?("slug") || self.changes.include?("path")
+    end
+    
     def cascade_save
-      self.children.all.each{|p|p.save}
+      self.children.all.each{|p|p.save} if tree_slug_or_path_changed?
     end
 
 end
