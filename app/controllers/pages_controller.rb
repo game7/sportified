@@ -1,7 +1,12 @@
 class PagesController < ApplicationController
+  before_filter :verify_admin, :except => [:show]
   
   def show
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
+  end
+  
+  def edit
+    
   end
   
   private
@@ -11,8 +16,13 @@ class PagesController < ApplicationController
   end
   
   def find_page
-    @page = Page.find_by_path(params[:path])
-    @page ||= Page.new(:title => 'Welcome') unless params[:path]
+    @page = params[:id] ? Page.find(params[:id]) : find_page_by_path
+  end
+  
+  def find_page_by_path
+    page = Page.find_by_path(params[:path])
+    page ||= Page.new(:title => 'Welcome') unless params[:path]
+    page
   end
   
   def set_breadcrumbs

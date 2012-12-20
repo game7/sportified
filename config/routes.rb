@@ -93,8 +93,16 @@
   match "admin/seasons(/:id)" => "admin/seasons#show", :as => :admin_seasons, :via => :get
   
   match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
+
+  resources :pages, :only => [ :edit ] do
+    resources :blocks, :only => [ :create, :destroy ] do
+      post 'position', :on => :collection
+    end
+  end
   
+    
   get '/pages/*path', :to => 'pages#show', :as => :page_friendly  
+
   
   namespace :admin do
     resources :pages do
