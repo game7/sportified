@@ -4,6 +4,7 @@
   :javascript
     $(function() {
       $("#pages ul").sortable({
+        handle: ".handle",
         revert: "true",
         opacity: 0.7,
         placeholder: "ui-state-highlight",
@@ -16,14 +17,18 @@
             url: '#{position_admin_pages_path(@page)}'
           }); 
         }
-      });   
+      });
+      $("a[rel='tooltip']").tooltip();
     });
-.well
-  = link_to 'Add New Page', new_admin_page_path, :class => 'btn'
-%section#pages.tree
+
+.navbar
+  .navbar-inner
+    = link_to icon('plus')+' Add New Page', new_admin_page_path, :class => 'btn'
+%section#pages.tree.well
   = render 'tree'
-.well
-  = link_to 'Add New Page', new_admin_page_path, :class => 'btn'
+.navbar
+  .navbar-inner
+    = link_to icon('plus')+' Add New Page', new_admin_page_path, :class => 'btn'
 
 :css
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }

@@ -17,13 +17,17 @@
   <% end %>
     <li id="page_<%= page.id %>">
       <div>
+        <span class="handle"><%= icon('move')%></span>
         <%= page.title_in_menu.presence || page.title %>
         <% if page.draft %> <em>(draft)</em><% end %>
-        <% unless page.show_in_menu %> <em>(hidden)</em><% end %>
+        <% unless page.show_in_menu %>
+          <a href="#" rel="tooltip" title="Page is not visible in Menu">
+            <span class="label label-info"><%= icon('eye-close', true)%></span>
+          </a>
+        <% end %>
         <span class="actions">
-          <%= link_to "Content", admin_page_blocks_path(page.id), :class => "btn btn-mini" %>
-          <%= link_to "Settings", edit_admin_page_path(page.id), :class => "btn btn-mini" %>
-          <%= link_to 'Delete', [:admin, page], :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-mini" %>
+          <%= link_to icon('pencil')+" Edit", edit_page_path(page.id), :class => "btn btn-mini" %>
+          <%= link_to icon('trash')+' Delete', [:admin, page], :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-mini" %>
         </span>
       </div>
   <% last_depth = page.depth %>
