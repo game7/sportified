@@ -132,10 +132,10 @@ GEM
       addressable (~> 2.2.6)
     less (2.2.2)
       commonjs (~> 0.2.6)
-    less-rails (2.2.4)
+    less-rails (2.2.6)
       actionpack (>= 3.1)
       less (~> 2.2.0)
-    less-rails-bootstrap (2.1.1)
+    less-rails-bootstrap (2.2.0)
       less-rails (~> 2.2.0)
     libv8 (3.3.10.4)
     libwebsocket (0.1.5)
@@ -157,7 +157,7 @@ GEM
     mongoid-tree (0.7.0)
       mongoid (~> 2.0)
     mongoid_taggable (0.1.7)
-    multi_json (1.2.0)
+    multi_json (1.5.0)
     multipart-post (1.1.5)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -287,7 +287,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy
-  less-rails-bootstrap
+  less-rails-bootstrap (>= 2.2.0)
   machinist_mongo
   mongoid
   mongoid-tree
