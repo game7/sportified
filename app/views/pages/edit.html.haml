@@ -3,7 +3,7 @@
 = render :partial => "actions"            
 
 #sections
-  = render :partial => "admin/sections/section", :collection => @page.sections.asc(:position)
+  = render :partial => "admin/sections/section", :collection => @page.sections.asc(:position), :locals => { :editable => true }
 
 #dialog-modal
 

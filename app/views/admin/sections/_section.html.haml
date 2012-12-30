@@ -1,15 +1,17 @@
-.section.editable{ :id => "section_#{ section.id.to_s }" }
-  .chrome
-    .title= Section
-    .buttons
-      .btn-group
-        %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown" } 
-          = icon('cog')
-          %span.caret
-        %ul.dropdown-menu
-          %li
-            = link_to icon(:trash)+' Delete', admin_page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
-    .clear  
+- editable ||= editable
+.section{ :id => "section_#{ section.id.to_s }", :class => "#{"editable" if editable}" }
+  - if editable
+    .chrome
+      .title= Section
+      .buttons
+        .btn-group
+          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown" } 
+            = icon('cog')
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              = link_to icon(:trash)+' Delete', admin_page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
+      .clear  
   .content.row-fluid
     - section.columns.each_with_index do |column, index|
       .column{ :class => width_to_span(column) }
