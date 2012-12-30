@@ -1,12 +1,6 @@
 - title "Edit " + @page.title
 
-.navbar
-  .navbar-inner
-    = link_to "Hide Controls", "#", :id => "toggle_editor", :class => 'btn'
-    = link_to icon('file')+" New Page", new_admin_page_path, :id => "add_block", :class => 'btn'
-    = link_to icon('th-list')+" Pages", admin_pages_path, :id => "add_block", :class => 'btn'
-    = link_to icon('cog')+" Settings", edit_admin_page_path(@page), :id => "add_block", :class => 'btn'
-    %a.btn{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section"
+= render :partial => "actions"            
 
 #sections
   = render :partial => "admin/sections/section", :collection => @page.sections.asc(:position)
@@ -66,7 +60,9 @@
   :javascript
     $(function() {
       $("#toggle_editor").click(function(){
-        if ($(this).text() == 'Show Controls') {
+        if ($(this).hasClass('icon-eye-close')) {
+          $(this).removeClass('icon-eye-close');
+          $(this).addClass('icon-eye-open');
           $('.block').addClass('editable');
           $(this).text('Hide Controls');
         } else {
@@ -102,7 +98,14 @@
         $('#block_type').val( $(this).attr('data-block_type') );
       });      
     });
-
+    
+    function toggleVisibleIcon(control) {
+      if (control.hasClass('icon-eye-close')) {
+        control.removeClass('icon-eye-close').addClass('icon-eye-open');
+      } else {
+        control.removeClass('icon-eye-open').addClass('icon-eye-close');      
+      }  
+    }
     
     function toggleEditor($button){
       var $block = $button.closest('.block');
