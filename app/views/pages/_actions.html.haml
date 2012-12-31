@@ -7,6 +7,6 @@
       %a.btn{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section"      
     .pull-right
       .btn-group{:"data-toggle" => "buttons-radio"}
-        %button.btn.active{ type: "button"}= icon("pencil")+" Edit"
-        %button.btn{ type: "button"}= icon("th")+" Organize"
-        %button.btn{ type: "button"}= icon("eye-open")+" Preview"
+        %button#toggle-edit.btn.active{ type: "button"}= icon("pencil")+" Edit"
+        %button#toggle-organize.btn{ type: "button"}= icon("th")+" Organize"
+        %button#toggle-preview.btn{ type: "button"}= icon("eye-open")+" Preview"

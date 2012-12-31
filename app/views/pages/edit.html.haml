@@ -63,8 +63,43 @@
       });
       $(document).on('click', '#block-catalog button.add_block', function(){
         $('#block_type').val( $(this).attr('data-block_type') );
-      });      
+      });   
+      
+      $('#toggle-edit').click(function(){
+        toggleDisplayMode('edit');
+      });
+      $('#toggle-organize').click(function(){
+        toggleDisplayMode('organize');
+      });
+      $('#toggle-preview').click(function(){
+        toggleDisplayMode('preview');
+      });            
+      
     });
+    
+    var displayMode = "edit";
+    
+    function toggleDisplayMode(mode) {
+      var isChanged = (displayMode != mode);
+      if (isChanged) {
+        //alert('mode changed from ['+displayMode+'] to ['+mode+']')
+        switch(mode) {
+          case "edit":
+            $(".section, .block").addClass("editable");
+            $(".block .content").show();
+            break;
+          case "organize":
+            $(".section, .block").addClass("editable");
+            $(".block .content").hide();
+            break;
+          case "preview":
+            $(".section, .block").removeClass("editable");
+            $(".block .content").show();
+            break;
+        }
+        displayMode = mode;
+      }
+    }
     
     function toggleVisibleIcon(control) {
       if (control.hasClass('icon-eye-close')) {

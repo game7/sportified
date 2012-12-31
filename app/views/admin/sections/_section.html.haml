@@ -19,5 +19,5 @@
           .blocks.row-fluid
             = render :partial => "admin/blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).asc(:position), :locals => { :editable => editable }
           - if editable  
-            .row-fluid
+            .row-fluid.add-block
               %a.span12.add_block.btn.btn-primary{ :role => "button", :"data-toggle" => "modal", :"data-column" => index, :"data-section_id" => section.id.to_s, :"href" => "#block-catalog"}= icon('plus', true)+" Add Block"
