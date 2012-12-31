@@ -5,7 +5,7 @@
 <% else %>
   $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
   $("#flash_success").slideDown();
-  var block = "<%= escape_javascript( render(:partial => 'admin/blocks/block', :locals => { :block => @block } ) )%>";
+  var block = "<%= escape_javascript( render(:partial => 'admin/blocks/block', :locals => { :block => @block, :editable => true } ) )%>";
   $("#section_<%= @block.section_id %>").find(".column").eq(<%= @block.column %>).find('.blocks').append(block);
   $("#block-catalog").modal('hide');
 <% end %>
