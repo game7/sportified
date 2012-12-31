@@ -9,8 +9,8 @@
             = icon('cog')
             %span.caret
           %ul.dropdown-menu
-            %li
-              = link_to icon(:trash)+' Delete', admin_page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
+            %li.nav-header ACTIONS
+            %li= link_to icon(:trash)+' Delete', admin_page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
       .clear  
   .content.row-fluid
     - section.columns.each_with_index do |column, index|

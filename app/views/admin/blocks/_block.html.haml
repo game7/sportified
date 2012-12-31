@@ -9,17 +9,17 @@
             = icon('cog')
             %span.caret
           %ul.dropdown-menu
+            %li.nav-header ACTIONS
             - block.class.actions.each do |action|
               %li
                 %a{ :class => "#{action}", :href => "#" }= icon(action.downcase)+' '+action.humanize 
+            %li= link_to icon(:trash)+' Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true                
             %li.divider
-            %li 
+            %li.nav-header MOVE
+            %li
               %a.move_up{ :href => "#" }= icon(:"arrow-up")+' Move Up'
             %li
               %a.move_down{ :href => "#" }= icon(:"arrow-down")+' Move Down'
-            %li.divider
-            %li
-              = link_to icon(:trash)+' Delete', admin_page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true
       .clear
   .content
     = render :partial => block.class.to_s.pluralize.underscore+"/block", :object => block
