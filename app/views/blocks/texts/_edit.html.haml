@@ -1,4 +1,4 @@
-= vertical_form_for [:admin, @page, block], :remote => true do |f|
+= vertical_form_for [@page, block], :remote => true do |f|
   = f.input :title, :input_html => { :style => "width: 500px;" }
   = f.input :caption, :input_html => { :style => "width: 500px;" }
   = f.input :body, :as => :text, :input_html => { :style => "width: 500px; height: 280px;" }

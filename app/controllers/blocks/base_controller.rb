@@ -1,4 +1,5 @@
-class Admin::Blocks::BaseController < Admin::AdminController
+class Blocks::BaseController < ApplicationController
+  before_filter :verify_admin
   before_filter :find_page
   before_filter :find_block
   

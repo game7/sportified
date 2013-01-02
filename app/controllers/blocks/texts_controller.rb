@@ -1,4 +1,4 @@
-class Admin::Blocks::TextsController < Admin::Blocks::BaseController
+class Blocks::TextsController < Blocks::BaseController
   
   def edit
   end

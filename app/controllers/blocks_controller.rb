@@ -15,15 +15,17 @@ class BlocksController < ApplicationController
   end
   
   def position
-    params['block'].each_with_index do |id, i|
+    params[:block].each_with_index do |id, i|
       block = @page.blocks.find(id);
       if block
         block.position = i
+        block.section_id = params[:section_id]
+        block.column = params[:column]
       end
     end  
     @page.save
     render :nothing => true
-  end  
+  end 
   
   private
   

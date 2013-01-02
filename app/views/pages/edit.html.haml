@@ -3,7 +3,7 @@
 = render :partial => "actions"            
 
 #sections
-  = render :partial => "admin/sections/section", :collection => @page.sections.asc(:position), :locals => { :editable => true }
+  = render :partial => "sections/section", :collection => @page.sections.asc(:position), :locals => { :editable => true }
 
 #dialog-modal
 
@@ -13,6 +13,12 @@
 
 
 :css
+  .section:first-child .move_section_up {
+    display: none;
+  }
+  .section:last-child .move_section_down {
+    display: none;
+  }
   .blocks .block:first-child .move_up {
     display: none;
   }
@@ -22,6 +28,20 @@
   .blocks .block div.actions > div {
     display: none;
   }
+  .columns .column:first-child .move_left {
+    display: none;
+  }
+  .columns .column:last-child .move_right {
+    display: none;
+  }
+  #sections .section:first-child .section_up {
+    display: none;
+  }
+  
+  #sections .section:last-child .section_down {
+    display: none;
+  }  
+
 
 - content_for :javascript do
   :javascript
@@ -45,18 +65,71 @@
         toggleEditor($(this));
         return false;
       });
+      $(document).on('click', '.section a.move_section_up', function(){
+        var $section = $(this).closest('.section');
+        $section.insertBefore($section.prev());
+        updateSectionPositions();
+        return false;
+      });
+      $(document).on('click', '.section a.move_section_down', function(){
+        var $section = $(this).closest('.section');
+        $section.insertAfter($section.next());
+        updateSectionPositions();
+        return false;
+      });      
       $(document).on('click', '.block a.move_up', function(){
         var $block = $(this).closest('.block');
         $block.insertBefore($block.prev());
-        updateBlockPositions($(this));
+        updateBlockPositions($(this).closest(".blocks"));
         return false;
       });
       $(document).on('click', '.block a.move_down', function(){
         var $block = $(this).closest('.block');
         $block.insertAfter($block.next());
-        updateBlockPositions($(this));
+        updateBlockPositions($(this).closest(".blocks"));
         return false;
       });
+      $(document).on('click', '.block a.move_left', function(){
+        var $block = $(this).closest('.block');
+        var $origin = $block.closest('.column');        
+        var $target = $origin.prev('.column').find('.blocks');
+        $block.appendTo($target);
+        updateBlockPositions($origin);
+        updateBlockPositions($target);
+        return false;
+      });      
+      $(document).on('click', '.block a.move_right', function(){
+        var $block = $(this).closest('.block');
+        var $origin = $block.closest('.column');
+        var $target = $origin.next('.column').find('.blocks');
+        $block.appendTo($target);
+        updateBlockPositions($origin);
+        updateBlockPositions($target);        
+        return false;
+      });
+      $(document).on('click', '.block a.section_up', function(){
+        var $block = $(this).closest('.block');
+        var $origin = $block.closest('.column');
+        var column = $origin.attr('data-column');
+        var $columns = $origin.closest('.section').prev('.section').find('.column');
+        var $target = (column >= $columns.size() ? $columns.last().find('.blocks') : $columns.eq(column).find('.blocks'));
+        $block.appendTo($target);
+        updateBlockPositions($origin);
+        updateBlockPositions($target);        
+        return false;
+      });      
+      $(document).on('click', '.block a.section_down', function(){
+        var $block = $(this).closest('.block');
+        var $origin = $block.closest('.column');
+        var column = $origin.attr('data-column');
+        var $columns = $origin.closest('.section').next('.section').find('.column');
+        var $target = (column >= $columns.size() ? $columns.last().find('.blocks') : $columns.eq(column).find('.blocks'));
+        $block.appendTo($target);
+        updateBlockPositions($origin);
+        updateBlockPositions($target);        
+        return false;
+      });      
+            
       $(document).on('click', '.section a.add_block', function(){
         $('#column').val( $(this).attr('data-column') );
         $('#section_id').val( $(this).attr('data-section_id') );
@@ -82,7 +155,6 @@
     function toggleDisplayMode(mode) {
       var isChanged = (displayMode != mode);
       if (isChanged) {
-        //alert('mode changed from ['+displayMode+'] to ['+mode+']')
         switch(mode) {
           case "edit":
             $(".section, .block").addClass("editable");
@@ -115,9 +187,25 @@
       $block.find('div.edit').slideToggle();      
     }
     
-    function updateBlockPositions(button) {
+    function updateSectionPositions(column) {
       var items = '';
-      $.each(button.closest(".blocks").find(".block"), function(){
+      $.each($(".section"), function(){
+        var id = $(this).attr("id");
+        items += id.replace("_","[]=") + "&";
+      })
+      $.ajax({
+        type: 'post',
+        data: items ,
+        dataType: 'json',
+        url: '#{position_page_sections_path(@page)}'
+      });
+    }  
+    
+    function updateBlockPositions(column) {
+      var items = '';
+      items += 'section_id=' + column.closest('.section').attr('id').replace('section_','') + '&';
+      items += 'column=' + column.closest('[data-column]').attr('data-column') + '&';
+      $.each(column.find(".block"), function(){
         var id = $(this).attr("id");
         items += id.replace("_","[]=") + "&";
       })

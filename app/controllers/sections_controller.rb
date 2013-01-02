@@ -1,8 +1,8 @@
-class Admin::SectionsController < Admin::AdminController
+class SectionsController < Admin::AdminController
+  before_filter :verify_admin
   before_filter :find_page
   before_filter :find_section, :only => [:destroy]
 
-  
   def create
     @section = @page.sections.create({ :pattern => params[:pattern] }) 
     flash[:success] = "Section has been added to Page"

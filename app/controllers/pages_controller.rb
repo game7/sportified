@@ -1,6 +1,13 @@
 class PagesController < ApplicationController
   before_filter :verify_admin, :except => [:show]
-  
+  before_filter :find_page, :only => [:edit, :update, :destroy]  
+  before_filter :load_parent_options, :only => [:new, :edit]
+  before_filter :mark_return_point, :only => [:new, :edit]
+
+  def index
+    @pages = Page.sorted_as_tree
+  end
+    
   def show
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
   end
@@ -8,6 +15,43 @@ class PagesController < ApplicationController
   def edit
     
   end
+
+  def update
+    if @page.update_attributes(params[:page])
+      return_to_last_point(:notice => 'Page has been updated')
+    else
+      render :action => "edit"
+    end    
+  end
+
+  def new
+    @page = Page.new
+  end
+
+  def create
+    @page = Page.new(params[:page])
+    if @page.save
+      return_to_last_point(:notice => 'Page was successfully created.')
+    else
+      render :action => "new"
+    end
+  end
+
+  def destroy
+    @page.delete
+    flash[:notice] = "Page '#{@page.title}' has been deleted"    
+  end
+
+  def position
+    params['page'].each_with_index do |id, i|
+      page = Page.find(id);
+      if page
+        page.position = i
+        page.save
+      end
+    end  
+    render :nothing => true
+  end  
   
   private
   
@@ -43,5 +87,11 @@ class PagesController < ApplicationController
       end
     end
   end
+  
+  def load_parent_options
+    @parent_options = Page.sorted_as_tree.entries.collect do |page|
+      [ ("-- " * page.depth) + page.title, page.id ]
+    end
+  end  
   
 end

@@ -1,4 +1,4 @@
-class Admin::Blocks::MarkupsController < Admin::Blocks::BaseController
+class Blocks::MarkupsController < Blocks::BaseController
   
   def edit
   end

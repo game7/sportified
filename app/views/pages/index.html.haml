@@ -14,7 +14,7 @@
             type: 'post',
             data: items ,
             dataType: 'json',
-            url: '#{position_admin_pages_path(@page)}'
+            url: '#{position_pages_path(@page)}'
           }); 
         }
       });
@@ -23,7 +23,7 @@
 
 .navbar
   .navbar-inner
-    = link_to icon('plus')+' Add New Page', new_admin_page_path, :class => 'btn'
+    = link_to icon('plus')+' Add New Page', new_page_path, :class => 'btn'
 %section#pages.tree.well
   = render 'tree'
 .navbar

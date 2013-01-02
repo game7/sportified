@@ -1,4 +1,4 @@
-class Admin::Blocks::ImagesController < Admin::Blocks::BaseController
+class Blocks::ImagesController < Blocks::BaseController
   
   def dialog
   end

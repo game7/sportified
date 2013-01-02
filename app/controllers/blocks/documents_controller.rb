@@ -1,4 +1,4 @@
-class Admin::Blocks::DocumentsController < Admin::Blocks::BaseController
+class Blocks::DocumentsController < Blocks::BaseController
   
   def dialog
   end

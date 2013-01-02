@@ -1,9 +1,9 @@
 .navbar
   .navbar-inner
     .pull-left
-      = link_to icon('file')+" New Page", new_admin_page_path, :id => "add_block", :class => 'btn'
-      = link_to icon('th-list')+" Pages", admin_pages_path, :id => "add_block", :class => 'btn'
-      = link_to icon('cog')+" Settings", edit_admin_page_path(@page), :id => "add_block", :class => 'btn'
+      = link_to icon('file')+" New Page", new_page_path, :id => "add_block", :class => 'btn'
+      = link_to icon('th-list')+" Pages", pages_path, :id => "add_block", :class => 'btn'
+      = link_to icon('cog')+" Settings", edit_page_path(@page), :id => "add_block", :class => 'btn'
       %a.btn{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section"      
     .pull-right
       .btn-group{:"data-toggle" => "buttons-radio"}

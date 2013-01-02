@@ -1,4 +1,4 @@
-class Admin::Blocks::ContactsController < Admin::Blocks::BaseController
+class Blocks::ContactsController < Blocks::BaseController
   
   def edit
   end

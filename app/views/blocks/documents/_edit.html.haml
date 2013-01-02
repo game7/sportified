@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @page, block], :html => { :multipart => true }, :remote => true do |f|
+= simple_form_for [@page, block], :html => { :multipart => true }, :remote => true do |f|
   = f.input :file, :as => :file
   = f.input :file_cache, :as => :hidden
   = f.input :title
