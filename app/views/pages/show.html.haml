@@ -1,4 +1,16 @@
 - title @page.title
-= render :partial => 'actions' if current_user_is_admin?
 = render :partial => 'blocks/block', :collection => @page.blocks.asc(:position)
+- if current_user_is_admin?
+  - content_for :actions do
+    .btn-group
+      %button.btn.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" } 
+        = icon('wrench')+' Page'
+        %span.caret
+      %ul.dropdown-menu.pull-right
+        %li.nav-header THIS PAGE
+        %li= link_to icon('pencil')+' Edit', edit_page_path(@page)
+        %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
+        %li.nav-header OTHER PAGES
+        %li= link_to icon('plus')+" New", new_page_path
+        %li= link_to icon('th-list')+" List", pages_path
 

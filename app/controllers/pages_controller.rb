@@ -76,6 +76,10 @@ class PagesController < ApplicationController
   end
   
   def set_area_navigation
+    set_child_page_navigation if [:show, :edit].include? params[:action].to_sym
+  end
+  
+  def set_child_page_navigation
     has_children = false
     @page.children.in_menu.each do |child|
       has_children = true
@@ -85,7 +89,7 @@ class PagesController < ApplicationController
       @page.siblings_and_self.in_menu.each do |sibling|
         add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)        
       end
-    end
+    end    
   end
   
   def load_parent_options

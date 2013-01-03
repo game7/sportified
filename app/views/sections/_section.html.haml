@@ -5,10 +5,10 @@
       .title= Section
       .buttons
         .btn-group
-          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown" } 
-            = icon('cog')
+          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Section Tools" } 
+            = icon('wrench')
             %span.caret
-          %ul.dropdown-menu
+          %ul.dropdown-menu.pull-right
             %li.nav-header ACTIONS
             %li= link_to icon(:trash)+' Delete', page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
             %li.divider

@@ -5,10 +5,10 @@
       .title= block.friendly_name
       .buttons
         .btn-group
-          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown" } 
-            = icon('cog')
+          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" } 
+            = icon('wrench')
             %span.caret
-          %ul.dropdown-menu
+          %ul.dropdown-menu.pull-right
             %li.nav-header ACTIONS
             - block.class.actions.each do |action|
               %li

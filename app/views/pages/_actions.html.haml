@@ -1,12 +1,17 @@
-.navbar
-  .navbar-inner
-    .pull-left
-      = link_to icon('file')+" New Page", new_page_path, :id => "add_block", :class => 'btn'
-      = link_to icon('th-list')+" Pages", pages_path, :id => "add_block", :class => 'btn'
-      = link_to icon('cog')+" Settings", edit_page_path(@page), :id => "add_block", :class => 'btn'
-      %a.btn{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section"      
-    .pull-right
-      .btn-group{:"data-toggle" => "buttons-radio"}
-        %button#toggle-edit.btn.active{ type: "button"}= icon("pencil")+" Edit"
-        %button#toggle-organize.btn{ type: "button"}= icon("th")+" Organize"
-        %button#toggle-preview.btn{ type: "button"}= icon("eye-open")+" Preview"
+- content_for :actions do
+  .buttons
+    .btn-group
+      %button.btn.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" } 
+        = icon('wrench')+' Page'
+        %span.caret
+      %ul.dropdown-menu.pull-right
+        %li.nav-header THIS PAGE
+        %li= link_to icon('share')+' Go To', get_page_url(@page)
+        %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
+        %li.nav-header OTHER PAGES
+        %li= link_to icon('plus')+" New", new_page_path
+        %li= link_to icon('th-list')+" List", pages_path  
+    .btn-group{:"data-toggle" => "buttons-radio"}
+      %button#toggle-edit.btn.active{ type: "button", rel: "tooltip", title: "Edit Mode"}= icon("pencil")
+      %button#toggle-organize.btn{ type: "button", rel: "tooltip", title: "Organize Mode"}= icon("th")
+      %button#toggle-preview.btn{ type: "button", rel: "tooltip", title: "Preview Mode"}= icon("eye-open")                  

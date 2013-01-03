@@ -1,5 +1,8 @@
 - title 'Pages'
 
+- content_for :actions do
+  = link_to icon('plus')+" New Page", new_page_path, :class => 'btn'
+
 - content_for :javascript do
   :javascript
     $(function() {
@@ -21,14 +24,8 @@
       $("a[rel='tooltip']").tooltip();
     });
 
-.navbar
-  .navbar-inner
-    = link_to icon('plus')+' Add New Page', new_page_path, :class => 'btn'
 %section#pages.tree.well
   = render 'tree'
-.navbar
-  .navbar-inner
-    = link_to icon('plus')+' Add New Page', new_admin_page_path, :class => 'btn'
 
 :css
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }

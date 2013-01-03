@@ -1,4 +1,6 @@
-- title "Edit " + @page.title
+- title @page.title
+- content_for :title_small do
+  [Edit]
 - content_for :head do
   = javascript_include_tag "pages"
   
@@ -6,8 +8,11 @@
 
 #sections
   = render :partial => "sections/section", :collection => @page.sections.asc(:position), :locals => { :editable => true }
+.row-fluid
+  %a.btn.span12{ :id => "add_section", :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section Here"   
 
 = render :partial => "block_catalog"
 
 = render :partial => "section_catalog"  
+
 

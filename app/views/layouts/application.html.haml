@@ -27,9 +27,12 @@
           = render "layouts/site_navigation" if @site_menu_items             
     #wrapper.container
       %header
-        %h1
+        %h1.pull-left
           = yield(:title)
           = content_tag :small, yield(:title_small) if content_for?(:title_small)
+        .actions.pull-right
+          = yield(:actions)
+        .clear
         = render "layouts/area_navigation" if @area_menu_items  
         = render "layouts/breadcrumbs" if @breadcrumbs
               
