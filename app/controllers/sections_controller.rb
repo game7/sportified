@@ -9,7 +9,7 @@ class SectionsController < Admin::AdminController
   end
   
   def destroy
-    @section.delete    
+    @section.destroy    
     flash[:success] = "Section Deleted"
   end
   

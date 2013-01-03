@@ -27,7 +27,7 @@ class Page
 
   field :tree 
 
-  embeds_many :sections, :class_name => "Section"
+  embeds_many :sections, :class_name => "Section", :cascade_callbacks => true
   embeds_many :blocks, :class_name => "Block"
 
   validates_presence_of :title
