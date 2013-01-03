@@ -11,6 +11,7 @@
         %li= link_to icon('pencil')+' Edit', edit_page_path(@page)
         %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
         %li.nav-header OTHER PAGES
+        %li= link_to icon('th-list')+" List", pages_path        
         %li= link_to icon('plus')+" New", new_page_path
-        %li= link_to icon('th-list')+" List", pages_path
+
 

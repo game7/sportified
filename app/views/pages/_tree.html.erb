@@ -26,6 +26,7 @@
           </a>
         <% end %>
         <span class="actions">
+          <%= link_to icon('share')+" Go To", get_page_url(page), :class => "btn btn-mini" %>
           <%= link_to icon('pencil')+" Edit", edit_page_path(page.id), :class => "btn btn-mini" %>
           <%= link_to icon('trash')+' Delete', page, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-mini" %>
         </span>
