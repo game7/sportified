@@ -1,5 +1,19 @@
 
-// button handlers
+$(function() {
+  $("#toggle_editor").click(function(){
+    if ($(this).hasClass('icon-eye-close')) {
+      $(this).removeClass('icon-eye-close');
+      $(this).addClass('icon-eye-open');
+      $('.block').addClass('editable');
+      $(this).text('Hide Controls');
+    } else {
+      $('.block').removeClass('editable');
+      $(this).text('Show Controls');
+    }
+    return false;      
+  });    
+});
+
 $(function() {
   $(document).on('click', '.block a.edit', function(){
     toggleEditor($(this));
@@ -114,6 +128,12 @@ function toggleDisplayMode(mode) {
     }
     displayMode = mode;
   }
+}
+
+function toggleEditor($button){
+  var $block = $button.closest('.block');
+  $block.find('.content').slideToggle();
+  $block.find('div.edit').slideToggle();      
 }
 
 function updateSectionPositions(column) {
