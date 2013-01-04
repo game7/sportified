@@ -99,14 +99,17 @@ function toggleDisplayMode(mode) {
       case "edit":
         $(".section, .block").addClass("editable");
         $(".block .content").show();
+        $(".add-section").show();
         break;
       case "organize":
         $(".section, .block").addClass("editable");
         $(".block .content").hide();
+        $(".add-section").show();
         break;
       case "preview":
         $(".section, .block").removeClass("editable");
         $(".block .content").show();
+        $(".add-section").hide();
         break;
     }
     displayMode = mode;
