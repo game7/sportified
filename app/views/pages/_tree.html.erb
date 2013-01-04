@@ -18,12 +18,22 @@
     <li id="page_<%= page.id %>">
       <div>
         <span class="handle"><%= icon('move')%></span>
-        <%= page.title_in_menu.presence || page.title %>
+        <strong><%= page.title_in_menu.presence || page.title %></strong>
         <% if page.draft %> <em>(draft)</em><% end %>
         <% unless page.show_in_menu %>
           <a href="#" rel="tooltip" title="Page is not visible in Menu">
-            <span class="label label-info"><%= icon('eye-close', true)%></span>
+            <span class="label"><%= icon('eye-close', true)%> Hidden</span>
           </a>
+        <% end %>
+        <% unless page.link_url.empty? %>
+          <a href="#" rel="tooltip" title="Menu links to custom location">
+            <span class="label"><%= icon('share', true)%> Link</span>
+          </a>
+        <% end %>
+        <% if page.skip_to_first_child %>
+          <a href="#" rel="tooltip" title="Menu links to firstc child page">
+            <span class="label"><%= icon('arrow-down', true)%> First Child</span>
+          </a>        
         <% end %>
         <span class="actions">
           <%= link_to icon('share')+" Go To", get_page_url(page), :class => "btn btn-mini" %>
