@@ -8,6 +8,7 @@
       - url = get_page_url(page)
       %li{ :class => request.url.include?(url) ? "active" : nil }
         %a{ :href => url }= page.title_in_menu.presence || page.title
+  %ul.nav.pull-right
     %li.dropdown
       %a.dropdown-toggle{ :href => "#", "data-toggle" => "dropdown"}
         Account
