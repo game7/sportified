@@ -6,5 +6,6 @@
   $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_success").slideDown();
   $("#block_<%= @block.id %> div.content").html("<%= escape_javascript( render(:partial => @block.class.to_s.pluralize.underscore+"/block", :locals => { :block => @block } ) )%>");
-  toggleEditor($("#block_<%= @block.id %>"));
+  $("#dialog-modal").modal('hide');  
+  $("#dialog-modal").html('');
 <% end %>

@@ -1,0 +1,7 @@
+var $modal = $('#dialog-modal');
+<% @modal_title = "Edit #{@block.class.to_s.demodulize.humanize}" %>
+$modal.html("<%= escape_javascript( render(:partial => "blocks/#{@block.class.to_s.demodulize.pluralize.underscore}/edit", :layout => "layouts/modal" ) )%>");
+$modal.modal();
+$modal.find('.submit').click(function(){
+  $modal.find('form').submit();
+});

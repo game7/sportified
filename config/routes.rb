@@ -99,11 +99,11 @@
     resources :sections, :only => [ :create, :destroy ] do
       post 'position', :on => :collection       
     end
-    resources :blocks, :only => [ :create, :destroy ] do
+    resources :blocks do
       post 'position', :on => :collection
     end
-    namespace :blocks, :except => [:edit, :update] do
-      resources :contacts, :only => [:edit, :update]
+    namespace :blocks do #:except => [:edit, :update] do
+      #resources :contacts, :only => [:edit, :update]
       resources :texts, :only => [:edit, :update]
       resources :images, :only => [:edit, :update]
       resources :documents, :only => [:edit, :update]

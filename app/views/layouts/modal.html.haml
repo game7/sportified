@@ -1,0 +1,9 @@
+.modal-header
+  %button.close{ :"data-dismiss" => "modal", :"aria-labelledby" => "modalLabel", :"aria-hidden" => "true" }
+  %h3#modalLabel HEADER
+.modal-body
+  = yield
+.modal-footer
+  %button.btn{ :"data-dismiss" => "modal", :"aria-hidden" => true } Close
+  %button.btn.btn-primary Save Changes
+    

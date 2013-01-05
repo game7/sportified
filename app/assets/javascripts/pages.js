@@ -17,6 +17,7 @@ $(function() {
 $(function() {
   $(document).on('click', '.block a.edit', function(){
     toggleEditor($(this));
+    editBlock($(this));
     return false;
   });
   $(document).on('click', '.section a.move_section_up', function(){

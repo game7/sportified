@@ -1,7 +1,6 @@
-= vertical_form_for [@page, block], :html => { :multipart => true }, :remote => true do |f|
+= simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
   = f.input :file, :as => :file
   = f.input :file_cache, :as => :hidden
   = f.input :title
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
+
   

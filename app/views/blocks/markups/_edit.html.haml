@@ -1,3 +1,4 @@
-= vertical_form_for [@page, block], :remote => true do |f|
-  = f.text_area :body, :class => 'span8'
-  = f.button :wrapped
+.row-fluid
+  = simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
+    = f.text_area :body, :class => 'span12'
+

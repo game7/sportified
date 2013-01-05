@@ -12,7 +12,7 @@
             %li.nav-header ACTIONS
             - block.class.actions.each do |action|
               %li
-                %a{ :class => "#{action}", :href => "#" }= icon(action.downcase)+' '+action.humanize 
+                = link_to icon(action)+" "+action.humanize, { :controller => "blocks", :action => "edit", :page_id => @page.id, :id => block.id }, :remote => true
             %li= link_to icon(:trash)+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true                
             %li.divider
             %li.nav-header MOVE
@@ -33,8 +33,3 @@
       .clear
   .content
     = render :partial => block.class.to_s.pluralize.underscore+"/block", :object => block
-  - if editable
-    .actions
-      - block.class.actions.each do |action|
-        %div{ :class => "well #{action}" }    
-          = render :partial => block.class.to_s.pluralize.underscore+"/"+action, :locals => { :block => block }

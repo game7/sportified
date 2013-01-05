@@ -1,13 +1,11 @@
-= vertical_form_for [@page, block], :html => { :multipart => true }, :remote => true do |f|
+- if @block.image?
+  .row-fluid
+    .span12{ :style => "text-align: center; margin-bottom: 20px;"}
+      = image_tag @block.image.thumb.url, :align => "center"
+= simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
   = f.input :image, :as => :file
   = f.input :remote_image_url
   = f.input :image_cache, :as => :hidden
-  = f.input :alignment, :collection => Blocks::Image.alignment_options, :input_html => { :class => "span2"}
   = f.input :link_url, :hint => "Optional.  If provided clicking image will navigate to here"
-  .form-actions
-    = f.button :submit, :class => 'btn btn-primary'
       
-- if block.image?
-  .row
-    .span12{ :style => "text-align: center; margin-bottom: 20px;"}
-      = image_tag block.image.url, :align => "center"
+

@@ -1,6 +1,6 @@
-= vertical_form_for [@page, block], :remote => true do |f|
-  = f.input :title, :input_html => { :style => "width: 500px;" }
-  = f.input :caption, :input_html => { :style => "width: 500px;" }
-  = f.input :body, :as => :text, :input_html => { :style => "width: 500px; height: 280px;" }
-  = f.button :wrapped
+.row-fluid
+  = vertical_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|  
+    = f.input :title, :input_html => { :class => "span12" }
+    = f.input :caption, :input_html => { :class => "span12" }
+    = f.input :body, :as => :text, :input_html => { :class => "span12" }
   
