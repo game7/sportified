@@ -28,7 +28,7 @@
     #wrapper.container
       %header
         %h1.pull-left
-          = yield(:title)
+          %span#page-title= yield(:title)
           = content_tag :small, yield(:title_small) if content_for?(:title_small)
         .actions.pull-right
           = yield(:actions)

@@ -17,11 +17,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    if @page.update_attributes(params[:page])
-      return_to_last_point(:notice => 'Page has been updated')
-    else
-      render :action => "edit"
-    end    
+    @page.update_attributes(params[:page]) 
   end
 
   def new

@@ -4,6 +4,4 @@ $modal.html("<%= escape_javascript( render(:partial => "edit", :layout => "layou
 $modal.modal();
 $modal.find('.submit').click(function(){
   $modal.find('form').submit();
-  $modal.modal('hide');  
-  $modal.html('');
 });

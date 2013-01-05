@@ -1,0 +1,10 @@
+<% if @page.errors.any? %>
+  $("#flash_notice").slideUp()
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
+  $("#flash_success").slideDown();
+  $("#page-title").html('<%= @page.title %>');
+  document.title = '<%= "#{@page.title} - #{Tenant.current.name}" %>';
+  $("#dialog-modal").modal('hide');  
+  $("#dialog-modal").html('');
+<% end %>
