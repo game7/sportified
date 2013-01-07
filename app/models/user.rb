@@ -8,8 +8,10 @@ class User
           :omniauthable
           
   ## Database authenticatable
-  field :email,              :type => String, :null => false
-  field :encrypted_password, :type => String, :null => false
+  field :email,              :type => String
+  validates :email, presence: true
+  field :encrypted_password, :type => String
+  validates :encrypted_password, presence: true
 
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -49,10 +51,8 @@ class User
   before_save :capture_site_at_sign_in
 
   field :name
-  key :name
-  index :email
   
-  references_and_referenced_in_many :sites
+  has_and_belongs_to_many :tenants
   embeds_many :roles, :class_name => "UserRole"
 
   embeds_many :authentications

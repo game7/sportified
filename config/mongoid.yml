@@ -1,27 +1,27 @@
-defaults: &defaults
-  host: localhost
-  idendity_map_enabled: true
-  # slaves:
-  #   - host: slave1.local
-  #     port: 27018
-  #   - host: slave2.local
-  #     port: 27019
 
 development:
-  <<: *defaults
-  database: sportified_development
+  sessions:
+    default:
+      database: sportified_development
+      hosts:
+        - localhost
+  options:
+    identity_map_enabled: true
 
 test:
-  <<: *defaults
-  database: sportified_test
+  sessions:
+    default:
+      database: sportified_test
+      hosts:
+        - localhost
+  options:
+    identity_map_enabled: true
 
-# set these environment variables on your prod server
 production:
-  database: sportified
-  idendity_map_enabled: true  
-  uri: <%= ENV['MONGOHQ_URL'] %>
-#  host: <%= ENV['MONGOID_HOST'] %>
-#  port: <%= ENV['MONGOID_PORT'] %>
-#  username: <%= ENV['MONGOID_USERNAME'] %>
-#  password: <%= ENV['MONGOID_PASSWORD'] %>
-#  database: <%= ENV['MONGOID_DATABASE'] %>
+  sessions:
+    default:
+      database: sportified
+      uri: <%= ENV['MONGOHQ_URL'] %>
+  options:
+    identity_map_enabled: true
+

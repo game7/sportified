@@ -1,14 +1,14 @@
 source 'http://rubygems.org'
-
+ruby '1.9.3'
 gem 'rails', '3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid'
+gem 'mongoid', '~> 3.0.0'
 gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
-gem 'mongoid_taggable'
+gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
 gem 'haml'
 gem 'kaminari'
 
@@ -25,7 +25,7 @@ gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem "less-rails-bootstrap", '>= 2.2.0'
 gem 'therubyracer', :platform => :ruby
 
-gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "mongoid-3.0"
 gem 'fog'
 gem 'rmagick'
 gem 'remotipart', '~> 0.4'

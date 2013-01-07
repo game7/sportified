@@ -1,3 +1,5 @@
+require 'bson'
+
 class Page
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -32,16 +34,17 @@ class Page
 
   validates_presence_of :title
 
-  scope :top_level, :where => { :parent_id => nil }
-  scope :with_path, lambda { |path| { :where => { :path => path } } }
+  scope :top_level, where( :parent_id => nil )
+  scope :with_path, ->(path) { where(:path => path) }
   
   class << self
     def sorted_as_tree
-      unscoped.fuse(tenant_scope).ascending(:tree)
+      unscoped.merge(tenant_scope).ascending(:tree)
     end
   end
-  scope :live, :where => { :draft => false }
-  scope :in_menu, :where => { :show_in_menu => true }
+  
+  scope :live, where( :draft => false )
+  scope :in_menu, where( :show_in_menu => true )  
   
   class << self
     def find_by_path(path)

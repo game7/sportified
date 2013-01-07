@@ -30,7 +30,7 @@ class Event
   field :summary
   field :description
 
-  referenced_in :venue
+  belongs_to :venue
   field :venue_name
   field :venue_short_name
   before_save do |event|
@@ -49,11 +49,11 @@ class Event
   has_and_belongs_to_many :teams
   field :show_for_all_teams, :type => Boolean
 
-  scope :in_the_past, :where => { :starts_on.lt => DateTime.now }
-  scope :in_the_future, :where => { :starts_on.gt => DateTime.now }
-  scope :from, lambda { |from| { :where => { :starts_on.gt => from } } }
-  scope :to, lambda { |to| { :where => { :starts_on.lt => to } } }
-  scope :between, lambda { |from, to| { :where => { :starts_on.gt => from, :starts_on.lte => to } } }
+  scope :in_the_past, where(:starts_on.lt => DateTime.now)
+  scope :in_the_future, where(:starts_on.gt => DateTime.now)
+  scope :from, ->(from) { where(:starts_on.gt => from) }
+  scope :to, ->(to) { where(:starts_on.lt => to) }
+  scope :between, ->(from, to) { where(:starts_on.gt => from, :starts_on.lte => to) }
 
   class << self  
     def for_team(t)

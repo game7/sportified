@@ -1,7 +1,6 @@
 class Season
   include Mongoid::Document
   include Sportified::TenantScoped
-  cache
  
   field :name  
   field :slug
