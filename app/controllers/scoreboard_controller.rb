@@ -15,7 +15,7 @@ class ScoreboardController < BaseLeagueController
     
     add_breadcrumb("Scoreboard")
     
-    @games = Game.between(@start_date, @end_date)
+    @games = Game.gt(starts_on: @start_date).lt(ends_on: @end_date)
     @games = @games.for_league(@league) if @league
     @games = @games.desc(:starts_on).entries
 

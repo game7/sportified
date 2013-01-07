@@ -53,7 +53,7 @@ class Event
   scope :in_the_future, where(:starts_on.gt => DateTime.now)
   scope :from, ->(from) { where(:starts_on.gt => from) }
   scope :to, ->(to) { where(:starts_on.lt => to) }
-  scope :between, ->(from, to) { where(:starts_on.gt => from, :starts_on.lte => to) }
+  #scope :between, ->(from, to) { gt(starts_on: from).lte(starts_on: to) }
 
   class << self  
     def for_team(t)
