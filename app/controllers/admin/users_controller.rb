@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::AdminController
   before_filter :load_user, :only => :show
 
   def load_user
-    @user = User.for_site(Site.current).find(params[:id])
+    @user = User.for_tenant(Tenant.current).find(params[:id])
   end
 
   def set_breadcrumbs
@@ -12,7 +12,7 @@ class Admin::UsersController < Admin::AdminController
   end
   
   def index
-    @users = User.for_site(Site.current).entries
+    @users = User.for_tenant(Tenant.current)
   end
 
   def show

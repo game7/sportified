@@ -1,4 +1,4 @@
-%table
+%table.table.table-bordered.table-striped
   %thead
     %tr
       %th{:scope => 'col'} Name
@@ -7,8 +7,8 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td #{user.name}
-        %td #{user.email}
-        %td #{link_to 'Show', [:admin, user]}
+        %td= user.name
+        %td= user.email
+        %td= link_to 'Show', [:admin, user], :class => 'btn btn-small'
 
 

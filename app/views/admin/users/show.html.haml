@@ -1,5 +1,5 @@
 - title @user.name
-%table
+%table.table.table-bordered.table-striped
   %tbody
     %tr
       %th{:scope => 'row'} Id
@@ -18,4 +18,4 @@
       %td #{@user.last_sign_in_at}
 #user_roles
   = render :partial => 'admin/user_roles/grid', :locals => { :user => @user }
-= link_to "Add Site Admin Role", admin_user_user_roles_path(@user), :remote => true, :method => :post
+= link_to icon('plus')+" Add Site Admin Role", admin_user_user_roles_path(@user), :remote => true, :method => :post, :class => 'btn'
