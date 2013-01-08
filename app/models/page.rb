@@ -39,7 +39,7 @@ class Page
   
   class << self
     def sorted_as_tree
-      unscoped.merge(tenant_scope).ascending(:tree)
+      unscoped.merge(Page.tenant_criteria).ascending(:tree)
     end
   end
   
