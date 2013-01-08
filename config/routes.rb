@@ -22,7 +22,6 @@
     resources :users do
       resources :user_roles, :only => [ :create, :destroy ]
     end
-    resource :site#, :only => [ :edit, :update ]
   end
 
   match "programs/:league_slug/schedule(/:season_slug)" => "schedule#index", :as => :schedule, :via => :get
