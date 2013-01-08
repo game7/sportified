@@ -12,8 +12,8 @@ class TeamGameResult
   field :allowed, :type => Integer
 
   embedded_in :team_record, :inverse_of => :results
-  referenced_in :game
-  referenced_in :opponent, :class_name => 'Team'
+  belongs_to :game
+  belongs_to :opponent, :class_name => 'Team'
 
   def initialize(params = nil)
     super(nil)

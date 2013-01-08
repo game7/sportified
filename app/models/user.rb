@@ -48,7 +48,7 @@ class User
   # field :invitation_token, :type => String
   
   before_create :set_id
-  before_save :capture_site_at_sign_in
+  before_save :capture_tenant_at_sign_in
 
   field :name
   
@@ -69,9 +69,9 @@ class User
   end
  
   class << self
-    def for_site(s)
-      id = s.class.to_s == "Site" ? s.id : s
-      where(:site_ids => id)
+    def for_tenant(t)
+      id = t.class.to_s == "Tenant" ? t.id : t
+      where(:tenant_ids => id)
     end
     def find_by_auth_provider_and_uid(provider, uid)
       where("authentications.provider" => provider, "authentications.uid" => uid).first
@@ -90,14 +90,14 @@ class User
       self._id = self.name if self._id.blank?
     end
 
-    def capture_site_at_sign_in
-       capture_site if self.sign_in_count_changed?
+    def capture_tenant_at_sign_in
+       capture_tenant if self.sign_in_count_changed?
     end
 
-    def capture_site
-      if Site.current
-        self.site_ids ||= []
-        self.site_ids << Site.current.id unless site_ids.include?(Site.current.id)
+    def capture_tenant
+      if Tenant.current
+        self.tenant_ids ||= []
+        self.tenant_ids << Tenant.current.id unless tenant_ids.include?(Tenant.current.id)
       end
     end
 

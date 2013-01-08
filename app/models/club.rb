@@ -7,7 +7,7 @@ class Club
 
   field :short_name
 
-  references_many :teams
+  has_many :teams
 
   before_save :ensure_short_name
   def ensure_short_name

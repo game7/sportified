@@ -25,7 +25,7 @@
             <span class="label"><%= icon('eye-close', true)%> Hidden</span>
           </a>
         <% end %>
-        <% unless page.link_url.empty? %>
+        <% if page.link_url %>
           <a href="#" rel="tooltip" title="Menu links to custom location">
             <span class="label"><%= icon('share', true)%> Link</span>
           </a>

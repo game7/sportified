@@ -7,14 +7,14 @@ class Player::Import
   field :contents, :type => Array
   validates_presence_of :contents  
 
-   referenced_in :season
+   belongs_to :season
    field :season_name
    validates_presence_of :season_id
    before_save do |import|
      import.season_name = import.season.name
    end
    
-   referenced_in :league
+   belongs_to :league
    field :league_name
    validates_presence_of :league_id
    before_save do |import|
