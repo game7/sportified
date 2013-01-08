@@ -53,21 +53,6 @@ class Page
     end
   end
 
-  #def blocks_grouped_by_panel
-  #  panels = { :default => [] }
-  #  layouts.each do |layout|
-  #    layout.panel_ids.each{|id| panels[id.to_s] = [] }
-  #  end
-  #  blocks.asc(:position).each do |block|
-  #    if panels.has_key?(block.panel_id)
-  #      panels[block.panel_id] << block
-  #    else
-  #      panels[:default] << block
-  #    end
-  #  end
-  #  panels
-  #end
-
   private
 
     def set_tree
