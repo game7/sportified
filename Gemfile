@@ -23,7 +23,7 @@ gem 'chronic'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 #gem 'delayed_job'
 gem "less-rails-bootstrap", '>= 2.2.0'
-gem 'therubyracer', :platform => :ruby
+gem 'therubyracer', ">= 0.10.1" , :platform => :ruby
 
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "mongoid-3.0"
 gem 'fog'

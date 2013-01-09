@@ -324,6 +324,6 @@ DEPENDENCIES
   rspec-rails (>= 2.0.1)
   sass-rails (~> 3.2.0)
   simple_form!
-  therubyracer
+  therubyracer (>= 0.10.1)
   uglifier
   webrat
