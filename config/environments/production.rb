@@ -64,7 +64,5 @@ Sportified::Application.configure do
     "skins/default/skin.js",
     "lang/en.js"
   ]
-  
-  config.assets.initialize_on_precompile = false
     
 end

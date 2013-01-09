@@ -22,7 +22,7 @@ gem 'chronic'
 #gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 #gem 'delayed_job'
-gem "less-rails-bootstrap", '>= 2.2.0'
+
 
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "mongoid-3.0"
 gem 'fog'
@@ -60,14 +60,16 @@ end
 
 group :development do
   gem 'haml-rails'
-  gem 'nifty-generators'  
+  gem 'nifty-generators' 
 end
 
 
 group :assets do
   gem 'sass-rails', " ~> 3.2.0"
   gem 'coffee-rails', " ~> 3.2.0"
-  gem 'uglifier'  
+  gem 'uglifier' 
+  gem "less-rails-bootstrap", '>= 2.2.0'
+  gem 'therubyracer'   
 end
 
 gem 'jquery-rails'
