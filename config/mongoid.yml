@@ -20,7 +20,6 @@ test:
 production:
   sessions:
     default:
-      database: sportified
       uri: <%= ENV['MONGOHQ_URL'] %>
   options:
     identity_map_enabled: true
