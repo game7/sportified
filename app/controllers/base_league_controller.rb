@@ -26,7 +26,7 @@ class BaseLeagueController < ApplicationController
   end
   
   def find_season
-    @season = @league.seasons.with_slug(params[:season_slug]).first if params[:season_slug]
+    @season = @league.seasons.find_by(slug: params[:season_slug]) if params[:season_slug]
     @season ||= @league.seasons.most_recent
   end
 
