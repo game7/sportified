@@ -1,4 +1,4 @@
-class Blocks::CarouselsController < Blocks::BaseController
+class Blocks::CarouselsController < BlocksController
   
   def edit
 

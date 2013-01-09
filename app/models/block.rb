@@ -1,3 +1,4 @@
+require 'bson'
 
 class Block
   include Mongoid::Document
