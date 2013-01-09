@@ -64,9 +64,6 @@ group :development do
   gem 'therubyracer', ">= 0.10.1" , :platform => :ruby
 end
 
-group :production do
-  gem 'therubyracer-heroku', '0.8.1.pre3'
-end
 
 group :assets do
   gem 'sass-rails', " ~> 3.2.0"
