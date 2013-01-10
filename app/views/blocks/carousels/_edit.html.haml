@@ -1,5 +1,6 @@
 = simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
   = f.input :post_count, :input_html => { :class => 'input-min' }
+  = f.input :shuffle, :as => :boolean
   .control-group
     %label.control-label Tags
     .controls

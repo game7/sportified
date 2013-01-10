@@ -7,6 +7,7 @@ module Blocks
 
     field :post_count, :type => Integer, :default => 5
     field :tags, :type => Array, :default => []
+    field :shuffle, :type => Boolean, :default => false
     
     def posts
       Post.tagged_with_any(self.tags)

@@ -1,7 +1,9 @@
 .carousel.slide{ :id => "carousel_#{block.id}" }
   .carousel-inner
     - count = 0
-    - block.posts.newest_first.each_with_index do |post, index|
+    - posts = block.posts.newest_first.entries
+    - posts.shuffle! if block.shuffle
+    - posts.each_with_index do |post, index|
       - break if count >= block.post_count
       - next unless post.image.present?
       - count += 1
