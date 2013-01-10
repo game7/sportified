@@ -17,4 +17,8 @@
 
 .modal.hide.fade{ :id => "dialog-modal", :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "modalLabel", :"aria-hidden" => true}
 
+:javascript
+  var position_page_blocks_path = "#{position_page_blocks_path(@page)}";
+  var position_page_sections_path = "#{position_page_sections_path(@page)}";
+
 

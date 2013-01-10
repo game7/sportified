@@ -147,7 +147,7 @@ function updateSectionPositions(column) {
     type: 'post',
     data: items ,
     dataType: 'json',
-    url: '#{position_page_sections_path(@page)}'
+    url: position_page_sections_path
   });
 }  
 
@@ -163,6 +163,6 @@ function updateBlockPositions(column) {
     type: 'post',
     data: items ,
     dataType: 'json',
-    url: '#{position_page_blocks_path(@page)}'
+    url: position_page_blocks_path
   });
 }
