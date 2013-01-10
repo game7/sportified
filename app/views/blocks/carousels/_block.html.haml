@@ -7,8 +7,9 @@
       - count += 1
       %div{ :class => "item#{' active' if index == 0}" }
         = image_tag post.image.url
-        .carousel-caption
-          %h4= post.title
-          %p= post.summary
+        - unless post.title.blank?
+          .carousel-caption
+            %h4= post.title
+            %p= post.summary
   %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
   %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
