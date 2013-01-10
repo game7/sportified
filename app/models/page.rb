@@ -39,7 +39,9 @@ class Page
   
   class << self
     def sorted_as_tree
-      unscoped.merge(Page.tenant_criteria).ascending(:tree)
+      crit = Page.all
+      crit.options = {}
+      crit.ascending(:tree)
     end
   end
   
