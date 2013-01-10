@@ -1,10 +1,19 @@
 = simple_form_for [:admin, @season, @team] do |f|
-  = f.input :league_id, :as => :select, :collection => @leagues if %w{new create}.include? params[:action]
-  = f.input :name
-  = f.input :short_name 
-  = f.input :club_id, :as => :select, :collection => @clubs
-  = f.input :division_id, :as => :select, :collection => @divisions
-  = f.input :pool  
-  = f.input :show_in_standings, :as => :boolean
-  = f.input :seed, :input_html => { :class => 'span1' }
+  %ul.nav.nav-tabs
+    %li.active
+      = link_to "Basic Info", '#basic', { :"data-toggle" => "tab" }
+    %li
+      = link_to "Branding", '#branding', { :"data-toggle" => "tab" }
+  .tab-content
+    .tab-pane.active{ :id => "basic" }
+      = f.input :league_id, :as => :select, :collection => @leagues if %w{new create}.include? params[:action]
+      = f.input :name
+      = f.input :short_name 
+      = f.input :club_id, :as => :select, :collection => @clubs
+      = f.input :division_id, :as => :select, :collection => @divisions
+      = f.input :pool  
+      = f.input :show_in_standings, :as => :boolean
+      = f.input :seed, :input_html => { :class => 'span1' }
+    .tab-pane{ :id => "branding" }
+    
   = f.button :wrapped, :cancel => return_url
