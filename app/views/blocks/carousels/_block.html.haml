@@ -1,17 +1,24 @@
 .carousel.slide{ :id => "carousel_#{block.id}" }
   .carousel-inner
     - count = 0
-    - posts = block.posts.newest_first.entries
+    - posts = block.posts.entries
     - posts.shuffle! if block.shuffle
     - posts.each_with_index do |post, index|
-      - break if count >= block.post_count
-      - next unless post.image.present?
-      - count += 1
       %div{ :class => "item#{' active' if index == 0}" }
-        = image_tag post.image.url
+        = image_tag post.image.url if index == 0
+        - unless index == 0
+          %img{ :"data-src" => post.image.url, :alt => image_alt(post.image.url) }
         - unless post.title.blank?
           .carousel-caption
             %h4= post.title
             %p= post.summary
   %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
   %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
+
+- content_for :javascript do
+  :javascript
+    $(function(){
+      $("#carousel_#{block.id} img[data-src]").each(function(index){
+        $(this).attr("src", $(this).attr("data-src"));
+      });      
+    });
