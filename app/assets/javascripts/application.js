@@ -4,6 +4,7 @@
 //= require jquery.form
 //= require jquery.remotipart
 //= require twitter/bootstrap
+//= require jcrop/jquery.Jcrop.min
 
 
 function clearForm(form) {
