@@ -1,9 +1,9 @@
+%ul.nav.nav-tabs
+  %li.active
+    = link_to "Basic Info", '#basic', { :"data-toggle" => "tab" }
+  %li
+    = link_to "Branding", '#branding', { :"data-toggle" => "tab" }
 = simple_form_for [:admin, @season, @team] do |f|
-  %ul.nav.nav-tabs
-    %li.active
-      = link_to "Basic Info", '#basic', { :"data-toggle" => "tab" }
-    %li
-      = link_to "Branding", '#branding', { :"data-toggle" => "tab" }
   .tab-content
     .tab-pane.active{ :id => "basic" }
       = f.input :league_id, :as => :select, :collection => @leagues if %w{new create}.include? params[:action]
@@ -15,5 +15,38 @@
       = f.input :show_in_standings, :as => :boolean
       = f.input :seed, :input_html => { :class => 'span1' }
     .tab-pane{ :id => "branding" }
-    
+      = f.input :logo, :as => :file
+      = f.input :remote_logo_url
+      = f.input :logo_cache, :as => :hidden 
+      - if @team.logo?
+        .jcrop
+          %img{ :src => @team.logo.url, :id => "jcrop_target"}
+          #preview{ :style => "width: 100px; height: 100px; overflow: hidden; margin-top: 10px;"}
+            = image_tag @team.logo.url         
   = f.button :wrapped, :cancel => return_url
+ 
+:css
+  .jcrop img {max-width: none}
+
+- content_for :javascript do
+  :javascript
+    
+    $(function(){
+      $('#jcrop_target').Jcrop({
+        aspectRatio: 1,
+        onChange: showPreview,
+        onSelect: showPreview
+      });
+    });
+    
+    function showPreview(coords) {
+      var rx = 100 / coords.w;
+      var ry = 100 / coords.h;
+      $('#preview img').css({
+        width: Math.round(rx * 271) + 'px',
+        height: Math.round(ry * 404) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+      return false;
+    }

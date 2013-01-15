@@ -6,9 +6,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    @site = Site.current
-    @site ||= model.site
-    "uploads/#{@site.slug}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "uploads/#{model.tenant.slug}/#{model.class.name.pluralize.downcase}/#{mounted_as}/#{model.id}"
   end
 
   def cache_dir
