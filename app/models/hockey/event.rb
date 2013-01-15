@@ -12,8 +12,8 @@ module Hockey
 
     embedded_in :parent, :inverse_of => :events, :class_name => 'Hockey::Statsheet'
 
-    scope :goals, where(type: 'Hockey::Goal')
-    scope :penalties, where(type: 'Hockey::Penalty')
+    scope :goals, where(:"_type" => 'Hockey::Goal')
+    scope :penalties, where(:"_type" => 'Hockey::Penalty')
     scope :sorted_by_time, order_by(:per.asc, :min.desc, :sec.desc)
     scope :for_period, ->(period) { where(per: period) }
 
