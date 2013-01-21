@@ -18,6 +18,7 @@
         - if team.league_id == league.id
           %tr
             %td
+              = image_tag team.logo.tiny unless team.logo.blank?
               = team.name
               .pull-right
                 - unless team.division_name.blank?

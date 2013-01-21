@@ -11,12 +11,9 @@ class Team
   field :pool, :type => String
   field :seed, :type => Integer
   
-  field :primary_color, :default => '#666'
-  field :accent_color, :default => '#000'
-  field :text_color, :default => '#FFF'
-  field :link_color, :default => '#000033'
-  
-  field :thumb_color, :default => '#FFFFFF'
+  field :primary_color, :default => '#DEDEDE'
+  field :secondary_color, :default => '#000'
+  field :accent_color, :default => '#FFF'
   
   field :crop_x, :type => Integer, :default => 0
   field :crop_y, :type => Integer, :default => 0
@@ -89,7 +86,18 @@ class Team
     self.division_name = division ? division.name : nil
   end
 
-  #
+  before_save :resize_logo_images, :if => :crop_changed?
+  def resize_logo_images
+    self.logo.recreate_versions!
+  end
+  
+  before_save :get_color_palette, :if => :logo?
+  def get_color_palette
+    p = self.logo.color_palette
+    self.primary_color = p[:primary]
+    self.secondary_color = p[:secondary]
+    self.accent_color = p[:accent]
+  end
   #before_save :prepare_crop_changed_message
   #def prepare_crop_changed_message
   #  if crop_changed?

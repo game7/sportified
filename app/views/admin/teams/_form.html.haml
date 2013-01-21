@@ -15,6 +15,10 @@
       = f.input :show_in_standings, :as => :boolean
       = f.input :seed, :input_html => { :class => 'span1' }
     .tab-pane{ :id => "branding" }
+      = f.input :crop_x, :as => :hidden
+      = f.input :crop_y, :as => :hidden
+      = f.input :crop_h, :as => :hidden
+      = f.input :crop_w, :as => :hidden     
       = f.input :logo, :as => :file
       = f.input :remote_logo_url
       = f.input :logo_cache, :as => :hidden 
@@ -22,7 +26,9 @@
         .jcrop
           %img{ :src => @team.logo.url, :id => "jcrop_target"}
           #preview{ :style => "width: 100px; height: 100px; overflow: hidden; margin-top: 10px;"}
-            = image_tag @team.logo.url         
+            = image_tag @team.logo.url
+        - #@team.logo.primary_colors[:colors].each do |color|
+        - #.color{:style => "background-color: #{color}; height: 20px; width: 20px; margin-top: 5px;"}
   = f.button :wrapped, :cancel => return_url
  
 :css
@@ -31,22 +37,40 @@
 - content_for :javascript do
   :javascript
     
-    $(function(){
+    $(function() {
       $('#jcrop_target').Jcrop({
-        aspectRatio: 1,
-        onChange: showPreview,
-        onSelect: showPreview
+          aspectRatio: 1,
+          onChange: update_crop,
+          onSelect: update_crop
+        }, function() {
+          // Use the API to get the real image size
+          var bounds = this.getBounds();
+          boundx = bounds[0];
+          boundy = bounds[1];
+          // Store the API in the jcrop_api variable
+          jcrop_api = this;
+          var x = #{@team.crop_x};
+          var y = #{@team.crop_y};
+          var w = #{@team.crop_w};
+          var h = #{@team.crop_h};
+          jcrop_api.setSelect([x,y,x+w,y+h]);      
       });
     });
     
-    function showPreview(coords) {
+    function update_crop(coords) {
       var rx = 100 / coords.w;
       var ry = 100 / coords.h;
+      var lw = $('#jcrop_target').width();
+      var lh = $('#jcrop_target').height();
       $('#preview img').css({
-        width: Math.round(rx * 271) + 'px',
-        height: Math.round(ry * 404) + 'px',
+        width: Math.round(rx * lw) + 'px',
+        height: Math.round(ry * lh) + 'px',
         marginLeft: '-' + Math.round(rx * coords.x) + 'px',
         marginTop: '-' + Math.round(ry * coords.y) + 'px'
       });
+      $('#team_crop_h').val(coords.h);
+      $('#team_crop_w').val(coords.w);
+      $('#team_crop_y').val(coords.y);
+      $('#team_crop_x').val(coords.x);
       return false;
     }
