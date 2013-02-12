@@ -1,0 +1,8 @@
+var $modal = $('#dialog-modal');
+<% @modal_title = "Edit Team" %>
+$modal.html("<%= escape_javascript( render(:partial => "form_#{ params[:form] || 'basic' }", :layout => "layouts/modal" ) )%>");
+$modal.modal();
+$modal.find('.submit').click(function(){
+  $modal.find('form').submit();
+});
+

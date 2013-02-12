@@ -1,0 +1,14 @@
+= simple_form_for @team, :remote => true do |f|
+  %ul.nav.nav-tabs#upload_type
+    %li.active
+      %a{ :href => "#file", :"data-toggle" => "tab"}= icon(:upload)+" Upload from File"
+    %li
+      %a{ :href => "#url  ", :"data-toggle" => "tab"}= icon(:globe)+" Upload from URL"
+  .tab-content
+    .tab-pane.active{ :id => "file" }
+      = f.input :logo, :as => :file
+    .tab-pane{ :id => "url" }
+      = f.input :remote_logo_url
+    
+:javascript
+  $("#upload_type").tab();

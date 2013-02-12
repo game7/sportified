@@ -11,9 +11,11 @@ class Team
   field :pool, :type => String
   field :seed, :type => Integer
   
-  field :primary_color, :default => '#DEDEDE'
-  field :secondary_color, :default => '#000'
-  field :accent_color, :default => '#FFF'
+  field :primary_color
+  field :secondary_color
+  field :accent_color
+  field :main_colors, :type => Array
+  field :custom_colors, :type => Boolean
   
   field :crop_x, :type => Integer, :default => 0
   field :crop_y, :type => Integer, :default => 0
@@ -85,6 +87,14 @@ class Team
     division ||= Division.find(self.division_id) if self.division_id
     self.division_name = division ? division.name : nil
   end
+  
+  before_save :clear_crop, :if => :logo_changed?
+  def clear_crop
+    self.crop_x = 0
+    self.crop_y = 0
+    self.crop_w = 0
+    self.crop_h = 0
+  end
 
   before_save :resize_logo_images, :if => :crop_changed?
   def resize_logo_images
@@ -94,9 +104,12 @@ class Team
   before_save :get_color_palette, :if => :logo?
   def get_color_palette
     p = self.logo.color_palette
-    self.primary_color = p[:primary]
-    self.secondary_color = p[:secondary]
-    self.accent_color = p[:accent]
+    self.main_colors = p[:colors]
+    unless self.custom_colors
+      self.primary_color = p[:primary]
+      self.secondary_color = p[:secondary]
+      self.accent_color = p[:accent]
+    end
   end
   #before_save :prepare_crop_changed_message
   #def prepare_crop_changed_message

@@ -1,18 +1,6 @@
 - title @league.name + ' Teams'
 = render :partial => 'shared/season_options', :object => @season_options
 .row
-  - @teams.each do |team|
-    .span6
-      .well{ :style => "background-color: #{team.primary_color}" }
-        .row-fluid
-          .span3  
-            = image_tag team.logo.thumb.url if team.logo?
-          .span9
-            %h3{ :style => "color: #{team.secondary_color}"}= team.name
-            = link_to "Schedule", team_schedule_path(@league.slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
-            %span{ :style=> "color: #{team.secondary_color}"}= " | "
-            = link_to "Roster", team_roster_path(@league.slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
-            %span{ :style=> "color: #{team.secondary_color}"}= " | "
-            = link_to "Statistics", team_statistics_path(@league.slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
-
-
+  = render :partial => "team", :collection => @teams, :locals => { :class_name => 'span6' }
+  
+.modal.hide.fade{ :id => "dialog-modal", :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "modalLabel", :"aria-hidden" => true }

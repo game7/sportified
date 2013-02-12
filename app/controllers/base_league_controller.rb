@@ -17,7 +17,7 @@ class BaseLeagueController < ApplicationController
     add_area_menu_item 'Standings', standings_path(@league)
     add_area_menu_item 'Statistics', statistics_path(@league)
     add_area_menu_item 'Teams', teams_path(@league)
-    add_area_menu_item 'Players', players_path(@league)    
+    add_area_menu_item 'Players', players_path(@league)
   end
   
   def find_league
@@ -26,8 +26,10 @@ class BaseLeagueController < ApplicationController
   end
   
   def find_season
-    @season = @league.seasons.find_by(slug: params[:season_slug]) if params[:season_slug]
-    @season ||= @league.seasons.most_recent
+    if @league
+      @season = @league.seasons.find_by(slug: params[:season_slug]) if params[:season_slug]
+      @season ||= @league.seasons.most_recent
+    end
   end
 
 end

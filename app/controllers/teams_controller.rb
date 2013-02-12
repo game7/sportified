@@ -1,9 +1,14 @@
 require 'icalendar'
 
 class TeamsController < BaseLeagueController
+  before_filter :verify_admin, :except => [:show, :index, :schedule, :roster, :statistics]
   before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
   before_filter :get_season_options, :only => [:index]
-
+  before_filter :find_team, :only => [:edit, :update, :destroy]
+  before_filter :load_league_options, :only => [:new]
+  before_filter :load_division_options, :only => [:new, :edit]
+  before_filter :load_club_options, :only => [:new, :edit]
+  
   def index
     add_breadcrumb "Teams"
 
@@ -26,6 +31,14 @@ class TeamsController < BaseLeagueController
       format.ics { to_ical(@events) }
     end    
 
+  end
+  
+  def edit
+
+  end
+  
+  def update
+    @team.update_attributes(params[:team])    
   end
 
   def roster
@@ -51,6 +64,30 @@ class TeamsController < BaseLeagueController
   end
   
   private
+  
+  def find_team
+    @team = Team.find(params[:id])
+  end
+  
+  def load_league_options
+    @leagues = @season.leagues.asc(:name)
+  end
+  
+  def load_division_options
+    league_id = @team ? @team.league_id : params[:league_id]
+    season_id = @team ? @team.season_id : params[:season_id]
+    @divisions = Division.for_league(league_id).for_season(season_id).asc(:name)
+  end
+
+  def load_club_options
+    @clubs = Club.asc(:name).entries
+  end  
+  
+  def set_area_navigation
+    puts params[:action]
+    super unless [:edit,:update,:new,:create].include? params[:action].to_sym
+  end
+  
   def set_team_breadcrumbs 
     add_breadcrumb "Teams", teams_path(@league.slug) 
     add_breadcrumb @team.name if @team
@@ -60,8 +97,6 @@ class TeamsController < BaseLeagueController
     super
     
   end
-  
-  private
   
   def get_season_options
     @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, teams_path(:league_slug => @league.slug, :season_slug => s == @season ? nil : s.slug)]}

@@ -1,0 +1,18 @@
+<% if @team.errors.any? %>
+  $("#flash_notice").slideUp()
+<% else %>
+  $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
+  $("#flash_success").slideDown();
+  $("#dialog-modal").modal('hide');  
+  $("#dialog-modal").html('');
+  var $team = $("#team-<%= @team.id %>");
+  $team.slideUp('slow', function() {
+    $team.find('.well').css('background-color', '<%= @team.primary_color %>');
+    $team.find('.name').text('<%= @team.name %>')
+                       .css('color', '<%= @team.secondary_color %>');
+    $team.find('.pages a').css('color', '<%= @team.accent_color %>');
+    $team.find('.logo').html('<%= image_tag @team.logo.thumb.url if @team.logo? %>');
+    $team.slideDown();
+  });
+
+<% end %>

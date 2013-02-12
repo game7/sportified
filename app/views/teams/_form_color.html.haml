@@ -1,0 +1,84 @@
+:css
+  .swatch {
+    height: 20px;
+    width: 20px;
+    border: 1px solid #CCC;
+    margin: 2px;
+    float: left;
+    cursor: pointer;
+  }
+  .swatch.selected {
+    border: 2px solid #0F0;
+  }
+  
+.preview{ :id => "team-#{@team.id}"}
+  .well{ :style => "background-color: #{@team.primary_color}" }
+    .row-fluid
+      .span3.logo
+        = image_tag @team.logo.thumb.url if @team.logo?
+      .span9
+        %h3.name{ :style => "color: #{@team.secondary_color}"}= @team.name
+        .pages
+          = link_to "Clubhouse", "#", { :style => "color: #{@team.accent_color};" }
+          %span{ :style=> "color: #{@team.secondary_color}"}= " | "
+          = link_to "Schedule", "#", { :style => "color: #{@team.accent_color};" }
+          %span{ :style=> "color: #{@team.secondary_color}"}= " | "
+          = link_to "Players", "#", { :style => "color: #{@team.accent_color};" }
+
+= simple_form_for @team, :remote => true do |f|
+  .control-group.optional
+    %label.optional.control-label Primary color
+    .controls
+      %input{ :id => "team_primary_color", :class => "color", :name => "team[primary_color]", :type => "hidden", :value => "#{@team.primary_color}" }
+      .swatches
+        - @team.main_colors.each do |color|
+          %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.primary_color}" }
+        .clear
+  .control-group.optional
+    %label.optional.control-label Secondary color
+    .controls
+      %input{ :id => "team_secondary_color", :class => "color", :name => "team[secondary_color]", :type => "hidden", :value => "#{@team.secondary_color}" }
+      .swatches
+        - @team.main_colors.each do |color|
+          %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.secondary_color}" }
+        .clear  
+  .control-group.optional
+    %label.optional.control-label Accent color
+    .controls
+      %input{ :id => "team_accent_color", :class => "color", :name => "team[accent_color]", :type => "hidden", :value => "#{@team.accent_color}" }
+      .swatches
+        - @team.main_colors.each do |color|
+          %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.accent_color}" }
+        .clear
+  = f.input :custom_colors, :as => :boolean        
+
+:javascript
+  $(function(){
+    
+    // select a color
+    $('.swatch').click(function() {
+      // update selection indicator
+      $(this).addClass('selected')
+             .siblings('.swatch').removeClass('selected');
+      // update hidden field
+      var selectedColor = $(this).css('background-color');
+      var $input = $(this).closest('.controls').find('input.color')
+      $input.val( colorToHex(selectedColor) );
+      // update preview
+      switch( $input.attr('id') ) {
+        case "team_primary_color":
+          $('.preview .well').css("background-color", selectedColor);
+          break;
+        case "team_secondary_color":
+          $('.preview .name').css("color", selectedColor);
+          $('.preview .pages span').css("color", selectedColor);
+          break;
+        default:
+          $('.preview .pages a').css("color", selectedColor);
+          break;
+      }
+      
+    });
+    
+    
+  });
