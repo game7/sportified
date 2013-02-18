@@ -5,7 +5,7 @@ gem 'rails', '3.2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid', '~> 3.0.0'
+gem 'mongoid', '~> 3.1.0'
 gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
@@ -20,16 +20,15 @@ gem 'icalendar'
 gem 'chronic'
 
 #gem 'formtastic', '~> 1.2.3'
-gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+gem 'simple_form', '~> 2.0.4'
 #gem 'delayed_job'
 
 
-gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "mongoid-3.0"
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
 gem 'rmagick'
 gem 'remotipart', '~> 0.4'
 
-#gem "wymeditor-rails", :git => 'git://github.com/game7/wymeditor-rails.git'
 gem "RedCloth"
 
 
