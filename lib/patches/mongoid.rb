@@ -31,18 +31,18 @@ module Mongoid #:nodoc:
   end
   
   # monkey-patch issue with multiple sort on embedded
-  module Contextual
-    class Memory
-      def in_place_sort(values)
-        documents.sort! do |a, b|
-          a_value, b_value = [], []
-          values.keys.each do |field|
-            a_value << (values[field] < 0 ? b[field] : a[field])
-            b_value << (values[field] < 0 ? a[field] : b[field])
-          end
-          a_value <=> b_value
-        end  
-      end      
-    end
-  end
+#  module Contextual
+#    class Memory
+#      def in_place_sort(values)
+#        documents.sort! do |a, b|
+#          a_value, b_value = [], []
+#          values.keys.each do |field|
+#            a_value << (values[field] < 0 ? b[field] : a[field])
+#            b_value << (values[field] < 0 ? a[field] : b[field])
+#          end
+#          a_value <=> b_value
+#        end  
+#      end      
+#    end
+#  end
 end

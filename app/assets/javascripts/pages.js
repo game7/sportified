@@ -83,8 +83,8 @@ $(function() {
     updateBlockPositions($origin);
     updateBlockPositions($target);        
     return false;
-  });      
-        
+  });
+    
   $(document).on('click', '.section a.add_block', function(){
     $('#column').val( $(this).attr('data-column') );
     $('#section_id').val( $(this).attr('data-section_id') );
