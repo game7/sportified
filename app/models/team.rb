@@ -49,8 +49,6 @@ class Team
   belongs_to :club
 
   has_many :players  
-  has_many :home_games, :class_name => "Game", :inverse_of => :home_team
-  has_many :away_games, :class_name => "Game", :inverse_of => :away_team
   embeds_one :record, :class_name => "Team::Record"
 
   before_save :set_slug
@@ -98,7 +96,7 @@ class Team
 
   before_save :resize_logo_images, :if => :crop_changed?
   def resize_logo_images
-    self.logo.recreate_versions!
+    self.logo.recreate_versions! if self.logo.url
   end
   
   before_save :get_color_palette, :if => :logo?
@@ -111,14 +109,6 @@ class Team
       self.accent_color = p[:accent]
     end
   end
-  #before_save :prepare_crop_changed_message
-  #def prepare_crop_changed_message
-  #  if crop_changed?
-  #    msg = Message.new(:team_crop_changed)
-  #    msg.data[:team_id] = self.id
-  #  end
-  #  enqueue_message msg
-  #end
 
   class << self
     def for_league(league)
