@@ -64,6 +64,8 @@
       var selectedColor = $(this).css('background-color');
       var $input = $(this).closest('.controls').find('input.color')
       $input.val( colorToHex(selectedColor) );
+      // update custom color checkbox
+      $('#team_custom_colors').prop('checked', true);
       // update preview
       switch( $input.attr('id') ) {
         case "team_primary_color":

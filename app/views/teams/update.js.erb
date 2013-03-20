@@ -12,7 +12,10 @@
                        .css('color', '<%= @team.secondary_color %>');
     $team.find('.pages a').css('color', '<%= @team.accent_color %>');
     $team.find('.logo').html('<%= image_tag @team.logo.thumb.url if @team.logo? %>');
+    $team.find('.actions').replaceWith('<%= escape_javascript(render :partial => "actions", :locals => { :team => @team }) %>');
     $team.slideDown();
   });
+
+  
 
 <% end %>

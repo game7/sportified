@@ -1,5 +1,5 @@
 %div{ :id => "team-#{team.id}", :class => "team #{class_name if class_name}"}
-  .well{ :style => "background-color: #{team.primary_color}" }
+  .well{ :style => "background-color: #{team.primary_color || '#FFF'}" }
     .row-fluid
       .span3.logo
         = image_tag team.logo.thumb.url if team.logo?

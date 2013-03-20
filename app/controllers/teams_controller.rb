@@ -12,7 +12,7 @@ class TeamsController < BaseLeagueController
   def index
     add_breadcrumb "Teams"
 
-    @teams = @league.teams.for_season(@season).asc(:name)
+    @teams = @league.teams.for_season(@season).asc(:name).without(:record, :event_ids)
 
     respond_to do |format|
       format.html # index.html.erb
