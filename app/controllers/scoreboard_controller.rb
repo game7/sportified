@@ -15,7 +15,11 @@ class ScoreboardController < BaseLeagueController
     
     add_breadcrumb("Scoreboard")
     
-    @games = Game.gt(starts_on: @start_date).lt(ends_on: @end_date)
+    @games = Game.gt(starts_on: @start_date)
+                  .lt(ends_on: @end_date)
+                  .includes(:home_team)
+                  .includes(:away_team)
+                  .includes(:statsheet)
     @games = @games.for_league(@league) if @league
     @games = @games.desc(:starts_on).entries
 
