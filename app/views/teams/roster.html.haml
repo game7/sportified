@@ -1,8 +1,9 @@
 - title "#{@team.name} #{@season.name} Roster"
-
+- content_for :banner do
+  .row.banner
+    = render :partial => "team", :locals => { :team => @team, :class_name => "span12" }
 #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-.row-fluid
-  = render :partial => 'team', :locals => { :team => @team, :class_name => 'span12' }
+
 %table.table.table-striped.table-bordered
   %thead
     %tr

@@ -27,18 +27,17 @@
           = render "layouts/site_navigation" if @site_menu_items             
     #wrapper.container
       %header
+        = render "layouts/area_navigation" if @area_menu_items  
+        = render "layouts/breadcrumbs" if @breadcrumbs
+        #banner
+          #{yield :banner}        
         %h1.pull-left
           %span#page-title= yield(:title)
           = content_tag :small, yield(:title_small) if content_for?(:title_small)
         .actions.pull-right
           = yield(:actions)
-        .clear
-        = render "layouts/area_navigation" if @area_menu_items  
-        = render "layouts/breadcrumbs" if @breadcrumbs
-              
+        .clear              
       #main
-        #banner
-          #{yield :banner}
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
         = yield

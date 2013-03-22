@@ -1,15 +1,16 @@
-.buttons.pull-right
-  .btn-group
-    %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Team Tools" } 
-      = icon('wrench')
-      %span.caret
-    %ul.dropdown-menu.pull-right
-      %li.nav-header EDIT
-      %li= link_to icon(:cog)+" Edit Settings", edit_team_path(team), :remote => true
-      %li= link_to icon(:upload)+" Upload Logo", edit_team_path(team, :form => 'upload_logo'), :remote => true
-      - if team.logo?
-        %li= link_to icon(:move)+" Adjust Logo", edit_team_path(team, :form => 'adjust_logo'), :remote => true
-      %li= link_to icon(:adjust)+" Edit Colors", edit_team_path(team, :form => 'color'), :remote => true
-      %li.divider
-      %li= link_to icon(:trash)+' Delete', admin_team_path(team), :confirm => 'Are you sure?', :method => :delete, :remote => true
-.clear
+.actions{ :style => "position: absolute; top: 10px; right: 10px;"}
+  .buttons.pull-right
+    .btn-group
+      %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Team Tools" } 
+        = icon('wrench')
+        %span.caret
+      %ul.dropdown-menu.pull-right
+        %li.nav-header EDIT
+        %li= link_to icon(:cog)+" Edit Settings", edit_team_path(team), :remote => true
+        %li= link_to icon(:upload)+" Upload Logo", edit_team_path(team, :form => 'upload_logo'), :remote => true
+        - if team.logo?
+          %li= link_to icon(:move)+" Adjust Logo", edit_team_path(team, :form => 'adjust_logo'), :remote => true
+        %li= link_to icon(:adjust)+" Edit Colors", edit_team_path(team, :form => 'color'), :remote => true
+        %li.divider
+        %li= link_to icon(:trash)+' Delete', admin_team_path(team), :confirm => 'Are you sure?', :method => :delete, :remote => true
+  .clear

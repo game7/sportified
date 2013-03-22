@@ -11,6 +11,13 @@
     $team.find('.name').text('<%= @team.name %>')
                        .css('color', '<%= @team.secondary_color %>');
     $team.find('.pages a').css('color', '<%= @team.accent_color %>');
+    <% if @team.logo? %>
+      $team.find('.info').removeClass('span12').addClass('span9');
+      $team.find('.logo').show();
+    <% else %>
+      $team.find('.info').removeClass('span9').addClass('span12');
+      $team.find('.logo').hide();
+    <% end %>
     $team.find('.logo').html('<%= image_tag @team.logo.thumb.url if @team.logo? %>');
     $team.find('.actions').replaceWith('<%= escape_javascript(render :partial => "actions", :locals => { :team => @team }) %>');
     $team.slideDown();

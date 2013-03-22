@@ -2,6 +2,4 @@
 = render :partial => 'shared/season_options', :object => @season_options
 .row
   = render :partial => "team", :collection => @teams, :locals => { :class_name => 'span6' }
-%pre
-  = @teams.to_json
 .modal.hide.fade{ :id => "dialog-modal", :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "modalLabel", :"aria-hidden" => true }

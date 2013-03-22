@@ -1,6 +1,8 @@
 - title "#{@team.name} #{@season.name} Schedule"
 - last_month = nil
-
+- content_for :banner do
+  .row.banner
+    = render :partial => "team", :locals => { :team => @team, :class_name => "span12" }
 .visible-phone
   .row
     .span12
@@ -26,11 +28,9 @@
             - last_future = future
           %tr
             %td
-              = event.starts_on.strftime('%a, %b %e')
-              %br/
-              = display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
-              %br/
-              = event.venue_name
+              %span= event.starts_on.strftime('%a, %b %e') + " :: "
+              %span= display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
+              %span= event.venue_name
 .hidden-phone
   .row
     .span12

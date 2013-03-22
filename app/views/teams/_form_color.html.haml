@@ -24,6 +24,8 @@
           = link_to "Schedule", "#", { :style => "color: #{@team.accent_color};" }
           %span{ :style=> "color: #{@team.secondary_color}"}= " | "
           = link_to "Players", "#", { :style => "color: #{@team.accent_color};" }
+          
+- color_options = @team.main_colors << "#FFF" << "#000"
 
 = simple_form_for @team, :remote => true do |f|
   .control-group.optional
@@ -31,7 +33,7 @@
     .controls
       %input{ :id => "team_primary_color", :class => "color", :name => "team[primary_color]", :type => "hidden", :value => "#{@team.primary_color}" }
       .swatches
-        - @team.main_colors.each do |color|
+        - color_options.each do |color|
           %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.primary_color}" }
         .clear
   .control-group.optional
@@ -39,7 +41,7 @@
     .controls
       %input{ :id => "team_secondary_color", :class => "color", :name => "team[secondary_color]", :type => "hidden", :value => "#{@team.secondary_color}" }
       .swatches
-        - @team.main_colors.each do |color|
+        - color_options.each do |color|
           %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.secondary_color}" }
         .clear  
   .control-group.optional
@@ -47,7 +49,7 @@
     .controls
       %input{ :id => "team_accent_color", :class => "color", :name => "team[accent_color]", :type => "hidden", :value => "#{@team.accent_color}" }
       .swatches
-        - @team.main_colors.each do |color|
+        - color_options.each do |color|
           %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.accent_color}" }
         .clear
   = f.input :custom_colors, :as => :boolean        
