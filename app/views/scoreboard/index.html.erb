@@ -17,16 +17,16 @@
     <% end %>
     <% if first_date or new_date # new head %>
       <% counter = 0 %>
-      <div class="row">
-        <div class="group-head">
+      <div class="row-fluid">
+        <div class="group-head span12">
           <h5><%= game.starts_on.to_date.strftime("%A, %B %e %Y") %></h5>
         </div>
       </div>
-      <div class="row">
+      <div class="row-fluid">
     <% else %>
       <% if counter % 3 == 0 %>
         </div>
-        <div class="row">
+        <div class="row-fluid">
       <% end %>    
     <% end %>
     <%= render :partial => "score_card", :locals => { :game => game } %>

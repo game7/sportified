@@ -1,48 +1,47 @@
-.scorecard
-  .inner
-    .header
-      %table
-        %tbody
-          %tr
-            %td.winner= '>' if game.has_result? && game.away_team_is_winner?
-            %td.team= game.away_team_name
-            %td.score= game.result.away_score if game.has_result?
-            %td.result{:rowspan => "2"}= game.has_result? ? "FINAL" : game.starts_on.strftime("%l:%M %p")
-          %tr
-            %td.winner= '>' if game.has_result? && game.home_team_is_winner?
-            %td.team= game.home_team_name
-            %td.score= game.result.home_score if game.has_result?          
-    - stats = game.statsheet
-    - if stats
-      .game-links
-        = link_to 'Box Score', game_box_score_path(@league.slug, game.id)
-      .line-score
-        %table.table
-          %thead
-            %tr
-              %th
-              %th.period 1
-              %th.period 2
-              %th.period 3
-              - if stats.overtime?
-                %th.period OT
-              %th.final T
+.span4
+  .scorecard
+    .inner
+      .status
+        - unless game.has_result?
+          = game.starts_on.strftime("%l:%M %P")
+        - if game.has_result?
+          FINAL
+      .matchup
+        %table
           %tbody
-            %tr
-              %td= stats.away_team_name
-              %td.period= stats.away_goals_1
-              %td.period= stats.away_goals_2
-              %td.period= stats.away_goals_3
-              - if stats.overtime?
-                %td.period= stats.away_goals_ot
-              %td.final= stats.away_goals_total
-            %tr
-              %td= stats.home_team_name
-              %td.period= stats.home_goals_1
-              %td.period= stats.home_goals_2
-              %td.period= stats.home_goals_3
-              - if stats.overtime?
-                %td.period= stats.home_goals_ot
-              %td.final= stats.home_goals_total
+            = render :partial => "team", :locals => { :team => game.away_team, :score => game.has_result? ? game.result.away_score : "" }
+            = render :partial => "team", :locals => { :team => game.home_team, :score => game.has_result? ? game.result.home_score : "" }
+      - stats = game.statsheet            
+      - if stats
+        .game-links
+          = link_to 'Box Score', game_box_score_path(@league.slug, game.id)
+        .line-score
+          %table.table
+            %thead
+              %tr
+                %th
+                %th.period 1
+                %th.period 2
+                %th.period 3
+                - if stats.overtime?
+                  %th.period OT
+                %th.final T
+            %tbody
+              %tr
+                %td= stats.away_team_name
+                %td.period= stats.away_goals_1
+                %td.period= stats.away_goals_2
+                %td.period= stats.away_goals_3
+                - if stats.overtime?
+                  %td.period= stats.away_goals_ot
+                %td.final= stats.away_goals_total
+              %tr
+                %td= stats.home_team_name
+                %td.period= stats.home_goals_1
+                %td.period= stats.home_goals_2
+                %td.period= stats.home_goals_3
+                - if stats.overtime?
+                  %td.period= stats.home_goals_ot
+                %td.final= stats.home_goals_total
           
 

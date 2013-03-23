@@ -37,9 +37,8 @@
 // --------------------------------
 
 .scoreboard .group-head {
-  .makeColumn(12);
   padding: 3px 5px;
-  border-bottom: 1px solid @grayLight;
+  border-bottom: 2px solid @grayLight;
   background-color: @grayLighter;
   margin-bottom: 18px;
 }
@@ -47,40 +46,83 @@
   clear: both;
 }
 .scorecard {
-  .makeColumn(4);
+  padding: 1px;
   margin-bottom: 18px;   
 }
 .scorecard .inner {
+  background-color: @grayLighter;
   border: 1px solid @grayLight;
   padding: 2px;
   .border-radius(5px);
 }
-.scorecard .header {
-  border-top: 2px solid #000;
-  border-bottom: 1px solid @grayLight;
-  table { 
-    #gradient > .vertical(@white, #dedede);
+
+.scorecard {
+  .status {
+    padding: 2px 4px;
     font-weight: bold;
-    width: 100%;
-    margin-bottom: 0px; 
-    td {
-      padding: 8px;
-      line-height: 18px;
+    font-size: 10pt;
+    border-bottom: solid 1px @grayLight;
+  }
+  .matchup {
+    table {
+      width: 100%;
+    }
+    td.logo {
+      width: 50px;
+    }
+    td.name {
+      padding-left: 10px;
+      line-height: 50px;
+      font-size: 24px;
+      font-weight: bold;
     }
     td.score {
-      border-right: 1px solid @grayLighter;
+      width: 80px;
+      line-height: 50px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: right;
+      padding-right: 10px;
     }
   }
-}
-.scorecard {
-  td.winner { width: 10%; }
-  td.team { width: 50%; }
-  td.score { width: 10%; text-align: right; }
-  td.result { wdith: 30%; vertical-align: middle; }
+  .team {
+    position: absolute;
+    height: 50px;
+    width: 294px;
+    .logo, .name, .score, {
+      position: absolute;
+      height: 50px;
+      top: 0px;
+    }
+
+    .name, .score {
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 50px;
+    }
+    .name {
+      left: 50px;
+      padding-left: 10px;
+    }
+    .score {
+      right: 0px;
+      width: 100px;
+      padding-right: 20px;
+      text-align: right;
+    }
+  }
+  .home {
+    top: 50px;
+  }
+  .away {
+    top: 0px;
+  }
 }
 
 .scorecard .game-links {
+  margin-top: 2px;
   padding: 4px;
+  border-top: 1px solid @grayLight;
   border-bottom: 1px solid @grayLight;
   font-size: 8pt;
 }
