@@ -32,7 +32,9 @@ module Hockey
     
     def self.post_player_results statsheet
       statsheet.players.each do |p|
+        #player = Player.where(id:  p.player_id).first
         player = p.player
+        puts 'NO PLAYER' if player.nil?
         next if player.nil?
         result = p.to_result
         player.record.post_result result
@@ -42,8 +44,10 @@ module Hockey
     
     def self.unpost_player_results statsheet
       statsheet.players.each do |p|
+        #player = Player.where(id:  p.player_id).first
         player = p.player
-        next if player.nil?
+        puts 'NO PLAYER' if player.nil?
+        next if player.nil?        
         player.record.cancel_result_for_game statsheet.game_id
         player.save
       end

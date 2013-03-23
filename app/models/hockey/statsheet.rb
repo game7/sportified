@@ -248,6 +248,7 @@ module Hockey
     end
 
     def goal_created(goal)
+      puts "GOAL!"
       increment_goals_for_player(goal.side, goal.plr, 1)
       increment_assists_for_player(goal.side, goal.a1, 1)
       increment_assists_for_player(goal.side, goal.a2, 1)
@@ -341,6 +342,7 @@ module Hockey
     end
 
     def clear_player_stats
+      puts '*****************************'
       players.each do |plr|
         plr.clear_stats
         plr.gp = 1 if plr.played

@@ -6,7 +6,7 @@ class Block
 
   field :section_id, :type => BSON::ObjectId
   field :column, :default => 0, :type => Integer
-  field :position, :type => Integer
+  field :position, :type => Integer, :default => 0
 
   embedded_in :page
   

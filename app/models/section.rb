@@ -4,7 +4,7 @@ class Section
     embedded_in :page
   
     field :pattern
-    field :position, :type => Integer   
+    field :position, :type => Integer, :default => 0
     
     PATTERNS = [
       "100", 

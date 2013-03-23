@@ -23,6 +23,8 @@ class Player
   before_save :ensure_record
 
   before_save :set_slug
+  
+  has_many :players
 
   def full_name
     [first_name, last_name].join(' ')

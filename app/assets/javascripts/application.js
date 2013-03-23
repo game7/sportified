@@ -1,7 +1,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui.min
-//= require jquery.form
 //= require jquery.remotipart
 //= require twitter/bootstrap
 //= require jcrop/jquery.Jcrop.min
@@ -40,7 +39,7 @@ $(document).ready(function() {
     window.location = this.value;
   });
 
-  $('.toggle').live("click", function() {
+  $('.toggle').on("click", function() {
     $('#'+this.getAttribute('rel')).slideToggle(300);
     return false;
   });

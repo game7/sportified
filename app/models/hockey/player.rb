@@ -14,7 +14,7 @@ module Hockey
       "#{first_name} #{last_name}"
     end
 
-    belongs_to :player
+    belongs_to :player, class_name: "::Player"
     embedded_in :statsheet, :class_name => "Hockey::Statsheet"
 
     scope :with_num, ->(n) { where(num: n) }
