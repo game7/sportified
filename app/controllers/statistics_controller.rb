@@ -12,6 +12,9 @@ class StatisticsController < BaseLeagueController
     @savepct_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_svp").limit(limit)
     @save_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_sv").limit(limit)
     @shutout_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_so".gt => 0).desc("record.g_so").limit(limit)
+    @hattrick_leaders = Player.for_league(@league).for_season(@season).where(:"record.hat".gt => 0).desc("record.hat").limit(limit)
+    @playmaker_leaders = Player.for_league(@league).for_season(@season).where(:"record.plmkr".gt => 0).desc("record.plmkr").limit(limit)
+    @gordie_leaders = Player.for_league(@league).for_season(@season).where(:"record.gordie".gt => 0).desc("record.gordie").limit(limit)
   end  
   
   private

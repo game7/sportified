@@ -2,111 +2,15 @@
 = render :partial => 'shared/season_options', :object => @season_options
 .row
   .span4
-    %h3 Goals
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat GOALS
-        %tbody
-          - data_exists = false
-          - @goal_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= player.record.g
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No goals have been recorded... yet              
+    = render :partial => "stat_table", :locals => { :title => "POINTS", :players => @point_leaders, :column => "pts" }
+    = render :partial => "stat_table", :locals => { :title => "GOALS", :players => @goal_leaders, :column => "g" }
+    = render :partial => "stat_table", :locals => { :title => "ASSISTS", :players => @assist_leaders, :column => "a" }
   .span4
-    %h3 Assists
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat ASSISTS
-        %tbody
-          - data_exists = false
-          - @assist_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= player.record.a
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No assists have been recorded... yet
+    = render :partial => "stat_table", :locals => { :title => "SAVE PERCENTAGE", :players => @savepct_leaders, :column => "g_svp", :format_with => ->(value) { number_with_precision(value, :precision => 3) } }
+    = render :partial => "stat_table", :locals => { :title => "SAVES", :players => @save_leaders, :column => "g_sv" }
+    = render :partial => "stat_table", :locals => { :title => "SHUTOUTS", :players => @shutout_leaders, :column => "g_so" }
   .span4
-    %h3 Points
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat POINTS
-        %tbody
-          - data_exists = false
-          - @point_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= player.record.pts
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No points have been recorded... yet              
-.row
-  .span4
-    %h3 Save Percentage
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat SAVE PCT
-        %tbody
-          - data_exists = false
-          - @savepct_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= number_with_precision(player.record.g_svp, :precision => 3)
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No saves have been recorded... yet
-  .span4
-    %h3 Saves
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat SAVES
-        %tbody
-          - data_exists = false
-          - @save_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= player.record.g_sv
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No saves have been recorded... yet              
-  .span4
-    %h3 Shutouts
-    %table.table.table-striped.table-bordered.leaders
-      %thead
-        %tr
-          %th.player PLAYER
-          %th.stat SO
-        %tbody
-          - data_exists = false
-          - @shutout_leaders.each do |player|
-            - data_exists = true
-            %tr
-              %td.player= player.full_name
-              %td.stat= player.record.g_so
-          - unless data_exists
-            %tr
-              %td{:colspan => 2} 
-                %em No shutouts have been recorded... yet
+    = render :partial => "stat_table", :locals => { :title => "HAT TRICKS", :players => @hattrick_leaders, :column => "hat"}
+    = render :partial => "stat_table", :locals => { :title => "PLAYMAKERS", :players => @playmaker_leaders, :column => "plmkr" }
+    = render :partial => "stat_table", :locals => { :title => "GORDIE HOWES", :players => @gordie_leaders, :column => "gordie" }    
+    

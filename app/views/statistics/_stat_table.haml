@@ -1,0 +1,13 @@
+- format_with ||= ->(value) { value }
+%table.table.table-striped.table-bordered.leaders
+  %thead
+    %tr
+      %th{ :colspan => "3"}= title
+  %tbody
+    - arr = players.entries
+    - for i in 0..2
+      - player = arr[i]
+      %tr
+        %td.logo= image_tag player.team.logo.thumb.url if player && player.team.logo?
+        %td.player= player.full_name if player
+        %td.stat= format_with.call(player.record[column]) if player
