@@ -24,7 +24,9 @@
     end
   end
 
-  match "programs/:league_slug/schedule(/:season_slug)" => "schedule#index", :as => :schedule, :via => :get
+  match "programs/:league_slug/schedule" => redirect("/programs/schedule/%{league_slug}")
+  match "programs/schedule/:league_slug" => "schedule#index", :as => :schedule, :via => :get
+  
   match "programs/standings/:league_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
   match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
 
