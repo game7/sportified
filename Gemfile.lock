@@ -108,6 +108,10 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.4)
+    fuelux-rails (2.3.0)
+      actionpack (>= 3.1)
+      execjs
+      railties (>= 3.1)
     haml (4.0.0)
       tilt
     haml-rails (0.4)
@@ -290,6 +294,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fog
+  fuelux-rails
   haml
   haml-rails
   icalendar
