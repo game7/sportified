@@ -6,23 +6,11 @@
   $("#dialog-modal").modal('hide');  
   $("#dialog-modal").html('');
   var $team = $("#team-<%= @team.id %>");
+  var partial = $('<%= escape_javascript(render :partial => "team", :locals => { :team => @team, :class_name => "span6" }) %>').hide();
   $team.slideUp('slow', function() {
-    $team.find('.well').css('background-color', '<%= @team.primary_color %>');
-    $team.find('.name').text('<%= @team.name %>')
-                       .css('color', '<%= @team.secondary_color %>');
-    $team.find('.pages a').css('color', '<%= @team.accent_color %>');
-    <% if @team.logo? %>
-      $team.find('.info').removeClass('span12').addClass('span9');
-      $team.find('.logo').show();
-    <% else %>
-      $team.find('.info').removeClass('span9').addClass('span12');
-      $team.find('.logo').hide();
-    <% end %>
-    $team.find('.logo').html('<%= image_tag @team.logo.thumb.url if @team.logo? %>');
-    $team.find('.actions').replaceWith('<%= escape_javascript(render :partial => "actions", :locals => { :team => @team }) %>');
-    $team.slideDown();
+    $team.slideUp('slow', function() {
+      $team.replaceWith(partial);
+      partial.slideDown('slow');
+    });
   });
-
-  
-
 <% end %>

@@ -3,7 +3,7 @@
     .logo
       = image_tag team.logo.small.url if team.logo?  
     = render :partial => "actions", :locals => { :team => team } if current_user_is_admin?
-    %h1.name{ :style => "color: #{team.secondary_color}"}= team.name
+    %h3.name{ :style => "color: #{team.secondary_color}"}= team.name
     .links
       = link_to "Schedule", team_schedule_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
       %span{ :style=> "color: #{team.secondary_color}"}= " | "
