@@ -25,7 +25,7 @@
           %span{ :style=> "color: #{@team.secondary_color}"}= " | "
           = link_to "Players", "#", { :style => "color: #{@team.accent_color};" }
           
-- color_options = @team.main_colors << "#FFF" << "#000"
+- color_options = @team.main_colors << "#FFFFFF" << "#000000"
 
 = simple_form_for @team, :remote => true do |f|
   .control-group.optional

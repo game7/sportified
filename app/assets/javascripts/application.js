@@ -5,18 +5,22 @@
 //= require twitter/bootstrap
 //= require jcrop/jquery.Jcrop.min
 
+function rgbAsHexString(rgbInt) {
+  var color = parseInt(rgbInt).toString(16);
+  return color.length == 1 ? '0'+color : color;
+}
+
 function colorToHex(color) {
     if (color.substr(0, 1) === '#') {
         return color;
     }
     var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
     
-    var red = parseInt(digits[2]);
-    var green = parseInt(digits[3]);
-    var blue = parseInt(digits[4]);
-    
-    var rgb = blue | (green << 8) | (red << 16);
-    return digits[1] + '#' + rgb.toString(16).toUpperCase();
+    var red = rgbAsHexString(digits[2]);
+    var green = rgbAsHexString(digits[3]);
+    var blue = rgbAsHexString(digits[4]);
+    //alert(('#' + red + '|' + green + '|' + blue).toUpperCase());
+    return ('#' + red + green + blue).toUpperCase();
 };
 
 

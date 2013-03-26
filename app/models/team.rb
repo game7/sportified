@@ -29,6 +29,10 @@ class Team
   def crop_changed?
     crop_x_changed? || crop_y_changed? || crop_h_changed? || crop_w_changed?
   end
+  
+  def get_color_palette?
+    crop_changed? || logo_changed?
+  end
 
   mount_uploader :logo, TeamLogoUploader
 
@@ -99,8 +103,10 @@ class Team
     self.logo.recreate_versions! if self.logo.url
   end
   
-  before_save :get_color_palette, :if => :logo?
+  before_save :get_color_palette, :if => :get_color_palette?
   def get_color_palette
+    puts 'boo'
+    puts 'hoo'
     p = self.logo.color_palette
     self.main_colors = p[:colors]
     unless self.custom_colors
@@ -120,18 +126,8 @@ class Team
       where(:season_id => season_id)
     end
   end
+
   scope :with_slug, lambda { |slug| where(:slug => slug) }
   scope :without_division, where(:division_id => nil)
-
-
-
-
-
-
-
-
-
-
-
 
 end
