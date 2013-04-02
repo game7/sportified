@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Site do
+describe Tenant do
   
   before(:each) do
-    @site = Site.make_unsaved
+    @tenant = Tenant.make_unsaved
   end
 
   context "when validating" do

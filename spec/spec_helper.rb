@@ -30,8 +30,16 @@ RSpec.configure do |config|
   # instead of true.
   #config.use_transactional_fixtures = true
 
-  config.before :each do
-    Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
+  config.before(:suite) do
+    DatabaseCleaner[:mongoid].strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner[:mongoid].start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner[:mongoid].clean
   end
 
 end
