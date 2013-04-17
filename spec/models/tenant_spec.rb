@@ -7,8 +7,7 @@ describe Tenant do
   end
 
   context "when validating" do
-    
-    it { should validate_presence_of(:name) }
+
     it { should validate_presence_of(:host) }
 
   end
