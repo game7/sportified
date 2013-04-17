@@ -14,8 +14,8 @@ class Admin::GamesController < Admin::BaseLeagueController
   def new
     @game = Game.new
     @game.season = @season if @season
-    @game.league_id = @league_options[0].id if @league_options.count == 1
-    @game.venue_id = @venue_options[0].id if @venue_options.count == 1
+    @game.league_id = params[:league_id] || @league_options[0].first.id unless @league_options.empty?
+    @game.venue_id = @venue_options.first.id unless @venue_options.empty?
     load_team_options
   end
 

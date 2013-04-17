@@ -16,7 +16,7 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   def new
     @event = Event.new(:season => @season, :league_id => params[:league_id])
-    @event.venue_id = @venue_options[0].id if @venue_options.count
+    @event.venue_id = @venue_options.first.id unless @venue_options.empty?
   end
 
   def edit
