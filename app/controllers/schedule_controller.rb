@@ -1,5 +1,5 @@
 class ScheduleController < BaseLeagueController
-  before_filter :get_team_options
+  before_filter :get_team_options, :unless => :all_leagues?
   
   def index
     
@@ -16,8 +16,8 @@ class ScheduleController < BaseLeagueController
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
-      @events = @league.events.gt(starts_on: @start_date).lt(ends_on: @end_date).asc(:starts_on).entries
-      #@events = @events.asc(:starts_on).entries
+      @events = all_leagues? ? Event : @league.events      
+      @events = @events.gt(starts_on: @start_date).lt(ends_on: @end_date).asc(:starts_on)
     end
 
     respond_to do |format|
@@ -27,6 +27,10 @@ class ScheduleController < BaseLeagueController
   end
   
   private
+  
+  def all_leagues?
+    !@league
+  end
   
   def get_team_options
     @team_options = @league.teams.for_season(@season).asc(:name).collect{|t| [t.name, team_schedule_path(:league_slug => t.league_slug, :season_slug => t.season_slug, :team_slug => t.slug)]}

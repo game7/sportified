@@ -23,6 +23,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   end
 
   def create
+    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])    
     @event = Event.new(params[:event])
     if @event.save
       return_to_last_point :success => 'Event was successfully created.'

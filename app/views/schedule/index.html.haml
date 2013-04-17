@@ -1,4 +1,4 @@
-- title @league.name + ' Schedule'
+- title "#{ @league ? @league.name+' ' : '' }Schedule"
 - last_date = nil
 
 - if current_user_is_admin?
@@ -8,7 +8,7 @@
 
 
 = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-=select("team", :id, @team_options, {}, { :class => "redirect_to" })
+= select("team", :id, @team_options, {}, { :class => "redirect_to" }) if @league
 
 %table.table.table-striped.table-bordered
   - if @events.count == 0
