@@ -24,7 +24,11 @@
         %td
           .visible-phone= event.starts_on.strftime("%l:%M%P").gsub("m","")
           .hidden-phone= event.starts_on.strftime("%l:%M %P")
-        %td= event.summary
+        %td
+          = event.summary
+          .pull-right
+            - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
+            = link_to "Edit", edit_url, :class => 'btn btn-mini'
         %td
           .visible-phone= event.venue_short_name
           .hidden-phone= event.venue_name
