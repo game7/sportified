@@ -29,9 +29,19 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   #config.use_transactional_fixtures = true
+  
+  config.include FactoryGirl::Syntax::Methods
 
-  config.before :each do
-    Mongoid.master.collections.select {|c| c.name !~ /system/ }.each(&:drop)
+  config.before(:suite) do
+    DatabaseCleaner[:mongoid].strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner[:mongoid].start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner[:mongoid].clean
   end
 
 end

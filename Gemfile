@@ -50,18 +50,16 @@ group :test do
   gem 'webrat'
   gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
-  # Autotest
   gem 'autotest'
   gem 'autotest-rails'
   gem 'autotest-notification'
-
+  gem 'database_cleaner'
 end
 
 group :development do
   gem 'haml-rails'
   gem 'nifty-generators' 
 end
-
 
 group :assets do
   gem 'sass-rails', " ~> 3.2.0"

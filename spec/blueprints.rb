@@ -6,7 +6,7 @@ Sham.name { Faker::Name.name }
 Sham.email { Faker::Internet.email }
 Sham.password { 'pa$$w0rd' }
 
-Site.blueprint do
+Tenant.blueprint do
   name { Sham.name }
   host { Sham.host }
 end
