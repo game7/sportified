@@ -1,6 +1,8 @@
 class BaseLeagueController < ApplicationController
+  skip_filter :set_area_navigation
   before_filter :find_league
   before_filter :find_season
+  before_filter :set_area_navigation
 
   private
 
@@ -13,12 +15,12 @@ class BaseLeagueController < ApplicationController
     super
     if @league
       #add_area_menu_item('Home', "#")
-      add_area_menu_item 'Schedule', schedule_path(@league)
-      add_area_menu_item 'Scoreboard', scoreboard_path(@league)
-      add_area_menu_item 'Standings', standings_path(@league)
-      add_area_menu_item 'Statistics', statistics_path(@league)
-      add_area_menu_item 'Teams', teams_path(@league)
-      add_area_menu_item 'Players', players_path(@league)
+      add_area_menu_item 'Schedule', schedule_path(@league.slug)
+      add_area_menu_item 'Scoreboard', scoreboard_path(@league.slug)
+      add_area_menu_item 'Standings', standings_path(@league.slug)
+      add_area_menu_item 'Statistics', statistics_path(@league.slug)
+      add_area_menu_item 'Teams', teams_path(@league.slug)
+      add_area_menu_item 'Players', players_path(@league.slug)
     end
   end
   
