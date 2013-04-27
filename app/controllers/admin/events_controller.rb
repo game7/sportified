@@ -15,15 +15,21 @@ class Admin::EventsController < Admin::BaseLeagueController
   end
 
   def new
-    @event = Event.new(:season => @season, :league_id => params[:league_id])
-    @event.venue_id = @venue_options.first.id unless @venue_options.empty?
+    if params[:clone]
+      clone = Event.find(params[:clone])
+      @event = clone.dup
+    else
+      @event = Event.new(:season => @season, :league_id => params[:league_id])
+      @event.venue_id = @venue_options.first.id unless @venue_options.empty?
+    end
   end
 
   def edit
   end
 
   def create
-    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])    
+    Chronic.time_class = Time.zone
+    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
     @event = Event.new(params[:event])
     if @event.save
       return_to_last_point :success => 'Event was successfully created.'
@@ -38,6 +44,7 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   def update
     @event = Event.find(params[:id])
+    Chronic.time_class = Time.zone
     params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
     if @event.update_attributes(params[:event])
       return_to_last_point(:notice => 'Event was successfully updated.')

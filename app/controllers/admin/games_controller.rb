@@ -12,10 +12,16 @@ class Admin::GamesController < Admin::BaseLeagueController
  
 
   def new
-    @game = Game.new
-    @game.season = @season if @season
-    @game.league_id = params[:league_id] || @league_options[0].first.id unless @league_options.empty?
-    @game.venue_id = @venue_options.first.id unless @venue_options.empty?
+    if params[:clone]
+      clone = Game.find(params[:clone])
+      @game = clone.dup
+    else
+      @game = Game.new
+      @game.season = @season if @season
+      @game.league_id = params[:league_id] || @league_options.first.id if @league_options.length == 1
+      @game.league = @league if @league
+      @game.venue_id = @venue_options.first.id if @venue_options.length == 1
+    end
     load_team_options
   end
 
@@ -23,6 +29,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def create
+    Chronic.time_class = Time.zone
     params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
     @game = Game.new(params[:game])
     if @game.save
@@ -39,6 +46,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def update
+    Chronic.time_class = Time.zone
     params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
     if @game.update_attributes(params[:game])
       return_to_last_point :success => 'Game was successfully updated.'
