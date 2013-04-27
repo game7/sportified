@@ -31,7 +31,7 @@ class Team
   end
   
   def get_color_palette?
-    crop_changed? || logo_changed?
+    self.logo? && (crop_changed? || logo_changed?)
   end
 
   mount_uploader :logo, TeamLogoUploader
