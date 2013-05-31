@@ -97,6 +97,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_is_host?
   
   def current_user_is_admin?
+    return false
     current_user_is_host? || lambda {
       current_tenant_id = Tenant.current.id
       current_user and current_user.roles.find_by_name(:admin).each do |role|
