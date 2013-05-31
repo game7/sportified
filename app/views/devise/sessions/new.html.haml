@@ -1,10 +1,10 @@
 - title "Sign in"
 
-= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  = f.input :email
-  = f.input :password
-  - if  devise_mapping.rememberable?
-    = f.input :remember_me, :as => :boolean
-  .form-actions
-    = f.submit "Sign in", :class => 'btn btn-primary'
-    = render :partial => "devise/shared/links"
+#= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+#  = f.input :email
+#  = f.input :password
+#  - if  devise_mapping.rememberable?
+#    = f.input :remember_me, :as => :boolean
+#  .form-actions
+#    = f.submit "Sign in", :class => 'btn btn-primary'
+#    = render :partial => "devise/shared/links"
