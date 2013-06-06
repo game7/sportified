@@ -7,7 +7,7 @@
       %div{ :class => "item#{' active' if index == 0}" }
         = image_tag post.image.url if index == 0
         - unless index == 0
-          %img{ :"data-src" => post.image.url, :alt => image_alt(post.image.url) }
+          %img{ :"data-src" => post.image.url, :alt => image_alt(post.image.url), :"data-link" => "#{post.link_url}" }
         - unless post.title.blank?
           .carousel-caption
             %h4= post.title
@@ -20,5 +20,11 @@
     $(function(){
       $("#carousel_#{block.id} img[data-src]").each(function(index){
         $(this).attr("src", $(this).attr("data-src"));
-      });      
+      });
+      $("#carousel_#{block.id} img[data-link]").each(function(index){
+        if ( $(this).attr('data-link') != '' ) {
+          var link = $('<a/>').attr('href', $(this).attr('data-link')).attr('target', '_blank');
+          $(this).wrap(link);
+        }
+      });    
     });

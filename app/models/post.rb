@@ -9,6 +9,7 @@ class Post
   field :title
   field :summary
   field :body
+  field :link_url
   mount_uploader :image, ImageUploader
   
   scope :newest_first, desc(:created_at)
