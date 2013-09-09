@@ -9,8 +9,8 @@
       .matchup
         %table
           %tbody
-            = render :partial => "team", :locals => { :team => game.away_team, :score => game.has_result? ? game.result.away_score : "" }
-            = render :partial => "team", :locals => { :team => game.home_team, :score => game.has_result? ? game.result.home_score : "" }
+            = render :partial => "team", :locals => { :team => game.away_team, :name => game.away_team_name,:score => game.has_result? ? game.result.away_score : "" }
+            = render :partial => "team", :locals => { :team => game.home_team, :name => game.home_team_name, :score => game.has_result? ? game.result.home_score : "" }
       - stats = game.statsheet            
       - if stats
         .game-links

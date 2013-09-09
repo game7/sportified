@@ -1,5 +1,5 @@
-%tr{ :style => "background-color: #{team.primary_color}; border-top: 2px solid #FFF; margin-top: 2px;"}
+%tr{ :style => "background-color: #{team.primary_color if team}; border-top: 2px solid #FFF; margin-top: 2px;"}
   %td.logo
-    = image_tag team.logo.thumb.url if team.logo?
-  %td.name{ :style => "color: #{team.secondary_color}", :nowrap => 'nowrap'}= team.name
-  %td.score{ :style => "color: #{team.secondary_color}"}= score
+    = image_tag team.logo.thumb.url if team && team.logo?
+  %td.name{ :style => "color: #{team.secondary_color if team}", :nowrap => 'nowrap'}= name
+  %td.score{ :style => "color: #{team.secondary_color if team}"}= score
