@@ -1,6 +1,7 @@
 class Team
   include Mongoid::Document
   include Sportified::TenantScoped
+  include Concerns::Brandable
  
   field :name
   validates :name, presence: true
@@ -10,31 +11,6 @@ class Team
   field :show_in_standings, :type => Boolean, :default => true
   field :pool, :type => String
   field :seed, :type => Integer
-  
-  field :primary_color
-  field :secondary_color
-  field :accent_color
-  field :main_colors, :type => Array
-  field :custom_colors, :type => Boolean
-  
-  field :crop_x, :type => Integer, :default => 0
-  field :crop_y, :type => Integer, :default => 0
-  field :crop_h, :type=> Integer, :default => 0
-  field :crop_w, :type => Integer, :default => 0
-
-  def cropping?
-    crop_w > 0 && crop_h > 0
-  end
-
-  def crop_changed?
-    crop_x_changed? || crop_y_changed? || crop_h_changed? || crop_w_changed?
-  end
-  
-  def get_color_palette?
-    self.logo? && (crop_changed? || logo_changed?)
-  end
-
-  mount_uploader :logo, TeamLogoUploader
 
   belongs_to :league
   validates_presence_of :league_id  
@@ -90,31 +66,6 @@ class Team
     self.division_name = division ? division.name : nil
   end
   
-  before_save :clear_crop, :if => :logo_changed?
-  def clear_crop
-    self.crop_x = 0
-    self.crop_y = 0
-    self.crop_w = 0
-    self.crop_h = 0
-  end
-
-  before_save :resize_logo_images, :if => :crop_changed?
-  def resize_logo_images
-    self.logo.recreate_versions! if self.logo.url
-  end
-  
-  before_save :get_color_palette, :if => :get_color_palette?
-  def get_color_palette
-    puts 'boo'
-    puts 'hoo'
-    p = self.logo.color_palette
-    self.main_colors = p[:colors]
-    unless self.custom_colors
-      self.primary_color = p[:primary]
-      self.secondary_color = p[:secondary]
-      self.accent_color = p[:accent]
-    end
-  end
 
   class << self
     def for_league(league)
