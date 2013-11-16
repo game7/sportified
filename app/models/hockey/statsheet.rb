@@ -317,7 +317,7 @@ module Hockey
     
     def check_and_set_gordie_howe player
       gordie = 0
-      gordie = 1 if player.g > 1 and player.a > 1 and player.pen > 1
+      gordie = 1 if player.g >=1 and player.a >= 1 and player.pen >= 1
       player.gordie = gordie
     end
     
