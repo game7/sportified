@@ -301,7 +301,7 @@ module Hockey
           when 'misconduct'
             plr.pen_misc += i
           when 'game_misconduct'
-            plr.men_game += i
+            plr.pen_game += i
         end
         check_and_set_gordie_howe plr
       end
