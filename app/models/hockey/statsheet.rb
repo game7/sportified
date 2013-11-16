@@ -293,7 +293,7 @@ module Hockey
       if plr = players.for_side(side).with_num(num).first
         plr.pen += i
         plr.pim += min
-        case severity
+        case severity.downcase
           when 'minor'
             plr.pen_minor += i
           when 'major'
