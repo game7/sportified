@@ -312,7 +312,7 @@ module Hockey
     end
     
     def check_and_set_playmaker player
-      player.hat = player.a >= 3 ? 1 : 0
+      player.plmkr = player.a >= 3 ? 1 : 0
     end
     
     def check_and_set_gordie_howe player
