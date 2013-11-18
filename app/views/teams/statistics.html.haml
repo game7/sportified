@@ -13,6 +13,10 @@
       %th.span1 PTS
       %th.span1 PEN
       %th.span1 PIM
+      %th.span1 MNR
+      %th.span1 MJR
+      %th.span1 MSC
+      %th.span1 GAME      
     %tbody
       - @players.each do |player|
         %tr
@@ -23,6 +27,10 @@
           %td= player.record.pts
           %td= player.record.pen
           %td= player.record.pim
+          %td= player.record.pen_minor
+          %td= player.record.pen_major
+          %td= player.record.pen_misc
+          %td= player.record.pen_game
 
 %h3 Goaltending Statistics
 %table.table.table-striped.table-bordered

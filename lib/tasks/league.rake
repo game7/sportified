@@ -103,7 +103,7 @@ namespace :league do
         statsheet = game.statsheet
         if statsheet
           puts "-- HAS STATSHEET"
-          unless statsheet.posted?
+          if statsheet.posted?
             puts "---- IT'S POSTED"
             puts "---- UNPOSTING..."
             Hockey::Statsheet::Processor.unpost statsheet
