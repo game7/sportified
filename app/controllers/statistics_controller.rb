@@ -20,7 +20,7 @@ class StatisticsController < BaseLeagueController
   private
   
   def get_season_options
-    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, statistics_path(:league_slug => @league.slug, :season_slug => s == @season ? nil : s.slug)]}
+    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, statistics_path(:league_slug => @league.slug, :season_slug => s.slug)]}
   end  
 
   def set_breadcrumbs
