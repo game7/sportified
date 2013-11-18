@@ -36,6 +36,7 @@
   match "programs/teams/:league_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
   
   match "programs/statistics/:league_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
+  match "programs/statistics/:league_slug/:season_slug/:view" => "statistics#show", :as => :statistic, :via => :get
   
   match "programs/:league_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get

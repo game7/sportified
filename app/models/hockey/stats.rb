@@ -1,6 +1,7 @@
 module Hockey
   module Stats
     extend ActiveSupport::Concern
+    include StatsViews
 
     included do
       field :gp, :type => Integer, :default => 0
@@ -147,6 +148,32 @@ module Hockey
       self.g_sol      -= stats.g_sol  
       self.g_totw     -= stats.g_totw 
       self.g_totl     -= stats.g_totl      
+    end
+    
+    module ClassMethods
+      
+      def tokens(view)
+        case view
+        when "scoring"
+          Hockey::Player::Record::SCORING
+        when "penalties"
+          Hockey::Player::Record::PENALTIES
+        when "goaltending"
+          Hockey::Player::Record::GOALTENDING
+        end
+      end
+      
+      def default_token(view)
+        case view
+        when "scoring"
+          "pts"
+        when "penalties"
+          "pim"
+        when "goaltending"
+          "g_gaa"
+        end       
+      end
+      
     end
     
   end
