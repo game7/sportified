@@ -16,6 +16,7 @@ module Hockey
       field :hat, :type => Integer, :default => 0
       field :plmkr, :type => Integer, :default => 0
       field :gordie, :type => Integer, :default => 0
+      field :eject, :type => Integer, :default => 0
       
       field :g_gp, :type => Integer, :default => 0
       field :g_toi, :type => Integer, :default => 0
@@ -53,6 +54,7 @@ module Hockey
       self.hat        = 0
       self.plmkr      = 0
       self.gordie     = 0
+      self.eject      = 0
       self.g_gp       = 0
       self.g_toi      = 0
       self.g_sa       = 0
@@ -88,6 +90,7 @@ module Hockey
       self.hat        += stats.hat      
       self.plmkr      += stats.plmkr    
       self.gordie     += stats.gordie   
+      self.eject      += stats.eject  
       self.g_gp       += stats.g_gp   
       self.g_toi      += stats.g_toi  
       self.g_sa       += stats.g_sa   
@@ -123,7 +126,8 @@ module Hockey
       self.pen_game   -= stats.pen_game 
       self.hat        -= stats.hat      
       self.plmkr      -= stats.plmkr    
-      self.gordie     -= stats.gordie
+      self.gordie     -= stats.gordie 
+      self.eject      -= stats.eject  
       self.g_gp       -= stats.g_gp   
       self.g_toi      -= stats.g_toi  
       self.g_sa       -= stats.g_sa   

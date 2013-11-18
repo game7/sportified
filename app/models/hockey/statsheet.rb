@@ -303,6 +303,7 @@ module Hockey
             plr.pen_game += i
         end
         check_and_set_gordie_howe plr
+        check_and_set_eject plr
       end
     end
     
@@ -318,6 +319,10 @@ module Hockey
       gordie = 0
       gordie = 1 if player.g >=1 and player.a >= 1 and player.pen >= 1
       player.gordie = gordie
+    end
+    
+    def check_and_set_eject player
+      player.eject = player.pen_minor >= 3 : 1 : 0
     end
     
     def set_goalie_stats goalie
