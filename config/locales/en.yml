@@ -61,16 +61,16 @@ en:
         pim:
           name: Penalty Minutes
           col: PIM
-        pen_min:
+        pen_minor:
           name: Minor Penalties
           col: MNR
-        pen_maj:
+        pen_major:
           name: Major Penalites
           col: MJR
-        pen_mis:
+        pen_misc:
           name: Misconduct Penalties
           col: MSC
-        pen_gam:
+        pen_game:
           name: Game Misconduct Penalties
           col: GMSC
         hat:
