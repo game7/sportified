@@ -40,3 +40,105 @@ en:
     text:
       name: "Text"
       description: "A block of text that can be formatted using Textile markup syntax"
+  hockey:
+    statistics:
+      tokens:
+        gp:
+          name: Games Played
+          col: GP
+        g:
+          name: Goals
+          col: G
+        a:
+          name: Assists
+          col: A
+        pts:
+          name: Points
+          col: PTS
+        pen:
+          name: Penalties
+          col: PEN
+        pim:
+          name: Penalty Minutes
+          col: PIM
+        pen_min:
+          name: Minor Penalties
+          col: MNR
+        pen_maj:
+          name: Major Penalites
+          col: MJR
+        pen_mis:
+          name: Misconduct Penalties
+          col: MSC
+        pen_gam:
+          name: Game Misconduct Penalties
+          col: GMSC
+        hat:
+          name: Hat Tricks
+          col: HAT
+        plmkr:
+          name: Playmaker
+          col: PMKR
+        gordie:
+          name: Gordie Howe
+          col: GORDIE
+        eject:
+          name: Ejections
+          col: EJECT
+        g_gp:
+          name: Games Played
+          col: GP
+        g_toi:
+          name: Minutes Played
+          col: TOI
+        g_sa:
+          name: Shots Against
+          col: SA  
+        g_ga:
+          name: Goals Against
+          col: GA
+        g_sv:
+          name: Saves
+          col: SV
+        g_svp:
+          name: Save Percent
+          col: SV%
+        g_gaa:
+          name: Goals Against Average
+          col: GAA
+        g_sa:
+          name: Shutouts
+          col: SO
+        g_soa:
+          name: Shootout Attempts Faced
+          col: SOA
+        g_sog:
+          name: Shootout Shootout Goals Allowed
+          col: SOG
+        g_sosvp:
+          name: Shootout Save Percent
+          col: SO%
+        g_regw:
+          name: Regulation Wins
+          col: REGW
+        g_regl:
+          name: Regulation Losses
+          col: REGL
+        g_otw:
+          name: Overtime Wins
+          col: OTW
+        g_otl:
+          name: Overtime Losses
+          col: OTL
+        g_sow:
+          name: Shootout Wins
+          col: SOW
+        g_sol:
+          name: Shootout Losses
+          col: SO
+        g_totw:
+          name: Total Wins
+          col: W
+        g_totl:
+          name: Total Losses
+          col: L

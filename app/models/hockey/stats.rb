@@ -174,6 +174,11 @@ module Hockey
         end       
       end
       
+      def column(token)
+        "boo"
+        I18n.t("hockey.statistics.tokens.#{token}.col")
+      end
+      
     end
     
   end

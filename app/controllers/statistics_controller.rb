@@ -20,7 +20,6 @@ class StatisticsController < BaseLeagueController
   
   def show
     @view = params[:view]
-    
     @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, statistic_path(:league_slug => @league.slug, :season_slug => s.slug, :view => @view)]}    
         
     @token = params[:token] || Hockey::Player::Record.default_token(params[:view])    

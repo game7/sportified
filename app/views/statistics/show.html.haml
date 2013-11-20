@@ -2,17 +2,17 @@
 = render :partial => 'shared/season_options', :object => @season_options
 
 - format_with ||= ->(value) { value }
-%table.table.table-striped.table-bordered.leaders
+%table.table.table-striped.table-bordered.statistics
   %thead
     %tr
       %th
       %th Player
       - for token in Hockey::Player::Record.tokens @view
-        %td.stat= link_to token, statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => @view, :token => token)
+        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Player::Record.column(token), statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => @view, :token => token)
   %tbody
     - for player in @players
       %tr
         %td.logo= image_tag player.team.logo.thumb.url if player.team.logo?
         %td.player= player.full_name
         - for token in Hockey::Player::Record.tokens @view
-          %td.stat= format_with.call(player.record[token])                           
+          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= format_with.call(player.record[token])  
