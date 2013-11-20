@@ -322,7 +322,7 @@ module Hockey
     end
     
     def check_and_set_eject player
-      player.eject = player.pen_minor >= 3 : 1 : 0
+      player.eject = player.pen_minor >= 3 ? 1 : 0
     end
     
     def set_goalie_stats goalie
