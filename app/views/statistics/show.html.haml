@@ -1,5 +1,11 @@
 - title  @league.name + ' Show Statistics'
 = render :partial => 'shared/season_options', :object => @season_options
+#views.pull-right
+  = link_to "Scoring", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "scoring")
+  = " | "
+  = link_to "Penalties", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "penalties")
+  = " | "
+  = link_to "Goaltending", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "goaltending")
 
 - format_with ||= ->(value) { value }
 %table.table.table-striped.table-bordered.statistics
