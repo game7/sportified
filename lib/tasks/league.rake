@@ -98,7 +98,8 @@ namespace :league do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
-      Game.all.each do |game|
+      season = Season.where(:name => '2013 Winter').first
+      Game.for_season(season).each do |game|
         puts "NEXT GAME: #{game.summary} (#{game.starts_on.strftime('%m/%d/%y')})"
         statsheet = game.statsheet
         if statsheet
