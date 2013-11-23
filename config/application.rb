@@ -17,9 +17,6 @@ end
 
 module Sportified
   class Application < Rails::Application
-    
-    Mongoid.logger.level = Logger::DEBUG
-    Moped.logger.level = Logger::DEBUG
 
     config.generators do |g|
       g.template_engine :haml
