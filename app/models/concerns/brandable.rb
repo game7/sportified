@@ -53,8 +53,6 @@ module Concerns
     end
 
     def get_color_palette
-      puts 'boo'
-      puts 'hoo'
       p = self.logo.color_palette
       self.main_colors = p[:colors]
       unless self.custom_colors

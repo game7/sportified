@@ -117,6 +117,20 @@ namespace :league do
       end
     end
   end  
+  
+  desc "Brandify teams"
+  task :brandify_teams => :environment do
+    Tenant.all.each do |tenant|
+      Tenant.current = tenant
+      #iterate teams with branding
+      Team.where(:logo.ne => nil).each do |branded|
+        Team.where(:name => branded.name).where(:logo => nil).each do |unbranded|
+          unbranded.replace_branding_from branded
+          unbranded.save
+        end
+      end
+    end
+  end
 
 
 end
