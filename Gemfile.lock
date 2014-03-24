@@ -74,7 +74,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
-    commonjs (0.2.6)
+    commonjs (0.2.7)
     database_cleaner (0.9.1)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
@@ -121,8 +121,8 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hashie (1.2.0)
-    hike (1.2.1)
-    i18n (0.6.1)
+    hike (1.2.3)
+    i18n (0.6.9)
     icalendar (1.2.2)
     journey (1.0.4)
     jquery-rails (2.2.1)
@@ -134,13 +134,13 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.2.0)
       addressable (~> 2.3)
-    less (2.2.2)
-      commonjs (~> 0.2.6)
-    less-rails (2.2.6)
+    less (2.5.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.5.0)
       actionpack (>= 3.1)
-      less (~> 2.2.0)
-    less-rails-bootstrap (2.2.1)
-      less-rails (~> 2.2.0)
+      less (~> 2.5.0)
+    less-rails-bootstrap (3.1.1.1)
+      less-rails (~> 2.5.0)
     libv8 (3.11.8.13)
     machinist (1.0.6)
     machinist_mongo (1.2.0)
@@ -260,7 +260,7 @@ GEM
       libv8 (~> 3.11.8.12)
       ref
     thor (0.14.6)
-    tilt (1.3.3)
+    tilt (1.4.1)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
@@ -303,7 +303,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy
-  less-rails-bootstrap (>= 2.2.0)
+  less-rails-bootstrap (>= 2.5.0)
   machinist_mongo
   mongoid (~> 3.1.0)
   mongoid-tree
