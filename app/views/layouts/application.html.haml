@@ -15,16 +15,20 @@
     %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     = yield(:head)
   %body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
+    .navbar.navbar-default.navbar-fixed-top{ :role => 'banner'}
+      .container
+        .navbar-header
+          %button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar        
           #site_logo
-            = link_to "/", :class => "brand" do
+            = link_to "/", :class => "navbar-brand" do
               %div
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
             = link_to Tenant.current.name, root_url, :class => "brand"
-          = render "layouts/site_navigation" if @site_menu_items             
+        = render "layouts/site_navigation" if @site_menu_items             
     #wrapper.container
       %header
         = render "layouts/area_navigation" if @area_menu_items  

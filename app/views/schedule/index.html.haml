@@ -4,7 +4,7 @@
 - if current_user_is_admin?
   - content_for :actions do
     = link_to icon('plus')+" New Event", new_admin_event_path(:season_id => @season, :league_id => @league), :class => 'btn'
-    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :league_id => @league), :class => 'btn'
+    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :league_id => @league), { :class => 'btn btn-primary', :role => 'button' }
 
 
 = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }

@@ -38,8 +38,8 @@
 
 .scoreboard .group-head {
   padding: 3px 5px;
-  border-bottom: 2px solid @grayLight;
-  background-color: @grayLighter;
+  border-bottom: 2px solid @gray-light;
+  background-color: @gray-lighter;
   margin-bottom: 18px;
 }
 .scoreboard .group-foot {
@@ -50,10 +50,9 @@
   margin-bottom: 18px;   
 }
 .scorecard .inner {
-  background-color: @grayLighter;
-  border: 1px solid @grayLight;
+  background-color: @gray-lighter;
+  border: 1px solid @gray-light;
   padding: 2px;
-  .border-radius(5px);
 }
 
 .scorecard {
@@ -61,7 +60,7 @@
     padding: 2px 4px;
     font-weight: bold;
     font-size: 10pt;
-    border-bottom: solid 1px @grayLight;
+    border-bottom: solid 1px @gray-light;
   }
   .matchup {
     table {
@@ -122,13 +121,13 @@
 .scorecard .game-links {
   margin-top: 2px;
   padding: 4px;
-  border-top: 1px solid @grayLight;
-  border-bottom: 1px solid @grayLight;
+  border-top: 1px solid @gray-light;
+  border-bottom: 1px solid @gray-light;
   font-size: 8pt;
 }
 
 .scorecard .line-score {
-  border-bottom: 1px solid @grayLight;
+  border-bottom: 1px solid @gray-light;
   table {
     margin-bottom: 0;
     td, th {
@@ -152,11 +151,11 @@
   margin-bottom: 20px;
 }
 .boxscore .status {
-  background-color: @grayLighter;
+  background-color: @gray-lighter;
   padding: 5px;
 }
 .boxscore .summary {
-  .makeColumn(12);  
+  .make-xs-column(12);  
   .matchup {
     padding: 5px;
   }
@@ -168,8 +167,7 @@
       height: 50px;
       width: 50px;
       margin-right: 10px;
-      border: 1px solid @grayLighter;
-      .border-radius(5px);
+      border: 1px solid @gray-lighter;
     } 
   }
   .logistics {
@@ -181,12 +179,12 @@
   }
 }
 .boxscore .linescore {
-  .makeColumn(4);
+  .make-xs-column(4);
 }
 .boxscore .teamstats {
   margin-bottom: 18px;
   .stat {
-    .makeColumn(4);
+    .make-xs-column(4);
   }
   table {
     margin-bottom: 0;
@@ -200,23 +198,23 @@
     margin-right: 10px;
     display: block;
     height: 18px;
-    background-color: @grayLight;
+    background-color: @gray-light;
   }
 }
 .boxscore .minute-by-minute {
-  .makeColumn(12)
+  .make-xs-column(12)
 }
 .boxscore .game-activity {
-  .makeColumn(12)
+  .make-xs-column(12)
 }
 .boxscore .player-summary {
-  .makeColumn(12)
+  .make-xs-column(12)
 }
 .boxscore .goaltender-summary {
-  .makeColumn(12)
+  .make-xs-column(12)
 }
 .boxscore .shots-on-goal {
-  .makeColumn(12)
+  .make-xs-column(12)
 }
 
 

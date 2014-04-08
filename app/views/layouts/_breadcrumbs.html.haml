@@ -1,9 +1,7 @@
 - if @breadcrumbs and @breadcrumbs.length > 0
-  %ul.breadcrumb
+  %ol.breadcrumb
     - @breadcrumbs.each_with_index do |crumb, index|
       %li
-        - unless index == 0
-          %span.divider= "/" 
         - if crumb[:url]
           %a{ :href => "#{crumb[:url]}" } #{crumb[:title]}
         - else
