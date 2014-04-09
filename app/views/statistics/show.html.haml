@@ -1,11 +1,13 @@
 - title  @league.name + ' Show Statistics'
-= render :partial => 'shared/season_options', :object => @season_options
-#views.pull-right
-  = link_to "Scoring", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "scoring")
-  = " | "
-  = link_to "Penalties", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "penalties")
-  = " | "
-  = link_to "Goaltending", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "goaltending")
+
+.row{ :style => "margin-bottom: 10px;" }
+  .col-xs-4
+    = render :partial => 'shared/season_options', :object => @season_options
+  .col-xs-8{ :style => "text-align: right;" }
+    .btn-group
+      = link_to "Scoring", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "scoring"), :class => "btn btn-default"
+      = link_to "Penalties", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "penalties"), :class => "btn btn-default"
+      = link_to "Goaltending", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "btn btn-default"
 
 - format_with ||= ->(value) { value }
 %table.table.table-striped.table-bordered.statistics
