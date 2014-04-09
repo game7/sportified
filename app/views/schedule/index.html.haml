@@ -3,12 +3,15 @@
 
 - if current_user_is_admin?
   - content_for :actions do
-    = link_to icon('plus')+" New Event", new_admin_event_path(:season_id => @season, :league_id => @league), :class => 'btn'
-    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :league_id => @league), { :class => 'btn btn-primary', :role => 'button' }
+    = link_to icon('plus')+" New Event", new_admin_event_path(:season_id => @season, :league_id => @league), :class => 'btn btn-default'
+    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :league_id => @league), { :class => 'btn btn-default', :role => 'button' }
 
-
-= render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-= select("team", :id, @team_options, {}, { :class => "redirect_to" }) if @league
+.row
+  .col-sm-6
+    = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+  .col-sm-2    
+  .col-sm-4.pagination
+    = select("team", :id, @team_options, {}, { :class => "redirect_to form-control" }) if @league
 
 %table.table.table-striped.table-bordered
   - if @events.count == 0
@@ -23,19 +26,19 @@
             = event.starts_on.to_date.strftime("%A, %B %e %Y")
       %tr
         %td
-          .visible-phone= event.starts_on.strftime("%l:%M%P").gsub("m","")
-          .hidden-phone= event.starts_on.strftime("%l:%M %P")
+          .visible-xs= event.starts_on.strftime("%l:%M%P").gsub("m","")
+          .hidden-xs= event.starts_on.strftime("%l:%M %P")
         %td
           = event.summary
           - if current_user_is_admin?
             .pull-right
               - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
-              = link_to "Edit", edit_url, :class => 'btn btn-mini'
+              = link_to "Edit", edit_url, :class => 'btn btn-default btn-xs'
               - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
-              = link_to "Clone", copy_url, :class => 'btn btn-mini'
+              = link_to "Clone", copy_url, :class => 'btn btn-default btn-xs'
         %td
-          .visible-phone= event.venue_short_name
-          .hidden-phone= event.venue_name
+          .visible-xs= event.venue_short_name
+          .hidden-xs= event.venue_name
       - last_date = event.starts_on.to_date
 - if @events.count > 0
   = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
