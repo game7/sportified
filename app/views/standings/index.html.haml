@@ -1,9 +1,12 @@
 - title @league.name + ' Standings'
-= render :partial => 'shared/season_options', :object => @season_options
+
+.row
+  .col-sm-4
+    = render :partial => 'shared/season_options', :object => @season_options
 
 - teams_by_division(@teams).each do |division|
   %h3= division[:name] unless division[:name].blank?
-  .visible-phone
+  .visible-xs
     %table.table.table-striped.table-bordered
       %thead
         %tr
@@ -19,7 +22,7 @@
             %tr
               %td= team.name
               %td= team.record.pts
-  .hidden-phone
+  .hidden-xs
     %table.table.table-striped.table-bordered
       %thead
         %tr
