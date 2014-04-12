@@ -66,6 +66,7 @@ group :assets do
   gem 'coffee-rails', " ~> 3.2.0"
   gem 'uglifier' 
   gem "less-rails-bootstrap", '>= 2.5.0'
+  gem 'font-awesome-sass'
   gem 'therubyracer'
   gem "fuelux-rails"  
 end
