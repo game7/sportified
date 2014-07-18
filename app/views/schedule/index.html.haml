@@ -7,11 +7,10 @@
     = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :league_id => @league), { :class => 'btn btn-default', :role => 'button' }
 
 .row
-  .col-sm-6
+  .col-sm-8
     = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-  .col-sm-2    
-  .col-sm-4.pagination
-    = select("team", :id, @team_options, {}, { :class => "redirect_to form-control" }) if @league
+  .col-sm-4
+    = select("team", :id, @team_options, {}, { :class => "redirect_to form-control", :style => "margin: 20px 0;" }) if @league   
 
 %table.table.table-striped.table-bordered
   - if @events.count == 0
@@ -40,6 +39,9 @@
           .visible-xs= event.venue_short_name
           .hidden-xs= event.venue_name
       - last_date = event.starts_on.to_date
-- if @events.count > 0
-  = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+- if @events.count > 4
+  .row
+    .col-sm-8
+      = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }  
+
 

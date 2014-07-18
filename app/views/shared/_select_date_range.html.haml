@@ -1,10 +1,10 @@
-%ul.pagination
-  %li
-    = link_to "← Previous", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-xs" 
-    = link_to "← Previous #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "hidden-xs"   
+%ul.pagination.date_range
+  %li.prev
+    = link_to "← Back", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-xs"
+    = link_to "← Prev #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-sm"      
+    = link_to "← Previous #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "hidden-xs hidden-sm"   
   %li.active
     = link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#"
-  %li
+  %li.next
     = link_to "Next #{range} Days →", {:date => next_date, :league_slug => params[:league_slug]}, :class => "hidden-xs"  
     = link_to "Next →", {:date => next_date, :league_slug => params[:league_slug]}, :class => "visible-xs" 
-
