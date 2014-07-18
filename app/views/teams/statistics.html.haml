@@ -1,7 +1,7 @@
 - title "#{@team.name} #{@season.name} Statistics"
 - content_for :banner do
   .row.banner
-    = render :partial => "team", :locals => { :team => @team, :class_name => "span12" }
+    = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
 %h3 Player Statistics
 %table.table.table-striped.table-bordered
   %thead

@@ -2,20 +2,17 @@
 - last_month = nil
 - content_for :banner do
   .row.banner
-    = render :partial => "team", :locals => { :team => @team, :class_name => "span12" }
-.visible-phone
+    = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
+.visible-xs
+  .row.options
+    .col-sm-4
+      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
+    .col-sm-4.col-sm-offset-4
+      %a.btn.btn-default.btn-block{ :href => url_for(params.merge(:format => :ics))}
+        %i.icon-calendar.icon-white
+        Download As iCal
   .row
-    .span12
-      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "span12 redirect_to" })
-  .row{ :style => "margin-bottom: 8px;"}
-    .span12
-      .pull-right
-        %a.btn.btn-info.span12{ :href => url_for(params.merge(:format => :ics))}
-          %i.icon-calendar.icon-white
-          Download As iCal
-      .clear
-  .row
-    .span12
+    .col-xs-12
       %table.table.table-striped.table-bordered
         - @events.each do |event|
           - month = event.starts_on.strftime('%B')
@@ -31,18 +28,16 @@
               %span= event.starts_on.strftime('%a, %b %e') + " :: "
               %span= display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
               %span= event.venue_name
-.hidden-phone
+.hidden-xs
+  .row.options
+    .col-sm-4
+      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
+    .col-sm-4.col-sm-offset-4
+      %a.btn.btn-default.btn-block{ :href => url_for(params.merge(:format => :ics))}
+        %i.icon-calendar.icon-white
+        Download As iCal
   .row
-    .span12
-      .pull-left
-        = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
-      .pull-right
-        %a.btn.btn-info{ :href => url_for(params.merge(:format => :ics))}
-          %i.icon-calendar.icon-white
-          Download As iCal
-      .clear
-  .row
-    .span12
+    .col-xs-12
       %table.table.table-striped.table-bordered
         - @events.each do |event|
           - month = event.starts_on.strftime('%B')

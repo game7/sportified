@@ -1,5 +1,7 @@
 - title @league.name + ' Teams'
-= render :partial => 'shared/season_options', :object => @season_options
+.row.options
+  .col-sm-4
+    = render :partial => 'shared/season_options', :object => @season_options
 .row
-  = render :partial => "team", :collection => @teams, :locals => { :class_name => 'span6' }
+  = render :partial => "team", :collection => @teams, :locals => { :class_name => 'col-sm-6' }
 .modal.hide.fade{ :id => "dialog-modal", :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "modalLabel", :"aria-hidden" => true }

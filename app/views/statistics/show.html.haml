@@ -1,9 +1,9 @@
 - title  @league.name + ' Show Statistics'
 
-.row{ :style => "margin-bottom: 10px;" }
-  .col-xs-4
+.row.options
+  .col-sm-4
     = render :partial => 'shared/season_options', :object => @season_options
-  .col-xs-8{ :style => "text-align: right;" }
+  .col-sm-8{ :style => "text-align: right;" }
     .btn-group
       = link_to "Scoring", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "scoring"), :class => "btn btn-default"
       = link_to "Penalties", statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => "penalties"), :class => "btn btn-default"
@@ -23,4 +23,4 @@
         %td.logo= image_tag player.team.logo.thumb.url if player.team.logo?
         %td.player= player.full_name
         - for token in Hockey::Player::Record.tokens @view
-          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= format_with.call(player.record[token])  
+          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(player.record[token], :precision => 3) : format_with.call(player.record[token])  
