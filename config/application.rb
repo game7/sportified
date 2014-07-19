@@ -3,7 +3,7 @@
 #require 'rails/all'
 require "action_controller/railtie"
 require "action_mailer/railtie"
-require "active_resource/railtie"
+#require "active_resource/railtie"
 require "sprockets/railtie"
 
 # If you have a Gemfile, require the gems listed there, including any gems

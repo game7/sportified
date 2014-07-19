@@ -1,11 +1,18 @@
 source 'http://rubygems.org'
-ruby '1.9.3'
-gem 'rails', '3.2.1'
+ruby '2.1.0'
+gem 'rails', '4.1.0'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid', '~> 3.1.0'
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0.rc1'
+gem 'uglifier', '>=1.3.0'
+gem "less-rails-bootstrap", '>= 2.5.0'
+gem 'font-awesome-sass'
+gem 'therubyracer'
+gem "fuelux-rails"
+
+
+gem 'mongoid', '~> 4.0.0'
 gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
@@ -20,7 +27,7 @@ gem 'icalendar'
 gem 'chronic'
 
 #gem 'formtastic', '~> 1.2.3'
-gem 'simple_form', '~> 2.0.4'
+gem 'simple_form', '~> 3.1.0.rc2'
 #gem 'delayed_job'
 
 
@@ -61,15 +68,6 @@ group :development do
   gem 'nifty-generators' 
 end
 
-group :assets do
-  gem 'sass-rails', " ~> 3.2.0"
-  gem 'coffee-rails', " ~> 3.2.0"
-  gem 'uglifier' 
-  gem "less-rails-bootstrap", '>= 2.5.0'
-  gem 'font-awesome-sass'
-  gem 'therubyracer'
-  gem "fuelux-rails"  
-end
 
 gem 'jquery-rails'
 
