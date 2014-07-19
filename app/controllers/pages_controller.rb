@@ -9,6 +9,7 @@ class PagesController < ApplicationController
   end
     
   def show
+    current_user
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
   end
   

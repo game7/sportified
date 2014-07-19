@@ -12,7 +12,7 @@ class Tenant
   
   validates :host, presence: true
   
-  scope :for_host, lambda { |host| { :where => { :host => host } } }
+  scope :for_host, ->(host) { where(:host => host) }
   
   class << self
     def current

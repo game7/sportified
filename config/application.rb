@@ -6,6 +6,10 @@ require "action_mailer/railtie"
 #require "active_resource/railtie"
 require "sprockets/railtie"
 
+require "bson"
+require "moped"
+Moped::BSON = BSON
+
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 if defined?(Bundler)

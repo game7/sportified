@@ -60,7 +60,7 @@ class User
   validates_presence_of :name, :email
   validates_uniqueness_of :name, :email, :case_sensitive => false
 
-  scope :with_email, lambda { |email| { :where => { :email => email } } }
+  scope :with_email, ->(email) { where(:email => email) }
 
   def role?(role)
     return !!(self.roles.find_by_name(role.to_s).first)

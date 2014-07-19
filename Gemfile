@@ -13,7 +13,7 @@ gem "fuelux-rails"
 
 
 gem 'mongoid', '~> 4.0.0'
-gem 'bson_ext'
+#gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
 gem 'haml'

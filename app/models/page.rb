@@ -34,7 +34,7 @@ class Page
 
   validates_presence_of :title
 
-  scope :top_level, where( :parent_id => nil )
+  scope :top_level, ->{ where( :parent_id => nil ) }
   scope :with_path, ->(path) { where(:path => path) }
   
   class << self
@@ -45,8 +45,8 @@ class Page
     end
   end
   
-  scope :live, where( :draft => false )
-  scope :in_menu, where( :show_in_menu => true )  
+  scope :live, ->{ where( :draft => false ) }
+  scope :in_menu, ->{ where( :show_in_menu => true ) }
   
   class << self
     def find_by_path(path)

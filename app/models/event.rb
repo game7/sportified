@@ -49,8 +49,8 @@ class Event
   has_and_belongs_to_many :teams
   field :show_for_all_teams, :type => Boolean
 
-  scope :in_the_past, where(:starts_on.lt => DateTime.now)
-  scope :in_the_future, where(:starts_on.gt => DateTime.now)
+  scope :in_the_past, ->{ where(:starts_on.lt => DateTime.now) }
+  scope :in_the_future, ->{ where(:starts_on.gt => DateTime.now) }
   scope :from, ->(from) { where(:starts_on.gt => from) }
   scope :to, ->(to) { where(:starts_on.lt => to) }
   #scope :between, ->(from, to) { gt(starts_on: from).lte(starts_on: to) }

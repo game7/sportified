@@ -12,6 +12,6 @@ class Post
   field :link_url
   mount_uploader :image, ImageUploader
   
-  scope :newest_first, desc(:created_at)
+  scope :newest_first, ->{ desc(:created_at) }
 
 end

@@ -22,8 +22,8 @@ class Season
     end
   end
 
-  scope :with_name, lambda { |name| where(:name => name) }
-  scope :with_slug, lambda { |slug| where(:slug => slug) }
+  scope :with_name, ->(name) { where(:name => name) }
+  scope :with_slug, ->(slug) { where(:slug => slug) }
 
   before_save do |season|
     season.slug = season.name.parameterize    

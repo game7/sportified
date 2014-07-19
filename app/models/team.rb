@@ -78,7 +78,7 @@ class Team
     end
   end
 
-  scope :with_slug, lambda { |slug| where(:slug => slug) }
-  scope :without_division, where(:division_id => nil)
+  scope :with_slug, ->(slug) { where(:slug => slug) }
+  scope :without_division, ->{ where(:division_id => nil) }
 
 end

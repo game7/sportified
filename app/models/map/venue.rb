@@ -5,6 +5,6 @@ class Map::Venue
   belongs_to :venue
   embedded_in :game_upload
 
-  scope :with_name, lambda { |name| where(:name => name) }
+  scope :with_name, ->{ |name| where(:name => name) }
 
 end

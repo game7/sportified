@@ -7,7 +7,7 @@ class UserRole
   field :tenant_id
   field :subject_id
 
-  scope :find_by_name, lambda { |name| { :where => { :name => name.to_s } } }
+  scope :find_by_name, ->(name) { where(:name => name.to_s) }
 
   class << self
     def for_tenant(t)

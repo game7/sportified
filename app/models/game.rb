@@ -107,6 +107,6 @@ class Game < Event
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
   
-  scope :without_result, where(result: nil)
+  scope :without_result, ->{ where(result: nil) }
 
 end

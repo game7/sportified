@@ -15,7 +15,7 @@ class League
     league.slug = league.name.parameterize    
   end
   
-  scope :with_slug, lambda { |slug| where(:slug => slug) }
+  scope :with_slug, ->(slug) { where(:slug => slug) }
   
   field :standings_array, :type => Array, :default => %w{gp w rl sol pts scored allowed margin stk}
   
