@@ -14,7 +14,7 @@
     root :to => "dashboard#index"    
     resources :tenants
     resources :users
-    match 'status' => 'dashboard#status'
+    get 'status' => 'dashboard#status'
   end
 
   namespace :admin do
@@ -24,7 +24,7 @@
     end
   end
 
-  match "programs/:league_slug/schedule" => redirect("/programs/schedule/%{league_slug}")
+  match "programs/:league_slug/schedule" => redirect("/programs/schedule/%{league_slug}"), :via => :get
   match "programs/schedule(/:league_slug)" => "schedule#index", :as => :schedule, :via => :get
   
   match "programs/standings/:league_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
@@ -49,7 +49,7 @@
   namespace :admin do
     resources :leagues
 
-    resources :seasons, :only => [:create, :new, :edit, :update, :delete], :shallow => true do
+    resources :seasons, :only => [:show, :create, :new, :edit, :update, :delete], :shallow => true do
       resources :divisions, :except => :index
       resources :teams, :except => :index do
         resources :players      
@@ -96,7 +96,7 @@
     #end
   end
   
-  match "admin/seasons(/:id)" => "admin/seasons#show", :as => :admin_seasons, :via => :get
+  #match "admin/seasons(/:id)" => "admin/seasons#show", :as => :admin_seasons, :via => :get
   
   match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
 
