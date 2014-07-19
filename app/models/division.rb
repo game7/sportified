@@ -24,5 +24,12 @@ class Division
       where(:season_id => season_id)
     end
   end  
+  
+  after_save do |division|
+    division.teams.each do |team|
+      team.set_division_name division
+      team.save
+    end
+  end  
 
 end

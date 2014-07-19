@@ -28,6 +28,13 @@ class Season
   before_save do |season|
     season.slug = season.name.parameterize    
   end
+  
+  after_save do |season|
+    season.teams.each do |team|
+      team.set_season_name_and_slug season
+      team.save
+    end
+  end  
 
 
 end

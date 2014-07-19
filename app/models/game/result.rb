@@ -23,5 +23,11 @@ class Game::Result
   validates :completed_in, presence: true
   
   field :exclude_from_team_records, type: Boolean
+  
+  after_create do |result|
+    game = result.game
+    Team::Record::Processor.post_game!(game)
+    #processor.update_power_rankings_from_game(game)    
+  end  
 
 end

@@ -39,4 +39,11 @@ class League
     end
   end  
   
+  after_save do |league|
+    league.teams.each do |team|
+      team.set_league_name_and_slug league
+      team.save
+    end
+  end  
+  
 end

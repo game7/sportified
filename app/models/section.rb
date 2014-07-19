@@ -27,5 +27,9 @@ class Section
     def columns
       @columns ||= pattern.split("|")
     end
+    
+    after_destroy do |section|
+      section.page.blocks.destroy_all(conditions: { section_id: section.id })
+    end    
   
 end
