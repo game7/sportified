@@ -4,8 +4,8 @@
 
   root :to => "pages#show"
   
-  match 'users/auth/facebook/setup' => 'sessions#setup'
-  match 'users/auth/:provider/callback' => 'authentications#create'
+  match 'users/auth/facebook/setup' => 'sessions#setup', via: :get
+  match 'users/auth/:provider/callback' => 'authentications#create', via: :get
   devise_for :users
   resources :users, :only => :show
   resources :authentications
@@ -118,7 +118,7 @@
     end    
   end
     
-  get '/pages/*path', :to => 'pages#show', :as => :page_friendly  
+  get '/pages/*path', :to => 'pages#show', :as => :page_friendly, :via => :get
 
   
   namespace :admin do
