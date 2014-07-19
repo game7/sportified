@@ -60,8 +60,6 @@ class User
   validates_presence_of :name, :email
   validates_uniqueness_of :name, :email, :case_sensitive => false
 
-  attr_accessible :name, :email, :password, :password_confirmation
-
   scope :with_email, lambda { |email| { :where => { :email => email } } }
 
   def role?(role)
