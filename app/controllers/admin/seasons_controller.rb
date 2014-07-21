@@ -23,7 +23,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def create
-    @season = Season.new(params[:season])
+    @season = Season.new(season_params)
     if @season.save
       return_to_last_point :success => 'Season was successfully created.'
     else
@@ -33,7 +33,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def update
-    if @season.update_attributes(params[:season])
+    if @season.update_attributes(season_params)
       return_to_last_point :success => 'Season was successfully updated.'
     else
       flash[:error] = "Season could not be updated."
@@ -47,6 +47,10 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def season_params
+    params.required(:season).permit(:name, :starts_on, :programs)
+  end
 
   def get_season_options
     @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, admin_seasons_path(:id => s == @season ? nil : s.id)]}

@@ -11,6 +11,6 @@
         %td #{season.name}
         %td #{season.starts_on}
         %td     
-          = link_to 'Edit', edit_admin_season_path(season), :class => "btn btn-mini"
-          = link_to 'Destroy', [:admin, season], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-mini"
-= link_to 'New Season', new_admin_season_path(@division), :class => "btn"
+          = link_to 'Edit', edit_admin_season_path(season), :class => 'btn btn-xs btn-primary'
+          = link_to 'Delete', [:admin, season], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-xs btn-primary"
+= link_to 'New Season', new_admin_season_path(@division), :class => 'btn btn-primary'

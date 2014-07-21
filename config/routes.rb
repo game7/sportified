@@ -49,7 +49,7 @@
   namespace :admin do
     resources :leagues
 
-    resources :seasons, :only => [:show, :create, :new, :edit, :update, :delete], :shallow => true do
+    resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do
       resources :divisions, :except => :index
       resources :teams, :except => :index do
         resources :players      
