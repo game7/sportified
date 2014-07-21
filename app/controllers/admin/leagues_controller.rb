@@ -17,7 +17,7 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   end
   
   def create
-    @league = League.new(params[:league])
+    @league = League.new(league_params)
     if @league.save
       return_to_last_point :success => 'League was successfully created.'
     else
@@ -31,7 +31,7 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   end
   
   def update
-    if @league.update_attributes(params[:league])
+    if @league.update_attributes(league_params)
       return_to_last_point :success => 'League was successfully updated.'
     else
       flash[:error] = "League could not be updated."
@@ -46,6 +46,10 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   end
   
   private
+  
+  def league_params
+    params.required(:league).permit(:name, :standings, :seasons)
+  end
   
   def add_breadcrumbs
     add_breadcrumb 'Leagues', admin_leagues_path    

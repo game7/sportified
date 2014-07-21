@@ -9,6 +9,6 @@
       %tr
         %td #{league.name}
         %td      
-          = link_to 'Edit', edit_admin_league_path(league), :class => "btn btn-mini"
-          = link_to 'Destroy', [:admin, league], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-mini"
-= link_to 'New League', new_admin_league_path, :class => "btn"
+          = link_to 'Edit', edit_admin_league_path(league), :class => 'btn btn-xs btn-primary'
+          = link_to 'Delete', [:admin, league], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+= link_to 'New League', new_admin_league_path, :class => "btn btn-primary"
