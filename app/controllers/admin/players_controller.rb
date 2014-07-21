@@ -19,7 +19,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
 
   def create
     params[:player][:birthdate] = Chronic.parse params[:player][:birthdate]
-    @player = @team.players.build(params[:player])
+    @player = @team.players.build(player_params)
     if @player.save
       return_to_last_point :success => 'Player was successfully created.'
     else
@@ -30,7 +30,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
 
   def update
     params[:player][:birthdate] = Chronic.parse params[:player][:birthdate]    
-    if @player.update_attributes(params[:player])
+    if @player.update_attributes(player_params)
      return_to_last_point :success => 'Player was successfully updated.'
     else
       render :action => "edit"
@@ -43,6 +43,10 @@ class Admin::PlayersController < Admin::BaseLeagueController
   end
   
   private
+  
+  def player_params
+    params.require(:player).permit(:first_name, :last_name, :jersey_number, :birthdate, :email)
+  end
   
   def find_player
     @player = Player.find(params[:id])
