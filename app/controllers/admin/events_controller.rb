@@ -30,7 +30,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   def create
     Chronic.time_class = Time.zone
     params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    @event = Event.new(params[:event])
+    @event = Event.new(event_params)
     if @event.save
       return_to_last_point :success => 'Event was successfully created.'
     else
@@ -46,7 +46,7 @@ class Admin::EventsController < Admin::BaseLeagueController
     @event = Event.find(params[:id])
     Chronic.time_class = Time.zone
     params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    if @event.update_attributes(params[:event])
+    if @event.update_attributes(event_params)
       return_to_last_point(:notice => 'Event was successfully updated.')
     else
       flash[:error] = 'Event could not be updated.'
@@ -64,6 +64,12 @@ class Admin::EventsController < Admin::BaseLeagueController
   
   
   private
+  
+  def event_params
+    params.require(:event).permit(:season_id, :league_id, :starts_on, :duration, 
+      :all_day, :venue_id, :summary, :description, :show_for_all_teams
+    )
+  end
   
   def add_events_breadcrumb
     add_breadcrumb 'Events', admin_events_path  

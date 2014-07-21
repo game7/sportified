@@ -16,7 +16,7 @@ class Admin::Games::ResultsController < Admin::BaseLeagueController
   end
 
   def create
-    @result = @game.build_result(params[:game_result])
+    @result = @game.build_result(game_result_params)
     if @game.save
       flash[:success] = "Game Result has been posted."
     else
@@ -25,6 +25,10 @@ class Admin::Games::ResultsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def game_result_params
+    params.required(:game_result).permit(:home_score, :away_score, :completed_in, :exclude_from_team_records)
+  end
   
   def find_game
     @game = Game.find(params[:game_id])

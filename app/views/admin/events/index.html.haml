@@ -1,7 +1,9 @@
 - title 'Events'
-- if @date
-  = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-= select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })
+.row.options
+  - if @date
+    = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
+  .col-sm-3
+    = select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })
 
 %table.table.table-striped.table-bordered
   %thead
@@ -15,9 +17,9 @@
     %tbody
       = render :partial => 'event', :collection => @events
 
-= link_to "New Event", new_admin_event_path(:season_id => params[:season_id]), :class => "btn"
-= link_to "New Game", new_admin_game_path(:season_id => params[:season_id]), :class => "btn"
-= link_to "Import Games From File", admin_game_imports_path, :class => "btn"
+= link_to "New Event", new_admin_event_path(:season_id => params[:season_id]), :class => "btn btn-primary"
+= link_to "New Game", new_admin_game_path(:season_id => params[:season_id]), :class => "btn btn-primary"
+= link_to "Import Games From File", admin_game_imports_path, :class => "btn btn-primary"
 
 #dialog-modal
 

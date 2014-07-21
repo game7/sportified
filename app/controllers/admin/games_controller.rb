@@ -31,7 +31,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   def create
     Chronic.time_class = Time.zone
     params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
-    @game = Game.new(params[:game])
+    @game = Game.new(game_params)
     if @game.save
       return_to_last_point :success => 'Game was successfully created.'
     else
@@ -48,7 +48,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   def update
     Chronic.time_class = Time.zone
     params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
-    if @game.update_attributes(params[:game])
+    if @game.update_attributes(game_params)
       return_to_last_point :success => 'Game was successfully updated.'
     else
       flash[:error] = "Game could not be updated."
@@ -62,6 +62,15 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
   
   private
+  
+  def game_params
+    params.require(:game).permit(:season_id, :league_id, :starts_on, :duration, 
+      :venue_id, :summary, :description, :show_for_all_teams,
+      :away_team_id, :away_custom_name, :away_team_name,
+      :home_team_id, :home_custom_name, :home_team_name,
+      :text_before, :text_after, :show_for_all_teams
+    )    
+  end
   
   def add_games_breadcrumb
     add_breadcrumb 'Games', admin_games_path  

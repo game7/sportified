@@ -3,8 +3,8 @@
   %td= game.starts_on.strftime('%l:%M %p')
   %td= game.summary
   %td
-    = link_to 'Result', new_admin_game_result_path(game.id), :remote => true, :class => "btn btn-mini #{game.has_result? ? 'btn-success' : 'btn-danger'}"
+    = link_to 'Result', new_admin_game_result_path(game.id), :remote => true, :class => "btn btn-xs #{game.has_result? ? 'btn-success' : 'btn-danger'}"
     - if game.statsheet
-      = link_to "Stats", edit_admin_game_statsheet_path(game), :class => "btn btn-mini #{game.statsheet.is_posted? ? 'btn-success' : 'btn-warning'}"
+      = link_to "Stats", edit_admin_game_statsheet_path(game), :class => "btn btn-xs #{game.statsheet.is_posted? ? 'btn-success' : 'btn-warning'}"
     - else
-      = link_to "Stats", edit_admin_game_statsheet_path(game), :class => "btn btn-mini btn-danger"    
+      = link_to "Stats", edit_admin_game_statsheet_path(game), :class => "btn btn-xs btn-primary"    

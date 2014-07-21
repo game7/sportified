@@ -1,7 +1,10 @@
 - title 'Game Results'
 
-= select("season", :id, @season_links, { :selected => admin_game_results_path(:season_id => @season.id) }, { :class => "redirect_to" })
-= select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to" })
+.row.options
+  .col-sm-3
+    = select("season", :id, @season_links, { :selected => admin_game_results_path(:season_id => @season.id) }, { :class => "redirect_to form-control" })
+  .col-sm-3
+    = select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })
 %table.table.table-striped.table-bordered
   %thead
     %tr
