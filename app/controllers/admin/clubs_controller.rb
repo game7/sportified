@@ -20,7 +20,7 @@ class Admin::ClubsController < Admin::BaseLeagueController
   end
 
   def create
-    @club = Club.new(params[:club])
+    @club = Club.new(club_params)
     if @club.save
       return_to_last_point :success => 'Club was successfully created.'
     else
@@ -30,7 +30,7 @@ class Admin::ClubsController < Admin::BaseLeagueController
   end
 
   def update
-    if @club.update_attributes(params[:club])
+    if @club.update_attributes(club_params)
       return_to_last_point :success => 'Club was successfully updated.'
     else
       flash[:error] = "Club could not be updated"
@@ -44,6 +44,10 @@ class Admin::ClubsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def club_params
+    params.required(:club).permit(:name, :short_name)
+  end
   
   def add_clubs_breadcrumb
     add_breadcrumb 'Clubs', admin_clubs_path  
