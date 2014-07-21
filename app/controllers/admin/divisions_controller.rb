@@ -30,7 +30,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def create
-    @division = @season.divisions.build(params[:division])
+    @division = @season.divisions.build(division_params)
     if @division.save
       return_to_last_point :success => 'Division was successfully created.'
     else
@@ -40,7 +40,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def update
-    if @division.update_attributes(params[:division])
+    if @division.update_attributes(division_params)
       return_to_last_point :success => 'Division was successfully updated.'
     else
       flash[:error] = "Division could not be updated"
@@ -54,6 +54,10 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def division_params
+    params.required(:division).permit(:league_id, :name)
+  end
 
   def find_season
     @season = Season.find(params[:season_id]) if params[:season_id]   
@@ -77,7 +81,7 @@ class Admin::DivisionsController < Admin::BaseLeagueController
     @league_links = @season.leagues.all.asc(:name).each.collect do |s|
       [s.name, admin_divisions_path(:season_id => @season.id, :league_id => s.id)]
     end
-    @league_links.insert 0, ['All Leagues', admin_teams_path(:season_id => @season.id)]
+    @league_links.insert 0, ['All Leagues', admin_divisions_path(:season_id => @season.id)]
   end  
   
   def load_league_options

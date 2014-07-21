@@ -1,12 +1,15 @@
 - title "Divisions"
 
-#{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-#{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+.row.options
+  .col-sm-3
+    #{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
+  .col-sm-3
+    #{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
 - divisions = @divisions.entries
 - @leagues.asc(:name).each do |league|
   %h2
     = league.name
-    = link_to 'New Division', new_admin_season_division_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-mini'
+    = link_to 'New Division', new_admin_season_division_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-xs btn-primary'
   %table.table.table-striped.table-bordered
     %thead
       %tr
@@ -18,5 +21,5 @@
           %tr
             %td= division.name
             %td
-              = link_to "Edit", edit_admin_division_path(division), :class => 'btn btn-mini'
-              = link_to 'Delete', [:admin, division], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
+              = link_to "Edit", edit_admin_division_path(division), :class => 'btn btn-xs btn-primary'
+              = link_to 'Delete', [:admin, division], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
