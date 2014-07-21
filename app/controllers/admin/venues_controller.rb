@@ -20,7 +20,7 @@ class Admin::VenuesController < Admin::BaseLeagueController
   end
 
   def create
-    @venue = Venue.new(params[:venue])
+    @venue = Venue.new(venue_params)
     if @venue.save
       return_to_last_point :success => 'Venue was successfully created.'
     else
@@ -30,7 +30,7 @@ class Admin::VenuesController < Admin::BaseLeagueController
   end
 
   def update
-    if @venue.update_attributes(params[:venue])
+    if @venue.update_attributes(venue_params)
       return_to_last_point :success => 'Venue was successfully updated.'
     else
       flash[:error] = "Venue could not be updated"
@@ -45,6 +45,10 @@ class Admin::VenuesController < Admin::BaseLeagueController
   
   private
   
+  def venue_params
+    params.required(:venue).permit(:name, :short_name)
+  end
+  
   def add_venues_breadcrumb
     add_breadcrumb 'Venues', admin_venues_path  
   end
@@ -53,4 +57,5 @@ class Admin::VenuesController < Admin::BaseLeagueController
     @venue = Venue.find(params[:id])
     add_breadcrumb @venue.name
   end
+  
 end
