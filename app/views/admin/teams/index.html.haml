@@ -1,13 +1,16 @@
 - title "Teams"
 - last_division = ""
 
-#{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
-#{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to" })}
+.row
+  .col-sm-3
+    #{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
+  .col-sm-3
+    #{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
 - teams = @teams.entries
 - @leagues.asc(:name).each do |league|
   %h2
     = league.name
-    = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-mini'
+    = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-sm btn-primary'
   %table.table.table-striped.table-bordered
     %thead
       %tr
@@ -26,7 +29,7 @@
                 - unless team.pool.blank?
                   %span.label= team.pool
             %td
-              = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-mini'
-              = link_to "Roster", admin_team_players_path(team), :class => 'btn btn-mini'
-              = link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini'
-= link_to 'Import Players from File', new_admin_player_import_path, :class => "btn"
+              = link_to "Edit", edit_admin_team_path(team), :class => 'btn btn-xs btn-primary'
+              = link_to "Roster", admin_team_players_path(team), :class => 'btn btn-xs btn-primary'
+              = link_to 'Delete', [:admin, team], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+= link_to 'Import Players from File', new_admin_player_import_path, :class => 'btn btn-primary'

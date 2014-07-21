@@ -21,7 +21,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
     process :crop_and_scale
     process :resize_to_fill => [200,200]
   end
-
+  
   version :thumb do
     process :crop_and_scale
     process :resize_to_fill => [100,100]
@@ -32,11 +32,11 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [50,50]
   end
 
-  version :micro do
+  version :micro do  
     process :crop_and_scale
     process :resize_to_fill => [25,25]
   end
-  
+
   def crop_and_scale(resize_to = nil)
     if model.cropping?
       manipulate! do |img|

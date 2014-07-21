@@ -36,7 +36,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def create
-    @team = @season.teams.build params[:team]
+    @team = @season.teams.build(team_params)
     if @team.save
       return_to_last_point :success => 'Team was successfully created.'
     else
@@ -49,7 +49,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def update
-    if @team.update_attributes(params[:team])
+    if @team.update_attributes(team_params)
       return_to_last_point :success => 'Team was successfully updated.'
     else
       flash[:error] = "Team could not be updated."
@@ -65,6 +65,13 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def team_params
+    params.required(:team).permit(
+      :league_id, :name, :short_name, :club_id, :division_id, :pool, :show_in_standings, :seed,
+      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache
+    )
+  end
 
   def find_team    
     @team = Team.find(params[:id])

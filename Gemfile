@@ -33,7 +33,7 @@ gem 'simple_form', '~> 3.1.0.rc2'
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
-gem 'rmagick'
+gem 'rmagick', require: false
 gem 'remotipart', '~> 1.0'
 
 gem "RedCloth"
