@@ -18,6 +18,6 @@
         %td= import.ready
         %td= import.completed
         %td
-          = link_to 'Edit', edit_admin_game_import_path(import), :class => 'btn btn-mini' unless import.completed
-          = link_to 'Complete', complete_admin_game_import_path(import), :method => :post, :class => 'btn btn-mini' if import.ready && !import.completed
-= link_to 'New Game Import', new_admin_game_import_path, :class => 'btn'
+          = link_to 'Edit', edit_admin_game_import_path(import), :class => 'btn btn-xs btn-primary' unless import.completed
+          = link_to 'Complete', complete_admin_game_import_path(import), :method => :post, :class => 'btn btn-xs btn-primary' if import.ready && !import.completed
+= link_to 'New Game Import', new_admin_game_import_path, :class => 'btn btn-primary'
