@@ -221,7 +221,6 @@ module Hockey
     end
 
     def event_created(event)
-
       set_latest_event_time(event) if is_latest?(event)    
 
       case event.class.to_s

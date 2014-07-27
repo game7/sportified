@@ -24,7 +24,7 @@
           %td #{g.a2}
           %td #{g.str}
           %td 
-            = link_to 'Delete', admin_hockey_statsheet_goal_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goal'
+            = link_to 'Delete', admin_hockey_statsheet_goal_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goal', :class => 'btn btn-xs btn-primary'
     - else
       %tr
         %td{ :colspan => 9 } No goals have been entered

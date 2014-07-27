@@ -35,5 +35,5 @@
           %td= g.goals_total
         %tr
           %td{ :colspan => 6 }
-            = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender', :class => 'btn btn-mini'
-            = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender', :class => 'btn btn-mini'
+            = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender', :class => 'btn btn-xs btn-primary'
+            = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender', :class => 'btn btn-xs btn-primary'

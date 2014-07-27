@@ -11,14 +11,14 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def update
-    @player.update_attributes(params['hockey_player'])
+    @player.update_attributes(hockey_player_params)
     if @player.save
       flash[:notice] = "Player Updated"
     end
   end
 
   def create
-    @player = @statsheet.players.build(params['hockey_player'])
+    @player = @statsheet.players.build(hockey_player_params)
     if @player.save
       @statsheet.reload
       flash[:notice] = "Player Added"
@@ -47,6 +47,10 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
   
   private
+  
+  def hockey_player_params
+    params.required(:hockey_player).permit(:side, :first_name, :last_name, :num, :played)
+  end
   
   def load_statsheet
     @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])

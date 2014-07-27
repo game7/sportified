@@ -16,7 +16,7 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   end
 
   def create
-    @goal = @statsheet.events.build(params['hockey_goal'], Hockey::Goal)
+    @goal = @statsheet.events.build(hockey_goal_params, Hockey::Goal)
     if @statsheet.save
       @statsheet.reload
       flash[:notice] = "Goal Added"
@@ -31,6 +31,12 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
       flash[:notice] = "Goal has been deleted"
     end
 
+  end
+  
+  private
+  
+  def hockey_goal_params
+    params.required(:hockey_goal).permit(:side, :per, :min, :sec, :side, :plr, :a1, :a2, :str)
   end
 
 end

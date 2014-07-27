@@ -10,7 +10,7 @@ module Hockey
     field :sec, :type => Integer
     field :plr
 
-    embedded_in :parent, :inverse_of => :events, :class_name => 'Hockey::Statsheet'
+    embedded_in :parent
 
     scope :goals, ->{ where(:"_type" => 'Hockey::Goal') }
     scope :penalties, ->{ where(:"_type" => 'Hockey::Penalty') }

@@ -5,5 +5,5 @@
   %td= player.num
   %td= "#{player.last_name}, #{player.first_name}"
   %td
-    = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), :remote => true, :title => 'Edit this player', :class => 'btn btn-mini'
-    = link_to 'Delete', admin_hockey_statsheet_player_path(@statsheet, player), :confirm => 'Are you sure?', :method => :delete, :remote => true, :title => 'Delete this player', :class => 'btn btn-mini'
+    = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), :remote => true, :title => 'Edit this player', :class => 'btn btn-xs btn-primary'
+    = link_to 'Delete', admin_hockey_statsheet_player_path(@statsheet, player), :confirm => 'Are you sure?', :method => :delete, :remote => true, :title => 'Delete this player', :class => 'btn btn-xs btn-primary'

@@ -13,7 +13,7 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
 
   def create
-    @penalty = @statsheet.events.build(params['hockey_penalty'], Hockey::Penalty)
+    @penalty = @statsheet.events.build(hockey_penalty_params, Hockey::Penalty)
     if @statsheet.save
       @statsheet.reload
       flash[:notice] = "Penalty Added"
@@ -21,7 +21,7 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
   
   def update
-    @penalty.update_attributes(params['hockey_penalty'])
+    @penalty.update_attributes(hockey_penalty_params)
     if @penalty.save
       flash[:notice] = "Penalty Updated"
     end
@@ -32,6 +32,13 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
   
   private
+  
+  def hockey_penalty_params
+    params.required(:hockey_penalty).permit(:side, :per, :min, :sec, :side, :plr, :inf, :dur, :severity,
+      :start_per, :start_min, :start_sec,
+      :end_per, :end_min, :end_sec
+    ) 
+  end
 
   def load_statsheet
     @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
