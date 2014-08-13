@@ -1,0 +1,51 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+      = " - " + Tenant.current.name
+    - theme = Tenant.current.theme
+    - if theme and !theme.empty?
+      = stylesheet_link_tag "/assets/#{theme}"
+      = favicon_link_tag "/assets/themes/#{theme}/icon.ico"
+    - else
+      = stylesheet_link_tag "application"
+    = csrf_meta_tag
+    %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    = yield(:head)
+  %body
+    .navbar.navbar-default.navbar-fixed-top{ :role => 'banner'}
+      .container
+        .navbar-header
+          %button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar        
+          #site_logo
+            = link_to "/", :class => "navbar-brand" do
+              %div
+            =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
+          #site_name
+            = link_to Tenant.current.name, root_url, :class => "brand"
+        = render "layouts/site_navigation" if @site_menu_items             
+    #wrapper.container
+      %header
+        = render "layouts/area_navigation" if @area_menu_items  
+        = render "layouts/breadcrumbs" if @breadcrumbs
+        #banner
+          #{yield :banner}        
+        %h1.pull-left
+          %span#page-title= yield(:title)
+          = content_tag :small, yield(:title_small) if content_for?(:title_small)
+        .actions.pull-right
+          = yield(:actions)
+        .clear              
+      #main
+        #page-header
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
+        = yield
+      #footer
+    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
+    = yield :javascript
+
+

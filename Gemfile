@@ -38,6 +38,9 @@ gem 'remotipart', '~> 1.0'
 
 gem "RedCloth"
 
+gem 'ember-rails'
+gem 'ember-source', '~> 1.6.1'
+
 
 #gem 'pages', :path => "vendor/engines/pages"
 

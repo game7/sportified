@@ -1,0 +1,10 @@
+
+%script{ :type => 'text/x-handlebars' }
+  Hey there!
+  {{outlet}}
+%script{ :type =>'text/x-handlebars', :'data-template-name' => 'index' }
+  hello-yo
+
+= content_for :head do
+  = javascript_include_tag "commissioner/application"   
+
