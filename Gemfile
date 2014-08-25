@@ -6,11 +6,9 @@ gem 'rails', '4.1.0'
 gem 'sass-rails', '~> 4.0.0.rc1'
 gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'uglifier', '>=1.3.0'
-gem "less-rails-bootstrap", '>= 2.5.0'
+gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass'
-gem 'therubyracer'
-gem "fuelux-rails"
-
+gem 'autoprefixer-rails'
 
 gem 'mongoid', '~> 4.0.0'
 #gem 'bson_ext'

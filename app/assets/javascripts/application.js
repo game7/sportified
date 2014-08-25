@@ -1,9 +1,8 @@
 //= require jquery
 //= require jquery_ujs
-//= require fuelux.js
 //= require jquery-ui.min
 //= require jquery.remotipart
-//= require twitter/bootstrap
+//= require bootstrap-sprockets
 //= require jcrop/jquery.Jcrop.min
 
 function rgbAsHexString(rgbInt) {

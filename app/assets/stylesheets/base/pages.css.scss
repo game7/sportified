@@ -8,7 +8,7 @@
   margin-bottom: 10px;
   .chrome {
     padding: 2px;
-    #gradient > .vertical(#DEDEDE,#CCC);
+    @include gradient-vertical(#DEDEDE,#CCC);
     display: none;
     .title {
       float: left;
@@ -31,13 +31,13 @@
 
 .editable {
   .inner {
-    border: 1px solid @gray-light;
+    border: 1px solid $gray-light;
   }
   .chrome {
     display: block;
   }
   .column-inner {
-    border: 1px solid @gray-light;
+    border: 1px solid $gray-light;
     border-top: 0;
     padding: 4px;
   }
@@ -48,7 +48,7 @@
 
 .section {
   .chrome {
-    border: 1px solid @gray-light;
+    border: 1px solid $gray-light;
   }
   margin-bottom: 5px;
 }

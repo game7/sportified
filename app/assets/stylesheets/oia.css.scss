@@ -1,25 +1,33 @@
-@import 'twitter/bootstrap';
+/*
+*= require_self
+*= require jquery-ui-1.8.11.custom
+*= require jcrop/jquery.Jcrop.min
+*= require font-awesome
+*/
+
+
+$brand-primary: #c70002;
+
+$navbar-default-bg:                #c70002;
+$navbar-default-link-color:        #cccccc;
+$navbar-default-link-active-color: #cccccc;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "base/base";
+@import "base/leagues";
+@import "base/pages";
 
 body {
-  padding-top: 40px;
+  padding-top: 50px;
 }
-
-@import 'twitter/bootstrap/responsive';
-@import "base/base.css.less";
-@import "base/leagues.css.less";
-@import "base/pages.css.less";
-
-@navbarBackground:                #f01530;
-@navbarBackgroundHighlight:       #f01530;
-@navbarLinkColor:                 #cccccc;
-@linkColor: #c70002;
 
 .navbar .nav > li > a {
   font-weight: bold;
 }
 
 body {
-  background-image: asset-url("themes/uhu/oia_web_bg.jpg");
+  background-image: asset-url("themes/oia/oia_web_bg.jpg");
   background-position: center top;
   background-repeat:no-repeat;
   background-attachment: fixed;
@@ -27,7 +35,7 @@ body {
 
 #site_logo {
   div {
-    background-image: asset-url("themes/uhu/brand.jpg");
+    background-image: asset-url("themes/oia/brand.jpg");
     background-size: 244px 20px;
     width: 244px;
     height: 20px;
@@ -61,7 +69,7 @@ body {
 }
 
 #wrapper {
-  background-image: asset-url("themes/uhu/oia_gray_10x10.png");
+  background-image: asset-url("themes/oia/oia_gray_10x10.png");
   padding-top: 10px;
   padding: 10px;
   margin-bottom: 900px;
@@ -76,4 +84,3 @@ header {
 table {
   background-color: #fff;
 }
-

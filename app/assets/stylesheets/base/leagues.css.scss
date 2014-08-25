@@ -71,8 +71,8 @@
 
 .scoreboard .group-head {
   padding: 3px 5px;
-  border-bottom: 2px solid @gray-light;
-  background-color: @gray-lighter;
+  border-bottom: 2px solid $gray-light;
+  background-color: $gray-lighter;
   margin-bottom: 18px;
 }
 .scoreboard .group-foot {
@@ -83,8 +83,8 @@
   margin-bottom: 18px;   
 }
 .scorecard .inner {
-  background-color: @gray-lighter;
-  border: 1px solid @gray-light;
+  background-color: $gray-lighter;
+  border: 1px solid $gray-light;
   padding: 2px;
 }
 
@@ -93,7 +93,7 @@
     padding: 2px 4px;
     font-weight: bold;
     font-size: 10pt;
-    border-bottom: solid 1px @gray-light;
+    border-bottom: solid 1px $gray-light;
   }
   .matchup {
     table {
@@ -154,13 +154,13 @@
 .scorecard .game-links {
   margin-top: 2px;
   padding: 4px;
-  border-top: 1px solid @gray-light;
-  border-bottom: 1px solid @gray-light;
+  border-top: 1px solid $gray-light;
+  border-bottom: 1px solid $gray-light;
   font-size: 8pt;
 }
 
 .scorecard .line-score {
-  border-bottom: 1px solid @gray-light;
+  border-bottom: 1px solid $gray-light;
   table {
     margin-bottom: 0;
     td, th {
@@ -184,11 +184,11 @@
   margin-bottom: 20px;
 }
 .boxscore .status {
-  background-color: @gray-lighter;
+  background-color: $gray-lighter;
   padding: 5px;
 }
 .boxscore .summary {
-  .make-xs-column(12);  
+  @include make-xs-column(12);  
   .matchup {
     padding: 5px;
   }
@@ -200,7 +200,7 @@
       height: 50px;
       width: 50px;
       margin-right: 10px;
-      border: 1px solid @gray-lighter;
+      border: 1px solid $gray-lighter;
     } 
   }
   .logistics {
@@ -212,12 +212,12 @@
   }
 }
 .boxscore .linescore {
-  .make-xs-column(4);
+  @include make-xs-column(4);
 }
 .boxscore .teamstats {
   margin-bottom: 18px;
   .stat {
-    .make-xs-column(4);
+    @include make-xs-column(4);
   }
   table {
     margin-bottom: 0;
@@ -231,23 +231,23 @@
     margin-right: 10px;
     display: block;
     height: 18px;
-    background-color: @gray-light;
+    background-color: $gray-light;
   }
 }
 .boxscore .minute-by-minute {
-  .make-xs-column(12)
+  @include make-xs-column(12)
 }
 .boxscore .game-activity {
-  .make-xs-column(12)
+  @include make-xs-column(12)
 }
 .boxscore .player-summary {
-  .make-xs-column(12)
+  @include make-xs-column(12)
 }
 .boxscore .goaltender-summary {
-  .make-xs-column(12)
+  @include make-xs-column(12)
 }
 .boxscore .shots-on-goal {
-  .make-xs-column(12)
+  @include make-xs-column(12)
 }
 
 

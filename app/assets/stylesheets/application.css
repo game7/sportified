@@ -2,6 +2,15 @@
 *= require_self
 *= require jquery-ui-1.8.11.custom
 *= require jcrop/jquery.Jcrop.min
-*= require themes/default/index
 *= require font-awesome
 */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "base/base";
+@import "base/leagues";
+@import "base/pages";
+
+body {
+  padding-top: 40px;
+}
