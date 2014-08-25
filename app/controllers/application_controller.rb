@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     @site_menu_items ||= []
     pages = Page.top_level.in_menu.live.asc(:position)
     pages.each do |page|
-      @site_menu_items << { :title => page.title, :url => get_page_url(page) }    
+      @site_menu_items << page    
     end
   end
 
