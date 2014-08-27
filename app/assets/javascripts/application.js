@@ -5,6 +5,7 @@
 //= require bootstrap-sprockets
 //= require jcrop/jquery.Jcrop.min
 
+
 function rgbAsHexString(rgbInt) {
   var color = parseInt(rgbInt).toString(16);
   return color.length == 1 ? '0'+color : color;
@@ -23,7 +24,6 @@ function colorToHex(color) {
     return ('#' + red + green + blue).toUpperCase();
 };
 
-
 function clearForm(form) {
   $(':input', form).each(function() {
     var type = this.type;
@@ -38,7 +38,7 @@ function clearForm(form) {
 };
 
 $(document).ready(function() {
-  
+
   $('select.redirect_to').change(function() {
     window.location = this.value;
   });
@@ -47,10 +47,8 @@ $(document).ready(function() {
     $('#'+this.getAttribute('rel')).slideToggle(300);
     return false;
   });
-  
+
   $('.carousel').carousel();
   $('[rel=tooltip]').tooltip();
 
 });
-
-

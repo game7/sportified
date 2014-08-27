@@ -9,9 +9,29 @@ class Admin::EventsController < Admin::BaseLeagueController
   before_filter :load_league_options, :only => [:new, :edit]
   before_filter :load_venue_options, :only => [:new, :edit]     
   before_filter :load_season_links, :only => [:index]
-  before_filter :load_events, :only => [:index]
 
   def index
+
+    unless @season
+      @date = params[:date] ? Date.parse(params[:date]) : Date.current
+      @days_in_future = 14
+      @days_in_past = 7
+      @start_date = @date - @days_in_past - 1
+      @end_date = @date + @days_in_future + 1
+      @next_date = @date + @days_in_future + @days_in_past
+      @prev_date = @date - @days_in_future - @days_in_past
+    end
+
+    @events = Event.all    
+    @events = @events.for_season(@season) if @season
+    @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
+    @events = @events.asc(:starts_on)
+    
+    respond_to do |format|
+      format.html
+      format.json { render json: @events }
+    end
+   
   end
 
   def new
@@ -103,23 +123,5 @@ class Admin::EventsController < Admin::BaseLeagueController
     @season = Season.find(params[:season_id]) if params[:season_id]
     @season ||= Season.most_recent()
   end
-
-  def load_events
-    
-    unless @season
-      @date = params[:date] ? Date.parse(params[:date]) : Date.current
-      @days_in_future = 14
-      @days_in_past = 7
-      @start_date = @date - @days_in_past - 1
-      @end_date = @date + @days_in_future + 1
-      @next_date = @date + @days_in_future + @days_in_past
-      @prev_date = @date - @days_in_future - @days_in_past
-    end
-
-    @events = Event.all    
-    @events = @events.for_season(@season) if @season
-    @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
-    @events = @events.asc(:starts_on)    
-  end  
 
 end

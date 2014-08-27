@@ -1,0 +1,3 @@
+class GameSerializer < EventSerializer
+
+end

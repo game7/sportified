@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get 'commish/index'
+
   get "dashboard/index"
 
   root :to => "pages#show"

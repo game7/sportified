@@ -2,9 +2,10 @@ source 'http://rubygems.org'
 ruby '2.1.0'
 gem 'rails', '4.1.0'
 
+gem 'active_model_serializers' 
 
 gem 'sass-rails', '~> 4.0.0.rc1'
-gem 'coffee-rails', '~> 4.0.0.rc1'
+#gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass'
@@ -27,6 +28,9 @@ gem 'chronic'
 #gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', '~> 3.1.0.rc2'
 #gem 'delayed_job'
+
+gem 'ember-rails'
+gem 'ember-source', '1.5.0'
 
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
