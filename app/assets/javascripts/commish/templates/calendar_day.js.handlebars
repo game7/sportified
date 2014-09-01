@@ -1,0 +1,13 @@
+<div class='ember-calendar-head'>
+  <div class='ember-calendar-head-dates'>
+    {{view App.Calendar.HeadingDateView dateBinding='controller.date'}}
+  </div>
+</div>
+<div class='ember-calendar-container'>
+  <div class='ember-calendar-body'>
+    {{view App.Calendar.HeadingTimesView timesBinding='controller.times'}}
+    <div class='ember-calendar-days'>
+      {{view App.Calendar.DayView eventsBinding='controller.day'}}
+    </div>
+  </div>
+</div>

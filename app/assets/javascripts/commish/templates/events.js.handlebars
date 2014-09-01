@@ -1,5 +1,3 @@
-<ul>
-  {{#each event in model}}
-    <li>{{event.startsOn}} >> {{event.summary}}</li>
-  {{/each}}
-</ul>
+{{dateRange.start}} - {{dateRange.end}} ({{dateRange.days}})<br/>
+Days: {{days.length}}
+{{view App.Calendar.CalendarView}}

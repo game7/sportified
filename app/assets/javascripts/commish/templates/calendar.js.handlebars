@@ -1,0 +1,10 @@
+<div class="btn-group">
+  <button class="btn btn-default" {{action loadPrevious target='controller'}}>
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </button>
+  <button class="btn btn-default" {{action loadNext target='controller'}}>
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </button>
+</div>
+{{view App.Calendar.ButtonsView controllerBinding='controller'}}
+{{view App.Calendar.ContainerView controllerBinding='controller'}}

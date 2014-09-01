@@ -1,6 +1,8 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require ember-calendar
+//= require moment
 //= require_self
 //= require ./commish/include
 
@@ -9,7 +11,9 @@ App = Ember.Application.create({
     rootElement: '#main',
     Resolver: Ember.DefaultResolver.extend({
       resolveTemplate: function(parsedName) {
-        parsedName.fullNameWithoutType = "commish/" + parsedName.fullNameWithoutType;
+        if (parsedName.fullNameWithoutType.indexOf('ember-') == -1) {
+          parsedName.fullNameWithoutType = "commish/" + parsedName.fullNameWithoutType;
+        }
         return this._super(parsedName);
       }
     }),
