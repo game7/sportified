@@ -1,0 +1,52 @@
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+</a>
+<div class="nav-collapse">
+  <ul class="nav">
+    <%# Page.top_level.in_menu.live.asc(:position).each do |page| %>
+    <% pages = Page.in_menu.live.sorted_as_tree.entries %>
+    <% tree = [] %>
+    <% pages.each_with_index do |page, i| %>
+      <% if page.depth == 0 %>
+        <% tree.push({ :page => page, :children => [] }) %>
+      <% elsif page.depth == 1 %>
+        <% tree.last[:children].push page %>
+      <% end %>
+    <% end %>
+    <% tree.each_with_index do |branch, i| %>
+      <% page = branch[:page] %>
+      <% url = get_page_url(page) %>
+      <li class="<%= request.url.include?(url) ? "active " : nil%><%= branch[:children].length > 0 ? "dropdown": nil %>">
+        <% if branch[:children].length == 0 %>
+          <a href="<%= url %>"><%= page.title_in_menu.presence || page.title %></a>
+        <% end %>
+        <% unless branch[:children].length == 0 %>
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= page.title_in_menu.presence || page.title %> <span class="caret"></span></a>        
+          <ul class="dropdown-menu" role="menu">
+            <% branch[:children].each do |child| %>
+              <% url = get_page_url(child) %>
+              <li><a href="<%= url %>"><%= child.title_in_menu.presence || child.title %></a></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  
+  
+  <ul class="nav pull-right">
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+        Account
+        <span class="caret"/>
+      </a>
+      <ul class="dropdown-menu">
+        <%= render "devise/menu/login_items" %>
+        <%= render "devise/menu/user_items" %>
+      </ul>
+    </li>
+  </ul>
+</div>
+              
