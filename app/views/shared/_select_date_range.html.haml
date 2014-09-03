@@ -1,10 +1,10 @@
 .pagination
   %ul
     %li
-      = link_to "←", {:date => prev_date, :division_slug => params[:division_slug]}, :class => "visible-phone" 
-      = link_to "← Previous #{range} Days", {:date => prev_date, :division_slug => params[:division_slug]}, :class => "hidden-phone"   
+      = link_to "←", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-phone" 
+      = link_to "← Previous #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "hidden-phone"   
     %li.active
       = link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#"
     %li
-      = link_to "Next #{range} Days →", {:date => next_date, :division_slug => params[:division_slug]}, :class => "hidden-phone"  
-      = link_to "→", {:date => next_date, :division_slug => params[:division_slug]}, :class => "visible-phone" 
+      = link_to "Next #{range} Days →", {:date => next_date, :league_slug => params[:league_slug]}, :class => "hidden-phone"  
+      = link_to "→", {:date => next_date, :league_slug => params[:league_slug]}, :class => "visible-phone" 
