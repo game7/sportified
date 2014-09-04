@@ -11,15 +11,23 @@ body {
 
 @navbarBackground:                #24247a;
 @navbarBackgroundHighlight:       #24247a;
+
+@navbarText:                      #777;
 @navbarLinkColor:                 #FFF;
+@navbarLinkColorHover:            #dedede;
+@navbarLinkColorActive:           #dedede;
+@navbarLinkBackgroundHover:       lighten(@navbarBackground, 20%);
+@navbarLinkBackgroundActive:      darken(@navbarBackground, 10%);
+
 @linkColor:                       #24247a;
 
+
 .navbar .nav > li > a {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 body {
-  background-image: asset-url("themes/oia/oia_web_bg.jpg");
+  background-image: asset-url("themes/styfl/football_field_grayscale.jpg");
   background-position: center top;
   background-repeat:no-repeat;
   background-attachment: fixed;
@@ -32,7 +40,7 @@ body {
     height: 20px;
   }
   div:after{
-    content: "STYFL";
+    content: "San Tan Youth Football";
   }
 }
 
