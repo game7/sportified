@@ -1,2 +1,6 @@
 - if block.image && block.image.url.presence
-  = image_tag block.image.url, :style => 'margin: auto; max-width: 100%; display: block;'
+  - if block.link_url
+    %a{ :href => "#{block.link_url}", :target => "_blank" }
+      = image_tag block.image.url, :style => 'margin: auto; max-width: 100%; display: block;'
+  - else
+    = image_tag block.image.url, :style => 'margin: auto; max-width: 100%; display: block;'
