@@ -20,7 +20,7 @@ module Blocks
     protected
     
     def format_link_url
-      unless self.link_url.start_with?("http://")
+      unless self.link_url && self.link_url.start_with?("http://")
         self.link_url = "http://#{self.link_url}"
       end
     end
