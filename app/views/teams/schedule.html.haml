@@ -33,9 +33,6 @@
     .col-sm-4
       = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
     .col-sm-4.col-sm-offset-4
-      %a.btn.btn-default.btn-block{ :href => url_for(params.merge(:format => :ics))}
-        %i.icon-calendar.icon-white
-        Download As iCal
   .row
     .col-xs-12
       %table.table.table-striped.table-bordered
