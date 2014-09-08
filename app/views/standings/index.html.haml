@@ -38,7 +38,10 @@
                 = "#{team.seed} -" if team.seed
                 = team.name
                 - @league.standings_array.each do |col|
-                  %td= team.record.send col
+                  - if is_float?(team.record.fields[col])
+                    %td=  number_with_precision(team.record.send(col), :precision => 3)
+                  - else
+                    %td= team.record.send col
 
 
 
