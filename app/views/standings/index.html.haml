@@ -38,7 +38,7 @@
                 = "#{team.seed} -" if team.seed
                 = team.name
                 - @league.standings_array.each do |col|
-                  %td= team.record[col]
+                  %td= team.record.send col
 
 
 
