@@ -34,13 +34,7 @@
 .hidden-phone
   .row
     .span12
-      .pull-left
-        = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
-      .pull-right
-        %a.btn.btn-info{ :href => url_for(params.merge(:format => :ics))}
-          %i.icon-calendar.icon-white
-          Download As iCal
-      .clear
+      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "redirect_to" })
   .row
     .span12
       %table.table.table-striped.table-bordered
