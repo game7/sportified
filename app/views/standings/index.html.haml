@@ -8,7 +8,7 @@
       %thead
         %tr
           %th TEAM
-          %th PTS
+          %th= @league.standings_array.include?('pts') ? t('.pts') : t('.pct')
         %tbody
           - last_pool = nil
           - division[:teams].each do |team|
@@ -18,7 +18,7 @@
               - last_pool = team.pool
             %tr
               %td= team.name
-              %td= team.record.pts
+              %td= @league.standings_array.include?('pts') ? team.record.pts : number_with_precision(team.record.pct, :precision => 3)
   .hidden-phone
     %table.table.table-striped.table-bordered
       %thead
