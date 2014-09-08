@@ -32,6 +32,15 @@ class Team::Record
   field :oowp, :type => Float, :default => 0.00
   field :sos, :type => Float, :default => 0.00
   field :rpi, :type => Float, :default => 0.00
+  
+  # field aliases
+  def pf
+    scored
+  end
+  
+  def pa
+    allowed
+  end
 
   embedded_in :team
   embeds_many :results, :class_name => 'Team::Record::Result'

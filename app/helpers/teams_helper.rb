@@ -1,7 +1,7 @@
 module TeamsHelper
   
   def display_event_summary(event, team)
-    event.class.to_s == "Game" && event.has_team?(@team) ? "vs. #{event.opponent_name(@team)}" : event.summary    
+    event.class.to_s == "Game" && event.has_team?(@team) ? "#{event.home_team == @team ? 'vs' : 'at'} #{event.opponent_name(@team)}" : event.summary    
   end
   
   def display_time_or_result(event, team)

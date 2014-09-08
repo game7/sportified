@@ -14,8 +14,11 @@ en:
       sol: "SOL"
       t: "T"
       pts: "PTS"
+      pct: "PCT"
       scored: "GF"
       allowed: "GA"
+      pf: "PF"
+      pa: "PA"
       margin: "+/-"
       stk: "STREAK"
   blocks:
