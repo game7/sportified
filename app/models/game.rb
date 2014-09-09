@@ -85,7 +85,7 @@ class Game < Event
         summary = "#{home_team_name} #{result.home_score}, #{away_team_name} #{result.away_score}#{tag}"
       end
     else
-      summary = "#{away_team_name} vs. #{home_team_name}"
+      summary = "#{away_team_name} at #{home_team_name}"
     end
     summary = [text_before, summary, text_after].join(" ").strip
     self.summary = summary
