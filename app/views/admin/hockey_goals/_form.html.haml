@@ -1,9 +1,9 @@
 = simple_form_for( @goal, :url => admin_hockey_statsheet_goals_path(@statsheet.id), :remote => true ) do |f|
-  = f.input :per, :collection => Statsheet::Hockey::Goal.periods, :input_html => {:class => "span1"}
-  = f.input :min, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
-  = f.input :sec, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
+  = f.input :per, :collection => Statsheet::Hockey::Goal.periods
+  = f.input :min, :maxlength => 2, :pattern => "[0-9]*"
+  = f.input :sec, :maxlength => 2, :pattern => "[0-9]*"
   = f.input :side, :collection => @sides, :include_blank => 'Choose Team'
-  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
-  = f.input :a1, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
-  = f.input :a2, :maxlength => 2, :pattern => "[0-9]*", :input_html => {:class => "span1"}
-  = f.input :str, :collection => Hockey::Goal.strengths, :input_html => {:class => "span1"}
+  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*"
+  = f.input :a1, :maxlength => 2, :pattern => "[0-9]*"
+  = f.input :a2, :maxlength => 2, :pattern => "[0-9]*"
+  = f.input :str, :collection => Hockey::Goal.strengths
