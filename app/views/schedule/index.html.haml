@@ -13,11 +13,12 @@
     = select("team", :id, @team_options, {}, { :class => "redirect_to form-control", :style => "margin: 20px 0;" }) if @league   
 
 %table.table.table-striped.table-bordered
-  - if @events.count == 0
+  - events = @events.entries
+  - if events.count == 0
     %tr
       %td No events scheduled
   - else
-    - @events.each do |event|
+    - events.each do |event|
       - if event.starts_on.to_date != last_date
         - reset_cycle()
         %tr.group-head
@@ -39,7 +40,7 @@
           .visible-xs= event.venue_short_name
           .hidden-xs= event.venue_name
       - last_date = event.starts_on.to_date
-- if @events.count > 4
+- if events.count > 4
   .row
     .col-sm-8
       = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }  
