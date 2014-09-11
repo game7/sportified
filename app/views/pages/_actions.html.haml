@@ -1,7 +1,7 @@
 - content_for :actions do
   .buttons
     .btn-group
-      %button.btn.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" } 
+      %button.btn.btn-default.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" } 
         = icon('wrench')+' Page'
         %span.caret
       %ul.dropdown-menu.pull-right
@@ -12,7 +12,10 @@
         %li.nav-header OTHER PAGES
         %li= link_to icon('th-list')+" List", pages_path         
         %li= link_to icon('plus')+" New", new_page_path 
-    .btn-group{:"data-toggle" => "buttons-radio"}
-      %button#toggle-edit.btn.active{ type: "button", rel: "tooltip", title: "Edit Mode"}= icon("pencil")
-      %button#toggle-organize.btn{ type: "button", rel: "tooltip", title: "Organize Mode"}= icon("th")
-      %button#toggle-preview.btn{ type: "button", rel: "tooltip", title: "Preview Mode"}= icon("eye-open")                  
+    .btn-group{:"data-toggle" => "buttons"}
+      %label#toggle-edit.btn.btn-default.active{ rel: "tooltip", title: "Edit" }
+        %input{ type: "radio", name: "options", checked: true }= icon("pencil")
+      %label#toggle-organize.btn.btn-default{ rel: "tooltip", title: "Organize" }
+        %input{ type: "radio", name: "options", checked: true }= icon("th")
+      %label#toggle-preview.btn.btn-default{ rel: "tooltip", title: "Preview" }
+        %input{ type: "radio", name: "options", checked: true }= icon("eye")               
