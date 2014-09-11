@@ -5,17 +5,17 @@
       .title= block.friendly_name
       .buttons
         .btn-group
-          %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" } 
+          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" } 
             = icon('wrench')
             %span.caret
-          %ul.dropdown-menu.pull-right
-            %li.nav-header ACTIONS
+          %ul.dropdown-menu.pull-right{ role: "menu" }
+            %li.dropdown-header ACTIONS
             - block.class.actions.each do |action|
               %li
                 = link_to icon(action)+" "+action.humanize, { :controller => "blocks", :action => "edit", :page_id => @page.id, :id => block.id }, :remote => true
-            %li= link_to icon(:trash)+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true                
+            %li= link_to icon(:"trash-o")+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true                
             %li.divider
-            %li.nav-header MOVE
+            %li.dropdown-header MOVE
             %li
               %a.move_up{ :href => "#" }= icon(:"arrow-up")+' Up'
             %li
@@ -25,7 +25,7 @@
             %li
               %a.move_right{ :href => "#" }= icon(:"arrow-right")+' Right'
             %li.divider  
-            %li.nav-header SECTION
+            %li.dropdown-header SECTION
             %li
               %a.section_up{ :href => "#" }= icon(:"arrow-up")+' Up'
             %li
