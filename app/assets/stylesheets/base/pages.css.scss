@@ -29,6 +29,10 @@
   }
 }
 
+.add-section {
+  width: 100%;
+}
+
 .editable {
   .inner {
     border: 1px solid $gray-light;
@@ -43,8 +47,10 @@
   }
   .add-block {
     display: block;
+    width: 100%;
   }
 }
+
 
 .section {
   .chrome {
