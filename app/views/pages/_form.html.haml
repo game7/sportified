@@ -2,15 +2,15 @@
   %fieldset
     %legend Basic
     = f.input :title
-    = f.input :draft, :as => :boolean
+    = f.input :draft, :as => :boolean, :wrapper => :vertical_boolean
     %fieldset
       %legend Positioning    
       = f.input :parent_id, :collection => @parent_options
-      = f.input :show_in_menu, :as => :boolean
+      = f.input :show_in_menu, :as => :boolean, :wrapper => :vertical_boolean
       = f.input :title_in_menu
     %fieldset
       %legend Navigation
-      = f.input :skip_to_first_child, :as => :boolean
+      = f.input :skip_to_first_child, :as => :boolean, :wrapper => :vertical_boolean
       = f.input :link_url
     %fieldset
       %legend Search Engine Optimization
