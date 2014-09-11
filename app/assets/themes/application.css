@@ -7,9 +7,7 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "base/base";
-@import "base/leagues";
-@import "base/pages";
+@import "base/include";
 
 body {
   padding-top: 40px;

@@ -3,7 +3,6 @@
 *= require jquery-ui-1.8.11.custom
 *= require jcrop/jquery.Jcrop.min
 *= require font-awesome
-*= require_tree ../stylesheets/admin
 */
 
 
@@ -23,9 +22,7 @@ $navbar-default-link-disabled-bg:          transparent !default;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "base/base";
-@import "base/leagues";
-@import "base/pages";
+@import "base/include";
 
 body {
   padding-top: 50px;

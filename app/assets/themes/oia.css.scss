@@ -14,9 +14,7 @@ $navbar-default-link-active-color: #cccccc;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "base/base";
-@import "base/leagues";
-@import "base/pages";
+@import "base/include";
 
 body {
   padding-top: 50px;
