@@ -1,8 +1,10 @@
-.modal-header
-  %button.close{ :type => "button", :"data-dismiss" => "modal", :"aria-labelledby" => "modalLabel", :"aria-hidden" => "true" } x
-  %h3{ :id => "modalLabel" }= @modal_title
-.modal-body
-  = yield
-.modal-footer
-  %button.btn{ :"data-dismiss" => "modal", :"aria-hidden" => true } Close
-  %button.btn.btn-primary.submit Save Changes
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{ :type => "button", :"data-dismiss" => "modal", :"aria-labelledby" => "modalLabel", :"aria-hidden" => "true" } x
+      %h3{ :id => "modalLabel" }= @modal_title
+    .modal-body
+      = yield
+    .modal-footer
+      %button.btn.btn-primary.submit Save Changes
+      %button.btn.btn-default{ :"data-dismiss" => "modal", :"aria-hidden" => true } Cancel      

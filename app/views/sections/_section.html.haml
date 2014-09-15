@@ -18,7 +18,7 @@
             %li
               %a.move_section_down{ :href => "#" }= icon(:"arrow-down")+' Down'            
       .clear  
-  .content.columns.row-fluid
+  .content.columns.row
     - section.columns.each_with_index do |column, index|
       .column{ :class => width_to_span(column), :"data-column" => index }
         .column-inner

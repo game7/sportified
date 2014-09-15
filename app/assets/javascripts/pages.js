@@ -85,7 +85,7 @@ $(function() {
     return false;
   });
     
-  $(document).on('click', '.section a.add_block', function(){
+  $(document).on('click', '.section a.add-block', function(){
     $('#column').val( $(this).attr('data-column') );
     $('#section_id').val( $(this).attr('data-section_id') );
   });

@@ -1,20 +1,22 @@
-#block-catalog.modal.hide.fade{ :role => "dialog"}
-  .modal-header
-    %button.close{ :"data-dismiss" => 'modal', :"aria-hidden" => 'true' }!= "&times;"
-    %h3 Add Block
-  .modal-body
-    = form_for [@page, Block.new], :html => { :id => 'new_block' }, :remote => true do |f|
-      %input{ :type => :hidden, :id => :block_type, :name => :block_type }
-      %input{ :type => :hidden, :id => :page_id, :name => :page_id, :value => @page.id }
-      %input{ :type => :hidden, :id => :section_id, :name => :section_id }
-      %input{ :type => :hidden, :id => :column, :name => :column }
-      - t('blocks').each do |block|
-        %div{ :style => "border-bottom: 1px solid #dedede;"}
-          %div.pull-left{ :style => ""}
-            %button.btn.add_block{ :type => :submit, :"data-block_type" => block[0], :style => "margin-top: 5px;" }= icon('plus')+" Add"
-          %div.pull-left{ :style => "margin-left: 10px"}
-            %strong= block[1][:name]
-            %br
-            =block[1][:description]
-          .clear  
-  .modal-footer
+.modal.fade{ :id => "block-catalog", :role => "dialog", :"tab-index" => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ :"data-dismiss" => 'modal', :"aria-hidden" => 'true' }!= "&times;"
+        %h3 Add Block
+      .modal-body
+        = form_for [@page, Block.new], :html => { :id => 'new_block' }, :remote => true do |f|
+          %input{ :type => :hidden, :id => :block_type, :name => :block_type }
+          %input{ :type => :hidden, :id => :page_id, :name => :page_id, :value => @page.id }
+          %input{ :type => :hidden, :id => :section_id, :name => :section_id }
+          %input{ :type => :hidden, :id => :column, :name => :column }
+          - t('blocks').each do |block|
+            %div{ :style => "border-bottom: 1px solid #dedede;"}
+              %div.pull-left{ :style => ""}
+                %button.btn.btn-primary.add_block{ :type => :submit, :"data-block_type" => block[0], :style => "margin-top: 5px;" }= icon('plus')+" Add"
+              %div.pull-left{ :style => "margin-left: 10px"}
+                %strong= block[1][:name]
+                %br
+                =block[1][:description]
+              .clear  
+      .modal-footer
