@@ -1,4 +1,12 @@
 <div>
-  <h1>Ember is Here... Yes!</h1>
+  <ul class="nav nav-pills">
+    {{#link-to "index" tagName="li"}}
+      <a {{bind-attr href="view.href"}}>Home</a>
+    {{/link-to}}
+    {{#link-to "events" tagName="li"}}
+      <a {{bind-attr href="view.href"}}>Events</a>
+    {{/link-to}}
+  </ul>
+  <hr/>
   {{ outlet }}
 </div>
