@@ -16,7 +16,7 @@ class Host::TenantsController < Host::HostController
   end
 
   def update
-    if @tenant.update_attributes(params[:tenant])
+    if @tenant.update_attributes(tenant_params)
       return_to_last_point :success => 'Tenant has been updated.'
     else
       flash[:error] = "Tenant could not be updated"
@@ -25,7 +25,7 @@ class Host::TenantsController < Host::HostController
   end
 
   def create
-    @tenant = Tenant.new(params[:tenant])
+    @tenant = Tenant.new(tenant_params)
     if @tenant.save
       return_to_last_point(:notice => 'New Tenant has been created.')
     else
@@ -40,6 +40,11 @@ class Host::TenantsController < Host::HostController
   end
 
   private
+  
+  def tenant_params
+    params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
+      :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id)
+  end
 
   def find_tenant
     @tenant = Tenant.find(params[:id])

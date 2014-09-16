@@ -1,0 +1,11 @@
+.social
+  - if Tenant.current.twitter_id
+    = link_to(icon('twitter'), "http://twitter.com/" + Tenant.current.twitter_id, { :target => "_blank", :class => "twitter", :title => "boo" })
+  - if Tenant.current.facebook_id
+    = link_to(icon('facebook'), "https://www.facebook.com/" + Tenant.current.facebook_id, { :target => "_blank", :class => "facebook" })
+  - if Tenant.current.google_plus_id
+    = link_to(icon('google-plus'), "https://plus.google.com/+" + Tenant.current.google_plus_id, { :target => "_blank", :class => "google_plus" })
+  - if Tenant.current.instagram_id
+    = link_to(icon('instagram'), "http://instagram.com/" + Tenant.current.instagram_id, { :target => "_blank", :class => "instagram" })
+  - if Tenant.current.foursquare_id
+    = link_to(icon('foursquare'), "https://foursquare.com/v/" + Tenant.current.foursquare_id, { :target => "_blank", :class => "foursquare" })

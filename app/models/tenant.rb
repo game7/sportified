@@ -10,6 +10,12 @@ class Tenant
   field :analytics_id, :type => String
   field :theme, :type => String
   
+  field :twitter_id, :type => String
+  field :facebook_id, :type => String
+  field :instagram_id, :type => String
+  field :foursquare_id, :type => String
+  field :google_plus_id, :type =>String
+  
   validates :host, presence: true
   
   scope :for_host, ->(host) { where(:host => host) }

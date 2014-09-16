@@ -149,3 +149,38 @@ header {
   clear: both;
 }
 
+#footer {
+  height: 100px;
+  background: rgb(48, 48, 48);
+  background: rgba(48, 48, 48, .90);
+  padding: 10px;
+}
+
+.social {
+  float: right;
+  a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 30px;
+    color: #fff;
+  }
+  .twitter {
+    background-color: #00aced;
+  }
+  .facebook {
+    background-color: #3b5998;
+  }
+  .google_plus {
+    background-color: #dd4b39;
+  }
+  .instagram {
+    background-color: #517fa4;
+  }
+  .foursquare {
+    background-color: #0072b1;
+  }
+}
+
