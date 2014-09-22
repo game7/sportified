@@ -12,6 +12,7 @@ class Team::Record
   field :t, :type => Integer, :default => 0
   field :rw, :type => Integer, :default => 0
   field :rl, :type => Integer, :default => 0
+  field :rffl, :type => Integer, :default => 0
   field :fw, :type => Integer, :default => 0
   field :fl, :type => Integer, :default => 0
   field :otw, :type => Integer, :default => 0
@@ -61,6 +62,7 @@ class Team::Record
     self.t = 0
     self.rw = 0
     self.rl = 0
+    self.rffl = 0
     self.otw = 0
     self.otl = 0
     self.sol = 0
@@ -120,11 +122,13 @@ class Team::Record
         case completed_in
           when 'regulation'
             self.rl += i
+            self.rffl += i
           when 'overtime'
             self.otl += i
           when 'shootout'
             self.sol += i
           when 'forfeit'
+            self.rffl += i
             self.ffl += i
         end
       when 'tie'
