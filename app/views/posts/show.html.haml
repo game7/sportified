@@ -1,0 +1,4 @@
+%h1= @post.title
+!= RedCloth.new(@post.body).to_html if @post.body.presence
+.back
+  %a{ :href => "javascript: history.back();" } Back
