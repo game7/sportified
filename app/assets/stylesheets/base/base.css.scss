@@ -149,6 +149,7 @@ header {
   clear: both;
 }
 
+
 #footer {
   height: 100px;
   background: rgb(48, 48, 48);
@@ -181,6 +182,23 @@ header {
   }
   .foursquare {
     background-color: #0072b1;
+  }
+}
+
+.feed {
+  .post {
+    .title {
+      margin-bottom: 0px;
+    }
+    .created {
+      color: #666;      
+    }
+    .summary {
+
+    }
+    .read_more {
+    
+    }
   }
 }
 

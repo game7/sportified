@@ -1,0 +1,11 @@
+.feed
+  - count = 0
+  - posts = block.posts.entries
+  - posts.each_with_index do |post, index|
+    .post
+      %h4.title= post.title
+      .created= "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
+      .summary= post.summary
+      - unless post.body.blank?
+        .read_more
+          = link_to "Read More", post

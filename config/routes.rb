@@ -2,6 +2,8 @@
 
   get 'commish/index'
 
+  resources :posts, :only => [ :show ]
+
   get "dashboard/index"
 
   root :to => "pages#show"

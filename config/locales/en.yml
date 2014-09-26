@@ -35,6 +35,9 @@ en:
     document:
       name: "Document"
       description: "Upload a document that can viewed or downloaded by visitors"
+    feed:
+      name: "Feed"
+      description: "A feed of posts"      
     image:
       name: "Image"
       description: "Upload an image that can be viewed by visitors"

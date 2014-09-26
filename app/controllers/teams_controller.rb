@@ -38,6 +38,7 @@ class TeamsController < BaseLeagueController
   end
   
   def update
+    @league = @team.league
     @team.update_attributes(params[:team])    
   end
 

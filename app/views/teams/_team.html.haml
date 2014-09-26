@@ -6,10 +6,12 @@
     %h3.name{ :style => "color: #{team.secondary_color}"}= team.name
     .links
       = link_to "Schedule", team_schedule_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
-      %span{ :style=> "color: #{team.secondary_color}"}= " | "
-      = link_to "Roster", team_roster_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
-      %span{ :style=> "color: #{team.secondary_color}"}= " | "
-      = link_to "Statistics", team_statistics_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if @league.show_players        
+        %span{ :style=> "color: #{team.secondary_color}"}= " | "
+        = link_to "Roster", team_roster_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if @league.show_statistics
+        %span{ :style=> "color: #{team.secondary_color}"}= " | "
+        = link_to "Statistics", team_statistics_path(team.league_slug, team.season_slug, team.slug), { :style => "color: #{team.accent_color};" }
 
 
 
