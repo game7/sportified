@@ -1,7 +1,7 @@
 - title 'Pages'
 
 - content_for :actions do
-  = link_to icon('plus')+" New Page", new_page_path, :class => 'btn'
+  = link_to icon('plus')+" New Page", new_page_path, :class => 'btn btn-default'
 
 - content_for :javascript do
   :javascript
@@ -25,7 +25,8 @@
     });
 
 %section#pages.tree.well
-  = render 'tree'
+  %ul
+    = render 'tree'
 
 :css
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }

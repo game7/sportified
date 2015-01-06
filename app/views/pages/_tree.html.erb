@@ -17,28 +17,28 @@
   <% end %>
     <li id="page_<%= page.id %>">
       <div>
-        <span class="handle"><%= icon('move')%></span>
+        <span class="handle"><%= icon('arrows')%></span>
         <strong><%= page.title_in_menu.presence || page.title %></strong>
         <% if page.draft %> <em>(draft)</em><% end %>
         <% unless page.show_in_menu %>
-          <a href="#" rel="tooltip" title="Page is not visible in Menu">
-            <span class="label"><%= icon('eye-close', true)%> Hidden</span>
-          </a>
+          <span data-toggle="tooltip" title="Page is not visible in Menu">
+            <span class="label label-default"><%= icon('eye-slash')%> Hidden</span>
+          </span>
         <% end %>
         <% unless page.link_url.blank? %>
-          <a href="#" rel="tooltip" title="Menu links to custom location">
-            <span class="label"><%= icon('share', true)%> Link</span>
-          </a>
+          <span data-toggle="tooltip" title="Menu links to custom location">
+            <span class="label label-default"><%= icon('share')%> Link</span>
+          </span>
         <% end %>
         <% if page.skip_to_first_child %>
-          <a href="#" rel="tooltip" title="Menu links to first child page">
-            <span class="label"><%= icon('arrow-down', true)%> First Child</span>
-          </a>        
+          <span data-toggle="tooltip" title="Menu links to first child page">
+            <span class="label label-default"><%= icon('arrow-down')%> First Child</span>
+          </span>        
         <% end %>
         <span class="actions">
-          <%= link_to icon('share')+" Go To", get_page_url(page), :class => "btn btn-mini" %>
-          <%= link_to icon('pencil')+" Edit", edit_page_path(page.id), :class => "btn btn-mini" %>
-          <%= link_to icon('trash')+' Delete', page, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-mini" %>
+          <%= link_to icon('share')+" Go To", get_page_url(page), :class => "btn btn-xs btn-default" %>
+          <%= link_to icon('pencil')+" Edit", edit_page_path(page.id), :class => "btn btn-xs btn-default" %>
+          <%= link_to icon('trash')+' Delete', page, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-xs btn-default" %>
         </span>
       </div>
   <% last_depth = page.depth %>
