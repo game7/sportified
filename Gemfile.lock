@@ -241,7 +241,7 @@ GEM
     remarkable_mongoid (0.6.0)
       remarkable_activemodel (~> 4.0.0.alpha4)
     remotipart (1.2.1)
-    rmagick (2.13.2)
+    rmagick (2.13.4)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -339,7 +339,7 @@ DEPENDENCIES
   rails_12factor
   remarkable_mongoid (>= 0.5.0)
   remotipart (~> 1.0)
-  rmagick
+  rmagick (~> 2.13.4)
   rspec (>= 2.0.1)
   rspec-rails (>= 2.0.1)
   sass-rails (~> 4.0.0.rc1)

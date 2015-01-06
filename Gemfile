@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.1.0'
+ruby '2.1.2'
 gem 'rails', '4.1.0'
 
 gem 'active_model_serializers' 
@@ -35,7 +35,7 @@ gem 'ember-source', '1.5.0'
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
-gem 'rmagick', require: false
+gem 'rmagick', '~> 2.13.4'
 gem 'remotipart', '~> 1.0'
 
 gem "RedCloth"
