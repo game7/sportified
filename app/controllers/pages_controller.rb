@@ -18,7 +18,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page.update_attributes(params[:page]) 
+    @page.update_attributes(page_params) 
   end
 
   def new
@@ -26,7 +26,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new(page_params)
     if @page.save
       return_to_last_point(:notice => 'Page was successfully created.')
     else
@@ -51,6 +51,12 @@ class PagesController < ApplicationController
   end  
   
   private
+  
+  def page_params
+    params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu, 
+                                  :link_url, :skip_to_first_child,
+                                  :meta_keywords, :meta_description)
+  end  
   
   def load_objects
     find_page

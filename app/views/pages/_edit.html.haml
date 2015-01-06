@@ -1,9 +1,9 @@
 = simple_form_for @page, :remote => true do |f|
   = f.input :title
   = f.input :parent_id, :collection => @parent_options
-  = f.input :show_in_menu, :as => :boolean
+  = f.input :show_in_menu, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :title_in_menu
-  = f.input :skip_to_first_child, :as => :boolean
+  = f.input :skip_to_first_child, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :link_url
   =# f.input :meta_keywords
   =# f.input :meta_description
