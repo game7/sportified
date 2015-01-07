@@ -2,6 +2,7 @@ class Admin::PostsController < Admin::AdminController
   
   before_filter :find_post, :only => [:edit, :update, :destroy]
   before_filter :mark_return_point, :only => [:new, :edit]
+  before_filter :add_posts_breadcrumb
   
   def index
     @posts = Post.all.newest_first.page(params[:page])
@@ -13,7 +14,7 @@ class Admin::PostsController < Admin::AdminController
   end
 
   def update
-    if @post.update_attributes(params[:post])
+    if @post.update_attributes(post_params)
       return_to_last_point(:notice => 'Post has been updated')
     else
       render :action => "edit"
@@ -25,7 +26,7 @@ class Admin::PostsController < Admin::AdminController
   end
 
   def create
-    @post = Post.new(params[:post])
+    @post = Post.new(post_params)
     if @post.save
       return_to_last_point(:notice => 'Post has been successfully created.')
     else
@@ -40,9 +41,17 @@ class Admin::PostsController < Admin::AdminController
   end
   
   private
+  
+  def post_params
+    params.required(:post).permit(:title, :summary, :body, :link_url, :tags, :image, :remote_image_url, :image_cache)
+  end
 
   def find_post
     @post = Post.find(params[:id])
+  end
+  
+  def add_posts_breadcrumb
+    add_breadcrumb 'Posts', admin_posts_url
   end
   
 end
