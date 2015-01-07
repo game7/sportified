@@ -5,6 +5,6 @@ class Map::Team
   belongs_to :team
   embedded_in :game_upload
 
-  scope :with_name,  ->{ |name| where(:name => name) }
+  scope :with_name, ->(name) { where(:name => name) }
 
 end
