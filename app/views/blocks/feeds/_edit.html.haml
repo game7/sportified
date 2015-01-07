@@ -1,6 +1,6 @@
 = simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
-  = f.input :post_count, :input_html => { :class => 'input-min' }
+  = f.input :post_count
   .control-group
     %label.control-label Tags
     .controls
-      = f.collection_check_boxes :tags, Post.tags_with_weight.collect{|a| [a[0], "#{a[0]} (#{a[1].to_s.chop.chop})"]}, :first, :last do |b| b.label { b.check_box + " " + b.text } end
+      = f.collection_check_boxes(:tags, Post.tags_with_weight.collect{|a| [a[0], "#{a[0]} (#{a[1].to_s.chop.chop})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'}) 
