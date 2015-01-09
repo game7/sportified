@@ -36,7 +36,7 @@ class Host::TenantsController < Host::HostController
 
   def destroy
     @tenant.destroy
-    return_to_last_point(:notice => 'Tenant has been deleted.')
+    flash[:notice] = "Tenant has been deleted"   
   end
 
   private

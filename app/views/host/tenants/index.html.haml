@@ -8,12 +8,12 @@
       %th Actions
   %tbody
     - @tenants.each do |tenant|
-      %tr
+      %tr{ :id => "tenant_#{tenant.id}" }
         %td #{tenant.name}
         %td #{tenant.slug}        
         %td #{tenant.host}
         %td 
-          = link_to 'Edit', edit_host_tenant_path(tenant), :class => 'btn btn-mini'
-          = link_to 'Delete', [:host, tenant], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
-= link_to 'Add New Tenant', new_host_tenant_path, :class => "btn"
+          = link_to 'Edit', edit_host_tenant_path(tenant), :class => 'btn btn-xs btn-default'
+          = link_to 'Delete', [:host, tenant], :method => :delete, :remote => true, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-xs btn-danger'
+= link_to 'Add New Tenant', new_host_tenant_path, :class => "btn btn-default"
 

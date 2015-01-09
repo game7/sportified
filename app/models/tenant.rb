@@ -16,6 +16,7 @@ class Tenant
   field :foursquare_id, :type => String
   field :google_plus_id, :type =>String
   
+  validates :name, presence: true
   validates :slug, presence: true
   
   scope :for_host, ->(host) { where(:host => host) }

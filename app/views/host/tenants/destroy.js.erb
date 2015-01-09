@@ -1,0 +1,3 @@
+$("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
+$("#flash_notice").slideDown();
+$("#tenant_<%= @tenant.id %>").fadeOut();
