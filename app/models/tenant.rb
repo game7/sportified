@@ -1,5 +1,6 @@
 class Tenant
   include Mongoid::Document
+  include Tenancy::Resource
   before_save :check_and_set_slug
   
   field :name, :type => String

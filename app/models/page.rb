@@ -6,7 +6,7 @@ class Page
   include Mongoid::Tree
   include Mongoid::Tree::Traversal
   include Mongoid::Tree::Ordering
-  include Sportified::TenantScoped
+  include Sportified::TenantScoped 
 
   before_save :set_slug, :set_path, :set_tree
   after_save :cascade_save
