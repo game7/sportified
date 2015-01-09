@@ -1,5 +1,5 @@
 class PlayersController < BaseLeagueController
-  before_filter :get_season_options
+  before_filter :get_season_options, :only => [:index]
   
   def index
 
@@ -12,6 +12,17 @@ class PlayersController < BaseLeagueController
       format.xml  { render :xml => @players }
     end
   end
+  
+  def show
+
+    @player = Player.find(params[:id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @player }
+    end
+    
+  end  
   
   private
   

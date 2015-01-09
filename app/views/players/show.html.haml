@@ -1,0 +1,56 @@
+
+%h3 Player Statistics
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th DATE
+      %th OPPONENT
+      %th.span1 G
+      %th.span1 A
+      %th.span1 PTS
+      %th.span1 PEN
+      %th.span1 PIM
+      %th.span1 MNR
+      %th.span1 MJR
+      %th.span1 MSC
+      %th.span1 GAME      
+    %tbody
+      - @player.record.results.each do |result|
+        %tr
+          %td= result.played_on.to_date.strftime("%-m/%d/%y")
+          %td= result.opponent_name
+          - if result.gp == 1
+            %td= result.g
+            %td= result.a
+            %td= result.pts
+            %td= result.pen
+            %td= result.pim
+            %td= result.pen_minor
+            %td= result.pen_major
+            %td= result.pen_misc
+            %td= result.pen_game            
+          - if result.gp == 0
+            %td{ :colspan => 9 } Did Not Play
+
+%h3 Goaltending Statistics
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th DATE
+      %th OPPONENT
+      %th.span1 TOI
+      %th.span1 SA
+      %th.span1 GA
+      %th.span1 SV
+      %th.span1 SV%
+    %tbody
+      - @player.record.results.each do |result|
+        - if result.g_gp == 1
+          %tr
+            %td= result.played_on.to_date.strftime("%-m/%d/%y")
+            %td= result.opponent_name          
+            %td= result.g_toi
+            %td= result.g_sa
+            %td= result.g_ga
+            %td= result.g_sv
+            %td= number_with_precision result.g_svp, :precision => 3

@@ -16,6 +16,6 @@
       %tr{ :class => cycle("odd","even") }
         %td.span1 #{player.jersey_number}
         %td.span11
-          = player.full_name
+          = link_to player.full_name, player_path(player.id)
 
 

@@ -35,8 +35,10 @@
   match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get  
 
   match "programs/players/:league_slug(/:season_slug)" => "players#index", :as => :players, :via => :get
+  match "programs/player/:id" => "players#show", :as => :player, :via => :get
+
   match "programs/:league_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
-  
+
   match "programs/teams/:league_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
   
   match "programs/statistics/:league_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
@@ -45,6 +47,7 @@
   match "programs/:league_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get
   match "programs/:league_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
+
   
   resources :seasons, :only => [], :shallow => true do
     resources :teams, :only => [ :new, :create, :edit, :update, :delete]
