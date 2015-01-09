@@ -16,13 +16,13 @@ class Tenant
   field :foursquare_id, :type => String
   field :google_plus_id, :type =>String
   
-  validates :host, presence: true
+  validates :slug, presence: true
   
   scope :for_host, ->(host) { where(:host => host) }
   
   class << self
     def current
-      Thread.current[:current_tenant] ||= Tenant.find_or_create_by(:host => '')
+      Thread.current[:current_tenant]
     end
     def current=(tenant)
       Thread.current[:current_tenant] = tenant

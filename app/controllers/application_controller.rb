@@ -62,7 +62,13 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_tenant
-    Tenant.current = Tenant.find_or_create_by( :host => request.host.gsub("www.","") )
+    # find current tenant by either full hostname or subdomain
+    Tenant.current = Tenant.or( 
+      { :host => request.host.gsub("www.","").downcase  },
+      { :slug => request.host.split(".").first.downcase  }
+    ).first
+    # raise routing exception if tenant not found
+    raise ActionController::RoutingError.new("Not Found") unless Tenant.current
   end
 
   def add_stylesheets

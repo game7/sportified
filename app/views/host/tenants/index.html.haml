@@ -3,12 +3,14 @@
   %thead
     %tr
       %th Name
+      %th Slug      
       %th Host
       %th Actions
   %tbody
     - @tenants.each do |tenant|
       %tr
         %td #{tenant.name}
+        %td #{tenant.slug}        
         %td #{tenant.host}
         %td 
           = link_to 'Edit', edit_host_tenant_path(tenant), :class => 'btn btn-mini'
