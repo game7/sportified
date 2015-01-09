@@ -33,7 +33,7 @@ class Season
     season.teams.each do |team|
       team.set_season_name_and_slug season
       team.save
-    end
+    end if season.name_changed?
   end  
 
 
