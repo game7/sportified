@@ -42,12 +42,12 @@ class League
       where(:season_ids => season_id)
     end
   end  
-  
+
   after_save do |league|
     league.teams.each do |team|
       team.set_league_name_and_slug league
       team.save
-    end
+    end if league.name_changed?
   end  
-  
+
 end
