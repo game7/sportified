@@ -60,6 +60,7 @@ module Hockey
       self.g_toi      = 0
       self.g_sa       = 0
       self.g_ga       = 0
+      self.g_sv       = 0
       self.g_svp      = 0
       self.g_gaa      = 0
       self.g_so       = 0
