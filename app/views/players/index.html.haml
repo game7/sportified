@@ -12,4 +12,4 @@
       %tr
         %td #{player.jersey_number}
         %td
-          = player.full_name
+          = link_to player.full_name, player_path(player.id)
