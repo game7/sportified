@@ -5,7 +5,6 @@
     = render :partial => 'shared/season_options', :object => @season_options
 
 - teams_by_division(@teams).each do |division|
-  %h3= division[:name] unless division[:name].blank?
   .visible-xs
     %table.table.table-striped.table-bordered
       %thead
