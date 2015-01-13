@@ -41,6 +41,8 @@ gem 'remotipart', '~> 1.0'
 
 gem "RedCloth"
 
+gem 'unicorn'
+
 
 #gem 'pages', :path => "vendor/engines/pages"
 
