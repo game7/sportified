@@ -3,7 +3,7 @@
     = link_to "← Back", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-xs"
     = link_to "← Prev #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "visible-sm"      
     = link_to "← Previous #{range} Days", {:date => prev_date, :league_slug => params[:league_slug]}, :class => "hidden-xs hidden-sm"   
-  %li.active
+  %li.disabled
     = link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#"
   %li.next
     = link_to "Next #{range} Days →", {:date => next_date, :league_slug => params[:league_slug]}, :class => "hidden-xs"  
