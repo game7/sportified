@@ -20,7 +20,7 @@ module Sportified
 
     config.generators do |g|
       g.template_engine :haml
-      g.orm :mongoid
+      g.orm :active_record
       g.test_framework :rspec, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
