@@ -116,7 +116,7 @@
       post 'position', :on => :collection
     end
     namespace :blocks do #:except => [:edit, :update] do
-      #resources :contacts, :only => [:edit, :update]
+      resources :contacts, :only => [:edit, :update]
       resources :texts, :only => [:edit, :update]
       resources :images, :only => [:edit, :update]
       resources :documents, :only => [:edit, :update]

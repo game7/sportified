@@ -4,9 +4,15 @@ class Blocks::MarkupsController < BlocksController
   end
   
   def update
-    if @block.update_attributes(params[:blocks_markup])
+    if @block.update_attributes(blocks_markup_params)
       flash[:success] = "Markup updated"          
     end    
   end
+  
+  private
+  
+  def blocks_markup_params
+    params.required(:blocks_markup).permit(:body)
+  end  
   
 end

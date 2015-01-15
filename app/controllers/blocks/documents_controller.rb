@@ -7,9 +7,15 @@ class Blocks::DocumentsController < BlocksController
   end
   
   def update
-    if @block.update_attributes(params[:blocks_document])
+    if @block.update_attributes(blocks_document_params)
       flash[:success] = "Document updated"
-    end    
+    end
+  end
+  
+  private
+  
+  def blocks_document_params
+    params.required(:blocks_document).permit(:title, :description, :file, :file_cache)
   end
   
 end

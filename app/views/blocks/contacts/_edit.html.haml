@@ -1,4 +1,4 @@
-= simple_form_for @block, :as => :block, :url => page_block_path(@page, @block), :remote => true do |f|
+= simple_form_for @block, :url => page_blocks_contact_path(@page, @block), :remote => true do |f|
   = f.input :first
   = f.input :last
   = f.input :title
