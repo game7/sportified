@@ -48,10 +48,6 @@ GEM
     autotest-rails (4.2.1)
       ZenTest (~> 4.5)
     autotest-standalone (4.5.11)
-    barber (0.4.2)
-      ember-source
-      execjs
-      handlebars-source
     bcrypt (3.1.7)
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
@@ -82,19 +78,6 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    ember-data-source (1.0.0.beta.9)
-      ember-source
-    ember-rails (0.15.0)
-      active_model_serializers
-      barber (>= 0.4.1)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      handlebars-source (> 1.0.0)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
-    ember-source (1.5.0)
-      handlebars-source (~> 1.0)
     erubis (2.7.0)
     excon (0.38.0)
     execjs (2.2.1)
@@ -142,7 +125,6 @@ GEM
       activesupport (>= 4.0.1)
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
-    handlebars-source (1.3.0)
     hashie (3.2.0)
     hike (1.2.3)
     i18n (0.6.11)
@@ -327,8 +309,6 @@ DEPENDENCIES
   chronic
   database_cleaner
   devise
-  ember-rails
-  ember-source (= 1.5.0)
   factory_girl_rails
   faker
   fog

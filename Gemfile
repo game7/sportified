@@ -32,9 +32,6 @@ gem 'chronic'
 gem 'simple_form', '~> 3.1.0.rc2'
 #gem 'delayed_job'
 
-gem 'ember-rails'
-gem 'ember-source', '1.5.0'
-
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'fog'
