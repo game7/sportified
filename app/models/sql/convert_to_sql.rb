@@ -1,47 +1,46 @@
 module Sql
   class ConvertToSql
     
-    def convert
-      
-      #::User.all.each do |user|
-      #  sql_user = find_or_create(user, ::Sql::User)
-      #  set_attributes(user, sql_user)
-      #  sql_user.save!
-      #end
-            
-      ::Tenant.all.each do |mongo|
-        sql = find_or_create(mongo, ::Sql::Tenant)
-        set_attributes(mongo, sql)
-        sql.save!
+    def convert(mongo, ar_type, initial_attrs = {})
+      sql = ar_object_for(mongo, ar_type).tap do |sql|
+        sql.assign_attributes(initial_attrs)
         
-        ::Tenant.current = mongo
+        keys(mongo, sql).each do |key|
+
+          begin
+            if key == "_id"
+              sql.mongo_id = mongo.id.to_s
+            elsif sql.respond_to?("apply_mongo_#{key}!")
+              sql.send("apply_mongo_#{key}!", mongo.send(key))
+            elsif mongo.respond_to?(key) && !key.end_with?("_id")
+              sql.send("#{key}=", mongo.send(key))
+            end
+          rescue Exception => ex
+            puts "Error while updating #{key}"
+            puts ex.message
+          end
+        end
+
+        begin
+          sql.save!
+        rescue Exception => ex
+          puts "Error(s) while saving"
+          puts sql.errors.full_messages
+        end
+        
+        sql
         
       end
-      
     end
     
     private
     
-    def find_or_create(mongo, ar_type)
-      puts "Looking for #{ar_type.to_s} -> #{mongo.id.to_s}"
-      sql = ar_type.where(:mongo_id => mongo.id.to_s).first
-      if sql
-        puts "Object Exists"
-      else
-        puts "New Object"
-        sql = ar_type.new
-      end
-      sql
+    def ar_object_for(mongo, ar_type)
+      ar_type.where(:mongo_id => mongo.id.to_s).first || ar_type.new
     end
     
-    def set_attributes(mongo, sql)
-      mongo.attributes.keys.each do |key|
-        if key == "_id"
-          sql.mongo_id = mongo.id.to_s
-        elsif mongo.respond_to?(key) && !key.end_with?("_id")
-          sql.send("#{key}=", mongo.send(key))
-        end
-      end      
+    def keys(mongo, sql)
+      (mongo.attributes.keys + sql.attributes.keys).uniq - ["id"]
     end
     
   end
