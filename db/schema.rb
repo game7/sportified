@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128040418) do
+ActiveRecord::Schema.define(version: 20150128052915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,5 +30,43 @@ ActiveRecord::Schema.define(version: 20150128040418) do
     t.string "google_plus_id"
     t.string "mongo_id"
   end
+
+  create_table "tenants_users", id: false, force: true do |t|
+    t.integer "tenant_id"
+    t.integer "user_id"
+  end
+
+  add_index "tenants_users", ["tenant_id"], name: "index_tenants_users_on_tenant_id", using: :btree
+  add_index "tenants_users", ["user_id"], name: "index_tenants_users_on_user_id", using: :btree
+
+  create_table "user_roles", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "title"
+    t.integer  "tenant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "mongo_id"
+  end
+
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

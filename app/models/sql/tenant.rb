@@ -1,6 +1,8 @@
 module Sql
   class Tenant < ActiveRecord::Base
     include Tenancy::Resource
+    
+    has_and_belongs_to_many :users
   
     before_save :check_and_set_slug
   
