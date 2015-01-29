@@ -2,19 +2,17 @@ namespace :mongo do
   desc "converts mongo models to postgresql models"
   task :to_sql => :environment do
     converter = Sql::ConvertToSql.new
+    session = Mongoid::Sessions.default
   
     section "Tenants"
-    Tenant.all.each do |mongo_tenant|
-      tenant = converter.convert(mongo_tenant, Sql::Tenant)
-      puts "-- Tenant #{tenant.id} updated"
+    session['tenants'].find.each do |mongo_tenant|
+      tenant = converter.convert(mongo_tenant, Tenant)
     end
     
     section "Users"
-    User.all.each do |mongo_user|
-      next unless mongo_user.roles.count > 0
-      user = converter.convert(mongo_user, Sql::User)
-      user.save(validate: false)
-      puts "-- User #{user.id} updated"
+    session['users'].find.each do |mongo_user|
+      next unless mongo_user['roles']
+      user = converter.convert(mongo_user, User)
     end
     
   end

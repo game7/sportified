@@ -5,15 +5,21 @@ module Sql
       sql = ar_object_for(mongo, ar_type).tap do |sql|
         sql.assign_attributes(initial_attrs)
         
+        if sql.new_record?
+          puts "NEW #{ar_type.to_s}"
+        else
+          puts "UPDATE #{ar_type.to_s} #{sql.id}"
+        end
+        
         keys(mongo, sql).each do |key|
 
           begin
             if key == "_id"
-              sql.mongo_id = mongo.id.to_s
+              sql.mongo_id = mongo['_id'].to_s
             elsif sql.respond_to?("apply_mongo_#{key}!")
-              sql.send("apply_mongo_#{key}!", mongo.send(key))
-            elsif mongo.respond_to?(key) && !key.end_with?("_id")
-              sql.send("#{key}=", mongo.send(key))
+              sql.send("apply_mongo_#{key}!", mongo[key])
+            elsif sql.respond_to?(key) && mongo[key] && !key.end_with?("_id")
+              sql.send("#{key}=", mongo[key])
             end
           rescue Exception => ex
             puts "Error while updating #{key}"
@@ -22,7 +28,7 @@ module Sql
         end
 
         begin
-          sql.save!
+          sql.save!(validate: ar_type != 'User')
         rescue Exception => ex
           puts "Error(s) while saving"
           puts sql.errors.full_messages
@@ -36,11 +42,11 @@ module Sql
     private
     
     def ar_object_for(mongo, ar_type)
-      ar_type.where(:mongo_id => mongo.id.to_s).first || ar_type.new
+      ar_type.where(:mongo_id => mongo['_id'].to_s).first || ar_type.new
     end
     
     def keys(mongo, sql)
-      (mongo.attributes.keys + sql.attributes.keys).uniq - ["id"]
+      (mongo.keys + sql.attributes.keys).uniq - ["id"]
     end
     
   end

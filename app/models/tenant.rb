@@ -1,26 +1,13 @@
-class Tenant
-  include Mongoid::Document
+class Tenant < ActiveRecord::Base
   include Tenancy::Resource
+  
+  has_and_belongs_to_many :users
+
   before_save :check_and_set_slug
 
-  field :name, :type => String
-  field :slug, :type => String
+  validates :name, :slug, presence: true
 
-  field :host, :type => String
-  field :description, :type => String
-  field :analytics_id, :type => String
-  field :theme, :type => String
-
-  field :twitter_id, :type => String
-  field :facebook_id, :type => String
-  field :instagram_id, :type => String
-  field :foursquare_id, :type => String
-  field :google_plus_id, :type =>String
-
-  validates :name, presence: true
-  validates :slug, presence: true
-
-  scope :for_host, ->(host) { where(:host => host) }
+  scope :for_host, ->(host) { where("host = ?", host) }
 
   class << self
     def current
@@ -33,6 +20,10 @@ class Tenant
 
   def check_and_set_slug
     self.slug ||= self.host.parameterize
+  end
+  
+  def apply_mongo_user_ids!(user)
+    
   end
 
 end

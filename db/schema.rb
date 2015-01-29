@@ -17,18 +17,20 @@ ActiveRecord::Schema.define(version: 20150128052915) do
   enable_extension "plpgsql"
 
   create_table "tenants", force: true do |t|
-    t.string "name"
-    t.string "slug"
-    t.string "host"
-    t.text   "description"
-    t.string "analytics_id"
-    t.string "theme"
-    t.string "twitter_id"
-    t.string "facebook_id"
-    t.string "instagram_id"
-    t.string "foursquare_id"
-    t.string "google_plus_id"
-    t.string "mongo_id"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "host"
+    t.text     "description"
+    t.string   "analytics_id"
+    t.string   "theme"
+    t.string   "twitter_id"
+    t.string   "facebook_id"
+    t.string   "instagram_id"
+    t.string   "foursquare_id"
+    t.string   "google_plus_id"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tenants_users", id: false, force: true do |t|

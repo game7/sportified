@@ -13,6 +13,7 @@ class CreateTenant < ActiveRecord::Migration
       t.string :foursquare_id
       t.string :google_plus_id
       t.string :mongo_id
+      t.timestamps
     end
   end
 end

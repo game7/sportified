@@ -1,11 +1,7 @@
-class UserRole
-  include Mongoid::Document
- 
-  embedded_in :user
-  field :name
-  field :title
-  field :tenant_id
-  field :subject_id
+class UserRole < ActiveRecord::Base
+
+  belongs_to :user
+  belongs_to :tenant
 
   scope :find_by_name, ->(name) { where(:name => name.to_s) }
 
