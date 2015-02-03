@@ -25,8 +25,9 @@
     });
 
 %section#pages.tree.well
-  %ul
-    = render 'tree'
+  %ul.trunk
+    - @pages.each do |page|
+      = render :partial => 'branch', :object => page
 
 :css
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }

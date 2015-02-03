@@ -1,5 +1,5 @@
 - title @page.title
-= render :partial => 'sections/section', :collection => @page.sections.asc(:position)
+= render :partial => 'sections/section', :collection => @page.sections.order(:position)
 - if current_user_is_admin?
   - content_for :actions do
     .btn-group

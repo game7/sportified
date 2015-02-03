@@ -1,6 +1,10 @@
-class Section < ActiveRecord::Base
-
-    belongs_to :page
+class Sectionx
+  include Mongoid::Document
+  
+    embedded_in :page
+  
+    field :pattern
+    field :position, :type => Integer, :default => 0
     
     PATTERNS = [
       "100", 
@@ -25,7 +29,7 @@ class Section < ActiveRecord::Base
     end
     
     after_destroy do |section|
-      section.page.blocks.where(section_id: section.id).destroy_all
-    end
-    
+      section.page.blocks.destroy_all(conditions: { section_id: section.id })
+    end    
+  
 end

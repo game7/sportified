@@ -14,6 +14,7 @@ gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
 
 gem 'tenancy'
+gem 'ancestry'
 gem 'mongoid', '~> 4.0.0'
 #gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'

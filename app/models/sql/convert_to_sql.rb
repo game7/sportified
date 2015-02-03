@@ -10,7 +10,7 @@ module Sql
         else
           puts "UPDATE #{ar_type.to_s} #{sql.id}"
         end
-        
+
         keys(mongo, sql).each do |key|
 
           begin
@@ -31,6 +31,7 @@ module Sql
           sql.save!(validate: ar_type != 'User')
         rescue Exception => ex
           puts "Error(s) while saving"
+          puts ex.message
           puts sql.errors.full_messages
         end
         

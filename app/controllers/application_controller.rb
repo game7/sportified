@@ -28,18 +28,18 @@ class ApplicationController < ActionController::Base
 
   def set_site_navigation
     @site_menu_items ||= []
-    pages = Page.top_level.in_menu.live.asc(:position)
+    pages = Page.roots.in_menu.live.order(:position)
     pages.each do |page|
       @site_menu_items << page    
     end
   end
 
   def get_page_url(page)
-    if page.skip_to_first_child and child = page.children.asc(:position).first
+    if page.skip_to_first_child and child = page.children.order(:position).first
       url = get_page_url(child)
     end
     url ||= page.link_url unless page.link_url.blank?
-    url ||= page_friendly_path(page.path)
+    url ||= page_friendly_path(page.url_path)
   end
   helper_method :get_page_url
 
@@ -63,10 +63,9 @@ class ApplicationController < ActionController::Base
 
   def find_current_tenant
     # find current tenant by either full hostname or subdomain
-    Tenant.current = Tenant.or( 
-      { :host => request.host.gsub("www.","").downcase  },
-      { :slug => request.host.split(".").first.downcase  }
-    ).first
+    host = request.host.gsub("www.","").downcase
+    slug = request.host.split(".").first.downcase
+    Tenant.current = Tenant.where("host = ? OR slug = ?", host, slug).first
     # raise routing exception if tenant not found
     raise ActionController::RoutingError.new("Not Found") unless Tenant.current
   end

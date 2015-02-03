@@ -1,0 +1,28 @@
+.collapse.navbar-collapse
+  %ul.nav.navbar-nav
+    - Page.in_menu.arrange(:order => :position).each do |root|
+      - page = root[0]
+      - url = get_page_url(page)
+      %li{ class: "#{request.url.include?(url) ? 'active ' : nil } #{root[1].length > 0 ? 'dropdown': nil }" }
+        - if root[1].length == 0
+          %a{ href: url }= page.title_in_menu.presence || page.title
+        - unless root[1].length == 0
+          %a{ :class => "dropdown-toggle", :href => "#", :'data-toggle' => "dropdown" }
+            = page.title_in_menu.presence || page.title
+            %span.caret
+          %ul{ :class => "dropdown-menu", :role => "menu" }
+            - root[1].each do |child|
+              - child_url = get_page_url(child[0])
+              %li
+                %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
+  
+  
+  %ul{ :class => "nav navbar-nav navbar-right" }
+    %li{ :class => "dropdown" }
+      %a{ :class => "dropdown-toggle", :href => "#",  :'data-toggle' => "dropdown" }
+        Account
+        %span.caret
+      %ul{ :class => "dropdown-menu", :role => "menu"}
+        = render "devise/menu/login_items"
+        = render "devise/menu/user_items"
+              

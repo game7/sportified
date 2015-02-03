@@ -11,10 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128052915) do
+ActiveRecord::Schema.define(version: 20150129052703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pages", force: true do |t|
+    t.integer  "tenant_id"
+    t.string   "title"
+    t.string   "slug"
+    t.string   "url_path"
+    t.text     "meta_keywords"
+    t.text     "meta_description"
+    t.string   "link_url"
+    t.boolean  "show_in_menu"
+    t.string   "title_in_menu"
+    t.boolean  "skip_to_first_child"
+    t.boolean  "draft"
+    t.string   "ancestry"
+    t.integer  "ancestry_depth"
+    t.integer  "position"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["ancestry"], name: "index_pages_on_ancestry", using: :btree
+  add_index "pages", ["tenant_id"], name: "index_pages_on_tenant_id", using: :btree
+
+  create_table "sections", force: true do |t|
+    t.integer  "page_id"
+    t.string   "pattern"
+    t.integer  "position"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sections", ["page_id"], name: "index_sections_on_page_id", using: :btree
 
   create_table "tenants", force: true do |t|
     t.string   "name"

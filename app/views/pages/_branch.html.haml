@@ -1,0 +1,31 @@
+- page = branch[0]
+- children = branch[1]
+%li{ :id => "page_#{page.id}" }
+  %div
+    %span.handle= icon('arrows')
+    %strong= page.title_in_menu.presence || page.title
+    - if page.draft
+      %em (draft)
+    - unless page.show_in_menu
+      %span{ :'data-toggle' => "tooltip", :title => "Page is not visible in Menu" }
+        %span.label.label-default
+          = icon('eye-slash')
+          Hidden
+    - unless page.link_url.blank?
+      %span{ :'data-toggle' => "tooltip", :title => "Menu links to custom location" }
+        %span.label.label-default
+          = icon('share')
+          Link
+    - if page.skip_to_first_child
+      %span{ :'data-toggle' => "tooltip", :title => "Menu links to first child page" }
+        %span.label.label-default
+          = icon('arrow-down')
+          First Child
+    %span.actions
+      = link_to icon('share')+" Go To", get_page_url(page), :class => "btn btn-xs btn-default"
+      = link_to icon('pencil')+" Edit", edit_page_path(page.id), :class => "btn btn-xs btn-default"
+      = link_to icon('trash')+' Delete', page, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => "btn btn-xs btn-default"
+  - if children.count > 0
+    %ul
+      - children.each do |child|
+        = render :partial => 'branch', :object => child

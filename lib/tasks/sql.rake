@@ -15,6 +15,16 @@ namespace :mongo do
       user = converter.convert(mongo_user, User)
     end
     
+    section "Pages"
+    session['pages'].find.each do |mongo_page|
+      page = converter.convert(mongo_page, Page)
+      if mongo_page['sections']
+        mongo_page['sections'].each do |mongo_section|
+          section = converter.convert(mongo_section, Section, { :page => page })
+        end 
+      end
+    end
+    
   end
   
   def section(name)

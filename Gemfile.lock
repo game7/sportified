@@ -38,6 +38,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (3.0.0.20140821)
       execjs
@@ -299,6 +301,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   active_model_serializers
+  ancestry
   autoprefixer-rails
   autotest
   autotest-notification

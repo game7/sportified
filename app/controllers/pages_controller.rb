@@ -5,12 +5,12 @@ class PagesController < ApplicationController
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def index
-    @pages = Page.sorted_as_tree
+    @pages = Page.in_menu.arrange(:order => :position)
   end
     
   def show
     current_user
-    redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.asc(:position).first).present?
+    redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.order(:position).first).present?
   end
   
   def edit
@@ -73,7 +73,7 @@ class PagesController < ApplicationController
   end
   
   def set_breadcrumbs
-    @page.ancestors_and_self.each do |parent|
+    (@page.ancestors + [@page]).each do |parent|
       add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
     end unless @page.root?
   end
@@ -89,16 +89,16 @@ class PagesController < ApplicationController
       add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
     end
     unless @page.root? or has_children
-      @page.siblings_and_self.in_menu.each do |sibling|
+      @page.siblings.in_menu.each do |sibling|
         add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)        
       end
     end    
   end
   
   def load_parent_options
-    @parent_options = Page.sorted_as_tree.entries.collect do |page|
-      [ ("-- " * page.depth) + page.title, page.id ]
+    @parent_options = Page.arrange_as_array(:order => :position).collect do |page|
+      [ page.name_for_selects, page.id]
     end
-  end  
+  end
   
 end

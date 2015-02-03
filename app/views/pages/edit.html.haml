@@ -7,7 +7,7 @@
 = render :partial => "actions"            
 
 #sections
-  = render :partial => "sections/section", :collection => @page.sections.asc(:position), :locals => { :editable => true }
+  = render :partial => "sections/section", :collection => @page.sections.order(:position), :locals => { :editable => true }
 .row-fluid.add-section
   %a.btn.btn-default.add-section{ :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section Here"   
 
