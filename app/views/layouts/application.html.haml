@@ -28,7 +28,7 @@
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
             = link_to Tenant.current.name, root_url, :class => "brand"
-        = render "layouts/site_navigation" if @site_menu_items             
+        = render "layouts/site_navigation"             
     #wrapper.container
       %header
         = render "layouts/area_navigation" if @area_menu_items  
