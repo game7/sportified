@@ -55,7 +55,7 @@ class Page < ActiveRecord::Base
     end
 
     def set_path
-      self.url_path = self.ancestors.collect(&:slug).join('/') + '/' + self.slug
+      self.url_path = self.ancestors.collect{|a| a.slug + '/' }.join + self.slug
     end
   
 end
