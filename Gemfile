@@ -16,6 +16,8 @@ gem 'autoprefixer-rails'
 
 gem 'tenancy'
 gem 'ancestry'
+gem 'acts_as_taggable_on'
+
 gem 'mongoid', '~> 4.0.0'
 #gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
