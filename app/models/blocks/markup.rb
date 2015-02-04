@@ -5,6 +5,8 @@ module Blocks
       %w{ edit }
     end
     
-    field :body
+    hstore_accessor :options,
+      body: :string
+    
   end
 end

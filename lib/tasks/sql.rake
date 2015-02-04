@@ -23,8 +23,14 @@ namespace :mongo do
           section = converter.convert(mongo_section, Section, { :page => page })
         end 
       end
+      if mongo_page['blocks']
+        mongo_page['blocks'].each do |mongo_block|
+          section = Section.where(:mongo_id => mongo_block[:section_id].to_s).first
+          block = converter.convert(mongo_block, mongo_block['_type'].constantize, { :page => page, :section_id => section ? section.id : nil })
+        end
+      end
     end
-    
+
   end
   
   def section(name)

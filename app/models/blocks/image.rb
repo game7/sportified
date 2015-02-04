@@ -7,10 +7,13 @@ module Blocks
       %w{ edit }
     end
     
-    field :link_url 
-    field :alignment
-    field :height
-    field :width
+    hstore_accessor :options,
+      link_url: :string,
+      alignment: :string,
+      height: :string,
+      width: :string,
+      image: :string
+
     mount_uploader :image, ImageUploader
     
     def self.alignment_options

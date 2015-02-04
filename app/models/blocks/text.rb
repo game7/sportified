@@ -1,12 +1,14 @@
 module Blocks
   class Text < Block
-  
+    
     def self.actions 
       %w{ edit }
     end
     
-    field :title
-    field :caption
-    field :body
+    hstore_accessor :options,
+      title: :string,
+      caption: :string,
+      body: :string
+    
   end
 end

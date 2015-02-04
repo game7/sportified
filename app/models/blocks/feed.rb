@@ -4,10 +4,11 @@ module Blocks
     def self.actions 
       %w{ edit }
     end
-
-    field :post_count, :type => Integer, :default => 5
-    field :tags, :type => Array, :default => []
     
+    hstore_accessor :options,
+      post_count: :integer,
+      tags: :array
+  
     def posts
       Post.tagged_with_any(self.tags).newest_first.limit(self.post_count)
     end

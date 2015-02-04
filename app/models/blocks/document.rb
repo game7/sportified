@@ -4,9 +4,12 @@ module Blocks
     def self.actions 
       %w{ edit }
     end
+    
+    hstore_accessor :options,
+      title: :string,
+      description: :string,
+      file: :string
 
-    field :title
-    field :description
     mount_uploader :file, DocumentUploader
     
   end

@@ -129,6 +129,8 @@ GEM
       railties (>= 4.0.1)
     hashie (3.2.0)
     hike (1.2.3)
+    hstore_accessor (0.6.1)
+      activesupport (>= 3.2.0)
     i18n (0.6.11)
     icalendar (2.1.0)
     inflecto (0.0.2)
@@ -318,6 +320,7 @@ DEPENDENCIES
   font-awesome-sass
   haml
   haml-rails
+  hstore_accessor
   icalendar
   jquery-rails
   kaminari

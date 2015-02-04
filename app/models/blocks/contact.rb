@@ -4,12 +4,14 @@ module Blocks
     def self.actions 
       %w{ edit }
     end
+    
+    hstore_accessor :options,
+      first: :string,
+      last: :string,
+      title: :string,
+      phone: :string,
+      email: :string,
+      show_email: :boolean
       
-    field :first
-    field :last
-    field :title
-    field :phone
-    field :email
-    field :show_email, :type => Boolean, :default => false
   end
 end

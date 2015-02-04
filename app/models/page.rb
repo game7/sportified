@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
   before_save :set_slug, :set_path
 
   has_many :sections
-  #embeds_many :blocks, :class_name => "Block"
+  has_many :blocks, :class_name => "Block"
 
   validates_presence_of :title
 
