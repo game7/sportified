@@ -1,6 +1,6 @@
 namespace :mongo do
   desc "converts mongo models to postgresql models"
-  task :to_sql => :environment do
+  task :to_sql, [:section]=> :environment do
     converter = Sql::ConvertToSql.new
     session = Mongoid::Sessions.default
   
@@ -9,11 +9,17 @@ namespace :mongo do
       tenant = converter.convert(mongo_tenant, Tenant)
     end
     
+    # set first tenant to localhost if non production
+    Tenant.first.update_attributes!(host: 'localhost') unless Rails.env == 'production'
+    
     section "Users"
     session['users'].find.each do |mongo_user|
       next unless mongo_user['roles']
       user = converter.convert(mongo_user, User)
     end
+    
+    # set user/2 to super_admin if non production
+    User.find(2).roles << UserRole.super_admin
     
     section "Pages"
     session['pages'].find.each do |mongo_page|
@@ -29,6 +35,11 @@ namespace :mongo do
           block = converter.convert(mongo_block, mongo_block['_type'].constantize, { :page => page, :section_id => section ? section.id : nil })
         end
       end
+    end
+    
+    section "Posts"
+    session['posts'].find.each do |mongo_post|
+      post = converter.convert(mongo_post, Post)
     end
 
   end

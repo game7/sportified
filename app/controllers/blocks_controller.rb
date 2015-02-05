@@ -1,12 +1,13 @@
 class BlocksController < ApplicationController
   before_filter :verify_admin
-  before_filter :find_page
+  before_filter :find_page, :only => [:create]
   before_filter :find_block, :only => [:edit, :update, :destroy]
 
   def create
-    @block = @page.blocks.create({ :section_id => params[:section_id], :column => params[:column] }, "blocks/#{params[:block_type]}".camelize.constantize) 
-    flash[:success] = "#{params[:block_type].humanize} has been added to Page"
-    puts 'block created'
+    @block = block_type.create({ section_id: params[:section_id], column: params[:column]}) do |block|
+      block.page = @page
+    end
+    flash[:success] = "#{@block.class_name.humanize} has been added to Page"
   end
   
   def edit
@@ -26,18 +27,16 @@ class BlocksController < ApplicationController
   
   def position
     params[:block].each_with_index do |id, i|
-      block = @page.blocks.find(id);
-      if block
-        block.position = i
-        block.section_id = params[:section_id]
-        block.column = params[:column]
-      end
-    end  
-    @page.save
+      Block.update(id, :position => i, :section_id => params[:section_id], :column => params[:column])
+    end
     render :nothing => true
   end 
   
   private
+  
+  def block_type
+    "Blocks::#{params[:block_type].classify}".constantize
+  end
   
   def find_page
     @page = Page.find(params[:page_id])

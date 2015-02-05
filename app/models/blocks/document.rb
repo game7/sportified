@@ -7,10 +7,12 @@ module Blocks
     
     hstore_accessor :options,
       title: :string,
-      description: :string,
-      file: :string
-
+      description: :string
+      
     mount_uploader :file, DocumentUploader
+    
+    def apply_mongo_file! mongo_file
+    end
     
   end
 end

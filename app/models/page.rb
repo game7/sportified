@@ -41,12 +41,18 @@ class Page < ActiveRecord::Base
   end 
   
   def apply_mongo_sections!(sections)
-
+  end
+  
+  def apply_mongo_blocks!(blocks)
   end
   
   def apply_mongo_path!(path)
     self.url_path = path
   end
+  
+  def apply_mongo_depth!(depth)
+    self.ancestry_depth = depth
+  end  
 
   private
 

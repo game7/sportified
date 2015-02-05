@@ -1,11 +1,11 @@
-- if @block.image?
+- if @block.file?
   .row-fluid
     .span12{ :style => "text-align: center; margin-bottom: 20px;"}
-      = image_tag @block.image.thumb.url, :align => "center"
+      = image_tag @block.file.thumb.url, :align => "center"
 = simple_form_for @block, :url => page_blocks_image_path(@page, @block), :remote => true do |f|
-  = f.input :image, :as => :file
-  = f.input :remote_image_url
-  = f.input :image_cache, :as => :hidden
+  = f.input :file, :as => :file
+  = f.input :remote_fie_url
+  = f.input :file_cache, :as => :hidden
   = f.input :link_url, :hint => "Optional.  If provided clicking image will navigate to here"
       
 

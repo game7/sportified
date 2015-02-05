@@ -11,10 +11,12 @@ module Blocks
       link_url: :string,
       alignment: :string,
       height: :string,
-      width: :string,
-      image: :string
+      width: :string
 
-    mount_uploader :image, ImageUploader
+    mount_uploader :file, ImageUploader
+    
+    def apply_mongo_file! mongo_file
+    end    
     
     def self.alignment_options
       ["left","center","right"]

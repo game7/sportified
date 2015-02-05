@@ -13,4 +13,10 @@ class Block < ActiveRecord::Base
     self.class.to_s.sub("Blocks::","").humanize
   end
   
+  # this is a helper method for mongo to psql conversion
+  # and can be removed after completion
+  def tenant
+    self.page.tenant
+  end
+  
 end

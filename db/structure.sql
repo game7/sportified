@@ -57,7 +57,8 @@ CREATE TABLE blocks (
     options hstore,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    file character varying(255)
 );
 
 
@@ -123,6 +124,43 @@ CREATE SEQUENCE pages_id_seq
 --
 
 ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE posts (
+    id integer NOT NULL,
+    tenant_id integer,
+    title character varying(255),
+    summary text,
+    body text,
+    link_url character varying(255),
+    image character varying(255),
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE posts_id_seq OWNED BY posts.id;
 
 
 --
@@ -379,6 +417,13 @@ ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY posts ALTER COLUMN id SET DEFAULT nextval('posts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY sections ALTER COLUMN id SET DEFAULT nextval('sections_id_seq'::regclass);
 
 
@@ -431,6 +476,14 @@ ALTER TABLE ONLY blocks
 
 ALTER TABLE ONLY pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
 
 
 --
@@ -493,6 +546,13 @@ CREATE INDEX index_pages_on_ancestry ON pages USING btree (ancestry);
 --
 
 CREATE INDEX index_pages_on_tenant_id ON pages USING btree (tenant_id);
+
+
+--
+-- Name: index_posts_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_posts_on_tenant_id ON posts USING btree (tenant_id);
 
 
 --
@@ -583,4 +643,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150203225028');
 INSERT INTO schema_migrations (version) VALUES ('20150204222311');
 
 INSERT INTO schema_migrations (version) VALUES ('20150204222312');
+
+INSERT INTO schema_migrations (version) VALUES ('20150204222452');
+
+INSERT INTO schema_migrations (version) VALUES ('20150205055953');
 

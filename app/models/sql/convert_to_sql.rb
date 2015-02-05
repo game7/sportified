@@ -24,6 +24,7 @@ module Sql
           rescue Exception => ex
             puts "Error while updating #{key}"
             puts ex.message
+            puts "sql: #{sql.attributes.keys}"
           end
         end
 
