@@ -84,12 +84,12 @@ class PagesController < ApplicationController
   
   def set_child_page_navigation
     has_children = false
-    @page.children.in_menu.each do |child|
+    @page.children.in_menu.order(:position).each do |child|
       has_children = true
       add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
     end
     unless @page.root? or has_children
-      @page.siblings.in_menu.each do |sibling|
+      @page.siblings.in_menu.order(:position).each do |sibling|
         add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)        
       end
     end    
