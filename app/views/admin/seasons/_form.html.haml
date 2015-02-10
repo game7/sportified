@@ -1,5 +1,5 @@
 = simple_form_for [:admin, @season] do |f|
   = f.input :name
   = f.input :starts_on
-  = f.association :leagues, :wrapper => :vertical_radio_and_checkboxes, :collection => League.all.asc(:name), :as => :check_boxes
+  = f.association :leagues, :wrapper => :vertical_radio_and_checkboxes, :collection => League.all.order(:name), :as => :check_boxes
   = f.button :wrapped, :cancel => return_url

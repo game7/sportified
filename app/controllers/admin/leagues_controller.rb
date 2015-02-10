@@ -4,7 +4,7 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   before_filter :find_league, :only => [:edit, :update, :destroy]
   
   def index
-    @leagues = League.all.asc(:name)
+    @leagues = League.all.order(:name)
     @leagues = @leagues.for_season(params[:season_id]) if params[:season_id]
     respond_to do |format|
       format.html
@@ -48,7 +48,7 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   private
   
   def league_params
-    params.required(:league).permit(:name, :standings, :seasons, :show_standings, :show_players, :show_statistics)
+    params.required(:league).permit(:name, :standings, :seasons, :show_standings, :show_players, :show_statistics, :league_ids => [])
   end
   
   def add_breadcrumbs

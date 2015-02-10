@@ -49,7 +49,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   private
   
   def season_params
-    params.required(:season).permit(:name, :starts_on, :programs)
+    params.required(:season).permit(:name, :starts_on, :programs, :league_ids => [])
   end
 
   def get_season_options
@@ -66,6 +66,6 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def find_seasons
-    @seasons = Season.asc(:name)
+    @seasons = Season.order(:name)
   end
 end

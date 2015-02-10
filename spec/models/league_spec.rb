@@ -1,11 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe League do
-
-  context "when validating" do
-
-    it { should validate_presence_of(:name) }
-
-  end
-
+RSpec.describe League, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

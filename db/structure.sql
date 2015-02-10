@@ -82,6 +82,74 @@ ALTER SEQUENCE blocks_id_seq OWNED BY blocks.id;
 
 
 --
+-- Name: leagues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE leagues (
+    id integer NOT NULL,
+    name character varying(255),
+    slug character varying(255),
+    show_standings boolean,
+    show_players boolean,
+    show_statistics boolean,
+    standings_array text[] DEFAULT '{}'::text[],
+    tenant_id integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: leagues_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE leagues_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: leagues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE leagues_id_seq OWNED BY leagues.id;
+
+
+--
+-- Name: leagues_seasons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE leagues_seasons (
+    id integer NOT NULL,
+    league_id integer,
+    season_id integer
+);
+
+
+--
+-- Name: leagues_seasons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE leagues_seasons_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: leagues_seasons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE leagues_seasons_id_seq OWNED BY leagues_seasons.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -170,6 +238,41 @@ ALTER SEQUENCE posts_id_seq OWNED BY posts.id;
 CREATE TABLE schema_migrations (
     version character varying(255) NOT NULL
 );
+
+
+--
+-- Name: seasons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE seasons (
+    id integer NOT NULL,
+    name character varying(255),
+    slug character varying(255),
+    starts_on date,
+    tenant_id integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: seasons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE seasons_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: seasons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE seasons_id_seq OWNED BY seasons.id;
 
 
 --
@@ -410,6 +513,20 @@ ALTER TABLE ONLY blocks ALTER COLUMN id SET DEFAULT nextval('blocks_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY leagues_seasons ALTER COLUMN id SET DEFAULT nextval('leagues_seasons_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 
 
@@ -418,6 +535,13 @@ ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regcl
 --
 
 ALTER TABLE ONLY posts ALTER COLUMN id SET DEFAULT nextval('posts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY seasons ALTER COLUMN id SET DEFAULT nextval('seasons_id_seq'::regclass);
 
 
 --
@@ -471,6 +595,22 @@ ALTER TABLE ONLY blocks
 
 
 --
+-- Name: leagues_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY leagues
+    ADD CONSTRAINT leagues_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: leagues_seasons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY leagues_seasons
+    ADD CONSTRAINT leagues_seasons_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -484,6 +624,14 @@ ALTER TABLE ONLY pages
 
 ALTER TABLE ONLY posts
     ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: seasons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY seasons
+    ADD CONSTRAINT seasons_pkey PRIMARY KEY (id);
 
 
 --
@@ -532,6 +680,20 @@ ALTER TABLE ONLY user_roles
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_leagues_seasons_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_leagues_seasons_on_league_id ON leagues_seasons USING btree (league_id);
+
+
+--
+-- Name: index_leagues_seasons_on_season_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_leagues_seasons_on_season_id ON leagues_seasons USING btree (season_id);
 
 
 --
@@ -647,4 +809,10 @@ INSERT INTO schema_migrations (version) VALUES ('20150204222312');
 INSERT INTO schema_migrations (version) VALUES ('20150204222452');
 
 INSERT INTO schema_migrations (version) VALUES ('20150205055953');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210010603');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210011439');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210012116');
 

@@ -1,16 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Season do
-  
-  before(:each) do
-    @season = Season.make_unsaved
-  end
-
-  context "when validating" do
-    
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:starts_on) }
-
-  end
-
+RSpec.describe Season, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

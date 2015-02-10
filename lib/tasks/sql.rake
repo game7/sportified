@@ -41,6 +41,19 @@ namespace :mongo do
     session['posts'].find.each do |mongo_post|
       post = converter.convert(mongo_post, Post)
     end
+    
+    section "Seasons"
+    session['seasons'].find.each do |mongo_season|
+      season = converter.convert(mongo_season, Season)
+    end
+    
+    section "Leagues"
+    session['leagues'].find.each do |mongo_league|
+      league = converter.convert(mongo_league, League)
+      mongo_league['season_ids'].each do |season_id|
+        league.seasons << Season.where(:mongo_id => season_id.to_s).first
+      end
+    end    
 
   end
   
