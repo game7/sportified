@@ -1,11 +1,7 @@
-class Club
-  include Mongoid::Document
+class Club < ActiveRecord::Base
   include Sportified::TenantScoped
 
-  field :name
   validates_presence_of :name
-
-  field :short_name
 
   has_many :teams
 
@@ -15,5 +11,5 @@ class Club
       self.short_name = self.name
     end
   end
-
+  
 end

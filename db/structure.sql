@@ -82,6 +82,40 @@ ALTER SEQUENCE blocks_id_seq OWNED BY blocks.id;
 
 
 --
+-- Name: clubs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE clubs (
+    id integer NOT NULL,
+    name character varying(255),
+    short_name character varying(255),
+    tenant_id integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: clubs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE clubs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: clubs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE clubs_id_seq OWNED BY clubs.id;
+
+
+--
 -- Name: leagues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -374,6 +408,57 @@ ALTER SEQUENCE tags_id_seq OWNED BY tags.id;
 
 
 --
+-- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE teams (
+    id integer NOT NULL,
+    name character varying(255),
+    short_name character varying(255),
+    slug character varying(255),
+    show_in_standings boolean,
+    pool character varying(255),
+    seed integer,
+    tenant_id integer,
+    league_id integer,
+    season_id integer,
+    club_id integer,
+    logo character varying(255),
+    primary_color character varying(255),
+    secondary_color character varying(255),
+    accent_color character varying(255),
+    main_colors text[] DEFAULT '{}'::text[],
+    custom_colors boolean,
+    crop_x integer DEFAULT 0,
+    crop_y integer DEFAULT 0,
+    crop_h integer DEFAULT 0,
+    crop_w integer DEFAULT 0,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE teams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
+
+
+--
 -- Name: tenants; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -513,6 +598,13 @@ ALTER TABLE ONLY blocks ALTER COLUMN id SET DEFAULT nextval('blocks_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY clubs ALTER COLUMN id SET DEFAULT nextval('clubs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -569,6 +661,13 @@ ALTER TABLE ONLY tags ALTER COLUMN id SET DEFAULT nextval('tags_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY tenants ALTER COLUMN id SET DEFAULT nextval('tenants_id_seq'::regclass);
 
 
@@ -592,6 +691,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY blocks
     ADD CONSTRAINT blocks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY clubs
+    ADD CONSTRAINT clubs_pkey PRIMARY KEY (id);
 
 
 --
@@ -659,6 +766,14 @@ ALTER TABLE ONLY tags
 
 
 --
+-- Name: teams_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tenants_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -680,6 +795,13 @@ ALTER TABLE ONLY user_roles
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_clubs_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_clubs_on_tenant_id ON clubs USING btree (tenant_id);
 
 
 --
@@ -729,6 +851,34 @@ CREATE INDEX index_sections_on_page_id ON sections USING btree (page_id);
 --
 
 CREATE UNIQUE INDEX index_tags_on_name ON tags USING btree (name);
+
+
+--
+-- Name: index_teams_on_club_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_on_club_id ON teams USING btree (club_id);
+
+
+--
+-- Name: index_teams_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_on_league_id ON teams USING btree (league_id);
+
+
+--
+-- Name: index_teams_on_season_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_on_season_id ON teams USING btree (season_id);
+
+
+--
+-- Name: index_teams_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_on_tenant_id ON teams USING btree (tenant_id);
 
 
 --
@@ -815,4 +965,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150210010603');
 INSERT INTO schema_migrations (version) VALUES ('20150210011439');
 
 INSERT INTO schema_migrations (version) VALUES ('20150210012116');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210204838');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210205852');
 

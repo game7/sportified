@@ -7,16 +7,15 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :load_league_links, :only => [:index]
   before_filter :find_team, :only => [:show, :edit, :update, :destroy]
   before_filter :load_league_options, :only => [:new]
-  before_filter :load_division_options, :only => [:new, :edit]
   before_filter :load_club_options, :only => [:new, :edit]
 
   def index
     @teams = Team.all
     @teams = @teams.for_league(params[:league_id]) if params[:league_id]  
     @teams = @teams.for_season(@season) if @season
-    @teams = @teams.asc(:name)
-    @leagues = @season.leagues.asc(:name)
-    @leagues = @leagues.where(:_id => params[:league_id]) if params[:league_id]    
+    @teams = @teams.order(:name)
+    @leagues = @season.leagues.order(:name)
+    @leagues = @leagues.where(id: params[:league_id]) if params[:league_id]    
     respond_to do |format|
       format.html
       format.json { render :json => @teams.entries }
@@ -42,7 +41,6 @@ class Admin::TeamsController < Admin::BaseLeagueController
     else
       flash[:error] = "Team could not be created."
       load_league_options
-      load_division_options
       load_club_options
       render :action => "new"
     end
@@ -53,7 +51,6 @@ class Admin::TeamsController < Admin::BaseLeagueController
       return_to_last_point :success => 'Team was successfully updated.'
     else
       flash[:error] = "Team could not be updated."
-      load_division_options
       load_club_options
       render :action => "edit"
     end
@@ -75,9 +72,8 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def find_team    
     @team = Team.find(params[:id])
-    @division = @team.division
-    add_breadcrumb @team.league_name
-    add_breadcrumb @team.season_name   
+    add_breadcrumb @team.league.name
+    add_breadcrumb @team.season.name   
     add_breadcrumb @team.name
   end  
   
@@ -91,13 +87,13 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
   
   def load_season_links
-    @season_links = Season.all.desc(:starts_on).each.collect do |s|
+    @season_links = Season.all.order(:starts_on => :desc).each.collect do |s|
       [s.name, admin_teams_path(:season_id => s.id)]
     end
   end
   
   def load_league_links
-    @league_links = @season.leagues.all.asc(:name).each.collect do |s|
+    @league_links = @season.leagues.all.order(:name).each.collect do |s|
       [s.name, admin_teams_path(:season_id => @season.id, :league_id => s.id)]
     end
     @league_links.insert 0, ['All Leagues', admin_teams_path(:season_id => @season.id)]
@@ -106,15 +102,9 @@ class Admin::TeamsController < Admin::BaseLeagueController
   def load_league_options
     @leagues = @season.leagues.asc(:name)
   end
-  
-  def load_division_options
-    league_id = @team ? @team.league_id : params[:league_id]
-    season_id = @team ? @team.season_id : params[:season_id]
-    @divisions = Division.for_league(league_id).for_season(season_id).asc(:name)
-  end
 
   def load_club_options
-    @clubs = Club.asc(:name).entries
+    @clubs = Club.order(:name).entries
   end
 
 

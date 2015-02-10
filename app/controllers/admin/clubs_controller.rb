@@ -5,7 +5,7 @@ class Admin::ClubsController < Admin::BaseLeagueController
   before_filter :load_club, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @clubs = Club.asc(:name)
+    @clubs = Club.order(:name)
   end
 
   def show

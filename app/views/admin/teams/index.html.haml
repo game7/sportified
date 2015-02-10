@@ -7,7 +7,7 @@
   .col-sm-3
     #{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
 - teams = @teams.entries
-- @leagues.asc(:name).each do |league|
+- @leagues.order(:name).each do |league|
   %h2
     = league.name
     = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-sm btn-primary'
@@ -24,8 +24,6 @@
               = image_tag team.logo.tiny unless team.logo.blank?
               = team.name
               .pull-right
-                - unless team.division_name.blank?
-                  %span.label= team.division_name
                 - unless team.pool.blank?
                   %span.label= team.pool
             %td

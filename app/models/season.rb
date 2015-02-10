@@ -10,10 +10,10 @@ class Season < ActiveRecord::Base
 
   class << self
     def most_recent
-      where(:starts_on.lt => DateTime.now).order(:starts_on, :desc).first
+      where("starts_on < ? ", DateTime.now).order(starts_on: :desc).first
     end
     def latest
-      order(:starts_on, :desc).first
+      order(starts_on: :desc).first
     end
   end
 

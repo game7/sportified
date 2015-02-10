@@ -6,17 +6,6 @@ module Concerns
     
     included do
       
-      field :primary_color
-      field :secondary_color
-      field :accent_color
-      field :main_colors, :type => Array
-      field :custom_colors, :type => Boolean
-
-      field :crop_x, :type => Integer, :default => 0
-      field :crop_y, :type => Integer, :default => 0
-      field :crop_h, :type=> Integer, :default => 0
-      field :crop_w, :type => Integer, :default => 0
-      
       mount_uploader :logo, TeamLogoUploader
       
       before_save :get_color_palette, :if => :get_color_palette?
