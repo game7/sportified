@@ -184,6 +184,40 @@ ALTER SEQUENCE leagues_seasons_id_seq OWNED BY leagues_seasons.id;
 
 
 --
+-- Name: locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE locations (
+    id integer NOT NULL,
+    tenant_id integer,
+    name character varying(255),
+    short_name character varying(255),
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -658,6 +692,13 @@ ALTER TABLE ONLY leagues_seasons ALTER COLUMN id SET DEFAULT nextval('leagues_se
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 
 
@@ -761,6 +802,14 @@ ALTER TABLE ONLY leagues
 
 ALTER TABLE ONLY leagues_seasons
     ADD CONSTRAINT leagues_seasons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
 
 
 --
@@ -870,6 +919,13 @@ CREATE INDEX index_leagues_seasons_on_league_id ON leagues_seasons USING btree (
 --
 
 CREATE INDEX index_leagues_seasons_on_season_id ON leagues_seasons USING btree (season_id);
+
+
+--
+-- Name: index_locations_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_locations_on_tenant_id ON locations USING btree (tenant_id);
 
 
 --
@@ -1039,4 +1095,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150210204838');
 INSERT INTO schema_migrations (version) VALUES ('20150210205852');
 
 INSERT INTO schema_migrations (version) VALUES ('20150210221248');
+
+INSERT INTO schema_migrations (version) VALUES ('20150211174045');
 

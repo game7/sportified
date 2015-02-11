@@ -71,7 +71,7 @@
     end
 
     resources :clubs
-    resources :venues
+    resources :locations
     resources :events
     resources :game_imports do
       post 'complete', :on => :member

@@ -74,16 +74,21 @@ namespace :mongo do
       player = converter.convert(mongo_player, Player)
     end
     
+    section "Locations"
+    session['venues'].find.each do |mongo_venue|
+      location = converter.convert(mongo_venue, Location)
+    end
+    
   end
   
   task :current, [:section]=> :environment do
     converter = Sql::ConvertToSql.new
     session = Mongoid::Sessions.default
     
-    section "Players"
-    session['players'].find.each do |mongo_player|
-      player = converter.convert(mongo_player, Player)
-    end    
+    section "Locations"
+    session['venues'].find.each do |mongo_venue|
+      location = converter.convert(mongo_venue, Location)
+    end 
     
   end  
   

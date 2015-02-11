@@ -1,0 +1,15 @@
+- title "Locations"
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Actions
+  %tbody
+    - @locations.each do |location|
+      %tr
+        %td #{location.name}
+        %td
+          = link_to 'Edit', edit_admin_location_path(location), :class => 'btn btn-primary btn-xs'
+          = link_to 'Delete', [:admin, location], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
+= link_to 'New Venue', new_admin_location_path, :class => 'btn btn-primary'
