@@ -63,27 +63,26 @@ namespace :mongo do
     section "Teams"
     session['teams'].find.each do |mongo_team|
       team = converter.convert(mongo_team, Team)
-    end    
-
+      #if mongo_team['logo']
+      #  team.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{team.tenant.slug}/#{team.class.name.pluralize.downcase}/logo/#{team.mongo_id}/" + mongo_team['logo']
+      #  puts team.remote_logo_url
+      #end      
+    end
+    
+    section "Players"
+    session['players'].find.each do |mongo_player|
+      player = converter.convert(mongo_player, Player)
+    end
+    
   end
-  
   
   task :current, [:section]=> :environment do
     converter = Sql::ConvertToSql.new
     session = Mongoid::Sessions.default
     
-    section "Clubs"
-    session['clubs'].find.each do |mongo_club|
-      club = converter.convert(mongo_club, Club)
-    end    
-
-    section "Teams"
-    session['teams'].find.each do |mongo_team|
-      team = converter.convert(mongo_team, Team)
-      #if mongo_team['logo']
-      #  team.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{team.tenant.slug}/#{team.class.name.pluralize.downcase}/logo/#{team.mongo_id}/" + mongo_team['logo']
-      #  puts team.remote_logo_url
-      #end
+    section "Players"
+    session['players'].find.each do |mongo_player|
+      player = converter.convert(mongo_player, Player)
     end    
     
   end  

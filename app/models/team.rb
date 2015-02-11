@@ -9,7 +9,7 @@ class Team < ActiveRecord::Base
   
   validates_presence_of :name, :league_id, :season_id
 
-  #has_many :players  
+  has_many :players  
   #embeds_one :record, :class_name => "Team::Record"
 
   before_save :set_slug

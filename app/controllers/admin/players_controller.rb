@@ -7,7 +7,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   before_filter :add_team_breadcrumbs, :only => [:index]
 
   def index
-    @players = @team.players.asc(:last_name)
+    @players = @team.players.order(:last_name)
   end
 
   def new
@@ -57,7 +57,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   end
 
   def add_team_breadcrumbs
-    add_breadcrumb @team.league_name
+    add_breadcrumb @team.league.name
     add_breadcrumb "Teams", admin_teams_path
     add_breadcrumb @team.name
     add_breadcrumb "Roster", admin_team_players_path(@team)

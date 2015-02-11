@@ -229,6 +229,45 @@ ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
 
 
 --
+-- Name: players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE players (
+    id integer NOT NULL,
+    tenant_id integer,
+    team_id integer,
+    first_name character varying(255),
+    last_name character varying(255),
+    jersey_number character varying(255),
+    birthdate date,
+    email character varying(255),
+    slug character varying(255),
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE players_id_seq OWNED BY players.id;
+
+
+--
 -- Name: posts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -626,6 +665,13 @@ ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY posts ALTER COLUMN id SET DEFAULT nextval('posts_id_seq'::regclass);
 
 
@@ -723,6 +769,14 @@ ALTER TABLE ONLY leagues_seasons
 
 ALTER TABLE ONLY pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY players
+    ADD CONSTRAINT players_pkey PRIMARY KEY (id);
 
 
 --
@@ -830,6 +884,20 @@ CREATE INDEX index_pages_on_ancestry ON pages USING btree (ancestry);
 --
 
 CREATE INDEX index_pages_on_tenant_id ON pages USING btree (tenant_id);
+
+
+--
+-- Name: index_players_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_players_on_team_id ON players USING btree (team_id);
+
+
+--
+-- Name: index_players_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_players_on_tenant_id ON players USING btree (tenant_id);
 
 
 --
@@ -969,4 +1037,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150210012116');
 INSERT INTO schema_migrations (version) VALUES ('20150210204838');
 
 INSERT INTO schema_migrations (version) VALUES ('20150210205852');
+
+INSERT INTO schema_migrations (version) VALUES ('20150210221248');
 

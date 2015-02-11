@@ -1,30 +1,19 @@
-class Player
-  include Mongoid::Document
-  before_validation :set_league_and_season
+class Player < ActiveRecord::Base
+  include Sportified::TenantScoped
   
-  field :first_name
-  field :last_name
-  field :jersey_number
-  field :birthdate, type: Date
-  field :email
-
-  field :slug
-
+  belongs_to :tenant
   belongs_to :team
-  validates :team_id, presence: true
+  has_one :league, through: :team
+  has_one :season, through: :team
   
-  belongs_to :league
-  validates :league_id, presence: true
-  
-  belongs_to :season
-  validates :season_id, presence: true  
-  
-  embeds_one :record, :class_name => "Hockey::Player::Record"
-  before_save :ensure_record
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :team_id, presence: true  
 
+  #embeds_one :record, :class_name => "Hockey::Player::Record"
+
+  before_save :ensure_record
   before_save :set_slug
-  
-  has_many :players
 
   def full_name
     [first_name, last_name].join(' ')
@@ -43,9 +32,16 @@ class Player
       season_id = ( season.class == Season ? season.id : season )
       where(:season_id => season_id)
     end
-  end  
+  end
+  
+  def apply_mongo_team_id! team_id
+    self.team = Team.where(mongo_id: team_id.to_s).first
+  end
+  
+  def apply_mongo_tenant_id! tenant_id
+    self.tenant = self.team.tenant
+  end
    
-
   private
 
     def set_slug
@@ -53,12 +49,7 @@ class Player
     end
     
     def ensure_record
-      self.record ||= Hockey::Player::Record.new
-    end
-    
-    def set_league_and_season
-      self.league_id = team.league_id if team
-      self.season_id = team.season_id if team
+      #self.record ||= Hockey::Player::Record.new
     end
 
 end

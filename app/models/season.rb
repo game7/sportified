@@ -4,8 +4,7 @@ class Season < ActiveRecord::Base
   validates_presence_of :name, :starts_on
   
   has_and_belongs_to_many :leagues
-  #has_many :divisions
-  #has_many :teams
+  has_many :teams
   #has_many :events  
 
   class << self
