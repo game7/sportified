@@ -79,16 +79,29 @@ namespace :mongo do
       location = converter.convert(mongo_venue, Location)
     end
     
+    section "Events"
+    session['events'].find.each do |mongo_event|
+      if mongo_event['type'] == 'Game'
+        event = converter.convert(mongo_event, Game)
+      else
+        event = converter.convert(mongo_event, Event)
+      end
+    end
+    
   end
   
   task :current, [:section]=> :environment do
     converter = Sql::ConvertToSql.new
     session = Mongoid::Sessions.default
     
-    section "Locations"
-    session['venues'].find.each do |mongo_venue|
-      location = converter.convert(mongo_venue, Location)
-    end 
+    section "Events"
+    session['events'].find.each_with_index do |mongo_event, i|
+      if mongo_event['_type'] == 'Game'
+        event = converter.convert(mongo_event, Game)
+      else
+        event = converter.convert(mongo_event, Event)
+      end
+    end
     
   end  
   

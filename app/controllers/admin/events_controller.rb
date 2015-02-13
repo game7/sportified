@@ -7,7 +7,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   before_filter :find_season, :only => [:index, :new, :create]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
-  before_filter :load_venue_options, :only => [:new, :edit]     
+  before_filter :load_location_options, :only => [:new, :edit]     
   before_filter :load_season_links, :only => [:index]
 
   def index
@@ -22,10 +22,10 @@ class Admin::EventsController < Admin::BaseLeagueController
       @prev_date = @date - @days_in_future - @days_in_past
     end
 
-    @events = Event.all    
+    @events = Event.all.includes(:location)
     @events = @events.for_season(@season) if @season
     @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
-    @events = @events.asc(:starts_on)
+    @events = @events.order(:starts_on)
     
     respond_to do |format|
       format.html
@@ -87,7 +87,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   
   def event_params
     params.require(:event).permit(:season_id, :league_id, :starts_on, :duration, 
-      :all_day, :venue_id, :summary, :description, :show_for_all_teams
+      :all_day, :location_id, :summary, :description, :show_for_all_teams
     )
   end
   
@@ -100,14 +100,14 @@ class Admin::EventsController < Admin::BaseLeagueController
   end
 
   def load_season_links
-    @season_links = Season.all.desc(:starts_on).each.collect do |s|
+    @season_links = Season.all.order(:starts_on => :desc).each.collect do |s|
       [s.name, admin_events_path(:season_id => s.id, :date => params[:date])]
     end
     #@season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
   end
   
   def load_season_options
-    @season_options = Season.desc(:starts_on)
+    @season_options = Season.order(starts_on: :desc)
   end  
 
   def load_league_options
@@ -115,8 +115,8 @@ class Admin::EventsController < Admin::BaseLeagueController
     @league_options ||= []
   end
 
-  def load_venue_options
-    @venue_options = Venue.asc(:name).entries
+  def load_location_options
+    @location_options = Location.order(:name).entries
   end
 
   def find_season

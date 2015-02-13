@@ -116,6 +116,60 @@ ALTER SEQUENCE clubs_id_seq OWNED BY clubs.id;
 
 
 --
+-- Name: events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE events (
+    id integer NOT NULL,
+    tenant_id integer,
+    league_id integer,
+    season_id integer,
+    location_id integer,
+    type character varying(255),
+    starts_on timestamp without time zone,
+    ends_on timestamp without time zone,
+    duration integer,
+    all_day boolean,
+    summary character varying(255),
+    description text,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    home_team_id integer,
+    away_team_id integer,
+    home_team_score integer DEFAULT 0,
+    away_team_score integer DEFAULT 0,
+    home_team_name character varying(255),
+    away_team_name character varying(255),
+    home_team_custom_name boolean,
+    away_team_custom_name boolean,
+    text_before character varying(255),
+    text_after character varying(255),
+    result character varying(255),
+    completion character varying(255)
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE events_id_seq OWNED BY events.id;
+
+
+--
 -- Name: leagues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -678,6 +732,13 @@ ALTER TABLE ONLY clubs ALTER COLUMN id SET DEFAULT nextval('clubs_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -786,6 +847,14 @@ ALTER TABLE ONLY blocks
 
 ALTER TABLE ONLY clubs
     ADD CONSTRAINT clubs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
 
 
 --
@@ -905,6 +974,48 @@ ALTER TABLE ONLY users
 --
 
 CREATE INDEX index_clubs_on_tenant_id ON clubs USING btree (tenant_id);
+
+
+--
+-- Name: index_events_on_away_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_away_team_id ON events USING btree (away_team_id);
+
+
+--
+-- Name: index_events_on_home_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_home_team_id ON events USING btree (home_team_id);
+
+
+--
+-- Name: index_events_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_league_id ON events USING btree (league_id);
+
+
+--
+-- Name: index_events_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_location_id ON events USING btree (location_id);
+
+
+--
+-- Name: index_events_on_season_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_season_id ON events USING btree (season_id);
+
+
+--
+-- Name: index_events_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_events_on_tenant_id ON events USING btree (tenant_id);
 
 
 --
@@ -1097,4 +1208,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150210205852');
 INSERT INTO schema_migrations (version) VALUES ('20150210221248');
 
 INSERT INTO schema_migrations (version) VALUES ('20150211174045');
+
+INSERT INTO schema_migrations (version) VALUES ('20150211180006');
+
+INSERT INTO schema_migrations (version) VALUES ('20150211180336');
 

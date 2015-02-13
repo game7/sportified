@@ -1,29 +1,23 @@
-
 class Game < Event
-
+  extend Enumerize
+ 
+  belongs_to :home_team, :class_name => "Team" 
   belongs_to :away_team, :class_name => "Team"
-  field :away_custom_name, :type => Boolean
-  field :away_team_name
-  field :away_team_score, :type => Integer, :default => 0
+  
+  enumerize :result, in: [ :pending, :final ], default: :pending
+  enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
+
   validates_numericality_of :away_team_score, :only_integer => true
   def away_team_is_winner?
-    return result.away_score > result.home_score if result
+    return away_team_score > home_team_score if result
   end
 
-  belongs_to :home_team, :class_name => "Team"
-  field :home_team_name
-  field :home_custom_name, :type => Boolean
-  field :home_team_score, :type => Integer, :default => 0
   validates_numericality_of :home_team_score, :only_integer => true
   def home_team_is_winner?
-    return result.away_score < result.home_score if result
+    return away_team_score < home_team_score if result
   end
 
-  embeds_one :result, class_name: "Game::Result", cascade_callbacks: true
-  has_one :statsheet
-  
-  field :text_before
-  field :text_after
+  #has_one :statsheet
 
   def has_team?(team)
     id = team.class == Team ? team.id : team
@@ -49,40 +43,33 @@ class Game < Event
 
   before_save :update_team_info
   def update_team_info
-    self.team_ids = []
-    self.division_ids ||= []
     if team = self.away_team
-      self.away_team_name = team.name unless away_custom_name
-      team_ids << team.id
-      division_ids << team.division_id unless division_ids.include?(team.division_id)
+      self.away_team_name = team.name unless away_team_custom_name
     else
-      self.away_team_name = '' unless away_custom_name
+      self.away_team_name = '' unless away_team_custom_name
     end
     if team = self.home_team
-      self.home_team_name = team.name unless home_custom_name
-      team_ids << team.id
-      division_ids << team.division_id unless division_ids.include?(team.division_id)
+      self.home_team_name = team.name unless home_team_custom_name
     else
-      self.home_team_name = '' unless home_custom_name
+      self.home_team_name = '' unless home_team_custom_name
     end
   end
 
   before_save :update_summary
   def update_summary
-    if has_result?
+    if result.final?
       tag = ''
-      case result.completed_in
-        when 'overtime' 
-          tag = ' (OT)'
-        when 'shootout' 
-          tag = ' (SO)'
-        when 'forfeit' 
-          tag = ' (FORFEIT)'
+      if completion.overtime?
+        tag = ' (OT)'
+      elsif completion.shootout?
+        tag = ' (SO)'
+      elsif completion.forfeit?
+        tag = ' (FORFEIT)'
       end
-      if result.away_score > result.home_score
-        summary = "#{away_team_name} #{result.away_score}, #{home_team_name} #{result.home_score}#{tag}"
+      if away_team_score > home_team_score
+        summary = "#{away_team_name} #{away_team_score}, #{home_team_name} #{home_team_score}#{tag}"
       else
-        summary = "#{home_team_name} #{result.home_score}, #{away_team_name} #{result.away_score}#{tag}"
+        summary = "#{home_team_name} #{home_team_score}, #{away_team_name} #{away_team_score}#{tag}"
       end
     else
       summary = "#{away_team_name} at #{home_team_name}"
@@ -91,12 +78,8 @@ class Game < Event
     self.summary = summary
   end
 
-  def has_result?
-    !self.result.nil?
-  end
-
   def display_score?
-    self.active? || self.completed? || self.final?
+    self.final?
   end
 
   def has_statsheet?
@@ -108,5 +91,22 @@ class Game < Event
   end
   
   scope :without_result, ->{ where(result: nil) }
-
+  
+  def apply_mongo_home_team_id! mongo_id
+    self.home_team = Team.where(mongo_id: mongo_id.to_s).first    
+  end
+  
+  def apply_mongo_away_team_id! mongo_id
+    self.away_team = Team.where(mongo_id: mongo_id.to_s).first
+  end
+  
+  def apply_mongo_result! mongo_result
+    if mongo_result
+      self.home_team_score = mongo_result['home_score']
+      self.away_team_score = mongo_result['away_score']
+      self.result = 'final'
+      self.completion = mongo_result['completed_in']
+    end
+  end
+  
 end

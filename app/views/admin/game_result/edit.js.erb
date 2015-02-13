@@ -1,6 +1,6 @@
-$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/games/results/new", :object => @result ) )%>");
+$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/game_result/form", :object => @game ) )%>");
 $('#dialog-modal').dialog({
-  title: 'Post Game Result',
+  title: 'Game Result',
   height: 300,
   width: 400,
   modal: true,

@@ -1,5 +1,9 @@
 ::Sportified::Application.routes.draw do
 
+  get 'game_result/edit'
+
+  get 'game_result/update'
+
   get 'commish/index'
 
   resources :posts, :only => [ :show ]
@@ -66,8 +70,8 @@
     resources :teams, :only => :index
     resources :events
     resources :games do
+      resource :result, :controller => :game_result, :only => [:edit, :update]
       resource :statsheet, :only => [:edit]
-      resource :result, :only => [:new, :create, :destroy], :module => :games
     end
 
     resources :clubs

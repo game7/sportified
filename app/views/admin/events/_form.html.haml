@@ -4,10 +4,9 @@
   = f.input :starts_on, :as => :string, :input_html => { :value => @event.starts_on ? I18n.l(@event.starts_on) : "" }
   = f.input :duration
   = f.input :all_day, :as => :boolean
-  = f.input :venue_id, :as => :select, :collection => @venue_options
+  = f.input :location_id, :as => :select, :collection => @location_options
   = f.input :summary
   - f.input :description, :as => :text
-  = f.input :show_for_all_teams, :as => :boolean
   = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do

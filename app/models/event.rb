@@ -1,17 +1,17 @@
-
-class Event
-  include Mongoid::Document
+class Event < ActiveRecord::Base
   include Sportified::TenantScoped
-  #include Sportified::PublishesMessages
-
-  field :starts_on, :type => DateTime
+  
+  belongs_to :tenant
+  belongs_to :league
+  belongs_to :season
+  belongs_to :location
+  
   validates_presence_of :starts_on, :season_id
   before_save :set_starts_on
   def set_starts_on
     self.starts_on = starts_on.change(:hour => 0) if all_day
   end
   
-  field :duration, :type => Integer, :default => 75
   validates_presence_of :duration
   validates_numericality_of :duration, :only_integer => true
   before_save :set_duration
@@ -19,47 +19,17 @@ class Event
     self.duration = 24 * 60 if all_day
   end
 
-  field :ends_on, :type => DateTime
   before_save :set_ends_on
   def set_ends_on
     self.ends_on = all_day ? self.starts_on.change(:day => starts_on.day + 1) : self.starts_on.advance(:minutes => self.duration)
   end
 
-  field :all_day, :type => Boolean
-
-  field :summary
-  field :description
-
-  belongs_to :venue
-  field :venue_name
-  field :venue_short_name
-  before_save do |event|
-    venue = event.venue
-    event.venue_name = venue ? venue.name : ''
-    event.venue_short_name = venue ? venue.short_name : ''
-  end
-  
-  belongs_to :league
-  validates :league_id, presence: true
-
-  belongs_to :season
-  validates :season_id, presence: true
-
-  has_and_belongs_to_many :divisions
-  has_and_belongs_to_many :teams
-  field :show_for_all_teams, :type => Boolean
-
-  scope :in_the_past, ->{ where(:starts_on.lt => DateTime.now) }
-  scope :in_the_future, ->{ where(:starts_on.gt => DateTime.now) }
-  scope :from, ->(from) { where(:starts_on.gt => from) }
-  scope :to, ->(to) { where(:starts_on.lt => to) }
-  #scope :between, ->(from, to) { gt(starts_on: from).lte(starts_on: to) }
+  scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }
+  scope :in_the_future, ->{ where('starts_on > ?', DateTime.now) }
+  #scope :from, ->(from) { where(:starts_on.gt => from) }
+  #scope :to, ->(to) { where(:starts_on.lt => to) }
 
   class << self  
-    def for_team(t)
-      id = t.class == Team ? t.id : t
-      any_of( { :team_ids => t.id})
-    end
     def for_season(s)
       id = s.class == Season ? s.id : s
       where(:season_id => id)
@@ -69,11 +39,17 @@ class Event
       where( :league_id => id)
     end
   end
-
-  #before_save :cleanup_division_ids
-  #def cleanup_division_ids
-  #  division_ids.collect! { |id| BSON::ObjectId(id.to_s) }
-  #  division_ids.uniq!
-  #end
-
+  
+  def apply_mongo_season_id! season_id
+    self.season = Season.where(mongo_id: season_id.to_s).first
+  end
+  
+  def apply_mongo_league_id! league_id
+    self.league = League.where(mongo_id: league_id.to_s).first
+  end  
+  
+  def apply_mongo_venue_id! venue_id
+    self.location = Location.where(mongo_id: venue_id.to_s).first
+  end  
+  
 end

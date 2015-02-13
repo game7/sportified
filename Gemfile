@@ -6,6 +6,7 @@ gem 'active_model_serializers'
 
 gem 'pg'
 gem 'hstore_accessor'
+gem 'enumerize'
 
 gem 'sass-rails', '~> 4.0.0.rc1'
 #gem 'coffee-rails', '~> 4.0.0.rc1'

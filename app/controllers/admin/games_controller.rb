@@ -3,12 +3,12 @@ class Admin::GamesController < Admin::BaseLeagueController
   
   before_filter :mark_return_point, :only => [:new, :edit]  
   before_filter :add_games_breadcrumb
-  before_filter :find_game, :only => [:edit, :update]   
+  before_filter :find_game, :only => [:edit, :result, :update]   
   before_filter :find_season, :only => [:new, :edit]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
   before_filter :load_team_options, :only => [:edit]
-  before_filter :load_venue_options, :only => [:new, :edit] 
+  before_filter :load_location_options, :only => [:new, :edit] 
  
 
   def new
@@ -27,6 +27,9 @@ class Admin::GamesController < Admin::BaseLeagueController
 
   def edit
   end
+  
+  def result
+  end
 
   def create
     Chronic.time_class = Time.zone
@@ -40,7 +43,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       load_season_options
       load_league_options
       load_team_options
-      load_venue_options
+      load_location_options
       render :action => "new"
     end
   end
@@ -56,7 +59,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       load_season_options
       load_league_options
       load_team_options
-      load_venue_options     
+      load_location_options     
       render :action => "edit"
     end
   end
@@ -65,10 +68,11 @@ class Admin::GamesController < Admin::BaseLeagueController
   
   def game_params
     params.require(:game).permit(:season_id, :league_id, :starts_on, :duration, 
-      :venue_id, :summary, :description, :show_for_all_teams,
-      :away_team_id, :away_custom_name, :away_team_name,
-      :home_team_id, :home_custom_name, :home_team_name,
-      :text_before, :text_after, :show_for_all_teams
+      :location_id, :summary, :description, :show_for_all_teams,
+      :away_team_id, :away_team_custom_name, :away_team_name,
+      :home_team_id, :home_team_custom_name, :home_team_name,
+      :text_before, :text_after, :show_for_all_teams,
+      :away_team_score, :home_team_score, :completion, :result
     )    
   end
   
@@ -77,23 +81,23 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def load_season_options
-    @season_options = Season.desc(:starts_on)
+    @season_options = Season.order(:starts_on => :desc)
   end
   
   def load_league_options
     @league_options = []    
-    @league_options = @season.leagues.asc(:name) if @season
+    @league_options = @season.leagues.order(:name) if @season
   end  
 
-  def load_venue_options
-    @venue_options = Venue.asc(:name).entries
+  def load_location_options
+    @location_options = Location.order(:name).entries
   end
 
   def load_team_options
     @team_options = []
     if @season and @game and @game.league_id
       puts 'TEAMS!!!'
-      @team_options = @season.teams.for_league(@game.league_id).asc(:name).entries.collect do |team|
+      @team_options = @season.teams.for_league(@game.league_id).order(:name).entries.collect do |team|
         [ team.name, team.id ]
       end
     end

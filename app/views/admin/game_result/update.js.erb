@@ -1,0 +1,10 @@
+<% if @game.errors.any? %>
+  $("#flash_notice").hide(300);
+  alert('<%= @game.errors.full_messages %>');
+  $('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/games_result/edit", :object => @game ) )%>");
+<% else %>
+  $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
+  $("#flash_notice").show(300);
+  $("#event_<%= @game.id %>").replaceWith("<%= escape_javascript( render(:partial => "admin/events/event", :object => @game ) )%>");
+  $('#dialog-modal').dialog("close");
+<% end %>
