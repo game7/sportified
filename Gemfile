@@ -19,7 +19,7 @@ gem 'tenancy'
 gem 'ancestry'
 gem 'acts_as_taggable_on'
 
-gem 'mongoid', '~> 4.0.0'
+gem 'mongoid', '~> 4.0.1'
 #gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
 gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
