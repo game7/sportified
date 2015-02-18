@@ -58,7 +58,7 @@ gem 'unicorn'
 group :test do
 
   gem 'rspec', '>= 2.0.1'
-  gem 'rspec-rails', '>= 2.0.1'
+  gem 'rspec-rails', '~> 3.1.0'
   gem "remarkable_mongoid", ">= 0.5.0"
   gem 'machinist_mongo', :require => 'machinist/mongoid'
   gem 'factory_girl_rails'
