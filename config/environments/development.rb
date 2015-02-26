@@ -17,10 +17,9 @@ Sportified::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.delivery_method = :stmp
-  config.action_mailer.perform_deliveries = false
-  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => 'localhost' }  
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = { :location => Rails.root.join('tmp/mail') }
   config.action_mailer.default :charset => "utf-8"
 
   # Print deprecation notices to the Rails logger
