@@ -11,6 +11,8 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
 
+gem "skylight"
+
 gem 'tenancy'
 gem 'mongoid', '~> 4.0.1'
 #gem 'bson_ext'
