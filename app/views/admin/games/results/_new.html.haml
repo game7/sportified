@@ -2,4 +2,4 @@
   = f.input :away_score, :label => @game.away_team_name
   = f.input :home_score, :label => @game.home_team_name
   = f.input :completed_in, :collection => Game::Result.completed_in_options
-  = f.input :exclude_from_team_records, :as => :boolean
+  = f.input :exclude_from_team_records, :as => :boolean, :wrapper => :vertical_boolean
