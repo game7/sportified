@@ -6,7 +6,7 @@ class Admin::Games::ResultsController < Admin::BaseLeagueController
   before_filter :get_league_links, :only => [:index]    
   
   def index
-    @games = Game.includes(:statsheet).for_season(@season).in_the_past.desc(:starts_on)
+    @games = Game.for_season(@season).in_the_past.desc(:starts_on)
     @games = @games.for_league(params[:league_id]) if params[:league_id]
   end
 
