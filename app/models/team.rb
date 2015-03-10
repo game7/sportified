@@ -8,19 +8,22 @@ class Team
   
   field :short_name
   field :slug
+  index slug: 1
   field :show_in_standings, :type => Boolean, :default => true
   field :pool, :type => String
   field :seed, :type => Integer
 
-  belongs_to :league
+  belongs_to :league, index: true
   validates_presence_of :league_id  
   field :league_name
   field :league_slug
+  index league_slug: 1
 
-  belongs_to :season
+  belongs_to :season, index: true
   validates_presence_of :season_id
   field :season_name
   field :season_slug
+  index season_slug: 1
 
   belongs_to :division
   field :division_name

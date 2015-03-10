@@ -10,14 +10,14 @@ class Player
 
   field :slug
 
-  belongs_to :team
+  belongs_to :team, index: true
   validates :team_id, presence: true
   
-  belongs_to :league
+  belongs_to :league, index: true
   validates :league_id, presence: true
   
-  belongs_to :season
-  validates :season_id, presence: true  
+  belongs_to :season, index: true
+  validates :season_id, presence: true
   
   embeds_one :record, :class_name => "Hockey::Player::Record"
   before_save :ensure_record

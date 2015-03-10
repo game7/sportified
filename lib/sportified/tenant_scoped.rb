@@ -7,6 +7,7 @@ module Sportified
       include Tenancy::ResourceScope
 
       scope_to :tenant
+      index tenant_id: 1
     end
 
   end
