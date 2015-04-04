@@ -49,7 +49,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   private
   
   def season_params
-    params.required(:season).permit(:name, :starts_on, :programs)
+    params.required(:season).permit(:name, :starts_on, { :league_ids => [] })
   end
 
   def get_season_options

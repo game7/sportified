@@ -48,7 +48,7 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   private
   
   def league_params
-    params.required(:league).permit(:name, :standings, :seasons, :show_standings, :show_players, :show_statistics)
+    params.required(:league).permit(:name, :standings, :seasons, :show_standings, :show_players, :show_statistics, { :season_ids => [] })
   end
   
   def add_breadcrumbs
