@@ -58,7 +58,7 @@
                     $("select[id$='league_id'] option").remove();
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='league_id']"); 
-                    $.each(data, function(i, j){
+                    $.each(data.teams, function(i, j){
                         row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
                         $(row).appendTo("select[id$='league_id']");
                     });
@@ -88,7 +88,7 @@
                     $("select[id$='team_id'] option").remove();
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='team_id']"); 
-                    $.each(data, function(i, j){
+                    $.each(data.teams, function(i, j){
                         row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
                         $(row).appendTo("select[id$='team_id']");
                     });
