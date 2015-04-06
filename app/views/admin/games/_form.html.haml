@@ -59,7 +59,7 @@
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='league_id']"); 
                     $.each(data.teams, function(i, j){
-                        row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
+                        row = "<option value=\"" + j._id.$oid + "\">" + j.name + "</option>";
                         $(row).appendTo("select[id$='league_id']");
                     });
                  }
@@ -89,7 +89,7 @@
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='team_id']"); 
                     $.each(data.teams, function(i, j){
-                        row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
+                        row = "<option value=\"" + j._id.$oid + "\">" + j.name + "</option>";
                         $(row).appendTo("select[id$='team_id']");
                     });
                  }
