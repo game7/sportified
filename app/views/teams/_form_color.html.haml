@@ -52,7 +52,7 @@
         - color_options.each do |color|
           %div{ :style => "background-color: #{color};", :class => "swatch #{'selected' if color == @team.accent_color}" }
         .clear
-  = f.input :custom_colors, :as => :boolean        
+  = f.input :custom_colors, :as => :boolean, :wrapper => :vertical_boolean
 
 :javascript
   $(function(){

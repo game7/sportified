@@ -189,7 +189,7 @@ GEM
     fog-xml (0.1.1)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    font-awesome-sass (4.3.1)
+    font-awesome-sass (4.3.2.1)
       sass (~> 3.2)
     formatador (0.2.5)
     haml (4.0.6)
@@ -402,7 +402,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   fog
-  font-awesome-sass
+  font-awesome-sass (~> 4.3.0)
   haml
   haml-rails
   icalendar

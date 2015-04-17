@@ -39,7 +39,7 @@ class TeamsController < BaseLeagueController
   
   def update
     @league = @team.league
-    @team.update_attributes(params[:team])    
+    @team.update_attributes(team_params)    
   end
 
   def roster
@@ -65,6 +65,14 @@ class TeamsController < BaseLeagueController
   end
   
   private
+  
+  def team_params
+    params.required(:team).permit(
+      :league_id, :name, :short_name, :club_id, :division_id, :pool, :show_in_standings, :seed,
+      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache,
+      :primary_color, :secondary_color, :accent_color, :custom_colors
+    )
+  end  
   
   def find_team
     @team = Team.find(params[:id])

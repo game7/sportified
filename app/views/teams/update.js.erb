@@ -6,7 +6,7 @@
   $("#dialog-modal").modal('hide');  
   $("#dialog-modal").html('');
   var $team = $("#team-<%= @team.id %>");
-  var partial = $('<%= escape_javascript(render :partial => "team", :locals => { :team => @team, :class_name => "span6" }) %>').hide();
+  var partial = $('<%= escape_javascript(render :partial => "team", :locals => { :team => @team, :class_name => "col-sm-6" }) %>').hide();
   $team.slideUp('slow', function() {
     $team.slideUp('slow', function() {
       $team.replaceWith(partial);
