@@ -16,11 +16,9 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   end
 
   def create
-    if params[:game_import][:contents]
-      contents = CSV.parse(params[:game_import][:contents].read)
-      params[:game_import].delete :contents
-    end
-    @game_import = Game::Import.new(params[:game_import])
+    contents = params.require(:game_import).permit(:contents)[:contents]
+    contents = CSV.parse(contents.read) if contents
+    @game_import = Game::Import.new(game_import_params)
     @game_import.contents = contents if contents
     if @game_import.save
       redirect_to edit_admin_game_import_path(@game_import.id), :success => "Game Upload has been created."
@@ -52,7 +50,7 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   end
 
   def update
-    if @game_import.update_attributes(params[:game_import])
+    if @game_import.update_attributes(game_import_params)
       redirect_to admin_game_imports_path, :notice => 'Game Upload was successfully updated.'
     else
       render :action => "edit"    
@@ -77,6 +75,10 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def game_import_params
+    params.require(:game_import).permit(:season_id, :league_id, :teams_attributes => [ :id, :team_id ], :venues_attributes => [ :id, :venue_id ])
+  end
   
   def add_games_breadcrumb
     add_breadcrumb 'Events', admin_events_path  

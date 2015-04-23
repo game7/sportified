@@ -202,10 +202,10 @@ header {
   }
 }
 
-.tab-pane {
+.tab-pane,
+.tab-content {
   padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-top-color: transparent;
 }
 
