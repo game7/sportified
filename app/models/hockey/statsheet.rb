@@ -9,10 +9,10 @@ class Hockey::Statsheet < ActiveRecord::Base
     
   has_many :skaters, class_name: 'Hockey::Skater::Result' do
     def home
-      where("team_id = ?", proxy_association.owner.home_team.id)
+      where("hockey_skaters.team_id = ?", proxy_association.owner.home_team.id)
     end
     def away
-      where("team_id = ?", proxy_association.owner.away_team.id)
+      where("hockey_skaters.team_id = ?", proxy_association.owner.away_team.id)
     end
   end
   has_many :goaltenders, class_name: 'Hockey::Goaltender::Result'

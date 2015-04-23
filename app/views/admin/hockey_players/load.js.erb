@@ -4,6 +4,6 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
-  $("#players-away").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.skaters.away.asc(:last_name) } ) )%>");
-  $("#players-home").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.skaters.home.asc(:last_name) } ) )%>");
+  $("#players-away").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.skaters.away } ) )%>");
+  $("#players-home").html("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.skaters.home } ) )%>");
 <% end %>
