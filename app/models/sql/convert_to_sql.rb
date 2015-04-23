@@ -1,3 +1,5 @@
+require 'JSON'
+
 module Sql
   class ConvertToSql
     
@@ -24,9 +26,24 @@ module Sql
           rescue Exception => ex
             puts "Error while updating #{key}"
             puts ex.message
-            puts "sql: #{sql.attributes.keys}"
+            puts "sql: #{JSON.pretty_generate(sql.attributes.keys)}"
           end
         end
+        
+        if (sql.respond_to?('apply_mongo!'))
+          begin
+            sql.send('apply_mongo!', mongo)
+          rescue Exception => ex
+            puts "Error(s) while MAPPING"
+            puts ex.message
+            puts JSON.pretty_generate(mongo)
+            puts sql.to_yaml
+          end        
+        end
+        
+        yield(mongo, sql) if block_given?
+        
+        
 
         begin
           sql.save!(validate: ar_type != 'User')

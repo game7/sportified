@@ -1,20 +1,20 @@
 
-#hockey_goal_per {
+#hockey_goal_period {
   max-width: 80px;
 }
 
-#hockey_goal_min,
-#hockey_goal_sec {
+#hockey_goal_minute,
+#hockey_goal_second {
   max-width: 80px;
 }
 
-#hockey_goal_side {
+#hockey_goal_team_id,
+#hockey_goal_scored_by_id,
+#hockey_goal_assisted_by_id,
+#hockey_goal_also_assisted_by_id {
   max-width: 400px;
 }
 
-#hockey_goal_plr,
-#hockey_goal_a1,
-#hockey_goal_a2,
-#hockey_goal_str {
+#hockey_goal_strength {
   max-width: 80px;
 }

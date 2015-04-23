@@ -5,23 +5,23 @@
   = link_to "Done", return_url, :class => "btn btn-sm btn-primary"
 .tabbable
   %ul.nav.nav-tabs
-    %li.active= link_to 'Summary', '#1', "data-toggle" => 'tab'
-    %li= link_to 'Players', '#2', "data-toggle" => 'tab'
-    %li= link_to 'Goals', '#3', "data-toggle" => 'tab'
-    %li= link_to 'Penalties', '#4', "data-toggle" => 'tab'
-    %li= link_to 'Goaltending', '#5', "data-toggle" => 'tab'
+    %li.active= link_to 'Summary', '#summary', "data-toggle" => 'tab'
+    %li= link_to 'Players', '#players', "data-toggle" => 'tab'
+    %li= link_to 'Goals', '#goals', "data-toggle" => 'tab'
+    %li= link_to 'Penalties', '#penalties', "data-toggle" => 'tab'
+    %li= link_to 'Goaltending', '#goaltending', "data-toggle" => 'tab'
 .tab-content
-  #1.tab-pane.active
+  #summary.tab-pane.active
     = render 'admin/hockey_statsheets/periods_sum'
     = render 'admin/hockey_statsheets/goals_sum'
     = render 'admin/hockey_statsheets/shots_sum'  
-  #2.tab-pane
+  #players.tab-pane
     = render 'admin/hockey_statsheets/players'  
-  #3.tab-pane
+  #goals.tab-pane
     = render 'admin/hockey_statsheets/goals'  
-  #4.tab-pane
+  #penalties.tab-pane
     = render 'admin/hockey_statsheets/penalties'  
-  #5.tab-pane
+  #goaltending.tab-pane
     = render 'admin/hockey_statsheets/goaltenders'  
 
 #dialog-modal
@@ -34,5 +34,17 @@
        var form = chk.closest('form');
        form.submit();
      });
+     
+     var hash = window.location.hash;
+     var prefix = "tab-";
+     
+     if (hash) {
+       $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
+     }
+     
+     $('.nav-tabs a').on('show.bs.tab', function(e) {
+       console.log('hash: ' + e.target.hash);
+       window.location.hash = e.target.hash.replace('#', prefix);
+     })
     });
 

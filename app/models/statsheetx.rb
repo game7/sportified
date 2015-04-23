@@ -1,4 +1,4 @@
-class Statsheet
+class Statsheetx
   include Mongoid::Document
 
   before_create :load_game_info

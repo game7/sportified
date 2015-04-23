@@ -2,10 +2,10 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   
   before_filter :find_statsheet
   before_filter :find_goaltender, :only => [:edit, :update, :destroy]
-  before_filter :prepare_sides
+  before_filter :list_players, :only => [:new, :edit]
   
   def new
-    @goaltender = Hockey::Goaltender.new
+    @goaltender = @statsheet.goaltenders.build()
   end
 
   def edit
@@ -15,6 +15,8 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
     @goaltender.update_attributes(hockey_goaltender_params)
     if @goaltender.save
       flash[:notice] = "Goaltender Updated"
+    else
+      list_players
     end
   end
 
@@ -23,7 +25,9 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
     if @goaltender.save
       @statsheet.reload
       flash[:notice] = "Goaltender Added"
-    end    
+    else
+      list_players
+    end
   end
 
   def destroy
@@ -44,12 +48,7 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   private
   
   def hockey_goaltender_params
-    params.required(:hockey_goaltender).permit(:side, :plr,
-                                                :min_1, :shots_1, :goals_1, 
-                                                :min_2, :shots_2, :goals_2, 
-                                                :min_3, :shots_3, :goals_3, 
-                                                :min_ot, :shots_ot, :goals_ot
-    )
+    params.required(:hockey_goaltender_result).permit(:team_id, :player_id, :minutes_played, :shots_against, :goals_against)
   end
   
   def find_statsheet
@@ -59,9 +58,10 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   def find_goaltender
     @goaltender = @statsheet.goaltenders.find(params['id'])
   end
+  
+  def list_players
+    @players = ::Player.where("team_id = ? OR team_id = ?", @statsheet.game.home_team_id, @statsheet.game.away_team_id)
+  end
 
-  def prepare_sides
-    @sides = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
-  end  
 
 end

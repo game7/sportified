@@ -5,6 +5,6 @@
 <% else %>
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
-  $("#penalties").html("<%= escape_javascript( render(:partial => "admin/hockey_penalties/table", :locals => { :penalties => @statsheet.events.penalties } ) )%>");
+  $("#penalties table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_penalties/table", :locals => { :penalties => @statsheet.penalties } ) )%>");
   $('#dialog-modal').dialog("close");
 <% end %>

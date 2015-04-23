@@ -49,7 +49,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   private
   
   def hockey_player_params
-    params.required(:hockey_player).permit(:side, :first_name, :last_name, :num, :played)
+    params.required(:hockey_skater_result).permit(:games_played)
   end
   
   def load_statsheet
@@ -57,7 +57,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def load_player
-    @player = @statsheet.players.find(params['id'])
+    @player = @statsheet.skaters.find(params['id'])
   end
 
   def prepare_sides

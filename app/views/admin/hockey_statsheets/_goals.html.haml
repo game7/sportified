@@ -1,7 +1,7 @@
 .well
   = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-sm btn-primary'
 #goals 
-  = render :partial => 'admin/hockey_goals/table', :locals => {:goals => @statsheet.events.goals}
-  = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-xs btn-primary' if  @statsheet.events.goals.count > 10
+  = render :partial => 'admin/hockey_goals/table', :locals => {:goals => @statsheet.goals}
+  = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-xs btn-primary' if  @statsheet.goals.count > 10
 .well
   = link_to 'Add Goal', new_admin_hockey_statsheet_goal_path(@statsheet), :remote => true, :class => 'btn btn-sm btn-primary'

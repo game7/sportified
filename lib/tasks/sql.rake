@@ -1,3 +1,5 @@
+require 'JSON'
+
 namespace :mongo do
   desc "converts mongo models to postgresql models"
   task :to_sql, [:section]=> :environment do
@@ -81,7 +83,7 @@ namespace :mongo do
     
     section "Events"
     session['events'].find.each do |mongo_event|
-      if mongo_event['type'] == 'Game'
+      if mongo_event['_type'] == 'Game'
         event = converter.convert(mongo_event, Game)
       else
         event = converter.convert(mongo_event, Event)
@@ -93,18 +95,31 @@ namespace :mongo do
   task :current, [:section]=> :environment do
     converter = Sql::ConvertToSql.new
     session = Mongoid::Sessions.default
-    
-    section "Events"
-    session['events'].find.each_with_index do |mongo_event, i|
-      if mongo_event['_type'] == 'Game'
-        event = converter.convert(mongo_event, Game)
-      else
-        event = converter.convert(mongo_event, Event)
-      end
+        
+    section "Statsheets"
+    session['statsheets'].find.each_with_index do |mongo_statsheet, i|
+      statsheet = converter.convert(mongo_statsheet, Hockey::Statsheet)
+      mongo_statsheet['players'].each do |mongo_player|
+        skater = converter.convert(mongo_player, Hockey::Skater::Result, { statsheet: statsheet })
+        if (mongo_player['g_gp'] == 1)
+          puts '- GOALIE'
+          goalie = converter.convert(mongo_player, Hockey::Goaltender::Result, { statsheet: statsheet })
+        end
+        #puts JSON.pretty_generate(mongo_player)
+        #puts skater.to_yaml
+      end if mongo_statsheet['players']
+      mongo_statsheet['events'].each do |mongo_event|
+        type = mongo_event['_type']
+        if type == 'Hockey::Goal'
+          goal = converter.convert(mongo_event, Hockey::Goal, { statsheet: statsheet })
+        elsif type == 'Hockey::Penalty'
+          penalty = converter.convert(mongo_event, Hockey::Penalty, { statsheet: statsheet })          
+        end
+      end if mongo_statsheet['events']
     end
     
   end  
-  
+
   def section(name)
     puts
     puts name

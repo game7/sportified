@@ -1,39 +1,23 @@
 - if goaltenders.count == 0
   No goaltenders have been entered
 - else
-  - goaltenders.each_with_index do |g, i|
-    %table.table.table-striped.table-bordered
-      %thead
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th Team
+        %th Player
+        %th Minutes
+        %th Shots
+        %th Goals
+        %th
+    %tbody      
+      - goaltenders.each_with_index do |g, i|
         %tr
-          %th #{g.side == 'away' ? @statsheet.away_team_name : @statsheet.home_team_name} ##{g.plr}
-          %th 1
-          %th 2
-          %th 3
-          %th OT
-          %th TOTAL
-      %tbody
-        %tr
-          %td Minutes
-          %td= g.min_1
-          %td= g.min_2
-          %td= g.min_3
-          %td= g.min_ot
-          %td= g.min_total
-        %tr
-          %td Shots
-          %td= g.shots_1
-          %td= g.shots_2
-          %td= g.shots_3
-          %td= g.shots_ot
-          %td= g.shots_total
-        %tr
-          %td Goals
-          %td= g.goals_1
-          %td= g.goals_2
-          %td= g.goals_3
-          %td= g.goals_ot
-          %td= g.goals_total
-        %tr
-          %td{ :colspan => 6 }
+          %td= g.team.short_name
+          %td= format_player_name(g)
+          %td= g.minutes_played
+          %td= g.shots_against
+          %td= g.goals_against
+          %td
             = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender', :class => 'btn btn-xs btn-primary'
             = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender', :class => 'btn btn-xs btn-primary'

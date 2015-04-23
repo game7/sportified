@@ -1,9 +1,9 @@
 %tr{ :id => "player_#{player.id}" }
   %td
     = form_for( player, :url => admin_hockey_statsheet_player_path(@statsheet.id, player), :html => { :class => "form-inline", :style => "margin: 0;" }, :remote => true ) do |f|
-      = f.check_box :played, { :class => "played" }
-  %td= player.num
-  %td= "#{player.last_name}, #{player.first_name}"
+      = f.check_box :games_played, { :class => "played" }
+  %td= player.player.jersey_number if player.player
+  %td= "#{player.player.last_name}, #{player.player.first_name}" if player.player
   %td
     = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), :remote => true, :title => 'Edit this player', :class => 'btn btn-xs btn-primary'
     = link_to 'Delete', admin_hockey_statsheet_player_path(@statsheet, player), :confirm => 'Are you sure?', :method => :delete, :remote => true, :title => 'Delete this player', :class => 'btn btn-xs btn-primary'

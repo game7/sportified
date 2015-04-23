@@ -1,9 +1,37 @@
 = simple_form_for( @goal, :url => admin_hockey_statsheet_goals_path(@statsheet.id), :remote => true ) do |f|
-  = f.input :per, :collection => Statsheet::Hockey::Goal.periods
-  = f.input :min, :maxlength => 2, :pattern => "[0-9]*"
-  = f.input :sec, :maxlength => 2, :pattern => "[0-9]*"
-  = f.input :side, :collection => @sides, :include_blank => 'Choose Team'
-  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*"
-  = f.input :a1, :maxlength => 2, :pattern => "[0-9]*"
-  = f.input :a2, :maxlength => 2, :pattern => "[0-9]*"
-  = f.input :str, :collection => Hockey::Goal.strengths
+  = f.input :time, :label => 'Time' do
+    .form-inline  
+      = f.input :period, :collection => Hockey::Goal.periods, :label => false
+      = f.input :minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
+      = f.input :second, :maxlength => 2, :pattern => "[0-9]*", :label => false
+  = f.input :team_id, :collection => @statsheet.teams, :label => 'Team'
+  = f.input :scored_by_id do
+    = f.select :scored_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+  = f.input :assisted_by_id do
+    = f.select :assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+  = f.input :also_assisted_by_id do
+    = f.select :also_assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+  = f.input :strength, :collection => Hockey::Goal.strengths
+  :javascript
+    function filter_players(changed) {
+      var teamId = $('select#hockey_goal_team_id').val();
+      $('#hockey_goal_scored_by_id option').hide();
+      $('#hockey_goal_assisted_by_id option').hide();
+      $('#hockey_goal_also_assisted_by_id option').hide();            
+      if (changed) {
+        $('#hockey_goal_scored_by_id').val('');
+        $('#hockey_goal_assisted_by_id').val('');
+        $('#hockey_goal_also_assisted_by_id').val('');
+      }
+      if (teamId != '') {
+        $('#hockey_goal_scored_by_id option[data-team-id=' + teamId + ']').show();
+        $('#hockey_goal_assisted_by_id option[data-team-id=' + teamId + ']').show();
+        $('#hockey_goal_also_assisted_by_id option[data-team-id=' + teamId + ']').show();
+      }
+    }
+    $(document).ready(function(){
+      filter_players();
+      $("select#hockey_goal_team_id").change(function(){
+          filter_players(true);
+      });
+    });

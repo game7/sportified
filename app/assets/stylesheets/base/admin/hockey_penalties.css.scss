@@ -1,15 +1,15 @@
 
-#hockey_penalty_per,
-#hockey_penalty_min,
-#hockey_penalty_sec {
+#hockey_penalty_period,
+#hockey_penalty_minute,
+#hockey_penalty_second {
   max-width: 80px;
 }
 
-#hockey_penalty_side {
+#hockey_penalty_team_id {
   max-width: 400px;
 }
 
-#hockey_penalty_inf {
+#hockey_penalty_infraction {
   max-width: 400px;
 }
 
@@ -17,13 +17,13 @@
   max-width: 200px;
 }
 
-#hockey_penalty_plr,
-#hockey_penalty_dur,
-#hockey_penalty_start_per,
-#hockey_penalty_start_min,
-#hockey_penalty_start_sec,
-#hockey_penalty_end_per,
-#hockey_penalty_end_min,
-#hockey_penalty_end_sec {
+#hockey_penalty_committed_by,
+#hockey_penalty_duration,
+#hockey_penalty_start_period,
+#hockey_penalty_start_minute,
+#hockey_penalty_start_second,
+#hockey_penalty_end_period,
+#hockey_penalty_end_minute,
+#hockey_penalty_end_second {
   max-width: 80px;
 }

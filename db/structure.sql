@@ -137,6 +137,8 @@ CREATE TABLE events (
     updated_at timestamp without time zone,
     home_team_id integer,
     away_team_id integer,
+    statsheet_id integer,
+    statsheet_type character varying(255),
     home_team_score integer DEFAULT 0,
     away_team_score integer DEFAULT 0,
     home_team_name character varying(255),
@@ -167,6 +169,251 @@ CREATE SEQUENCE events_id_seq
 --
 
 ALTER SEQUENCE events_id_seq OWNED BY events.id;
+
+
+--
+-- Name: hockey_goals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hockey_goals (
+    id integer NOT NULL,
+    tenant_id integer,
+    statsheet_id integer,
+    period integer,
+    minute integer,
+    second integer,
+    team_id integer,
+    scored_by_id integer,
+    scored_on_id integer,
+    assisted_by_id integer,
+    also_assisted_by_id integer,
+    strength character varying(255),
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hockey_goals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hockey_goals_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hockey_goals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hockey_goals_id_seq OWNED BY hockey_goals.id;
+
+
+--
+-- Name: hockey_goaltenders; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hockey_goaltenders (
+    id integer NOT NULL,
+    type character varying(255),
+    tenant_id integer,
+    team_id integer,
+    player_id integer,
+    statsheet_id integer,
+    games_played integer,
+    minutes_played integer,
+    shots_against integer,
+    goals_against integer,
+    saves integer,
+    save_percentage double precision,
+    goals_against_average double precision,
+    shutouts integer,
+    shootout_attempts integer,
+    shootout_goals integer,
+    shootout_save_percentage double precision,
+    regulation_wins integer,
+    regulation_losses integer,
+    overtime_wins integer,
+    overtime_losses integer,
+    shootout_wins integer,
+    shootout_losses integer,
+    total_wins integer,
+    total_losses integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hockey_goaltenders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hockey_goaltenders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hockey_goaltenders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hockey_goaltenders_id_seq OWNED BY hockey_goaltenders.id;
+
+
+--
+-- Name: hockey_penalties; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hockey_penalties (
+    id integer NOT NULL,
+    tenant_id integer,
+    statsheet_id integer,
+    period integer,
+    minute integer,
+    second integer,
+    team_id integer,
+    committed_by_id integer,
+    infraction character varying(255),
+    duration integer,
+    severity character varying(255),
+    start_period character varying(255),
+    start_minute integer,
+    start_second integer,
+    end_period character varying(255),
+    end_minute integer,
+    end_second integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hockey_penalties_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hockey_penalties_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hockey_penalties_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hockey_penalties_id_seq OWNED BY hockey_penalties.id;
+
+
+--
+-- Name: hockey_skaters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hockey_skaters (
+    id integer NOT NULL,
+    type character varying(255),
+    tenant_id integer,
+    team_id integer,
+    player_id integer,
+    statsheet_id integer,
+    jersey_number character varying(255),
+    games_played integer,
+    goals integer,
+    assists integer,
+    points integer,
+    penalties integer,
+    penalty_minutes integer,
+    minor_penalties integer,
+    major_penalties integer,
+    misconduct_penalties integer,
+    game_misconduct_penalties integer,
+    hat_tricks integer,
+    playmakers integer,
+    gordie_howes integer,
+    ejections integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hockey_skaters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hockey_skaters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hockey_skaters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hockey_skaters_id_seq OWNED BY hockey_skaters.id;
+
+
+--
+-- Name: hockey_statsheets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hockey_statsheets (
+    id integer NOT NULL,
+    tenant_id integer,
+    posted boolean,
+    away_score integer,
+    home_score integer,
+    latest_period character varying(255),
+    latest_minute integer,
+    latest_second integer,
+    min_1 integer,
+    min_2 integer,
+    min_3 integer,
+    min_ot integer,
+    away_shots_1 integer,
+    away_shots_2 integer,
+    away_shots_3 integer,
+    away_shots_ot integer,
+    home_shots_1 integer,
+    home_shots_2 integer,
+    home_shots_3 integer,
+    home_shots_ot integer,
+    mongo_id character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hockey_statsheets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hockey_statsheets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hockey_statsheets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hockey_statsheets_id_seq OWNED BY hockey_statsheets.id;
 
 
 --
@@ -739,6 +986,41 @@ ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY hockey_goals ALTER COLUMN id SET DEFAULT nextval('hockey_goals_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hockey_goaltenders ALTER COLUMN id SET DEFAULT nextval('hockey_goaltenders_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hockey_penalties ALTER COLUMN id SET DEFAULT nextval('hockey_penalties_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hockey_skaters ALTER COLUMN id SET DEFAULT nextval('hockey_skaters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hockey_statsheets ALTER COLUMN id SET DEFAULT nextval('hockey_statsheets_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -855,6 +1137,46 @@ ALTER TABLE ONLY clubs
 
 ALTER TABLE ONLY events
     ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hockey_goals_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hockey_goals
+    ADD CONSTRAINT hockey_goals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hockey_goaltenders_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hockey_goaltenders
+    ADD CONSTRAINT hockey_goaltenders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hockey_penalties_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hockey_penalties
+    ADD CONSTRAINT hockey_penalties_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hockey_skaters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hockey_skaters
+    ADD CONSTRAINT hockey_skaters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hockey_statsheets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hockey_statsheets
+    ADD CONSTRAINT hockey_statsheets_pkey PRIMARY KEY (id);
 
 
 --
@@ -1016,6 +1338,97 @@ CREATE INDEX index_events_on_season_id ON events USING btree (season_id);
 --
 
 CREATE INDEX index_events_on_tenant_id ON events USING btree (tenant_id);
+
+
+--
+-- Name: index_hockey_goals_on_statsheet_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goals_on_statsheet_id ON hockey_goals USING btree (statsheet_id);
+
+
+--
+-- Name: index_hockey_goals_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goals_on_tenant_id ON hockey_goals USING btree (tenant_id);
+
+
+--
+-- Name: index_hockey_goaltenders_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goaltenders_on_player_id ON hockey_goaltenders USING btree (player_id);
+
+
+--
+-- Name: index_hockey_goaltenders_on_statsheet_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goaltenders_on_statsheet_id ON hockey_goaltenders USING btree (statsheet_id);
+
+
+--
+-- Name: index_hockey_goaltenders_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goaltenders_on_team_id ON hockey_goaltenders USING btree (team_id);
+
+
+--
+-- Name: index_hockey_goaltenders_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_goaltenders_on_tenant_id ON hockey_goaltenders USING btree (tenant_id);
+
+
+--
+-- Name: index_hockey_penalties_on_statsheet_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_penalties_on_statsheet_id ON hockey_penalties USING btree (statsheet_id);
+
+
+--
+-- Name: index_hockey_penalties_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_penalties_on_tenant_id ON hockey_penalties USING btree (tenant_id);
+
+
+--
+-- Name: index_hockey_skaters_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_skaters_on_player_id ON hockey_skaters USING btree (player_id);
+
+
+--
+-- Name: index_hockey_skaters_on_statsheet_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_skaters_on_statsheet_id ON hockey_skaters USING btree (statsheet_id);
+
+
+--
+-- Name: index_hockey_skaters_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_skaters_on_team_id ON hockey_skaters USING btree (team_id);
+
+
+--
+-- Name: index_hockey_skaters_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_skaters_on_tenant_id ON hockey_skaters USING btree (tenant_id);
+
+
+--
+-- Name: index_hockey_statsheets_on_tenant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hockey_statsheets_on_tenant_id ON hockey_statsheets USING btree (tenant_id);
 
 
 --
@@ -1212,4 +1625,14 @@ INSERT INTO schema_migrations (version) VALUES ('20150211174045');
 INSERT INTO schema_migrations (version) VALUES ('20150211180006');
 
 INSERT INTO schema_migrations (version) VALUES ('20150211180336');
+
+INSERT INTO schema_migrations (version) VALUES ('20150302180214');
+
+INSERT INTO schema_migrations (version) VALUES ('20150302234608');
+
+INSERT INTO schema_migrations (version) VALUES ('20150302235459');
+
+INSERT INTO schema_migrations (version) VALUES ('20150303183516');
+
+INSERT INTO schema_migrations (version) VALUES ('20150303184334');
 

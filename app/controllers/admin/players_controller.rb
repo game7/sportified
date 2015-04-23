@@ -8,6 +8,10 @@ class Admin::PlayersController < Admin::BaseLeagueController
 
   def index
     @players = @team.players.order(:last_name)
+    respond_to do |format|
+      format.html
+      format.json { render :json => @players }
+    end    
   end
 
   def new

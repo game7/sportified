@@ -3,6 +3,7 @@ class Game < Event
  
   belongs_to :home_team, :class_name => "Team" 
   belongs_to :away_team, :class_name => "Team"
+  belongs_to :statsheet, polymorphic: true  
   
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
@@ -16,8 +17,6 @@ class Game < Event
   def home_team_is_winner?
     return away_team_score < home_team_score if result
   end
-
-  #has_one :statsheet
 
   def has_team?(team)
     id = team.class == Team ? team.id : team

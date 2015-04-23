@@ -1,34 +1,25 @@
 - edit_mode = ['edit','update'].index(params[:action]) ? true : false
 = simple_form_for( @goaltender, :url => url, :remote => true ) do |f|
-  = f.input :side, :collection => @sides, :disabled => edit_mode, :label => 'Team'
-  = f.input :plr, :maxlength => 2, :pattern => "[0-9]*", :label => 'Player Number'
-  %table.table.table-bordered
-    %thead
-      %tr
-        %th Period
-        %th Minutes
-        %th Shots
-        %th Goals
-    %tbody
-      %tr
-        %td 1
-        %td= f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :shots_1, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :goals_1, :maxlength => 2, :pattern => "[0-9]*"
-      %tr
-        %td 2
-        %td= f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :shots_2, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :goals_2, :maxlength => 2, :pattern => "[0-9]*"
-      %tr
-        %td 3
-        %td= f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :shots_3, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :goals_3, :maxlength => 2, :pattern => "[0-9]*"
-      %tr
-        %td OT
-        %td= f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :shots_ot, :maxlength => 2, :pattern => "[0-9]*"
-        %td= f.text_field :goals_ot, :maxlength => 2, :pattern => "[0-9]*"
-
-
+  = f.input :team_id, :collection => @statsheet.teams, :disabled => edit_mode, :label => 'Team'
+  = f.input :player_id do
+    = f.select :player_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+  = f.input :minutes_played, :maxlength => 3, :pattern => "[0-9]*"
+  = f.input :shots_against, :maxlength => 2, :pattern => "[0-9]*"
+  = f.input :goals_against, :maxlength => 2, :pattern => "[0-9]*"
+:javascript
+  function filter_players(changed) {
+    var teamId = $('select#hockey_goaltender_result_team_id').val();
+    $('#hockey_goaltender_result_player_id option').hide();
+    if (changed) {
+      $('#hockey_goaltender_result_player_id').val('');
+    }
+    if (teamId != '') {
+      $('#hockey_goaltender_result_player_id option[data-team-id=' + teamId + ']').show();
+    }
+  }
+  $(document).ready(function(){
+    filter_players();
+    $("select#hockey_goaltender_result_team_id").change(function(){
+        filter_players(true);
+    });
+  }); 

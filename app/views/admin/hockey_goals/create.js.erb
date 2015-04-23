@@ -6,7 +6,7 @@
   $('#dialog-modal').dialog("close");
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
-  $("#goals").html("<%= escape_javascript( render(:partial => "admin/hockey_goals/table", :locals => { :goals => @statsheet.events.goals } ) )%>");
+  $("#goals table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_goals/table", :locals => { :goals => @statsheet.goals } ) )%>");
   $("#away_score").html(<%= @statsheet.away_score %>);
   $("#home_score").html(<%= @statsheet.home_score %>);
 <% end %>

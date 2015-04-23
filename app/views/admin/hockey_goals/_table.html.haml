@@ -15,14 +15,14 @@
     - if goals.count > 0
       - goals.each_with_index do |g, i|
         %tr
-          %td #{(i+1).to_s}
-          %td #{g.per}
-          %td #{g.time}
-          %td #{g.side == 'away' ? @statsheet.away_team_name : @statsheet.home_team_name}
-          %td #{g.plr}
-          %td #{g.a1}
-          %td #{g.a2}
-          %td #{g.str}
+          %td= (i+1).to_s
+          %td= g.period
+          %td= g.time
+          %td= g.team.short_name
+          %td= format_player_name(g.scored_by)
+          %td= format_player_name(g.assisted_by)
+          %td= format_player_name(g.also_assisted_by)
+          %td= g.strength
           %td 
             = link_to 'Delete', admin_hockey_statsheet_goal_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goal', :class => 'btn btn-xs btn-primary'
     - else

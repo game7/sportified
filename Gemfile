@@ -5,7 +5,7 @@ gem 'rails', '4.1.0'
 gem 'active_model_serializers' 
 
 gem 'pg'
-gem 'hstore_accessor'
+gem 'hstore_accessor', '~> 0.9.0'
 gem 'enumerize'
 
 gem 'sass-rails', '~> 4.0.0.rc1'

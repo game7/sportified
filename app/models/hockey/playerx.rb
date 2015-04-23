@@ -1,5 +1,5 @@
 module Hockey
-  class Player
+  class Playerx
     include Mongoid::Document
     include Sides
     include Stats
