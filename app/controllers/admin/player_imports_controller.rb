@@ -19,7 +19,7 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
       contents = CSV.parse(params[:player_import][:contents].read)
       params[:player_import].delete :contents
     end
-    @player_import = Player::Import.new(params[:player_import])
+    @player_import = Player::Import.new(player_import_params)
     @player_import.contents = contents if contents
     if @player_import.save
       redirect_to edit_admin_player_import_path(@player_import.id), :success => "Player Import has been created."
@@ -48,7 +48,7 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
   end
 
   def update
-    if @player_import.update_attributes(params[:player_import])
+    if @player_import.update_attributes(player_import_params)
       redirect_to admin_player_imports_path, :notice => 'Player Import was successfully updated.'
     else
       render :action => "edit"    
@@ -73,6 +73,10 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
   end
   
   private
+  
+  def player_import_params
+    params.require(:player_import).permit(:league_id, :season_id, :teams_attributes => [ :team_id, :id ])
+  end
   
   def add_players_breadcrumb
     add_breadcrumb 'Teams', admin_teams_path  
