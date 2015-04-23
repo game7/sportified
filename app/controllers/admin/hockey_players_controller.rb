@@ -34,16 +34,10 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def load
-    @statsheet.reload_players
+    @statsheet.load_players
     if @statsheet.save
       flash[:notice] = "Players have been loaded from team rosters"
     end    
-  end
-  def reload
-    @statsheet.reload_players
-    if @statsheet.save
-      flash[:notice] = "Players have been reloaded from team rosters"
-    end
   end
   
   private

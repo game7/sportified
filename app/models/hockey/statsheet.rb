@@ -95,19 +95,16 @@ class Hockey::Statsheet < ActiveRecord::Base
   def shootout?
     false
   end
-  
+
   def load_players(game = self.game)
     load_team_players(game.away_team)
     load_team_players(game.home_team)    
   end
 
   def load_team_players(team)
-    puts 'load skaters'
-    skater_ids = self.skaters.entries.collect{ |plr| plr.player_id }
-    puts 'loop players'
+    skater_ids = self.skaters.where("team_id = ?", team.id).collect{ |plr| plr.player_id }
     team.players.each do |player|
-      puts player.last_name
-      skaters.create(player: player) unless skater_ids.index(player.id)
+      skaters.create(team: team, player: player) unless skater_ids.index(player.id)
     end if team
   end
   
