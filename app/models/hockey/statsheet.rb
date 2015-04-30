@@ -15,8 +15,30 @@ class Hockey::Statsheet < ActiveRecord::Base
       where("hockey_skaters.team_id = ?", proxy_association.owner.away_team.id)
     end
   end
+  
   has_many :goaltenders, class_name: 'Hockey::Goaltender::Result'
-  has_many :goals, class_name: 'Hockey::Goal'
+  
+  has_many :goals, class_name: 'Hockey::Goal' do
+    def period1
+      where('period = ?', '1')
+    end
+    def period2
+      where('period = ?', '2')      
+    end
+    def period3
+      where('period = ?', '3')      
+    end
+    def overtime
+      where('period = ?' 'OT')
+    end
+    def home
+      where("hockey_goals.team_id = ?", proxy_association.owner.home_team.id)
+    end
+    def away
+      where("hockey_goals.team_id = ?", proxy_association.owner.away_team.id)
+    end
+  end
+  
   has_many :penalties, class_name: 'Hockey::Penalty'
   
   def teams

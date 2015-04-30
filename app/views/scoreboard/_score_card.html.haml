@@ -2,15 +2,15 @@
   .scorecard
     .inner
       .status
-        - unless game.has_result?
+        - unless game.result.pending?
           = game.starts_on.strftime("%l:%M %P")
-        - if game.has_result?
+        - if game.result.final?
           FINAL
       .matchup
         %table
           %tbody
-            = render :partial => "team", :locals => { :team => game.away_team, :name => game.away_team_name,:score => game.has_result? ? game.result.away_score : "" }
-            = render :partial => "team", :locals => { :team => game.home_team, :name => game.home_team_name, :score => game.has_result? ? game.result.home_score : "" }
+            = render :partial => "team", :locals => { :team => game.away_team, :name => game.away_team_name,:score => game.result.final? ? game.away_team_score : "" }
+            = render :partial => "team", :locals => { :team => game.home_team, :name => game.home_team_name, :score => game.result.final? ? game.home_team_score : "" }
       - stats = game.statsheet            
       - if stats
         .game-links
@@ -28,20 +28,20 @@
                 %th.final T
             %tbody
               %tr
-                %td= stats.away_team_name
-                %td.period= stats.away_goals_1
-                %td.period= stats.away_goals_2
-                %td.period= stats.away_goals_3
+                %td= game.away_team_name
+                %td.period= stats.goals.away.period1.count
+                %td.period= stats.goals.away.period2.count
+                %td.period= stats.goals.away.period3.count
                 - if stats.overtime?
-                  %td.period= stats.away_goals_ot
-                %td.final= stats.away_goals_total
+                  %td.period= stats.goals.away.overtime.count
+                %td.final= stats.goals.away.count
               %tr
-                %td= stats.home_team_name
-                %td.period= stats.home_goals_1
-                %td.period= stats.home_goals_2
-                %td.period= stats.home_goals_3
+                %td= game.home_team_name
+                %td.period= stats.goals.home.period1.count
+                %td.period= stats.goals.home.period2.count
+                %td.period= stats.goals.home.period3.count
                 - if stats.overtime?
-                  %td.period= stats.home_goals_ot
-                %td.final= stats.home_goals_total
+                  %td.period= stats.goals.home.overtime.count
+                %td.final= stats.goals.home.count
           
 
