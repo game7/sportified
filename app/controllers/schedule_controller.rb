@@ -16,8 +16,9 @@ class ScheduleController < BaseLeagueController
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
-      @events = all_leagues? ? Event : @league.events      
-      @events = @events.gt(starts_on: @start_date).lt(ends_on: @end_date).asc(:starts_on)
+      @events = all_leagues? ? Event : @league.events
+      @events = @events.includes(:location, :home_team, :away_team)
+      @events = @events.where('starts_on > ? AND ends_on < ?', @start_date, @end_date).order(starts_on: :asc)
     end
 
     respond_to do |format|

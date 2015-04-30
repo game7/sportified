@@ -37,8 +37,8 @@
               - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
               = link_to "Clone", copy_url, :class => 'btn btn-default btn-xs'
         %td
-          .visible-xs= event.venue_short_name
-          .hidden-xs= event.venue_name
+          .visible-xs= event.location.short_name
+          .hidden-xs= event.location.name
       - last_date = event.starts_on.to_date
 - if events.count > 4
   .row
