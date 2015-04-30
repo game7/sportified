@@ -1,0 +1,64 @@
+--- # Standings Schemata
+  nhl:
+    description: NHL Standings
+    order: points DESC, wins, margin
+    primary_column: pts
+    columns:
+      gp:
+        title: GP
+        attr: games_played
+      w:
+        title: W
+        attr: wins
+      l:
+        title: L
+        attr: losses
+      sol:
+        title: SOL
+        attr: shootout_losses
+      pts:
+        title: PTS
+        attr: points
+      gf:
+        title: GF
+        attr: scored
+      ga:
+        title: GA
+        attr: allowed
+      margin:
+        title: +/-
+        attr: margin
+      streak:
+        title: STK
+        attr: streak
+  pct:
+    description: Generic Standings
+    order: percent DESC, wins, margin
+    primary_column: pct
+    columns:
+      gp:
+        title: GP
+        attr: games_played
+      w:
+        title: W
+        attr: wins
+      l:
+        title: L
+        attr: losses
+      pct:
+        title: PCT
+        attr: percent
+        precision: 3
+      pf:
+        title: PA
+        attr: scored
+      pa:
+        title: PA
+        attr: allowed
+      margin:
+        title: DIFF
+        attr: margin
+      streak:
+        title: STK
+        attr: streak
+      

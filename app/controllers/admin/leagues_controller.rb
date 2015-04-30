@@ -48,12 +48,12 @@ class Admin::LeaguesController < Admin::BaseLeagueController
   private
   
   def league_params
-    params.required(:league).permit(:name, :standings, :seasons, :show_standings, :show_players, :show_statistics, :league_ids => [])
+    params.required(:league).permit(:name, :standings_schema_id, :seasons, :show_standings, :show_players, :show_statistics, :league_ids => [])
   end
   
   def add_breadcrumbs
     add_breadcrumb 'Leagues', admin_leagues_path    
-  end  
+  end
   
   def find_league
     @league = League.find(params[:id])

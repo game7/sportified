@@ -4,46 +4,26 @@
   .col-sm-4
     = render :partial => 'shared/season_options', :object => @season_options
 
-- teams_by_division(@teams).each do |division|
-  .visible-xs
-    %table.table.table-striped.table-bordered
-      %thead
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th.span2 TEAM
+      - @league.standings_schema['columns'].each do |col|
+        %th{ :class => "span1 #{'hidden-xs' unless col[0] == @league.standings_schema['primary_column']}"}= col[1]['title']
+  %tbody
+    - last_pool = nil
+    - @teams.each do |team|
+      - unless team.pool.blank? or team.pool == last_pool
         %tr
-          %th TEAM
-          %th= @league.standings_array.include?('pts') ? t('.pts') : t('.pct')
-        %tbody
-          - last_pool = nil
-          - division[:teams].each do |team|
-            - unless team.pool.blank? or team.pool == last_pool
-              %tr
-                %th{:colspan => 2}= team.pool
-              - last_pool = team.pool
-            %tr
-              %td= team.name
-              %td= @league.standings_array.include?('pts') ? team.record.pts : number_with_precision(team.record.pct, :precision => 3)
-  .hidden-xs
-    %table.table.table-striped.table-bordered
-      %thead
-        %tr
-          %th.span2 TEAM
-          - @league.standings_array.each do |col|
-            %th.span1= t('.'+col)
-        %tbody
-          - last_pool = nil
-          - division[:teams].each do |team|
-            - unless team.pool.blank? or team.pool == last_pool
-              %tr
-                %th{:colspan => 10}= team.pool
-              - last_pool = team.pool            
-            %tr
-              %td
-                = "#{team.seed} -" if team.seed
-                = team.name
-                - @league.standings_array.each do |col|
-                  - if is_float?(team.record.fields[col])
-                    %td=  number_with_precision(team.record.send(col), :precision => 3)
-                  - else
-                    %td= team.record.send col
-
-
-
+          %th{:colspan => 10}= team.pool
+        - last_pool = team.pool            
+      %tr
+        %td
+          = "#{team.seed} -" if team.seed
+          = team.name
+          - @league.standings_schema['columns'].each do |col|
+            %td{ :class => "#{'hidden-xs' unless col[0] == @league.standings_schema['primary_column']}"}
+              - if col[1]['precision']
+                = number_with_precision(team.send(col[1]['attr']), :precision => col[1]['precision'])
+              - else
+                = team.send(col[1]['attr'])

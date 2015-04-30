@@ -1,7 +1,7 @@
 module StandingsColumnsHelper
   
   def is_float?(field)
-    field && field.options[:type].to_s == "Float"
+    field && field.is_a?(Float)
   end
 
 end

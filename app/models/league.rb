@@ -25,6 +25,24 @@ class League < ActiveRecord::Base
    self.standings_array = standings.split(self.class.standings_separator).map(&:strip).reject(&:blank?)
  end
  
+ def standings_schema_id
+   read_attribute(:standings_schema_id) || 'pct'
+ end
+ 
+ def standings_schema
+   League.standings_schemata[self.standings_schema_id] || League.standings_schemata['pct']
+ end
+ 
+ def self.standings_schema_options
+   League.standings_schemata.collect do |s| 
+     [ s[1]['description'], s[0] ]
+   end
+ end
+ 
+ def self.standings_schemata
+   @@schemata ||= YAML.load_file(Rails.root.to_s + '/config/standings.yml')
+ end
+ 
  class << self
    def for_season(season)
      season_id = ( season.class == Season ? season.id : season )

@@ -1,6 +1,7 @@
 class Team < ActiveRecord::Base
   include Sportified::TenantScoped
   include Concerns::Brandable
+  include Concerns::Recordable
   
   belongs_to :tenant
   belongs_to :league
@@ -9,8 +10,11 @@ class Team < ActiveRecord::Base
   
   validates_presence_of :name, :league_id, :season_id
 
-  has_many :players  
-  #embeds_one :record, :class_name => "Team::Record"
+  has_many :players
+  
+  def games
+    Game.where("home_team_id = ? OR away_team_id = ?", id, id)
+  end
 
   before_save :set_slug
   def set_slug
@@ -22,11 +26,6 @@ class Team < ActiveRecord::Base
     if self.short_name.nil? || self.short_name.empty?
       self.short_name = self.name
     end
-  end
-  
-  before_save :ensure_record
-  def ensure_record
-    #self.record ||= Team::Record.new
   end
   
   class << self

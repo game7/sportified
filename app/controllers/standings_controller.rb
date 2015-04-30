@@ -11,15 +11,15 @@ class StandingsController < BaseLeagueController
     #  @teams = []
     #  flash[:error] = "Standings layout has not been setup for this division"
     #end
-    add_breadcrumb "Standings"
-    @teams = @league.teams.for_season(@season).asc('division_name').asc('pool').asc('seed').desc('record.pts').desc('record.w').desc('record.margin')
+    add_breadcrumb "Standings" 
+    @teams = @league.teams.for_season(@season).order('pool, seed, ' + @league.standings_schema['order'])
   end
   
   private
   
   def get_season_options
     most_recent = Season.most_recent
-    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, standings_path(:league_slug => @league.slug, :season_slug => s == most_recent ? nil : s.slug)]}
+    @season_options = @league.seasons.all.order('starts_on DESC').collect{|s| [s.name, standings_path(:league_slug => @league.slug, :season_slug => s == most_recent ? nil : s.slug)]}
   end  
   
 end

@@ -431,7 +431,8 @@ CREATE TABLE leagues (
     tenant_id integer,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    standings_schema_id character varying(255)
 );
 
 
@@ -809,7 +810,26 @@ CREATE TABLE teams (
     crop_w integer DEFAULT 0,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    games_played integer,
+    wins integer,
+    losses integer,
+    ties integer,
+    overtime_wins integer,
+    overtime_losses integer,
+    shootout_wins integer,
+    shootout_losses integer,
+    forfeit_wins integer,
+    forfeit_losses integer,
+    points integer,
+    percent double precision,
+    scored integer,
+    allowed integer,
+    margin integer,
+    last_result character varying(255),
+    current_run integer,
+    longest_win_streak integer,
+    longest_loss_streak integer
 );
 
 
@@ -1635,4 +1655,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150302235459');
 INSERT INTO schema_migrations (version) VALUES ('20150303183516');
 
 INSERT INTO schema_migrations (version) VALUES ('20150303184334');
+
+INSERT INTO schema_migrations (version) VALUES ('20150424155941');
+
+INSERT INTO schema_migrations (version) VALUES ('20150430214331');
 
