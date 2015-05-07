@@ -7,11 +7,11 @@ module Sql
       sql = ar_object_for(mongo, ar_type).tap do |sql|
         sql.assign_attributes(initial_attrs)
         
-        if sql.new_record?
-          puts "NEW #{ar_type.to_s}"
-        else
-          puts "UPDATE #{ar_type.to_s} #{sql.id}"
-        end
+        #if sql.new_record?
+        #  puts "NEW #{ar_type.to_s}"
+        #else
+        #  puts "UPDATE #{ar_type.to_s} #{sql.id}"
+        #end
 
         keys(mongo, sql).each do |key|
 

@@ -1,0 +1,159 @@
+require 'JSON'
+
+module Sql
+  class Converter
+    
+    def initialize
+      @converter = ConvertToSql.new
+      @session = Mongoid::Sessions.default      
+    end
+    
+    def section(name)
+      puts
+      puts name
+      puts '--------------------------------'
+    end
+    
+    def all
+      tenants
+      users
+      pages
+      posts
+      seasons
+      leagues
+      clubs
+      teams
+      players
+      locations
+      events
+      statsheets
+    end
+    
+    def tenants
+      section "Tenants"
+      @session['tenants'].find.each do |mongo_tenant|
+        tenant = @converter.convert(mongo_tenant, Tenant)
+      end    
+      # set first tenant to localhost if non production
+      Tenant.first.update_attributes!(host: 'localhost') unless Rails.env == 'production'        
+    end
+    
+    def users
+      section "Users"
+      @session['users'].find.each do |mongo_user|
+        next unless mongo_user['roles']
+        user = @converter.convert(mongo_user, User)
+      end
+      # set user/2 to super_admin if non production
+      User.find(2).roles << UserRole.super_admin      
+    end
+
+    def pages
+      section "Pages"
+      @session['pages'].find.each do |mongo_page|
+        page = @converter.convert(mongo_page, Page)
+        if mongo_page['sections']
+          mongo_page['sections'].each do |mongo_section|
+            section = @converter.convert(mongo_section, Section, { :page => page })
+          end 
+        end
+        if mongo_page['blocks']
+          mongo_page['blocks'].each do |mongo_block|
+            section = Section.where(:mongo_id => mongo_block[:section_id].to_s).first
+            block = @converter.convert(mongo_block, mongo_block['_type'].constantize, { :page => page, :section_id => section ? section.id : nil })
+          end
+        end
+      end
+    end
+    
+    def posts
+      section "Posts"
+      @session['posts'].find.each do |mongo_post|
+        post = @converter.convert(mongo_post, Post)
+      end
+    end
+
+    def seasons
+      section "Seasons"
+      @session['seasons'].find.each do |mongo_season|
+        season = @converter.convert(mongo_season, Season)
+      end
+    end
+    
+    def leagues
+      section "Leagues"
+      @session['leagues'].find.each do |mongo_league|
+        league = @converter.convert(mongo_league, League)
+        mongo_league['season_ids'].each do |season_id|
+          season = Season.where(:mongo_id => season_id.to_s).first
+          league.seasons << season if season
+        end
+      end      
+    end
+    
+    def clubs
+      section "Clubs"
+      @session['clubs'].find.each do |mongo_club|
+        club = @converter.convert(mongo_club, Club)
+      end
+    end
+
+    def teams
+      section "Teams"
+      @session['teams'].find.each do |mongo_team|
+        team = @converter.convert(mongo_team, Team)
+        if mongo_team['logo']
+          team.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{team.tenant.slug}/#{team.class.name.pluralize.downcase}/logo/#{team.mongo_id}/" + mongo_team['logo']
+          puts team.remote_logo_url
+        end      
+      end
+    end
+
+    def players
+      section "Players"
+      @session['players'].find.each do |mongo_player|
+        player = @converter.convert(mongo_player, Player)
+      end
+    end
+
+    def locations
+      section "Locations"
+      @session['venues'].find.each do |mongo_venue|
+        location = @converter.convert(mongo_venue, Location)
+      end
+    end
+
+    def events
+      section "Events"
+      @session['events'].find.each do |mongo_event|
+        if mongo_event['_type'] == 'Game'
+          event = @converter.convert(mongo_event, Game)
+        else
+          event = @converter.convert(mongo_event, Event)
+        end
+      end
+    end
+    
+    def statsheets
+      section "Statsheets"
+      @session['statsheets'].find.batch_size(10).each_with_index do |mongo_statsheet, i|
+        statsheet = @converter.convert(mongo_statsheet, Hockey::Statsheet)
+        mongo_statsheet['players'].each do |mongo_player|
+          skater = @converter.convert(mongo_player, Hockey::Skater::Result, { statsheet: statsheet })
+          if (mongo_player['g_gp'] == 1)
+            goalie = @converter.convert(mongo_player, Hockey::Goaltender::Result, { statsheet: statsheet })
+          end
+        end if mongo_statsheet['players']
+        mongo_statsheet['events'].each do |mongo_event|
+          type = mongo_event['_type']
+          if type == 'Hockey::Goal'
+            goal = @converter.convert(mongo_event, Hockey::Goal, { statsheet: statsheet })
+          elsif type == 'Hockey::Penalty'
+            penalty = @converter.convert(mongo_event, Hockey::Penalty, { statsheet: statsheet })          
+          end
+        end if mongo_statsheet['events']
+      end      
+    end
+    
+  end
+end
