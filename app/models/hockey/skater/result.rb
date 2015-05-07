@@ -1,6 +1,7 @@
 class Hockey::Skater::Result < Hockey::Skater
   
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
+  has_one :game, through: :statsheet
   belongs_to :team
   belongs_to :player, class_name: '::Player'
   

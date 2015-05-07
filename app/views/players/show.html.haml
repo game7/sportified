@@ -15,21 +15,21 @@
       %th.span1 MSC
       %th.span1 GAME      
     %tbody
-      - @player.record.results.each do |result|
+      - Hockey::Skater::Result.where('player_id = ?', @player.id).includes(:game).order('events.starts_on').each do |result|
         %tr
-          %td= result.played_on.to_date.strftime("%-m/%d/%y")
-          %td= result.opponent_name
-          - if result.gp == 1
-            %td= result.g
-            %td= result.a
-            %td= result.pts
-            %td= result.pen
-            %td= result.pim
-            %td= result.pen_minor
-            %td= result.pen_major
-            %td= result.pen_misc
-            %td= result.pen_game            
-          - if result.gp == 0
+          %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
+          %td= result.game.opponent_name(result.team)
+          - if result.games_played == 1
+            %td= result.goals
+            %td= result.assists
+            %td= result.points
+            %td= result.penalties
+            %td= result.penalty_minutes
+            %td= result.minor_penalties
+            %td= result.major_penalties
+            %td= result.misconduct_penalties
+            %td= result.game_misconduct_penalties            
+          - if result.games_played == 0
             %td{ :colspan => 9 } Did Not Play
 
 %h3 Goaltending Statistics
@@ -44,11 +44,11 @@
       %th.span1 SV
       %th.span1 SV%
     %tbody
-      - @player.record.results.each do |result|
+      - Hockey::Goaltender::Result.where('player_id = ?', @player.id).each do |result|
         - if result.g_gp == 1
           %tr
-            %td= result.played_on.to_date.strftime("%-m/%d/%y")
-            %td= result.opponent_name
+            %td= #result.played_on.to_date.strftime("%-m/%d/%y")
+            %td= #result.opponent_name
             %td= result.g_toi
             %td= result.g_sa
             %td= result.g_ga
