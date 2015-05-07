@@ -3,7 +3,6 @@
   = f.input :name
   = f.input :short_name 
   = f.input :club_id, :as => :select, :collection => @clubs
-  = f.input :division_id, :as => :select, :collection => @divisions
   = f.input :pool  
   = f.input :show_in_standings, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :seed, :input_html => { :class => 'span1' }

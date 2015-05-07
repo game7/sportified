@@ -39,6 +39,25 @@ class Game < Event
     id = team.class == Team ? team.id : team   
     id == away_team_id ? home_team : away_team
   end
+  
+  def team_scored(team)
+    self.home_team_id == team.id ? self.home_team_score : self.away_team_score
+  end
+  
+  def team_allowed(team)
+    self.home_team_id == team.id ? self.away_team_score : self.home_team_score    
+  end
+  
+  def team_margin(team)
+    team_scored(team) - team_allowed(team)
+  end
+  
+  def team_decision(team)
+    margin = team_margin(team)
+    'T' if margin == 0
+    'W' if margin > 0
+    'L' if margin < 0
+  end
 
   before_save :update_team_info
   def update_team_info
@@ -78,7 +97,7 @@ class Game < Event
   end
 
   def display_score?
-    self.final?
+    self.result.final?
   end
 
   def has_statsheet?

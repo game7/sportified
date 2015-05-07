@@ -27,7 +27,7 @@
             %td
               %span= event.starts_on.strftime('%a, %b %e') + " :: "
               %span= display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
-              %span= event.venue_name
+              %span= event.location.name
 .hidden-xs
   .row.options
     .col-sm-4
@@ -52,5 +52,5 @@
             %td.span2= event.starts_on.strftime('%a, %b %e')
             %td.span4= display_event_summary(event, @team)
             %td.span3= display_time_or_result(event, @team)
-            %td.span3= event.venue_name
+            %td.span3= event.location.name
 

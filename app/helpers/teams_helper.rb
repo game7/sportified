@@ -5,7 +5,7 @@ module TeamsHelper
   end
   
   def display_time_or_result(event, team)
-    if event.class.to_s == "Game" && event.has_result? && event.has_team?(team)
+    if event.class.to_s == "Game" && event.display_score? && event.has_team?(team)
       display_result(event, team)
     else 
       event.all_day ? "All Day" : event.starts_on.strftime('%l:%M %p') 
@@ -13,9 +13,8 @@ module TeamsHelper
   end
 
   def display_result(game, team)
-    if game.has_result?
-      result = TeamGameResult.new(:team => team, :game => game)
-      result.decision.first.capitalize + ' ' + result.scored.to_s + '-' + result.allowed.to_s
+    if game.display_score?
+      game.team_decision(team).to_s + ' ' + game.team_scored(team).to_s + '-' + game.team_allowed(team).to_s
     end
   end
 

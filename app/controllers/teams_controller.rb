@@ -12,7 +12,7 @@ class TeamsController < BaseLeagueController
   def index
     add_breadcrumb "Teams"
 
-    @teams = @league.teams.for_season(@season).asc(:name).without(:record, :event_ids)
+    @teams = @league.teams.for_season(@season).order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +22,7 @@ class TeamsController < BaseLeagueController
 
   def schedule
     @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first
-    @events = Event.for_team(@team).asc(:starts_on)
+    @events = Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id).order(:starts_on).includes(:location, :home_team, :away_team)
     add_breadcrumb "Schedule"
     @team_links = links_to_team_schedule(@league, @season)
 
@@ -45,15 +45,15 @@ class TeamsController < BaseLeagueController
   def roster
     add_breadcrumb "Roster"
     @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first    
-    @players = @team.players.asc(:last_name)
+    @players = @team.players.order(:last_name)
     @team_links = links_to_team_roster(@league, @season)
   end
   
   def statistics
     @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first   
     add_breadcrumb "Statistics"
-    @players = @team.players.desc(:"record.pts")
-    @goalies = @team.players.where(:"record.g_gp".gt => 0).desc(:"record.g_svp")
+    @players = Hockey::Skater::Record.where('team_id = ?', @team.id).order(points: :desc)
+    @goalies = Hockey::Goaltender::Record.where('team_id = ?', @team.id).order(save_percentage: :desc)
   end
 
   def show
@@ -79,17 +79,17 @@ class TeamsController < BaseLeagueController
   end
   
   def load_league_options
-    @leagues = @season.leagues.asc(:name)
+    @leagues = @season.leagues.order(:name)
   end
   
   def load_division_options
     league_id = @team ? @team.league_id : params[:league_id]
     season_id = @team ? @team.season_id : params[:season_id]
-    @divisions = Division.for_league(league_id).for_season(season_id).asc(:name)
+    @divisions = []#Division.for_league(league_id).for_season(season_id).asc(:name)
   end
 
   def load_club_options
-    @clubs = Club.asc(:name).entries
+    @clubs = Club.order(:name)
   end  
   
   def set_area_navigation
@@ -108,18 +108,18 @@ class TeamsController < BaseLeagueController
   end
   
   def get_season_options
-    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, teams_path(:league_slug => @league.slug, :season_slug => s.slug)]}
+    @season_options = @league.seasons.all.order(starts_on: :desc).collect{|s| [s.name, teams_path(:league_slug => @league.slug, :season_slug => s.slug)]}
   end  
 
   def links_to_team_schedule(league, season)
-    teams = @league.teams.for_season(season).asc(:name)
+    teams = @league.teams.for_season(season).order(:name)
     teams.each.collect do |t|
       [t.name, team_schedule_path(league.slug, season.slug, t.slug)] 
     end   
   end
 
   def links_to_team_roster(league, season)
-    teams = @league.teams.for_season(season).asc(:name)
+    teams = @league.teams.for_season(season).order(:name)
     teams.each.collect do |t|
       [t.name, team_roster_path(league.slug, season.slug, t.slug)] 
     end
