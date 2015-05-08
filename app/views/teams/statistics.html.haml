@@ -20,7 +20,9 @@
     %tbody
       - @players.each do |player|
         %tr
-          %td= [player.first_name, player.last_name].join(" ")
+          %td
+            = [player.first_name, player.last_name].join(" ")
+            = "*" if player.substitute?
           %td= player.record.gp
           %td= player.record.g
           %td= player.record.a
@@ -46,7 +48,9 @@
     %tbody
       - @goalies.each do |player|
         %tr
-          %td= [player.first_name, player.last_name].join(" ")
+          %td
+            = [player.first_name, player.last_name].join(" ")
+            = "*" if player.substitute?
           %td= player.record.g_gp
           %td= player.record.g_toi
           %td= player.record.g_sa

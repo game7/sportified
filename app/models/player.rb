@@ -7,6 +7,7 @@ class Player
   field :jersey_number
   field :birthdate, type: Date
   field :email
+  field :substitute, type: Boolean
 
   field :slug
 
