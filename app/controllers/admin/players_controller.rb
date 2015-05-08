@@ -49,7 +49,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   private
   
   def player_params
-    params.require(:player).permit(:first_name, :last_name, :jersey_number, :birthdate, :email)
+    params.require(:player).permit(:first_name, :last_name, :jersey_number, :birthdate, :email, :substitute)
   end
   
   def find_player

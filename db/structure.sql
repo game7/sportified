@@ -580,7 +580,8 @@ CREATE TABLE players (
     slug character varying(255),
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    substitute boolean
 );
 
 
@@ -1659,4 +1660,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150303184334');
 INSERT INTO schema_migrations (version) VALUES ('20150424155941');
 
 INSERT INTO schema_migrations (version) VALUES ('20150430214331');
+
+INSERT INTO schema_migrations (version) VALUES ('20150508175529');
 

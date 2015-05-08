@@ -1,6 +1,8 @@
 %tr{ :class => cycle("odd","even") }
   %td= player.jersey_number
-  %td= player.full_name
+  %td
+    = player.full_name
+    = "*" if player.substitute?
   %td= player.age
   %td
     = link_to 'Edit', edit_admin_player_path(player), :class => 'btn btn-xs btn-primary'
