@@ -9,6 +9,7 @@ module Hockey
     field :first_name
     field :last_name
     field :num
+    field :substitute, :type => Boolean
     
     def name
       "#{first_name} #{last_name}"
@@ -25,6 +26,7 @@ module Hockey
       self.first_name = player.first_name
       self.last_name = player.last_name
       self.num = player.jersey_number
+      self.substitute = player.substitute
     end
     
     def set_games_played
