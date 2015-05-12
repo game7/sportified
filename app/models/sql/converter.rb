@@ -84,6 +84,7 @@ module Sql
       section "Leagues"
       @session['leagues'].find.each do |mongo_league|
         league = @converter.convert(mongo_league, League)
+        league.seasons.clear
         mongo_league['season_ids'].each do |season_id|
           season = Season.where(:mongo_id => season_id.to_s).first
           league.seasons << season if season
