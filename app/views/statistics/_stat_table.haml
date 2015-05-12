@@ -8,10 +8,11 @@
       %td{ :colspan => "3"}
         %a{ :href => statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
   %tbody
+    - puts players.count
     - arr = players.entries
     - for i in 0..2
       - player = arr[i]
       %tr
-        %td.logo= image_tag player.team.logo.thumb.url if player && player.team.logo?
-        %td.player= player.full_name if player
-        %td.stat= format_with.call(player.record[token]) if player
+        %td.logo= image_tag player.player.team.logo.thumb.url if player && player.team.logo?
+        %td.player= player.player.full_name if player && player.player
+        %td.stat= format_with.call(player[token]) if player

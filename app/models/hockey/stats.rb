@@ -167,16 +167,15 @@ module Hockey
       def default_token(view)
         case view
         when "scoring"
-          "pts"
+          "points"
         when "penalties"
-          "pim"
+          "penalties"
         when "goaltending"
-          "g_gaa"
+          "goals_against_average"
         end       
       end
       
       def column(token)
-        "boo"
         I18n.t("hockey.statistics.tokens.#{token}.col")
       end
       

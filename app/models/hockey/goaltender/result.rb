@@ -2,7 +2,6 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
   
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   belongs_to :team, class_name: '::Team'
-  belongs_to :player, class_name: '::Player'
   
   validates :statsheet, presence: true
   validates :team, presence: true

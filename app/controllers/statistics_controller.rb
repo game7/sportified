@@ -4,33 +4,38 @@ class StatisticsController < BaseLeagueController
     add_breadcrumb "Statistics"
     add_breadcrumb @season.name if @season
     
-    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, statistics_path(:league_slug => @league.slug, :season_slug => s.slug)]}    
+    @season_options = @league.seasons.all.order(starts_on: :desc).collect{|s| [s.name, statistics_path(:league_slug => @league.slug, :season_slug => s.slug)]}    
     
     limit = 3
-    @goal_leaders = Player.for_league(@league).for_season(@season).where(:"record.g".gt => 0).desc("record.g").limit(limit)
-    @assist_leaders = Player.for_league(@league).for_season(@season).where(:"record.a".gt => 0).desc("record.a").limit(limit)
-    @point_leaders = Player.for_league(@league).for_season(@season).where(:"record.pts".gt => 0).desc("record.pts").limit(limit)
-    @savepct_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_svp").limit(limit)
-    @save_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_gp".gt => 0).desc("record.g_sv").limit(limit)
-    @shutout_leaders = Player.for_league(@league).for_season(@season).where(:"record.g_so".gt => 0).desc("record.g_so").limit(limit)
-    @hattrick_leaders = Player.for_league(@league).for_season(@season).where(:"record.hat".gt => 0).desc("record.hat").limit(limit)
-    @playmaker_leaders = Player.for_league(@league).for_season(@season).where(:"record.plmkr".gt => 0).desc("record.plmkr").limit(limit)
-    @gordie_leaders = Player.for_league(@league).for_season(@season).where(:"record.gordie".gt => 0).desc("record.gordie").limit(limit)
+    @goal_leaders = skaters(:goals, 3)
+    @assist_leaders = skaters(:assists, 3)
+    @point_leaders = skaters(:points, 3)
+    @savepct_leaders = goalies(:save_percentage, 3)
+    @save_leaders = goalies(:saves, 3)
+    @shutout_leaders = goalies(:shutouts, 3)
+    @hattrick_leaders = skaters(:hat_tricks, 3)
+    @playmaker_leaders = skaters(:playmakers, 3)
+    @gordie_leaders = skaters(:gordie_howes, 3)
   end  
   
   def show
     @view = params[:view]
-    @season_options = @league.seasons.all.desc(:starts_on).collect{|s| [s.name, statistic_path(:league_slug => @league.slug, :season_slug => s.slug, :view => @view)]}    
+    @season_options = @league.seasons.all.order(starts_on: :desc).collect{|s| [s.name, statistic_path(:league_slug => @league.slug, :season_slug => s.slug, :view => @view)]}    
         
     @token = params[:token] || Hockey::Player::Record.default_token(params[:view])    
-    @players = Player.for_league(@league).for_season(@season).desc("record."+@token).limit(25)
+    @players = (@view == 'goaltending') ? goalies(@token, 25) : skaters(@token, 25)
     
-    # let's only show goalies in the goaltender view
-    @players = @players.where(:"record.g_gp".gt => 0) if params[:view] == "goaltending"
-
   end
   
   private
+  
+  def skaters(stat, limit)
+    Hockey::Skater::Record.joins(player: :team).includes(:player, :team).where('teams.league_id = ? AND teams.season_id = ?', @league.id, @season.id).where("hockey_skaters.#{stat} > 0").order(stat => :desc).limit(limit)
+  end
+  
+  def goalies(stat, limit)
+    Hockey::Goaltender::Record.joins(player: :team).includes(:player, :team).where('teams.league_id = ? AND teams.season_id = ?', @league.id, @season.id).where("hockey_goaltenders.#{stat} > 0").order(stat => :desc)
+  end  
 
   def set_breadcrumbs
     super

@@ -3,12 +3,11 @@ class Hockey::Skater::Result < Hockey::Skater
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   has_one :game, through: :statsheet
   belongs_to :team
-  belongs_to :player, class_name: '::Player'
   
   validates :statsheet, presence: true
   validates :team, presence: true
   
-  default_scope { includes(:player).order("players.last_name ASC, players.first_name ASC") }
+  default_scope { includes(:player) }
     
   def apply_mongo_player_id!(mongo)
     self.player = ::Player.where(:mongo_id => mongo.to_s).first
