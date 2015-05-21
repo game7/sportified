@@ -25,7 +25,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 
-gem 'icalendar'
+gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
 #gem 'formtastic', '~> 1.2.3'
