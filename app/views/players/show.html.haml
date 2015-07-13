@@ -44,13 +44,13 @@
       %th.span1 SV
       %th.span1 SV%
     %tbody
-      - Hockey::Goaltender::Result.where('player_id = ?', @player.id).each do |result|
-        - if result.g_gp == 1
+      - Hockey::Goaltender::Result.where('player_id = ?', @player.id).includes(:game, :team).order('events.starts_on').each do |result|
+        - if result.games_played == 1
           %tr
-            %td= #result.played_on.to_date.strftime("%-m/%d/%y")
-            %td= #result.opponent_name
-            %td= result.g_toi
-            %td= result.g_sa
-            %td= result.g_ga
-            %td= result.g_sv
-            %td= number_with_precision result.g_svp, :precision => 3
+            %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
+            %td= result.game.opponent_name(result.team)
+            %td= result.minutes_played
+            %td= result.shots_against
+            %td= result.goals_against
+            %td= result.saves
+            %td= number_with_precision result.save_percentage, :precision => 3

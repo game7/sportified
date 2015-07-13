@@ -1,6 +1,7 @@
 class Hockey::Goaltender::Result < Hockey::Goaltender
   
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
+  has_one :game, through: :statsheet
   belongs_to :team, class_name: '::Team'
   
   validates :statsheet, presence: true
