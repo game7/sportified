@@ -15,7 +15,7 @@
       %th.span1 MSC
       %th.span1 GAME      
     %tbody
-      - Hockey::Skater::Result.where('player_id = ?', @player.id).includes(:game).order('events.starts_on').each do |result|
+      - Hockey::Skater::Result.where('player_id = ?', @player.id).includes(:game, :team).order('events.starts_on').each do |result|
         %tr
           %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
           %td= result.game.opponent_name(result.team)
