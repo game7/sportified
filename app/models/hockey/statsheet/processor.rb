@@ -17,11 +17,9 @@ module Hockey
     
     def self.check_and_set_game_result statsheet
       game = statsheet.game
-      return if game.has_result?
-      result = game.build_result
-      result.home_score = statsheet.home_goals_total
-      result.away_score = statsheet.away_goals_total
-      result.completed_in = statsheet.completed_in
+      return if game.result.final?
+      game.home_team_score = statsheet.goals.home.count
+      game.away_team_score = statsheet.goals.away.count
       game.save
     end
     

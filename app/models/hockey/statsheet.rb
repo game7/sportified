@@ -54,38 +54,6 @@ class Hockey::Statsheet < ActiveRecord::Base
     min_ot > 0 ? 'overtime' : 'regulation'
   end
   
-  #field :away_goals_1, :type => Integer, :default => 0
-  #field :away_goals_2, :type => Integer, :default => 0
-  #field :away_goals_3, :type => Integer, :default => 0
-  #field :away_goals_ot, :type => Integer, :default => 0
-  #field :home_goals_1, :type => Integer, :default => 0
-  #field :home_goals_2, :type => Integer, :default => 0
-  #field :home_goals_3, :type => Integer, :default => 0
-  #field :home_goals_ot, :type => Integer, :default => 0
-  #
-  #def away_goals_total
-  #  away_goals_1 + away_goals_2 + away_goals_3 + away_goals_ot 
-  #end
-  #def home_goals_total
-  #  home_goals_1 + home_goals_2 + home_goals_3 + home_goals_ot    
-  #end
-  #
-  #def clear_goals
-  #  ['away', 'home'].each do |side|
-  #    ['1','2','3','ot'].each do |per|
-  #      self["#{side}_goals_#{per}"] = 0
-  #    end
-  #  end
-  #end
-
-  #def calculate_goals
-  #  clear_goals
-  #  events.goals.each do |g|
-  #    att = "#{g.side}_goals_#{g.per.downcase}"
-  #    self[att] += 1
-  #  end
-  #end
-  
   def away_shots_total
     #away_shots_1 + away_shots_2 + away_shots_3 + away_shots_ot
     0
