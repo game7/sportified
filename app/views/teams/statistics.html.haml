@@ -18,21 +18,21 @@
       %th.span1 MSC
       %th.span1 GAME      
     %tbody
-      - @players.each do |player|
+      - @players.each do |skater|
         %tr
           %td
-            = [player.first_name, player.last_name].join(" ")
-            = "*" if player.substitute?
-          %td= player.record.gp
-          %td= player.record.g
-          %td= player.record.a
-          %td= player.record.pts
-          %td= player.record.pen
-          %td= player.record.pim
-          %td= player.record.pen_minor
-          %td= player.record.pen_major
-          %td= player.record.pen_misc
-          %td= player.record.pen_game
+            = [skater.player.first_name, skater.player.last_name].join(" ")
+            = "*" if skater.player.substitute?
+          %td= skater.games_played
+          %td= skater.goals
+          %td= skater.assists
+          %td= skater.points
+          %td= skater.penalties
+          %td= skater.penalty_minutes
+          %td= skater.minor_penalties
+          %td= skater.major_penalties
+          %td= skater.misconduct_penalties
+          %td= skater.game_misconduct_penalties
 
 %h3 Goaltending Statistics
 %table.table.table-striped.table-bordered
@@ -46,15 +46,15 @@
       %th.span1 SV
       %th.span1 SV%
     %tbody
-      - @goalies.each do |player|
+      - @goalies.each do |goalie|
         %tr
           %td
-            = [player.first_name, player.last_name].join(" ")
-            = "*" if player.substitute?
-          %td= player.record.g_gp
-          %td= player.record.g_toi
-          %td= player.record.g_sa
-          %td= player.record.g_ga
-          %td= player.record.g_sv
-          %td= number_with_precision player.record.g_svp, :precision => 3
+            = [goalie.player.first_name, goalie.player.last_name].join(" ")
+            = "*" if goalie.player.substitute?
+          %td= goalie.games_played
+          %td= goalie.minutes_played
+          %td= goalie.shots_against
+          %td= goalie.goals_against
+          %td= goalie.saves
+          %td= number_with_precision goalie.save_percentage, :precision => 3
 

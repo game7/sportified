@@ -52,8 +52,8 @@ class TeamsController < BaseLeagueController
   def statistics
     @team = @league.teams.for_season(@season).with_slug(params[:team_slug]).first   
     add_breadcrumb "Statistics"
-    @players = Hockey::Skater::Record.where('team_id = ?', @team.id).order(points: :desc)
-    @goalies = Hockey::Goaltender::Record.where('team_id = ?', @team.id).order(save_percentage: :desc)
+    @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(points: :desc)
+    @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(save_percentage: :desc)
   end
 
   def show

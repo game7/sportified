@@ -85,6 +85,14 @@ class Hockey::Statsheet < ActiveRecord::Base
   def shootout?
     false
   end
+  
+  def post
+    Hockey::Statsheet::Processor.post self
+  end
+  
+  def unpost
+    Hockey::Statsheet::Processor.unpost self
+  end
 
   def load_players(game = self.game)
     load_team_players(game.away_team)

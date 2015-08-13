@@ -2,8 +2,6 @@ module Hockey
   class Statsheet::Processor
 
     def self.post statsheet
-      check_and_set_game_result statsheet
-      update_player_stats statsheet
       post_player_results statsheet
       set_to_posted statsheet
     end
@@ -15,49 +13,37 @@ module Hockey
     
     private
     
-    def self.check_and_set_game_result statsheet
-      game = statsheet.game
-      return if game.result.final?
-      game.home_team_score = statsheet.goals.home.count
-      game.away_team_score = statsheet.goals.away.count
-      game.save
-    end
-    
-    def self.update_player_stats statsheet
-      statsheet.calculate_player_stats
-      statsheet.save
-    end
-    
     def self.post_player_results statsheet
-      statsheet.players.each do |p|
-        #player = Player.where(id:  p.player_id).first
-        player = p.player
-        puts 'NO PLAYER' if player.nil?
-        next if player.nil?
-        result = p.to_result
-        player.record.post_result result
-        player.save
+      statsheet.skaters.each do |skater|
+        record = Hockey::Skater::Record.find_or_create_by(player_id: skater.player_id)
+        record.add_result! skater
       end
+      statsheet.goaltenders.each do |goalie|
+        record = Hockey::Goaltender::Record.find_or_create_by(player_id: goalie.player_id)
+        record.add_result! goalie
+      end      
     end
     
     def self.unpost_player_results statsheet
-      statsheet.players.each do |p|
-        #player = Player.where(id:  p.player_id).first
-        player = p.player
-        puts 'NO PLAYER' if player.nil?
-        next if player.nil?        
-        player.record.cancel_result_for_game statsheet.game_id
-        player.save
+      statsheet.skaters.each do |skater|
+        if record = Hockey::Skater::Record.find_by(player_id: skater.player_id)
+          record.remove_result! skater
+        end
       end
-    end    
+      statsheet.goaltenders.each do |goalie|
+        if record = Hockey::Goaltender::Record.find_by(player_id: goalie.player_id)
+          record.remove_result! goalie
+        end
+      end      
+    end 
     
     def self.set_to_posted statsheet
-      statsheet.is_posted = true
+      statsheet.posted = true
       statsheet.save
     end
     
     def self.set_to_unposted statsheet
-      statsheet.is_posted = false
+      statsheet.posted = false
       statsheet.save
     end
     

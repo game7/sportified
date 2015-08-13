@@ -18,9 +18,9 @@
       - for token in Hockey::Player::Record.tokens @view
         %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Player::Record.column(token), statistic_path(:league_slug => @league.slug, :season_slug => @season.slug, :view => @view, :token => token)
   %tbody
-    - for player in @players
+    - for record in @players
       %tr
-        %td.logo= image_tag player.team.logo.thumb.url if player.team.logo?
-        %td.player= "#{player.player.last_name}, #{player.player.first_name}" if player.player
+        %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
+        %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
         - for token in Hockey::Player::Record.tokens @view
-          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(player[token], :precision => 3) : format_with.call(player[token])  
+          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(record[token], :precision => 3) : format_with.call(record.player[token])  

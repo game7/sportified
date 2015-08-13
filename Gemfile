@@ -70,6 +70,7 @@ group :test do
   gem 'launchy'   # so we can use : Then show me the page
   gem 'autotest'
   gem 'autotest-rails'
+  gem 'rspec-autotest'
   gem 'autotest-notification'
   gem 'database_cleaner'
 end

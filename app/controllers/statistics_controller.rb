@@ -30,7 +30,7 @@ class StatisticsController < BaseLeagueController
   private
   
   def skaters(stat, limit)
-    Hockey::Skater::Record.joins(player: :team).includes(:player, :team).where('teams.league_id = ? AND teams.season_id = ?', @league.id, @season.id).where("hockey_skaters.#{stat} > 0").order(stat => :desc).limit(limit)
+    Hockey::Skater::Record.joins(player: :team).includes(:player).where('teams.league_id = ? AND teams.season_id = ?', @league.id, @season.id).where("hockey_skaters.#{stat} > 0").order(stat => :desc).limit(limit)
   end
   
   def goalies(stat, limit)
