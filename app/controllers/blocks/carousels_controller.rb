@@ -5,6 +5,7 @@ class Blocks::CarouselsController < BlocksController
   end
   
   def update
+    p blocks_carousel_params
     if @block.update_attributes(blocks_carousel_params)
       flash[:success] = "Carousel updated"
     end
@@ -13,7 +14,7 @@ class Blocks::CarouselsController < BlocksController
   private
   
   def blocks_carousel_params
-    params.required(:blocks_carousel).permit(:post_count, :tags, :shuffle)
+    params.required(:blocks_carousel).permit(:post_count, :shuffle, :tags => [])
   end
   
 end

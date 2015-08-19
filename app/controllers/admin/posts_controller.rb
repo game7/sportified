@@ -5,8 +5,8 @@ class Admin::PostsController < Admin::AdminController
   before_filter :add_posts_breadcrumb
   
   def index
-    @posts = Post.all.newest_first.page(params[:page])
-    @tags = Post.tags
+    @posts = Post.all.newest_first.includes(:tags).page(params[:page])
+    @tags = Post.tag_counts
   end
 
   def edit

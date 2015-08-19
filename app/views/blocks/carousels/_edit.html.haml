@@ -1,7 +1,7 @@
 = simple_form_for @block, :url => page_blocks_carousel_path(@page, @block), :remote => true do |f|
   = f.input :post_count, :input_html => { :class => 'input-min' }
-  = f.input :shuffle, :as => :boolean
+  = f.input :shuffle, :as => :boolean, :wrapper => :vertical_boolean
   .control-group
     %label.control-label Tags
     .controls
-      = f.collection_check_boxes(:tags, Post.tags_with_weight.collect{|a| [a[0], "#{a[0]} (#{a[1].to_s.chop.chop})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'}) 
+      = f.collection_check_boxes(:tags, Post.tag_counts.collect{|a| [a[:name], "#{a[:name]} (#{a[:count].to_s})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'}) 

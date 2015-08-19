@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   
   mount_uploader :image, ImageUploader
   
-  scope :newest_first, ->{ desc(:created_at) }
+  scope :newest_first, ->{ order(created_at: :desc) }
   
   def apply_mongo!(mongo)
     self.tag_list = mongo[:tags_array].join(',')

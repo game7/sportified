@@ -15,7 +15,7 @@ module Blocks
       tags: :array
     
     def posts
-      Post.tagged_with_any(self.tags).where(:image.exists => true).newest_first.limit(self.post_count)
+      Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").newest_first.limit(self.post_count)
     end
     
   end
