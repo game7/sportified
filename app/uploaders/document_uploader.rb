@@ -3,7 +3,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
 
   def store_dir
     tenant = Tenant.current || model.tenant
-    if model.respond_to?('page')
+    if model.respond_to?('page') && model.page
       klass = "pages"
       id = model.page.id
     else

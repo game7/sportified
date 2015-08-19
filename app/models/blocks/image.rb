@@ -22,6 +22,12 @@ module Blocks
       ["left","center","right"]
     end
     
+    def apply_mongo!(mongo)
+      if mongo['image'] && !self.file.url
+        self.remote_file_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/pages/#{self.page.mongo_id}/images/" + mongo['image']
+      end
+    end
+    
     protected
     
     def format_link_url

@@ -1,6 +1,6 @@
 class BlocksController < ApplicationController
   before_filter :verify_admin
-  before_filter :find_page, :only => [:create]
+  before_filter :find_page, :only => [:create, :edit, :update, :destroy]
   before_filter :find_block, :only => [:edit, :update, :destroy]
 
   def create
