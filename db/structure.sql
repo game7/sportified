@@ -148,7 +148,8 @@ CREATE TABLE events (
     text_before character varying(255),
     text_after character varying(255),
     result character varying(255),
-    completion character varying(255)
+    completion character varying(255),
+    exclude_from_team_records boolean
 );
 
 
@@ -1666,4 +1667,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150508175529');
 INSERT INTO schema_migrations (version) VALUES ('20150713221413');
 
 INSERT INTO schema_migrations (version) VALUES ('20150713221636');
+
+INSERT INTO schema_migrations (version) VALUES ('20150816220926');
 

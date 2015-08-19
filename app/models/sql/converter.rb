@@ -103,10 +103,7 @@ module Sql
       section "Teams"
       @session['teams'].find.each do |mongo_team|
         team = @converter.convert(mongo_team, Team)
-        if mongo_team['logo']
-          team.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{team.tenant.slug}/#{team.class.name.pluralize.downcase}/logo/#{team.mongo_id}/" + mongo_team['logo']
-          puts team.remote_logo_url
-        end      
+        p '.'
       end
     end
 
@@ -137,23 +134,39 @@ module Sql
     
     def statsheets
       section "Statsheets"
+      count = 0
+      total = 0
       @session['statsheets'].find.batch_size(10).each_with_index do |mongo_statsheet, i|
-        statsheet = @converter.convert(mongo_statsheet, Hockey::Statsheet)
-        mongo_statsheet['players'].each do |mongo_player|
-          skater = @converter.convert(mongo_player, Hockey::Skater::Result, { statsheet: statsheet })
-          if (mongo_player['g_gp'] == 1)
-            goalie = @converter.convert(mongo_player, Hockey::Goaltender::Result, { statsheet: statsheet })
-          end
-        end if mongo_statsheet['players']
-        mongo_statsheet['events'].each do |mongo_event|
-          type = mongo_event['_type']
-          if type == 'Hockey::Goal'
-            goal = @converter.convert(mongo_event, Hockey::Goal, { statsheet: statsheet })
-          elsif type == 'Hockey::Penalty'
-            penalty = @converter.convert(mongo_event, Hockey::Penalty, { statsheet: statsheet })          
-          end
-        end if mongo_statsheet['events']
-      end      
+        #ActiveRecord::Base.transaction do
+          start = Time.now
+          #puts
+          #puts 'statsheet'
+          statsheet = @converter.convert(mongo_statsheet, Hockey::Statsheet)
+          #puts
+          #puts '- players'
+          mongo_statsheet['players'].each do |mongo_player|
+            skater = @converter.convert(mongo_player, Hockey::Skater::Result, { statsheet: statsheet })
+            if (mongo_player['g_gp'] == 1)
+              goalie = @converter.convert(mongo_player, Hockey::Goaltender::Result, { statsheet: statsheet })
+            end
+          end if mongo_statsheet['players']
+          #puts
+          #puts '- events'
+          mongo_statsheet['events'].each do |mongo_event|
+            type = mongo_event['_type']
+            if type == 'Hockey::Goal'
+              goal = @converter.convert(mongo_event, Hockey::Goal, { statsheet: statsheet })
+            elsif type == 'Hockey::Penalty'
+              penalty = @converter.convert(mongo_event, Hockey::Penalty, { statsheet: statsheet })          
+            end
+          end if mongo_statsheet['events']
+          #puts
+          duration = Time.now - start
+          count += 1
+          total += duration
+          puts "completed: #{duration}, count: #{count}, duration: #{total}, average: #{total / count}"
+        #end
+      end
     end
     
   end

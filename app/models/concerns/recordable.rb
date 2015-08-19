@@ -14,6 +14,9 @@ module Concerns
 
        # only process games that are final
        next unless game.result.final?
+       
+       # don't count if exluded from recrods
+       next if game.exclude_from_team_records?
 
        # determine score
        if self.id == game.home_team_id

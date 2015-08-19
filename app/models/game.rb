@@ -124,6 +124,7 @@ class Game < Event
       self.away_team_score = mongo_result['away_score']
       self.result = 'final'
       self.completion = mongo_result['completed_in']
+      self.exclude_from_team_records = mongo_result['exclude_from_team_records']
     end
   end
   

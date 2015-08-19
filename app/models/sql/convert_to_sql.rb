@@ -8,13 +8,14 @@ module Sql
         sql.assign_attributes(initial_attrs)
         
         #if sql.new_record?
-        #  puts "NEW #{ar_type.to_s}"
+        #  #puts "NEW #{ar_type.to_s}"
+        #  print 'N'
         #else
-        #  puts "UPDATE #{ar_type.to_s} #{sql.id}"
+        #  #puts "UPDATE #{ar_type.to_s} #{sql.id}"
+        #  print 'U'
         #end
 
         keys(mongo, sql).each do |key|
-
           begin
             if key == "_id"
               sql.mongo_id = mongo['_id'].to_s
@@ -24,7 +25,8 @@ module Sql
               sql.send("#{key}=", mongo[key])
             end
           rescue Exception => ex
-            puts "Error while updating #{key}"
+            puts
+            puts "ERROR while MAPPING #{key}"
             puts ex.message
             puts "sql: #{JSON.pretty_generate(sql.attributes.keys)}"
           end
@@ -34,7 +36,8 @@ module Sql
           begin
             sql.send('apply_mongo!', mongo)
           rescue Exception => ex
-            puts "Error(s) while MAPPING"
+            puts
+            puts "ERROR while MAPPING"
             puts ex.message
             puts JSON.pretty_generate(mongo)
             puts sql.to_yaml
@@ -44,12 +47,9 @@ module Sql
         yield(mongo, sql) if block_given?
         
         
-
-        begin
-          sql.save!(validate: ar_type != 'User')
-        rescue Exception => ex
-          puts "Error(s) while saving"
-          puts ex.message
+        unless sql.save(validate: ar_type != 'User')
+          puts
+          puts "ERROR while SAVING"
           puts sql.errors.full_messages
         end
         
