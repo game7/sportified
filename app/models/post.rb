@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  include Sportified::TenantScoped  
   acts_as_taggable
   belongs_to :tenant
   
@@ -7,5 +8,11 @@ class Post < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   
   scope :newest_first, ->{ desc(:created_at) }
+  
+  def apply_mongo!(mongo)
+    if mongo['image'] && !self.image.url
+      puts self.remote_image_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/posts/#{self.mongo_id}/images/" + mongo['image']
+    end
+  end
     
 end
