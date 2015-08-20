@@ -15,10 +15,22 @@ module Sql
     end
     
     def all
+      hosting
+      content
+      league
+    end
+    
+    def hosting
       tenants
       users
+    end
+    
+    def content
       pages
       posts
+    end
+    
+    def league
       seasons
       leagues
       clubs
