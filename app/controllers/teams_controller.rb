@@ -130,11 +130,11 @@ class TeamsController < BaseLeagueController
     events.each do |e|
       event = Icalendar::Event.new
       event.uid = e.id.to_s
-      event.start = e.starts_on
-      event.end = e.ends_on
+      event.dtstart = e.starts_on
+      event.dtend = e.ends_on
       event.summary = e.summary
       event.location = e.venue_name
-      cal.add event
+      cal.add_event event
     end
     cal.publish
     send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season_slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season_slug}-schedule.ics")
