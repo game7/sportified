@@ -1,3 +1,4 @@
+require "chronic"
 class Admin::SeasonsController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
@@ -23,6 +24,8 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def create
+    Chronic.time_class = Time.zone
+    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])    
     @season = Season.new(season_params)
     if @season.save
       return_to_last_point :success => 'Season was successfully created.'
@@ -33,6 +36,8 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def update
+    Chronic.time_class = Time.zone
+    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])    
     if @season.update_attributes(season_params)
       return_to_last_point :success => 'Season was successfully updated.'
     else
