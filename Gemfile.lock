@@ -399,7 +399,7 @@ DEPENDENCIES
   haml
   haml-rails
   hstore_accessor (~> 0.9.0)
-  icalendar
+  icalendar (~> 2.3.0)
   jquery-rails
   kaminari
   launchy
