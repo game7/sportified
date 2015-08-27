@@ -1,5 +1,3 @@
-require 'JSON'
-
 module Sql
   class Converter
     
