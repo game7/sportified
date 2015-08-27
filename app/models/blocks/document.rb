@@ -1,4 +1,3 @@
-require 'JSON'
 module Blocks
   class Document < Block
 
