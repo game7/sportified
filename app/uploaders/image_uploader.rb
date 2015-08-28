@@ -10,7 +10,7 @@ class ImageUploader < CarrierWave::Uploader::Base
       klass = model.class.name.pluralize.downcase
       id = model.id
     end
-    "uploads/#{tenant.slug}/#{klass}/#{id}/images/"
+    "assets/#{tenant.id}/#{klass}/#{id}/images/"
   end
 
   def cache_dir

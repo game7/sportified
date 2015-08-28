@@ -6,9 +6,9 @@ class GameUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    @site = Site.current
-    @site ||= model.site
-    "uploads/#{@site.slug}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    @tenant = Tenant.current
+    @tenant ||= model.tenant
+    "assets/#{@tenant.slug}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   def cache_dir
