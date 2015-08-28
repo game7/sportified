@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def index
-    @pages = Page.in_menu.arrange(:order => :position)
+    @pages = Page.arrange(:order => :position)
   end
     
   def show
