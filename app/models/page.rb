@@ -17,7 +17,7 @@ class Page < ActiveRecord::Base
   class << self
     def find_by_path(path)
       page = Page.with_path(path).first if path
-      page ||= Page.roots.first
+      page ||= Page.roots.order(position: :asc).first
     end
     
     def arrange_as_array(options={}, hash=nil)
