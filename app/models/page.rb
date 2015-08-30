@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
   end
   
   def apply_mongo_parent_id!(parent_id)
-    self.parent = Page.where(:mongo_id => parent_id.to_s).first
+    self.parent = Page.unscoped.where(:mongo_id => parent_id.to_s).first
   end 
   
   def apply_mongo_sections!(sections)
