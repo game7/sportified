@@ -60,7 +60,7 @@ module Sql
 
     def pages
       section "Pages"
-      @session['pages'].find.each do |mongo_page|
+      @session['pages'].find.sort(tree: 1).each do |mongo_page|
         page = @converter.convert(mongo_page, Page)
         if mongo_page['sections']
           mongo_page['sections'].each do |mongo_section|
