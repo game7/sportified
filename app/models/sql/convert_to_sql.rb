@@ -59,7 +59,7 @@ module Sql
     private
     
     def ar_object_for(mongo, ar_type)
-      ar_type.where(:mongo_id => mongo['_id'].to_s).first || ar_type.new
+      ar_type.unscoped.where(:mongo_id => mongo['_id'].to_s).first || ar_type.new
     end
     
     def keys(mongo, sql)
