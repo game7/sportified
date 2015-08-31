@@ -9,8 +9,6 @@ class Post < ActiveRecord::Base
   
   scope :newest_first, ->{ order(created_at: :desc) }
   scope :newest, ->{ order(created_at: :desc) }
-
-  scope :randomize, -> { order('random()') }
   
   def apply_mongo!(mongo)
     self.tag_list = mongo[:tags_array].join(',')

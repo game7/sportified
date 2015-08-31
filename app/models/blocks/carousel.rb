@@ -11,9 +11,8 @@ module Blocks
       tags: :array
     
     def posts
-      posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL")
-      posts = self.shuffle ? posts.randomize : posts.newest
-      posts.limit(self.post_count)
+      posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").newest.limit(self.post_count)
+      posts.shuffle if self.shuffle
     end
     
   end
