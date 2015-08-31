@@ -1,9 +1,6 @@
 .carousel.slide{ :id => "carousel_#{block.id}" }
   .carousel-inner
-    - count = 0
-    - posts = block.posts.entries
-    - posts.shuffle! if block.shuffle
-    - posts.each_with_index do |post, index|
+    - block.posts.each_with_index do |post, index|
       %div{ :class => "item#{' active' if index == 0}" }
         = image_tag post.image.url if index == 0
         - unless index == 0

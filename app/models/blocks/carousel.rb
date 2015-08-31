@@ -8,14 +8,12 @@ module Blocks
     hstore_accessor :options,
       post_count: :integer,
       shuffle: :boolean,
-      title: :string,
-      phone: :string,
-      email: :string,
-      show_email: :boolean,
       tags: :array
     
     def posts
-      Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").newest_first.limit(self.post_count)
+      posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL")
+      posts = self.shuffle ? posts.randomize : posts.newest
+      posts.limit(self.post_count)
     end
     
   end
