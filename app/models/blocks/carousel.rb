@@ -12,7 +12,7 @@ module Blocks
     
     def posts
       posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").newest.limit(self.post_count)
-      posts.shuffle if self.shuffle
+      self.shuffle ? posts.shuffle : posts
     end
     
   end
