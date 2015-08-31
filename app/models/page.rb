@@ -1,11 +1,11 @@
 class Page < ActiveRecord::Base
-  has_ancestry orphan_strategy: :restrict, cache_depth: true, touch: true
+  has_ancestry orphan_strategy: :rootify, cache_depth: true, touch: true
   include Sportified::TenantScoped 
 
   before_save :set_slug, :set_path
 
-  has_many :sections
-  has_many :blocks, :class_name => "Block"
+  has_many :sections, :dependent => :destroy
+  has_many :blocks, :class_name => "Block", :dependent => :destroy
 
   validates_presence_of :title
 
