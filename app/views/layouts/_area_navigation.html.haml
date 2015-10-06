@@ -1,9 +1,17 @@
-.subnav
+.subnav.hidden-xs.hidden-sm
   %ul.nav.nav-pills.nav-justified
     - if @area_name
       .brand= @area_name
     - @area_menu_items.each do |item|
       %li{ :class => request.url.include?(item[:url]) ? "active" : nil }
         %a{ :href => item[:url] }= item[:title]
-
-
+.subnav-select.hidden-md.hidden-lg
+  =select("subnav", :url, @area_menu_items.map { |item| [item[:title], item[:url]] }, { :selected => request.path }, { :class => "redirect_to form-control" })
+-# .btn-group.btn-subnav.hidden-md.hidden-lg
+-#   %button.btn.btn-default.dropdown-toggle{ :type => "button", :'data-toggle' => "dropdown" }
+-#     Navigate To
+-#     %span.caret
+-#   %ul.dropdown-menu
+-#     - @area_menu_items.each do |item|
+-#       %li
+-#         %a{ :href => item[:url] }= item[:title]

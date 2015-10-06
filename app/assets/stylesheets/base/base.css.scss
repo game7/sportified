@@ -81,6 +81,23 @@ header {
           border-radius: 0 0 4px 4px;
 }
 
+.subnav-select {
+  margin-bottom: 10px;
+}
+
+.btn-subnav {
+  width: 100%;
+  margin-bottom: 10px;
+  .btn {
+    width: 100%;
+    text-align: left;
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
+
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 980px) {
   .subnav-fixed {
