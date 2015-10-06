@@ -1,4 +1,12 @@
 
+html, body {
+  min-height: 100%;
+}
+
+#wrapper {
+  min-height: 600px;
+}
+
 header {
   h1 {
     margin-bottom: 10px;
@@ -151,7 +159,7 @@ header {
 
 
 #footer {
-  height: 100px;
+  height: 60px;
   background: rgb(48, 48, 48);
   background: rgba(48, 48, 48, .90);
   padding: 10px;

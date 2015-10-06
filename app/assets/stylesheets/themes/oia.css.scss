@@ -8,11 +8,12 @@
 @import "font-awesome";
 
 
-$brand-primary: #c70002;
+$brand-primary: #990033;
 
-$navbar-default-bg:                #c70002;
-$navbar-default-link-color:        #cccccc;
-$navbar-default-link-active-color: #cccccc;
+$navbar-default-bg:                #990033;
+$navbar-default-link-color:        #ffffff;
+$navbar-default-link-active-color: #ffb310;
+$navbar-default-link-hover-color:  #ffb310;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -26,6 +27,10 @@ body {
   font-weight: bold;
 }
 
+.navbar-default {
+  border-bottom-color: #990033;
+}
+
 body {
   background-image: asset-url("themes/oia/oia_web_bg.jpg");
   background-position: center top;
@@ -35,7 +40,7 @@ body {
 
 #site_logo {
   div {
-    background-image: asset-url("themes/oia/brand.jpg");
+    background-image: asset-url("themes/oia/brand_maroon.jpg");
     background-size: 244px 20px;
     width: 244px;
     height: 20px;
@@ -72,7 +77,6 @@ body {
   background-image: asset-url("themes/oia/oia_gray_10x10.png");
   padding-top: 10px;
   padding: 10px;
-  margin-bottom: 900px;
 }
 
 header {
@@ -83,4 +87,8 @@ header {
 
 table {
   background-color: #fff;
+}
+
+#footer {
+  background: rgb(120, 0, 40);
 }
