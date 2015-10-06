@@ -40,7 +40,7 @@ function clearForm(form) {
 $(document).ready(function() {
 
   $('select.redirect_to').change(function() {
-    window.location = this.value;
+    if (this.value && this.value !== '') { window.location = this.value; }
   });
 
   $('.toggle').on("click", function() {
