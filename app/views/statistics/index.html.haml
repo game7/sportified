@@ -3,15 +3,15 @@
   .col-xs-4
     = render :partial => 'shared/season_options', :object => @season_options
 .row
-  .col-xs-4
+  .col-sm-4
     = render :partial => "stat_table", :locals => { :title => "POINTS", :players => @point_leaders, :view => 'scoring', :token => "pts" }
     = render :partial => "stat_table", :locals => { :title => "GOALS", :players => @goal_leaders, :view => 'scoring', :token => "g" }
     = render :partial => "stat_table", :locals => { :title => "ASSISTS", :players => @assist_leaders, :view => 'scoring', :token => "a" }
-  .col-xs-4
+  .col-sm-4
     = render :partial => "stat_table", :locals => { :title => "SAVE PERCENTAGE", :players => @savepct_leaders, :view => 'goaltending', :token => "g_svp", :format_with => ->(value) { number_with_precision(value, :precision => 3) } }
     = render :partial => "stat_table", :locals => { :title => "SAVES", :players => @save_leaders, :view => 'goaltending', :token => "g_sv" }
     = render :partial => "stat_table", :locals => { :title => "SHUTOUTS", :players => @shutout_leaders, :view => 'goaltending', :token => "g_so" }
-  .col-xs-4
+  .col-sm-4
     = render :partial => "stat_table", :locals => { :title => "HAT TRICKS", :players => @hattrick_leaders, :view => 'scoring', :token => "hat"}
     = render :partial => "stat_table", :locals => { :title => "PLAYMAKERS", :players => @playmaker_leaders, :view => 'scoring', :token => "plmkr" }
     = render :partial => "stat_table", :locals => { :title => "GORDIE HOWES", :players => @gordie_leaders, :view => 'scoring', :token => "gordie" }    
