@@ -11,10 +11,18 @@
             = page.title_in_menu.presence || page.title
             %span.caret
           %ul{ :class => "dropdown-menu", :role => "menu" }
-            - root[1].each do |child|
+            - root[1].each_with_index do |child, i|
               - child_url = get_page_url(child[0])
-              %li
-                %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
+              - if child[1].length > 0
+                - unless i == 0
+                  %li.divider{ :role => "separator"}
+                %li.dropdown-header= child[0].title_in_menu.presence || child[0].title
+                - child[1].each do |grandchild|
+                  %li
+                    %a{ :href => child_url }= grandchild[0].title_in_menu.presence || grandchild[0].title
+              - else 
+                %li
+                  %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
   
   
   %ul{ :class => "nav navbar-nav navbar-right" }

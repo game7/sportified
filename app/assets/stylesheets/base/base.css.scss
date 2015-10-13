@@ -1,4 +1,12 @@
 
+html, body {
+  min-height: 100%;
+}
+
+#wrapper {
+  min-height: 600px;
+}
+
 header {
   h1 {
     margin-bottom: 10px;
@@ -72,6 +80,23 @@ header {
      -moz-border-radius: 0 0 4px 4px;
           border-radius: 0 0 4px 4px;
 }
+
+.subnav-select {
+  margin-bottom: 10px;
+}
+
+.btn-subnav {
+  width: 100%;
+  margin-bottom: 10px;
+  .btn {
+    width: 100%;
+    text-align: left;
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 980px) {
@@ -151,7 +176,7 @@ header {
 
 
 #footer {
-  height: 100px;
+  height: 60px;
   background: rgb(48, 48, 48);
   background: rgba(48, 48, 48, .90);
   padding: 10px;
@@ -209,3 +234,11 @@ header {
   border-top-color: transparent;
 }
 
+select {
+  font-size: 50px;
+}
+
+.dropdown-header {
+  text-transform: uppercase;
+  font-weight: bold;
+}
