@@ -1,35 +1,46 @@
 <div class="collapse navbar-collapse">
   <ul class="nav navbar-nav">
-    <%# Page.top_level.in_menu.live.asc(:position).each do |page| %>
-    <% pages = Page.in_menu.live.sorted_as_tree.entries %>
-    <% tree = [] %>
-    <% pages.each_with_index do |page, i| %>
-      <% if page.depth == 0 %>
-        <% tree.push({ :page => page, :children => [] }) %>
-      <% elsif page.depth == 1 %>
-        <% tree.last[:children].push page %>
-      <% end %>
-    <% end %>
-    <% tree.each_with_index do |branch, i| %>
-      <% page = branch[:page] %>
+    <% depth = 0 %>
+    <% tree = Page.in_menu.live.sorted_as_tree.entries %>
+    
+    <% tree.each_with_index do |page, i| %>
       <% url = get_page_url(page) %>
-      <li class="<%= request.url.include?(url) ? "active " : nil%><%= branch[:children].length > 0 ? "dropdown": nil %>">
-        <% if branch[:children].length == 0 %>
-          <a href="<%= url %>"><%= page.title_in_menu.presence || page.title %></a>
+      <% next_page = tree[i+1] %>
+      <% has_children = next_page && next_page.depth > page.depth %>
+      
+      <% if page.depth == 0 %>
+        <li class="<%= request.url.include?(url) ? "active " : nil%><%= depth > 1 && has_children ? "dropdown": nil %>">
+          <% if has_children %>
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= page.title_in_menu.presence || page.title %> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+          <% else %>
+            <a href=<%= url %>><%= page.title_in_menu.presence || page.title %></a>
+          <% end %>
+      <% end %>
+      
+      <% if page.depth == 1 && has_children %>
+        <% unless page.at_top? %>
+          <li class="divider" role="separator"></li>
         <% end %>
-        <% unless branch[:children].length == 0 %>
-          <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= page.title_in_menu.presence || page.title %> <span class="caret"></span></a>        
-          <ul class="dropdown-menu" role="menu">
-            <% branch[:children].each do |child| %>
-              <% url = get_page_url(child) %>
-              <li><a href="<%= url %>"><%= child.title_in_menu.presence || child.title %></a></li>
-            <% end %>
-          </ul>
-        <% end %>
-      </li>
+        <li class="dropdown-header"><%= page.title_in_menu.presence || page.title %></li>
+      <% end %>
+      
+      <% if (page.depth == 1 && !has_children) || page.depth == 2 %>
+        <li>
+          <a href=<%= url %>><%= page.title_in_menu.presence || page.title %></a>
+        </li>      
+      <% end %>
+      
+      <% if page.depth != 0 && (!next_page || next_page.depth == 0) %>
+        </ul>
+        </li>
+      <% end %>
+
+      <% depth = page.depth %>
+      
     <% end %>
+    
   </ul>
-  
   
   <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
@@ -44,4 +55,3 @@
     </li>
   </ul>
 </div>
-              
