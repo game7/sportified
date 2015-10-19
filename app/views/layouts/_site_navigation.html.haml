@@ -19,7 +19,7 @@
                 %li.dropdown-header= child[0].title_in_menu.presence || child[0].title
                 - child[1].each do |grandchild|
                   %li
-                    %a{ :href => child_url }= grandchild[0].title_in_menu.presence || grandchild[0].title
+                    %a{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
               - else 
                 %li
                   %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
