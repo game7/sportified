@@ -191,7 +191,10 @@ CREATE TABLE hockey_goals (
     strength character varying(255),
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    scored_by_number character varying(255),
+    assisted_by_number character varying(255),
+    also_assisted_by_number character varying(255)
 );
 
 
@@ -1669,4 +1672,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150713221413');
 INSERT INTO schema_migrations (version) VALUES ('20150713221636');
 
 INSERT INTO schema_migrations (version) VALUES ('20150816220926');
+
+INSERT INTO schema_migrations (version) VALUES ('20151021173632');
 

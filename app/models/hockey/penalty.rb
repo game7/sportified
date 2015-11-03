@@ -37,7 +37,8 @@ class Hockey::Penalty < ActiveRecord::Base
   
   def apply_mongo!(mongo)
     self.team = (mongo['side'] == 'home' ? self.statsheet.home_team : self.statsheet.away_team)
-    player = self.team.players.where(jersey_number: mongo['plr']).first
+    self.tenant_id = self.team.tenant_id if self.team
+    player = self.team.players.where(jersey_number: mongo['plr']).first if self.team
     self.committed_by = self.statsheet.skaters.where(player_id: player.id).first if player
     self.tenant_id = self.statsheet.tenant_id
     self.infraction = mongo['inf']

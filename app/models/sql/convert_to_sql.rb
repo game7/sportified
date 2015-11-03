@@ -47,7 +47,7 @@ module Sql
         
         unless sql.save(validate: ar_type != 'User')
           puts
-          puts "ERROR while SAVING"
+          puts "ERROR while SAVING " + sql.class.name
           puts sql.errors.full_messages
         end
         
