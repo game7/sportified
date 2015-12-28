@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
   def apply_mongo_encrypted_password!(mongo_password)
     self.password = 'mongo_password'
     self.encrypted_password = mongo_password
-    puts "#{self.password} - #{self.encrypted_password}"
   end
 
   protected
