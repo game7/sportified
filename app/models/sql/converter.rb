@@ -55,7 +55,7 @@ module Sql
         user = @converter.convert(mongo_user, User)
       end
       # set user/2 to super_admin if non production
-      User.find(2).roles << UserRole.super_admin      
+      User.find(2).roles << UserRole.super_admin if Rails.env.development?   
     end
 
     def pages
