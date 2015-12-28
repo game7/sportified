@@ -42,7 +42,7 @@ module Sql
     def tenants
       section "Tenants"
       @session['tenants'].find.each do |mongo_tenant|
-        tenant = @converter.convert(mongo_tenant, Tenant)
+        tenant = @converter.convert(mongo_tenant, Tenant) if mongo_tenant[:name]
       end    
       # set first tenant to localhost if non production
       Tenant.first.update_attributes!(host: 'localhost') unless Rails.env == 'production'        
