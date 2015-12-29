@@ -58,7 +58,7 @@ class Player < ActiveRecord::Base
   end
   
   def apply_mongo_tenant_id! tenant_id
-    self.tenant = self.team.tenant
+    self.tenant = self.team.tenant if self.team
   end
    
   private

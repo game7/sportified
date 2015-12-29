@@ -23,10 +23,11 @@ module Sql
               sql.send("#{key}=", mongo[key])
             end
           rescue Exception => ex
-            puts
-            puts "ERROR while MAPPING #{key}"
+            puts '- - - - - - - - - - - - - - - - - - - - - - - - - - - - -'
+            puts "ERROR while MAPPING apply_#{key}"
             puts ex.message
-            puts "sql: #{JSON.pretty_generate(sql.attributes.keys)}"
+            puts "sql: #{JSON.pretty_generate(sql.attributes)}"
+            puts
           end
         end
         
@@ -34,21 +35,23 @@ module Sql
           begin
             sql.send('apply_mongo!', mongo)
           rescue Exception => ex
-            puts
-            puts "ERROR while MAPPING"
+            puts '- - - - - - - - - - - - - - - - - - - - - - - - - - - - -'
+            puts "ERROR while MAPPING - apply_mongo"
             puts ex.message
             puts JSON.pretty_generate(mongo)
             puts sql.to_yaml
-          end        
+            puts     
+          end
         end
         
         yield(mongo, sql) if block_given?
         
         
         unless sql.save(validate: ar_type != 'User')
-          puts
+          puts '- - - - - - - - - - - - - - - - - - - - - - - - - - - - -'
           puts "ERROR while SAVING " + sql.class.name
           puts sql.errors.full_messages
+          puts
         end
         
         sql

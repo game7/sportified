@@ -126,9 +126,14 @@ module Sql
 
     def players
       section "Players"
-      @session['players'].find.each do |mongo_player|
+      players = @session['players'].find
+      total = players.count
+      players.each_with_index do |mongo_player, i|
         player = @converter.convert(mongo_player, Player)
+        print " #{i} of #{total}\r"
+        $stdout.flush        
       end
+      puts " #{total} of #{total}"      
     end
 
     def locations
