@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id         :integer          not null, primary key
+#  tenant_id  :integer
+#  name       :string(255)
+#  short_name :string(255)
+#  mongo_id   :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'rails_helper'
 
 RSpec.describe Location, :type => :model do

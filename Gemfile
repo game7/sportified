@@ -7,6 +7,7 @@ gem 'active_model_serializers'
 gem 'pg'
 gem 'hstore_accessor', '~> 0.9.0'
 gem 'enumerize'
+gem 'annotate'
 
 gem 'sass-rails', '~> 4.0.0.rc1'
 #gem 'coffee-rails', '~> 4.0.0.rc1'

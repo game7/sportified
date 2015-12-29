@@ -43,6 +43,9 @@ GEM
     addressable (2.3.7)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
+    annotate (2.6.10)
+      activerecord (>= 3.2, <= 4.3)
+      rake (~> 10.4)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (5.1.5)
       execjs
@@ -372,6 +375,7 @@ DEPENDENCIES
   active_model_serializers
   acts_as_taggable_on
   ancestry
+  annotate
   autoprefixer-rails
   autotest
   autotest-notification
