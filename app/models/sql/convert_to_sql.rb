@@ -55,13 +55,19 @@ module Sql
         
       end
     end
-    
+
     private
     
     def ar_object_for(mongo, ar_type)
-      ar_type.unscoped.where(:mongo_id => mongo['_id'].to_s).first || ar_type.new
+      (ar_type.unscoped.find_by(:mongo_id => mongo['_id'].to_s) || ar_type.new).tap do |obj|
+        set_current_tenant obj
+      end
     end
-    
+
+    def set_current_tenant(obj)
+      Tenant.current = obj.tenant if obj.tenant
+    end
+
     def keys(mongo, sql)
       (mongo.keys + sql.attributes.keys).uniq - ["id"]
     end
