@@ -65,7 +65,7 @@ module Sql
     end
 
     def set_current_tenant(obj)
-      Tenant.current = obj.tenant if obj.tenant
+      Tenant.current = obj.tenant if obj[:tenant_id]
     end
 
     def keys(mongo, sql)
