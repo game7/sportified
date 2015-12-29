@@ -47,6 +47,9 @@ class User < ActiveRecord::Base
     self.encrypted_password = mongo_password
   end
 
+  def apply_mongo_roles!(mongo_roles)
+  end
+
   protected
 
   def set_id

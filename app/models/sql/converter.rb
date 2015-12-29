@@ -53,9 +53,12 @@ module Sql
       @session['users'].find.each do |mongo_user|
         next unless mongo_user['roles']
         user = @converter.convert(mongo_user, User)
+        mongo_user[:roles].each do |mongo_role|
+          tenant = Tenant.where(:mongo_id => mongo_role[:tenant_id].to_s).first || {}
+          puts mongo_role.merge(:tenant_id => tenant[:id]).except('_id')
+          user.roles.create(mongo_role.merge(:tenant_id => tenant[:id]).except('_id'))
+        end if mongo_user[:roles] && user.roles.count == 0
       end
-      # set user/2 to super_admin if non production
-      User.find(2).roles << UserRole.super_admin if Rails.env.development?   
     end
 
     def pages
