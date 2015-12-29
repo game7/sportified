@@ -138,9 +138,14 @@ module Sql
 
     def locations
       section "Locations"
-      @session['venues'].find.each do |mongo_venue|
+      venues = @session['venues'].find
+      total = venues.count
+      venues.each_with_index do |mongo_venue, i|
         location = @converter.convert(mongo_venue, Location)
+        print " #{i} of #{total}\r"
+        $stdout.flush        
       end
+      puts " #{total} of #{total}"         
     end
 
     def events
