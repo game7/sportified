@@ -114,10 +114,14 @@ module Sql
 
     def teams
       section "Teams"
-      @session['teams'].find.each do |mongo_team|
+      teams = @session['teams'].find
+      total = teams.count
+      teams.each_with_index do |mongo_team, i|
         team = @converter.convert(mongo_team, Team)
-        p '.'
+        print " #{i} of #{total}\r"
+        $stdout.flush
       end
+      puts " #{total} of #{total}"
     end
 
     def players

@@ -87,9 +87,9 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
       end
     end    
     
-    map[:primary] = primary.to_color(Magick::AllCompliance, false, 8, true)
-    map[:secondary] = secondary.to_color(Magick::AllCompliance, false, 8, true)
-    map[:accent] = accent.to_color(Magick::AllCompliance, false, 8, true)
+    map[:primary] = primary.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
+    map[:secondary] = secondary.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
+    map[:accent] = accent.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
     map
   end
   

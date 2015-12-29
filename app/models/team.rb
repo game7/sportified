@@ -92,7 +92,6 @@ class Team < ActiveRecord::Base
   
   def apply_mongo_season_id! season_id
     self.season = Season.where(:mongo_id => season_id.to_s).first
-    p season_id.to_s
   end
   
   def apply_mongo_league_id! league_id
@@ -104,9 +103,8 @@ class Team < ActiveRecord::Base
   end
   
   def apply_mongo!(mongo)
-    if mongo['logo'] && !self.logo
+    if mongo['logo']
       self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
-      p self.remote_logo_url
     end    
   end  
   
