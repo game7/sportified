@@ -38,7 +38,7 @@ gem 'simple_form', '~> 3.1.0.rc2'
 #gem 'delayed_job'
 
 
-gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', '~> 2.13.4'
 gem 'remotipart', '~> 1.0'
