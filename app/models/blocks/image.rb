@@ -23,7 +23,7 @@ module Blocks
     end
     
     def apply_mongo!(mongo)
-      if mongo['image'] && !self.file.url
+      if mongo['image'] && !self.file.url && self.tenant
         self.remote_file_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/pages/#{self.page.mongo_id}/images/" + mongo['image']
       end
     end
