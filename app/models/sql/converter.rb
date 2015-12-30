@@ -36,6 +36,7 @@ module Sql
       players
       locations
       events
+      team_records
       statsheets
     end
     
@@ -161,8 +162,22 @@ module Sql
         print " #{i} of #{total}\r"
         $stdout.flush        
       end
-      puts " #{total} of #{total}"        
+      puts " #{total} of #{total}"  
     end
+
+    def team_records
+      section "Team Records"
+      teams = Team.unscoped.all
+      total = teams.count
+      teams.each_with_index do |team, i|
+        team.reset_record
+        team.calculate_record
+        team.save
+        print " #{i} of #{total}\r"
+        $stdout.flush        
+      end
+      puts " #{total} of #{total}"  
+    end    
     
     def statsheets
       section "Statsheets"
