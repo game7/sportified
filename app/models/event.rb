@@ -37,10 +37,14 @@
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
   
-  belongs_to :tenant
   belongs_to :league
+  validates_presence_of :league_id
+  
   belongs_to :season
+  validates_presence_of :season_id
+  
   belongs_to :location
+  validates_presence_of :location_id
   
   validates_presence_of :starts_on, :season_id
   before_save :set_starts_on
@@ -77,15 +81,25 @@ class Event < ActiveRecord::Base
   end
   
   def apply_mongo_season_id! season_id
-    self.season = Season.where(mongo_id: season_id.to_s).first
+    self.season = Season.unscoped.where(mongo_id: season_id.to_s).first
   end
   
   def apply_mongo_league_id! league_id
-    self.league = League.where(mongo_id: league_id.to_s).first
+    self.league = League.unscoped.where(mongo_id: league_id.to_s).first
   end  
   
   def apply_mongo_venue_id! venue_id
-    self.location = Location.where(mongo_id: venue_id.to_s).first
-  end  
+    # puts "seeking location with mongo_id #{venue_id.to_s}"
+    self.location = Location.unscoped.where(mongo_id: venue_id.to_s).first
+  end
+
+  def apply_mongo! mongo
+    # patch for existing events that currently have nil for location
+    # we'll patch the existing event with the first location for the tenant
+    unless self.location
+      Tenant.current = self.tenant_id
+      self.location = Location.first
+    end
+  end
   
 end

@@ -150,13 +150,18 @@ module Sql
 
     def events
       section "Events"
-      @session['events'].find.each do |mongo_event|
+      events = @session['events'].find
+      total = events.count
+      events.each_with_index do |mongo_event, i|
         if mongo_event['_type'] == 'Game'
           event = @converter.convert(mongo_event, Game)
         else
           event = @converter.convert(mongo_event, Event)
         end
+        print " #{i} of #{total}\r"
+        $stdout.flush        
       end
+      puts " #{total} of #{total}"        
     end
     
     def statsheets

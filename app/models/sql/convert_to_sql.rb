@@ -49,8 +49,8 @@ module Sql
         
         unless sql.save(validate: ar_type != 'User')
           puts '- - - - - - - - - - - - - - - - - - - - - - - - - - - - -'
-          puts "ERROR while SAVING " + sql.class.name
-          puts sql.errors.full_messages
+          puts "ERROR while SAVING #{sql.class.name}: #{sql.errors.full_messages.join(', ')}"
+          puts sql.to_yaml
           puts
         end
         
