@@ -30,6 +30,9 @@
 #  mongo_id                 :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
+#  jersey_number            :string(255)
+#  first_name               :string(255)
+#  last_name                :string(255)
 #
 
 class Hockey::Goaltender::Result < Hockey::Goaltender
@@ -40,32 +43,43 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
   
   validates :statsheet, presence: true
   validates :team, presence: true
-  validates :player, presence: true
+  #validates :player, presence: true'
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
   
   def apply_mongo_player_id!(mongo)
-    self.player = ::Player.where(:mongo_id => mongo.to_s).first
   end
   
   def apply_mongo!(mongo)
-    self.team_id = self.player.team_id
+    self.team_id = self.player.team_id if self.player
+    unless self.team_id
+      self.team_id = self.statsheet.home_team.id if mongo[:side] == 'home'
+      self.team_id = self.statsheet.away_team.id if mongo[:side] == 'away'      
+    end
+    self.player = ::Player.where(:mongo_id => mongo[:player_id].to_s).first
+    self.first_name = mongo[:first_name]
+    self.last_name = mongo[:last_name]
+    self.jersey_number = mongo[:num]
     self.tenant_id = self.statsheet.tenant_id
-    self.games_played = mongo['g_gp']
-    self.minutes_played = mongo['g_toi']
-    self.shots_against = mongo['g_sa']
-    self.goals_against = mongo['g_ga']
-    self.saves = mongo['g_sv']
-    self.shutouts = mongo['g_so']
-    self.shootout_attempts = mongo['g_soa'] || 0
-    self.shootout_goals = mongo['s_sog'] || 0
-    self.shootout_save_percentage = mongo['sosvp'] || 0
-    self.regulation_wins = mongo['g_regw']
-    self.regulation_losses = mongo['g_regl']
-    self.overtime_wins = mongo['g_otw']
-    self.overtime_losses = mongo['g_otl']
-    self.shootout_wins = mongo['g_sow']
-    self.shootout_losses = mongo['g_sol']
-    self.total_wins = mongo['g_totw']
-    self.total_losses = mongo['g_totl']
+    self.games_played = mongo[:g_gp]
+    self.minutes_played = mongo[:g_toi]
+    self.shots_against = mongo[:g_sa]
+    self.goals_against = mongo[:g_ga]
+    self.saves = mongo[:g_sv]
+    self.shutouts = mongo[:g_so]
+    self.shootout_attempts = mongo[:g_soa] || 0
+    self.shootout_goals = mongo[:s_sog] || 0
+    self.shootout_save_percentage = mongo[:sosvp] || 0
+    self.regulation_wins = mongo[:g_regw]
+    self.regulation_losses = mongo[:g_regl]
+    self.overtime_wins = mongo[:g_otw]
+    self.overtime_losses = mongo[:g_otl]
+    self.shootout_wins = mongo[:g_sow]
+    self.shootout_losses = mongo[:g_sol]
+    self.total_wins = mongo[:g_totw]
+    self.total_losses = mongo[:g_totl]
     
     self.goals_against_average = (self.goals_against * self.minutes_played) / 45.to_f
     self.save_percentage = self.saves / self.shots_against.to_f

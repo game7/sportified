@@ -30,6 +30,9 @@
 #  mongo_id                 :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
+#  jersey_number            :string(255)
+#  first_name               :string(255)
+#  last_name                :string(255)
 #
 
 class Hockey::Goaltender::Record < Hockey::Goaltender

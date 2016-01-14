@@ -4,6 +4,7 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   before_filter :list_players, :only => [:new, :edit]
   
   def new
+    puts 'WTF???'
     @goal = Hockey::Goal.new
   end
 
@@ -42,7 +43,9 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   end
   
   def list_players
-    @players = ::Player.where("team_id = ? OR team_id = ?", @statsheet.game.home_team_id, @statsheet.game.away_team_id)
+    #@players = ::Player.where("team_id = ? OR team_id = ?", @statsheet.game.home_team_id, @statsheet.game.away_team_id)
+    @players = @statsheet.skaters
+    puts "player count: #{@players.count}"
   end  
 
 end

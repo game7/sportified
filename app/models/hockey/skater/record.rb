@@ -26,6 +26,8 @@
 #  mongo_id                  :string(255)
 #  created_at                :datetime
 #  updated_at                :datetime
+#  first_name                :string(255)
+#  last_name                 :string(255)
 #
 
 class Hockey::Skater::Record < Hockey::Skater

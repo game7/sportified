@@ -1,8 +1,8 @@
 - bar_width = 200
 .stat
   .goals
-    - away_goals = @stats.away_goals_total
-    - home_goals = @stats.home_goals_total
+    - away_goals = @stats.goals.away.count
+    - home_goals = @stats.goals.home.count
     - total_goals = away_goals + home_goals
     - away_width = total_goals > 0 ? away_goals * bar_width / total_goals : 0
     - home_width = total_goals > 0 ? home_goals * bar_width / total_goals : 0
@@ -41,8 +41,8 @@
             = home_shots
 .stat
   .pim
-    - away_pim = @stats.away_pim_total
-    - home_pim = @stats.home_pim_total
+    - away_pim = @stats.penalties.away.count
+    - home_pim = @stats.penalties.home.count
     - total_pim = away_pim + home_pim
     - away_width = total_pim > 0 ? away_pim * bar_width / total_pim : 0
     - home_width = total_pim > 0 ? home_pim * bar_width / total_pim : 0

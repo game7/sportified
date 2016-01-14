@@ -2,26 +2,27 @@
 #
 # Table name: hockey_penalties
 #
-#  id              :integer          not null, primary key
-#  tenant_id       :integer
-#  statsheet_id    :integer
-#  period          :integer
-#  minute          :integer
-#  second          :integer
-#  team_id         :integer
-#  committed_by_id :integer
-#  infraction      :string(255)
-#  duration        :integer
-#  severity        :string(255)
-#  start_period    :string(255)
-#  start_minute    :integer
-#  start_second    :integer
-#  end_period      :string(255)
-#  end_minute      :integer
-#  end_second      :integer
-#  mongo_id        :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                  :integer          not null, primary key
+#  tenant_id           :integer
+#  statsheet_id        :integer
+#  period              :integer
+#  minute              :integer
+#  second              :integer
+#  team_id             :integer
+#  committed_by_id     :integer
+#  infraction          :string(255)
+#  duration            :integer
+#  severity            :string(255)
+#  start_period        :string(255)
+#  start_minute        :integer
+#  start_second        :integer
+#  end_period          :string(255)
+#  end_minute          :integer
+#  end_second          :integer
+#  mongo_id            :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  committed_by_number :string(255)
 #
 
 class Hockey::Penalty < ActiveRecord::Base
@@ -36,7 +37,7 @@ class Hockey::Penalty < ActiveRecord::Base
   belongs_to :team, class_name: 'Team'
   belongs_to :committed_by, class_name: 'Hockey::Skater::Result'
   
-  validates :committed_by, presence: true
+  #validates :committed_by, presence: true
   validates :infraction, presence: true
   validates :duration, presence: true
   validates :severity, presence: true
@@ -64,8 +65,8 @@ class Hockey::Penalty < ActiveRecord::Base
   def apply_mongo!(mongo)
     self.team = (mongo['side'] == 'home' ? self.statsheet.home_team : self.statsheet.away_team)
     self.tenant_id = self.team.tenant_id if self.team
-    player = self.team.players.where(jersey_number: mongo['plr']).first if self.team
-    self.committed_by = self.statsheet.skaters.where(player_id: player.id).first if player
+    self.committed_by_number = mongo['plr']    
+    self.committed_by = self.statsheet.skaters.where(team_id: self.team_id).where(jersey_number: mongo[:plr]).first if self.team
     self.tenant_id = self.statsheet.tenant_id
     self.infraction = mongo['inf']
     self.duration = mongo['dur']

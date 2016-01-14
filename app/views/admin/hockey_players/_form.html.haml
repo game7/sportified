@@ -1,6 +1,6 @@
 = simple_form_for( @player, :url => url, :remote => true ) do |f|
   = f.input :first_name
   = f.input :last_name
-  = f.input :num
-  = f.input :played, :as => :boolean, :wrapper => :vertical_boolean
+  = f.input :jersey_number
+  = f.input :games_played, :as => :boolean, :wrapper => :vertical_boolean, :label => 'Played?'
 

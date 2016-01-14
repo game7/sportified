@@ -2,8 +2,8 @@
 - javascript("https://www.google.com/jsapi")
 - content_for :javascript do
   :javascript
-    var away_team_name = "#{@stats.away_team_name}";
-    var home_team_name = "#{@stats.home_team_name}";
+    var away_team_name = "#{@stats.away_team.name}";
+    var home_team_name = "#{@stats.home_team.name}";
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -29,7 +29,7 @@
         legend: 'bottom'
       });
     }
-
+    
 .boxscore
   .row
     .summary
@@ -38,15 +38,15 @@
         .team.away
           %h3 
             .logo
-            = @stats.away_team_name
-            %span.score= @stats.away_goals_total
+            = @stats.away_team.name
+            %span.score= @stats.goals.away.count
           %p.record (1-1-1, 3 pts)
           .clear
         .team.home
           %h3 
             .logo
-            = @stats.home_team_name
-            %span.score= @stats.home_goals_total
+            = @stats.home_team.name
+            %span.score= @stats.goals.home.count
           %p.record (1-1-1, 3 pts)
           .clear
       .logistics
@@ -58,12 +58,13 @@
   .row
     .teamstats
       = render 'team_statistics_table'
-  %h4 Minute By Minute
-  .row
-    .minute-by-minute
-      - minutes = @stats.score_by_minute.to_json
-      #data_div{ :style => "display: none;"} #{minutes}
-      #chart_div
+  / TODO - reimplement minute by minute chart
+  / %h4 Minute By Minute
+  / .row
+  /   .minute-by-minute
+  /     - minutes = @stats.score_by_minute.to_json
+  /     #data_div{ :style => "display: none;"} #{minutes}
+  /     #chart_div
   %h4 Game Activity
   .row
     .game-activity
@@ -76,9 +77,9 @@
   .row
     .goaltender-summary
       = render 'goaltender_summary_table'
-  %h4 Shots On Goal
-  .row
-    .shots-on-goal
-      = render 'shots_summary_table'
+  / %h4 Shots On Goal
+  / .row
+  /   .shots-on-goal
+  /     = render 'shots_summary_table'
 
     

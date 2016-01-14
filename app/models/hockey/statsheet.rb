@@ -43,11 +43,26 @@ class Hockey::Statsheet < ActiveRecord::Base
     def away
       where("hockey_skaters.team_id = ?", proxy_association.owner.away_team.id)
     end
+    def for_side(side)
+      owner = proxy_association.owner
+      id = (side == 'home' ? owner.home_team.id : owner.away_team.id)
+      where("hockey_skaters.team_id = ?", id)
+    end    
   end
   
-  has_many :goaltenders, class_name: 'Hockey::Goaltender::Result'
+  has_many :goaltenders, class_name: 'Hockey::Goaltender::Result' do
+    def for_side(side)
+      owner = proxy_association.owner
+      id = (side == 'home' ? owner.home_team.id : owner.away_team.id)
+      where("hockey_goaltenders.team_id = ?", id)
+    end     
+  end
+
   
   has_many :goals, class_name: 'Hockey::Goal' do
+    def for_period(period)
+      where('period = ?', period)
+    end
     def period1
       where('period = ?', '1')
     end
@@ -68,7 +83,17 @@ class Hockey::Statsheet < ActiveRecord::Base
     end
   end
   
-  has_many :penalties, class_name: 'Hockey::Penalty'
+  has_many :penalties, class_name: 'Hockey::Penalty' do
+    def for_period(period)
+      where('period = ?', period)
+    end    
+    def home
+      where("hockey_penalties.team_id = ?", proxy_association.owner.home_team.id)
+    end
+    def away
+      where("hockey_penalties.team_id = ?", proxy_association.owner.away_team.id)
+    end    
+  end
   
   def teams
     [ away_team, home_team ]
@@ -131,7 +156,7 @@ class Hockey::Statsheet < ActiveRecord::Base
   def load_team_players(team)
     skater_ids = self.skaters.where("team_id = ?", team.id).collect{ |plr| plr.player_id }
     team.players.each do |player|
-      skaters.create(team: team, player: player) unless skater_ids.index(player.id)
+      skaters.create(team: team, player: player, first_name: player.first_name, last_name: player.last_name, jersey_number: player.jersey_number) unless skater_ids.index(player.id)
     end if team
   end
   
@@ -139,7 +164,7 @@ class Hockey::Statsheet < ActiveRecord::Base
 
   end
   
-  def apply_mongo_players!(mongo_goaltenders)
+  def apply_mongo_players!(mongo_players)
 
   end
   
@@ -148,7 +173,7 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
   
   def apply_mongo!(mongo)
-    self.tenant = self.game.tenant    
+    self.tenant = self.game.tenant if self.game
   end
   
 end

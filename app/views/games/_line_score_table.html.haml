@@ -9,18 +9,18 @@
         %th.period OT
       %th.total T
     %tr
-      %td.team= @stats.away_team_name
-      %td.period= @stats.away_goals_1
-      %td.period= @stats.away_goals_2
-      %td.period= @stats.away_goals_3
+      %td.team= @stats.away_team.name
+      %td.period= @stats.goals.away.period1.count
+      %td.period= @stats.goals.away.period2.count
+      %td.period= @stats.goals.away.period3.count
       - if @stats.overtime?
-        %td.period= @stats.away_goals_ot
-      %td.total= @stats.away_goals_total
+        %td.period= @stats.goals.away.overtime.count
+      %td.total= @stats.goals.away.count
     %tr
-      %td.team= @stats.home_team_name
-      %td.period= @stats.home_goals_1
-      %td.period= @stats.home_goals_2
-      %td.period= @stats.home_goals_3
+      %td.team= @stats.home_team.name
+      %td.period= @stats.goals.home.period1.count
+      %td.period= @stats.goals.home.period2.count
+      %td.period= @stats.goals.home.period3.count
       - if @stats.overtime?
-        %td.period= @stats.home_goals_ot
-      %td.total= @stats.home_goals_total
+        %td.period= @stats.goals.home.overtime.count
+      %td.total= @stats.goals.home.count

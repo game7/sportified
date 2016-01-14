@@ -6,7 +6,7 @@
     %th.team Team
     %th.goal Scoring Detail
 %tbody
-  - goals = stats.events.goals.for_period(period).sorted_by_time
+  - goals = stats.goals.for_period(period).sorted_by_time
   - if goals.count == 0
     %tr
       %td{ :colspan => '3' } No scoring this period
@@ -15,21 +15,16 @@
     - goals.each do |goal|
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{goal.time}
-        %td.team 
-          - if goal.side == 'away'
-            -#image_tag @away_team.logo.micro.url.to_s if @away_team.logo?
-            = @stats.away_team_name
-          - else
-            -#image_tag @home_team.logo.micro.url.to_s if @home_team.logo?
-            = @stats.home_team_name
+        %td.team
+          = goal.team.name
         %td.goal 
-          = "##{goal.plr} #{show_player_name(stats, goal.side, goal.plr)}"
+          = "##{goal.scored_by_number} #{goal.scored_by.player.full_name if goal.scored_by && goal.scored_by.player}"
           .assists
-            - unless goal.a1.blank?
+            - if goal.assisted_by
               Assists: 
-              = "##{goal.a1} #{show_player_name(stats, goal.side, goal.a1)}"
-              - unless goal.a2.blank?
-                = ", ##{goal.a2} #{show_player_name(stats, goal.side, goal.a2)}"
+              = "##{goal.assisted_by_number} #{goal.assisted_by.player.full_name if goal.assisted_by && goal.assisted_by.player}"
+              - if goal.also_assisted_by
+                = "##{goal.also_assisted_by_number} #{goal.also_assisted_by.player.full_name if goal.also_assisted_by && goal.also_assisted_by.player}"
             - else
               Unassisted
 %thead
@@ -38,7 +33,7 @@
     %th.team Team
     %th.penalty Penalty Detail
 %tbody
-  - penalties = stats.events.penalties.for_period(period).sorted_by_time.each
+  - penalties = stats.penalties.for_period(period).sorted_by_time.each
   - if penalties.count == 0
     %tr
       %td{ :colspan => '3' } No penalties this period
@@ -48,12 +43,10 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{penalty.time}
         %td.team
-          - if penalty.side == 'away'
-            -#image_tag @away_team.logo.micro.url.to_s if @away_team.logo?
-            = @stats.away_team_name
-          - else
-            -#image_tag @home_team.logo.micro.url.to_s if @home_team.logo?
-            = @stats.home_team_name
-        %td.penalty ##{penalty.plr} #{show_player_name(stats, penalty.side, penalty.plr)}: #{penalty.dur} Minutes for #{penalty.inf}
+          = penalty.team.name
+        %td.penalty
+          = "##{penalty.committed_by_number}"
+          = " #{penalty.committed_by.player.full_name}:" if penalty.committed_by && penalty.committed_by.player
+          = " #{penalty.duration} Minutes for #{penalty.infraction}"
 
 

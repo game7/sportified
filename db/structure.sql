@@ -249,7 +249,10 @@ CREATE TABLE hockey_goaltenders (
     total_losses integer DEFAULT 0,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    jersey_number character varying(255),
+    first_name character varying(255),
+    last_name character varying(255)
 );
 
 
@@ -296,7 +299,8 @@ CREATE TABLE hockey_penalties (
     end_second integer,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    committed_by_number character varying(255)
 );
 
 
@@ -347,7 +351,9 @@ CREATE TABLE hockey_skaters (
     ejections integer DEFAULT 0,
     mongo_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    first_name character varying(255),
+    last_name character varying(255)
 );
 
 
@@ -1674,4 +1680,12 @@ INSERT INTO schema_migrations (version) VALUES ('20150713221636');
 INSERT INTO schema_migrations (version) VALUES ('20150816220926');
 
 INSERT INTO schema_migrations (version) VALUES ('20151021173632');
+
+INSERT INTO schema_migrations (version) VALUES ('20151230173429');
+
+INSERT INTO schema_migrations (version) VALUES ('20151230175017');
+
+INSERT INTO schema_migrations (version) VALUES ('20160101225452');
+
+INSERT INTO schema_migrations (version) VALUES ('20160101230314');
 

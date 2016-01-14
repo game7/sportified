@@ -127,9 +127,10 @@ module Sql
 
     def players
       section "Players"
+      Player.delete_all
       players = @session['players'].find
       total = players.count
-      players.each_with_index do |mongo_player, i|
+      players.batch_size(400).each_with_index do |mongo_player, i|
         player = @converter.convert(mongo_player, Player)
         print " #{i} of #{total}\r"
         $stdout.flush        
@@ -181,24 +182,38 @@ module Sql
     
     def statsheets
       section "Statsheets"
-      count = 0
-      total = 0
-      @session['statsheets'].find.batch_size(10).each_with_index do |mongo_statsheet, i|
+      # Hockey::Skater.delete_all
+      # Hockey::Goaltender.delete_all
+      # Hockey::Goal.delete_all
+      # Hockey::Penalty.delete_all
+      # Hockey::Statsheet.delete_all
+      total = @session['statsheets'].find.count
+      @session['statsheets'].find.sort('_id' => -1).batch_size(10).each_with_index do |mongo_statsheet, i|
         #ActiveRecord::Base.transaction do
-          start = Time.now
-          #puts
-          #puts 'statsheet'
           statsheet = @converter.convert(mongo_statsheet, Hockey::Statsheet)
-          #puts
-          #puts '- players'
+          #next unless statsheet.mongo_id.to_s == "5661ea7a346430000f380000"
           mongo_statsheet['players'].each do |mongo_player|
             skater = @converter.convert(mongo_player, Hockey::Skater::Result, { statsheet: statsheet })
-            if (mongo_player['g_gp'] == 1)
+            if mongo_player['g_gp'] == 1
               goalie = @converter.convert(mongo_player, Hockey::Goaltender::Result, { statsheet: statsheet })
             end
           end if mongo_statsheet['players']
-          #puts
-          #puts '- events'
+
+          # there are some cases where a goalie has been logged but not related to an individual
+          # on the GAME roster, in which case we need capture from the goalie log
+          mongo_statsheet['goaltenders'].each do |mongo_goalie|
+            if statsheet.goaltenders.for_side(mongo_goalie[:side]).first == nil
+              attrs = {
+                jersey_number: mongo_goalie[:plr],
+                team: mongo_goalie[:side] == 'home' ? statsheet.home_team : statsheet.away_team,
+                minutes_played: mongo_goalie[:min_1] + mongo_goalie[:min_2] + mongo_goalie[:min_3] + mongo_goalie[:min_ot],
+                shots_against: mongo_goalie[:shots_1] + mongo_goalie[:shots_2] + mongo_goalie[:shots_3] + mongo_goalie[:shots_ot],
+                goals_against: mongo_goalie[:goals_1] + mongo_goalie[:goals_2] + mongo_goalie[:goals_3] + mongo_goalie[:goals_ot]
+              }
+              statsheet.goaltenders.create attrs
+            end
+          end if mongo_statsheet['goaltenders']
+
           mongo_statsheet['events'].each do |mongo_event|
             type = mongo_event['_type']
             if type == 'Hockey::Goal'
@@ -207,13 +222,12 @@ module Sql
               penalty = @converter.convert(mongo_event, Hockey::Penalty, { statsheet: statsheet })          
             end
           end if mongo_statsheet['events']
-          #puts
-          duration = Time.now - start
-          count += 1
-          total += duration
-          puts "completed: #{duration}, count: #{count}, duration: #{total}, average: #{total / count}"
+
         #end
+        print " #{i} of #{total}\r"
+        $stdout.flush          
       end
+      puts " #{total} of #{total}"        
     end
     
   end

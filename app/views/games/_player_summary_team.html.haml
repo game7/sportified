@@ -1,7 +1,7 @@
 %thead
   %tr.title
     %th{ :colspan => 6 } 
-      = side == 'away' ? @stats.away_team_name : @stats.home_team_name
+      = side == 'away' ? @stats.away_team.name : @stats.home_team.name
   %tr.columns
     %th.player Player
     %th.goal G
@@ -10,19 +10,20 @@
     %th.pen PEN
     %th.pim PIM
 %tbody
-  - players = @stats.players.for_side(side).entries
-  - if players.count > 0
+  - skaters = @stats.skaters.for_side(side).entries
+  - if skaters.count > 0
     - reset_cycle
-    - players.each do |player|
+    - skaters.each do |skater|
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.player 
-          = player.name
-          = "##{player.num}" unless player.num.blank?
-        %td.goal #{player.g}
-        %td.assists #{player.a}
-        %td.points #{player.pts}
-        %td.pen #{player.pen}
-        %td.pim #{player.pim}
+          = skater.full_name
+          = "##{skater.jersey_number}" unless skater.jersey_number.blank?
+          = " *" unless skater.player_id
+        %td.goal #{skater.goals}
+        %td.assists #{skater.assists}
+        %td.points #{skater.points}
+        %td.pen #{skater.penalties}
+        %td.pim #{skater.penalty_minutes}
   - else
     %tr
       %td{ :colpsan => 6 } No player data has been maintained
