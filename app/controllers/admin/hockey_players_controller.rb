@@ -43,7 +43,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   private
   
   def hockey_player_params
-    params.required(:hockey_skater_result).permit(:games_played)
+    params.required(:hockey_skater_result).permit(:games_played, :first_name, :last_name, :jersey_number)
   end
   
   def load_statsheet
