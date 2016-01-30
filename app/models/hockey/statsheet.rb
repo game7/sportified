@@ -46,8 +46,11 @@ class Hockey::Statsheet < ActiveRecord::Base
     def for_side(side)
       owner = proxy_association.owner
       id = (side == 'home' ? owner.home_team.id : owner.away_team.id)
-      where("hockey_skaters.team_id = ?", id)
+      self.for_team(id)
     end    
+    def for_team(team_id)
+      where("hockey_skaters.team_id = ?", team_id)
+    end      
   end
   
   has_many :goaltenders, class_name: 'Hockey::Goaltender::Result' do

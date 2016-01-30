@@ -1,10 +1,10 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController  
   before_filter :load_statsheet
   before_filter :load_player, :only => [:edit, :update, :destroy]
-  before_filter :prepare_sides, :only => [:new, :create]
+  before_filter :prepare_team_options, :only => [:new, :create]
 
   def new
-    @player = @statsheet.players.build(:played => true)
+    @player = @statsheet.skaters.build(:games_played => true)
   end
 
   def edit
@@ -18,7 +18,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def create
-    @player = @statsheet.players.build(hockey_player_params)
+    @player = @statsheet.skaters.build(hockey_player_params)
     if @player.save
       @statsheet.reload
       flash[:notice] = "Player Added"
@@ -43,7 +43,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   private
   
   def hockey_player_params
-    params.required(:hockey_skater_result).permit(:games_played, :first_name, :last_name, :jersey_number)
+    params.required(:hockey_skater_result).permit(:games_played, :first_name, :last_name, :jersey_number, :team_id)
   end
   
   def load_statsheet
@@ -54,8 +54,8 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
     @player = @statsheet.skaters.find(params['id'])
   end
 
-  def prepare_sides
-    @side_options = [ [@statsheet.away_team_name, 'away'], [@statsheet.home_team_name, 'home'] ]    
+  def prepare_team_options
+    @team_options = [ [@statsheet.away_team.name, @statsheet.away_team.id], [@statsheet.home_team.name, @statsheet.home_team.id] ]    
   end  
 
 end

@@ -1,6 +1,6 @@
 = simple_form_for( @player, :url => admin_hockey_statsheet_players_path(@statsheet.id), :remote => true ) do |f|
-  = f.input :side, :collection => @side_options
+  = f.input :team_id, :collection => @team_options
   = f.input :first_name
   = f.input :last_name
-  = f.input :num
-  = f.input :played, :as => :boolean, :wrapper => :vertical_boolean
+  = f.input :jersey_number
+  = f.input :games_played, :as => :boolean, :wrapper => :vertical_boolean, :label => "Played?"
