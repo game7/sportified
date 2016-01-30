@@ -100,8 +100,7 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
   
   def min_total
-    #min_1 + min_2 + min_3 + min_ot
-    'boo'
+    min_1.to_i + min_2.to_i + min_3.to_i + min_ot.to_i
   end
   
   def completed_in
