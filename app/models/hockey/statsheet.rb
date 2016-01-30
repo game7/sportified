@@ -108,12 +108,10 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
   
   def away_shots_total
-    #away_shots_1 + away_shots_2 + away_shots_3 + away_shots_ot
-    0
+    away_shots_1.to_i + away_shots_2.to_i + away_shots_3.to_i + away_shots_ot.to_i
   end
   def home_shots_total
-    #home_shots_1 + home_shots_2 + home_shots_3 + home_shots_ot
-    0
+    home_shots_1.to_i + home_shots_2.to_i + home_shots_3.to_i + home_shots_ot.to_i
   end
 
   def clear_shots

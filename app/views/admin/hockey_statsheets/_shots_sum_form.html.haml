@@ -8,13 +8,13 @@
       %th 3
       %th OT
     %tr
-      %td= @statsheet.away_team_name
+      %td= @statsheet.away_team.name
       %td= f.text_field :away_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %td= f.text_field :away_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %td= f.text_field :away_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %td= f.text_field :away_shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
     %tr
-      %td= @statsheet.home_team_name
+      %td= @statsheet.home_team.name
       %td= f.text_field :home_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %td= f.text_field :home_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
       %td= f.text_field :home_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
