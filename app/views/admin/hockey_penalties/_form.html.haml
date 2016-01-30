@@ -22,6 +22,22 @@
       = f.input :end_minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
       = f.input :end_second, :maxlength => 2, :pattern => "[0-9]*", :label => false
 :javascript
+  function filter_players(changed) {
+    var teamId = $('select#hockey_penalty_team_id').val();
+    $('#hockey_penalty_committed_by_id option').hide();        
+    if (changed) {
+      $('#hockey_penalty_committed_by_id').val('');
+    }
+    if (teamId != '') {
+      $('#hockey_penalty_committed_by_id option[data-team-id=' + teamId + ']').show();
+    }
+  }
+  $(document).ready(function(){
+    filter_players();
+    $("select#hockey_penalty_team_id").change(function(){
+        filter_players(true);
+    });
+  });
   $(function() {
     var penalties = #{Hockey::Penalty.infractions.to_json};
     $('#hockey_penalty_infraction').autocomplete({
