@@ -223,6 +223,9 @@ module Sql
             end
           end if mongo_statsheet['events']
 
+          Hockey::Statsheet::Processor.unpost statsheet if statsheet.posted
+          Hockey::Statsheet::Processor.post statsheet
+
         #end
         print " #{i} of #{total}\r"
         $stdout.flush          
