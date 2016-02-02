@@ -104,7 +104,9 @@ class Team < ActiveRecord::Base
   
   def apply_mongo!(mongo)
     if mongo['logo']
-      self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
+      unless self.logo.url
+        self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
+      end
     end    
   end  
   
