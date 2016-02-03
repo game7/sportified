@@ -92,10 +92,18 @@ class Team < ActiveRecord::Base
   
   def apply_mongo_season_id! season_id
     self.season = Season.where(:mongo_id => season_id.to_s).first
+    unless self.season
+      puts "Failed to locate Season: #{season_id.to_s}"
+      puts
+    end
   end
   
   def apply_mongo_league_id! league_id
     self.league = League.where(:mongo_id => league_id.to_s).first
+    unless self.league
+      puts "Failed to locate League: #{league_id.to_s}"
+      puts
+    end    
   end
 
   def apply_mongo_club_id! club_id
@@ -103,11 +111,9 @@ class Team < ActiveRecord::Base
   end
   
   def apply_mongo!(mongo)
-    # if mongo['logo']
-    #   unless self.logo.url
-    #     self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
-    #   end
-    # end    
+    if mongo['logo']
+      self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
+    end    
   end  
   
 end
