@@ -147,11 +147,11 @@ class Game < Event
   scope :without_result, ->{ where(result: nil) }
   
   def apply_mongo_home_team_id! mongo_id
-    self.home_team = Team.where(mongo_id: mongo_id.to_s).first    
+    self.home_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first    
   end
   
   def apply_mongo_away_team_id! mongo_id
-    self.away_team = Team.where(mongo_id: mongo_id.to_s).first
+    self.away_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first
   end
   
   def apply_mongo_result! mongo_result

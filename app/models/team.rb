@@ -107,7 +107,7 @@ class Team < ActiveRecord::Base
   end
 
   def apply_mongo_club_id! club_id
-    self.club = Club.where(:mongo_id => club_id.to_s).first if club_id
+    self.club = Club.unscoped.where(:mongo_id => club_id.to_s).first if club_id
   end
   
   def apply_mongo!(mongo)

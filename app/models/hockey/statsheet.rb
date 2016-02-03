@@ -169,7 +169,7 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
   
   def apply_mongo_game_id!(mongo_game)
-    self.game = Game.where(:mongo_id => mongo_game.to_s).first
+    self.game = Game.unscoped.where(:mongo_id => mongo_game.to_s).first
   end
   
   def apply_mongo!(mongo)

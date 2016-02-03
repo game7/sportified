@@ -54,7 +54,7 @@ class Player < ActiveRecord::Base
   end
   
   def apply_mongo_team_id! team_id
-    self.team = Team.where(mongo_id: team_id.to_s).first
+    self.team = Team.unscoped.where(mongo_id: team_id.to_s).first
   end
   
   def apply_mongo_tenant_id! tenant_id
