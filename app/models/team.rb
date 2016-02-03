@@ -91,7 +91,7 @@ class Team < ActiveRecord::Base
   scope :with_slug, ->(slug) { where(:slug => slug) }
   
   def apply_mongo_season_id! season_id
-    self.season = Season.where(:mongo_id => season_id.to_s).first
+    self.season = Season.unscoped.where(:mongo_id => season_id.to_s).first
     unless self.season
       puts "Failed to locate Season: #{season_id.to_s}"
       puts
@@ -99,7 +99,7 @@ class Team < ActiveRecord::Base
   end
   
   def apply_mongo_league_id! league_id
-    self.league = League.where(:mongo_id => league_id.to_s).first
+    self.league = League.unscoped.where(:mongo_id => league_id.to_s).first
     unless self.league
       puts "Failed to locate League: #{league_id.to_s}"
       puts
