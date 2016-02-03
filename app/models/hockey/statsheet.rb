@@ -38,14 +38,14 @@ class Hockey::Statsheet < ActiveRecord::Base
     
   has_many :skaters, class_name: 'Hockey::Skater::Result' do
     def home
-      where("hockey_skaters.team_id = ?", proxy_association.owner.home_team.id)
+      where("hockey_skaters.team_id = ?", proxy_association.owner.game.home_team_id)
     end
     def away
-      where("hockey_skaters.team_id = ?", proxy_association.owner.away_team.id)
+      where("hockey_skaters.team_id = ?", proxy_association.owner.game.away_team_id)
     end
     def for_side(side)
       owner = proxy_association.owner
-      id = (side == 'home' ? owner.home_team.id : owner.away_team.id)
+      id = (side == 'home' ? owner.game.home_team_id : owner.game.away_team_id)
       self.for_team(id)
     end    
     def for_team(team_id)
@@ -56,7 +56,7 @@ class Hockey::Statsheet < ActiveRecord::Base
   has_many :goaltenders, class_name: 'Hockey::Goaltender::Result' do
     def for_side(side)
       owner = proxy_association.owner
-      id = (side == 'home' ? owner.home_team.id : owner.away_team.id)
+      id = (side == 'home' ? owner.game.home_team_id : owner.game.away_team_id)
       where("hockey_goaltenders.team_id = ?", id)
     end     
   end
@@ -79,10 +79,10 @@ class Hockey::Statsheet < ActiveRecord::Base
       where('period = ?' 'OT')
     end
     def home
-      where("hockey_goals.team_id = ?", proxy_association.owner.home_team.id)
+      where("hockey_goals.team_id = ?", proxy_association.owner.game.home_team_id)
     end
     def away
-      where("hockey_goals.team_id = ?", proxy_association.owner.away_team.id)
+      where("hockey_goals.team_id = ?", proxy_association.owner.game.away_team_id)
     end
   end
   
@@ -91,10 +91,10 @@ class Hockey::Statsheet < ActiveRecord::Base
       where('period = ?', period)
     end    
     def home
-      where("hockey_penalties.team_id = ?", proxy_association.owner.home_team.id)
+      where("hockey_penalties.team_id = ?", proxy_association.owner.game.home_team_id)
     end
     def away
-      where("hockey_penalties.team_id = ?", proxy_association.owner.away_team.id)
+      where("hockey_penalties.team_id = ?", proxy_association.owner.game.away_team_id)
     end    
   end
   
