@@ -156,7 +156,14 @@ class Hockey::Statsheet < ActiveRecord::Base
   def load_team_players(team)
     skater_ids = self.skaters.where("team_id = ?", team.id).collect{ |plr| plr.player_id }
     team.players.each do |player|
-      skaters.create(team: team, player: player, first_name: player.first_name, last_name: player.last_name, jersey_number: player.jersey_number) unless skater_ids.index(player.id)
+      skaters.create(
+        team: team, 
+        player: player, 
+        first_name: player.first_name, 
+        last_name: player.last_name, 
+        jersey_number: player.jersey_number,
+        games_played: 1
+      ) unless skater_ids.index(player.id)
     end if team
   end
   
