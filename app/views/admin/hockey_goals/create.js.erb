@@ -7,6 +7,7 @@
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
   $("#goals table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_goals/table", :locals => { :goals => @statsheet.goals } ) )%>");
+  $("#goals_sum").html("<%= escape_javascript( render(:partial => "admin/hockey_statsheets/goals_sum_table", :locals => { home: @statsheet.goals.home.grouped_by_period, away: @statsheet.goals.away.grouped_by_period } ) )%>");
   $("#away_score").html(<%= @statsheet.away_score %>);
   $("#home_score").html(<%= @statsheet.home_score %>);
 <% end %>

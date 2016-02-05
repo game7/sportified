@@ -1,7 +1,7 @@
 %table.table.table-bordered
   %thead
     %tr
-      %td= link_to 'Edit Goals', edit_admin_hockey_statsheet_path(@statsheet, :form => 'goals_sum'), :remote => true, :class => 'btn btn-xs btn-primary'
+      %td=# link_to 'Edit Goals', edit_admin_hockey_statsheet_path(@statsheet, :form => 'goals_sum'), :remote => true, :class => 'btn btn-xs btn-primary'
       %th{:scope => 'col'} 1
       %th{:scope => 'col'} 2
       %th{:scope => 'col'} 3
@@ -10,15 +10,15 @@
   %tbody
     %tr
       %td= @statsheet.away_team.name
-      %td= @statsheet.away_goals_1
-      %td= @statsheet.away_goals_2
-      %td= @statsheet.away_goals_3
-      %td= @statsheet.away_goals_ot
-      %td= @statsheet.away_goals_total
+      %td= away["1"].count
+      %td= away["2"].count
+      %td= away["3"].count
+      %td= away["ot"].count
+      %td= away["all"].count
     %tr
-      %td= @statsheet.home_team.name
-      %td= @statsheet.home_goals_1
-      %td= @statsheet.home_goals_2
-      %td= @statsheet.home_goals_3
-      %td= @statsheet.home_goals_ot
-      %td= @statsheet.home_goals_total
+      %td= @statsheet.home_team.name    
+      %td= home["1"].count
+      %td= home["2"].count
+      %td= home["3"].count
+      %td= home["ot"].count
+      %td= home["all"].count

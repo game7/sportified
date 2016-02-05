@@ -1,6 +1,6 @@
 %h3
   = "Goals"
 #goals_sum
-  =# render :partial => 'admin/hockey_statsheets/goals_sum_table'
+  = render :partial => 'admin/hockey_statsheets/goals_sum_table', locals: { home: @statsheet.goals.home.grouped_by_period, away: @statsheet.goals.away.grouped_by_period}
 
 

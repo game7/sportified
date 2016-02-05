@@ -84,6 +84,16 @@ class Hockey::Statsheet < ActiveRecord::Base
     def away
       where("hockey_goals.team_id = ?", proxy_association.owner.game.away_team_id)
     end
+    def grouped_by_period
+      periods = {}
+      %w{1 2 3 ot all}.each{|i| periods[i] = []}
+      puts "goals: #{all.count}"
+      all.each do |goal| 
+        periods[goal.period.to_s] << goal
+        periods['all'] << goal
+      end
+      periods
+    end
   end
   
   has_many :penalties, class_name: 'Hockey::Penalty' do
@@ -166,6 +176,20 @@ class Hockey::Statsheet < ActiveRecord::Base
       ) unless skater_ids.index(player.id)
     end if team
   end
+
+  def autoload_goaltenders
+    home = goaltenders.build(:team_id => self.game.home_team_id)
+    away = goaltenders.build(:side => self.game.away_team_id)
+
+    %w{home away}.each do |side|
+      %w{1 2 3 ot}.each do |per|
+        eval("#{side}.min_#{per} = self.min_#{per}")
+        %w{shots goals}.each do |stat|
+          eval("#{side}.#{stat}_#{per} = self.#{side == "home" ? "away" : "home"}_#{stat}_#{per}")
+        end
+      end
+    end
+  end 
   
   def apply_mongo_goaltenders!(mongo_goaltenders)
 
