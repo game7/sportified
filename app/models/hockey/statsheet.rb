@@ -50,7 +50,10 @@ class Hockey::Statsheet < ActiveRecord::Base
     end    
     def for_team(team_id)
       where("hockey_skaters.team_id = ?", team_id)
-    end      
+    end
+    def playing
+      where("games_played = ?", 1)
+    end   
   end
   
   has_many :goaltenders, class_name: 'Hockey::Goaltender::Result' do
