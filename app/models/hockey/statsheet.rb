@@ -181,17 +181,17 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
 
   def autoload_goaltenders
-    home = goaltenders.build(:team_id => self.game.home_team_id)
-    away = goaltenders.build(:side => self.game.away_team_id)
+    
+    goaltenders.build(team_id: self.game.home_team_id,
+                      minutes_played: self.min_total,
+                      shots_against: self.away_shots_total,
+                      goals_against: self.goals.away.count)
+ 
+    goaltenders.build(team_id: self.game.away_team_id,
+                      minutes_played: self.min_total,
+                      shots_against: self.home_shots_total,
+                      goals_against: self.goals.home.count)  
 
-    %w{home away}.each do |side|
-      %w{1 2 3 ot}.each do |per|
-        eval("#{side}.min_#{per} = self.min_#{per}")
-        %w{shots goals}.each do |stat|
-          eval("#{side}.#{stat}_#{per} = self.#{side == "home" ? "away" : "home"}_#{stat}_#{per}")
-        end
-      end
-    end
   end 
   
   def apply_mongo_goaltenders!(mongo_goaltenders)
