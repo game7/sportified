@@ -14,7 +14,7 @@
       - goaltenders.each_with_index do |g, i|
         %tr
           %td= g.team.short_name
-          %td= format_player_name(g)
+          %td= "#{g.jersey_number} - #{g.last_name}"
           %td= g.minutes_played
           %td= g.shots_against
           %td= g.goals_against

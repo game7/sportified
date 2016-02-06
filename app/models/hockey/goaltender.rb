@@ -36,7 +36,9 @@
 #
 
 class Hockey::Goaltender < ActiveRecord::Base
-  include Sportified::TenantScoped  
+  include Sportified::TenantScoped
+  before_save :set_player_name
+
   belongs_to :player, class_name: '::Player'
 
   STATS = %w{ games_played minutes_played
@@ -92,6 +94,17 @@ class Hockey::Goaltender < ActiveRecord::Base
   
   def calculate_goals_against_average
     self.goals_against_average = (self.goals_against / (self.minutes_played / 45.0) )
+  end
+
+  def set_player_name
+    puts 'hi'
+    puts self.player_id
+    if self.player
+      puts 'updating'
+      self.first_name = self.player.first_name
+      self.last_name = self.player.last_name
+      self.jersey_number = self.player.jersey_number
+    end
   end
     
 end

@@ -170,27 +170,27 @@ class Hockey::Statsheet < ActiveRecord::Base
     skater_ids = self.skaters.where("team_id = ?", team.id).collect{ |plr| plr.player_id }
     team.players.each do |player|
       skaters.create(
-        team: team, 
-        player: player, 
-        first_name: player.first_name, 
-        last_name: player.last_name, 
-        jersey_number: player.jersey_number,
-        games_played: 1
+        team:           team, 
+        player:         player, 
+        first_name:     player.first_name, 
+        last_name:      player.last_name, 
+        jersey_number:  player.jersey_number,
+        games_played:   1
       ) unless skater_ids.index(player.id)
     end if team
   end
 
   def autoload_goaltenders
     
-    goaltenders.build(team_id: self.game.home_team_id,
+    goaltenders.build(team_id:        self.game.home_team_id,
                       minutes_played: self.min_total,
-                      shots_against: self.away_shots_total,
-                      goals_against: self.goals.away.count)
+                      shots_against:  self.away_shots_total,
+                      goals_against:  self.goals.away.count)
  
-    goaltenders.build(team_id: self.game.away_team_id,
+    goaltenders.build(team_id:        self.game.away_team_id,
                       minutes_played: self.min_total,
-                      shots_against: self.home_shots_total,
-                      goals_against: self.goals.home.count)  
+                      shots_against:  self.home_shots_total,
+                      goals_against:  self.goals.home.count)  
 
   end 
   

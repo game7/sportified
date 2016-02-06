@@ -2,7 +2,7 @@
 = simple_form_for( @goaltender, :url => url, :remote => true ) do |f|
   = f.input :team_id, :collection => @statsheet.teams, :disabled => edit_mode, :label => 'Team'
   = f.input :player_id do
-    = f.select :player_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+    = f.select :player_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.player_id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
   = f.input :minutes_played, :maxlength => 3, :pattern => "[0-9]*"
   = f.input :shots_against, :maxlength => 2, :pattern => "[0-9]*"
   = f.input :goals_against, :maxlength => 2, :pattern => "[0-9]*"
