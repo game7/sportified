@@ -68,7 +68,9 @@
     end
     resources :divisions, :only => :index
     resources :teams, :only => :index
-    resources :events
+    resources :events do
+      get 'calendar', :on => :collection
+    end
     resources :games do
       resource :result, :controller => :game_result, :only => [:edit, :update]
       resource :statsheet, :only => [:edit]

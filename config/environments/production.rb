@@ -64,7 +64,8 @@ Sportified::Application.configure do
     'themes/oia.css',
     'themes/styfl.css',
     'pages.js',
-    "lang/en.js"
+    "lang/en.js",
+    'calendar/app.js'
   ]
     
 end
