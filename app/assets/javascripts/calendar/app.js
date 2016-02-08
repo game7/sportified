@@ -5,12 +5,12 @@
 //= require angular-ui-calendar
 //= require fullcalendar
 
-angular.module('CalendarApp', [
+var CalendarApp = angular.module('CalendarApp', [
     'ui.calendar',
     'ui.bootstrap'
-	]).controller('CalendarCtrl', CalendarCtrl);
+	]);
 
-function CalendarCtrl($scope, $compile, $timeout, uiCalendarConfig) {
+var CalendarCtrl = function($scope, $compile, $timeout, uiCalendarConfig) {
   var date = new Date();
   var d = date.getDate();
   var m = date.getMonth();
@@ -59,3 +59,5 @@ function CalendarCtrl($scope, $compile, $timeout, uiCalendarConfig) {
       };
 
 }
+CalendarCtrl.$inject = ['$scope', '$compile', '$timeout', 'uiCalendarConfig']
+CalendarApp.controller('CalendarCtrl', CalendarCtrl);
