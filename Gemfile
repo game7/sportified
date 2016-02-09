@@ -10,7 +10,7 @@ gem 'enumerize'
 gem 'annotate'
 
 gem 'sass-rails', '~> 4.0.0.rc1'
-#gem 'coffee-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.3.0'
