@@ -6,8 +6,8 @@
       = " - " + Tenant.current.name
     - theme = Tenant.current.theme
     - if theme and !theme.empty?
-      = stylesheet_link_tag "/assets/themes/#{theme}"
-      = favicon_link_tag "/assets/themes/#{theme}/icon.ico"
+      = stylesheet_link_tag "themes/#{theme}"
+      = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
       = stylesheet_link_tag "application"
     = javascript_include_tag "application"

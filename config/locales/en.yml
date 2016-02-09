@@ -1,5 +1,23 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
 
 en:
   hello: "Hello world"
@@ -50,70 +68,73 @@ en:
   hockey:
     statistics:
       tokens:
-        games_played:
+        gp:
           name: Games Played
           col: GP
-        goals:
+        g:
           name: Goals
           col: G
-        assists:
+        a:
           name: Assists
           col: A
-        points:
+        pts:
           name: Points
           col: PTS
-        penalties:
+        pen:
           name: Penalties
           col: PEN
-        penalty_minutes:
+        pim:
           name: Penalty Minutes
           col: PIM
-        minor_penalties:
+        pen_minor:
           name: Minor Penalties
           col: MNR
-        major_penalties:
+        pen_major:
           name: Major Penalites
           col: MJR
-        misconduct_penalties:
+        pen_misc:
           name: Misconduct Penalties
           col: MSC
-        game_misconduct_penalties:
+        pen_game:
           name: Game Misconduct Penalties
           col: GMSC
-        hat_tricks:
+        hat:
           name: Hat Tricks
           col: HAT
-        playmakers:
+        plmkr:
           name: Playmaker
           col: PMKR
-        gordie_howes:
+        gordie:
           name: Gordie Howe
           col: GORDIE
-        ejections:
+        eject:
           name: Ejections
           col: EJECT
-        minutes_played:
+        g_gp:
+          name: Games Played
+          col: GP
+        g_toi:
           name: Minutes Played
           col: TOI
-        shots_against:
+        g_sa:
           name: Shots Against
           col: SA  
-        goals_against:
+        g_ga:
           name: Goals Against
           col: GA
-        saves:
+        g_sv:
           name: Saves
           col: SV
-        save_percentage:
+        g_svp:
           name: Save Percent
           col: SV%
-        goals_against_average:
+        g_gaa:
           name: Goals Against Average
           col: GAA
-        shutouts:
+        g_sa:
           name: Shutouts
           col: SO
-        shootout_attempts:
+        g_soa:
           name: Shootout Attempts Faced
           col: SOA
         g_sog:
@@ -145,4 +166,4 @@ en:
           col: W
         g_totl:
           name: Total Losses
-          col: L
+          col: L  
