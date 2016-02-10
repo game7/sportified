@@ -1,4 +1,4 @@
-let CalendarApp = angular.module('CalendarApp', ['ui.calendar', 'ui.router', 'ui.bootstrap', 'templates']);
+const CalendarApp = angular.module('CalendarApp', ['ui.calendar', 'ui.router', 'ui.bootstrap', 'templates']);
 
 CalendarApp.config(['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
   $urlRouterProvider.otherwise('/');

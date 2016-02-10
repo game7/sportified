@@ -55,4 +55,5 @@ class IndexCtrl  {
 }
 
 IndexCtrl.$inject = ['$scope', '$compile', '$timeout', 'uiCalendarConfig'];
+
 CalendarApp.controller('IndexCtrl', IndexCtrl);
