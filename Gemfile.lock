@@ -53,6 +53,10 @@ GEM
     addressable (2.4.0)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
+    angular-rails-templates (1.0.0.beta2)
+      railties (~> 4.2)
+      sprockets (~> 3.0)
+      tilt
     annotate (2.7.0)
       activerecord (>= 3.2, < 6.0)
       rake (~> 10.4)
@@ -454,6 +458,7 @@ DEPENDENCIES
   active_model_serializers
   acts_as_taggable_on
   ancestry
+  angular-rails-templates (~> 1.0.0.beta2)
   annotate
   autoprefixer-rails
   autotest

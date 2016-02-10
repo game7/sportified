@@ -13,6 +13,7 @@ gem 'sass-rails', '~> 5.0.4'
 #gem 'coffee-rails', '~> 4.0.0.rc1'
 gem "sprockets"
 gem "sprockets-es6"
+gem "angular-rails-templates", "~> 1.0.0.beta2"
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.3.0'
