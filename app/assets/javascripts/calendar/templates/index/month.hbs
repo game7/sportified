@@ -1,0 +1,19 @@
+<div>
+<strong>Month Template</strong>
+  date: {{date}}
+  [start]
+  <table class="table table-bordered">
+    <tbody>
+    	{{#each daysByWeek as |week|}}
+        <tr>
+          {{#each week as |day|}}
+            <td>
+              {{day}}
+            </td>
+          {{/each}}
+        </tr>
+    	{{/each}}
+    </tbody>
+  </table>
+  [end]
+</div>

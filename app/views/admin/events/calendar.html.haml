@@ -1,10 +1,6 @@
-= javascript 'calendar/app';
-= stylesheet 'fullcalendar';
+= javascript 'calendar/application';
+= stylesheet 'calendar/application';
 :javascript
 	var events = #{@events.to_json};
-%div{ "ng-app" => "CalendarApp", "ng-controller" => "CalendarCtrl" }
-	/ .btn-group
-	/ 	%button.btn.btn-default{ 'ng-click' => "changeView('agendaDay', 'my-calendar')" } Day
-	/ 	%button.btn.btn-default{ 'ng-click' => "changeView('agendaWeek', 'my-calendar')" } Week
-	/ 	%button.btn.btn-default{ 'ng-click' => "changeView('month', 'my-calendar')" } Month
-	%div{ :calendar => "my-calendar", "ui-calendar" => "uiConfig.calendar", "ng-model" => "eventSources" }
+	require('calendar/application');
+#calendar-app

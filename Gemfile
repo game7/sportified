@@ -56,7 +56,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-ui-router'
   gem 'rails-assets-angular-ui-bootstrap-bower', '0.10.0'
   gem 'rails-assets-angular-ui-calendar'
-  gem 'rails-assets-fullcalendar'  
+  gem 'rails-assets-fullcalendar'
+  gem 'rails-assets-moment'
 end
 
 

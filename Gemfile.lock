@@ -468,6 +468,7 @@ DEPENDENCIES
   rails-assets-angular-ui-calendar!
   rails-assets-angular-ui-router!
   rails-assets-fullcalendar!
+  rails-assets-moment!
   rails_12factor
   remarkable_mongoid (>= 0.5.0)
   remotipart (~> 1.0)

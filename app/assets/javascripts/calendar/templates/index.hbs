@@ -1,0 +1,26 @@
+
+<div style="background-color: #FFF; padding: 5px;">
+  <div class="row">
+    <div class="col-sm-2">Calendar</div>
+    <div class="col-sm-10">
+      <div class="row">
+        <div class="col-sm-6 clearfix">
+          <div class="pull-left">{{calendar-pager date=date}}</div>
+          <div class="pull-left">Tuesday February 9, 2016</div> 
+        </div>        
+        <div class="col-sm-6 clearfix">
+          {{calendar-view-selector selectedView="model.selectedView"}}      
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-block">Create</button>
+    </div>
+    <div class="col-sm-10">
+      {{outlet}}
+    </div>
+  </div>
+</div>
