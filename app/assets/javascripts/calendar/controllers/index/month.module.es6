@@ -4,7 +4,15 @@ export default Ember.Controller.extend({
   indexController: Ember.inject.controller('index'),
 	date: Ember.computed.reads('indexController.date'),
 
-	daysByWeek: Ember.computed('daysByMonth', function() {
+  month: Ember.computed('date', function() {
+    return moment(this.get('date')).format('MMMM');
+  }),
+
+  year: Ember.computed('date', function() {
+    return moment(this.get('date')).year();
+  }),
+
+	daysByWeek: Ember.computed('date', function() {
     
     let date = moment(this.get('date')),
       firstDayOfMonth = date.date(1).isoWeekday(),
