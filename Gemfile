@@ -13,7 +13,7 @@ gem 'sass-rails', '~> 5.0.4'
 #gem 'coffee-rails', '~> 4.0.0.rc1'
 gem "sprockets"
 gem "sprockets-es6"
-gem "angular-rails-templates", "~> 1.0.0.beta2"
+
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.3.0'
@@ -40,7 +40,6 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
-#gem 'formtastic', '~> 1.2.3'
 gem 'simple_form', '~> 3.1.0.rc2'
 #gem 'delayed_job'
 
@@ -55,11 +54,6 @@ gem "RedCloth"
 gem 'unicorn'
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-angular'
-  gem 'rails-assets-angular-ui-router'
-  gem 'rails-assets-angular-ui-bootstrap-bower', '0.10.0'
-  gem 'rails-assets-angular-ui-calendar'
-  gem 'rails-assets-fullcalendar'
   gem 'rails-assets-moment'
 end
 
