@@ -50,7 +50,9 @@
     = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript
-      $('.dropdown-toggle').dropdown();
+      
+      var $dropdown = $('.dropdown-toggle');
+      if ($dropdown.dropdown) { $dropdown.dropdown(); }
       
       // fix sub nav on scroll
       var $win = $(window)

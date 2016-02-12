@@ -48,8 +48,10 @@ $(document).ready(function() {
     return false;
   });
 
-  $('.carousel').carousel();
-  $('[rel=tooltip]').tooltip();
-  $('[data-toggle="tooltip"]').tooltip();
+  var $carousel = $('.carousel');
+  if ($carousel.carousel) { $carousel.carousel(); }
+
+  var $tooltip = $('[rel=tooltip], [data-toggle="tooltip"]');
+  if ($tooltip.tooltip) { $tooltip.tooltip(); }
 
 });

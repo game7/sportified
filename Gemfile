@@ -19,6 +19,9 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.3.0'
 gem 'autoprefixer-rails'
 
+gem 'ember-rails'
+gem 'ember-source', '~> 2.3.1'
+
 gem 'tenancy'
 gem 'ancestry'
 gem 'acts_as_taggable_on'
@@ -56,7 +59,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-ui-router'
   gem 'rails-assets-angular-ui-bootstrap-bower', '0.10.0'
   gem 'rails-assets-angular-ui-calendar'
-  gem 'rails-assets-fullcalendar'  
+  gem 'rails-assets-fullcalendar'
+  gem 'rails-assets-moment'
 end
 
 
