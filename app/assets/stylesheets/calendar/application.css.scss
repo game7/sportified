@@ -21,8 +21,18 @@
 
 .calendar-month-view {
 	table {
-		td {
+		td.day {
 			height: 100px;
+			width: 14.29%
 		}
+	}
+	.event {
+		width: 100%;
+		margin-top: 1px;
+		border: 1px solid #e1e1e1;
+		background-color: rgba(225,225,225, 0.25);
+		font-size: 75%;
+		border-left: 3px solid #e1e1e1;
+		padding-left: 2px;
 	}
 }

@@ -9,9 +9,7 @@
     	{{#each daysByWeek as |week|}}
         <tr>
           {{#each week as |day|}}
-            <td>
-              {{day}}
-            </td>
+            {{calendar-month-day day=day}}
           {{/each}}
         </tr>
     	{{/each}}
