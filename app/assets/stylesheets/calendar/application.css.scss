@@ -36,3 +36,75 @@
 		padding-left: 2px;
 	}
 }
+
+.calendar-timetable {
+
+  .main {
+    &:after {
+      clear: both;
+      content: '';
+      display: table;
+    }
+  }
+
+  .content {
+    position: relative
+  }
+
+	li {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+  .time-labels {
+    padding: 0;
+    padding-right: 5px;
+    text-align: right;
+    margin-left: 0;
+    float: left;
+    width: 60px;
+    margin-top: -30px;
+    line-height: 60px;
+  }
+  .time-label {
+    &:first-child {
+      color: transparent;
+    }
+    font-weight: bold;
+    color: #888;      
+  }
+  .time-slots {
+    padding-left: 60px;
+    border: 1px solid #e1e1e1;
+  }
+	.time-slot {  
+		border: 1px solid #e1e1e1;
+    border-bottom: 0;
+    border-right: 0;
+		height: 30px;
+    &:first-child {
+      border-top: 0;
+    }
+	}
+  .day-columns {
+    padding-left: 61px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .day-column {
+    &:not(:last-child) {
+      border-right: 1px solid #ececec;
+    }
+    height: 100%;
+    position: relative;
+    float: left;
+    // width: 14.28571%;
+  }
+
+  ul.events {
+    padding: 0;
+  }
+}

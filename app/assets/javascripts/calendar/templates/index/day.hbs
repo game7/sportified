@@ -1,42 +1,28 @@
+<div class="calendar-timetable">
+  <div class="header">
 
-<div>
-  <div class="cal-day-hour">
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">8:00</div>
-      <div class="col-xs-11"></div>
+  </div>
+  <div class="main">
+    <div class="time-column">
+      <ul class="time-labels">
+        {{#each hours as |hour|}}
+          {{timetable-time-label hour=hour}}
+        {{/each}}
+      </ul>
     </div>
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">8:30</div>
-      <div class="col-xs-11"></div>
+    <div class="content">
+      <div class="timetable">
+        <ul class="time-slots">
+          {{#each hours as |hour|}}
+          <li class="time-slot"></li>
+          <li class="time-slot"></li>
+          {{/each}}
+        </ul>
+        <ul class="day-columns">
+          {{timetable-day-column events=model width="100%"}}
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="cal-day-hour">
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">9:00</div>
-      <div class="col-xs-11"></div>
-    </div>
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">9:30</div>
-      <div class="col-xs-11"></div>
-    </div>
-    <div class="cal-day-hour">
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">10:00</div>
-      <div class="col-xs-11"></div>
-    </div>
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">10:30</div>
-      <div class="col-xs-11"></div>
-    </div>
-  </div>
-  <div class="cal-day-hour">
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">11:00</div>
-      <div class="col-xs-11"></div>
-    </div>
-    <div class="cal-day-hour-part">
-      <div class="col-xs-1">11:30</div>
-      <div class="col-xs-11"></div>
-    </div>
-  </div></div>
+
 </div>

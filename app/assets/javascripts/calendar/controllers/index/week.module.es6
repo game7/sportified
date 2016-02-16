@@ -11,6 +11,14 @@ export default Ember.Controller.extend({
     return moment(this.get('date')).year();
   }),
 
+  init: function() {
+    let hours = [];
+    for(var i = 8; i < 24; i++) {
+      hours.push(i);
+    }
+    this.set('hours', hours);  
+  },  
+
   events: Ember.computed('model', function() {
     return this.get('model') || [];
   }),
@@ -26,41 +34,23 @@ export default Ember.Controller.extend({
     return result;
   }),
 
-	daysByWeek: Ember.computed('date', function() {
+  days: Ember.computed('date', function() {
     
-    let date = moment(this.get('date')),
-      firstDayOfMonth = date.date(1).isoWeekday(),
-      days = [],
-      weeks = [],
-      events = this.get('eventsByDay');
+    let date = moment(this.get('date'));
+    let start = date.clone().subtract(date.day(), 'days');
+    let days = [];
+    let events = this.get('eventsByDay');
 
-    // pad first week to account for day of week
-    for(let i = 1; i < firstDayOfMonth; i++) {
-      days.push(null);
-    }
-
-    // add all dates in month
-    for(var i = 0; i < date.daysInMonth(); i++) {
+    for(let i = 0; i < 7; i++) {
       days.push({
-        number: i + 1,
-        events: events[i+1] || []
+        date: start.format('YYYY-MM-DD'),
+        events: events[start.date()] || []
       });
+      start.add(1,'days');
     }
+    return days;
 
-    // create array of weeks
-    while(days.length > 0) {
-      weeks.push(days.splice(0, 7));
-    }
-
-    // ensure last week has 7 positions
-    let lastWeek = weeks[weeks.length - 1];
-    while(lastWeek.length < 7) {
-      lastWeek.push(null);
-    }
-
-    return weeks;
-
-	}),
+  }),  
 
 	actions: {
 

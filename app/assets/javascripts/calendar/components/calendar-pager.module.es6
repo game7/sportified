@@ -1,12 +1,12 @@
 import Ember from 'ember'
 
 export default Ember.Component.extend({
-  today: moment().format('L'),
+  today: moment().format('YYYY-MM-DD'),
   nextDate: Ember.computed('date', function() {
-    return moment(this.get('date')).add(1,'month').format('YYYY-MM-DD')
+    return moment(this.get('date')).add((this.get('quantity') || 1), this.get('interval')).format('YYYY-MM-DD')
   }),
   prevDate: Ember.computed('date', function() {
-    return moment(this.get('date')).subtract(1,'month').format('YYYY-MM-DD')
+    return moment(this.get('date')).subtract((this.get('quantity') || 1), this.get('interval')).format('YYYY-MM-DD')
   }),
   actions: {
 
