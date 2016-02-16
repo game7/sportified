@@ -1,5 +1,9 @@
 ::Sportified::Application.routes.draw do
 
+  namespace :api do
+  get 'events/index'
+  end
+
   get 'game_result/edit'
 
   get 'game_result/update'
