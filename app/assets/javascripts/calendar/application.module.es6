@@ -1,6 +1,3 @@
-//= require jquery
-//= require jquery_ujs
-
 //= require ember
 //= require ember-data
 //= require ember-rails/application

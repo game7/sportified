@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   }),
 
   events: Ember.computed('model', function() {
-    return this.get('model') || [];
+    return this.get('model').events || [];
   }),
 
   eventsByDay: Ember.computed('date', 'events', function() {

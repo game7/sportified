@@ -8,5 +8,13 @@ export default Ember.Component.extend({
   		time = moment(event.starts_on).format('h:mm A');
   	this.set('time', time);
   },
+  didInsertElement: function() {
+  	this.$().find('a[rel=popover]').popover().click(function(e) {
+  		e.preventDefault();
+  	});
+  },
+  willDestroyElement: function() {
+  	this.$().find('a[rel=popover]').popover('destroy');
+  },
   actions: {}
 });

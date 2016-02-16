@@ -7,10 +7,14 @@ export default Ember.Route.extend({
     }
   },
   model(params) {
-    let date = params.date || moment().format('YYYY-MM-DD');
-    return sportified.events.filter(function(event) {
-      return moment(event.starts_on).isSame(date, 'day');
-    });
+    let date = moment(params.date);
+    return $.get({
+      url: '/api/events/index',
+      data: {
+        from: date.format('YYYY-MM-DD'),
+        to: date.add(1, 'days').format('YYYY-MM-DD')
+      }
+    })
   },
   renderTemplate: function() {
     this.render();
