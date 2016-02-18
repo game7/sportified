@@ -15,5 +15,8 @@ Rails.application.config.assets.version = '1.0'
     'pages.js',
     "lang/en.js",
     "fullcalendar.css",
-    "calendar/include.js"
+    "calendar/application.js",
+    "calendar/application.css",
+    "scorebook/application.js",
+    "scorebook/application.css"
   ]
