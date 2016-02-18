@@ -39,7 +39,7 @@
      var prefix = "tab-";
      
      if (hash) {
-       $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
+       $(".nav-tabs a[href='" + hash.replace(prefix, "") + "']").tab('show');
      }
      
      $('.nav-tabs a').on('show.bs.tab', function(e) {
