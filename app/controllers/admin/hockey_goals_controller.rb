@@ -4,8 +4,7 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   before_filter :list_players, :only => [:new, :edit]
   
   def new
-    puts 'WTF???'
-    @goal = Hockey::Goal.new
+    @goal = Hockey::Goal.new{|goal| goal.strength = '5-5' }
   end
 
   def create
