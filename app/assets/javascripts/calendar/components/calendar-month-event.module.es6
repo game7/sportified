@@ -5,11 +5,15 @@ export default Ember.Component.extend({
   init: function() {
   	this._super();
   	let event = this.get('event'),
-  		time = moment(event.starts_on).format('h:mm A');
-  	this.set('time', time);
+  		start = moment(event.starts_on).format('h:mma').replace('m',''),
+  		end = moment(event.ends_on).format('h:mma').replace('m','');
+	this.set('time', `${start} - ${end}`);
   },
   didInsertElement: function() {
-  	this.$().find('a[rel=popover]').popover().click(function(e) {
+  	this.$().find('a[rel=popover]').popover({
+  		content: this.$().find('.event-popover').html(),
+  		html: true
+  	}).click(function(e) {
   		e.preventDefault();
   	});
   },
