@@ -20,9 +20,3 @@ Calendar.create({
 	// LOG_VIEW_LOOKUPS:          true,
 	// LOG_RESOLVER:              true
 });
-
-// TODO - remove this when we switch to ajax data loading
-sportified.events.forEach(function(event) {
-	event.starts_on = moment(event.starts_on).add(7, 'h').toISOString();
-	event.ends_on = moment(event.ends_on).add(7, 'h').toISOString();
-});
