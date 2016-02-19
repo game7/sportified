@@ -5,7 +5,8 @@
   end
 
   namespace :api do
-  get 'events/index'
+    get 'events/index'
+    get 'games', to: 'games#index'
   end
 
   get 'game_result/edit'

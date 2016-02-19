@@ -36,4 +36,6 @@
 
 class GameSerializer < EventSerializer
 
+  attributes :id, :summary
+
 end
