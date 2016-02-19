@@ -8,4 +8,8 @@ class Api::GamesController < ApplicationController
 
   end
 
+  def show
+    render json: Game.find(params[:id])
+  end
+
 end

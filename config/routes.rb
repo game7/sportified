@@ -6,7 +6,7 @@
 
   namespace :api do
     resources :events, :only => [ :index ]
-    resources :games, :only => [ :index ]
+    resources :games, :only => [ :index, :show ]
   end
 
   get 'game_result/edit'
