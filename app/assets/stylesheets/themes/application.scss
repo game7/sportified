@@ -7,10 +7,21 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+
+// $brand-primary: #990033;
+
+// $navbar-default-bg:                #990033;
+// $navbar-default-link-color:        #ffffff;
+// $navbar-default-link-active-color: #ffb310;
+// $navbar-default-link-hover-color:  #ffb310;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "base/include";
 
 body {
-  padding-top: 40px;
+  height: 768px;
+  width: 1024px;
+  border: 1px solid #cccccc;
+  margin: auto;
 }
