@@ -94,6 +94,10 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
     chronic (0.10.2)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     concurrent-ruby (1.0.0)
     connection_pool (2.2.0)
     database_cleaner (1.5.1)
@@ -106,6 +110,12 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     ember-cli-assets (0.0.20)
+    ember-cli-rails (0.7.0)
+      cocaine (~> 0.5.8)
+      ember-cli-rails-assets (>= 0.6.1)
+      html_page (~> 0.1.0)
+      railties (>= 3.2, < 5)
+    ember-cli-rails-assets (0.6.1)
     ember-data-source (2.3.3)
       ember-source (>= 2, < 3.0)
     ember-es6_template (0.4.3)
@@ -273,6 +283,7 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    html_page (0.1.0)
     i18n (0.7.0)
     icalendar (2.3.0)
     inflecto (0.0.2)
@@ -476,6 +487,7 @@ DEPENDENCIES
   chronic
   database_cleaner
   devise
+  ember-cli-rails
   ember-rails
   ember-source (~> 2.3.1)
   enumerize

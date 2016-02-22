@@ -4,6 +4,8 @@
     get 'scorebook', to: 'scorebook#index'
   end
 
+  mount_ember_app :scorebook, to: 'apps/scorebook'
+
   namespace :api do
     resources :events, :only => [ :index ]
     resources :games, :only => [ :index, :show ]

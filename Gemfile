@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ruby '2.2.0'
 gem 'rails', '~> 4.2'
 
-gem 'active_model_serializers' 
+gem 'active_model_serializers'
 
 gem 'pg'
 gem 'hstore_accessor', '~> 0.9.0'
@@ -21,6 +21,7 @@ gem 'autoprefixer-rails'
 
 gem 'ember-rails'
 gem 'ember-source', '~> 2.3.1'
+gem 'ember-cli-rails'
 
 gem 'tenancy'
 gem 'ancestry'
@@ -85,7 +86,7 @@ end
 
 group :development do
   gem 'haml-rails'
-  gem 'nifty-generators' 
+  gem 'nifty-generators'
 end
 
 group :production do
