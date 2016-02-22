@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
 
   init(params) {
     this._super(params);
-    debugger;
     this.set('clock', Clock.create({ time: moment.duration(10, 'minutes').add(9, 'seconds') }));
   },
 
@@ -24,4 +23,4 @@ export default Ember.Controller.extend({
     }
   }
 
-})
+});

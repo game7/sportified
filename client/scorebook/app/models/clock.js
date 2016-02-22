@@ -1,15 +1,15 @@
-import Ember from 'ember'
+import Ember from 'ember';
+import moment from 'moment';
+
+const strlen = (int) => `${int}`.length < 2 ? `0${int}` : int;
 
 const {
-  Object,
   observer,
   computed,
   run
 } = Ember;
 
-const strlen = (int) => `${int}`.length < 2 ? `0${int}` : int;
-
-export default Object.extend({
+export default Ember.Object.extend({
 
   time: 0,
   ticking: false,

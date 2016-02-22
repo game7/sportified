@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'scorebook',
+    podModulePrefix: 'scorebook/pods',
     environment: environment,
     baseURL: '/apps/scorebook',
     locationType: 'auto',

@@ -1,9 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-  namespace :admin do
-    get 'scorebook', to: 'scorebook#index'
-  end
-
   mount_ember_app :scorebook, to: 'apps/scorebook'
 
   namespace :api do
