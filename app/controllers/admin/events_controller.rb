@@ -1,14 +1,14 @@
 require "chronic"
 class Admin::EventsController < Admin::BaseLeagueController
-  
+
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_events_breadcrumb  
+  before_filter :add_events_breadcrumb
   before_filter :load_event, :only => [:edit, :update, :destroy]
-  before_filter :find_season, :only => [:index, :calendar, :new, :create]
+  before_filter :find_season, :only => [:index, :new, :create]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
-  before_filter :load_location_options, :only => [:new, :edit]     
-  before_filter :load_season_links, :only => [:index, :calendar]
+  before_filter :load_location_options, :only => [:new, :edit]
+  before_filter :load_season_links, :only => [:index]
 
   def index
 
@@ -26,17 +26,13 @@ class Admin::EventsController < Admin::BaseLeagueController
     @events = @events.for_season(@season) if @season
     @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
     @events = @events.order(:starts_on)
-    
+
     respond_to do |format|
       format.html
       format.json { render json: @events }
     end
-   
-  end
 
-  def calendar
-   
-  end  
+  end
 
   def new
     if params[:clone]
@@ -75,8 +71,8 @@ class Admin::EventsController < Admin::BaseLeagueController
     else
       flash[:error] = 'Event could not be updated.'
       load_season_options
-      load_league_options      
-      load_venue_options     
+      load_league_options
+      load_venue_options
       render :action => "edit"
     end
   end
@@ -85,22 +81,22 @@ class Admin::EventsController < Admin::BaseLeagueController
     @event.destroy
     return_to_last_point :success => 'Event has been deleted.'
   end
-  
-  
+
+
   private
-  
+
   def event_params
-    params.require(:event).permit(:season_id, :league_id, :starts_on, :duration, 
+    params.require(:event).permit(:season_id, :league_id, :starts_on, :duration,
       :all_day, :location_id, :summary, :description, :show_for_all_teams
     )
   end
-  
+
   def add_events_breadcrumb
-    add_breadcrumb 'Events', admin_events_path  
+    add_breadcrumb 'Events', admin_events_path
   end
 
   def load_event
-    @event = Event.find(params[:id])   
+    @event = Event.find(params[:id])
   end
 
   def load_season_links
@@ -109,10 +105,10 @@ class Admin::EventsController < Admin::BaseLeagueController
     end
     #@season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
   end
-  
+
   def load_season_options
     @season_options = Season.order(starts_on: :desc)
-  end  
+  end
 
   def load_league_options
     @league_options = @season.leagues.asc(:name) if @season

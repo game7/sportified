@@ -1,0 +1,18 @@
+<div class="calendar-month-view">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="7">{{month}} {{year}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each daysByWeek as |week|}}
+        <tr>
+          {{#each week as |day|}}
+            {{calendar-month-day day=day}}
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

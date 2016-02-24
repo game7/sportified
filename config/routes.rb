@@ -1,5 +1,6 @@
 ::Sportified::Application.routes.draw do
 
+  mount_ember_app :calendar, to: 'apps/calendar'
   mount_ember_app :scorebook, to: 'apps/scorebook'
 
   namespace :api do
@@ -75,9 +76,7 @@
     end
     resources :divisions, :only => :index
     resources :teams, :only => :index
-    resources :events do
-      get 'calendar', :on => :collection
-    end
+    resources :events
     resources :games do
       resource :result, :controller => :game_result, :only => [:edit, :update]
       resource :statsheet, :only => [:edit]

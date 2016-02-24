@@ -5,7 +5,9 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
-    // prepend: "apps/scorebook/",
+    // fingerprint: {
+    //   prepend: "apps/calendar/"
+    // },
     emberCliFontAwesome: {
       useScss: true
     }

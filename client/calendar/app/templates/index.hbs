@@ -1,0 +1,23 @@
+<div style="background-color: #FFF; padding: 5px;">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-6 clearfix">
+          <div class="pull-left">{{outlet 'pager'}}</div>
+        </div>
+        <div class="col-sm-6 clearfix">
+          {{calendar-view-selector}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+{{!--     <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-block">Create</button>
+    </div> --}}
+    <div class="col-sm-12">
+      {{outlet}}
+    </div>
+  </div>
+</div>

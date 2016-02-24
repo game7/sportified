@@ -1,0 +1,14 @@
+<div>
+  <a rel="popover"
+    href="#"
+    role="button"
+    title="{{event.summary}}"
+    data-placement="top"
+    data-trigger="focus">{{time}}</a>
+</div>
+<div>{{event.summary}}</div>
+<div class="event-popover" style="display: none;">
+  {{time}}
+  <hr/>
+  <a href="/admin/games/{{event.id}}/edit" class="btn btn-xs btn-primary">Edit Event</a>
+</div>
