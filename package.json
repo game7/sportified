@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "postinstall": "./bin/heroku_install"
+  },
+  "devDependencies": {
+    "bower": "*"
+  },
+  "cacheDirectories": [
+    "client/calendar/node_modules",
+    "client/calendar/bower_components",
+    "client/scorebook/node_modules",
+    "client/scorebook/bower_components",
+    "node_modules"
+  ]
+}

@@ -89,11 +89,6 @@ group :development do
   gem 'nifty-generators'
 end
 
-group :production do
-  gem 'rails_12factor'
-end
-
-
 gem 'jquery-rails'
 
-# needless comment +1
+gem 'rails_12factor', group: [:staging, :production]
