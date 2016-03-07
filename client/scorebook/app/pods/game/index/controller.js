@@ -7,7 +7,12 @@ const {
 export default Ember.Controller.extend({
 
   gameController: Ember.inject.controller("game"),
+
   game: Ember.computed.reads('gameController.game'),
+  statsheet: Ember.computed.reads('gameController.statsheet'),
+  homeTeam: Ember.computed.reads('gameController.homeTeam'),
+  awayTeam: Ember.computed.reads('gameController.awayTeam'),
+
   clock: Ember.computed.reads('gameController.clock'),
 
   label: computed('clock.ticking', function() {

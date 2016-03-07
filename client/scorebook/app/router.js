@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('game', { path: '/game/:game_id' }, function() {
     this.route('goal', function() {
       this.route('new');
+      this.route('edit', { path: '/edit/:goal_id'});
     });
 
     this.route('penalty', function() {

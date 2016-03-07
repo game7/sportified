@@ -5,7 +5,13 @@
 
   namespace :api do
     resources :events, :only => [ :index ]
-    resources :games, :only => [ :index, :show ]
+    resources :games, :only => [ :index, :show ] do
+      get 'statify', :on => :member
+      put 'statify', :on => :member
+    end
+    namespace :hockey do
+      resources :statsheets, :only => [ :show ]
+    end
   end
 
   get 'game_result/edit'

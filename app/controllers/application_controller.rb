@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
     @stylesheets = []
     @breadcrumbs = []
   end
-  
+
   private
 
   def load_objects
-    
+
   end
 
   def set_breadcrumbs
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   helper_method :get_page_url
 
   def set_area_navigation
-    
+
   end
 
   def add_breadcrumb(title, url = nil)
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     # find current tenant by either full hostname or subdomain
     host = request.host.gsub("www.","").downcase
     slug = request.host.split(".").first.downcase
-    Tenant.current = Tenant.where("host = ? OR slug = ?", host, slug).first
+    ::Tenant.current = ::Tenant.where("host = ? OR slug = ?", host, slug).first
     # raise routing exception if tenant not found
     raise ActionController::RoutingError.new("Not Found") unless Tenant.current
   end
@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
   def mark_return_point
     session[:return_to] = params[:return_to] || request.env["HTTP_REFERER"]
   end
-  
+
   def return_url
     session[:return_to]
   end
@@ -86,21 +86,21 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to], response_status)
   end
 
-  
+
   def current_user_is_host?
     current_user and current_user.role? :super_admin
   end
   helper_method :current_user_is_host?
-  
+
   def current_user_is_admin?
     current_user_is_host? || has_admin_role?(current_user, Tenant.current.id)
   end
   helper_method :current_user_is_admin?
-  
+
   def verify_admin
     redirect_to root_url unless current_user_is_admin?
-  end 
-  
+  end
+
   def has_admin_role?(user, tenant_id)
     result = false
     user.roles.find_by_name(:admin).each do |role|

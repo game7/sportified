@@ -32,8 +32,10 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     active-model-adapter-source (2.0.3)
       ember-data-source (>= 1.13, < 3.0)
-    active_model_serializers (0.9.4)
-      activemodel (>= 3.2)
+    active_model_serializers (0.10.0.rc4)
+      actionpack (>= 4.0)
+      activemodel (>= 4.0)
+      railties (>= 4.0)
     activejob (4.2.5.1)
       activesupport (= 4.2.5.1)
       globalid (>= 0.3.0)
@@ -473,7 +475,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
-  active_model_serializers
+  active_model_serializers (~> 0.10.0.rc4)
   acts_as_taggable_on
   ancestry
   annotate

@@ -1,6 +1,6 @@
 <h1>Scorebook App</h1>
 <ul>
 {{#each games as |game|}}
-  <li>{{#link-to 'game' game}}{{game.summary}}{{/link-to}}</li>
+  <li>{{#link-to 'game' game.id}}{{game.summary}}{{/link-to}}</li>
 {{/each}}
 </ul>

@@ -1,17 +1,30 @@
-<div class="row">
+<div class="row" style="height: 398px;">
   <div class="col-sm-4">
-    <div style="padding: 5px">
+    {{awayTeam.name}}
+  </div>
+  <div class="col-sm-4" style="height: 100%; border-left: solid 1px #CCC; border-right: solid 1px #CCC;">
+    <h1>{{clock.minutes}}:{{clock.seconds}}</h1>
+    <button class="btn btn-default btn-block btn-lg" {{action "toggleClock"}}>{{label}}</button>
+  </div>
+  <div class="col-sm-4">
+    {{homeTeam.name}}
+  </div>
+</div>
+<div class="row" style="height: 300px; border-top: solid 1px #CCC;">
+  <div class="col-sm-3">
+    <div style="padding: 5px; padding-right: 0;">
       {{#link-to "game.penalty.new" class="btn btn-primary btn-block btn-lg" }}Penalty{{/link-to}}
       {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Shot + Goal{{/link-to}}
       <button class="btn btn-primary btn-block btn-lg">Shot + Save</button>
     </div>
   </div>
-  <div class="col-sm-4">
-    <h1>{{clock.minutes}}:{{clock.seconds}}</h1>
-    <button class="btn btn-default btn-block btn-lg" {{action "toggleClock"}}>{{label}}</button>
+  <div class="col-sm-6" style="height: 100%; border-left: solid 1px #CCC; border-right: solid 1px #CCC;">
+    {{#each statsheet.goals as |goal|}}
+      <li>{{#link-to 'game.goal.edit' goal}}{{goal.scoredBy.firstName}}{{/link-to}}</li>
+    {{/each}}
   </div>
-  <div class="col-sm-4">
-    <div style="padding: 5px">
+  <div class="col-sm-3">
+    <div style="padding: 5px;">
       {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Goal{{/link-to}}
       {{#link-to "game.penalty.new" class="btn btn-primary btn-block btn-lg" }}Penalty{{/link-to}}
       <button class="btn btn-primary btn-block btn-lg">Save</button>

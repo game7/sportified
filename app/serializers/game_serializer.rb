@@ -34,8 +34,9 @@
 #  exclude_from_team_records :boolean
 #
 
-class GameSerializer < EventSerializer
-
-  attributes :id, :summary
-
+class GameSerializer < ActiveModel::Serializer
+  attributes :id, :starts_on, :ends_on, :summary, :result, :completion
+  has_one :home_team
+  has_one :away_team
+  has_one :statsheet
 end
