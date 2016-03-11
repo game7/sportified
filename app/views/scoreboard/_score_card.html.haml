@@ -1,17 +1,19 @@
-.span4
+.col-sm-4
   .scorecard
     .inner
       .status
-        - unless game.result.pending?
+        - unless game.completion
           = game.starts_on.strftime("%l:%M %P")
         - if game.result.final?
           FINAL
+          - if game.completion.shootout?
+            = " - SO"
       .matchup
         %table
           %tbody
             = render :partial => "team", :locals => { :team => game.away_team, :name => game.away_team_name,:score => game.result.final? ? game.away_team_score : "" }
             = render :partial => "team", :locals => { :team => game.home_team, :name => game.home_team_name, :score => game.result.final? ? game.home_team_score : "" }
-      - stats = game.statsheet            
+      - stats = game.statsheet
       - if stats
         .game-links
           = link_to 'Box Score', game_box_score_path(@league.slug, game.id)
@@ -43,5 +45,5 @@
                 - if stats.overtime?
                   %td.period= stats.goals.home.overtime.count
                 %td.final= stats.goals.home.count
-          
+
 
