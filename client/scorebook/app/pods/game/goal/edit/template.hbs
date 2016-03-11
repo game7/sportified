@@ -1,27 +1,61 @@
 <h3>Edit Goal</h3>
 <hr/>
-<div class="btn-group-vertical" role="group" aria-label="...">
-  <button class="btn btn-default" {{action "up"}}><i class="fa fa-chevron-up"></i></button>
-  <button class="btn btn-default">{{count}}</button>
-  <button class="btn btn-default" {{action "down"}}><i class="fa fa-chevron-down"></i></button>
-</div>
-<div class="btn-group-vertical" role="group" aria-label="...">
-  <button class="btn btn-default" {{action "up"}}><i class="fa fa-chevron-up"></i></button>
-  <button class="btn btn-default">{{count}}</button>
-  <button class="btn btn-default" {{action "down"}}><i class="fa fa-chevron-down"></i></button>
-</div>
-:
-<div class="btn-group-vertical" role="group" aria-label="...">
-  <button class="btn btn-default" {{action "up"}}><i class="fa fa-chevron-up"></i></button>
-  <button class="btn btn-default">{{count}}</button>
-  <button class="btn btn-default" {{action "down"}}><i class="fa fa-chevron-down"></i></button>
-</div>
-<div class="btn-group-vertical" role="group" aria-label="...">
-  <button class="btn btn-default" {{action "up"}}><i class="fa fa-chevron-up"></i></button>
-  <button class="btn btn-default">{{count}}</button>
-  <button class="btn btn-default" {{action "down"}}><i class="fa fa-chevron-down"></i></button>
-</div>
+{{#nav-tabs}}
+  {{#nav-tab}}
+    {{#link-to 'game.goal.edit.time' game goal}}
+      <form>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="text" class="form-control" readonly value="{{formattedTime}}" style="width: 100px;">
+        </div>
+      </form>
+    {{/link-to}}
+  {{/nav-tab}}
+  {{#nav-tab}}
+    {{#link-to 'game.goal.edit.team' game goal}}
+      <form>
+        <div class="form-group">
+          <label>Team</label>
+          <input type="text" class="form-control" readonly value="{{team.name}}">
+        </div>
+      </form>
+    {{/link-to}}
+  {{/nav-tab}}
+  {{#nav-tab}}
+    {{#link-to 'game.goal.edit.scoredBy' game goal}}
+      <form>
+        <div class="form-group">
+          <label>Scored By</label>
+          <input type="text" class="form-control" readonly value="Chris Woodall">
+        </div>
+      </form>
+    {{/link-to}}
+  {{/nav-tab}}
+  {{#nav-tab}}
+    {{#link-to 'game.goal.edit.assistedBy' game goal}}
+      <form>
+        <div class="form-group">
+          <label>Assisted By</label>
+          <input type="text" class="form-control" readonly value="Tom Tenkely">
+        </div>
+      </form>
+    {{/link-to}}
+  {{/nav-tab}}
+  {{#nav-tab}}
+    {{#link-to 'game.goal.edit.alsoAssistedBy' game goal}}
+      <form>
+        <div class="form-group">
+          <label>Assisted By</label>
+          <input type="text" class="form-control" readonly value="Adam Mims">
+        </div>
+      </form>
+    {{/link-to}}
+  {{/nav-tab}}
+{{/nav-tabs}}
+<br/>
+{{outlet}}
 <hr/>
 {{#link-to "game.index" game class="btn btn-default" }}Back to Game{{/link-to}}
+<button class="btn btn-primary" {{action "update"}}>Update</button>
+{{goal.time}}
 
-{{outlet}}

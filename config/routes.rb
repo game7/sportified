@@ -1,5 +1,6 @@
 ::Sportified::Application.routes.draw do
 
+
   mount_ember_app :calendar, to: 'apps/calendar'
   mount_ember_app :scorebook, to: 'apps/scorebook'
 
@@ -11,6 +12,7 @@
     end
     namespace :hockey do
       resources :statsheets, :only => [ :show ]
+      resources :goals, :only => [ :create, :update ]
     end
   end
 

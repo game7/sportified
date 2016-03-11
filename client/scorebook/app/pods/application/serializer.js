@@ -7,4 +7,5 @@ export default DS.JSONAPISerializer.extend({
   keyForRelationship: function(attr, method) {
     return Ember.String.underscore(attr);
   }
+
 });

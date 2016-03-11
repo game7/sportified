@@ -1,0 +1,6 @@
+
+<div class="btn-group" role="group" aria-label="...">
+  <button type="button" class="btn btn-default btn-lg {{if awayTeamSelected "active"}}" {{action "selectAwayTeam"}}>{{awayTeam.name}}</button>
+  <button type="button" class="btn btn-default btn-lg {{if homeTeamSelected "active"}}" {{action "selectHomeTeam"}}>{{homeTeam.name}}</button>
+</div>
+{{outlet}}

@@ -14,13 +14,13 @@
   <div class="col-sm-3">
     <div style="padding: 5px; padding-right: 0;">
       {{#link-to "game.penalty.new" class="btn btn-primary btn-block btn-lg" }}Penalty{{/link-to}}
-      {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Shot + Goal{{/link-to}}
+      {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Shot + Goalx{{/link-to}}
       <button class="btn btn-primary btn-block btn-lg">Shot + Save</button>
     </div>
   </div>
   <div class="col-sm-6" style="height: 100%; border-left: solid 1px #CCC; border-right: solid 1px #CCC;">
     {{#each statsheet.goals as |goal|}}
-      <li>{{#link-to 'game.goal.edit' goal}}{{goal.scoredBy.firstName}}{{/link-to}}</li>
+      <li>{{#link-to 'game.goal.edit' goal}}{{goal.formattedTime}} - {{goal.scoredBy.firstName}} {{goal.scoredBy.lastName}}{{/link-to}}</li>
     {{/each}}
   </div>
   <div class="col-sm-3">
