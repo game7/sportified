@@ -15,7 +15,8 @@ module TeamsHelper
   def display_result(game, team)
     if game.has_result?
       result = TeamGameResult.new(:team => team, :game => game)
-      result.decision.first.capitalize + ' ' + result.scored.to_s + '-' + result.allowed.to_s
+      postfix = result.completed_in == 'shootout' ? " (SO)" : ""
+      result.decision.first.capitalize + ' ' + result.scored.to_s + '-' + result.allowed.to_s + postfix
     end
   end
 

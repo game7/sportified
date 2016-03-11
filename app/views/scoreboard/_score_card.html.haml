@@ -1,4 +1,4 @@
-.span4
+.col-sm-4
   .scorecard
     .inner
       .status
@@ -6,6 +6,8 @@
           = game.starts_on.strftime("%l:%M %P")
         - if game.has_result?
           FINAL
+          - if game.result.completed_in == 'shootout'
+            = " - SO"
       .matchup
         %table
           %tbody
