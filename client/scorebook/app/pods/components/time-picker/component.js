@@ -6,11 +6,11 @@ export default Ember.Component.extend({
     this._super(...arguments);
   },
 
-  time: moment.duration(20, 'minutes'),
+  time: Ember.computed.oneWay('selected'),
 
   actions: {
-    onTimeChanged: function(amount, part) {
-      this.get('onTimeChanged')(amount, part)
+    onTimeChanged: function(time) {
+      this.get('onTimeChanged')(time)
     }
   }
 

@@ -14,18 +14,33 @@
   <div class="col-sm-3">
     <div style="padding: 5px; padding-right: 0;">
       {{#link-to "game.penalty.new" class="btn btn-primary btn-block btn-lg" }}Penalty{{/link-to}}
-      {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Shot + Goalx{{/link-to}}
+      {{#link-to "game.goal.new" (query-params teamId=awayTeam.id) class="btn btn-primary btn-block btn-lg" }}Shot + Goalx{{/link-to}}
       <button class="btn btn-primary btn-block btn-lg">Shot + Save</button>
     </div>
   </div>
   <div class="col-sm-6" style="height: 100%; border-left: solid 1px #CCC; border-right: solid 1px #CCC;">
-    {{#each statsheet.goals as |goal|}}
-      <li>{{#link-to 'game.goal.edit' goal}}{{goal.formattedTime}} - {{goal.scoredBy.firstName}} {{goal.scoredBy.lastName}}{{/link-to}}</li>
-    {{/each}}
+    {{#nav-tabs}}
+      {{#nav-tab url=(query-params tab="scoring")}}Scoring{{/nav-tab}}
+      {{#nav-tab url=(query-params tab="penalties")}}Penalties{{/nav-tab}}
+      {{#nav-tab url=(query-params tab="shots")}}Shots{{/nav-tab}}
+      {{#nav-tab url=(query-params tab="all")}}All{{/nav-tab}}
+    {{/nav-tabs}}
+    {{#tab-content name="scoring" selected=tab}}
+      {{goal-list statsheet=statsheet}}
+    {{/tab-content}}
+    {{#tab-content name="penalties" selected=tab}}
+      {{penalty-list statsheet=statsheet}}
+    {{/tab-content}}
+    {{#tab-content name="shots" selected=tab}}
+      <h4>shots</h4>
+    {{/tab-content}}
+    {{#tab-content name="all" selected=tab}}
+      {{event-list statsheet=statsheet}}
+    {{/tab-content}}
   </div>
   <div class="col-sm-3">
     <div style="padding: 5px;">
-      {{#link-to "game.goal.new" class="btn btn-primary btn-block btn-lg" }}Goal{{/link-to}}
+      {{#link-to "game.goal.new" (query-params teamId=homeTeam.id) class="btn btn-primary btn-block btn-lg" }}Goal{{/link-to}}
       {{#link-to "game.penalty.new" class="btn btn-primary btn-block btn-lg" }}Penalty{{/link-to}}
       <button class="btn btn-primary btn-block btn-lg">Save</button>
     </div>

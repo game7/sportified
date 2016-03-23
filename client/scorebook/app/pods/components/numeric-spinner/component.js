@@ -31,10 +31,18 @@ export default Ember.Component.extend({
 
   actions: {
     up() {
-      this.get('onUp') ? this.get('onUp')() : this.incrementProperty('value', this.get('step'));
+      if (this.get('onUp')) {
+        this.get('onUp')();
+      } else {
+        this.incrementProperty('value', this.get('step'));
+      }
     },
     down() {
-      this.get('onUp') ? this.get('onDown')() : this.decrementProperty('value', this.get('step'));
+      if (this.get('onUp')) {
+        this.get('onDown')();
+      } else {
+        this.decrementProperty('value', this.get('step'));
+      }
     }
   }
 

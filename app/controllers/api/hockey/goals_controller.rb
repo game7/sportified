@@ -3,6 +3,12 @@ class Api::Hockey::GoalsController < ApplicationController
   respond_to :json
 
   def create
+    goal = ::Hockey::Goal.create(goal_params)
+    if goal.valid?
+      render json: goal, status: :ok
+    else
+      render json: Sportified::ErrorSerializer.serialize(goal.errors), status: :unprocessable_entity
+    end
   end
 
   def update

@@ -1,0 +1,15 @@
+<table class="table table-bordered table-striped">
+  <tbody>
+  {{#each goals as |goal|}}
+    <tr>
+      <td>{{#link-to 'game.goal.edit' goal class="btn btn-primary"}}Edit{{/link-to}}</td>
+      <td>{{goal.team.shortName}}</td>
+      <td>{{goal.period}}</td>
+      <td>{{goal.formattedTime}}</td>
+      <td>{{goal.scoredBy.jerseyNumber}}</td>
+      <td>{{goal.assistedBy.jerseyNumber}}</td>
+      <td>{{goal.alsoAssistedBy.jerseyNumber}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

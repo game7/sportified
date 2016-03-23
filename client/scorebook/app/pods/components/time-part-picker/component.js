@@ -29,7 +29,7 @@ export default NumericSpinner.extend({
     const step = this.get('step');
     const timePart = this.get('time').get(this.get('part'));
 
-    if (step == 1) {
+    if (step === 1) {
       return timePart % 10;
     }
     return Math.floor(timePart / step);

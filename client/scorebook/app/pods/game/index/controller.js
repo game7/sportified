@@ -5,6 +5,7 @@ const {
 } = Ember;
 
 export default Ember.Controller.extend({
+  queryParams: ['tab'],
 
   gameController: Ember.inject.controller("game"),
 

@@ -27,6 +27,10 @@ class Hockey::Goal < ActiveRecord::Base
 
   STR = %w[5-5 5-4 5-3 4-5 4-4 4-3 3-5 3-4 3-3 6-5 6-4 6-3]
 
+  validates :statsheet, presence: true
+  validates :team, presence: true
+  validates :scored_by, presence: true
+
   validates :period, presence: true
 
   validates :minute, presence: true
