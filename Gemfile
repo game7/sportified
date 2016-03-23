@@ -25,7 +25,7 @@ gem 'ember-cli-rails'
 
 gem 'tenancy'
 gem 'ancestry'
-gem 'acts_as_taggable_on'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'mongoid', '~> 4.0.1'
 #gem 'bson_ext'
