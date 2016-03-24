@@ -21,7 +21,7 @@
 
 class Tenant < ActiveRecord::Base
   include Tenancy::Resource
-  
+
   has_and_belongs_to_many :users
 
   before_save :check_and_set_slug
@@ -37,14 +37,22 @@ class Tenant < ActiveRecord::Base
     def current=(tenant)
       Thread.current[:current_tenant] = tenant
     end
-  end  
+  end
 
   def check_and_set_slug
     self.slug ||= self.host.parameterize
   end
-  
+
   def apply_mongo_user_ids!(user)
-    
+
+  end
+
+  def apply_mongo! mongo
+    self.twitter_id = mongo["twitter_id"]
+    self.facebook_id = mongo["facebook_id"]
+    self.instagram_id = mongo["instagram_id"]
+    self.foursquare_id = mongo["foursquare_id"]
+    self.google_plus_id = mongo["google_plus_id"]
   end
 
 end
