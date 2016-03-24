@@ -36,11 +36,11 @@
 
 class Game < Event
   extend Enumerize
- 
-  belongs_to :home_team, :class_name => "Team" 
+
+  belongs_to :home_team, :class_name => "Team"
   belongs_to :away_team, :class_name => "Team"
-  belongs_to :statsheet, polymorphic: true  
-  
+  belongs_to :statsheet, polymorphic: true
+
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
 
@@ -65,29 +65,29 @@ class Game < Event
   end
 
   def opponent_name(team)
-    throw :team_not_present unless has_team?(team)  
-    id = team.class == Team ? team.id : team  
+    throw :team_not_present unless has_team?(team)
+    id = team.class == Team ? team.id : team
     id == away_team_id ? home_team_name : away_team_name
   end
 
   def opponent(team)
-    throw :team_not_present unless has_team?(team) 
-    id = team.class == Team ? team.id : team   
+    throw :team_not_present unless has_team?(team)
+    id = team.class == Team ? team.id : team
     id == away_team_id ? home_team : away_team
   end
-  
+
   def team_scored(team)
     self.home_team_id == team.id ? self.home_team_score : self.away_team_score
   end
-  
+
   def team_allowed(team)
-    self.home_team_id == team.id ? self.away_team_score : self.home_team_score    
+    self.home_team_id == team.id ? self.away_team_score : self.home_team_score
   end
-  
+
   def team_margin(team)
     team_scored(team) - team_allowed(team)
   end
-  
+
   def team_decision(team)
     margin = team_margin(team)
     'T' if margin == 0
@@ -143,25 +143,32 @@ class Game < Event
   def can_add_statsheet?
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
-  
+
   scope :without_result, ->{ where(result: nil) }
-  
+
   def apply_mongo_home_team_id! mongo_id
-    self.home_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first    
+    self.home_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first
   end
-  
+
   def apply_mongo_away_team_id! mongo_id
     self.away_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first
   end
-  
-  def apply_mongo_result! mongo_result
-    if mongo_result
-      self.home_team_score = mongo_result['home_score']
-      self.away_team_score = mongo_result['away_score']
-      self.result = 'final'
-      self.completion = mongo_result['completed_in']
-      self.exclude_from_team_records = mongo_result['exclude_from_team_records']
+
+  def apply_mongo! mongo
+    if mongo
+      if mongo['result']
+        self.home_team_score = mongo['result']['home_score']
+        self.away_team_score = mongo['result']['away_score']
+        self.result = 'final'
+        self.completion = mongo['result']['completed_in']
+      end
+
+      self.home_team_custom_name = mongo['home_custom_name']
+      self.away_team_custom_name = mongo['away_custom_name']
+      self.home_team_name = mongo['home_team_name']
+      self.away_team_name = mongo['away_team_name']
+      self.exclude_from_team_records = mongo['exclude_from_team_records']
     end
   end
-  
+
 end

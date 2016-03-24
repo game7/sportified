@@ -10,7 +10,7 @@
   .col-sm-8
     = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
   .col-sm-4
-    = select("team", :id, @team_options, {}, { :class => "redirect_to form-control", :style => "margin: 0px 0 0 0;" }) if @league   
+    = select("team", :id, @team_options, {}, { :class => "redirect_to form-control", :style => "margin: 0px 0 0 0;" }) if @league
 
 %table.table.table-striped.table-bordered
   - events = @events.entries
@@ -37,12 +37,13 @@
               - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
               = link_to "Clone", copy_url, :class => 'btn btn-default btn-xs'
         %td
-          .visible-xs= event.location.short_name
-          .hidden-xs= event.location.name
+          - if event.location
+            .visible-xs= event.location.short_name
+            .hidden-xs= event.location.name
       - last_date = event.starts_on.to_date
 - if events.count > 4
   .row
     .col-sm-8
-      = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }  
+      = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
 
 

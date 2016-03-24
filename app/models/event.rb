@@ -36,22 +36,22 @@
 
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
-  
+
   belongs_to :league
   validates_presence_of :league_id
-  
+
   belongs_to :season
   validates_presence_of :season_id
-  
+
   belongs_to :location
-  validates_presence_of :location_id
-  
+  # validates_presence_of :location_id
+
   validates_presence_of :starts_on, :season_id
   before_save :set_starts_on
   def set_starts_on
     self.starts_on = starts_on.change(:hour => 0) if all_day
   end
-  
+
   validates_presence_of :duration
   validates_numericality_of :duration, :only_integer => true
   before_save :set_duration
@@ -69,7 +69,7 @@ class Event < ActiveRecord::Base
   scope :after, ->(after) { where('starts_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
 
-  class << self  
+  class << self
     def for_season(s)
       id = s.class == Season ? s.id : s
       where(:season_id => id)
@@ -79,15 +79,15 @@ class Event < ActiveRecord::Base
       where( :league_id => id)
     end
   end
-  
+
   def apply_mongo_season_id! season_id
     self.season = Season.unscoped.where(mongo_id: season_id.to_s).first
   end
-  
+
   def apply_mongo_league_id! league_id
     self.league = League.unscoped.where(mongo_id: league_id.to_s).first
-  end  
-  
+  end
+
   def apply_mongo_venue_id! venue_id
     # puts "seeking location with mongo_id #{venue_id.to_s}"
     self.location = Location.unscoped.where(mongo_id: venue_id.to_s).first
@@ -101,5 +101,5 @@ class Event < ActiveRecord::Base
       self.location = Location.first
     end
   end
-  
+
 end
