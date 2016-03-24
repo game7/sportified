@@ -1,21 +1,22 @@
 - title 'Events'
-.row.options
-  - if @date
-    = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-  .col-sm-3
-    = select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })
 
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %td Date
-      %td Time
-      %td Type
-      %td Description
-      %td Venue
-      %td Actions
-    %tbody
-      = render :partial => 'event', :collection => @events
+= render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => 7 }
+
+
+- @days.each do |day, events|
+  .panel.panel-default
+    .panel-heading
+      %strong= day
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th.col-xs-1 Time
+          %th.col-xs-1 Type
+          %th.col-xs-5 Description
+          %th.col-xs-2 Venue
+          %th.col-xs-3 Actions
+      %tbody
+        = render :partial => 'event', :collection => events
 
 = link_to "New Event", new_admin_event_path(:season_id => params[:season_id]), :class => "btn btn-primary"
 = link_to "New Game", new_admin_game_path(:season_id => params[:season_id]), :class => "btn btn-primary"

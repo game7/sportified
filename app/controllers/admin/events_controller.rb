@@ -4,7 +4,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_events_breadcrumb
   before_filter :load_event, :only => [:edit, :update, :destroy]
-  before_filter :find_season, :only => [:index, :new, :create]
+  before_filter :find_season, :only => [:new, :create]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
   before_filter :load_location_options, :only => [:new, :edit]
@@ -12,20 +12,20 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   def index
 
-    unless @season
-      @date = params[:date] ? Date.parse(params[:date]) : Date.current
-      @days_in_future = 14
-      @days_in_past = 7
-      @start_date = @date - @days_in_past - 1
-      @end_date = @date + @days_in_future + 1
-      @next_date = @date + @days_in_future + @days_in_past
-      @prev_date = @date - @days_in_future - @days_in_past
-    end
+    @date = params[:date] ? Date.parse(params[:date]) : Date.current
+    @days_in_future = 7
+    @days_in_past = 7
+    @start_date = @date.at_beginning_of_week
+    @end_date = @date.at_end_of_week
+    @next_date = @date + 7
+    @prev_date = @date - 7
 
     @events = Event.all.includes(:location)
-    @events = @events.for_season(@season) if @season
-    @events = @events.between(@start_date, @end_date) unless @division.present? || @season.present?
+    @events = @events.after(@start_date.beginning_of_day).before(@end_date.end_of_day)
     @events = @events.order(:starts_on)
+    @days = @events.group_by do |event|
+      event.starts_on.strftime('%A %-m/%-e/%y')
+    end
 
     respond_to do |format|
       format.html

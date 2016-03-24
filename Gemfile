@@ -50,6 +50,8 @@ gem 'fog'
 gem 'rmagick', '~> 2.13.4'
 gem 'remotipart', '~> 1.0'
 
+gem "simple_calendar", "~> 2.0"
+
 gem "RedCloth"
 
 gem 'unicorn'

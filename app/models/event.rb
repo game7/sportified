@@ -80,6 +80,10 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def start_time
+    self.starts_on
+  end
+
   def apply_mongo_season_id! season_id
     self.season = Season.unscoped.where(mongo_id: season_id.to_s).first
   end
