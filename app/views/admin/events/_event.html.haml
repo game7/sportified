@@ -1,14 +1,30 @@
 %tr{ :id => "event_#{event.id.to_s}" }
   %td= event.starts_on.strftime('%l:%M %p')
   %td= event.class.name
-  %td
-    = event.summary
+  %td= event.summary
   %td= event.location.short_name if event.location
   %td
-    - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
-    = link_to "Edit", edit_url, :class => 'btn btn-xs btn-primary'
-    - if event.class.to_s == 'Game'
-      = link_to 'Result', edit_admin_game_result_path(event.id), :remote => true, :class => "btn btn-xs btn-primary"
-      = link_to "Stats", edit_admin_game_statsheet_path(event.id), :class => "btn btn-xs btn-primary"
-    = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+    .btn-group.btn-block.pull-right
+      %button.btn.btn-block.btn-primary.btn-sm.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}
+        Action
+        %span.caret
+      %ul.dropdown-menu
+        %li.dropdown-header Event
+        %li
+          - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
+          = link_to 'Edit', edit_url
+        %li
+          - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
+          = link_to 'Clone', copy_url
+        %li
+          = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+        - if event.class.to_s == 'Game'
+          %li.divider{role: "separator"}
+          %li.dropdown-header Game
+          %li
+            = link_to 'Result', edit_admin_game_result_path(event.id), :remote => true
+            = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
+
+
+
 
