@@ -1,9 +1,9 @@
 class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
-  
+
   before_filter :find_statsheet
   before_filter :find_goaltender, :only => [:edit, :update, :destroy]
   before_filter :list_players, :only => [:new, :edit]
-  
+
   def new
     @goaltender = @statsheet.goaltenders.build()
   end
@@ -31,9 +31,9 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   end
 
   def destroy
-    flash[:notice] = "Goaltender has been deleted" if @goaltender.delete 
+    flash[:notice] = "Goaltender has been deleted" if @goaltender.delete
   end
-  
+
   def autoload
     @statsheet.goaltenders.all.each{|g|g.delete}
     @statsheet.autoload_goaltenders
@@ -44,13 +44,13 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
       flash[:error] = "Goaltenders could not be loaded."
     end
   end
-  
+
   private
-  
+
   def hockey_goaltender_params
     params.required(:hockey_goaltender_result).permit(:team_id, :player_id, :minutes_played, :shots_against, :goals_against)
   end
-  
+
   def find_statsheet
     @statsheet = Hockey::Statsheet.find(params['hockey_statsheet_id'])
   end
@@ -58,9 +58,9 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   def find_goaltender
     @goaltender = @statsheet.goaltenders.find(params['id'])
   end
-  
+
   def list_players
-    @players = @statsheet.skaters.playing
+    @players = @statsheet.skaters.playing.order(last_name: :asc)
   end
 
 
