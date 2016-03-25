@@ -52,6 +52,8 @@ gem 'remotipart', '~> 1.0'
 
 gem "simple_calendar", "~> 2.0"
 
+gem 'invoicing', '~> 1.0.1'
+
 gem "RedCloth"
 
 gem 'unicorn'
