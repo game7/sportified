@@ -1,0 +1,19 @@
+%h1 Listing registrar_sessions
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @registrar_sessions.each do |registrar_session|
+      %tr
+        %td= link_to 'Show', registrar_session
+        %td= link_to 'Edit', edit_registrar_session_path(registrar_session)
+        %td= link_to 'Destroy', registrar_session, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Session', new_registrar_session_path
