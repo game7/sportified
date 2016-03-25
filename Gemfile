@@ -86,6 +86,7 @@ group :test do
   gem 'rspec-autotest'
   gem 'autotest-notification'
   gem 'database_cleaner'
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development do

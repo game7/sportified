@@ -1,6 +1,9 @@
 ::Sportified::Application.routes.draw do
 
 
+  namespace :registrar do
+    resources :sessions
+  end
   mount_ember_app :calendar, to: 'apps/calendar'
   mount_ember_app :scorebook, to: 'apps/scorebook'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324232945) do
+ActiveRecord::Schema.define(version: 20160325205439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -358,6 +358,19 @@ ActiveRecord::Schema.define(version: 20160324232945) do
   end
 
   add_index "posts", ["tenant_id"], name: "index_posts_on_tenant_id", using: :btree
+
+  create_table "registrar_sessions", force: :cascade do |t|
+    t.integer  "registrable_id"
+    t.string   "registrable_type"
+    t.string   "title",                   limit: 30
+    t.text     "description"
+    t.integer  "registrations_allowed"
+    t.integer  "registrations_available"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "registrar_sessions", ["registrable_type", "registrable_id"], name: "index_registrar_sessions_on_registrable_type_and_registrable_id", using: :btree
 
   create_table "seasons", force: :cascade do |t|
     t.string   "name",       limit: 255
