@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160325205439) do
+ActiveRecord::Schema.define(version: 20160325214050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,7 +359,23 @@ ActiveRecord::Schema.define(version: 20160325205439) do
 
   add_index "posts", ["tenant_id"], name: "index_posts_on_tenant_id", using: :btree
 
+  create_table "registrar_registration_types", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "registrar_session_id"
+    t.string   "title",                limit: 30
+    t.text     "description"
+    t.decimal  "price",                           precision: 20, scale: 4
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+  end
+
+  add_index "registrar_registration_types", ["registrar_session_id"], name: "index_registrar_registration_types_on_registrar_session_id", using: :btree
+  add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
+
   create_table "registrar_sessions", force: :cascade do |t|
+    t.integer  "tenant_id"
     t.integer  "registrable_id"
     t.string   "registrable_type"
     t.string   "title",                   limit: 30
@@ -371,6 +387,7 @@ ActiveRecord::Schema.define(version: 20160325205439) do
   end
 
   add_index "registrar_sessions", ["registrable_type", "registrable_id"], name: "index_registrar_sessions_on_registrable_type_and_registrable_id", using: :btree
+  add_index "registrar_sessions", ["tenant_id"], name: "index_registrar_sessions_on_tenant_id", using: :btree
 
   create_table "seasons", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -520,4 +537,5 @@ ActiveRecord::Schema.define(version: 20160325205439) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "registrar_registration_types", "registrar_sessions"
 end

@@ -2,6 +2,9 @@
 
 
   namespace :registrar do
+    resources :registration_types
+  end
+  namespace :registrar do
     resources :sessions
   end
   mount_ember_app :calendar, to: 'apps/calendar'

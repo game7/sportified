@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: registrar_sessions
+#
+#  id                      :integer          not null, primary key
+#  tenant_id               :integer
+#  registrable_id          :integer
+#  registrable_type        :string
+#  title                   :string(30)
+#  description             :text
+#  registrations_allowed   :integer
+#  registrations_available :integer
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#
+
 class Registrar::SessionsController < ApplicationController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_action :set_registrar_session, only: [:show, :edit, :update, :destroy]

@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Session:
+  = @registrar_registration_type.session
+%p
+  %b Title:
+  = @registrar_registration_type.title
+%p
+  %b Description:
+  = @registrar_registration_type.description
+%p
+  %b Price:
+  = @registrar_registration_type.price
+%p
+  %b Quantity allowed:
+  = @registrar_registration_type.quantity_allowed
+%p
+  %b Quantity available:
+  = @registrar_registration_type.quantity_available
+
+= link_to 'Edit', edit_registrar_registration_type_path(@registrar_registration_type)
+\|
+= link_to 'Back', registrar_registration_types_path
