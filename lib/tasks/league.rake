@@ -1,6 +1,6 @@
 
 namespace :league do
-  
+
   desc "Restore matchups from team records"
   task :restore_matchups => :environment do
     Tenant.all.each do |tenant|
@@ -23,7 +23,7 @@ namespace :league do
           unless opponent
             puts "    RUH-ROH - opposing team could not be found!!!!!"
             next
-          end          
+          end
           if game.result.home_score == result.scored
             puts "    -- #{team.name} should be the HOME team (#{game.home_team_id} == #{team.id})"
             unless game.home_team_id == team.id
@@ -37,7 +37,7 @@ namespace :league do
               puts "    --- but they are not so let's SET AWAY TEAM to #{opponent.name}"
               puts "    --- #{game.away_team_id} set to #{opponent.id}"
               game.away_team_id = opponent.id
-              dirty = true              
+              dirty = true
             end
           elsif game.result.away_score == result.scored
             puts "    -- #{team.name} should be the AWAY team (#{game.away_team_id} == #{team.id})"
@@ -52,8 +52,8 @@ namespace :league do
               puts "    --- but they are not so let's SET HOME TEAM to #{opponent.name}"
               puts "    --- #{game.home_team_id} set to #{opponent.id}"
               game.home_team_id = opponent.id
-              dirty = true              
-            end            
+              dirty = true
+            end
           else
             "    -- RUH-ROH... this result doesn't match the game..."
           end
@@ -68,7 +68,7 @@ namespace :league do
       end
     end
   end
-  
+
   desc "Update hockey statsheet player names"
   task :update_statsheet_player_names => :environment do
     Tenant.all.each do |tenant|
@@ -92,32 +92,24 @@ namespace :league do
       end
     end
   end
-  
+
   desc "Update all player stats"
   task :update_all_statistics => :environment do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
-      season = Season.where(:name => '2014 Summer').first
-      Game.for_season(season).each do |game|
-        puts "NEXT GAME: #{game.summary} (#{game.starts_on.strftime('%m/%d/%y')})"
-        statsheet = game.statsheet
-        if statsheet
-          puts "-- HAS STATSHEET"
-          if statsheet.posted?
-            puts "---- IT'S POSTED"
-            puts "---- UNPOSTING..."
-            Hockey::Statsheet::Processor.unpost statsheet
-            puts "---- DONE UNPOSTING"
-            puts "---- RE-POSTING..."
-            Hockey::Statsheet::Processor.post statsheet
-            puts "---- DONE RE-POSTING"
-          end
-        end
+      puts "Resetting Skater Records"
+      Hockey::Skater::Record.all.each{|record| record.reset! }
+      puts "Resetting Goalie Records"
+      Hockey::Goaltender::Record.all.each{|record| record.reset! }
+      Hockey::Statsheet.all.each do |statsheet|
+        puts "---- POSTING #{statsheet.id}"
+        Hockey::Statsheet::Processor.post statsheet
+        puts "---- DONE POSTING"
       end
     end
-  end  
-  
+  end
+
   desc "Brandify teams"
   task :brandify_teams => :environment do
     Tenant.all.each do |tenant|

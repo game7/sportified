@@ -55,7 +55,7 @@ en:
       description: "Upload a document that can viewed or downloaded by visitors"
     feed:
       name: "Feed"
-      description: "A feed of posts"      
+      description: "A feed of posts"
     image:
       name: "Image"
       description: "Upload an image that can be viewed by visitors"
@@ -68,70 +68,70 @@ en:
   hockey:
     statistics:
       tokens:
-        gp:
+        games_played:
           name: Games Played
           col: GP
-        g:
+        goals:
           name: Goals
           col: G
-        a:
+        assists:
           name: Assists
           col: A
-        pts:
+        points:
           name: Points
           col: PTS
-        pen:
+        penalties:
           name: Penalties
           col: PEN
-        pim:
+        penalty_minutes:
           name: Penalty Minutes
           col: PIM
-        pen_minor:
+        minor_penalties:
           name: Minor Penalties
           col: MNR
-        pen_major:
+        major_penalties:
           name: Major Penalites
           col: MJR
-        pen_misc:
+        misconduct_penalties:
           name: Misconduct Penalties
           col: MSC
-        pen_game:
+        game_misconduct_penalties:
           name: Game Misconduct Penalties
           col: GMSC
-        hat:
+        hat_tricks:
           name: Hat Tricks
           col: HAT
-        plmkr:
+        playmakers:
           name: Playmaker
           col: PMKR
-        gordie:
+        gordie_howes:
           name: Gordie Howe
           col: GORDIE
-        eject:
+        ejections:
           name: Ejections
           col: EJECT
         g_gp:
           name: Games Played
           col: GP
-        g_toi:
+        minutes_played:
           name: Minutes Played
           col: TOI
-        g_sa:
+        shots_against:
           name: Shots Against
-          col: SA  
-        g_ga:
+          col: SA
+        goals_against:
           name: Goals Against
           col: GA
-        g_sv:
+        saves:
           name: Saves
           col: SV
-        g_svp:
+        save_percentage:
           name: Save Percent
           col: SV%
-        g_gaa:
+        goals_against_average:
           name: Goals Against Average
           col: GAA
-        g_sa:
+        shutouts:
           name: Shutouts
           col: SO
         g_soa:
@@ -166,4 +166,4 @@ en:
           col: W
         g_totl:
           name: Total Losses
-          col: L  
+          col: L
