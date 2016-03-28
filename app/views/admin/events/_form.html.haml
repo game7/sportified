@@ -3,7 +3,7 @@
   = f.input :league_id, :as => :select, :collection => @league_options if params['action'] == 'new'
   = f.input :starts_on, :as => :string, :input_html => { :value => @event.starts_on ? I18n.l(@event.starts_on) : "" }
   = f.input :duration
-  = f.input :all_day, :as => :boolean
+  = f.input :all_day, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :location_id, :as => :select, :collection => @location_options
   = f.input :summary
   - f.input :description, :as => :text
@@ -14,7 +14,7 @@
     $(document).ready(function(){
         $("select#event_season_id").change(function(){
             var id_value_string = $(this).val();
-            if (id_value_string == "") { 
+            if (id_value_string == "") {
                 // if the id is empty remove all the sub_selection options from being selectable and do not do any ajax
                 $("select[id$='league_id'] option").remove();
                 var row = "<option value=\"" + "" + "\">" + "" + "</option>";
@@ -29,10 +29,10 @@
                   error: function(XMLHttpRequest, errorTextStatus, error){
                       alert("Failed to submit : "+ errorTextStatus+" ;"+error);
                   },
-                  success: function(data){  
+                  success: function(data){
                       $("select[id$='league_id'] option").remove();
                       var row = "<option value=\"" + "" + "\">" + "" + "</option>";
-                      $(row).appendTo("select[id$='league_id']"); 
+                      $(row).appendTo("select[id$='league_id']");
                       $.each(data, function(i, j){
                           row = "<option value=\"" + j._id + "\">" + j.name + "</option>";
                           $(row).appendTo("select[id$='league_id']");
@@ -42,5 +42,5 @@
             };
         });
     });
-    
-    
+
+

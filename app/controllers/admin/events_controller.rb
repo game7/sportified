@@ -40,7 +40,7 @@ class Admin::EventsController < Admin::BaseLeagueController
       @event = clone.dup
     else
       @event = Event.new(:season => @season, :league_id => params[:league_id])
-      @event.venue_id = @venue_options.first.id unless @venue_options.empty?
+      @event.location_id = @location_options.first.id unless @location_options.empty?
     end
   end
 
@@ -57,7 +57,7 @@ class Admin::EventsController < Admin::BaseLeagueController
       flash[:error] = 'Event could not be created.'
       load_season_options
       load_league_options
-      load_venue_options
+      load_location_options
       render :action => "new"
     end
   end
@@ -72,7 +72,7 @@ class Admin::EventsController < Admin::BaseLeagueController
       flash[:error] = 'Event could not be updated.'
       load_season_options
       load_league_options
-      load_venue_options
+      load_location_options
       render :action => "edit"
     end
   end
@@ -111,7 +111,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   end
 
   def load_league_options
-    @league_options = @season.leagues.asc(:name) if @season
+    @league_options = @season.leagues.order(:name) if @season
     @league_options ||= []
   end
 

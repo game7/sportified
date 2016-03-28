@@ -1,15 +1,15 @@
 require 'chronic'
 class Admin::GamesController < Admin::BaseLeagueController
-  
-  before_filter :mark_return_point, :only => [:new, :edit]  
+
+  before_filter :mark_return_point, :only => [:new, :edit]
   before_filter :add_games_breadcrumb
-  before_filter :find_game, :only => [:edit, :result, :update]   
+  before_filter :find_game, :only => [:edit, :result, :update]
   before_filter :find_season, :only => [:new, :edit]
   before_filter :load_season_options, :only => [:new, :edit]
   before_filter :load_league_options, :only => [:new, :edit]
   before_filter :load_team_options, :only => [:edit]
-  before_filter :load_location_options, :only => [:new, :edit] 
- 
+  before_filter :load_location_options, :only => [:new, :edit]
+
 
   def new
     if params[:clone]
@@ -20,14 +20,14 @@ class Admin::GamesController < Admin::BaseLeagueController
       @game.season = @season if @season
       @game.league_id = params[:league_id] || @league_options.first.id if @league_options.length == 1
       @game.league = @league if @league
-      @game.venue_id = @venue_options.first.id if @venue_options.length == 1
+      @game.location_id = @location_options.first.id if @location_options.length == 1
     end
     load_team_options
   end
 
   def edit
   end
-  
+
   def result
   end
 
@@ -59,35 +59,35 @@ class Admin::GamesController < Admin::BaseLeagueController
       load_season_options
       load_league_options
       load_team_options
-      load_location_options     
+      load_location_options
       render :action => "edit"
     end
   end
-  
+
   private
-  
+
   def game_params
-    params.require(:game).permit(:season_id, :league_id, :starts_on, :duration, 
+    params.require(:game).permit(:season_id, :league_id, :starts_on, :duration,
       :location_id, :summary, :description, :show_for_all_teams,
       :away_team_id, :away_team_custom_name, :away_team_name,
       :home_team_id, :home_team_custom_name, :home_team_name,
       :text_before, :text_after, :show_for_all_teams,
       :away_team_score, :home_team_score, :completion, :result
-    )    
+    )
   end
-  
+
   def add_games_breadcrumb
-    add_breadcrumb 'Games', admin_games_path  
+    add_breadcrumb 'Games', admin_games_path
   end
 
   def load_season_options
     @season_options = Season.order(:starts_on => :desc)
   end
-  
+
   def load_league_options
-    @league_options = []    
+    @league_options = []
     @league_options = @season.leagues.order(:name) if @season
-  end  
+  end
 
   def load_location_options
     @location_options = Location.order(:name).entries
@@ -104,13 +104,13 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def find_game
-    @game = Game.find(params[:id])  
+    @game = Game.find(params[:id])
   end
 
   def find_season
     @season = @game.season if @game
     @season ||= Season.find(params[:season_id]) if params[:season_id]
-    @season ||= Season.most_recent 
+    @season ||= Season.most_recent
   end
 
 end
