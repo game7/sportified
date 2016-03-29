@@ -1,6 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-
   namespace :registrar do
     resources :registration_types
   end
@@ -97,7 +96,10 @@
     end
 
     resources :clubs
-    resources :locations
+    resources :locations do
+      resources :playing_surfaces
+      resources :locker_rooms
+    end
     resources :events
     resources :game_imports do
       post 'complete', :on => :member

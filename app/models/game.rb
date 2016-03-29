@@ -32,6 +32,9 @@
 #  result                    :string(255)
 #  completion                :string(255)
 #  exclude_from_team_records :boolean
+#  playing_surface_id        :integer
+#  home_team_locker_room_id  :integer
+#  away_team_locker_room_id  :integer
 #
 
 class Game < Event
@@ -40,6 +43,10 @@ class Game < Event
   belongs_to :home_team, :class_name => "Team"
   belongs_to :away_team, :class_name => "Team"
   belongs_to :statsheet, polymorphic: true
+
+  belongs_to :playing_surface
+  belongs_to :home_team_locker_room
+  belongs_to :away_team_locker_room
 
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]

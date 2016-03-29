@@ -2,7 +2,9 @@
   %td= event.starts_on.strftime('%l:%M %p')
   %td= event.class.name
   %td= event.summary
-  %td= event.location.short_name if event.location
+  %td
+    = event.location.short_name if event.location
+    = " - #{event.playing_surface.name}" if event.type == 'Game' && event.playing_surface
   %td
     .btn-group.btn-block.pull-right
       %button.btn.btn-block.btn-primary.btn-sm.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}

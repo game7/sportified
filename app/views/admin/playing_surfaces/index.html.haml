@@ -1,0 +1,19 @@
+%h1 Listing playing_surfaces
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @playing_surfaces.each do |playing_surface|
+      %tr
+        %td= link_to 'Show', playing_surface
+        %td= link_to 'Edit', edit_playing_surface_path(playing_surface)
+        %td= link_to 'Destroy', playing_surface, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Playing surface', new_playing_surface_path

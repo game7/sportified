@@ -1,0 +1,19 @@
+%h1 Listing locker_rooms
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @locker_rooms.each do |locker_room|
+      %tr
+        %td= link_to 'Show', locker_room
+        %td= link_to 'Edit', edit_locker_room_path(locker_room)
+        %td= link_to 'Destroy', locker_room, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Locker room', new_locker_room_path

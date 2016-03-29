@@ -9,6 +9,8 @@ class Admin::GamesController < Admin::BaseLeagueController
   before_filter :load_league_options, :only => [:new, :edit]
   before_filter :load_team_options, :only => [:edit]
   before_filter :load_location_options, :only => [:new, :edit]
+  before_filter :load_playing_surface_options, :only => [:new, :edit]
+  before_filter :load_locker_room_options, :only => [:new, :edit]
 
 
   def new
@@ -21,6 +23,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       @game.league_id = params[:league_id] || @league_options.first.id if @league_options.length == 1
       @game.league = @league if @league
       @game.location_id = @location_options.first.id if @location_options.length == 1
+      @game.playing_surface_id = @playing_surface_options.first.id if @playing_surface_options.length ==1
     end
     load_team_options
   end
@@ -44,6 +47,8 @@ class Admin::GamesController < Admin::BaseLeagueController
       load_league_options
       load_team_options
       load_location_options
+      load_playing_surface_options
+      load_locker_room_options
       render :action => "new"
     end
   end
@@ -60,6 +65,8 @@ class Admin::GamesController < Admin::BaseLeagueController
       load_league_options
       load_team_options
       load_location_options
+      load_playing_surface_options
+      load_locker_room_options
       render :action => "edit"
     end
   end
@@ -72,7 +79,8 @@ class Admin::GamesController < Admin::BaseLeagueController
       :away_team_id, :away_team_custom_name, :away_team_name,
       :home_team_id, :home_team_custom_name, :home_team_name,
       :text_before, :text_after, :show_for_all_teams,
-      :away_team_score, :home_team_score, :completion, :result
+      :away_team_score, :home_team_score, :completion, :result,
+      :playing_surface_id, :home_team_locker_room_id, :away_team_locker_room_id
     )
   end
 
@@ -90,13 +98,20 @@ class Admin::GamesController < Admin::BaseLeagueController
   end
 
   def load_location_options
-    @location_options = Location.order(:name).entries
+    @location_options = Location.order(:name)
+  end
+
+  def load_playing_surface_options
+    @playing_surface_options = PlayingSurface.order(:name)
+  end
+
+  def load_locker_room_options
+    @locker_room_options = LockerRoom.order(:name)
   end
 
   def load_team_options
     @team_options = []
     if @season and @game and @game.league_id
-      puts 'TEAMS!!!'
       @team_options = @season.teams.for_league(@game.league_id).order(:name).entries.collect do |team|
         [ team.name, team.id ]
       end

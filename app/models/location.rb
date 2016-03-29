@@ -14,6 +14,15 @@
 class Location < ActiveRecord::Base
   include Sportified::TenantScoped
 
+  has_many :facilities do
+    def playing_surfaces
+      where(type: 'PlayingSurface')
+    end
+    def locker_rooms
+      where(type: 'LockerRoom')
+    end
+  end
+
   validates_presence_of :name
 
   before_save :ensure_short_name

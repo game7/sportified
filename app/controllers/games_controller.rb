@@ -32,6 +32,9 @@
 #  result                    :string(255)
 #  completion                :string(255)
 #  exclude_from_team_records :boolean
+#  playing_surface_id        :integer
+#  home_team_locker_room_id  :integer
+#  away_team_locker_room_id  :integer
 #
 
 class GamesController < BaseLeagueController

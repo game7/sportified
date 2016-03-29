@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160325214050) do
+ActiveRecord::Schema.define(version: 20160329183612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,14 +71,35 @@ ActiveRecord::Schema.define(version: 20160325214050) do
     t.string   "result",                    limit: 255
     t.string   "completion",                limit: 255
     t.boolean  "exclude_from_team_records"
+    t.integer  "playing_surface_id"
+    t.integer  "home_team_locker_room_id"
+    t.integer  "away_team_locker_room_id"
   end
 
   add_index "events", ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
+  add_index "events", ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
   add_index "events", ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
+  add_index "events", ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
   add_index "events", ["league_id"], name: "index_events_on_league_id", using: :btree
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
+  add_index "events", ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
   add_index "events", ["season_id"], name: "index_events_on_season_id", using: :btree
   add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
+
+  create_table "facilities", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.integer  "tenant_id"
+    t.integer  "location_id"
+    t.integer  "parent_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "preference"
+  end
+
+  add_index "facilities", ["location_id"], name: "index_facilities_on_location_id", using: :btree
+  add_index "facilities", ["parent_id"], name: "index_facilities_on_parent_id", using: :btree
+  add_index "facilities", ["tenant_id"], name: "index_facilities_on_tenant_id", using: :btree
 
   create_table "hockey_goals", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -537,5 +558,6 @@ ActiveRecord::Schema.define(version: 20160325214050) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "facilities", "locations"
   add_foreign_key "registrar_registration_types", "registrar_sessions"
 end
