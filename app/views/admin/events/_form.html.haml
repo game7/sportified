@@ -1,12 +1,29 @@
 = simple_form_for [:admin, @event] do |f|
-  = f.input :season_id, :as => :select, :collection => @season_options if params['action'] == 'new'
-  = f.input :league_id, :as => :select, :collection => @league_options if params['action'] == 'new'
-  = f.input :starts_on, :as => :string, :input_html => { :value => @event.starts_on ? I18n.l(@event.starts_on) : "" }
-  = f.input :duration
-  = f.input :all_day, :as => :boolean, :wrapper => :vertical_boolean
-  = f.input :location_id, :as => :select, :collection => @location_options
-  = f.input :summary
-  - f.input :description, :as => :text
+  .panel.panel-default
+    .panel-heading Logistics
+    .panel-body
+      - if params[:action] == 'new'
+        .row
+          .col-sm-6
+            = f.input :season_id, :as => :select, :collection => @season_options
+          .col-sm-6
+            = f.input :league_id, :as => :select, :collection => @league_options
+      .row
+        .col-sm-4
+          = f.input :starts_on, :as => :string, :input_html => { :value => @event.starts_on ? I18n.l(@event.starts_on) : "" }
+        .col-sm-2
+          = f.input :duration
+      = f.input :all_day, :as => :boolean, :wrapper => :vertical_boolean
+      .row
+        .col-sm-4
+          = f.input :location_id, :as => :select, :collection => @location_options
+
+  .panel.panel-default
+    .panel-heading Display
+    .panel-body
+      = f.input :summary
+      =f.input :description, :as => :text
+
   = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do
