@@ -1,0 +1,3 @@
+.event{ :title => 'Event', :data => { :toggle => 'popover' }}
+  .time= event.starts_on.strftime('%l:%M%P').gsub('m', '')
+  .summary= event.summary

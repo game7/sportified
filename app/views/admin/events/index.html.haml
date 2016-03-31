@@ -1,8 +1,9 @@
 - title 'Events'
 
-= render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => 7 }
+/ = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => 7 }
 
-
+= render "admin/events/views/#{params[:view] || 'day'}"
+%hr
 - @days.each do |day, events|
   .panel.panel-default
     .panel-heading

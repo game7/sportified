@@ -1,0 +1,62 @@
+
+
+.simple-calendar {
+
+  table {
+    table-layout: fixed;
+  }
+
+  td.day {
+    padding: 1px;
+
+    .date {
+      margin: 4px;
+    }
+
+    .events {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+
+    .event {
+      display: flex;
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 3px;
+      margin-bottom: 1px;
+      font-size: 9pt;
+      .time {
+        flex: 0 0 40px;
+      }
+      .summary {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+    }
+
+  }
+
+
+  .wday-1,
+  .wday-2,
+  .wday-3,
+  .wday-4,
+  .wday-5,
+  .wday-6,
+  .wday-0 {
+    width: 14.28%;
+    border: 1px solid #ccc;
+  }
+
+  .today {
+    background-color: #dedede !important;
+  }
+
+
+}
+
+

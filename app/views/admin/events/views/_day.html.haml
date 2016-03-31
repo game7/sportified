@@ -1,0 +1,4 @@
+= calendar events: @events, start_date: @date, number_of_days: 1 do |date, events|
+  .date= date.day
+  .events
+    = render :partial => 'admin/events/views/event', :collection => events

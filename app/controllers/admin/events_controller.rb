@@ -13,15 +13,15 @@ class Admin::EventsController < Admin::BaseLeagueController
   def index
 
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    @days_in_future = 7
-    @days_in_past = 7
-    @start_date = @date.at_beginning_of_week
-    @end_date = @date.at_end_of_week
-    @next_date = @date + 7
-    @prev_date = @date - 7
 
+    puts "date: #{@date}"
+    puts "start: #{@date.at_beginning_of_week.beginning_of_day}"
+    puts "end: #{@date.at_end_of_week.end_of_day}"
     @events = Event.all.includes(:location)
-    @events = @events.after(@start_date.beginning_of_day).before(@end_date.end_of_day)
+    @events = @events.after(@date.beginning_of_day).before(@date.end_of_day) unless params[:view]
+    @events = @events.after(@date.days_ago(1).beginning_of_day).before(@date.days_since(3).end_of_day) if params[:view] == 'fourday'
+    @events = @events.after(@date.at_beginning_of_week.beginning_of_day).before(@date.at_end_of_week.end_of_day) if params[:view] == 'week'
+    @events = @events.after(@date.at_beginning_of_month.beginning_of_day).before(@date.at_end_of_month.end_of_day) if params[:view] == 'month'
     @events = @events.order(:starts_on)
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
