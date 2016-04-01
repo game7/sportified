@@ -39,7 +39,7 @@ module Concerns
          self.points += 2
        elsif they_scored > we_scored
          result = 'L'
-         self.losses += 1 if game.completion.regulation?
+         self.losses += 1 unless game.completion.overtime? or game.completion.shootout?
          self.overtime_losses += 1 if game.completion.overtime?
          self.shootout_losses += 1 if game.completion.shootout?
          self.forfeit_losses += 1 if game.completion.forfeit?
