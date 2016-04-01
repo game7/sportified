@@ -1,6 +1,13 @@
 
 namespace :league do
 
+  desc "exclude prefixed games from standings"
+  task :exclude_prefixed_games => :environment do
+    Game.where('text_before IS NOT NULL').where("text_before != ''").each do |game|
+      game.update_attributes(exclude_from_team_records: true)
+    end
+  end
+
   desc "Restore matchups from team records"
   task :restore_matchups => :environment do
     Tenant.all.each do |tenant|
