@@ -97,9 +97,9 @@ class Game < Event
 
   def team_decision(team)
     margin = team_margin(team)
-    'T' if margin == 0
-    'W' if margin > 0
-    'L' if margin < 0
+    return 'T' if margin == 0
+    return 'W' if margin > 0
+    return 'L' if margin < 0
   end
 
   before_save :update_team_info
@@ -137,6 +137,12 @@ class Game < Event
     end
     summary = [text_before, summary, text_after].join(" ").strip
     self.summary = summary
+  end
+
+  after_save :calculate_team_records
+  def calculate_team_records
+    home_team.calculate_record && home_team.save if home_team
+    away_team.calculate_record && away_team.save if away_team
   end
 
   def display_score?

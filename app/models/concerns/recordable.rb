@@ -14,7 +14,7 @@ module Concerns
 
        # only process games that are final
        next unless game.result.final?
-       
+
        # don't count if exluded from recrods
        next if game.exclude_from_team_records?
 
@@ -39,7 +39,7 @@ module Concerns
          self.points += 2
        elsif they_scored > we_scored
          result = 'L'
-         self.losses += 1
+         self.losses += 1 if game.completion.regulation?
          self.overtime_losses += 1 if game.completion.overtime?
          self.shootout_losses += 1 if game.completion.shootout?
          self.forfeit_losses += 1 if game.completion.forfeit?
@@ -57,7 +57,7 @@ module Concerns
        end
 
        self.longest_win_streak = self.current_run if result = 'W' && self.current_run > self.longest_win_streak
-       self.longest_loss_streak = self.current_run if result = 'L' && self.current_run > self.longest_loss_streak 
+       self.longest_loss_streak = self.current_run if result = 'L' && self.current_run > self.longest_loss_streak
 
        self.percent = self.wins.fdiv(self.games_played)
        self.scored += we_scored

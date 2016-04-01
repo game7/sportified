@@ -110,6 +110,17 @@ namespace :league do
     end
   end
 
+  desc "Calculate Team Records"
+  task :calculate_team_records => :environment do
+    Tenant.all.each do |tenant|
+      Tenant.current = tenant
+      Team.all.each do |team|
+        team.calculate_record
+        team.save
+      end
+    end
+  end
+
   desc "Brandify teams"
   task :brandify_teams => :environment do
     Tenant.all.each do |tenant|

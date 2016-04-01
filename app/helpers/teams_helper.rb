@@ -64,7 +64,7 @@ module TeamsHelper
   def display_result(game, team)
     if game.display_score?
       postfix = game.completion.shootout? ? ' (SO)' : ''
-      game.team_decision(team).to_s + ' ' + game.team_scored(team).to_s + '-' + game.team_allowed(team).to_s + postfix
+      "#{game.team_decision(team)} #{game.team_scored(team)}-#{game.team_allowed(team)}#{postfix}"
     end
   end
 
