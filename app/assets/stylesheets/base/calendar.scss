@@ -27,6 +27,10 @@
       padding: 3px;
       margin-bottom: 1px;
       font-size: 9pt;
+      a {
+        display: flex;
+        width: 100%;
+      }
       .time {
         flex: 0 0 40px;
       }

@@ -25,3 +25,12 @@
 
 #dialog-modal
 
+- content_for :javascript do
+  :javascript
+    $(function() {
+      $('[data-toggle="popover"]').popover({
+        trigger: 'focus',
+      }).click(function() {
+        return false;
+      });
+    });
