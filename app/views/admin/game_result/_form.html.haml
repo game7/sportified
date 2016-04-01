@@ -1,7 +1,12 @@
 = simple_form_for @game, :url => admin_game_result_path(@game), :remote => true do |f|
-  %fieldset
-  = f.input :away_team_score, :label => @game.away_team_name
-  = f.input :home_team_score, :label => @game.home_team_name
-  = f.input :completion
-  = f.input :result
+  .row
+    .col-xs-6
+      = f.input :away_team_score, :label => @game.away_team_name
+    .col-xs-6
+      = f.input :home_team_score, :label => @game.home_team_name
+  .row
+    .col-xs-6
+      = f.input :completion
+    .col-xs-6
+      = f.input :result
   = f.input :exclude_from_team_records, :as => :boolean, :wrapper => :vertical_boolean
