@@ -63,7 +63,10 @@ module TeamsHelper
 
   def display_result(game, team)
     if game.display_score?
-      postfix = game.completion.shootout? ? ' (SO)' : ''
+      postfix = ''
+      postfix = ' (SO)' if game.completion.shootout?
+      postfix = ' (Forfeit)' if game.completion.forfeit?
+      postfix = ' (OT)' if game.completion.overtime?
       "#{game.team_decision(team)} #{game.team_scored(team)}-#{game.team_allowed(team)}#{postfix}"
     end
   end
