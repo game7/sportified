@@ -28,6 +28,11 @@
 
   .col-sm-3
     .panel.panel-default
+      .panel-heading Manage
+      %ul.list-group
+        = link_to 'Programs', admin_programs_path, class: 'list-group-item'
+        = link_to 'Locations', admin_locations_path, class: 'list-group-item'
+    .panel.panel-default
       .panel-heading Experimental
       %ul.list-group
         = link_to 'Calendar', 'apps/calendar/', class: 'list-group-item'

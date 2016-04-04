@@ -79,6 +79,10 @@
   end
 
   namespace :admin do
+
+    resources :programs, :only => [:index]
+    resources :activities, :except => [:index, :destroy]
+
     resources :leagues
 
     resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do

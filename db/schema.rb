@@ -382,6 +382,7 @@ ActiveRecord::Schema.define(version: 20160404223859) do
 
   create_table "programs", force: :cascade do |t|
     t.integer  "tenant_id"
+    t.string   "type"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at",  null: false

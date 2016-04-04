@@ -4,6 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  tenant_id   :integer
+#  type        :string
 #  name        :string
 #  description :text
 #  created_at  :datetime         not null

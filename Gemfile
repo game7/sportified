@@ -90,6 +90,7 @@ group :test do
 end
 
 group :development do
+  gem "spring"
   gem 'haml-rails'
   gem 'nifty-generators'
 end

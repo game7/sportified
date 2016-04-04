@@ -1,0 +1,16 @@
+- title "Programs"
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Actions
+  %tbody
+    - @programs.each do |program|
+      %tr
+        %td= program.name
+        %td= program.type
+        %td
+          = link_to 'Edit', edit_polymorphic_path([:admin, program]), :class => 'btn btn-xs btn-primary'
+          = link_to 'Delete', [:admin, program], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+= link_to 'New Activity', new_admin_activity_path, :class => "btn btn-primary"
