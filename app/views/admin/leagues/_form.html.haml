@@ -1,0 +1,4 @@
+= simple_form_for [:admin, @league] do |f|
+  = f.input :name
+  = f.input :description
+  = f.button :wrapped, :cancel => return_url

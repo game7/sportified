@@ -80,8 +80,9 @@
 
   namespace :admin do
 
-    resources :programs, :only => [:index]
-    resources :activities, :except => [:index, :destroy]
+    resources :programs, :only => [:index, :destroy]
+    resources :activities, :except => [:index]
+    resources :leagues, :except => [:index]
 
     resources :divisions
 
