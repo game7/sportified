@@ -1,31 +1,31 @@
 require "chronic"
 class Admin::SeasonsController < Admin::BaseLeagueController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]  
-  before_filter :add_seasons_breadcrumb  
+  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
+  before_filter :add_seasons_breadcrumb
   before_filter :find_season, :only => [:edit, :update, :delete]
   before_filter :find_seasons, :only => [:index]
   before_filter :get_season_options, :only => [:show]
 
   def index
   end
-  
+
   def show
     @season = Season.find(params[:id]) if params[:id]
     @season ||= Season.most_recent
-    add_breadcrumb @season.name    
+    add_breadcrumb @season.name
   end
 
   def new
     @season = Season.new
   end
 
-  def edit   
+  def edit
   end
 
   def create
     Chronic.time_class = Time.zone
-    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])    
+    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])
     @season = Season.new(season_params)
     if @season.save
       return_to_last_point :success => 'Season was successfully created.'
@@ -37,7 +37,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
 
   def update
     Chronic.time_class = Time.zone
-    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])    
+    params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])
     if @season.update_attributes(season_params)
       return_to_last_point :success => 'Season was successfully updated.'
     else
@@ -50,19 +50,19 @@ class Admin::SeasonsController < Admin::BaseLeagueController
     @season.destroy
     return_to_last_point :success => 'Season has been deleted.'
   end
-  
+
   private
-  
+
   def season_params
-    params.required(:season).permit(:name, :starts_on, :programs, :league_ids => [])
+    params.required(:season).permit(:name, :starts_on, :programs, :division_ids => [])
   end
 
   def get_season_options
     @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, admin_seasons_path(:id => s == @season ? nil : s.id)]}
-  end  
-  
+  end
+
   def add_seasons_breadcrumb
-    add_breadcrumb 'Seasons', admin_seasons_path    
+    add_breadcrumb 'Seasons', admin_seasons_path
   end
 
   def find_season

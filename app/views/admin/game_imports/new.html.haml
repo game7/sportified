@@ -1,7 +1,7 @@
 - title "New Game Import"
 = simple_form_for [:admin, @game_import], :html => {:multipart => true} do |f|
   = f.input :season_id, :as => :select, :collection => @season_options
-  = f.input :league_id, :as => :select, :collection => @league_options
+  = f.input :division_id, :as => :select, :collection => @division_options
   = f.input :contents, :as => :file
   .form-actions
     = f.button :submit, :class => 'btn btn-primary'
@@ -10,31 +10,31 @@
     $(document).ready(function(){
       $("select#game_import_season_id").change(function(){
           var id_value_string = $(this).val();
-          if (id_value_string == "") { 
+          if (id_value_string == "") {
               // if the id is empty remove all the sub_selection options from being selectable and do not do any ajax
-              $("select[id$='league_id'] option").remove();
+              $("select[id$='division_id'] option").remove();
               var row = "<option value=\"" + "" + "\">" + "" + "</option>";
-              $(row).appendTo("select[id$='league_id']");
+              $(row).appendTo("select[id$='division_id']");
           }
           else {
             $.ajax({
                 dataType: "json",
                 cache: false,
-                url: '#{admin_leagues_path}?season_id=' + id_value_string,
+                url: '#{admin_divisions_path}?season_id=' + id_value_string,
                 timeout: 2000,
                 error: function(XMLHttpRequest, errorTextStatus, error){
                     alert("Failed to submit : "+ errorTextStatus+" ;"+error);
                 },
-                success: function(data){  
-                    $("select[id$='league_id'] option").remove();
+                success: function(data){
+                    $("select[id$='division_id'] option").remove();
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
-                    $(row).appendTo("select[id$='league_id']");
-                    $.each(data.leagues, function(i, j){
+                    $(row).appendTo("select[id$='division_id']");
+                    $.each(data.divisions, function(i, j){
                         row = "<option value=\"" + j._id.$oid + "\">" + j.name + "</option>";
-                        $(row).appendTo("select[id$='league_id']");
+                        $(row).appendTo("select[id$='division_id']");
                     });
                  }
             });
           };
-      });    
+      });
     });

@@ -6,7 +6,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   before_filter :find_game, :only => [:edit, :result, :update]
   before_filter :find_season, :only => [:new, :edit]
   before_filter :load_season_options, :only => [:new, :edit]
-  before_filter :load_league_options, :only => [:new, :edit]
+  before_filter :load_division_options, :only => [:new, :edit]
   before_filter :load_team_options, :only => [:edit]
   before_filter :load_location_options, :only => [:new, :edit]
   before_filter :load_playing_surface_options, :only => [:new, :edit]
@@ -20,8 +20,8 @@ class Admin::GamesController < Admin::BaseLeagueController
     else
       @game = Game.new
       @game.season = @season if @season
-      @game.league_id = params[:league_id] || @league_options.first.id if @league_options.length == 1
-      @game.league = @league if @league
+      @game.division_id = params[:division_id] || @division_options.first.id if @division_options.length == 1
+      @game.division = @division if @division
       @game.location_id = @location_options.first.id if @location_options.length == 1
       @game.playing_surface_id = @playing_surface_options.first.id if @playing_surface_options.length ==1
     end
@@ -44,7 +44,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       flash[:error] = "Game could not be created."
       find_season
       load_season_options
-      load_league_options
+      load_division_options
       load_team_options
       load_location_options
       load_playing_surface_options
@@ -62,7 +62,7 @@ class Admin::GamesController < Admin::BaseLeagueController
       flash[:error] = "Game could not be updated."
       find_season
       load_season_options
-      load_league_options
+      load_division_options
       load_team_options
       load_location_options
       load_playing_surface_options
@@ -74,7 +74,7 @@ class Admin::GamesController < Admin::BaseLeagueController
   private
 
   def game_params
-    params.require(:game).permit(:season_id, :league_id, :starts_on, :duration,
+    params.require(:game).permit(:season_id, :division_id, :starts_on, :duration,
       :location_id, :summary, :description, :show_for_all_teams,
       :away_team_id, :away_team_custom_name, :away_team_name,
       :home_team_id, :home_team_custom_name, :home_team_name,
@@ -92,9 +92,9 @@ class Admin::GamesController < Admin::BaseLeagueController
     @season_options = Season.order(:starts_on => :desc)
   end
 
-  def load_league_options
-    @league_options = []
-    @league_options = @season.leagues.order(:name) if @season
+  def load_division_options
+    @division_options = []
+    @division_options = @season.divisions.order(:name) if @season
   end
 
   def load_location_options
@@ -111,8 +111,8 @@ class Admin::GamesController < Admin::BaseLeagueController
 
   def load_team_options
     @team_options = []
-    if @season and @game and @game.league_id
-      @team_options = @season.teams.for_league(@game.league_id).order(:name).entries.collect do |team|
+    if @season and @game and @game.division_id
+      @team_options = @season.teams.for_division(@game.division_id).order(:name).entries.collect do |team|
         [ team.name, team.id ]
       end
     end

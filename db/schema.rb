@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404223859) do
+ActiveRecord::Schema.define(version: 20160404232957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,31 @@ ActiveRecord::Schema.define(version: 20160404223859) do
 
   add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
 
+  create_table "divisions", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.string   "slug",                limit: 255
+    t.boolean  "show_standings"
+    t.boolean  "show_players"
+    t.boolean  "show_statistics"
+    t.text     "standings_array",                 default: [], array: true
+    t.integer  "tenant_id"
+    t.string   "mongo_id",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "standings_schema_id", limit: 255
+  end
+
+  create_table "divisions_seasons", force: :cascade do |t|
+    t.integer "division_id"
+    t.integer "season_id"
+  end
+
+  add_index "divisions_seasons", ["division_id"], name: "index_divisions_seasons_on_division_id", using: :btree
+  add_index "divisions_seasons", ["season_id"], name: "index_divisions_seasons_on_season_id", using: :btree
+
   create_table "events", force: :cascade do |t|
     t.integer  "tenant_id"
-    t.integer  "league_id"
+    t.integer  "division_id"
     t.integer  "season_id"
     t.integer  "location_id"
     t.string   "type",                      limit: 255
@@ -78,9 +100,9 @@ ActiveRecord::Schema.define(version: 20160404223859) do
 
   add_index "events", ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
   add_index "events", ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
+  add_index "events", ["division_id"], name: "index_events_on_division_id", using: :btree
   add_index "events", ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
   add_index "events", ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
-  add_index "events", ["league_id"], name: "index_events_on_league_id", using: :btree
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
   add_index "events", ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
   add_index "events", ["season_id"], name: "index_events_on_season_id", using: :btree
@@ -292,28 +314,6 @@ ActiveRecord::Schema.define(version: 20160404223859) do
     t.datetime "updated_at"
   end
 
-  create_table "leagues", force: :cascade do |t|
-    t.string   "name",                limit: 255
-    t.string   "slug",                limit: 255
-    t.boolean  "show_standings"
-    t.boolean  "show_players"
-    t.boolean  "show_statistics"
-    t.text     "standings_array",                 default: [], array: true
-    t.integer  "tenant_id"
-    t.string   "mongo_id",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "standings_schema_id", limit: 255
-  end
-
-  create_table "leagues_seasons", force: :cascade do |t|
-    t.integer "league_id"
-    t.integer "season_id"
-  end
-
-  add_index "leagues_seasons", ["league_id"], name: "index_leagues_seasons_on_league_id", using: :btree
-  add_index "leagues_seasons", ["season_id"], name: "index_leagues_seasons_on_season_id", using: :btree
-
   create_table "locations", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "name",       limit: 255
@@ -470,7 +470,7 @@ ActiveRecord::Schema.define(version: 20160404223859) do
     t.string   "pool",                limit: 255
     t.integer  "seed"
     t.integer  "tenant_id"
-    t.integer  "league_id"
+    t.integer  "division_id"
     t.integer  "season_id"
     t.integer  "club_id"
     t.string   "logo",                limit: 255
@@ -508,7 +508,7 @@ ActiveRecord::Schema.define(version: 20160404223859) do
   end
 
   add_index "teams", ["club_id"], name: "index_teams_on_club_id", using: :btree
-  add_index "teams", ["league_id"], name: "index_teams_on_league_id", using: :btree
+  add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
   add_index "teams", ["season_id"], name: "index_teams_on_season_id", using: :btree
   add_index "teams", ["tenant_id"], name: "index_teams_on_tenant_id", using: :btree
 

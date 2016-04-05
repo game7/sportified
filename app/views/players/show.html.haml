@@ -1,4 +1,5 @@
 
+%h1= "#{@player.first_name} #{@player.last_name}"
 %h3 Player Statistics
 %table.table.table-striped.table-bordered
   %thead
@@ -13,7 +14,7 @@
       %th.span1 MNR
       %th.span1 MJR
       %th.span1 MSC
-      %th.span1 GAME      
+      %th.span1 GAME
     %tbody
       - Hockey::Skater::Result.where('player_id = ?', @player.id).includes(:game, :team).order('events.starts_on').each do |result|
         %tr
@@ -28,7 +29,7 @@
             %td= result.minor_penalties
             %td= result.major_penalties
             %td= result.misconduct_penalties
-            %td= result.game_misconduct_penalties            
+            %td= result.game_misconduct_penalties
           - if result.games_played == 0
             %td{ :colspan => 9 } Did Not Play
 

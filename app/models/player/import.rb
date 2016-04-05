@@ -1,11 +1,11 @@
 class Player::Import
   include Mongoid::Document
-  
+
   include Mongoid::Timestamps
   include Sportified::TenantScoped
-  
+
   field :contents, :type => Array
-  validates_presence_of :contents  
+  validates_presence_of :contents
 
    belongs_to :season
    field :season_name
@@ -13,14 +13,14 @@ class Player::Import
    before_save do |import|
      import.season_name = import.season.name
    end
-   
-   belongs_to :league
-   field :league_name
-   validates_presence_of :league_id
+
+   belongs_to :division
+   field :division_name
+   validates_presence_of :division_id
    before_save do |import|
-     import.league_name = import.league.name
+     import.division_name = import.division.name
    end
-      
+
    field :columns, :type => Array, :default => []
 
    embeds_many :teams, class_name: 'Map::Team'
@@ -28,7 +28,7 @@ class Player::Import
 
    field :ready, :type => Boolean, :default => false
    field :completed, :type => Boolean, :default => false
-   
+
    before_create :map_contents
    def map_contents
      map_columns
@@ -43,7 +43,7 @@ class Player::Import
    end
 
    def can_complete?
-     ready	
+     ready
    end
 
    def ready?
@@ -68,9 +68,9 @@ class Player::Import
            when 'last', 'last_name', 'part_lname', 'lname'
              self.columns << :last_name
            when 'birthdate', 'dob'
-             self.columns << :birthdate 
+             self.columns << :birthdate
            when 'email', 'email_address'
-             self.columns << :email                         
+             self.columns << :email
            else
              self.columns << nil
          end
@@ -93,5 +93,5 @@ class Player::Import
      t = teams.with_name(name).first
      t.team_id if t
    end
-   
+
 end

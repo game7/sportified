@@ -6,7 +6,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   before_filter :load_event, :only => [:edit, :update, :destroy]
   before_filter :find_season, :only => [:new, :create]
   before_filter :load_season_options, :only => [:new, :edit]
-  before_filter :load_league_options, :only => [:new, :edit]
+  before_filter :load_division_options, :only => [:new, :edit]
   before_filter :load_location_options, :only => [:new, :edit]
   before_filter :load_season_links, :only => [:index]
 
@@ -39,7 +39,7 @@ class Admin::EventsController < Admin::BaseLeagueController
       clone = Event.find(params[:clone])
       @event = clone.dup
     else
-      @event = Event.new(:season => @season, :league_id => params[:league_id])
+      @event = Event.new(:season => @season, :division_id => params[:division_id])
       @event.location_id = @location_options.first.id unless @location_options.empty?
     end
   end
@@ -56,7 +56,7 @@ class Admin::EventsController < Admin::BaseLeagueController
     else
       flash[:error] = 'Event could not be created.'
       load_season_options
-      load_league_options
+      load_division_options
       load_location_options
       render :action => "new"
     end
@@ -71,7 +71,7 @@ class Admin::EventsController < Admin::BaseLeagueController
     else
       flash[:error] = 'Event could not be updated.'
       load_season_options
-      load_league_options
+      load_division_options
       load_location_options
       render :action => "edit"
     end
@@ -86,7 +86,7 @@ class Admin::EventsController < Admin::BaseLeagueController
   private
 
   def event_params
-    params.require(:event).permit(:season_id, :league_id, :starts_on, :duration,
+    params.require(:event).permit(:season_id, :division_id, :starts_on, :duration,
       :all_day, :location_id, :summary, :description, :show_for_all_teams
     )
   end
@@ -110,9 +110,9 @@ class Admin::EventsController < Admin::BaseLeagueController
     @season_options = Season.order(starts_on: :desc)
   end
 
-  def load_league_options
-    @league_options = @season.leagues.order(:name) if @season
-    @league_options ||= []
+  def load_division_options
+    @division_options = @season.divisions.order(:name) if @season
+    @division_options ||= []
   end
 
   def load_location_options

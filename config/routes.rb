@@ -53,25 +53,25 @@
     end
   end
 
-  match "programs/:league_slug/schedule" => redirect("/programs/schedule/%{league_slug}"), :via => :get
-  match "programs/schedule(/:league_slug)" => "schedule#index", :as => :schedule, :via => :get
+  match "programs/:division_slug/schedule" => redirect("/programs/schedule/%{division_slug}"), :via => :get
+  match "programs/schedule(/:division_slug)" => "schedule#index", :as => :schedule, :via => :get
 
-  match "programs/standings/:league_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
-  match "programs/:league_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get
+  match "programs/standings/:division_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
+  match "programs/:division_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get
 
-  match "programs/players/:league_slug(/:season_slug)" => "players#index", :as => :players, :via => :get
+  match "programs/players/:division_slug(/:season_slug)" => "players#index", :as => :players, :via => :get
   match "programs/player/:id" => "players#show", :as => :player, :via => :get
 
-  match "programs/:league_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
+  match "programs/:division_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
 
-  match "programs/teams/:league_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
+  match "programs/teams/:division_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
 
-  match "programs/statistics/:league_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
-  match "programs/statistics/:league_slug/:season_slug/:view" => "statistics#show", :as => :statistic, :via => :get
+  match "programs/statistics/:division_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
+  match "programs/statistics/:division_slug/:season_slug/:view" => "statistics#show", :as => :statistic, :via => :get
 
-  match "programs/:league_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
-  match "programs/:league_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get
-  match "programs/:league_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
+  match "programs/:division_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
+  match "programs/:division_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get
+  match "programs/:division_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
 
 
   resources :seasons, :only => [], :shallow => true do
@@ -83,7 +83,7 @@
     resources :programs, :only => [:index]
     resources :activities, :except => [:index, :destroy]
 
-    resources :leagues
+    resources :divisions
 
     resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do
       resources :divisions, :except => :index

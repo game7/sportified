@@ -10,7 +10,7 @@
 #  pool                :string(255)
 #  seed                :integer
 #  tenant_id           :integer
-#  league_id           :integer
+#  division_id         :integer
 #  season_id           :integer
 #  club_id             :integer
 #  logo                :string(255)

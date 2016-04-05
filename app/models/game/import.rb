@@ -2,9 +2,9 @@ class Game::Import
   include Mongoid::Document
   include Mongoid::Timestamps
   include Sportified::TenantScoped
-  
+
   field :contents, :type => Array
-  validates_presence_of :contents  
+  validates_presence_of :contents
 
    belongs_to :season
    field :season_name
@@ -12,13 +12,13 @@ class Game::Import
    before_save do |import|
      import.season_name = import.season.name
    end
-   
-   belongs_to :league
-   field :league_name
-   validates_presence_of :league_id
+
+   belongs_to :division
+   field :division_name
+   validates_presence_of :division_id
    before_save do |import|
-     import.league_name = import.league.name
-   end   
+     import.division_name = import.division.name
+   end
 
    field :columns, :type => Array, :default => []
 
@@ -35,7 +35,7 @@ class Game::Import
    def strip_contents
      self.contents.each{|r| r.collect!{|c| c = c.strip } }
    end
-   
+
    before_create :map_contents
    def map_contents
      map_columns
@@ -51,7 +51,7 @@ class Game::Import
    end
 
    def can_complete?
-     ready	
+     ready
    end
 
    def ready?
@@ -117,7 +117,7 @@ class Game::Import
    def map_venues
      v = columns.index(:venue)
      venue_names = []
-     contents.each_with_index do |row, i| 
+     contents.each_with_index do |row, i|
        venue_names << row[v] if i > 0
      end if v
      venue_names.uniq.each{|name| self.venues.build(:name => name)}

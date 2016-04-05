@@ -1,5 +1,5 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
-  
+
   before_filter :mark_return_point, :only => [:edit]
   before_filter :find_game
   before_filter :find_season
@@ -23,20 +23,20 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
   private
 
   def find_game
-    @game = Game.find(params[:game_id])    
+    @game = Game.find(params[:game_id])
   end
-  
+
   def find_season
-    @season = @game.season    
+    @season = @game.season
   end
 
   def add_games_breadcrumb
-    add_breadcrumb 'Games', admin_games_path  
+    add_breadcrumb 'Events', admin_events_path
   end
 
   def add_stats_breadcrumb
-    add_breadcrumb 'Statsheet'  
-  end  
+    add_breadcrumb 'Statsheet'
+  end
 
 
 end

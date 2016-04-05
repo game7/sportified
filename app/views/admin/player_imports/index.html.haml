@@ -5,16 +5,16 @@
     %tr
       %th Date
       %th Season
-      %th League      
+      %th Division
       %th Ready
       %th Processed
       %th Actions
-  %tbody  
+  %tbody
     - @player_imports.each do |import|
       %tr
         %td= import.created_at
         %td= import.season_name
-        %td= import.league_name
+        %td= import.division_name
         %td= import.ready
         %td= import.completed
         %td

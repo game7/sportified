@@ -10,7 +10,7 @@
 #  pool                :string(255)
 #  seed                :integer
 #  tenant_id           :integer
-#  league_id           :integer
+#  division_id         :integer
 #  season_id           :integer
 #  club_id             :integer
 #  logo                :string(255)
@@ -51,16 +51,16 @@ class Team < ActiveRecord::Base
   include Sportified::TenantScoped
   include Concerns::Brandable
   include Concerns::Recordable
-  
+
   belongs_to :tenant
-  belongs_to :league
+  belongs_to :division
   belongs_to :season
   belongs_to :club
-  
-  validates_presence_of :name, :league_id, :season_id
+
+  validates_presence_of :name, :division_id, :season_id
 
   has_many :players
-  
+
   def games
     Game.where("home_team_id = ? OR away_team_id = ?", id, id)
   end
@@ -76,11 +76,11 @@ class Team < ActiveRecord::Base
       self.short_name = self.name
     end
   end
-  
+
   class << self
-    def for_league(league)
-      league_id = ( league.class == League ? league.id : league )
-      where(:league_id => league_id)      
+    def for_division(division)
+      division_id = ( division.class == Division ? division.id : division )
+      where(:division_id => division_id)
     end
     def for_season(season)
       season_id = ( season.class == Season ? season.id : season )
@@ -89,31 +89,5 @@ class Team < ActiveRecord::Base
   end
 
   scope :with_slug, ->(slug) { where(:slug => slug) }
-  
-  def apply_mongo_season_id! season_id
-    self.season = Season.unscoped.where(:mongo_id => season_id.to_s).first
-    unless self.season
-      puts "Failed to locate Season: #{season_id.to_s}"
-      puts
-    end
-  end
-  
-  def apply_mongo_league_id! league_id
-    self.league = League.unscoped.where(:mongo_id => league_id.to_s).first
-    unless self.league
-      puts "Failed to locate League: #{league_id.to_s}"
-      puts
-    end    
-  end
 
-  def apply_mongo_club_id! club_id
-    self.club = Club.unscoped.where(:mongo_id => club_id.to_s).first if club_id
-  end
-  
-  def apply_mongo!(mongo)
-    if mongo['logo']
-      self.remote_logo_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/#{self.class.name.pluralize.downcase}/logo/#{self.mongo_id}/" + mongo['logo']
-    end    
-  end  
-  
 end

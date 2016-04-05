@@ -1,17 +1,17 @@
 %div{ :id => "team-#{team.id}", :class => "team #{class_name if class_name}"}
   .well{ :style => "background-color: #{team.primary_color || '#FFF'};" }
     .logo
-      = image_tag team.logo.small.url if team.logo?  
+      = image_tag team.logo.small.url if team.logo?
     = render :partial => "actions", :locals => { :team => team } if current_user_is_admin?
     %h3.name{ :style => "color: #{team.secondary_color}"}= team.name
     .links
-      = link_to "Schedule", team_schedule_path(team.league.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
-      - if @league.show_players        
+      = link_to "Schedule", team_schedule_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if @division.show_players
         %span{ :style=> "color: #{team.secondary_color}"}= " | "
-        = link_to "Roster", team_roster_path(team.league.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
-      - if @league.show_statistics
+        = link_to "Roster", team_roster_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if @division.show_statistics
         %span{ :style=> "color: #{team.secondary_color}"}= " | "
-        = link_to "Statistics", team_statistics_path(team.league.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+        = link_to "Statistics", team_statistics_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
 
 
 

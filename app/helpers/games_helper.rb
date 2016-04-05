@@ -4,7 +4,7 @@
 #
 #  id                        :integer          not null, primary key
 #  tenant_id                 :integer
-#  league_id                 :integer
+#  division_id               :integer
 #  season_id                 :integer
 #  location_id               :integer
 #  type                      :string(255)

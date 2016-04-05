@@ -19,10 +19,10 @@
 
 class PlayersController < BaseLeagueController
   before_filter :get_season_options, :only => [:index]
-  
+
   def index
 
-    @teams = @league.teams.for_season(@season)
+    @teams = @division.teams.for_season(@season)
     ids = @teams.collect{|team| team.id}
     @players = Player.joins(:team).where('teams.season_id = ?', @season.id).order(last_name: :asc)
 
@@ -31,7 +31,7 @@ class PlayersController < BaseLeagueController
       format.xml  { render :xml => @players }
     end
   end
-  
+
   def show
 
     @player = Player.find(params[:id])
@@ -40,13 +40,13 @@ class PlayersController < BaseLeagueController
       format.html # index.html.erb
       format.xml  { render :xml => @player }
     end
-    
-  end  
-  
+
+  end
+
   private
-  
+
   def get_season_options
-    @season_options = @league.seasons.all.order(starts_on: :desc).collect{|s| [s.name, players_path(:league_slug => @league.slug, :season_slug => s.slug)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, players_path(:division_slug => @division.slug, :season_slug => s.slug)]}
   end
 
 end

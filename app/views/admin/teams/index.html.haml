@@ -5,12 +5,12 @@
   .col-sm-3
     #{select("season", :id, @season_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
   .col-sm-3
-    #{select("league", :id, @league_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
+    #{select("division", :id, @division_links, { :selected => request.fullpath }, { :class => "redirect_to form-control" })}
 - teams = @teams.entries
-- @leagues.order(:name).each do |league|
+- @divisions.order(:name).each do |division|
   %h2
-    = league.name
-    = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :league_id => league.id), :class => 'btn btn-sm btn-primary'
+    = division.name
+    = link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :division_id => division.id), :class => 'btn btn-sm btn-primary'
   %table.table.table-striped.table-bordered
     %thead
       %tr
@@ -18,7 +18,7 @@
         %th Actions
     %tbody
       - teams.each do |team|
-        - if team.league_id == league.id
+        - if team.division_id == division.id
           %tr
             %td
               = image_tag team.logo.tiny unless team.logo.blank?

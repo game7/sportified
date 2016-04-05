@@ -13,13 +13,13 @@
 #
 
 class Season < ActiveRecord::Base
-  include Sportified::TenantScoped 
-  
+  include Sportified::TenantScoped
+
   validates_presence_of :name, :starts_on
-  
-  has_and_belongs_to_many :leagues
+
+  has_and_belongs_to_many :divisions
   has_many :teams
-  #has_many :events  
+  #has_many :events
 
   class << self
     def most_recent
@@ -34,17 +34,7 @@ class Season < ActiveRecord::Base
   scope :with_slug, ->(slug) { where(:slug => slug) }
 
   before_save do |season|
-    season.slug = season.name.parameterize    
+    season.slug = season.name.parameterize
   end
-  
-  #after_save do |season|
-  #  season.teams.each do |team|
-  #    team.set_season_name_and_slug season
-  #    team.save
-  #  end if season.name_changed?
-  #end
-  
-  def apply_mongo_league_ids!(league_ids)
-  end  
-  
+
 end

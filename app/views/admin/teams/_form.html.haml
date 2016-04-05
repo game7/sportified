@@ -6,21 +6,21 @@
 = simple_form_for [:admin, @season, @team] do |f|
   .tab-content
     .tab-pane.active{ :id => "basic" }
-      = f.input :league_id, :as => :select, :collection => @leagues if %w{new create}.include? params[:action]
+      = f.input :division_id, :as => :select, :collection => @divisions if %w{new create}.include? params[:action]
       = f.input :name
-      = f.input :short_name 
+      = f.input :short_name
       = f.input :club_id, :as => :select, :collection => @clubs
-      = f.input :pool  
+      = f.input :pool
       = f.input :show_in_standings, :as => :boolean, :wrapper => :vertical_boolean
       = f.input :seed, :input_html => { :class => 'span1' }
     .tab-pane{ :id => "branding" }
       = f.input :crop_x, :as => :hidden
       = f.input :crop_y, :as => :hidden
       = f.input :crop_h, :as => :hidden
-      = f.input :crop_w, :as => :hidden     
+      = f.input :crop_w, :as => :hidden
       = f.input :logo, :as => :file
       = f.input :remote_logo_url
-      = f.input :logo_cache, :as => :hidden 
+      = f.input :logo_cache, :as => :hidden
       - if @team.logo?
         .jcrop
           %img{ :src => @team.logo.url, :id => "jcrop_target"}
@@ -29,13 +29,13 @@
         - #@team.logo.primary_colors[:colors].each do |color|
         - #.color{:style => "background-color: #{color}; height: 20px; width: 20px; margin-top: 5px;"}
   = f.button :wrapped, :cancel => return_url
- 
+
 :css
   .jcrop img {max-width: none}
 
 - content_for :javascript do
   :javascript
-    
+
     $(function() {
       $('#jcrop_target').Jcrop({
           aspectRatio: 1,
@@ -52,10 +52,10 @@
           var y = #{@team.crop_y};
           var w = #{@team.crop_w};
           var h = #{@team.crop_h};
-          jcrop_api.setSelect([x,y,x+w,y+h]);      
+          jcrop_api.setSelect([x,y,x+w,y+h]);
       });
     });
-    
+
     function update_crop(coords) {
       var rx = 100 / coords.w;
       var ry = 100 / coords.h;

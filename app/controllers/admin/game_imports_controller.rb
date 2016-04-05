@@ -2,13 +2,13 @@ require 'csv'
 require 'open-uri'
 
 class Admin::GameImportsController < Admin::BaseLeagueController
-  
+
   before_filter :add_games_breadcrumb
   before_filter :find_game_import, :only => [:edit, :update, :complete]
   before_filter :load_season_options, :only => [:new]
-  before_filter :load_league_options, :only => [:new]
+  before_filter :load_division_options, :only => [:new]
   before_filter :load_team_options, :only => [:edit, :update]
-  before_filter :load_venue_options, :only => [:edit, :update]  
+  before_filter :load_venue_options, :only => [:edit, :update]
 
   def new
     add_breadcrumb 'New'
@@ -26,7 +26,7 @@ class Admin::GameImportsController < Admin::BaseLeagueController
       flash[:error] = "Game Upload could not be created."
       find_season
       load_season_options
-      load_league_options
+      load_division_options
       render :action => "new"
     end
   end
@@ -53,7 +53,7 @@ class Admin::GameImportsController < Admin::BaseLeagueController
     if @game_import.update_attributes(game_import_params)
       redirect_to admin_game_imports_path, :notice => 'Game Upload was successfully updated.'
     else
-      render :action => "edit"    
+      render :action => "edit"
     end
   end
 
@@ -73,22 +73,22 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   def index
     @game_imports = Game::Import.desc(:created_at)
   end
-  
+
   private
-  
+
   def game_import_params
-    params.require(:game_import).permit(:season_id, :league_id, :teams_attributes => [ :id, :team_id ], :venues_attributes => [ :id, :venue_id ])
+    params.require(:game_import).permit(:season_id, :division_id, :teams_attributes => [ :id, :team_id ], :venues_attributes => [ :id, :venue_id ])
   end
-  
+
   def add_games_breadcrumb
-    add_breadcrumb 'Events', admin_events_path  
+    add_breadcrumb 'Events', admin_events_path
     add_breadcrumb 'Game Uploads', admin_game_imports_path
   end
-  
+
   def find_game_import
     @game_import = Game::Import.find(params[:id])
   end
-  
+
   def find_season
     @season = @game_import.season if @game_import
   end
@@ -96,16 +96,16 @@ class Admin::GameImportsController < Admin::BaseLeagueController
   def load_season_options
     @season_options = Season.desc(:starts_on)
   end
-  
-  def load_league_options
-    @league_options = []
-    @league_options = @season.leagues.desc(:starts_on) if @season
-  end  
+
+  def load_division_options
+    @division_options = []
+    @division_options = @season.divisions.order(:starts_on => :desc) if @season
+  end
 
   def load_team_options
     @team_options = []
     if @game_import
-      @team_options = Team.for_season(@game_import.season_id).for_league(@game_import.league_id).asc(:name).entries.collect do |team|
+      @team_options = Team.for_season(@game_import.season_id).for_division(@game_import.division_id).asc(:name).entries.collect do |team|
         [ team.name, team.id ]
       end
     end
