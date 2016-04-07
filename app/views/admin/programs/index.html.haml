@@ -8,7 +8,7 @@
   %tbody
     - @programs.each do |program|
       %tr
-        %td= program.name
+        %td= link_to program.name, [:admin, program]
         %td= program.type
         %td
           = link_to 'Edit', edit_polymorphic_path([:admin, program]), :class => 'btn btn-xs btn-primary'

@@ -17,6 +17,7 @@ class Season < ActiveRecord::Base
 
   validates_presence_of :name, :starts_on
 
+  belongs_to :league
   has_and_belongs_to_many :divisions
   has_many :teams
   #has_many :events

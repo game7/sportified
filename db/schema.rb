@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404232957) do
+ActiveRecord::Schema.define(version: 20160406015618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(version: 20160404232957) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "standings_schema_id", limit: 255
+    t.integer  "league_id"
   end
+
+  add_index "divisions", ["league_id"], name: "index_divisions_on_league_id", using: :btree
 
   create_table "divisions_seasons", force: :cascade do |t|
     t.integer "division_id"
@@ -429,7 +432,10 @@ ActiveRecord::Schema.define(version: 20160404232957) do
     t.string   "mongo_id",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "league_id"
   end
+
+  add_index "seasons", ["league_id"], name: "index_seasons_on_league_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
@@ -569,6 +575,7 @@ ActiveRecord::Schema.define(version: 20160404232957) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "divisions", "programs", column: "league_id"
   add_foreign_key "facilities", "locations"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrar_registration_types", "registrar_sessions"

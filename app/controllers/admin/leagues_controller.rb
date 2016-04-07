@@ -3,6 +3,10 @@ class Admin::LeaguesController < Admin::AdminController
   before_filter :add_breadcrumbs
   before_filter :find_league, :only => [:edit, :update, :destroy]
 
+  def show
+    @league = League.includes(:divisions, :seasons).find(params[:id])
+  end
+
   def new
     @league = League.new
   end
