@@ -85,16 +85,16 @@
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
         resources :divisions, :except => [:show]
-        resources :seasons, :except => [:show]
+        resources :seasons
       end
     end
 
-    resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do
-      resources :divisions, :except => :index
-      resources :teams, :except => :index do
-        resources :players
-      end
-    end
+    # resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do
+    #   resources :divisions, :except => :index
+    #   resources :teams, :except => :index do
+    #     resources :players
+    #   end
+    # end
 
     resources :teams, :only => :index
     resources :events

@@ -53,8 +53,8 @@ class Team < ActiveRecord::Base
   include Concerns::Recordable
 
   belongs_to :tenant
-  belongs_to :division
-  belongs_to :season
+  belongs_to :division, class_name: '::League::Division'
+  belongs_to :season, class_name: '::League::Division'
   belongs_to :club
 
   validates_presence_of :name, :division_id, :season_id
@@ -79,11 +79,11 @@ class Team < ActiveRecord::Base
 
   class << self
     def for_division(division)
-      division_id = ( division.class == Division ? division.id : division )
+      division_id = ( division.class == League::Division ? division.id : division )
       where(:division_id => division_id)
     end
     def for_season(season)
-      season_id = ( season.class == Season ? season.id : season )
+      season_id = ( season.class == League::Season ? season.id : season )
       where(:season_id => season_id)
     end
   end

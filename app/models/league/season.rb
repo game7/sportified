@@ -4,7 +4,7 @@ class League::Season < ActiveRecord::Base
   validates_presence_of :name, :starts_on
 
   belongs_to :program
-  has_and_belongs_to_many :divisions
+  has_and_belongs_to_many :divisions, :order => 'name'
   has_many :teams
   #has_many :events
 

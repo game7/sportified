@@ -8,8 +8,8 @@
   %tbody
     - @seasons.each do |season|
       %tr
-        %td #{season.name}
-        %td #{season.starts_on}
+        %td= link_to season.name, [:admin, :league, season]
+        %td= season.starts_on
         %td
           = link_to 'Edit', edit_admin_league_season_path(season), :class => 'btn btn-xs btn-primary'
           = link_to 'Delete', [:admin, :league, season], :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-xs btn-primary"

@@ -2,7 +2,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :find_league, :only => [:index, :new, :create]
-  before_filter :find_season, :only => [:edit, :update, :destroy]
+  before_filter :find_season, :only => [:show, :edit, :update, :destroy]
   before_filter :find_seasons, :only => [:index]
   before_filter :get_season_options, :only => [:show]
   before_filter :add_breadcrumbs, :except => [:destroy]
@@ -11,9 +11,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def show
-    @season = ::League::Season.find(params[:id]) if params[:id]
-    @season ||= ::League::Season.most_recent
-    add_breadcrumb @season.name
+
   end
 
   def new
@@ -58,7 +56,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def get_season_options
-  @season_options = League::Season.all.desc(:starts_on).collect{|s| [s.name, admin_league_seasons_path(:id => s == @season ? nil : s.id)]}
+    @season_options = ::League::Season.where('id != ?', @season.try('id')).order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}
   end
 
   def add_breadcrumbs
