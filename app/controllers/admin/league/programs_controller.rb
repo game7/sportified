@@ -1,18 +1,18 @@
-class Admin::LeaguesController < Admin::AdminController
+class Admin::League::ProgramsController < ApplicationController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :add_breadcrumbs
   before_filter :find_league, :only => [:edit, :update, :destroy]
 
   def show
-    @league = League.includes(:divisions, :seasons).find(params[:id])
+    @league = ::League::Program.includes(:divisions, :seasons).find(params[:id])
   end
 
   def new
-    @league = League.new
+    @league = ::League::Program.new
   end
 
   def create
-    @league = League.new(league_params)
+    @league = ::League::Program.new(league_params)
     if @league.save
       return_to_last_point :success => 'League was successfully created.'
     else
@@ -41,7 +41,7 @@ class Admin::LeaguesController < Admin::AdminController
   private
 
   def league_params
-    params.required(:league).permit(:name, :description)
+    params.required(:league_program).permit(:name, :description)
   end
 
   def add_breadcrumbs
@@ -49,6 +49,6 @@ class Admin::LeaguesController < Admin::AdminController
   end
 
   def find_league
-    @league = League.find(params[:id])
+    @league = ::League::Program.find(params[:id])
   end
 end

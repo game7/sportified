@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::LeaguesController, :type => :controller do
+RSpec.describe Admin::League::ProgramsController, :type => :controller do
 
   describe "GET show" do
     it "returns http success" do

@@ -1,5 +1,41 @@
 ::Sportified::Application.routes.draw do
 
+  namespace :admin do
+  namespace :league do
+    get 'programs/show'
+    end
+  end
+
+  namespace :admin do
+  namespace :league do
+    get 'programs/new'
+    end
+  end
+
+  namespace :admin do
+  namespace :league do
+    get 'programs/edit'
+    end
+  end
+
+  namespace :admin do
+  namespace :league do
+    get 'program/show'
+    end
+  end
+
+  namespace :admin do
+  namespace :league do
+    get 'program/new'
+    end
+  end
+
+  namespace :admin do
+  namespace :league do
+    get 'program/edit'
+    end
+  end
+
   namespace :registrar do
     resources :registration_types
   end
@@ -82,7 +118,9 @@
 
     resources :programs, :only => [:index, :destroy]
     resources :activities, :except => [:index, :destroy]
-    resources :leagues, :except => [:index, :destroy]
+    namespace :league do
+      resources :programs, :except => [:index, :destroy]
+    end
 
     resources :divisions
 

@@ -1,4 +1,5 @@
-class League < Program
-  has_many :seasons
-  has_many :divisions
+module League
+  def self.table_name_prefix
+    'league_'
+  end
 end
