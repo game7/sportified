@@ -1,23 +1,23 @@
-require "chronic"
-class Admin::SeasonsController < Admin::BaseLeagueController
+class Admin::League::SeasonsController < Admin::BaseLeagueController
 
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_seasons_breadcrumb
-  before_filter :find_season, :only => [:edit, :update, :delete]
+  before_filter :find_league, :only => [:index, :new, :create]
+  before_filter :find_season, :only => [:edit, :update, :destroy]
   before_filter :find_seasons, :only => [:index]
   before_filter :get_season_options, :only => [:show]
+  before_filter :add_breadcrumbs, :except => [:destroy]
 
   def index
   end
 
   def show
-    @season = Season.find(params[:id]) if params[:id]
-    @season ||= Season.most_recent
+    @season = ::League::Season.find(params[:id]) if params[:id]
+    @season ||= ::League::Season.most_recent
     add_breadcrumb @season.name
   end
 
   def new
-    @season = Season.new
+    @season = @league.seasons.build
   end
 
   def edit
@@ -26,7 +26,7 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   def create
     Chronic.time_class = Time.zone
     params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])
-    @season = Season.new(season_params)
+    @season = @league.seasons.build(season_params)
     if @season.save
       return_to_last_point :success => 'Season was successfully created.'
     else
@@ -58,19 +58,24 @@ class Admin::SeasonsController < Admin::BaseLeagueController
   end
 
   def get_season_options
-    @season_options = Season.all.desc(:starts_on).collect{|s| [s.name, admin_seasons_path(:id => s == @season ? nil : s.id)]}
+  @season_options = League::Season.all.desc(:starts_on).collect{|s| [s.name, admin_league_seasons_path(:id => s == @season ? nil : s.id)]}
   end
 
-  def add_seasons_breadcrumb
-    add_breadcrumb 'Seasons', admin_seasons_path
+  def add_breadcrumbs
+    league = @league || @season.program
+    add_breadcrumb league.name, admin_league_program_path(league)
+    add_breadcrumb 'Seasons', admin_league_program_seasons_path(league)
+  end
+
+  def find_league
+    @league = ::League::Program.find(params[:program_id])
   end
 
   def find_season
-    @season = Season.find(params[:id])
-    add_breadcrumb @season.name
+    @season = ::League::Season.find(params[:id])
   end
 
   def find_seasons
-    @seasons = Season.order(:name)
+    @seasons = ::League::Season.order(:name)
   end
 end

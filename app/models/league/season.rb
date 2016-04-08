@@ -1,23 +1,9 @@
-# == Schema Information
-#
-# Table name: seasons
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
-#  starts_on  :date
-#  tenant_id  :integer
-#  mongo_id   :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
-class Season < ActiveRecord::Base
+class League::Season < ActiveRecord::Base
   include Sportified::TenantScoped
 
   validates_presence_of :name, :starts_on
 
-  belongs_to :league
+  belongs_to :program
   has_and_belongs_to_many :divisions
   has_many :teams
   #has_many :events
@@ -37,5 +23,4 @@ class Season < ActiveRecord::Base
   before_save do |season|
     season.slug = season.name.parameterize
   end
-
 end

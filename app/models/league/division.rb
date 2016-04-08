@@ -4,7 +4,7 @@ class League::Division < ActiveRecord::Base
   validates :name, presence: true
 
   belongs_to :program
-  has_and_belongs_to_many :seasons, class_name: '::Season', join_table: 'divisions_seasons'
+  has_and_belongs_to_many :seasons
   has_many :teams, class_name: '::Team'
   has_many :events, class_name: '::Event'
 

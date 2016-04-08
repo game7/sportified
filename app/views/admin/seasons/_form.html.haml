@@ -1,5 +1,0 @@
-= simple_form_for [:admin, @season] do |f|
-  = f.input :name
-  = f.input :starts_on
-  = f.association :divisions, :wrapper => :vertical_radio_and_checkboxes, :collection => Division.all.order(:name), :as => :check_boxes
-  = f.button :wrapped, :cancel => return_url
