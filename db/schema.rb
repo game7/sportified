@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408192420) do
+ActiveRecord::Schema.define(version: 20160408220626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,14 +40,6 @@ ActiveRecord::Schema.define(version: 20160408192420) do
   end
 
   add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
-
-  create_table "divisions_seasons", force: :cascade do |t|
-    t.integer "division_id"
-    t.integer "season_id"
-  end
-
-  add_index "divisions_seasons", ["division_id"], name: "index_divisions_seasons_on_division_id", using: :btree
-  add_index "divisions_seasons", ["season_id"], name: "index_divisions_seasons_on_season_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -317,6 +309,27 @@ ActiveRecord::Schema.define(version: 20160408192420) do
 
   add_index "league_divisions", ["program_id"], name: "index_league_divisions_on_program_id", using: :btree
 
+  create_table "league_divisions_seasons", force: :cascade do |t|
+    t.integer "division_id"
+    t.integer "season_id"
+  end
+
+  add_index "league_divisions_seasons", ["division_id"], name: "index_league_divisions_seasons_on_division_id", using: :btree
+  add_index "league_divisions_seasons", ["season_id"], name: "index_league_divisions_seasons_on_season_id", using: :btree
+
+  create_table "league_seasons", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "slug",       limit: 255
+    t.date     "starts_on"
+    t.integer  "tenant_id"
+    t.string   "mongo_id",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "program_id"
+  end
+
+  add_index "league_seasons", ["program_id"], name: "index_league_seasons_on_program_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "name",       limit: 255
@@ -423,19 +436,6 @@ ActiveRecord::Schema.define(version: 20160408192420) do
 
   add_index "registrar_sessions", ["registrable_type", "registrable_id"], name: "index_registrar_sessions_on_registrable_type_and_registrable_id", using: :btree
   add_index "registrar_sessions", ["tenant_id"], name: "index_registrar_sessions_on_tenant_id", using: :btree
-
-  create_table "seasons", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "slug",       limit: 255
-    t.date     "starts_on"
-    t.integer  "tenant_id"
-    t.string   "mongo_id",   limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "program_id"
-  end
-
-  add_index "seasons", ["program_id"], name: "index_seasons_on_program_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
@@ -577,7 +577,7 @@ ActiveRecord::Schema.define(version: 20160408192420) do
 
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrar_registration_types", "registrar_sessions"
-  add_foreign_key "seasons", "programs"
 end

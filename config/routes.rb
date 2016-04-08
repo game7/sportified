@@ -1,6 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-
   namespace :registrar do
     resources :registration_types
   end
@@ -86,6 +85,7 @@
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
         resources :divisions, :except => [:show]
+        resources :seasons, :except => [:show]
       end
     end
 
