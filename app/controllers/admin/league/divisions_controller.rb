@@ -1,10 +1,11 @@
-class Admin::DivisionsController < Admin::BaseLeagueController
+class Admin::League::DivisionsController < Admin::BaseLeagueController
   before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_breadcrumbs
+  before_filter :find_league, :only => [:index, :new, :create]
   before_filter :find_division, :only => [:edit, :update, :destroy]
+  before_filter :add_breadcrumbs, :except => [:destroy]
 
   def index
-    @divisions = Division.all.order(:name)
+    @divisions = @league.divisions.order(:name)
     @divisions = @divisions.for_season(params[:season_id]) if params[:season_id]
     respond_to do |format|
       format.html
@@ -13,11 +14,11 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def new
-    @division = Division.new
+    @division = ::League::Division.new
   end
 
   def create
-    @division = Division.new(division_params)
+    @division = @league.divisions.build(division_params)
     if @division.save
       return_to_last_point :success => 'Division was successfully created.'
     else
@@ -52,11 +53,16 @@ class Admin::DivisionsController < Admin::BaseLeagueController
   end
 
   def add_breadcrumbs
-    add_breadcrumb 'Divisions', admin_divisions_path
+    league = @league || @division.program
+    add_breadcrumb league.name, admin_league_program_path(league)
+    add_breadcrumb 'Divisions', admin_league_program_divisions_path(league)
+  end
+
+  def find_league
+    @league = ::League::Program.find(params[:program_id])
   end
 
   def find_division
-    @division = Division.find(params[:id])
+    @division = ::League::Division.find(params[:id])
   end
-
 end

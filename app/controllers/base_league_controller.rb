@@ -25,7 +25,7 @@ class BaseLeagueController < ApplicationController
   end
 
   def find_division
-    @division = Division.with_slug(params[:division_slug]).first
+    @division = League::Division.with_slug(params[:division_slug]).first
     add_breadcrumb(@division.name) if @division
   end
 

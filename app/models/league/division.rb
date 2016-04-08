@@ -1,30 +1,12 @@
-# == Schema Information
-#
-# Table name: divisions
-#
-#  id                  :integer          not null, primary key
-#  name                :string(255)
-#  slug                :string(255)
-#  show_standings      :boolean
-#  show_players        :boolean
-#  show_statistics     :boolean
-#  standings_array     :text             default([]), is an Array
-#  tenant_id           :integer
-#  mongo_id            :string(255)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  standings_schema_id :string(255)
-#
-
-class Division < ActiveRecord::Base
+class League::Division < ActiveRecord::Base
   include Sportified::TenantScoped
 
   validates :name, presence: true
 
-  belongs_to :league, class_name: 'League'
-  has_and_belongs_to_many :seasons
-  has_many :teams
-  has_many :events
+  belongs_to :program
+  has_and_belongs_to_many :seasons, class_name: '::Season', join_table: 'divisions_seasons'
+  has_many :teams, class_name: '::Team'
+  has_many :events, class_name: '::Event'
 
  before_save do |division|
    division.slug = division.name.parameterize
@@ -49,11 +31,11 @@ class Division < ActiveRecord::Base
  end
 
  def standings_schema
-   Division.standings_schemata[self.standings_schema_id] || Division.standings_schemata['pct']
+   League::Division.standings_schemata[self.standings_schema_id] || Division.standings_schemata['pct']
  end
 
  def self.standings_schema_options
-   Division.standings_schemata.collect do |s|
+   self.standings_schemata.collect do |s|
      [ s[1]['description'], s[0] ]
    end
  end
@@ -68,5 +50,4 @@ class Division < ActiveRecord::Base
      where(:season_ids => season_id)
    end
  end
-
 end

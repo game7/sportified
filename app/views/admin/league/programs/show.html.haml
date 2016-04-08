@@ -4,12 +4,6 @@
   .col-sm-8
   .col-sm-4
     .panel.panel-default
-      .panel-heading Divisions
+      .panel-heading Manage
       %ul.list-group
-        - @league.divisions.each do |division|
-          %li.list-group-item= division.name
-    .panel.panel-default
-      .panel-heading Seasons
-      %ul.list-group
-        - @league.seasons.each do |season|
-          %li.list-group-item= season.name
+        %li.list-group-item= link_to 'Divisions', admin_league_program_divisions_path(@league)

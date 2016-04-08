@@ -6,13 +6,7 @@ class Admin::BaseLeagueController < Admin::AdminController
   end
 
   def set_area_navigation
-      add_area_menu_item "Divisions", admin_divisions_path
-      add_area_menu_item "Seasons", admin_seasons_path
-      add_area_menu_item "Divisions", admin_divisions_path
-      add_area_menu_item "Locations", admin_locations_path
-      add_area_menu_item "Clubs", admin_clubs_path
-      add_area_menu_item "Teams", admin_teams_path
-      add_area_menu_item "Schedule", admin_events_path
+
   end
 
 end

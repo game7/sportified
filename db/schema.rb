@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408003948) do
+ActiveRecord::Schema.define(version: 20160408192420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,23 +40,6 @@ ActiveRecord::Schema.define(version: 20160408003948) do
   end
 
   add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
-
-  create_table "divisions", force: :cascade do |t|
-    t.string   "name",                limit: 255
-    t.string   "slug",                limit: 255
-    t.boolean  "show_standings"
-    t.boolean  "show_players"
-    t.boolean  "show_statistics"
-    t.text     "standings_array",                 default: [], array: true
-    t.integer  "tenant_id"
-    t.string   "mongo_id",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "standings_schema_id", limit: 255
-    t.integer  "program_id"
-  end
-
-  add_index "divisions", ["program_id"], name: "index_divisions_on_program_id", using: :btree
 
   create_table "divisions_seasons", force: :cascade do |t|
     t.integer "division_id"
@@ -317,6 +300,23 @@ ActiveRecord::Schema.define(version: 20160408003948) do
     t.datetime "updated_at"
   end
 
+  create_table "league_divisions", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.string   "slug",                limit: 255
+    t.boolean  "show_standings"
+    t.boolean  "show_players"
+    t.boolean  "show_statistics"
+    t.text     "standings_array",                 default: [], array: true
+    t.integer  "tenant_id"
+    t.string   "mongo_id",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "standings_schema_id", limit: 255
+    t.integer  "program_id"
+  end
+
+  add_index "league_divisions", ["program_id"], name: "index_league_divisions_on_program_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "name",       limit: 255
@@ -575,8 +575,8 @@ ActiveRecord::Schema.define(version: 20160408003948) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "divisions", "programs"
   add_foreign_key "facilities", "locations"
+  add_foreign_key "league_divisions", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrar_registration_types", "registrar_sessions"
   add_foreign_key "seasons", "programs"

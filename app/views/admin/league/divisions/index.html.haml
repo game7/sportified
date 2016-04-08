@@ -1,0 +1,14 @@
+- title 'Divisions'
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Actions
+  %tbody
+    - @divisions.each do |division|
+      %tr
+        %td #{division.name}
+        %td
+          = link_to 'Edit', edit_admin_league_division_path(division), :class => 'btn btn-xs btn-primary'
+          = link_to 'Delete', [:admin, :league, division], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+= link_to 'New Division', new_admin_league_program_division_path, :class => "btn btn-primary"
