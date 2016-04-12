@@ -56,7 +56,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def get_season_options
-    @season_options = ::League::Season.where('id != ?', @season.try('id')).order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}
+    @season_options = ::League::Season.order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}
   end
 
   def add_breadcrumbs
@@ -74,6 +74,6 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def find_seasons
-    @seasons = ::League::Season.order(:name)
+    @seasons = ::League::Season.order(name: :desc)
   end
 end
