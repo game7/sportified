@@ -23,4 +23,4 @@
         %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
         %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
         - for token in Hockey::Player::Record.tokens @view
-          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(record[token], :precision => 3) : format_with.call(record.player[token])  
+          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(record[token], :precision => 3) : format_with.call(record[token])
