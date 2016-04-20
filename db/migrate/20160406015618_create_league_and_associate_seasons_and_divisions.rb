@@ -6,18 +6,18 @@ class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
   end
 
   def down
-    Season.unscoped.update_all("league_id = null")
-    Division.unscoped.update_all("league_id = null")
-    League.unscoped.all.each{|league| league.destroy }
+    update("update seasons set program_id = null")
+    update("update divisions set program_id = null")
+    delete("delete from programs")
+    League::Program.unscoped.all.each{|league| league.destroy }
   end
 
   private
 
   def create_and_assign_league(tenant_slug, league_name)
-    Tenant.current = Tenant.find_by(slug: tenant_slug)
-    league = League.create(name: league_name);
-    Season.update_all("league_id = #{league.id}")
-    Division.update_all("league_id = #{league.id}")
+    id = insert "insert into programs (name, type, created_at, updated_at) values ('#{league_name}','League','#{Time.now}','#{Time.now}')"
+    update("update seasons set league_id = #{id}")
+    update("update divisions set league_id = #{id}")
   end
 
 
