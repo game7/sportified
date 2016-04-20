@@ -70,7 +70,7 @@ class TeamsController < BaseLeagueController
 
   def schedule
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
-    @events = Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id).order(:starts_on).includes(:location, :home_team, :away_team)
+    @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id).order(:starts_on).includes(:location, :home_team, :away_team)
     add_breadcrumb "Schedule"
     @team_links = links_to_team_schedule(@division, @season)
 
@@ -123,7 +123,7 @@ class TeamsController < BaseLeagueController
   end
 
   def find_team
-    @team = Team.find(params[:id])
+    @team = League::Team.find(params[:id])
   end
 
   def load_division_options

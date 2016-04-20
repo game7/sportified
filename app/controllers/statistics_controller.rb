@@ -30,11 +30,11 @@ class StatisticsController < BaseLeagueController
   private
 
   def skaters(stat, limit)
-    Hockey::Skater::Record.joins(player: :team).includes(:player).where('teams.division_id = ? AND teams.season_id = ?', @division.id, @season.id).where("hockey_skaters.#{stat} > 0").order(stat => :desc).limit(limit)
+    Hockey::Skater::Record.joins(player: :team).includes(:player).where('league_teams.division_id = ? AND league_teams.season_id = ?', @division.id, @season.id).where("hockey_skaters.#{stat} > 0").order(stat => :desc).limit(limit)
   end
 
   def goalies(stat, limit)
-    Hockey::Goaltender::Record.joins(player: :team).includes(:player, :team).where('teams.division_id = ? AND teams.season_id = ?', @division.id, @season.id).where("hockey_goaltenders.#{stat} > 0").order(stat => :desc)
+    Hockey::Goaltender::Record.joins(player: :team).includes(:player, :team).where('league_teams.division_id = ? AND league_teams.season_id = ?', @division.id, @season.id).where("hockey_goaltenders.#{stat} > 0").order(stat => :desc)
   end
 
   def set_breadcrumbs

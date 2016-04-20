@@ -38,9 +38,9 @@ namespace :league do
       Tenant.current = tenant
       puts "TENANT = #{tenant.host}"
       puts "Resetting Skater Records"
-      Hockey::Skater::Record.all.each{|record| record.reset! }
+      Hockey::Skater::Record.delete_all
       puts "Resetting Goalie Records"
-      Hockey::Goaltender::Record.all.each{|record| record.reset! }
+      Hockey::Goaltender::Record.delete_all
       Hockey::Statsheet.all.each do |statsheet|
         puts "---- POSTING #{statsheet.id}"
         Hockey::Statsheet::Processor.post statsheet

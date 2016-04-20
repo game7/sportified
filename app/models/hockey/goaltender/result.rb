@@ -36,11 +36,11 @@
 #
 
 class Hockey::Goaltender::Result < Hockey::Goaltender
-  
+
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
-  has_one :game, through: :statsheet
-  belongs_to :team, class_name: '::Team'
-  
+  has_one :game, through: :statsheet, class_name: '::League::Game'
+  belongs_to :team, class_name: '::League::Team'
+
   validates :statsheet, presence: true
   validates :team, presence: true
   #validates :player, presence: true'
@@ -48,15 +48,15 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
   def full_name
     "#{first_name} #{last_name}"
   end
-  
+
   def apply_mongo_player_id!(mongo)
   end
-  
+
   def apply_mongo!(mongo)
     self.team_id = self.player.team_id if self.player
     unless self.team_id
       self.team_id = self.statsheet.home_team.id if mongo[:side] == 'home'
-      self.team_id = self.statsheet.away_team.id if mongo[:side] == 'away'      
+      self.team_id = self.statsheet.away_team.id if mongo[:side] == 'away'
     end
     self.player = ::Player.where(:mongo_id => mongo[:player_id].to_s).first
     self.first_name = mongo[:first_name]
@@ -80,7 +80,7 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
     self.shootout_losses = mongo[:g_sol]
     self.total_wins = mongo[:g_totw]
     self.total_losses = mongo[:g_totl]
-    
+
     self.goals_against_average = (self.goals_against * self.minutes_played) / 45.to_f
     self.save_percentage = self.saves / self.shots_against.to_f
   end

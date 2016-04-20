@@ -63,7 +63,7 @@ class League::Game < League::Event
   end
 
   def has_team?(team)
-    id = team.class == Team ? team.id : team
+    id = team.class == League::Team ? team.id : team
     id == away_team_id || id == home_team_id
   end
 
@@ -74,13 +74,13 @@ class League::Game < League::Event
 
   def opponent_name(team)
     throw :team_not_present unless has_team?(team)
-    id = team.class == Team ? team.id : team
+    id = team.class == League::Team ? team.id : team
     id == away_team_id ? home_team_name : away_team_name
   end
 
   def opponent(team)
     throw :team_not_present unless has_team?(team)
-    id = team.class == Team ? team.id : team
+    id = team.class == League::Team ? team.id : team
     id == away_team_id ? home_team : away_team
   end
 

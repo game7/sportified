@@ -24,7 +24,7 @@ class PlayersController < BaseLeagueController
 
     @teams = @division.teams.for_season(@season)
     ids = @teams.collect{|team| team.id}
-    @players = Player.joins(:team).where('teams.season_id = ?', @season.id).order(last_name: :asc)
+    @players = Player.joins(:team).where('league_teams.season_id = ?', @season.id).order(last_name: :asc)
 
     respond_to do |format|
       format.html # index.html.erb

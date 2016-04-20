@@ -1,7 +1,7 @@
 .actions{ :style => "position: absolute; top: 10px; right: 10px;"}
   .buttons.pull-right
     .btn-group
-      %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Team Tools" } 
+      %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Team Tools" }
         = icon('wrench')
         %span.caret
       %ul.dropdown-menu.pull-right{ :role => :menu }
@@ -12,5 +12,5 @@
           %li= link_to icon(:expand)+" Adjust Logo", edit_team_path(team, :form => 'adjust_logo'), :remote => true
         %li= link_to icon('paint-brush')+" Edit Colors", edit_team_path(team, :form => 'color'), :remote => true
         %li.divider
-        %li= link_to icon(:trash)+' Delete', admin_team_path(team), :confirm => 'Are you sure?', :method => :delete, :remote => true
+        %li= link_to icon(:trash)+' Delete', admin_league_team_path(team), :confirm => 'Are you sure?', :method => :delete, :remote => true
   .clear
