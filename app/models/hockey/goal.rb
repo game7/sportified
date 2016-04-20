@@ -40,7 +40,7 @@ class Hockey::Goal < ActiveRecord::Base
   validates :second, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 60 }
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
-  belongs_to :team, class_name: "Team"
+  belongs_to :team, class_name: "::League::Team"
   belongs_to :scored_by, class_name: "Hockey::Skater::Result"
   belongs_to :scored_on, class_name: "Hockey::Goaltender::Result"
   belongs_to :assisted_by, class_name: "Hockey::Skater::Result"

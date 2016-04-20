@@ -20,7 +20,7 @@ class Admin::GameResultController < Admin::BaseLeagueController
   end
 
   def find_game
-    @game = Game.find(params[:game_id])
+    @game = ::League::Game.find(params[:game_id])
   end
 
 end

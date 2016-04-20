@@ -27,16 +27,16 @@
 
 class Hockey::Penalty < ActiveRecord::Base
   include Sportified::TenantScoped
-  
+
   SEVERITIES = %w[minor major misconduct game_misconduct]
-  INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing 
-                  fighting holding_the_stick hooking interference kneeing roughing slashing 
+  INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing
+                  fighting holding_the_stick hooking interference kneeing roughing slashing
                   spearing tripping unsportsmanlike_conduct misconduct game_misconduct]
-  
+
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
-  belongs_to :team, class_name: 'Team'
+  belongs_to :team, class_name: '::League::Team'
   belongs_to :committed_by, class_name: 'Hockey::Skater::Result'
-  
+
   #validates :committed_by, presence: true
   validates :infraction, presence: true
   validates :duration, presence: true
@@ -58,14 +58,14 @@ class Hockey::Penalty < ActiveRecord::Base
   def end_time
     format_time(self.end_min, self.end_sec)
   end
-  
+
   scope :sorted_by_time, ->{ order(period: :asc, minute: :desc, second: :desc) }
-  scope :for_period, ->(period) { where(per: period) }  
-  
+  scope :for_period, ->(period) { where(per: period) }
+
   def apply_mongo!(mongo)
     self.team = (mongo['side'] == 'home' ? self.statsheet.home_team : self.statsheet.away_team)
     self.tenant_id = self.team.tenant_id if self.team
-    self.committed_by_number = mongo['plr']    
+    self.committed_by_number = mongo['plr']
     self.committed_by = self.statsheet.skaters.where(team_id: self.team_id).where(jersey_number: mongo[:plr]).first if self.team
     self.tenant_id = self.statsheet.tenant_id
     self.infraction = mongo['inf']
@@ -80,20 +80,20 @@ class Hockey::Penalty < ActiveRecord::Base
     self.end_minute = mongo['end_min']
     self.end_second = mongo['end_sec']
   end
-  
+
   def time
     format_time(self.minute, self.second)
   end
-  
+
   def start_time
     format_time(self.start_minute, self.start_second)
   end
-  
+
   def end_time
     format_time(self.end_minute, self.end_second)
   end
-  
-  PER = %w[1 2 3 OT]  
+
+  PER = %w[1 2 3 OT]
 
   class << self
     def periods
@@ -105,6 +105,6 @@ class Hockey::Penalty < ActiveRecord::Base
 
     def format_time(min, sec)
       min.to_s + ':' + "0#{sec.to_s}"[-2,2] unless min.blank? || sec.blank?
-    end  
-    
+    end
+
 end
