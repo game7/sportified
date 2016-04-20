@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408220626) do
+ActiveRecord::Schema.define(version: 20160414231723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160408220626) do
     t.integer  "playing_surface_id"
     t.integer  "home_team_locker_room_id"
     t.integer  "away_team_locker_room_id"
+    t.integer  "program_id"
   end
 
   add_index "events", ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160408220626) do
   add_index "events", ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
   add_index "events", ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
+  add_index "events", ["program_id"], name: "index_events_on_program_id", using: :btree
   add_index "events", ["season_id"], name: "index_events_on_season_id", using: :btree
   add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
 
@@ -330,6 +332,56 @@ ActiveRecord::Schema.define(version: 20160408220626) do
 
   add_index "league_seasons", ["program_id"], name: "index_league_seasons_on_program_id", using: :btree
 
+  create_table "league_teams", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.string   "short_name",          limit: 255
+    t.string   "slug",                limit: 255
+    t.boolean  "show_in_standings"
+    t.string   "pool",                limit: 255
+    t.integer  "seed"
+    t.integer  "tenant_id"
+    t.integer  "division_id"
+    t.integer  "season_id"
+    t.integer  "club_id"
+    t.string   "logo",                limit: 255
+    t.string   "primary_color",       limit: 255
+    t.string   "secondary_color",     limit: 255
+    t.string   "accent_color",        limit: 255
+    t.text     "main_colors",                     default: [], array: true
+    t.boolean  "custom_colors"
+    t.integer  "crop_x",                          default: 0
+    t.integer  "crop_y",                          default: 0
+    t.integer  "crop_h",                          default: 0
+    t.integer  "crop_w",                          default: 0
+    t.string   "mongo_id",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "games_played"
+    t.integer  "wins"
+    t.integer  "losses"
+    t.integer  "ties"
+    t.integer  "overtime_wins"
+    t.integer  "overtime_losses"
+    t.integer  "shootout_wins"
+    t.integer  "shootout_losses"
+    t.integer  "forfeit_wins"
+    t.integer  "forfeit_losses"
+    t.integer  "points"
+    t.float    "percent"
+    t.integer  "scored"
+    t.integer  "allowed"
+    t.integer  "margin"
+    t.string   "last_result",         limit: 255
+    t.integer  "current_run"
+    t.integer  "longest_win_streak"
+    t.integer  "longest_loss_streak"
+  end
+
+  add_index "league_teams", ["club_id"], name: "index_league_teams_on_club_id", using: :btree
+  add_index "league_teams", ["division_id"], name: "index_league_teams_on_division_id", using: :btree
+  add_index "league_teams", ["season_id"], name: "index_league_teams_on_season_id", using: :btree
+  add_index "league_teams", ["tenant_id"], name: "index_league_teams_on_tenant_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "name",       limit: 255
@@ -468,56 +520,6 @@ ActiveRecord::Schema.define(version: 20160408220626) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "teams", force: :cascade do |t|
-    t.string   "name",                limit: 255
-    t.string   "short_name",          limit: 255
-    t.string   "slug",                limit: 255
-    t.boolean  "show_in_standings"
-    t.string   "pool",                limit: 255
-    t.integer  "seed"
-    t.integer  "tenant_id"
-    t.integer  "division_id"
-    t.integer  "season_id"
-    t.integer  "club_id"
-    t.string   "logo",                limit: 255
-    t.string   "primary_color",       limit: 255
-    t.string   "secondary_color",     limit: 255
-    t.string   "accent_color",        limit: 255
-    t.text     "main_colors",                     default: [], array: true
-    t.boolean  "custom_colors"
-    t.integer  "crop_x",                          default: 0
-    t.integer  "crop_y",                          default: 0
-    t.integer  "crop_h",                          default: 0
-    t.integer  "crop_w",                          default: 0
-    t.string   "mongo_id",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "games_played"
-    t.integer  "wins"
-    t.integer  "losses"
-    t.integer  "ties"
-    t.integer  "overtime_wins"
-    t.integer  "overtime_losses"
-    t.integer  "shootout_wins"
-    t.integer  "shootout_losses"
-    t.integer  "forfeit_wins"
-    t.integer  "forfeit_losses"
-    t.integer  "points"
-    t.float    "percent"
-    t.integer  "scored"
-    t.integer  "allowed"
-    t.integer  "margin"
-    t.string   "last_result",         limit: 255
-    t.integer  "current_run"
-    t.integer  "longest_win_streak"
-    t.integer  "longest_loss_streak"
-  end
-
-  add_index "teams", ["club_id"], name: "index_teams_on_club_id", using: :btree
-  add_index "teams", ["division_id"], name: "index_teams_on_division_id", using: :btree
-  add_index "teams", ["season_id"], name: "index_teams_on_season_id", using: :btree
-  add_index "teams", ["tenant_id"], name: "index_teams_on_tenant_id", using: :btree
-
   create_table "tenants", force: :cascade do |t|
     t.string   "name",           limit: 255
     t.string   "slug",           limit: 255
@@ -575,6 +577,7 @@ ActiveRecord::Schema.define(version: 20160408220626) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"

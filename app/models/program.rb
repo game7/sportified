@@ -16,6 +16,8 @@ class Program < ActiveRecord::Base
 
   belongs_to :tenant
 
+  has_many :events
+
   validates :name, presence: true
 
 end

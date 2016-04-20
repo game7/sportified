@@ -19,10 +19,6 @@
       %tbody
         = render :partial => 'event', :collection => events
 
-= link_to "New Event", new_admin_event_path(:season_id => params[:season_id]), :class => "btn btn-primary"
-= link_to "New Game", new_admin_game_path(:season_id => params[:season_id]), :class => "btn btn-primary"
-= link_to "Import Games From File", admin_game_imports_path, :class => "btn btn-primary"
-
 #dialog-modal
 
 - content_for :javascript do

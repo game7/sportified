@@ -6,17 +6,18 @@
     = link_to 'New Season', new_admin_league_program_season_path(@season.program), :class => "btn btn-default"
     = link_to 'New Division', new_admin_league_program_division_path(@season.program), :class => "btn btn-default"
   .clear
-- puts "- - - - - - - - - - - - - - - - - - - - "
-- puts @season.teams.includes(:division).group_by{|t| t.division}.count
 - @season.teams.includes(:division).group_by{|t| t.division}.each do |division, teams|
   - next unless division
   .panel.panel-default
     .panel-heading
       = division.name
       .pull-right
-        = link_to 'Edit', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
-        -# link_to 'New Team', new_admin_season_team_path(:season_id => @season.id, :division_id => division.id), :class => 'btn btn-mini'
+        = link_to icon(:cog) + ' Settings', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
+        = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
     %ul.list-group
       - teams.each do |team|
-        %li.list-group-item= team.name
+        %li.list-group-item
+          = link_to team.name, [:admin, team.class.name.deconstantize.underscore.presence, team]
+          .pull-right
+            = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-xs btn-default"
 

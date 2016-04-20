@@ -35,6 +35,7 @@
 #  playing_surface_id        :integer
 #  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
+#  program_id                :integer
 #
 
 class GamesController < BaseLeagueController

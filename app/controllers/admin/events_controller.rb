@@ -1,14 +1,9 @@
 require "chronic"
-class Admin::EventsController < Admin::BaseLeagueController
+class Admin::EventsController < Admin::AdminController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
+  before_filter :mark_return_point, :only => [:destroy]
   before_filter :add_events_breadcrumb
-  before_filter :load_event, :only => [:edit, :update, :destroy]
-  before_filter :find_season, :only => [:new, :create]
-  before_filter :load_season_options, :only => [:new, :edit]
-  before_filter :load_division_options, :only => [:new, :edit]
-  before_filter :load_location_options, :only => [:new, :edit]
-  before_filter :load_season_links, :only => [:index]
+  before_filter :load_event, :only => [:destroy]
 
   def index
 
@@ -34,48 +29,6 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   end
 
-  def new
-    if params[:clone]
-      clone = Event.find(params[:clone])
-      @event = clone.dup
-    else
-      @event = Event.new(:season => @season, :division_id => params[:division_id])
-      @event.location_id = @location_options.first.id unless @location_options.empty?
-    end
-  end
-
-  def edit
-  end
-
-  def create
-    Chronic.time_class = Time.zone
-    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    @event = Event.new(event_params)
-    if @event.save
-      return_to_last_point :success => 'Event was successfully created.'
-    else
-      flash[:error] = 'Event could not be created.'
-      load_season_options
-      load_division_options
-      load_location_options
-      render :action => "new"
-    end
-  end
-
-  def update
-    @event = Event.find(params[:id])
-    Chronic.time_class = Time.zone
-    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    if @event.update_attributes(event_params)
-      return_to_last_point(:notice => 'Event was successfully updated.')
-    else
-      flash[:error] = 'Event could not be updated.'
-      load_season_options
-      load_division_options
-      load_location_options
-      render :action => "edit"
-    end
-  end
 
   def destroy
     @event.destroy
@@ -85,43 +38,12 @@ class Admin::EventsController < Admin::BaseLeagueController
 
   private
 
-  def event_params
-    params.require(:event).permit(:season_id, :division_id, :starts_on, :duration,
-      :all_day, :location_id, :summary, :description, :show_for_all_teams
-    )
-  end
-
   def add_events_breadcrumb
     add_breadcrumb 'Events', admin_events_path
   end
 
   def load_event
     @event = Event.find(params[:id])
-  end
-
-  def load_season_links
-    @season_links = Season.all.order(:starts_on => :desc).each.collect do |s|
-      [s.name, admin_events_path(:season_id => s.id, :date => params[:date])]
-    end
-    #@season_links.insert 0, ["All Seasons", admin_events_path(:date => params[:date])]
-  end
-
-  def load_season_options
-    @season_options = Season.order(starts_on: :desc)
-  end
-
-  def load_division_options
-    @division_options = @season.divisions.order(:name) if @season
-    @division_options ||= []
-  end
-
-  def load_location_options
-    @location_options = Location.order(:name).entries
-  end
-
-  def find_season
-    @season = Season.find(params[:season_id]) if params[:season_id]
-    @season ||= Season.most_recent()
   end
 
 end

@@ -16,20 +16,17 @@
 
 
   .col-sm-3
-    .panel.panel-default
-      .panel-heading League
-      %ul.list-group
-        = link_to 'Teams', admin_teams_path, class: 'list-group-item'
-        = link_to 'Clubs', admin_clubs_path, class: 'list-group-item'
-        = link_to 'Locations', admin_locations_path, class: 'list-group-item'
-        = link_to 'Schedule', admin_events_path, class: 'list-group-item'
 
-  .col-sm-3
     .panel.panel-default
       .panel-heading Manage
       %ul.list-group
         = link_to 'Programs', admin_programs_path, class: 'list-group-item'
+        = link_to 'Schedule', admin_events_path, class: 'list-group-item'
         = link_to 'Locations', admin_locations_path, class: 'list-group-item'
+        = link_to 'Clubs', admin_clubs_path, class: 'list-group-item'
+
+  .col-sm-3
+
     .panel.panel-default
       .panel-heading Experimental
       %ul.list-group

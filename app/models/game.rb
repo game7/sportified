@@ -35,13 +35,14 @@
 #  playing_surface_id        :integer
 #  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
+#  program_id                :integer
 #
 
 class Game < Event
   extend Enumerize
 
-  belongs_to :home_team, :class_name => "Team"
-  belongs_to :away_team, :class_name => "Team"
+  belongs_to :home_team, :class_name => "::League::Team"
+  belongs_to :away_team, :class_name => "::League::Team"
   belongs_to :statsheet, polymorphic: true
 
   belongs_to :playing_surface

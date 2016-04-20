@@ -10,7 +10,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   before_filter :load_club_options, :only => [:new, :edit]
 
   def index
-    @teams = Team.all
+    @teams = ::League::Team
     @teams = @teams.for_division(params[:division_id]) if params[:division_id]
     @teams = @teams.for_season(@season) if @season
     @teams = @teams.order(:name)
@@ -71,7 +71,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def find_team
-    @team = Team.find(params[:id])
+    @team = ::League::Team.find(params[:id])
     add_breadcrumb @team.division.name
     add_breadcrumb @team.season.name
     add_breadcrumb @team.name
@@ -82,12 +82,12 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def find_season
-    @season = Season.find(params[:season_id]) if params[:season_id]
-    @season ||= Season.most_recent()
+    @season = ::League::Season.find(params[:season_id]) if params[:season_id]
+    @season ||= ::League::Season.most_recent()
   end
 
   def load_season_links
-    @season_links = Season.all.order(:starts_on => :desc).each.collect do |s|
+    @season_links = ::League::Season.all.order(:starts_on => :desc).each.collect do |s|
       [s.name, admin_teams_path(:season_id => s.id)]
     end
   end

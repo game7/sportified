@@ -5,6 +5,64 @@
 //= require bootstrap-sprockets
 //= require jcrop/jquery.Jcrop.min
 
+function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
+  var $observer = $(observerId);
+  var $observed = $(observedId);
+  var optionTag = '<option></option>';
+
+  function bind() {
+    var val = $observed.val();
+    $observer.empty().append($(optionTag).val('').text(''));
+    if (val && val !== '') {
+      $observer.attr('disabled', true);
+      if (typeof urlOrOptions == 'string') {
+        var url = urlOrOptions;
+        var ok = true;
+        $observed.each(function(i, item) {
+          var $obj = $(item);
+          if ($obj.val() === '') {
+            ok = false;
+          }
+          url = url.replace('::' + $obj.attr('id') + '::', $obj.val());
+        });
+        if (ok) {
+          return $.getJSON(url, function(data) {
+            $.each(data, function(i, object) {
+              $observer.append($(optionTag).val(object[optionKey]).text(object[optionValue]));
+            });
+            $observer.attr('disabled', false);
+          })
+        } else {
+          $observer.attr('disabled', false);
+        }
+      } else {
+        var options = urlOrOptions[val] || [];
+        $.each(options, function(i, object) {
+          $observer.append($(optionTag).val(object[optionKey]).text(object[optionValue]));
+        });
+        $observer.attr('disabled', false);
+      }
+    }
+    return $.when();
+  }
+
+  $observed.change(function() {
+    bind();
+  });
+
+  bind().then(function() {
+    if(selected && selected.length) {
+      for(var i = 0; i < selected.length; i++) {
+        $($observer[i]).val(selected[i]);
+      }
+    } else {
+      $observer.val(selected);
+    }
+  });
+
+
+
+}
 
 function rgbAsHexString(rgbInt) {
   var color = parseInt(rgbInt).toString(16);
@@ -16,7 +74,7 @@ function colorToHex(color) {
         return color;
     }
     var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
-    
+
     var red = rgbAsHexString(digits[2]);
     var green = rgbAsHexString(digits[3]);
     var blue = rgbAsHexString(digits[4]);

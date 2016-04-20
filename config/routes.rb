@@ -84,9 +84,13 @@
     resources :activities, :except => [:index, :destroy]
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
-        resources :divisions, :except => [:show]
+        resources :divisions, :except => [:show] do
+          resources :teams, :except => [:index]
+        end
         resources :seasons
       end
+      resources :events, :only => [:new, :create, :edit, :update]
+      resources :games, :only => [:new, :create, :edit, :update]
     end
 
     # resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do

@@ -1,0 +1,8 @@
+- title @team.name
+%p
+  %strong Name:
+  = @team.name
+%p
+  %strong Short Name:
+  = @team.short_name
+= link_to 'Edit', edit_admin_league_team_path(@team)

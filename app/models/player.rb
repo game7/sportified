@@ -21,7 +21,7 @@ class Player < ActiveRecord::Base
   include Sportified::TenantScoped
 
   belongs_to :tenant
-  belongs_to :team
+  belongs_to :team, class_name: 'League::Team'
   has_one :division, through: :team
   has_one :season, through: :team
 

@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: league_divisions
+#
+#  id                  :integer          not null, primary key
+#  name                :string(255)
+#  slug                :string(255)
+#  show_standings      :boolean
+#  show_players        :boolean
+#  show_statistics     :boolean
+#  standings_array     :text             default([]), is an Array
+#  tenant_id           :integer
+#  mongo_id            :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  standings_schema_id :string(255)
+#  program_id          :integer
+#
+
 class League::Division < ActiveRecord::Base
   include Sportified::TenantScoped
 
@@ -5,7 +24,7 @@ class League::Division < ActiveRecord::Base
 
   belongs_to :program
   has_and_belongs_to_many :seasons
-  has_many :teams, class_name: '::Team'
+  has_many :teams
   has_many :events, class_name: '::Event'
 
  before_save do |division|

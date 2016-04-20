@@ -4,17 +4,11 @@
     .summary= event.summary
   %ul.dropdown-menu
     %li.dropdown-header Event
-    %li
-      - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
-      = link_to 'Edit', edit_url
-    %li
-      - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
-      = link_to 'Clone', copy_url
-    %li
-      = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
-    - if event.class.to_s == 'Game'
+    %li= link_to 'Edit', edit_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event])
+    %li= link_to 'Clone', new_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event.class], :clone => event.id)
+    %li= link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+    - if event.class.to_s == 'League::Game'
       %li.divider{role: "separator"}
       %li.dropdown-header Game
-      %li
-        = link_to 'Result', edit_admin_game_result_path(event.id), :remote => true
-        = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
+      %li= link_to 'Result', edit_admin_game_result_path(event.id), :remote => true
+      %li= link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)

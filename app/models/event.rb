@@ -35,16 +35,14 @@
 #  playing_surface_id        :integer
 #  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
+#  program_id                :integer
 #
 
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
 
-  belongs_to :division
-  validates_presence_of :division_id
-
-  belongs_to :season
-  validates_presence_of :season_id
+  belongs_to :program
+  validates :program_id, presence: true
 
   belongs_to :location
   # validates_presence_of :location_id
