@@ -160,29 +160,4 @@ class League::Game < League::Event
 
   scope :without_result, ->{ where(result: nil) }
 
-  def apply_mongo_home_team_id! mongo_id
-    self.home_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first
-  end
-
-  def apply_mongo_away_team_id! mongo_id
-    self.away_team = Team.unscoped.where(mongo_id: mongo_id.to_s).first
-  end
-
-  def apply_mongo! mongo
-    if mongo
-      if mongo['result']
-        self.home_team_score = mongo['result']['home_score']
-        self.away_team_score = mongo['result']['away_score']
-        self.result = 'final'
-        self.completion = mongo['result']['completed_in']
-      end
-
-      self.home_team_custom_name = mongo['home_custom_name']
-      self.away_team_custom_name = mongo['away_custom_name']
-      self.home_team_name = mongo['home_team_name']
-      self.away_team_name = mongo['away_team_name']
-      self.exclude_from_team_records = mongo['exclude_from_team_records']
-    end
-  end
-
 end

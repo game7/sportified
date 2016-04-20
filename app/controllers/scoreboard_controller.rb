@@ -15,10 +15,13 @@ class ScoreboardController < ::BaseLeagueController
 
     add_breadcrumb("Scoreboard")
 
-    @games = Game.where('starts_on > ? AND ends_on < ?', @start_date, @end_date)
+    @games = League::Game.where('starts_on > ? AND ends_on < ?', @start_date, @end_date)
                   .includes(:home_team, :away_team, :statsheet)
                   .order(starts_on: :asc)
-    @games = @games.for_league(@league) if @league
+
+    @games = @games.for_division(League::Division.with_slug(params[:division_slug])) if params[:division_slug]
+
+    @days = @games.group_by{|game| game.starts_on.to_date.strftime("%A, %B %e %Y")}
 
   end
 

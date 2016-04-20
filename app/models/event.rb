@@ -70,17 +70,6 @@ class Event < ActiveRecord::Base
   scope :after, ->(after) { where('starts_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
 
-  class << self
-    def for_season(s)
-      id = s.class == Season ? s.id : s
-      where(:season_id => id)
-    end
-    def for_division(d)
-      id = d.class == Division ? d.id : d
-      where( :division_id => id)
-    end
-  end
-
   def start_time
     self.starts_on
   end

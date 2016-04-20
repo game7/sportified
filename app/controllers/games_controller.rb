@@ -46,11 +46,11 @@ class GamesController < BaseLeagueController
     @home_team = @game.home_team
     @away_team = @game.away_team
   end
-  
+
   private
-  
+
   def find_game
-    @game = Game.find(params[:id])
+    @game = ::League::Game.find(params[:id])
   end
 
 end

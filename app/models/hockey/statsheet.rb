@@ -30,7 +30,7 @@
 class Hockey::Statsheet < ActiveRecord::Base
   include Sportified::TenantScoped
 
-  has_one :game, :as => :statsheet
+  has_one :game, :as => :statsheet, :class_name => '::League::Game'
   validates_presence_of :game
 
   has_one :home_team, through: :game
