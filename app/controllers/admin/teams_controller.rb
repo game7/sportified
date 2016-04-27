@@ -27,7 +27,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def new
-    @team = @season.teams.build(:league_id => params[:league_id])
+    @team = @season.teams.build(:league_id => params[:league_id], :show_in_standings => true)
     add_breadcrumb 'New'
   end
 
