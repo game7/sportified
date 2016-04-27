@@ -6,8 +6,8 @@ class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
   end
 
   def down
-    update("update seasons set program_id = null")
-    update("update divisions set program_id = null")
+    update("update seasons set league_id = null")
+    update("update divisions set league_id = null")
     delete("delete from programs")
     League::Program.unscoped.all.each{|league| league.destroy }
   end
