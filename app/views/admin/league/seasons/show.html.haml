@@ -1,5 +1,5 @@
 .div
-  %h1.pull-left= @season.name
+  %h1.pull-left{ :style => 'margin-top: 0;'}= @season.name
   .form-inline.pull-right
     = select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to form-control" })
     = link_to 'Edit', edit_admin_league_season_path(@season), :class => "btn btn-default"
