@@ -1,8 +1,25 @@
 - title @team.name
-%p
-  %strong Name:
-  = @team.name
-%p
-  %strong Short Name:
-  = @team.short_name
-= link_to 'Edit', edit_admin_league_team_path(@team)
+- page_actions do
+  = link_to 'Edit Team', edit_admin_league_team_path(@team), :class => 'btn btn-primary'
+  = link_to 'Add Player', new_admin_league_team_player_path(@team), :class => 'btn btn-primary'
+.row
+  .col-sm-6
+    .panel.panel-default
+      .panel-heading Players
+      %ul.list-group
+        - @team.players.each do |player|
+          %li.list-group-item
+            = player.full_name
+            .pull-right
+              = link_to 'Edit', edit_admin_league_player_path(player), :class => 'btn btn-xs btn-default'
+              = link_to 'Delete', [:admin, :league, player], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'
+  .col-sm-6
+    .panel.panel-default
+      .panel-heading Games
+      %ul.list-group
+        - @games.each do |game|
+          %li.list-group-item
+            = game.summary
+            .pull-right
+              = link_to 'Edit', edit_admin_league_game_path(game), :class => 'btn btn-xs btn-default'
+              = link_to 'Delete', [:admin, :league, game], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'

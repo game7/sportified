@@ -21,26 +21,26 @@
           %button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
             %span.icon-bar
             %span.icon-bar
-            %span.icon-bar        
+            %span.icon-bar
           #site_logo
             = link_to "/", :class => "navbar-brand" do
               %div
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
             = link_to Tenant.current.name, root_url, :class => "brand"
-        = render "layouts/site_navigation"             
+        = render "layouts/site_navigation"
     #wrapper.container
       %header
-        = render "layouts/area_navigation" if @area_menu_items  
+        = render "layouts/area_navigation" if @area_menu_items
         = render "layouts/breadcrumbs" if @breadcrumbs
         #banner
-          #{yield :banner}        
-        %h1.pull-left
-          %span#page-title= yield(:title)
-          = content_tag :small, yield(:title_small) if content_for?(:title_small)
-        .actions.pull-right
-          = yield(:actions)
-        .clear              
+          #{yield :banner}
+        .page-title.clearfix
+          %h1.pull-left
+            %span#page-title= yield(:title)
+            = content_tag :small, yield(:title_small) if content_for?(:title_small)
+          .actions.pull-right
+            = yield(:actions)
       #main
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
@@ -50,10 +50,10 @@
     = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript
-      
+
       var $dropdown = $('.dropdown-toggle');
       if ($dropdown.dropdown) { $dropdown.dropdown(); }
-      
+
       // fix sub nav on scroll
       var $win = $(window)
         , $nav = $('.subnav')
@@ -73,5 +73,5 @@
           isFixed = 0
           $nav.removeClass('subnav-fixed')
         }
-      }      
+      }
 

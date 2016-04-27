@@ -160,4 +160,11 @@ class League::Game < League::Event
 
   scope :without_result, ->{ where(result: nil) }
 
+  class << self
+    def for_team(t)
+      id = t.class ==  League::Team ? t.id : t
+      where("home_team_id = ? OR away_team_id = ?", id, id)
+    end
+  end
+
 end

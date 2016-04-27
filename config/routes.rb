@@ -85,7 +85,9 @@
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
         resources :divisions, :except => [:show] do
-          resources :teams, :except => [:index]
+          resources :teams, :except => [:index] do
+            resources :players, :except => [:index, :show]
+          end
         end
         resources :seasons
       end

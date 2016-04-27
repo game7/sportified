@@ -57,7 +57,7 @@ class Admin::PlayersController < Admin::BaseLeagueController
   end
 
   def find_team
-    @team = Team.find(params[:team_id])
+    @team = ::League::Team.find(params[:team_id])
   end
 
   def add_team_breadcrumbs

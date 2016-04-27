@@ -92,6 +92,17 @@ header {
   }
 }
 
+.page-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 5px;
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 980px) {
@@ -238,3 +249,18 @@ select {
   text-transform: uppercase;
   font-weight: bold;
 }
+
+.form-group.date {
+  @extend .clearfix;
+
+  label.date {
+    display: block;
+  }
+
+  select.date {
+    @extend .pull-left;
+    max-width: 100px;
+  }
+}
+
+

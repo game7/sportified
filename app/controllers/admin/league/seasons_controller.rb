@@ -62,7 +62,6 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   def add_breadcrumbs
     league = @league || @season.program
     add_breadcrumb league.name, admin_league_program_path(league)
-    add_breadcrumb 'Seasons', admin_league_program_seasons_path(league)
   end
 
   def find_league
