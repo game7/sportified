@@ -66,7 +66,7 @@ namespace :league do
       Tenant.current = tenant
       #iterate teams with branding
       Team.where(:logo => nil).each do |unbranded|
-        if (branded = Team.where(:name => unbranded.name).where(:logo.ne => nil).desc(:season_name).first)
+        if (branded = Team.where(name: unbranded.name).where("logo IS NOT NULL").order(created_at: :desc).first)
           unbranded.replace_branding_from branded
           unbranded.save
         end

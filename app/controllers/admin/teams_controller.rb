@@ -16,6 +16,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
     @teams = @teams.order(:name)
     @divisions = @season.divisions.order(:name)
     @divisions = @divisions.where(id: params[:division_id]) if params[:division_id]
+
     respond_to do |format|
       format.html
       format.json { render :json => @teams.entries }
@@ -27,7 +28,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def new
-    @team = @season.teams.build(:division_id => params[:division_id])
+    @team = @season.teams.build(:division_id => params[:division_id], :show_in_standings => true)
     add_breadcrumb 'New'
   end
 
