@@ -15,9 +15,10 @@ class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
   private
 
   def create_and_assign_league(tenant_slug, league_name)
-    id = insert "insert into programs (name, type, created_at, updated_at) values ('#{league_name}','League','#{Time.now}','#{Time.now}')"
-    update("update seasons set league_id = #{id}")
-    update("update divisions set league_id = #{id}")
+    tenant = Tenant.find_by(slug: tenant_slug)
+    id = insert "insert into programs (name, tenant_id, type, created_at, updated_at) values ('#{league_name}','#{tenant.id}', 'League','#{Time.now}','#{Time.now}')"
+    update("update seasons set league_id = #{id} where tenant_id=#{tenant.id}")
+    update("update divisions set league_id = #{id} where tenant_id=#{tenant.id}")
   end
 
 
