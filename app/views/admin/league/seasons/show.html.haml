@@ -16,11 +16,14 @@
         = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
     .panel-body{ :style => 'padding: 0' }
       - teams.each do |team|
-        .col-sm-4{ :style => 'padding: 5px;' }
-          .team{ :style => 'border: 1px solid #eee; padding: 5px' }
-            .team-name
-              = link_to team.name, [:admin, team.class.name.deconstantize.underscore.presence, team]
-            .actions
-              = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-xs btn-default"
+        .col-sm-3{ :style => 'padding: 5px;' }
+          .team.clearfix{ :style => 'border: 1px solid #eee; padding: 5px' }
+            .pull-left{ :style => 'height: 50px; width: 50px; border: 1px solid #eee;' }
+              = image_tag(team.logo.thumb.url, size: "50") if team.logo?
+            .pull-left{ :style => 'margin-left: 5px;'}
+              .team-name
+                = link_to team.name, [:admin, team.class.name.deconstantize.underscore.presence, team]
+              .actions
+                = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-sm btn-default"
 
 

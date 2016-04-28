@@ -28,6 +28,14 @@
   .col-sm-3
 
     .panel.panel-default
+      .panel-heading Current Programs
+      %ul.list-group
+        - Program.order(:name).all.each do |program|
+          = link_to program.name, [:admin, program.class.name.deconstantize.underscore.presence, program], class: 'list-group-item'
+
+  .col-sm-3
+
+    .panel.panel-default
       .panel-heading Experimental
       %ul.list-group
         = link_to 'Calendar', 'apps/calendar/', class: 'list-group-item'

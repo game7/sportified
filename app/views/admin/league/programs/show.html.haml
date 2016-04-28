@@ -1,10 +1,25 @@
-%h1= @league.name
+-title @league.name
 
 .row
   .col-sm-8
-  .col-sm-4
+
     .panel.panel-default
-      .panel-heading Manage
+      .panel-heading= icon(:calendar) + " Events"
       %ul.list-group
-        %li.list-group-item= link_to 'Divisions', admin_league_program_divisions_path(@league)
-        %li.list-group-item= link_to 'Seasons', admin_league_program_seasons_path(@league)
+        - @events.each do |event|
+          %li.list-group-item
+            = event.summary
+
+  .col-sm-4
+
+    .panel.panel-default
+      .panel-heading Seasons
+      %ul.list-group
+        - @seasons.first(3).each do |season|
+          %li.list-group-item= link_to season.name, [:admin, :league, season]
+        %li.list-group-item= link_to 'All Seasons...', admin_league_program_seasons_path(@league)
+      .panel-heading Divisions
+      %ul.list-group
+        - @divisions.each do |division|
+          %li.list-group-item= link_to division.name, [:admin, :league, division]
+
