@@ -131,8 +131,8 @@
                     $("select[id$='league_id'] option").remove();
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='league_id']");
-                    $.each(data.teams, function(i, j){
-                        row = "<option value=\"" + j._id.$oid + "\">" + j.name + "</option>";
+                    $.each(data, function(i, j){
+                        row = "<option value=\"" + j.id + "\">" + j.name + "</option>";
                         $(row).appendTo("select[id$='league_id']");
                     });
                  }
@@ -157,12 +157,12 @@
                 error: function(XMLHttpRequest, errorTextStatus, error){
                     alert("Failed to submit : "+ errorTextStatus+" ;"+error);
                 },
-                success: function(data){
+                success: function(result){
                     $("select[id$='team_id'] option").remove();
                     var row = "<option value=\"" + "" + "\">" + "" + "</option>";
                     $(row).appendTo("select[id$='team_id']");
-                    $.each(data.teams, function(i, j){
-                        row = "<option value=\"" + j._id.$oid + "\">" + j.name + "</option>";
+                    $.each(result.data, function(i, j){
+                        row = "<option value=\"" + j.id + "\">" + j.attributes.name + "</option>";
                         $(row).appendTo("select[id$='team_id']");
                     });
                  }
