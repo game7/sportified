@@ -8,6 +8,15 @@ namespace :league do
     end
   end
 
+  desc "fires reset_record method for teams that have null records"
+  task :reset_null_records => :environment do
+    Team.unscoped.where(games_played: nil).each do |team|
+      team.reset_record
+      team.save
+      puts "Record reset for #{team.name} (#{team.id})"
+    end
+  end
+
   desc "Restore matchups from team records"
   task :restore_matchups => :environment do
     Tenant.all.each do |tenant|

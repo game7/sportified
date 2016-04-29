@@ -4,8 +4,12 @@ module Concerns
   module Recordable
     extend ActiveSupport::Concern
 
+    included do
+      before_create :reset_record
+    end
+
     def streak
-     self.last_result + self.current_run.to_s
+     self.last_result + self.current_run.to_s if self.last_result
     end
 
     def calculate_record
