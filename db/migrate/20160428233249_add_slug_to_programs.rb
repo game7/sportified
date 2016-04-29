@@ -5,7 +5,10 @@ class AddSlugToPrograms < ActiveRecord::Migration
     end
     reversible do |change|
       change.up do
-        Program.unscoped.all.each{|p| p.save}
+        Program.unscoped.all.each do |program|
+          program.save
+          puts "sluggified #{program.name} to #{program.slug}"
+        end
       end
     end
   end
