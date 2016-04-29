@@ -1,0 +1,17 @@
+
+.row
+  .col-sm-9
+
+  .col-sm-3
+    .panel.panel-default
+      .panel-heading Divisions
+      %ul.list-group
+        - @program.divisions.order(:name).each do |division|
+          %li.list-group-item
+            = link_to division.name, league_schedule_path(@program.slug, division.slug)
+    .panel.panel-default
+      .panel-heading Seasons
+      %ul.list-group
+        - @program.seasons.order(starts_on: :desc).each do |season|
+          %li.list-group-item
+            = season.name

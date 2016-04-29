@@ -3,11 +3,11 @@
 # Table name: league_seasons
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
+#  name       :string
+#  slug       :string
 #  starts_on  :date
 #  tenant_id  :integer
-#  mongo_id   :string(255)
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #  program_id :integer

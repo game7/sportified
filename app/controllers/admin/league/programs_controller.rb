@@ -45,7 +45,7 @@ class Admin::League::ProgramsController < ApplicationController
   private
 
   def league_params
-    params.required(:league_program).permit(:name, :description)
+    params.required(:program).permit(:name, :description)
   end
 
   def add_breadcrumbs

@@ -4,20 +4,20 @@
 #
 #  id                  :integer          not null, primary key
 #  tenant_id           :integer
-#  title               :string(255)
-#  slug                :string(255)
-#  url_path            :string(255)
+#  title               :string
+#  slug                :string
+#  url_path            :string
 #  meta_keywords       :text
 #  meta_description    :text
-#  link_url            :string(255)
+#  link_url            :string
 #  show_in_menu        :boolean
-#  title_in_menu       :string(255)
+#  title_in_menu       :string
 #  skip_to_first_child :boolean
 #  draft               :boolean
-#  ancestry            :string(255)
+#  ancestry            :string
 #  ancestry_depth      :integer
 #  position            :integer
-#  mongo_id            :string(255)
+#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #

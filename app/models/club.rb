@@ -3,10 +3,10 @@
 # Table name: clubs
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  short_name :string(255)
+#  name       :string
+#  short_name :string
 #  tenant_id  :integer
-#  mongo_id   :string(255)
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

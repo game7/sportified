@@ -1,5 +1,6 @@
 class BaseLeagueController < ApplicationController
   skip_filter :set_area_navigation
+  before_filter :find_program
   before_filter :find_division
   before_filter :find_season
   before_filter :set_area_navigation
@@ -24,8 +25,12 @@ class BaseLeagueController < ApplicationController
     end
   end
 
+  def find_program
+    @program = ::League::Program.with_slug(params[:league_slug]).first
+  end
+
   def find_division
-    @division = League::Division.with_slug(params[:division_slug]).first
+    @division = (@program.divisions || League::Division).where(slug: :division_slug).first
     add_breadcrumb(@division.name) if @division
   end
 

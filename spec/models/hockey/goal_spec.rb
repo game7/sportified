@@ -13,13 +13,13 @@
 #  scored_on_id            :integer
 #  assisted_by_id          :integer
 #  also_assisted_by_id     :integer
-#  strength                :string(255)
-#  mongo_id                :string(255)
+#  strength                :string
+#  mongo_id                :string
 #  created_at              :datetime
 #  updated_at              :datetime
-#  scored_by_number        :string(255)
-#  assisted_by_number      :string(255)
-#  also_assisted_by_number :string(255)
+#  scored_by_number        :string
+#  assisted_by_number      :string
+#  also_assisted_by_number :string
 #
 
 require 'rails_helper'

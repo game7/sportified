@@ -3,7 +3,6 @@
 # Table name: registrar_sessions
 #
 #  id                      :integer          not null, primary key
-#  tenant_id               :integer
 #  registrable_id          :integer
 #  registrable_type        :string
 #  title                   :string(30)

@@ -4,12 +4,12 @@
 #
 #  id         :integer          not null, primary key
 #  tenant_id  :integer
-#  title      :string(255)
+#  title      :string
 #  summary    :text
 #  body       :text
-#  link_url   :string(255)
-#  image      :string(255)
-#  mongo_id   :string(255)
+#  link_url   :string
+#  image      :string
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

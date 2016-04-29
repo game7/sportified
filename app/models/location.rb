@@ -4,9 +4,9 @@
 #
 #  id         :integer          not null, primary key
 #  tenant_id  :integer
-#  name       :string(255)
-#  short_name :string(255)
-#  mongo_id   :string(255)
+#  name       :string
+#  short_name :string
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

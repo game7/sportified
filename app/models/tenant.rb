@@ -3,18 +3,18 @@
 # Table name: tenants
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)
-#  slug           :string(255)
-#  host           :string(255)
+#  name           :string
+#  slug           :string
+#  host           :string
 #  description    :text
-#  analytics_id   :string(255)
-#  theme          :string(255)
-#  twitter_id     :string(255)
-#  facebook_id    :string(255)
-#  instagram_id   :string(255)
-#  foursquare_id  :string(255)
-#  google_plus_id :string(255)
-#  mongo_id       :string(255)
+#  analytics_id   :string
+#  theme          :string
+#  twitter_id     :string
+#  facebook_id    :string
+#  instagram_id   :string
+#  foursquare_id  :string
+#  google_plus_id :string
+#  mongo_id       :string
 #  created_at     :datetime
 #  updated_at     :datetime
 #

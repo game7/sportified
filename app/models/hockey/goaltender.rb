@@ -3,7 +3,7 @@
 # Table name: hockey_goaltenders
 #
 #  id                       :integer          not null, primary key
-#  type                     :string(255)
+#  type                     :string
 #  tenant_id                :integer
 #  team_id                  :integer
 #  player_id                :integer
@@ -27,12 +27,12 @@
 #  shootout_losses          :integer          default(0)
 #  total_wins               :integer          default(0)
 #  total_losses             :integer          default(0)
-#  mongo_id                 :string(255)
+#  mongo_id                 :string
 #  created_at               :datetime
 #  updated_at               :datetime
-#  jersey_number            :string(255)
-#  first_name               :string(255)
-#  last_name                :string(255)
+#  jersey_number            :string
+#  first_name               :string
+#  last_name                :string
 #
 
 class Hockey::Goaltender < ActiveRecord::Base

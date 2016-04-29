@@ -10,19 +10,19 @@
 #  second              :integer
 #  team_id             :integer
 #  committed_by_id     :integer
-#  infraction          :string(255)
+#  infraction          :string
 #  duration            :integer
-#  severity            :string(255)
-#  start_period        :string(255)
+#  severity            :string
+#  start_period        :string
 #  start_minute        :integer
 #  start_second        :integer
-#  end_period          :string(255)
+#  end_period          :string
 #  end_minute          :integer
 #  end_second          :integer
-#  mongo_id            :string(255)
+#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
-#  committed_by_number :string(255)
+#  committed_by_number :string
 #
 
 class Hockey::Penalty < ActiveRecord::Base

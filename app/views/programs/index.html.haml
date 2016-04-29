@@ -1,0 +1,15 @@
+- title 'Programs'
+- if current_user_is_admin?
+  - content_for(:actions) do
+    = link_to 'New Activity', new_admin_activity_program_path, :class => "btn btn-primary"
+    = link_to 'New League', new_admin_league_program_path, :class => "btn btn-primary"
+
+%ul.list-group
+  - @programs.each do |program|
+    %li.list-group-item
+      %strong= link_to program.name, program_path(program.slug)
+      - if current_user_is_admin?
+        .pull-right
+          = link_to 'Edit', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-primary'
+          = link_to 'Delete', [:admin, program], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+      .description= program.description

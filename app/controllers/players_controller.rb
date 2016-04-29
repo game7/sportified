@@ -5,13 +5,13 @@
 #  id            :integer          not null, primary key
 #  tenant_id     :integer
 #  team_id       :integer
-#  first_name    :string(255)
-#  last_name     :string(255)
-#  jersey_number :string(255)
+#  first_name    :string
+#  last_name     :string
+#  jersey_number :string
 #  birthdate     :date
-#  email         :string(255)
-#  slug          :string(255)
-#  mongo_id      :string(255)
+#  email         :string
+#  slug          :string
+#  mongo_id      :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #  substitute    :boolean

@@ -4,9 +4,9 @@
 #
 #  id         :integer          not null, primary key
 #  page_id    :integer
-#  pattern    :string(255)
+#  pattern    :string
 #  position   :integer
-#  mongo_id   :string(255)
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

@@ -53,6 +53,11 @@
     end
   end
 
+  resources :programs, only: [:index, :show], param: :slug
+
+  match "leagues/:league_slug/schedule/:division_slug" => "schedule#index", :as => :league_schedule, :via => :get
+  match "leagues/:league_slug/standings/:division_slug(/:season_slug)" => "standings#index", :as => :league_standings, :via => :get
+
   match "programs/:division_slug/schedule" => redirect("/programs/schedule/%{division_slug}"), :via => :get
   match "programs/schedule(/:division_slug)" => "schedule#index", :as => :schedule, :via => :get
 
@@ -81,7 +86,9 @@
   namespace :admin do
 
     resources :programs, :only => [:index, :destroy]
-    resources :activities, :except => [:index, :destroy]
+    namespace :activity do
+      resources :programs, :except => [:index, :destroy]
+    end
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
         resources :divisions, :except => [:show] do

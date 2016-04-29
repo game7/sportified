@@ -4,15 +4,15 @@
 #
 #  id         :integer          not null, primary key
 #  page_id    :integer
-#  type       :string(255)
+#  type       :string
 #  section_id :integer
 #  column     :integer
 #  position   :integer
 #  options    :hstore
-#  mongo_id   :string(255)
+#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
-#  file       :string(255)
+#  file       :string
 #
 
 class Block < ActiveRecord::Base

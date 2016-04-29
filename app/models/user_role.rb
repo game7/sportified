@@ -4,12 +4,12 @@
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  name       :string(255)
-#  title      :string(255)
+#  name       :string
+#  title      :string
 #  tenant_id  :integer
 #  created_at :datetime
 #  updated_at :datetime
-#  mongo_id   :string(255)
+#  mongo_id   :string
 #
 
 class UserRole < ActiveRecord::Base

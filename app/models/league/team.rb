@@ -3,27 +3,27 @@
 # Table name: league_teams
 #
 #  id                  :integer          not null, primary key
-#  name                :string(255)
-#  short_name          :string(255)
-#  slug                :string(255)
+#  name                :string
+#  short_name          :string
+#  slug                :string
 #  show_in_standings   :boolean
-#  pool                :string(255)
+#  pool                :string
 #  seed                :integer
 #  tenant_id           :integer
 #  division_id         :integer
 #  season_id           :integer
 #  club_id             :integer
-#  logo                :string(255)
-#  primary_color       :string(255)
-#  secondary_color     :string(255)
-#  accent_color        :string(255)
+#  logo                :string
+#  primary_color       :string
+#  secondary_color     :string
+#  accent_color        :string
 #  main_colors         :text             default([]), is an Array
 #  custom_colors       :boolean
 #  crop_x              :integer          default(0)
 #  crop_y              :integer          default(0)
 #  crop_h              :integer          default(0)
 #  crop_w              :integer          default(0)
-#  mongo_id            :string(255)
+#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #  games_played        :integer
@@ -41,7 +41,7 @@
 #  scored              :integer
 #  allowed             :integer
 #  margin              :integer
-#  last_result         :string(255)
+#  last_result         :string
 #  current_run         :integer
 #  longest_win_streak  :integer
 #  longest_loss_streak :integer
