@@ -3,10 +3,7 @@ class ScheduleController < BaseLeagueController
 
   def index
 
-    add_breadcrumb("Schedule")
-
     if params[:season_slug]
-      add_breadcrumb(@season.name)
       @events = @division.events.for_season(@season).asc(:starts_on)
     else
       @date = params[:date] ? Date.parse(params[:date]) : Date.current

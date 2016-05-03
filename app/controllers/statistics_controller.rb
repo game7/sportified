@@ -4,7 +4,7 @@ class StatisticsController < BaseLeagueController
     add_breadcrumb "Statistics"
     add_breadcrumb @season.name if @season
 
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, statistics_path(:division_slug => @division.slug, :season_slug => s.slug)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_statistics_path(@program.slug, @division.slug, s.slug)]}
 
     limit = 3
     @goal_leaders = skaters(:goals, 3)
@@ -20,7 +20,7 @@ class StatisticsController < BaseLeagueController
 
   def show
     @view = params[:view]
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, statistic_path(:division_slug => @division.slug, :season_slug => s.slug, :view => @view)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_statistic_path(@program.slug, @division.slug, s.slug, @view)]}
 
     @token = params[:token] || Hockey::Player::Record.default_token(params[:view])
     @players = (@view == 'goaltending') ? goalies(@token, 25) : skaters(@token, 25)

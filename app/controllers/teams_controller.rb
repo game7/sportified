@@ -140,7 +140,7 @@ class TeamsController < BaseLeagueController
   end
 
   def set_team_breadcrumbs
-    add_breadcrumb "Teams", teams_path(@division.slug)
+    add_breadcrumb "Teams", league_teams_path(@program.slug, @division.slug)
     add_breadcrumb @team.name if @team
   end
 
@@ -150,20 +150,20 @@ class TeamsController < BaseLeagueController
   end
 
   def get_season_options
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, teams_path(:division_slug => @division.slug, :season_slug => s.slug)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_teams_path(@program.slug, @division.slug, s.slug)]}
   end
 
   def links_to_team_schedule(division, season)
     teams = @division.teams.for_season(season).order(:name)
     teams.each.collect do |t|
-      [t.name, team_schedule_path(division.slug, season.slug, t.slug)]
+      [t.name, league_team_schedule_path(@program.slug, division.slug, season.slug, t.slug)]
     end
   end
 
   def links_to_team_roster(division, season)
     teams = @division.teams.for_season(season).order(:name)
     teams.each.collect do |t|
-      [t.name, team_roster_path(division.slug, season.slug, t.slug)]
+      [t.name, league_team_roster_path(@program.slug, division.slug, season.slug, t.slug)]
     end
   end
 

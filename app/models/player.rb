@@ -38,6 +38,10 @@ class Player < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
 
+  def last_first
+    [last_name, first_name].join(', ')
+  end
+
   def age
     ((Date.today - birthdate) / 365).floor if birthdate
   end

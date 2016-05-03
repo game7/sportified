@@ -5,13 +5,13 @@
     = render :partial => "actions", :locals => { :team => team } if current_user_is_admin?
     %h3.name{ :style => "color: #{team.secondary_color}"}= team.name
     .links
-      = link_to "Schedule", team_schedule_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+      = link_to "Schedule", league_team_schedule_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
       - if @division.show_players
         %span{ :style=> "color: #{team.secondary_color}"}= " | "
-        = link_to "Roster", team_roster_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+        = link_to "Roster", league_team_roster_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
       - if @division.show_statistics
         %span{ :style=> "color: #{team.secondary_color}"}= " | "
-        = link_to "Statistics", team_statistics_path(team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+        = link_to "Statistics", league_team_statistics_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
 
 
 

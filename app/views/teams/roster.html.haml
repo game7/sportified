@@ -16,4 +16,4 @@
       %tr{ :class => cycle("odd","even") }
         %td.span1 #{player.jersey_number}
         %td.span11
-          = link_to "#{player.full_name}#{"*" if player.substitute}", player_path(player.id)
+          = link_to "#{player.full_name}#{"*" if player.substitute}", league_player_path(@program.slug, @division.slug, @season.slug, @team.slug, player.slug, player.id)

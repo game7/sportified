@@ -6,7 +6,7 @@
   %tfoot
     %tr
       %td{ :colspan => "3"}
-        %a{ :href => statistic_path(:division_slug => @division.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
+        %a{ :href => league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
   %tbody
     - 3.times do |i|
       - record = players[i]

@@ -13,8 +13,6 @@ class ScoreboardController < ::BaseLeagueController
 
   def index
 
-    add_breadcrumb("Scoreboard")
-
     @games = League::Game.where('starts_on > ? AND ends_on < ?', @start_date, @end_date)
                   .includes(:home_team, :away_team, :statsheet)
                   .order(starts_on: :asc)

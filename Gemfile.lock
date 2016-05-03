@@ -349,6 +349,8 @@ GEM
     origin (2.2.0)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -520,6 +522,7 @@ DEPENDENCIES
   oa-oauth
   omniauth
   pg
+  quiet_assets
   rails (~> 4.2)
   rails-assets-moment!
   rails_12factor

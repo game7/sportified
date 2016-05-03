@@ -16,7 +16,7 @@
       - stats = game.statsheet
       - if stats
         .game-links
-          = link_to 'Box Score', game_box_score_path(@division.slug, game.id)
+          = link_to 'Box Score', league_game_box_score_path(@program.slug, game.id)
         .line-score
           %table.table
             %thead

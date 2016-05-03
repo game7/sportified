@@ -22,9 +22,7 @@ class PlayersController < BaseLeagueController
 
   def index
 
-    @teams = @division.teams.for_season(@season)
-    ids = @teams.collect{|team| team.id}
-    @players = Player.joins(:team).where('league_teams.season_id = ?', @season.id).order(last_name: :asc)
+    @players = Player.joins(:team).includes(:team).where('league_teams.season_id = ? AND league_teams.division_id = ?', @season.id, @division.id).order(last_name: :asc)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +44,7 @@ class PlayersController < BaseLeagueController
   private
 
   def get_season_options
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, players_path(:division_slug => @division.slug, :season_slug => s.slug)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_players_path(@program.slug, @division.slug, s.slug)]}
   end
 
 end

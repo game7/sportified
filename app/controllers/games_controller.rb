@@ -50,7 +50,7 @@ class GamesController < BaseLeagueController
   private
 
   def find_game
-    @game = ::League::Game.find(params[:id])
+    @game = ::League::Game.includes(:division, :season, :home_team, :away_team, :statsheet).find(params[:id])
   end
 
 end

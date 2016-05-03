@@ -19,7 +19,7 @@ class StandingsController < BaseLeagueController
 
   def get_season_options
     most_recent = League::Season.most_recent
-    @season_options = @division.seasons.all.order('starts_on DESC').collect{|s| [s.name, standings_path(:division_slug => @division.slug, :season_slug => s == most_recent ? nil : s.slug)]}
+    @season_options = @division.seasons.all.order('starts_on DESC').collect{|s| [s.name, league_standings_path(@program.slug, @division.slug, s == most_recent ? nil : s.slug)]}
   end
 
 end

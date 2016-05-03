@@ -93,6 +93,7 @@ group :development do
   gem "spring"
   gem 'haml-rails'
   gem 'nifty-generators'
+  gem 'quiet_assets'
 end
 
 gem 'jquery-rails'

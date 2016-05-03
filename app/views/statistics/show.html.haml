@@ -5,9 +5,9 @@
     = render :partial => 'shared/season_options', :object => @season_options
   .col-sm-8{ :style => "text-align: right;" }
     .btn-group
-      = link_to "Scoring", statistic_path(:division_slug => @division.slug, :season_slug => @season.slug, :view => "scoring"), :class => "btn btn-default"
-      = link_to "Penalties", statistic_path(:division_slug => @division.slug, :season_slug => @season.slug, :view => "penalties"), :class => "btn btn-default"
-      = link_to "Goaltending", statistic_path(:division_slug => @division.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "btn btn-default"
+      = link_to "Scoring", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "scoring"), :class => "btn btn-default"
+      = link_to "Penalties", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "penalties"), :class => "btn btn-default"
+      = link_to "Goaltending", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "btn btn-default"
 
 - format_with ||= ->(value) { value }
 %table.table.table-striped.table-bordered.statistics
@@ -16,7 +16,7 @@
       %th
       %th Player
       - for token in Hockey::Player::Record.tokens @view
-        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Player::Record.column(token), statistic_path(:divisionslug => @division.slug, :season_slug => @season.slug, :view => @view, :token => token)
+        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Player::Record.column(token), league_statistic_path(:league_slug => @program.slug, :divisionslug => @division.slug, :season_slug => @season.slug, :view => @view, :token => token)
   %tbody
     - for record in @players
       %tr

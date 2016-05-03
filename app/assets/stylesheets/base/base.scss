@@ -13,6 +13,11 @@ header {
   }
 }
 
+th.primary {
+  background-color: $navbar-default-bg !important;
+  color: $navbar-default-link-color !important;
+}
+
 .breadcrumb {
   margin: 0;
 }

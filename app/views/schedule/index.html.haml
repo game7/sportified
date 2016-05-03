@@ -3,8 +3,8 @@
 
 - if current_user_is_admin?
   - content_for :actions do
-    = link_to icon('plus')+" New Event", new_admin_event_path(:season_id => @season, :division_id => @division), :class => 'btn btn-default'
-    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :division_id => @division), { :class => 'btn btn-default', :role => 'button' }
+    = link_to icon('plus')+" New Event", new_admin_event_path(:season_id => @season, :division_id => @division), :class => 'btn btn-primary'
+    = link_to icon('plus')+" New Game", new_admin_game_path(:season_id => @season, :division_id => @division), { :class => 'btn btn-primary', :role => 'button' }
 
 .row.options
   .col-sm-8
@@ -33,9 +33,9 @@
           - if current_user_is_admin?
             .pull-right
               - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
-              = link_to "Edit", edit_url, :class => 'btn btn-default btn-xs'
+              = link_to "Edit", edit_url, :class => 'btn btn-primary btn-xs'
               - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
-              = link_to "Clone", copy_url, :class => 'btn btn-default btn-xs'
+              = link_to "Clone", copy_url, :class => 'btn btn-primary btn-xs'
         %td
           - if event.location
             .visible-xs= event.location.short_name

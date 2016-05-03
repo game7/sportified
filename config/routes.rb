@@ -55,28 +55,18 @@
 
   resources :programs, only: [:index, :show], param: :slug
 
-  match "leagues/:league_slug/schedule/:division_slug" => "schedule#index", :as => :league_schedule, :via => :get
-  match "leagues/:league_slug/standings/:division_slug(/:season_slug)" => "standings#index", :as => :league_standings, :via => :get
-
-  match "programs/:division_slug/schedule" => redirect("/programs/schedule/%{division_slug}"), :via => :get
-  match "programs/schedule(/:division_slug)" => "schedule#index", :as => :schedule, :via => :get
-
-  match "programs/standings/:division_slug(/:season_slug)" => "standings#index", :as => :standings, :via => :get
-  match "programs/:division_slug/scoreboard" => "scoreboard#index", :as => :scoreboard, :via => :get
-
-  match "programs/players/:division_slug(/:season_slug)" => "players#index", :as => :players, :via => :get
-  match "programs/player/:id" => "players#show", :as => :player, :via => :get
-
-  match "programs/:division_slug/game/:id/box_score" => "games#box_score", :as => :game_box_score, :via => :get
-
-  match "programs/teams/:division_slug(/:season_slug)" => "teams#index", :as => :teams, :via => :get
-
-  match "programs/statistics/:division_slug(/:season_slug)" => "statistics#index", :as => :statistics, :via => :get
-  match "programs/statistics/:division_slug/:season_slug/:view" => "statistics#show", :as => :statistic, :via => :get
-
-  match "programs/:division_slug/teams/:season_slug/:team_slug/schedule" => "teams#schedule", :as => :team_schedule, :via => :get
-  match "programs/:division_slug/teams/:season_slug/:team_slug/roster" => "teams#roster", :as => :team_roster, :via => :get
-  match "programs/:division_slug/teams/:season_slug/:team_slug/statistics" => "teams#statistics", :as => :team_statistics, :via => :get
+  match "league/:league_slug/schedule/:division_slug" => "schedule#index"                                       , :as => :league_schedule        , :via => :get
+  match "league/:league_slug/scoreboard/:division_slug" => "scoreboard#index"                                   , :as => :league_scoreboard      , :via => :get
+  match "league/:league_slug/standings/:division_slug(/:season_slug)" => "standings#index"                      , :as => :league_standings       , :via => :get
+  match "league/:league_slug/statistics/:division_slug(/:season_slug)" => "statistics#index"                    , :as => :league_statistics      , :via => :get
+  match "league/:league_slug/statistics/:division_slug/:season_slug/:view" => "statistics#show"                 , :as => :league_statistic       , :via => :get
+  match "league/:league_slug/teams/:division_slug(/:season_slug)" => "teams#index"                              , :as => :league_teams           , :via => :get
+  match "league/:league_slug/teams/:division_slug/:season_slug/:team_slug/schedule" => "teams#schedule"         , :as => :league_team_schedule   , :via => :get
+  match "league/:league_slug/teams/:division_slug/:season_slug/:team_slug/roster" => "teams#roster"             , :as => :league_team_roster     , :via => :get
+  match "league/:league_slug/teams/:division_slug/:season_slug/:team_slug/statistics" => "teams#statistics"     , :as => :league_team_statistics , :via => :get
+  match "league/:league_slug/players/:division_slug(/:season_slug)" => "players#index"                          , :as => :league_players         , :via => :get
+  match "league/:league_slug/players/:division_slug/:season_slug/:team_slug/:player_slug/:id" => "players#show" , :as => :league_player          , :via => :get
+  match "league/:league_slug/game/:id/box_score" => "games#box_score"                                           , :as => :league_game_box_score  , :via => :get
 
 
   resources :seasons, :only => [], :shallow => true do
