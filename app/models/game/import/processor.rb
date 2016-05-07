@@ -1,19 +1,18 @@
 require 'chronic'
 
 class Game::Import::Processor
-   
+
   def initialize(import)
     @games = []
     @import = import
   end
-  
+
   def build_games!
     @import.contents.each_with_index do |row, i|
       next if i == 0
       g = Game.new
       g.season_id = @import.season_id
       g.league_id = @import.league_id
-      g.starts_on = Chronic.parse "#{get_column(:date, row)} #{get_column(:time, row)}"
       g.duration = get_column(:duration, row)
       g.away_team_id = get_column(:away_team, row)
       g.home_team_id = get_column(:home_team, row)

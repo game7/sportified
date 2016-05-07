@@ -1,4 +1,7 @@
 
+require 'csv'
+require 'chronic'
+
 namespace :league do
 
   desc "exclude prefixed games from standings"
@@ -157,5 +160,32 @@ namespace :league do
     end
   end
 
+  desc "Load Games"
+  task :load_games => :environment do
+    Tenant.current = Tenant.first
+    path = File.expand_path("games.csv", File.dirname(__FILE__))
+    puts "path: #{path}"
+    games = CSV.read(path, headers: true)
+    games = games.map do |g|
+      hash = {}
+      g.each do |prop|
+        hash[prop[0].to_sym] = prop[1]
+      end
+      hash
+    end
+    Time.zone = "UTC"
+    Chronic.time_class = Time.zone
+    games.each do |g|
+      g[:starts_on] = Chronic.parse(g[:date] + ' ' + g[:time])
+      g.delete :date
+      g.delete :time
+      game = Game.create(g)
+      if (game.save)
+        puts "New Game with Id: #{game.id}"
+      else
+        puts "ERROR"
+      end
+    end
+  end
 
 end
