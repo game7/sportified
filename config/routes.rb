@@ -78,6 +78,7 @@
     resources :programs, :only => [:index, :destroy]
     namespace :activity do
       resources :programs, :except => [:index, :destroy]
+      resources :sessions, :except => [:index, :destroy]
     end
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do

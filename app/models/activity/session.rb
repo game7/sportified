@@ -38,40 +38,5 @@
 #  program_id                :integer
 #
 
-class Event < ActiveRecord::Base
-  include Sportified::TenantScoped
-
-  belongs_to :program
-  validates :program_id, presence: true
-
-  belongs_to :location
-  # validates_presence_of :location_id
-
-  validates_presence_of :starts_on
-  before_save :set_starts_on
-  def set_starts_on
-    self.starts_on = starts_on.change(:hour => 0) if all_day
-  end
-
-  validates_presence_of :duration
-  validates_numericality_of :duration, :only_integer => true
-  before_save :set_duration
-  def set_duration
-    self.duration = 24 * 60 if all_day
-  end
-
-  before_save :set_ends_on
-  def set_ends_on
-    self.ends_on = all_day ? self.starts_on.change(:day => starts_on.day + 1) : self.starts_on.advance(:minutes => self.duration)
-  end
-
-  scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }
-  scope :in_the_future, ->{ where('starts_on > ?', DateTime.now) }
-  scope :after, ->(after) { where('starts_on > ?', after) }
-  scope :before, ->(before) { where('starts_on < ?', before) }
-
-  def start_time
-    self.starts_on
-  end
-
+class Activity::Session < ::Event
 end
