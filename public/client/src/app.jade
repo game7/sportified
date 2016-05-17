@@ -1,0 +1,8 @@
+template
+  require(from="nav-bar.html")
+  require(from="bootstrap/css/bootstrap.css")
+
+  nav-bar(router.bind="router")
+
+  div.page-host
+    router-view
