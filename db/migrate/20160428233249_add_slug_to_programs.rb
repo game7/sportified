@@ -5,10 +5,14 @@ class AddSlugToPrograms < ActiveRecord::Migration
     end
     reversible do |change|
       change.up do
+        Program.reset_column_information
         Program.unscoped.all.each do |program|
-          program.slug = 'xxx'
-          program.save
-          puts "sluggified #{program.name} to #{program.slug}"
+          program.set_slug
+          if program.save!
+            puts "sluggified #{program.name} to #{program.slug}"
+          else
+            puts program.errors.to_json
+          end
         end
       end
     end
