@@ -27,7 +27,7 @@ class BaseLeagueController < ApplicationController
 
   def find_program
     @program = ::League::Program.with_slug(params[:league_slug]).first
-    add_breadcrumb(@program.name, program_path(@program))
+    add_breadcrumb(@program.name, program_path(@program.slug))
   end
 
   def find_division
