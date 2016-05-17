@@ -8,7 +8,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    "assets/#{model.tenant.id}/#{model.class.name.pluralize.downcase}/#{mounted_as}/#{model.id}"
+    "assets/#{model.tenant.id}/teams/logo/#{model.id}"
   end
 
   def cache_dir
@@ -21,7 +21,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
     process :crop_and_scale
     process :resize_to_fill => [200,200]
   end
-  
+
   version :thumb do
     process :crop_and_scale
     process :resize_to_fill => [100,100]
@@ -32,7 +32,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [50,50]
   end
 
-  version :micro do  
+  version :micro do
     process :crop_and_scale
     process :resize_to_fill => [25,25]
   end
@@ -48,7 +48,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
       resize_to_limit(resize_to, resize_to)
     end
   end
-  
+
   # Create a 1-row image that has a column for every color in the quantized
   # image. The columns are sorted decreasing frequency of appearance in the
   # quantized image.
@@ -64,11 +64,11 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
     palette = Magick::ImageList.new
     pixels = img.get_pixels(0, 0, img.columns, 1)
     map = { :colors => pixels.collect{ |p| p.to_color(Magick::AllCompliance, false, 8, true) } }
-    
+
     primary = pixels[0]
     secondary = ''
     accent = ''
-    
+
     max_diff = 0
     pixels.each do |pixel|
       diff = get_color_diff(primary, pixel)
@@ -77,7 +77,7 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
         secondary = pixel
       end
     end
-    
+
     max_diff = 0
     pixels.each do |pixel|
       diff = get_color_diff(primary, pixel)
@@ -85,22 +85,22 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
         max_diff = diff
         accent = pixel
       end
-    end    
-    
+    end
+
     map[:primary] = primary.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
     map[:secondary] = secondary.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
     map[:accent] = accent.to_color(Magick::AllCompliance, false, 8, true) if accent.respond_to?(:to_color)
     map
   end
-  
+
   def get_color_diff(a, b)
     square(a.red-b.red) + square(a.green-b.green) + square(a.blue-b.blue)
   end
-  
+
   def square(n)
     n * n
   end
-  
+
 
   def color_palette
     cache_stored_file! if !cached?
