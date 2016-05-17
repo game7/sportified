@@ -31,7 +31,7 @@ class ScheduleController < BaseLeagueController
   end
 
   def get_team_options
-    @team_options = @division.teams.for_season(@season).order(:name).collect{|t| [t.name, team_schedule_path(:division_slug => t.division.slug, :season_slug => t.season.slug, :team_slug => t.slug)]}
+    @team_options = @division.teams.for_season(@season).order(:name).collect{|t| [t.name, league_team_schedule_path(:division_slug => t.division.slug, :season_slug => t.season.slug, :team_slug => t.slug)]}
     @team_options.insert 0, ["Team Schedules", ""]
   end
 
