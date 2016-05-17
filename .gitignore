@@ -9,4 +9,6 @@ tmp/**/*
 uploads/
 node_modules/
 bower_components/
+jspm_packages/
+public/client/dist/**/*
 .idea
