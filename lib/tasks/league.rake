@@ -188,4 +188,29 @@ namespace :league do
     end
   end
 
+  desc "Load Rosters"
+  task :load_rosters => :environment do
+    Tenant.current = Tenant.first
+    # path = File.expand_path("games.csv", File.dirname(__FILE__))
+    # puts "path: #{path}"
+    data = Net::HTTP.get(URI.parse('https://s3.amazonaws.com/sportified/rosters.csv'))
+    players = CSV.parse(data, headers: true)
+    players = players.map do |g|
+      hash = {}
+      g.each do |prop|
+        hash[prop[0].to_sym] = prop[1]
+      end
+      hash
+    end
+    players.each do |p|
+      player = Player.create(p)
+      player.email = player.email.downcase unless player.email.blank?
+      if (player.save)
+        puts "New Player with Id: #{player.id}"
+      else
+        puts "ERROR"
+      end
+    end
+  end
+
 end
