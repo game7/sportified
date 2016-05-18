@@ -8,8 +8,8 @@
       %th.stat.hidden-xs L
       %th.stat.hidden-xs SOL
       %th.stat.visible-xs RECORD
-      %th.stat.visible-xs POINTS
-      %th.stat.hidden-xs PTS
+      %th.stat.points.visible-xs POINTS
+      %th.stat.points.hidden-xs PTS
       %th.stat.hidden-xs GF
       %th.stat.hidden-xs GA
       %th.stat.hidden-xs +/-
@@ -34,7 +34,7 @@
         %td.stat.hidden-xs= team.losses
         %td.stat.hidden-xs= team.shootout_losses
         %td.stat.visible-xs= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
-        %td.stat= team.points
+        %td.stat.points= team.points
         %td.stat.hidden-xs= team.scored
         %td.stat.hidden-xs= team.allowed
         %td.stat.hidden-xs= team.margin
@@ -55,3 +55,4 @@
                 %i.fa.fa-arrow-down
           - if team.current_run <= 2
             = team.streak
+

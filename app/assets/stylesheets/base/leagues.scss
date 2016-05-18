@@ -333,7 +333,12 @@ table.statistics {
     td.team {
       width: 25%;
     }
+    th.points,
+    td.points {
+      background-color: #F3F3F3 !important;
+    }
   }
+
 }
 
 
