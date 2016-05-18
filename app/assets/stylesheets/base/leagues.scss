@@ -4,9 +4,9 @@
 // --------------------------------
 .team {
   .well {
-    position: relative; 
+    position: relative;
     height: 110px;
-    padding: 0;    
+    padding: 0;
   }
   .logo {
     width: 100px;
@@ -22,12 +22,12 @@
   .name {
     position: absolute;
     left: 120px;
-    top: 10px; 
+    top: 10px;
   }
   .links {
     position: absolute;
     left: 120px;
-    top: 65px;    
+    top: 65px;
   }
 }
 .banner {
@@ -63,7 +63,7 @@
     }
   }
   .next {
-    a { 
+    a {
       width: 30%;
       text-align: right;
     }
@@ -85,7 +85,7 @@
 }
 .scorecard {
   padding: 1px;
-  margin-bottom: 18px;   
+  margin-bottom: 18px;
 }
 .scorecard .inner {
   background-color: $gray-lighter;
@@ -106,11 +106,11 @@
     }
     td.logo {
       width: 50px;
-      height: 50px;      
+      height: 50px;
       img {
        height: 50px;
        width: 50px;
-      }      
+      }
     }
     td.name {
       padding-left: 10px;
@@ -199,7 +199,7 @@
   padding: 5px;
 }
 .boxscore .summary {
-  @include make-xs-column(12);  
+  @include make-xs-column(12);
   .matchup {
     padding: 5px;
   }
@@ -212,11 +212,11 @@
       width: 50px;
       margin-right: 10px;
       border: 1px solid $gray-lighter;
-    } 
+    }
   }
   .logistics {
     padding: 5px;
-    clear: both;  
+    clear: both;
   }
   .clear {
     clear: both;
@@ -266,11 +266,11 @@
 // ---------------------------------
 
 table.leaders {
-  td { 
+  td {
     vertical-align: middle;
   }
   td.logo {
-    padding: 0; 
+    padding: 0;
     width: 50px;
     height: 50px;
     img {
@@ -285,11 +285,11 @@ table.leaders {
 }
 
 table.statistics {
-  td { 
+  td {
     vertical-align: middle;
   }
   td.logo {
-    padding: 0; 
+    padding: 0;
     width: 50px;
     height: 50px;
     img {
@@ -305,6 +305,34 @@ table.statistics {
   th.active,
   td.active {
     background-color: #f3f3f3 !important;
+  }
+}
+
+// STANDINGS
+// --------------------------------------
+
+.standings {
+  th.rank,
+  td.rank {
+    width: 10px;
+    text-align: center;
+    line-height: 25px;
+    vertical-align: center;
+  }
+
+  th.stat,
+  td.stat {
+    width: 8.33%;
+    line-height: 25px;
+    vertical-align: center;
+    text-align: center;
+  }
+
+  @media only screen and (min-width : 767px) {
+    th.team,
+    td.team {
+      width: 25%;
+    }
   }
 }
 
