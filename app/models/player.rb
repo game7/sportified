@@ -15,6 +15,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  substitute    :boolean
+#  position      :string
 #
 
 class Player < ActiveRecord::Base
@@ -28,6 +29,7 @@ class Player < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :team_id, presence: true
+  validates :position, length: { maximum: 5 }
 
   #embeds_one :record, :class_name => "Hockey::Player::Record"
 

@@ -15,6 +15,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  substitute    :boolean
+#  position      :string
 #
 
 module PlayersHelper
