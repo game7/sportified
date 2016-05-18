@@ -51,14 +51,12 @@ require 'icalendar'
 
 class TeamsController < BaseLeagueController
   before_filter :verify_admin, :except => [:show, :index, :schedule, :roster, :statistics]
-  before_filter :set_team_breadcrumbs, :only => [:schedule, :show, :roster]
   before_filter :get_season_options, :only => [:index]
   before_filter :find_team, :only => [:edit, :update, :destroy]
   before_filter :load_division_options, :only => [:new]
   before_filter :load_club_options, :only => [:new, :edit]
 
   def index
-    add_breadcrumb "Teams"
 
     @teams = @division.teams.for_season(@season).order(:name)
 
@@ -71,7 +69,7 @@ class TeamsController < BaseLeagueController
   def schedule
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
     @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id).order(:starts_on).includes(:location, :home_team, :away_team)
-    add_breadcrumb "Schedule"
+
     @team_links = links_to_team_schedule(@division, @season)
 
     respond_to do |format|
@@ -91,7 +89,6 @@ class TeamsController < BaseLeagueController
   end
 
   def roster
-    add_breadcrumb "Roster"
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
     @players = @team.players.order(:last_name)
     @team_links = links_to_team_roster(@division, @season)
@@ -99,7 +96,6 @@ class TeamsController < BaseLeagueController
 
   def statistics
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
-    add_breadcrumb "Statistics"
     @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(points: :desc)
     @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(save_percentage: :desc)
   end
@@ -137,11 +133,6 @@ class TeamsController < BaseLeagueController
   def set_area_navigation
     puts params[:action]
     super unless [:edit,:update,:new,:create].include? params[:action].to_sym
-  end
-
-  def set_team_breadcrumbs
-    add_breadcrumb "Teams", league_teams_path(@program.slug, @division.slug)
-    add_breadcrumb @team.name if @team
   end
 
   def load_objects

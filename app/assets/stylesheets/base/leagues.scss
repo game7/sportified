@@ -336,3 +336,25 @@ table.statistics {
   }
 }
 
+
+table.team-statistics {
+  th.title {
+    background-color: $brand-primary;
+    color: #FFF;
+    border-bottom-width: 0;
+  }
+}
+
+
+table.team-statistics.players {
+  th.player,
+  td.player {
+    width: 25%;
+  }
+  th.stat,
+  td.stat {
+    width: 7.5%;
+    text-align: center;
+  }
+}
+

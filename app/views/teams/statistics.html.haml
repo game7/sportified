@@ -1,42 +1,45 @@
-- title "#{@team.name} #{@season.name} Statistics"
+- title "Statistics"
 - content_for :banner do
   .row.banner
     = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
-%h3 Player Statistics
-%table.table.table-striped.table-bordered
+
+%table.team-statistics.players.table.table-striped.table-bordered
   %thead
     %tr
-      %th NAME
-      %th.span1 GP
-      %th.span1 G
-      %th.span1 A
-      %th.span1 PTS
-      %th.span1 PEN
-      %th.span1 PIM
-      %th.span1 MNR
-      %th.span1 MJR
-      %th.span1 MSC
-      %th.span1 GAME      
+      %th.title{ :colspan => "11" } PLAYERS
+    %tr
+      %th.player NAME
+      %th.stat GP
+      %th.stat G
+      %th.stat A
+      %th.stat PTS
+      %th.stat PEN
+      %th.stat PIM
+      %th.stat MNR
+      %th.stat MJR
+      %th.stat MSC
+      %th.stat GAME
     %tbody
       - @players.each do |skater|
         %tr
-          %td
+          %td.player
             = [skater.player.first_name, skater.player.last_name].join(" ")
             = "*" if skater.player.substitute?
-          %td= skater.games_played
-          %td= skater.goals
-          %td= skater.assists
-          %td= skater.points
-          %td= skater.penalties
-          %td= skater.penalty_minutes
-          %td= skater.minor_penalties
-          %td= skater.major_penalties
-          %td= skater.misconduct_penalties
-          %td= skater.game_misconduct_penalties
+          %td.stat= skater.games_played
+          %td.stat= skater.goals
+          %td.stat= skater.assists
+          %td.stat= skater.points
+          %td.stat= skater.penalties
+          %td.stat= skater.penalty_minutes
+          %td.stat= skater.minor_penalties
+          %td.stat= skater.major_penalties
+          %td.stat= skater.misconduct_penalties
+          %td.stat= skater.game_misconduct_penalties
 
-%h3 Goaltending Statistics
-%table.table.table-striped.table-bordered
+%table.team-statistics.table.table-striped.table-bordered
   %thead
+    %tr
+      %th.title{ :colspan => "11" } GOALTENDERS
     %tr
       %th NAME
       %th.span1 GP

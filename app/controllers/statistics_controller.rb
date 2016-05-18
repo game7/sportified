@@ -1,8 +1,6 @@
 class StatisticsController < BaseLeagueController
 
   def index
-    add_breadcrumb "Statistics"
-    add_breadcrumb @season.name if @season
 
     @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_statistics_path(@program.slug, @division.slug, s.slug)]}
 
