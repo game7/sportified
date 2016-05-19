@@ -1,4 +1,4 @@
-- title @season.name
+- title "#{@season.program.name} #{@season.name}"
 - content_for :actions do
   %form.form-inline
     = select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to form-control" })
