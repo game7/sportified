@@ -74,4 +74,8 @@ class Event < ActiveRecord::Base
     self.starts_on
   end
 
+  def module_name
+    self.class.name.deconstantize.underscore.presence
+  end
+
 end
