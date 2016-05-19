@@ -32,6 +32,7 @@
 }
 .banner {
   .team {
+    margin-top: 10px;
     .well {
       margin-bottom: 0;
     }
@@ -185,6 +186,13 @@
     td.final {
       font-weight: bold;
     }
+  }
+}
+
+table.team-schedule {
+  th {
+    background-color: $brand-primary !important;
+    color: $navbar-default-link-color !important;
   }
 }
 

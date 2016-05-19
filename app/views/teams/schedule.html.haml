@@ -13,21 +13,16 @@
         Download As iCal
   .row
     .col-xs-12
-      %table.table.table-striped.table-bordered
-        - @events.each do |event|
-          - month = event.starts_on.strftime('%B')
-          - future = event.starts_on.future?
-          - if month != last_month
-            - reset_cycle()
-            %tr
-              %th= month
-            - last_month = month
-            - last_future = future
+      %table.team-schedule.table.table-striped.table-bordered
+        - @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
           %tr
-            %td
-              %span= event.starts_on.strftime('%a, %b %e') + " :: "
-              %span= display_time_or_result(event, @team) + " " + display_event_summary(event, @team)
-              %span= event.try(:location).try(:name)
+            %th= month
+          - events.each do |event|
+            %tr
+              %td
+                .date= event.starts_on.strftime('%A %B %e @ %l:%M %p')
+                .summary= display_event_summary(event, @team)
+                .location= event.try(:location).try(:name)
 .hidden-xs
   .row.options
     .col-sm-4
@@ -35,22 +30,17 @@
     .col-sm-4.col-sm-offset-4
   .row
     .col-xs-12
-      %table.table.table-striped.table-bordered
-        - @events.each do |event|
-          - month = event.starts_on.strftime('%B')
-          - future = event.starts_on.future?
-          - if month != last_month
-            - reset_cycle()
-            %tr
-              %th.span2= month
-              %th.span4 EVENT
-              %th.span3 TIME / RESULT
-              %th.span3 LOCATION
-            - last_month = month
-            - last_future = future
+      %table.team-schedule.table.table-striped.table-bordered
+        - @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
           %tr
-            %td.span2= event.starts_on.strftime('%a, %b %e')
-            %td.span4= display_event_summary(event, @team)
-            %td.span3= display_time_or_result(event, @team)
-            %td.span3= event.try(:location).try(:name)
+            %th.span2= month
+            %th.span4 EVENT
+            %th.span3 TIME / RESULT
+            %th.span3 LOCATION
+          - events.each do |event|
+            %tr
+              %td.span2= event.starts_on.strftime('%a, %b %e')
+              %td.span4= display_event_summary(event, @team)
+              %td.span3= display_time_or_result(event, @team)
+              %td.span3= event.try(:location).try(:name)
 
