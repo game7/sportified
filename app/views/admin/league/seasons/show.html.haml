@@ -7,23 +7,21 @@
     = link_to 'New Season', new_admin_league_program_season_path(@season.program), :class => "btn btn-default"
     = link_to 'New Division', new_admin_league_program_division_path(@season.program), :class => "btn btn-default"
 
+.row
 - @teams.group_by{|t| t.division}.each do |division, teams|
-  .panel.panel-default
-    .panel-heading
-      = division.name
-      .pull-right
-        = link_to icon(:cog) + ' Settings', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
-        = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
-    .panel-body{ :style => 'padding: 0' }
-      - teams.each do |team|
-        .col-sm-3{ :style => 'padding: 5px;' }
-          .team.clearfix{ :style => 'border: 1px solid #eee; padding: 5px' }
-            .pull-left{ :style => 'height: 50px; width: 50px; border: 1px solid #eee;' }
-              = image_tag(team.logo.thumb.url, size: "50") if team.logo?
-            .pull-left{ :style => 'margin-left: 5px;'}
-              .team-name
-                = link_to team.name, [:admin, team.class.name.deconstantize.underscore.presence, team]
-              .actions
-                = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-sm btn-default"
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        = division.name
+        .pull-right
+          = link_to icon(:cog) + ' Settings', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
+          = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
+      .list-group
+        - teams.each do |team|
+          .list-group-item
+            = image_tag(team.logo.micro.url, size: "25") if team.logo?
+            = team.name
+            .actions.pull-right
+              = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-sm btn-default"
 
 

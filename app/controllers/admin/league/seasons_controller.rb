@@ -13,7 +13,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   def show
     @teams = @season.teams.joins(:division)
                           .includes(:division)
-                          .order('league_divisions.name')
+                          .order('league_divisions.name, league_teams.name')
   end
 
   def new
