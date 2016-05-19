@@ -312,19 +312,21 @@ table.statistics {
 // --------------------------------------
 
 .standings {
+
+  th, td {
+    line-height: 25px;
+    vertical-align: center;
+  }
+
   th.rank,
   td.rank {
     width: 10px;
     text-align: center;
-    line-height: 25px;
-    vertical-align: center;
   }
 
   th.stat,
   td.stat {
     width: 8.33%;
-    line-height: 25px;
-    vertical-align: center;
     text-align: center;
   }
 
