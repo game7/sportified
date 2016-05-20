@@ -179,11 +179,12 @@ namespace :league do
       g[:starts_on] = Chronic.parse(g[:date] + ' ' + g[:time])
       g.delete :date
       g.delete :time
-      game = Game.create(g)
+      game = League::Game.create(g)
       if (game.save)
         puts "New Game with Id: #{game.id}"
       else
         puts "ERROR"
+        puts game.errors.to_json
       end
     end
   end
