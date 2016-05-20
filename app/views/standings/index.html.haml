@@ -1,29 +1,7 @@
-- title @division.name + ' Standings'
+- title 'Standings'
 
 .row.options
   .col-sm-4
     = render :partial => 'shared/season_options', :object => @season_options
 
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th.span2 TEAM
-      - @division.standings_schema['columns'].each do |col|
-        %th{ :class => "span1 #{'hidden-xs' unless col[0] == @division.standings_schema['primary_column']}"}= col[1]['title']
-  %tbody
-    - last_pool = nil
-    - @teams.each do |team|
-      - unless team.pool.blank? or team.pool == last_pool
-        %tr
-          %th{:colspan => 10}= team.pool
-        - last_pool = team.pool
-      %tr
-        %td
-          = "#{team.seed} -" if team.seed
-          = team.name
-          - @division.standings_schema['columns'].each do |col|
-            %td{ :class => "#{'hidden-xs' unless col[0] == @division.standings_schema['primary_column']}"}
-              - if col[1]['precision']
-                = number_with_precision(team.send(col[1]['attr']), :precision => col[1]['precision'])
-              - else
-                = team.send(col[1]['attr'])
+= render "standings/templates/#{@division.standings_schema_id}"

@@ -1,4 +1,4 @@
-class Admin::DashboardController < Admin::BaseLeagueController
+class Admin::DashboardController < Admin::AdminController
   def show
   end
 end

@@ -1,4 +1,4 @@
-- title "#{ @division ? @division.name+' ' : '' }Schedule"
+- title "Schedule"
 - last_date = nil
 
 - if current_user_is_admin?
@@ -32,10 +32,8 @@
           = event.summary
           - if current_user_is_admin?
             .pull-right
-              - edit_url = event.class.to_s == 'Game' ? edit_admin_game_path(event) : edit_admin_event_path(event)
-              = link_to "Edit", edit_url, :class => 'btn btn-primary btn-xs'
-              - copy_url = event.class.to_s == 'Game' ? new_admin_game_path(:clone => event.id) : new_admin_event_path(:clone => event.id)
-              = link_to "Clone", copy_url, :class => 'btn btn-primary btn-xs'
+              = link_to "Edit", edit_polymorphic_path([:admin, event.module_name, event]), :class => 'btn btn-primary btn-xs'
+              = link_to "Clone", new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), :class => 'btn btn-primary btn-xs'
         %td
           - if event.location
             .visible-xs= event.location.short_name

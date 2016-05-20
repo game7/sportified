@@ -1,4 +1,5 @@
 class Admin::League::TeamsController < Admin::BaseLeagueController
+  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
   before_filter :find_team, except: [:new, :create]
   before_filter :find_division, only: [:new, :create]
   before_filter :find_program

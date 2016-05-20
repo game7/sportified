@@ -1,4 +1,7 @@
 
+require 'csv'
+require 'chronic'
+
 namespace :league do
 
   desc "exclude prefixed games from standings"
@@ -157,5 +160,58 @@ namespace :league do
     end
   end
 
+  desc "Load Games"
+  task :load_games => :environment do
+    Tenant.current = Tenant.first
+    path = File.expand_path("games.csv", File.dirname(__FILE__))
+    puts "path: #{path}"
+    games = CSV.read(path, headers: true)
+    games = games.map do |g|
+      hash = {}
+      g.each do |prop|
+        hash[prop[0].to_sym] = prop[1]
+      end
+      hash
+    end
+    Time.zone = "UTC"
+    Chronic.time_class = Time.zone
+    games.each do |g|
+      g[:starts_on] = Chronic.parse(g[:date] + ' ' + g[:time])
+      g.delete :date
+      g.delete :time
+      game = League::Game.create(g)
+      if (game.save)
+        puts "New Game with Id: #{game.id}"
+      else
+        puts "ERROR"
+        puts game.errors.to_json
+      end
+    end
+  end
+
+  desc "Load Rosters"
+  task :load_rosters => :environment do
+    Tenant.current = Tenant.first
+    # path = File.expand_path("games.csv", File.dirname(__FILE__))
+    # puts "path: #{path}"
+    data = Net::HTTP.get(URI.parse('https://s3.amazonaws.com/sportified/rosters.csv'))
+    players = CSV.parse(data, headers: true)
+    players = players.map do |g|
+      hash = {}
+      g.each do |prop|
+        hash[prop[0].to_sym] = prop[1]
+      end
+      hash
+    end
+    players.each do |p|
+      player = Player.create(p)
+      player.email = player.email.downcase unless player.email.blank?
+      if (player.save)
+        puts "New Player with Id: #{player.id}"
+      else
+        puts "ERROR"
+      end
+    end
+  end
 
 end

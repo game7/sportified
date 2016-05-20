@@ -26,12 +26,12 @@ class BaseLeagueController < ApplicationController
   end
 
   def find_program
-    @program = ::League::Program.with_slug(params[:league_slug]).first
-    add_breadcrumb(@program.name, program_path(@program))
+    @program = ::League::Program.with_slug(params[:league_slug]).first if params[:league_slug]
+    add_breadcrumb(@program.name, program_path(@program.slug)) if @program
   end
 
   def find_division
-    @division = (@program.divisions || League::Division).where(slug: params[:division_slug]).first
+    @division = (@program.divisions || League::Division).where(slug: params[:division_slug]).first if params[:division_slug]
     add_breadcrumb(@division.name, league_schedule_path(@program.slug, @division.slug)) if @division
   end
 

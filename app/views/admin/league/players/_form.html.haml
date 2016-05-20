@@ -1,0 +1,16 @@
+= simple_form_for [:admin, :league, @team, @player] do |f|
+  .row
+    .col-sm-3
+      = f.input :first_name
+    .col-sm-3
+      = f.input :last_name
+  .row
+    .col-sm-2
+      = f.input :jersey_number
+  = f.input :birthdate
+  .row
+    .col-sm-4
+      = f.input :email
+  = f.input :substitute, :as => :boolean, :wrapper => :vertical_boolean
+  = f.button :wrapped, :cancel => return_url
+
