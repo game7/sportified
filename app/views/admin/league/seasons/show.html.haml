@@ -82,10 +82,13 @@
             = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
         .list-group
           - teams.each do |team|
-            .list-group-item
+            = link_to admin_league_team_path(team), { :class => "list-group-item" } do
               = image_tag(team.logo.micro.url, size: "25") if team.logo?
               = team.name
-              .actions.pull-right
-                = link_to icon(:cog) + ' Settings', edit_admin_league_team_path(team), :class => "btn btn-xs btn-default"
+              .pull-right
+                %span{ :title => "Number of Players"}
+                  = team.players.size
+                  = " "
+                  = icon(:group)
 
 

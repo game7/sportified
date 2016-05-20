@@ -11,9 +11,12 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def show
-    @teams = @season.teams.joins(:division)
-                          .includes(:division)
-                          .order('league_divisions.name, league_teams.name')
+    @teams = League::Team.joins(:division)
+                         .includes(:division)
+                         .includes(:players)
+                         .where(season_id: @season.id)
+                         .order('league_divisions.name, league_teams.name')
+
     horizon = 3.days
     @recent = League::Game.where(season_id: @season.id).before(DateTime.now.beginning_of_day).after(horizon.ago.beginning_of_day).order(starts_on: :desc)
     @upcoming = League::Game.where(season_id: @season.id).after(DateTime.now.beginning_of_day).before(horizon.from_now.beginning_of_day).order(starts_on: :asc)
