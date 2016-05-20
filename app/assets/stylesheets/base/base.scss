@@ -268,4 +268,24 @@ select {
   }
 }
 
+.tiled {
+  .dummy {
+    margin-top: 100%
+  }
+  .tile {
+    @extend .thumbnail;
+    position: absolute;
+    top: 15px;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    text-align:center;
+    padding-top:calc(50% - 45px);
+    //background-color: $brand-primary
+  }
+  i.fa {
+    font-size: 3em;
+  }
+}
+
 

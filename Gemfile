@@ -16,7 +16,7 @@ gem "sprockets-es6"
 
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
-gem 'font-awesome-sass', '~> 4.3.0'
+gem 'font-awesome-sass', '~> 4.6.2'
 gem 'autoprefixer-rails'
 
 gem 'ember-rails'

@@ -1,45 +1,49 @@
 - title Dashboard
 
-.row
+.row.tiled
 
-  .col-sm-3
-    .panel.panel-default
-      .panel-heading Site
-      %ul.list-group
-        = link_to 'Users', admin_users_path, class: 'list-group-item'
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => admin_events_path }
+      %i.fa.fa-calendar
+      %p Calendar
 
-    .panel.panel-default
-      .panel-heading Content
-      %ul.list-group
-        = link_to 'Pages', pages_path, class: 'list-group-item'
-        = link_to 'Posts', admin_posts_path, class: 'list-group-item'
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => admin_programs_path }
+      %i.fa.fa-sitemap
+      %p Programs
 
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => pages_path }
+      %i.fa.fa-file-text-o
+      %p Pages
 
-  .col-sm-3
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => pages_path }
+      %i.fa.fa-sticky-note-o
+      %p Posts
 
-    .panel.panel-default
-      .panel-heading Manage
-      %ul.list-group
-        = link_to 'Programs', admin_programs_path, class: 'list-group-item'
-        = link_to 'Schedule', admin_events_path, class: 'list-group-item'
-        = link_to 'Locations', admin_locations_path, class: 'list-group-item'
-        = link_to 'Clubs', admin_clubs_path, class: 'list-group-item'
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => admin_users_path }
+      %i.fa.fa-user
+      %p Users
 
-  .col-sm-3
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => admin_locations_path }
+      %i.fa.fa-map-marker
+      %p Locations
 
-    .panel.panel-default
-      .panel-heading Current Programs
-      %ul.list-group
-        - Program.order(:name).all.each do |program|
-          = link_to program.name, [:admin, program.class.name.deconstantize.underscore.presence, program], class: 'list-group-item'
+  .col-md-2.col-sm-3.col-xs-4
+    .dummy
+    %a.tile{ :href => admin_clubs_path }
+      %i.fa.fa-users
+      %p Clubs
 
-  .col-sm-3
-
-    .panel.panel-default
-      .panel-heading Experimental
-      %ul.list-group
-        = link_to 'Calendar', 'apps/calendar/', class: 'list-group-item'
-        = link_to 'Scorebook', 'apps/scorebook/', class: 'list-group-item'
 
 
 
