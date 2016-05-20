@@ -1,0 +1,12 @@
+- title 'Player Roster'
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr.col-head
+      %th NUM
+      %th NAME
+      %th AGE
+      %th ACTIONS
+  %tbody
+    = render :partial => "player", :collection => @players
+= link_to 'Add Player', new_admin_team_player_path(@team), :class => 'btn btn-primary'
