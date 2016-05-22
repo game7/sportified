@@ -1,20 +1,21 @@
 template(bindable="router")
-  nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
-    div.navbar-header
-      button.navbar-toggle(type="button", data-target="#skeleton-navigation-navbar-collapse")
-        span.sr-only Toggle Navigation/span
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href="#")
-        i.fa.fa-home
-        span ${router.title}
+  require(from="./nav-bar.css")
+  nav.navbar.navbar-black.navbar-fixed-top(role="navigation")
+    .container
+      .navbar-header
+        button.navbar-toggle(type="button", data-target="#skeleton-navigation-navbar-collapse")
+          span.sr-only Toggle Navigation/span
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="#")
+          span sportified
 
-    div.collapse.navbar-collapse(id="skeleton-navigation-navbar-collapse")
-      ul.nav.navbar-nav
-        li(repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}")
-          a(data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href") ${row.title}
+      div.collapse.navbar-collapse(id="skeleton-navigation-navbar-collapse")
+        ul.nav.navbar-nav
+          li(repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}")
+            a(data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href") ${row.title}
 
-      ul.nav.navbar-nav.navbar-right
-        li.loader(if.bind="router.isNavigating")
-          i.fa.fa-spinner.fa-spin.fa-2x
+        ul.nav.navbar-nav.navbar-right
+          li.loader(if.bind="router.isNavigating")
+            i.fa.fa-spinner.fa-spin.fa-2x
