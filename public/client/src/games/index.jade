@@ -1,0 +1,12 @@
+template
+  h1.page-header Games
+
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Starts On
+        th Summary
+    tbody
+      tr(repeat.for="game of games")
+        td ${game.starts_on}
+        td ${game.summary}

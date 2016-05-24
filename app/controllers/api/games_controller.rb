@@ -2,11 +2,11 @@ class Api::GamesController < ApplicationController
 
   def index
     horizon = params[:days] ? params[:days].to_i : 7
-    render json: Game.in_the_past.after(horizon.day.ago).includes(:home_team, :away_team).order(starts_on: :desc), include: [:home_team, :away_team]
+    render json: ::League::Game.in_the_past.after(horizon.day.ago).includes(:home_team, :away_team).order(starts_on: :desc), include: [:home_team, :away_team]
   end
 
   def show
-    render json: Game.includes(:home_team, :away_team).find(params[:id]), include: [:home_team, :away_team]
+    render json: ::League::Game.includes(:home_team, :away_team).find(params[:id]), include: [:home_team, :away_team]
   end
 
   def statify
