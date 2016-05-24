@@ -14,6 +14,5 @@ done
 for app in "public/client"; do
   cd $app &&
     npm install &&
-    jspm install -y &&
     cd -
 done
