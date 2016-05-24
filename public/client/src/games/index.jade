@@ -8,5 +8,5 @@ template
         th Summary
     tbody
       tr(repeat.for="game of games")
-        td ${game.starts_on}
+        td ${game.starts_on | dateFormat}
         td ${game.summary}
