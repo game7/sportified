@@ -13,7 +13,6 @@ export class Index {
   }
 
   fetch(daysInThePast) {
-    debugger;
     return Resource.all('game', { days: daysInThePast }).then((games) => {
       this.games = games;
     })

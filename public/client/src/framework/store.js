@@ -1,5 +1,6 @@
 import { inject }           from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
+import { Configuration }    from './configuration';
 
 export function parameterize(params) {
   let results = [];
@@ -9,20 +10,20 @@ export function parameterize(params) {
   return results.join('&');
 }
 
-@inject(HttpClient)
+@inject(HttpClient, Configuration)
 export class Store {
 
-  constructor(http) {
+  constructor(http, configuration) {
     this.http = http.configure(config => {
       config
         .useStandardConfiguration()
-        .withBaseUrl('api/')
+        .withBaseUrl(configuration.api.baseUrl);
     });
   }
 
   static get current() {
     if (!Store._current) {
-      Store._current = new Store(new HttpClient());
+      Store._current = new Store(new HttpClient(), new Configuration());
     }
     return Store._current;
   }
