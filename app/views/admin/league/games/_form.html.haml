@@ -61,7 +61,7 @@
       $(function() {
         bindSelect('#game_division_id', '#game_program_id', divisions, 'id', 'name', '#{@game.division_id}');
         bindSelect('#game_season_id', '#game_program_id', seasons, 'id', 'name', '#{@game.season_id}');
-        bindSelect('#game_home_team_id, #game_away_team_id', '#game_season_id, #game_division_id', teams_path, 'id', 'name', ['#{@game.home_team_id}', '#{@game.away_team_id}']);
+        bindSelect('#game_home_team_id, #game_away_team_id', '#game_season_id, #game_division_id', teams_path, 'id', 'name', ['#{@game.away_team_id}', '#{@game.home_team_id}']);
         bindSelect('#game_playing_surface_id', '#game_location_id', playing_surfaces, 'id', 'name', '#{@game.playing_surface_id}');
         bindSelect('#game_home_team_locker_room_id, #game_away_team_locker_room_id', '#game_location_id', locker_rooms, 'id', 'name', ['#{@game.home_team_locker_room_id}', '#{@game.away_team_locker_room_id}']);
       });
