@@ -7,7 +7,9 @@
   .row
     .col-sm-2
       = f.input :jersey_number
-  = f.input :birthdate
+  .row
+    .col-sm-3
+      = f.input :birthdate, as: :date, html5: true
   .row
     .col-sm-4
       = f.input :email
