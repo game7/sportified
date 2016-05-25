@@ -51,7 +51,7 @@ function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue
   });
 
   bind().then(function() {
-    if(selected && selected.length) {
+    if(selected && Array.isArray(selected)) {
       for(var i = 0; i < selected.length; i++) {
         $($observer[i]).val(selected[i]);
       }
