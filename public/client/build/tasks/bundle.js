@@ -13,6 +13,13 @@ gulp.task('bundle', ['build'], function() {
   return bundler.bundle(config);
 });
 
+gulp.task('bundle-deps', function() {
+  config.bundles = {
+    "dist/aurelia": bundles.bundles["dist/aurelia"]
+  }
+  return bundler.bundle(config);
+});
+
 gulp.task('unbundle', function() {
   return bundler.unbundle(config);
 });
