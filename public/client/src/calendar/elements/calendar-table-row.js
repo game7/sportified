@@ -15,6 +15,7 @@ export class CalendarTableRow {
       this.days.push(date.format('YYYY-MM-DD'));
       date.add(1, 'days');
     }
+    this.dayWidth = `${((1/this.days.length)*100).toFixed(2)}%`
   }
 
 }

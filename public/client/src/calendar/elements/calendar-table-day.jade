@@ -1,3 +1,4 @@
 template
 
-  .calendar-table-day(class="${isToday ? 'today' : ''}") ${day}
+  .calendar-table-day(class="${isToday ? 'today' : ''}", css="width: ${width};") 
+    | ${day}
