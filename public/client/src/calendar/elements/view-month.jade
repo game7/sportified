@@ -1,0 +1,5 @@
+template
+  require(from="./calendar-table")
+
+  h3 ${title}
+  calendar-table(date.bind="date" start-date.bind="startDate" end-date.bind="endDate")

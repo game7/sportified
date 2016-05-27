@@ -1,0 +1,8 @@
+template
+  require(from="./calendar-table-row")
+  
+  .calendar-table
+    calendar-table-row(repeat.for="row of rows", 
+                       date.bind="date", 
+                       start-date.bind="row.start"
+                       end-date.bind="row.end")
