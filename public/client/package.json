@@ -20,7 +20,7 @@
   },
   "scripts": {
     "postinstall": "jspm install -y",
-    "heroku-post-build": "gulp bundle",
+    "heroku-postbuild": "gulp bundle",
     "test": "gulp test",
     "e2e": "gulp serve webdriver-standalone e2e"
   },
