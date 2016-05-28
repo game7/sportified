@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+echo bundle aurelia client.
+cd "public/client" &&
+  gulp bundle &&
+  cd -
