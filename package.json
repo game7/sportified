@@ -3,8 +3,7 @@
     "node": "5.5"
   },
   "scripts": {
-    "postinstall": "./bin/heroku_install",
-    "heroku-postbuild": "cd \"public/client\" && gulp bundle && cd -"
+    "postinstall": "./bin/heroku_install"
   },
   "devDependencies": {
     "bower": "*"

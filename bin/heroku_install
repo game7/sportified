@@ -13,6 +13,6 @@ done
 
 for app in "public/client"; do
   cd $app &&
-    npm install &&
+    npm install && gulp bundle
     cd -
 done
