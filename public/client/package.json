@@ -19,7 +19,8 @@
     "url": "http://github.com/aurelia/skeleton-navigation"
   },
   "scripts": {
-    "postinstall": "jspm install -y && gulp build",
+    "postinstall": "jspm install -y",
+    "heroku-post-build": "gulp bundle",
     "test": "gulp test",
     "e2e": "gulp serve webdriver-standalone e2e"
   },
