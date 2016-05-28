@@ -10,10 +10,10 @@ template
   .toolbar
     calendar-date-stepper(date.bind="date", on-step.call="setDate(date)")
     | 
-    calendar-view-selector(select.bind="show", on-select.call="setView(viewName)")
+    calendar-view-selector(select.bind="show", view-name.bind="view", on-select.call="setView(viewName)")
 
   hr
-  ${startDate} - ${endDate}
+  | ${startDate} - ${endDate}
   calendar-table(date.bind="date" start-date.bind="startDate" end-date.bind="endDate")
   br
 
