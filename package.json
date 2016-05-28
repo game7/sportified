@@ -4,7 +4,7 @@
   },
   "scripts": {
     "postinstall": "./bin/heroku_install",
-    "heroku-postbuild": "cd "public/client" && gulp bundle && cd -"
+    "heroku-postbuild": "cd \"public/client\" && gulp bundle && cd -"
   },
   "devDependencies": {
     "bower": "*"
