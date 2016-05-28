@@ -11,7 +11,7 @@ for app in "client/calendar" "client/scorebook"; do
     cd -
 done
 
-gulp="$(pwd)/node_modules/.bin/gulp"
+gulp="$(pwd)/public/client/node_modules/.bin/gulp"
 
 for app in "public/client"; do
   cd $app &&
