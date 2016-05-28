@@ -4,7 +4,7 @@
   },
   "scripts": {
     "postinstall": "./bin/heroku_install",
-    "heroku-postbuild": "./bin/heroku_bundle"
+    "heroku-postbuild": "cd "public/client" && gulp bundle && cd -"
   },
   "devDependencies": {
     "bower": "*"
@@ -14,6 +14,7 @@
     "client/calendar/bower_components",
     "client/scorebook/node_modules",
     "client/scorebook/bower_components",
+    "public/client/node_modules",
     "node_modules"
   ]
 }
