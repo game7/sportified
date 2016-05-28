@@ -8,12 +8,17 @@ template
   h1 Calendar
 
   .toolbar
-    calendar-date-stepper(date.bind="date", on-step.call="setDate(date)")
+    calendar-date-stepper(date.bind="date", 
+                          on-step.call="setDate(date)",
+                          step-amount.bind="stepAmount",
+                          step-unit.bind="stepUnit")
     | 
-    calendar-view-selector(select.bind="show", view-name.bind="view", on-select.call="setView(viewName)")
+    calendar-view-selector(select.bind="show", 
+                           on-select.call="setView(viewName)")
 
   hr
+
   | ${startDate} - ${endDate}
-  calendar-table(date.bind="date" start-date.bind="startDate" end-date.bind="endDate")
+  calendar-table(date.bind="date" start-date.bind="startDate" end-date.bind="endDate" events.bind="events")
   br
 

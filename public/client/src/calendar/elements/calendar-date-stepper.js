@@ -4,11 +4,12 @@ import moment       from 'moment'
 export class CalendarDateStepperCustomElement {
 
     @bindable date;
-    @bindable view;
+    @bindable stepAmount;
+    @bindable stepUnit;
     @bindable onStep;
 
     back() {
-      this.step(-1, 'months');
+      this.step(-this.stepAmount, this.stepUnit);
     }
 
     today() {
@@ -19,7 +20,7 @@ export class CalendarDateStepperCustomElement {
     }
 
     forward() {
-      this.step(1, 'months');
+      this.step(this.stepAmount, this.stepUnit);
     }
 
     step(number, unit) {

@@ -4,5 +4,6 @@ template
   .calendar-table
     calendar-table-row(repeat.for="row of rows", 
                        date.bind="date", 
-                       start-date.bind="row.start"
-                       end-date.bind="row.end")
+                       start-date.bind="row.start",
+                       end-date.bind="row.end",
+                       events.bind="row.events")

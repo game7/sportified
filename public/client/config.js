@@ -41,6 +41,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "fullcalendar": "npm:fullcalendar@2.7.2",
     "jquery": "npm:jquery@2.2.4",
+    "lodash": "npm:lodash@4.13.1",
     "moment": "npm:moment@2.13.0",
     "text": "github:systemjs/plugin-text@0.0.3",
     "twix": "npm:twix@1.0.0",
@@ -220,6 +221,10 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:lodash@4.13.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"

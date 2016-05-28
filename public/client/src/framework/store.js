@@ -38,7 +38,8 @@ export class Store {
   all(type, params) {
     let base = this.inflect(type);
     let query = parameterize(params || {});
-    return this.http.fetch(this.inflect(type)).then(response => response.json()).then((json) => {
+    let url = `${base}${query.length > 0 ? '?' : ''}${query}`;
+    return this.http.fetch(url).then(response => response.json()).then((json) => {
       return json.data;
     })
   }

@@ -9,12 +9,13 @@ export class CalendarTable {
   @bindable date;
   @bindable startDate;
   @bindable endDate
+  @bindable events
 
   attached() {
 
   }
 
-  @computedFrom('startDate', 'endDate')
+  @computedFrom('startDate', 'endDate', 'events')
   get rows() {
     let next = moment(this.startDate).clone();
     _rows = [];
@@ -23,14 +24,21 @@ export class CalendarTable {
       if(end.isAfter(this.endDate)) {
         end = moment(this.endDate);
       }
-      _rows.push({
+      let row = {
         start: next.format('MM-DD-YYYY'),
-        end: end.format('MM-DD-YYYY')
-      });
+        end: end.format('MM-DD-YYYY'),
+        events: this.eventsBetween(next, end)
+      };
+      _rows.push(row);
       next.add(7, 'days');      
     }
-    console.log('rows', _rows.length);
     return _rows;    
+  }
+
+  eventsBetween(start, end) {
+    return this.events.filter((event) => {
+      return moment(event.starts_on).isBetween(start, end);
+    });
   }
 
 }

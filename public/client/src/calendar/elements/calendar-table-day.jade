@@ -1,4 +1,6 @@
 template
+  require(from="./calendar-table-event")
 
   .calendar-table-day(class="${isToday ? 'today' : ''}", css="width: ${width};") 
     | ${day}
+    calendar-table-event(repeat.for="event of events", event.bind="event") 
