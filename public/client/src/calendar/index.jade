@@ -14,7 +14,8 @@ template
                           step-unit.bind="stepUnit")
     | 
     calendar-view-selector(select.bind="show", 
-                           on-select.call="setView(viewName)")
+                           on-select.call="setView(viewName)",
+                           view-name.bind="view")
 
   hr
 

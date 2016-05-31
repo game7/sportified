@@ -4,4 +4,4 @@ template(bindable="select")
     button.btn.btn-default(type="button", 
                            repeat.for="view of views",
                            click.delegate="select(view.name)",
-                           class="${ (viewName == view.name) ? 'active' : 'boo'}") ${view.label}
+                           class="${ (viewName == view.name) ? 'active' : ''}") ${view.label}
