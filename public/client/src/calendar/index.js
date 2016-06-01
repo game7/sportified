@@ -2,6 +2,7 @@ import moment                   from 'moment';
 import { inject, computedFrom } from 'aurelia-framework';
 import { Router }               from 'aurelia-router';
 import { Resource }             from '../framework/resource';
+import { Store }                from '../framework/store';
 import { bind }                 from 'lodash';
 
 @inject(Router)
@@ -10,14 +11,25 @@ export class Index {
   constructor(router) {
     this.router = router;
     this.events = [];
+    this.programs = [];
   }
 
   activate(params) {
     this.date = moment(params.date).format('MM-DD-YYYY');
     this.view = params.view || 'month';
-    return this.loadEvents(this.date).then(() => {
+    
+    let promises = [];
+    
+    promises.push(this.loadEvents(this.date).then(() => {
       this.loadViewSettings();
-    });
+    }));
+
+    promises.push(Resource.all('program').then((programs) => {
+      this.programs = programs;
+    }));
+
+    return Promise.all(promises);
+
   }
 
   setDate(date) {
@@ -43,9 +55,10 @@ export class Index {
     const start = this.firstDateOfMonth(date).format('YYYY-MM-DD');
     const end = this.lastDateOfWeek(date).format('YYYY-MM-DD');
     let self = this;
-    return Resource.all('event', { 
+    return Store.current.api.all('event').get({ 
       from: start,
-      to: end
+      to: end,
+      include: 'program',
     }).then((events) => {
       this.events = events; 
     })

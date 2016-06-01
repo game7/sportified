@@ -6,7 +6,7 @@ var proxy       = require('proxy-middleware');
 // this task utilizes the browsersync plugin
 // to create a dev server instance
 // at http://localhost:9000
-gulp.task('serve', ['build'], function(done) {
+gulp.task('serve', ['build', 'bundle-deps'], function(done) {
   var proxyOptions = url.parse('http://localhost:3000/api');
   proxyOptions.route = '/api';
   browserSync({

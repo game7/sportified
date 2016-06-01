@@ -30,7 +30,9 @@ module.exports = {
         "bootstrap",
         "bootstrap/css/bootstrap.css!text",
         "jquery",
-        "moment"
+        "moment",
+        "lodash",
+        "devour-client"
       ],
       "options": {
         "inject": true,

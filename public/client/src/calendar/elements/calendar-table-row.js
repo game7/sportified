@@ -8,6 +8,7 @@ export class CalendarTableRow {
   @bindable endDate
   @bindable date;
   @bindable events;
+  @bindable programs;
 
   attached() {
     let date = moment(this.startDate).clone();
@@ -24,7 +25,7 @@ export class CalendarTableRow {
 
   eventsForDate(date) {
     return this.events.filter((event) => {
-      return moment(event.starts_on).isSame(date, 'day');
+      return moment(event.startsOn).isSame(date, 'day');
     })
   }
 

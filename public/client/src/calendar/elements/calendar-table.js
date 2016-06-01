@@ -8,8 +8,9 @@ export class CalendarTable {
 
   @bindable date;
   @bindable startDate;
-  @bindable endDate
-  @bindable events
+  @bindable endDate;
+  @bindable events;
+  @bindable programs;
 
   attached() {
 
@@ -37,7 +38,7 @@ export class CalendarTable {
 
   eventsBetween(start, end) {
     return this.events.filter((event) => {
-      return moment(event.starts_on).isBetween(start, end);
+      return moment(event.startsOn).isBetween(start, end);
     });
   }
 

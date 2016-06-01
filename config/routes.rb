@@ -11,6 +11,7 @@
 
   namespace :api do
     resources :events, :only => [ :index ]
+    resources :programs, :only => [ :index ]
     resources :games, :only => [ :index, :show ] do
       get 'statify', :on => :member
       put 'statify', :on => :member

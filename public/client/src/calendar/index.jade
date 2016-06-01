@@ -3,23 +3,37 @@ template
   require(from="./elements/calendar-date-stepper")    
   require(from="./elements/calendar-view-selector")    
   require(from="./elements/calendar-table")
+  require(from="./elements/program-selector")
 
 
   h1 Calendar
 
-  .toolbar
-    calendar-date-stepper(date.bind="date", 
-                          on-step.call="setDate(date)",
-                          step-amount.bind="stepAmount",
-                          step-unit.bind="stepUnit")
-    | 
-    calendar-view-selector(select.bind="show", 
-                           on-select.call="setView(viewName)",
-                           view-name.bind="view")
+  .row
+    .col-sm-2
 
-  hr
+    .col-sm-10
+      .toolbar
+        calendar-date-stepper(date.bind="date", 
+                              on-step.call="setDate(date)",
+                              step-amount.bind="stepAmount",
+                              step-unit.bind="stepUnit")
+        | 
+        calendar-view-selector(select.bind="show", 
+                               on-select.call="setView(viewName)",
+                               view-name.bind="view")
 
-  | ${startDate} - ${endDate}
-  calendar-table(date.bind="date" start-date.bind="startDate" end-date.bind="endDate" events.bind="events")
+  .row
+    .col-sm-2
+      program-selector(repeat.for="program of programs" program.bind="program")
+
+
+    .col-sm-10
+
+      | ${startDate} - ${endDate}
+      calendar-table(date.bind="date",
+                     start-date.bind="startDate",
+                     end-date.bind="endDate",
+                     events.bind="events",
+                     programs.bind="programs")
   br
 

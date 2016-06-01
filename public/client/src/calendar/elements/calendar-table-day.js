@@ -7,6 +7,7 @@ export class CalendarTableDay {
   @bindable date;
   @bindable width;
   @bindable events;
+  @bindable programs;
 
   attached() {
     this.isToday = (moment(this.date).format("MM-DD-YYYY") == moment().format("MM-DD-YYYY"));

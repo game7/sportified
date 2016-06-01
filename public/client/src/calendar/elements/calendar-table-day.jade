@@ -3,4 +3,6 @@ template
 
   .calendar-table-day(class="${isToday ? 'today' : ''}", css="width: ${width};") 
     | ${day}
-    calendar-table-event(repeat.for="event of events", event.bind="event") 
+    calendar-table-event(repeat.for="event of events", 
+                         event.bind="event",
+                         programs.bind="programs") 

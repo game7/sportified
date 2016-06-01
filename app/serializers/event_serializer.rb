@@ -39,5 +39,7 @@
 #
 
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :starts_on, :ends_on, :duration, :description, :summary
+  attributes :id, :starts_on, :ends_on, :duration, :description, :summary, :program_id, :location_id
+  has_one :program
+  has_one :location
 end

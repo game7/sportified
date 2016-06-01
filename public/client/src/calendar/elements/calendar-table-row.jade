@@ -2,4 +2,8 @@ template
   require(from="./calendar-table-day")
 
   .calendar-table-row
-    calendar-table-day(repeat.for="day of days", date.bind="day.date", width.bind="dayWidth", events.bind="day.events")
+    calendar-table-day(repeat.for="day of days", 
+                       date.bind="day.date", 
+                       width.bind="dayWidth", 
+                       events.bind="day.events",
+                       programs.bind="programs")
