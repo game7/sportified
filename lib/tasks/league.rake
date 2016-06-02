@@ -56,6 +56,33 @@ namespace :league do
     end
   end
 
+  desc "retriggers player statistics for specified season"
+  task :recalculate_goalie_games_played, [:season] => :environment do |t, args|
+    League::Game.for_season(args[:season]).where('statsheet_id IS NOT NULL').includes(statsheet: [:goals, :penalties]).each do |game|
+      puts '--------------------------'
+      puts game.summary
+      puts '--------------------------'
+      statsheet = game.statsheet;
+      repost = statsheet.posted;
+      if statsheet.posted
+        puts '- unposting statsheet'
+        Hockey::Statsheet::Processor.unpost statsheet
+      end
+      statsheet.transaction do
+        puts '- setting games_played'
+        statsheet.goaltenders.each do |goalie|
+          goalie.games_played = 1
+          goalie.save!
+        end
+      end
+      if repost
+        puts '- reposting statsheet'
+        statsheet.goaltenders.reload
+        Hockey::Statsheet::Processor.post statsheet
+      end
+    end
+  end
+
   desc "Restore matchups from team records"
   task :restore_matchups => :environment do
     Tenant.all.each do |tenant|
