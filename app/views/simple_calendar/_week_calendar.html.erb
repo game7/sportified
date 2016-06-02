@@ -1,7 +1,9 @@
 <div class="simple-calendar view-week">
   <% date = params[:date] ? Date.parse(params[:date]) : Date.current %>
-  <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => date.last_week, :next_date => date.next_week } %>
-  <table class="table table-striped">
+  <div class="toolbar">
+    <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => date.last_week, :next_date => date.next_week } %>
+  </div>
+  <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>

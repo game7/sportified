@@ -3,12 +3,26 @@
 .simple-calendar {
 
   .toolbar {
+    margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  &.view-week,
+  &.view-4-day,
+  &.view-1-day {
+    td.day {
+      height: 400px;
+    }
   }
 
   &.view-month {
     td.day {
       height: 120px;
+    }
+
+    .prev-month,
+    .next-month {
+      background-color: #DEDEDE !important;
     }
   }
 
@@ -67,8 +81,9 @@
   }
 
   .today {
-    background-color: #dedede !important;
+    background-color: #D9EDF7 !important;
   }
+
 
 
 }

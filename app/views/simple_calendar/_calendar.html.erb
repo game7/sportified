@@ -1,7 +1,9 @@
 <div class="simple-calendar view-<%= date_range.length %>-day">
   <% date = params[:date] ? Date.parse(params[:date]) : Date.current %>
-  <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => date.days_ago(date_range.length), :next_date => date.days_since(date_range.length) } %>
-  <table class="table table-striped">
+  <div class="toolbar">
+    <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => date.days_ago(date_range.length), :next_date => date.days_since(date_range.length) } %>
+  </div>
+  <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
