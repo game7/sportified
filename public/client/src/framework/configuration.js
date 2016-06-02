@@ -11,7 +11,7 @@ export class Configuration {
     let hostname = window.location.hostname;
     let local = "localhost";
 
-    this.api.baseUrl = (hostname.search(local) !== -1) ? 'api/' : '/api/';
+    this.api.baseUrl = (hostname.search(local) !== -1) ? 'api' : '/api';
 
   }
 
