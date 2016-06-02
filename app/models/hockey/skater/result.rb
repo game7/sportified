@@ -31,7 +31,6 @@
 #
 
 class Hockey::Skater::Result < Hockey::Skater
-  after_touch :calculate_statistics
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   has_one :game, through: :statsheet, class_name: 'League::Game'
@@ -63,32 +62,6 @@ class Hockey::Skater::Result < Hockey::Skater
   def penalties=(value)
     write_attribute(:penalties, value)
     calculate_gordie_howes
-  end
-
-  def apply_mongo_player_id!(mongo)
-  end
-
-  def apply_mongo!(mongo)
-    self.tenant_id = self.statsheet.tenant_id
-    self.team = mongo[:side] == 'home' ? self.statsheet.home_team : self.statsheet.away_team
-    self.player = ::Player.where(:mongo_id => mongo[:player_id].to_s).first
-    self.first_name = mongo[:first_name]
-    self.last_name = mongo[:last_name]
-    self.jersey_number = mongo[:num]
-    self.games_played = mongo[:gp]
-    self.goals = mongo[:g]
-    self.assists = mongo[:a]
-    self.points = mongo[:pts]
-    self.penalties = mongo[:pen]
-    self.penalty_minutes = mongo[:pim]
-    self.minor_penalties = mongo[:pen_minor]
-    self.major_penalties = mongo[:pen_major]
-    self.misconduct_penalties = mongo[:pen_misc]
-    self.game_misconduct_penalties = mongo[:pen_game]
-    self.ejections = mongo[:eject]
-    self.hat_tricks = mongo[:hat]
-    self.playmakers = mongo[:plmkr]
-    self.gordie_howes = mongo[:gordie]
   end
 
   private

@@ -17,10 +17,12 @@ module Sportified
       g.orm :active_record
       g.test_framework :rspec, :fixture => true, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
-    end    
+    end
 
     config.autoload_paths += %W(#{config.root}/lib)
-    config.autoload_paths += Dir["#{config.root}/lib/**/*"]    
+    config.autoload_paths += Dir["#{config.root}/lib/**/*"]
+    config.autoload_paths += %W(#{config.root}/app/services)
+    config.autoload_paths += Dir["#{config.root}/app/services/**/*"]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

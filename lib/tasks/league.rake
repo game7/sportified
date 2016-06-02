@@ -1,4 +1,6 @@
 
+
+
 require 'csv'
 require 'chronic'
 
@@ -17,6 +19,40 @@ namespace :league do
       team.reset_record
       team.save
       puts "Record reset for #{team.name} (#{team.id})"
+    end
+  end
+
+  desc "retriggers player statistics for specified season"
+  task :recalculate_player_results, [:season] => :environment do |t, args|
+    League::Game.for_season(args[:season]).where('statsheet_id IS NOT NULL').includes(statsheet: [:goals, :penalties]).each do |game|
+      puts '--------------------------'
+      puts game.summary
+      puts '--------------------------'
+      statsheet = game.statsheet;
+      repost = statsheet.posted;
+      if statsheet.posted
+        puts '- unposting statsheet'
+        Hockey::Statsheet::Processor.unpost statsheet
+      end
+      statsheet.transaction do
+        puts '- recalculating goals'
+        goal_service = Hockey::GoalService.new(statsheet)
+        statsheet.goals.each do |goal|
+          print '.'
+          goal_service.update_player_results!(goal, 1)
+        end
+        puts '- recalculating penalties'
+        penalty_service = Hockey::PenaltyService.new(statsheet)
+        statsheet.penalties.each do |penalty|
+          print '.'
+          penalty_service.update_player_results!(penalty, 1)
+        end
+      end
+      if repost
+        puts '- reposting statsheet'
+        statsheet.skaters.reload
+        Hockey::Statsheet::Processor.post statsheet
+      end
     end
   end
 

@@ -13,8 +13,9 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   end
 
   def create
-    @penalty = @statsheet.penalties.build(hockey_penalty_params)
-    if @statsheet.save
+    penalty_service = Hockey::PenaltyService.new(@statsheet)
+    @penalty = penalty_service.create_penalty!(hockey_penalty_params)
+    if @penalty.persisted?
       @statsheet.reload
       flash[:notice] = "Penalty Added"
     else
@@ -33,6 +34,16 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
 
   def destroy
     flash[:notice] = "Penalty has been deleted" if @penalty.delete
+  end
+
+  def destroy
+    penalty_service = Hockey::PenaltyService.new(@statsheet)
+    @penalty = penalty_service.destroy_penalty!(params[:id])
+    if @penalty.destroyed?
+      @statsheet.save
+      flash[:notice] = "Penalty has been deleted"
+    end
+
   end
 
   private

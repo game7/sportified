@@ -8,8 +8,9 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   end
 
   def create
-    @goal = @statsheet.goals.build(hockey_goal_params)
-    if @statsheet.save
+    goal_service = Hockey::GoalService.new(@statsheet)
+    @goal = goal_service.create_goal!(hockey_goal_params)
+    if @goal.persisted?
       @statsheet.reload
       flash[:notice] = "Goal Added"
     else
@@ -18,9 +19,9 @@ class Admin::HockeyGoalsController < Admin::BaseLeagueController
   end
 
   def destroy
-
-    goal = @statsheet.goals.find(params['id'])
-    if goal.delete
+    goal_service = Hockey::GoalService.new(@statsheet)
+    @goal = goal_service.destroy_goal!(params[:id])
+    if @goal.destroyed?
       @statsheet.save
       flash[:notice] = "Goal has been deleted"
     end
