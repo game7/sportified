@@ -1,4 +1,4 @@
-= month_calendar events: @events do |date, events|
+= month_calendar start_date: @date,events: @events do |date, events|
   .date= date.day
   .events
     = render :partial => 'admin/events/views/event', :collection => events

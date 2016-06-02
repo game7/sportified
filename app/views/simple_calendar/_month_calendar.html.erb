@@ -1,7 +1,8 @@
 <div class="simple-calendar view-month">
-  <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => Date.current.last_month, :next_date => Date.current.next_month } %>
-
-  <table class="table table-striped">
+  <div class="toolbar">
+    <%= render :partial => "simple_calendar/calendar_toolbar", :locals => { :prev_date => @date.last_month, :next_date => @date.next_month } %>
+  </div>
+  <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>

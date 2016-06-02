@@ -12,7 +12,7 @@ class Admin::EventsController < Admin::AdminController
     puts "date: #{@date}"
     puts "start: #{@date.at_beginning_of_week.beginning_of_day}"
     puts "end: #{@date.at_end_of_week.end_of_day}"
-    @events = Event.all.includes(:location)
+    @events = Event.all.includes(:location, :program)
     @events = @events.after(@date.beginning_of_day).before(@date.end_of_day) unless params[:view]
     @events = @events.after(@date.days_ago(1).beginning_of_day).before(@date.days_since(3).end_of_day) if params[:view] == 'fourday'
     @events = @events.after(@date.at_beginning_of_week.beginning_of_day).before(@date.at_end_of_week.end_of_day) if params[:view] == 'week'

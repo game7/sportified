@@ -6,9 +6,9 @@
 <div class="pull-right">
   <div class="btn-group" role="group">
     <%= link_to "Day", url_for(:date => params[:date]), :class => "btn btn-default #{'active' unless params[:view]}" %>
+    <%= link_to "4 Days", url_for(:view => 'fourday', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'fourday'}" %>
     <%= link_to "Week", url_for(:view => 'week', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'week'}" %>
     <%= link_to "Month", url_for(:view => 'month', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'month'}" %>
-    <%= link_to "4 Days", url_for(:view => 'fourday', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'fourday'}" %>
   </div>
   <div class="btn-group">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">

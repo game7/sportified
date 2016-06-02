@@ -2,6 +2,16 @@
 
 .simple-calendar {
 
+  .toolbar {
+    margin-bottom: 10px;
+  }
+
+  &.view-month {
+    td.day {
+      height: 120px;
+    }
+  }
+
   table {
     table-layout: fixed;
   }
