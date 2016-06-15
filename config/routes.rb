@@ -105,7 +105,9 @@
     resources :events
     resources :games do
       resource :result, :controller => :game_result, :only => [:edit, :update]
-      resource :statsheet, :only => [:edit]
+      resource :statsheet, :only => [:edit] do
+        get 'print', on: :member
+      end
     end
 
     resources :clubs

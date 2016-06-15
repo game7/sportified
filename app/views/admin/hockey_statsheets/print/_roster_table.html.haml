@@ -1,0 +1,20 @@
+%table
+  %thead
+    %tr.title
+      %th(colspan="3")= header
+    %tr
+      %th(width="15%") GP
+      %th(width="15%") #
+      %th(width="70%") NAME
+  %tbody
+    - (1..20).each do |row|
+      %tr
+        %td &nbsp;
+        %td(style="text-align: center;")
+          = "#{skaters[row].jersey_number}" if skaters[row]
+        %td.name
+          %span
+            - if skaters[row]
+              = "#{skaters[row].last_name}, #{skaters[row].first_name}"
+              = "*" if skaters[row].player and skaters[row].player.substitute?
+            != "&nbsp;" unless skaters[row]

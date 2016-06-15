@@ -1,0 +1,175 @@
+:css
+  @page {
+    size: 8.5in 11in;
+    margin: .5in;
+  }
+  body {
+    padding-top: 0;
+  }
+  table {
+    width: 100%;
+    font-size: 12px;
+  }
+  td, th {
+    border: 1px solid black;
+    padding: 2px 4px;
+    line-height: 1;
+  }
+  th {
+    text-align: center;
+  }
+  tr.title > th {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    -webkit-print-color-adjust: exact;
+  }
+  .overview {
+    height: 306px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .overview th {
+    text-align: left;
+  }
+  .goals, .penalties {
+    float: left;
+  }
+  .goals {
+    width: 40%;
+    padding-right: 3px;
+  }
+  .penalties {
+    width: 60%;
+  }
+  .header,
+  .top,
+  .middle {
+    margin-bottom: 5px;
+  }
+  .home-team, .away-team {
+    width: 25%;
+    float: left;
+  }
+  .header .home,
+  .header .away {
+    width: 50%;
+    float: left;
+  }
+  .header .home {
+    text-align: right;
+  }
+  .game-info {
+    width: 50%;
+    float: left;
+  }
+  .scoring-by-period,
+  .shots-by-period {
+    float: left;
+    width: 50%;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .home-saves,
+  .away-saves,
+  .home-minutes,
+  .away-minutes {
+    float: left;
+    width: 25%;
+  }
+  .clear {
+    clear: both;
+  }
+  .home-saves,
+  .home-minutes {
+    padding-right: 3px;
+  }
+  .away-saves,
+  .away-minutes {
+    padding-left: 3px;
+  }
+  td.name {
+    position: relative
+  }
+  td.name:before {
+    content: '&nbsp;';
+    visibility: hidden;
+  }
+  td.name span {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
+.header
+  .away
+    %h3= @statsheet.game.away_team_name
+  .home
+    %h3= @statsheet.game.home_team_name
+  .clear
+.top
+  .away-team
+    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "HOME TEAM", skaters: @statsheet.skaters.away.order(:last_name) }
+  .game-info
+    .overview
+      %table
+        %tr.title
+          %th(colspan="2" style="text-align: center;") GAME OVERVIEW
+        %tr
+          %th Date
+          %td= @statsheet.game.starts_on.strftime('%^a %-m/%-e/%y %l:%M %p')
+        %tr
+          %th Time
+          %td= @statsheet.game.starts_on.strftime('%l:%M %p')
+        %tr
+          %th League
+          %td= @statsheet.game.program.name
+        %tr
+          %th Season
+          %td= @statsheet.game.season.name
+        %tr
+          %th Division
+          %td= @statsheet.game.division.name
+        %tr
+          %th Location
+          %td= @statsheet.game.location.name
+        %tr
+          %th Surface
+          %th= @statsheet.game.playing_surface.name if @statsheet.game.playing_surface
+        %tr
+          %th(colspan=2 style="height: 165px; vertical-align: top;") Notes
+
+    .by-period
+      .scoring-by-period
+        = render partial: 'admin/hockey_statsheets/print/scoring_table'
+      .shots-by-period
+        = render partial: 'admin/hockey_statsheets/print/shots_table'
+      .clear
+  .home-team
+    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "AWAY TEAM", skaters: @statsheet.skaters.home.order(:last_name) }
+  .clear
+.middle
+  .goals
+    = render partial: 'admin/hockey_statsheets/print/goals_table'
+  .penalties
+    = render partial: 'admin/hockey_statsheets/print/penalties_table'
+  .clear
+.bottom
+  .home-saves
+    = render partial: 'admin/hockey_statsheets/print/goalie_table', locals: { header: 'HOME GOALIE SAVES' }
+  .home-minutes
+    = render partial: 'admin/hockey_statsheets/print/goalie_table', locals: { header: 'HOME GOALIE MINUTES' }
+  .away-minutes
+    = render partial: 'admin/hockey_statsheets/print/goalie_table', locals: { header: 'AWAY GOALIE MINUTES' }
+  .away-saves
+    = render partial: 'admin/hockey_statsheets/print/goalie_table', locals: { header: 'AWAY GOALIE SAVES' }
+:javascript
+  $(function() {
+    window.print();
+  });
+
+
+
+

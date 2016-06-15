@@ -1,16 +1,23 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
-
+  layout "print", :only => [:print]
   before_filter :mark_return_point, :only => [:edit]
   before_filter :find_game
   before_filter :find_season
+  before_filter :find_or_build_statsheet, :only => [:edit, :print]
   before_filter :add_games_breadcrumb
   before_filter :add_stats_breadcrumb
 
-  def show
+  def edit
 
   end
 
-  def edit
+  def print
+
+  end
+
+  private
+
+  def find_or_build_statsheet
     unless @game.has_statsheet?
       @statsheet = Hockey::Statsheet.new
       @statsheet.game = @game
@@ -19,8 +26,6 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
       @statsheet = @game.statsheet
     end
   end
-
-  private
 
   def find_game
     @game = ::League::Game.find(params[:game_id])
