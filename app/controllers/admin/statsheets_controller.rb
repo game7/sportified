@@ -22,6 +22,7 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
       @statsheet = Hockey::Statsheet.new
       @statsheet.game = @game
       @statsheet.save
+      @statsheet.load_players
     else
       @statsheet = @game.statsheet
     end
