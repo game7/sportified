@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "please-change-me@config-initializers-devise.com"
+  config.mailer_sender = "mailer@sportified.net"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -12,16 +12,16 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'  
+  require 'devise/orm/active_record'
   require 'devise/orm/mongoid'
 
   # config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
   #config.omniauth :facebook, nil, nil, :setup => true
-  
-  config.secret_key = '7c270371a234d0d2dbfe33c5bd335359507d654ca0d04e7d4b968abc14489b23c40137183300be29290d8674ef03fb88d0492ad005d8ffada423a05f0ad4402e'  
+
+  config.secret_key = '7c270371a234d0d2dbfe33c5bd335359507d654ca0d04e7d4b968abc14489b23c40137183300be29290d8674ef03fb88d0492ad005d8ffada423a05f0ad4402e'
 
   config.case_insensitive_keys = [:email]
-  config.reset_password_within = 24.hours  
+  config.reset_password_within = 24.hours
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
@@ -60,10 +60,10 @@ Devise.setup do |config|
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
-  # When confirm_within is zero, the user won't be able to sign in without confirming. 
-  # You can use this to let your user access some features of your application 
-  # without confirming the account, but blocking it after a certain period 
-  # (ie 2 days). 
+  # When confirm_within is zero, the user won't be able to sign in without confirming.
+  # You can use this to let your user access some features of your application
+  # without confirming the account, but blocking it after a certain period
+  # (ie 2 days).
   # config.confirm_within = 2.days
 
   # ==> Configuration for :rememberable
@@ -122,7 +122,7 @@ Devise.setup do |config|
   # devise role declared in your routes.
   # config.default_scope = :user
 
-  # Configure sign_out behavior. 
+  # Configure sign_out behavior.
   # By default sign_out is scoped (i.e. /users/sign_out affects only :user scope).
   # In case of sign_out_all_scopes set to true any logout action will sign out all active scopes.
   # config.sign_out_all_scopes = false
