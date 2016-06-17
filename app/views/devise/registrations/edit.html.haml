@@ -1,12 +1,22 @@
-- title "Edit #{resource_name.to_s.humanize}"
+- title "Edit Account"
 
 = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-  = f.input :first_name
-  = f.input :last_name
-  = f.input :email
-  = f.input :password, :hint => "Leave blank if you don't want to change it"
-  = f.input :password_confirmation
-  = f.input :current_password, :hint => "We need your current password to confirm your changes"
+  .row
+    .col-sm-3
+      = f.input :first_name
+    .col-sm-3
+      = f.input :last_name
+  .row
+    .col-sm-6
+      = f.input :email
+  .row
+    .col-sm-3
+      = f.input :password, :hint => "Leave blank if you don't want to change it"
+    .col-sm-3
+      = f.input :password_confirmation
+  .row
+    .col-sm-3
+      = f.input :current_password, :hint => "We need your current password to confirm your changes"
   .form-actions
     = f.submit "Update", :class => 'btn btn-primary'
     / = link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete, :class => "btn"
