@@ -7,14 +7,6 @@
 	input[type="submit"] {
 		@extend .btn-block;
 	}
-	.form-actions {
-		a {
-			display: block;
-			width: 200px;
-			margin: 10px auto;
-			text-align: center;
-		}
-	}
 }
 
 #user_email,

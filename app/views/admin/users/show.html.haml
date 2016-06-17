@@ -1,4 +1,4 @@
-- title @user.name
+- title "#{@user.first_name} #{@user.last_name}"
 %table.table.table-bordered.table-striped
   %tbody
     %tr
@@ -6,7 +6,7 @@
       %td #{@user.id}
     %tr
       %th{:scope => 'row'} Name
-      %td #{@user.name}
+      %td #{@user.first_name} #{@user.last_name}
     %tr
       %th{:scope => 'row'} Email
       %td #{@user.email}

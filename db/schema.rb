@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211180336) do
+ActiveRecord::Schema.define(version: 20160616233629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,26 +30,374 @@ ActiveRecord::Schema.define(version: 20150211180336) do
     t.string   "file"
   end
 
-  create_table "leagues", force: :cascade do |t|
+  create_table "clubs", force: :cascade do |t|
     t.string   "name"
-    t.string   "slug"
-    t.boolean  "show_standings"
-    t.boolean  "show_players"
-    t.boolean  "show_statistics"
-    t.text     "standings_array", default: [], array: true
+    t.string   "short_name"
     t.integer  "tenant_id"
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "leagues_seasons", force: :cascade do |t|
-    t.integer "league_id"
+  add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "division_id"
+    t.integer  "season_id"
+    t.integer  "location_id"
+    t.string   "type"
+    t.datetime "starts_on"
+    t.datetime "ends_on"
+    t.integer  "duration"
+    t.boolean  "all_day"
+    t.string   "summary"
+    t.text     "description"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "home_team_id"
+    t.integer  "away_team_id"
+    t.integer  "statsheet_id"
+    t.string   "statsheet_type"
+    t.integer  "home_team_score",           default: 0
+    t.integer  "away_team_score",           default: 0
+    t.string   "home_team_name"
+    t.string   "away_team_name"
+    t.boolean  "home_team_custom_name"
+    t.boolean  "away_team_custom_name"
+    t.string   "text_before"
+    t.string   "text_after"
+    t.string   "result"
+    t.string   "completion"
+    t.boolean  "exclude_from_team_records"
+    t.integer  "playing_surface_id"
+    t.integer  "home_team_locker_room_id"
+    t.integer  "away_team_locker_room_id"
+    t.integer  "program_id"
+  end
+
+  add_index "events", ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
+  add_index "events", ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
+  add_index "events", ["division_id"], name: "index_events_on_division_id", using: :btree
+  add_index "events", ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
+  add_index "events", ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
+  add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
+  add_index "events", ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
+  add_index "events", ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
+  add_index "events", ["program_id"], name: "index_events_on_program_id", using: :btree
+  add_index "events", ["season_id"], name: "index_events_on_season_id", using: :btree
+  add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
+
+  create_table "facilities", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.integer  "tenant_id"
+    t.integer  "location_id"
+    t.integer  "parent_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "preference"
+  end
+
+  add_index "facilities", ["location_id"], name: "index_facilities_on_location_id", using: :btree
+  add_index "facilities", ["parent_id"], name: "index_facilities_on_parent_id", using: :btree
+  add_index "facilities", ["tenant_id"], name: "index_facilities_on_tenant_id", using: :btree
+
+  create_table "hockey_goals", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "statsheet_id"
+    t.integer  "period"
+    t.integer  "minute"
+    t.integer  "second"
+    t.integer  "team_id"
+    t.integer  "scored_by_id"
+    t.integer  "scored_on_id"
+    t.integer  "assisted_by_id"
+    t.integer  "also_assisted_by_id"
+    t.string   "strength"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "scored_by_number"
+    t.string   "assisted_by_number"
+    t.string   "also_assisted_by_number"
+  end
+
+  add_index "hockey_goals", ["mongo_id"], name: "index_hockey_goals_on_mongo_id", using: :btree
+  add_index "hockey_goals", ["statsheet_id"], name: "index_hockey_goals_on_statsheet_id", using: :btree
+  add_index "hockey_goals", ["tenant_id"], name: "index_hockey_goals_on_tenant_id", using: :btree
+
+  create_table "hockey_goaltenders", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "tenant_id"
+    t.integer  "team_id"
+    t.integer  "player_id"
+    t.integer  "statsheet_id"
+    t.integer  "games_played",             default: 0
+    t.integer  "minutes_played",           default: 0
+    t.integer  "shots_against",            default: 0
+    t.integer  "goals_against",            default: 0
+    t.integer  "saves",                    default: 0
+    t.float    "save_percentage",          default: 0.0
+    t.float    "goals_against_average",    default: 0.0
+    t.integer  "shutouts",                 default: 0
+    t.integer  "shootout_attempts",        default: 0
+    t.integer  "shootout_goals",           default: 0
+    t.float    "shootout_save_percentage", default: 0.0
+    t.integer  "regulation_wins",          default: 0
+    t.integer  "regulation_losses",        default: 0
+    t.integer  "overtime_wins",            default: 0
+    t.integer  "overtime_losses",          default: 0
+    t.integer  "shootout_wins",            default: 0
+    t.integer  "shootout_losses",          default: 0
+    t.integer  "total_wins",               default: 0
+    t.integer  "total_losses",             default: 0
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "jersey_number"
+    t.string   "first_name"
+    t.string   "last_name"
+  end
+
+  add_index "hockey_goaltenders", ["mongo_id"], name: "index_hockey_goaltenders_on_mongo_id", using: :btree
+  add_index "hockey_goaltenders", ["player_id"], name: "index_hockey_goaltenders_on_player_id", using: :btree
+  add_index "hockey_goaltenders", ["statsheet_id"], name: "index_hockey_goaltenders_on_statsheet_id", using: :btree
+  add_index "hockey_goaltenders", ["team_id"], name: "index_hockey_goaltenders_on_team_id", using: :btree
+  add_index "hockey_goaltenders", ["tenant_id"], name: "index_hockey_goaltenders_on_tenant_id", using: :btree
+
+  create_table "hockey_penalties", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "statsheet_id"
+    t.integer  "period"
+    t.integer  "minute"
+    t.integer  "second"
+    t.integer  "team_id"
+    t.integer  "committed_by_id"
+    t.string   "infraction"
+    t.integer  "duration"
+    t.string   "severity"
+    t.string   "start_period"
+    t.integer  "start_minute"
+    t.integer  "start_second"
+    t.string   "end_period"
+    t.integer  "end_minute"
+    t.integer  "end_second"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "committed_by_number"
+  end
+
+  add_index "hockey_penalties", ["mongo_id"], name: "index_hockey_penalties_on_mongo_id", using: :btree
+  add_index "hockey_penalties", ["statsheet_id"], name: "index_hockey_penalties_on_statsheet_id", using: :btree
+  add_index "hockey_penalties", ["tenant_id"], name: "index_hockey_penalties_on_tenant_id", using: :btree
+
+  create_table "hockey_skaters", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "tenant_id"
+    t.integer  "team_id"
+    t.integer  "player_id"
+    t.integer  "statsheet_id"
+    t.string   "jersey_number"
+    t.integer  "games_played",              default: 0
+    t.integer  "goals",                     default: 0
+    t.integer  "assists",                   default: 0
+    t.integer  "points",                    default: 0
+    t.integer  "penalties",                 default: 0
+    t.integer  "penalty_minutes",           default: 0
+    t.integer  "minor_penalties",           default: 0
+    t.integer  "major_penalties",           default: 0
+    t.integer  "misconduct_penalties",      default: 0
+    t.integer  "game_misconduct_penalties", default: 0
+    t.integer  "hat_tricks",                default: 0
+    t.integer  "playmakers",                default: 0
+    t.integer  "gordie_howes",              default: 0
+    t.integer  "ejections",                 default: 0
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+  end
+
+  add_index "hockey_skaters", ["mongo_id"], name: "index_hockey_skaters_on_mongo_id", using: :btree
+  add_index "hockey_skaters", ["player_id"], name: "index_hockey_skaters_on_player_id", using: :btree
+  add_index "hockey_skaters", ["statsheet_id"], name: "index_hockey_skaters_on_statsheet_id", using: :btree
+  add_index "hockey_skaters", ["team_id"], name: "index_hockey_skaters_on_team_id", using: :btree
+  add_index "hockey_skaters", ["tenant_id"], name: "index_hockey_skaters_on_tenant_id", using: :btree
+
+  create_table "hockey_statsheets", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.boolean  "posted"
+    t.integer  "away_score"
+    t.integer  "home_score"
+    t.string   "latest_period"
+    t.integer  "latest_minute"
+    t.integer  "latest_second"
+    t.integer  "min_1"
+    t.integer  "min_2"
+    t.integer  "min_3"
+    t.integer  "min_ot"
+    t.integer  "away_shots_1"
+    t.integer  "away_shots_2"
+    t.integer  "away_shots_3"
+    t.integer  "away_shots_ot"
+    t.integer  "home_shots_1"
+    t.integer  "home_shots_2"
+    t.integer  "home_shots_3"
+    t.integer  "home_shots_ot"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hockey_statsheets", ["mongo_id"], name: "index_hockey_statsheets_on_mongo_id", using: :btree
+  add_index "hockey_statsheets", ["tenant_id"], name: "index_hockey_statsheets_on_tenant_id", using: :btree
+
+  create_table "invoicing_ledger_items", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "type"
+    t.datetime "issue_date"
+    t.string   "currency",     limit: 3,                           null: false
+    t.decimal  "total_amount",            precision: 20, scale: 4
+    t.decimal  "tax_amount",              precision: 20, scale: 4
+    t.string   "status",       limit: 20
+    t.string   "identifier",   limit: 50
+    t.string   "description"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.string   "uuid",         limit: 40
+    t.datetime "due_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoicing_line_items", force: :cascade do |t|
+    t.integer  "ledger_item_id"
+    t.string   "type"
+    t.decimal  "net_amount",                precision: 20, scale: 4
+    t.decimal  "tax_amount",                precision: 20, scale: 4
+    t.string   "description"
+    t.string   "uuid",           limit: 40
+    t.datetime "tax_point"
+    t.decimal  "quantity",                  precision: 20, scale: 4
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoicing_tax_rates", force: :cascade do |t|
+    t.string   "description"
+    t.decimal  "rate",           precision: 20, scale: 4
+    t.datetime "valid_from",                              null: false
+    t.datetime "valid_until"
+    t.integer  "replaced_by_id"
+    t.boolean  "is_default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "league_divisions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.boolean  "show_standings"
+    t.boolean  "show_players"
+    t.boolean  "show_statistics"
+    t.text     "standings_array",     default: [], array: true
+    t.integer  "tenant_id"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "standings_schema_id"
+    t.integer  "program_id"
+  end
+
+  add_index "league_divisions", ["program_id"], name: "index_league_divisions_on_program_id", using: :btree
+
+  create_table "league_divisions_seasons", force: :cascade do |t|
+    t.integer "division_id"
     t.integer "season_id"
   end
 
-  add_index "leagues_seasons", ["league_id"], name: "index_leagues_seasons_on_league_id", using: :btree
-  add_index "leagues_seasons", ["season_id"], name: "index_leagues_seasons_on_season_id", using: :btree
+  add_index "league_divisions_seasons", ["division_id"], name: "index_league_divisions_seasons_on_division_id", using: :btree
+  add_index "league_divisions_seasons", ["season_id"], name: "index_league_divisions_seasons_on_season_id", using: :btree
+
+  create_table "league_seasons", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.date     "starts_on"
+    t.integer  "tenant_id"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "program_id"
+  end
+
+  add_index "league_seasons", ["program_id"], name: "index_league_seasons_on_program_id", using: :btree
+
+  create_table "league_teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.string   "slug"
+    t.boolean  "show_in_standings"
+    t.string   "pool"
+    t.integer  "seed"
+    t.integer  "tenant_id"
+    t.integer  "division_id"
+    t.integer  "season_id"
+    t.integer  "club_id"
+    t.string   "logo"
+    t.string   "primary_color"
+    t.string   "secondary_color"
+    t.string   "accent_color"
+    t.text     "main_colors",         default: [], array: true
+    t.boolean  "custom_colors"
+    t.integer  "crop_x",              default: 0
+    t.integer  "crop_y",              default: 0
+    t.integer  "crop_h",              default: 0
+    t.integer  "crop_w",              default: 0
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "games_played"
+    t.integer  "wins"
+    t.integer  "losses"
+    t.integer  "ties"
+    t.integer  "overtime_wins"
+    t.integer  "overtime_losses"
+    t.integer  "shootout_wins"
+    t.integer  "shootout_losses"
+    t.integer  "forfeit_wins"
+    t.integer  "forfeit_losses"
+    t.integer  "points"
+    t.float    "percent"
+    t.integer  "scored"
+    t.integer  "allowed"
+    t.integer  "margin"
+    t.string   "last_result"
+    t.integer  "current_run"
+    t.integer  "longest_win_streak"
+    t.integer  "longest_loss_streak"
+  end
+
+  add_index "league_teams", ["club_id"], name: "index_league_teams_on_club_id", using: :btree
+  add_index "league_teams", ["division_id"], name: "index_league_teams_on_division_id", using: :btree
+  add_index "league_teams", ["season_id"], name: "index_league_teams_on_season_id", using: :btree
+  add_index "league_teams", ["tenant_id"], name: "index_league_teams_on_tenant_id", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.string   "name"
+    t.string   "short_name"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["tenant_id"], name: "index_locations_on_tenant_id", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -74,6 +422,26 @@ ActiveRecord::Schema.define(version: 20150211180336) do
   add_index "pages", ["ancestry"], name: "index_pages_on_ancestry", using: :btree
   add_index "pages", ["tenant_id"], name: "index_pages_on_tenant_id", using: :btree
 
+  create_table "players", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "team_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "jersey_number"
+    t.date     "birthdate"
+    t.string   "email"
+    t.string   "slug"
+    t.string   "mongo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "substitute"
+    t.string   "position"
+  end
+
+  add_index "players", ["mongo_id"], name: "index_players_on_mongo_id", using: :btree
+  add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
+  add_index "players", ["tenant_id"], name: "index_players_on_tenant_id", using: :btree
+
   create_table "posts", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "title"
@@ -88,15 +456,45 @@ ActiveRecord::Schema.define(version: 20150211180336) do
 
   add_index "posts", ["tenant_id"], name: "index_posts_on_tenant_id", using: :btree
 
-  create_table "seasons", force: :cascade do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.date     "starts_on"
+  create_table "programs", force: :cascade do |t|
     t.integer  "tenant_id"
-    t.string   "mongo_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "type"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "slug"
   end
+
+  add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
+
+  create_table "registrar_registration_types", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "registrar_session_id"
+    t.string   "title",                limit: 30
+    t.text     "description"
+    t.decimal  "price",                           precision: 20, scale: 4
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+  end
+
+  add_index "registrar_registration_types", ["registrar_session_id"], name: "index_registrar_registration_types_on_registrar_session_id", using: :btree
+  add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
+
+  create_table "registrar_sessions", force: :cascade do |t|
+    t.integer  "registrable_id"
+    t.string   "registrable_type"
+    t.string   "title",                   limit: 30
+    t.text     "description"
+    t.integer  "registrations_allowed"
+    t.integer  "registrations_available"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "registrar_sessions", ["registrable_type", "registrable_id"], name: "index_registrar_sessions_on_registrable_type_and_registrable_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
@@ -120,9 +518,11 @@ ActiveRecord::Schema.define(version: 20150211180336) do
   end
 
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "taggings_count", default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
@@ -175,13 +575,25 @@ ActiveRecord::Schema.define(version: 20150211180336) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "name"
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "events", "programs"
+  add_foreign_key "facilities", "locations"
+  add_foreign_key "league_divisions", "programs"
+  add_foreign_key "league_seasons", "programs"
+  add_foreign_key "league_seasons", "programs"
+  add_foreign_key "programs", "tenants"
+  add_foreign_key "registrar_registration_types", "registrar_sessions"
 end

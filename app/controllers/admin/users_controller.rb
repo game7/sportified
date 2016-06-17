@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::AdminController
-  
+
   before_filter :load_user, :only => :show
 
   def load_user
@@ -10,17 +10,17 @@ class Admin::UsersController < Admin::AdminController
     super
     add_breadcrumb( "Users", admin_users_path )
   end
-  
+
   def index
-    @users = User.for_tenant(Tenant.current)
+    @users = Tenant.current.users
   end
 
   def show
-    
+
   end
 
   def make_admin
-    
+
   end
 
 end

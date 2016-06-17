@@ -1,12 +1,14 @@
 %table.table.table-striped.table-bordered
   %thead
     %tr
-      %th{:scope => 'col'} Name
+      %th{:scope => 'col'} First
+      %th{:scope => 'col'} Last
       %th{:scope => 'col'} Email
       %th{:scope => 'col'} Actions
   %tbody
     - @users.each do |user|
       %tr
-        %td #{user.name}
+        %td #{user.first_name}
+        %td #{user.last_name}
         %td #{user.email}
         %td #{link_to 'Show', [:host, user]}

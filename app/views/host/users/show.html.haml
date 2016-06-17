@@ -1,4 +1,4 @@
-- title @user.name
+- title "#{@user.first_name} #{@user.last_name}"
 %table.table.table-bordered
   %tbody
     %tr
@@ -6,7 +6,7 @@
       %td #{@user.id}
     %tr
       %th{:scope => 'row'} Name
-      %td #{@user.name}
+      %td #{@user.first_name} #{@user.last_name}
     %tr
       %th{:scope => 'row'} Email
       %td #{@user.email}
@@ -22,12 +22,10 @@
     %tr
       %th{:scope => 'col'} Title
       %th{:scope => 'col'} Tenant
-      %th{:scope => 'col'} Subject
       %th{:scope => 'col'} Action
   %tbody
     - @user.roles.each do |role|
       %tr
         %td #{role.title}
         %td #{role.tenant_id}
-        %td #{role.subject_id}
         %td Delete

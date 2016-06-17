@@ -13,10 +13,14 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
-#  name                   :string
 #  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  first_name             :string
+#  last_name              :string
 #
 
 module UsersHelper
