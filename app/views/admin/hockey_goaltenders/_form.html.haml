@@ -9,12 +9,16 @@
 :javascript
   function filter_players(changed) {
     var teamId = $('select#hockey_goaltender_result_team_id').val();
-    $('#hockey_goaltender_result_player_id option').hide();
+    $('#hockey_goaltender_result_player_id option').hide().each(function(index, item){
+      if($(item).val() != '' && $(item).parent('span').length == 0) {
+        $(item).wrap('<span style="display: none;" />');
+      }
+    });
     if (changed) {
       $('#hockey_goaltender_result_player_id').val('');
     }
     if (teamId != '') {
-      $('#hockey_goaltender_result_player_id option[data-team-id=' + teamId + ']').show();
+      $('#hockey_goaltender_result_player_id option[data-team-id=' + teamId + ']').show().unwrap();
     }
   }
   $(document).ready(function(){
@@ -22,4 +26,4 @@
     $("select#hockey_goaltender_result_team_id").change(function(){
         filter_players(true);
     });
-  }); 
+  });

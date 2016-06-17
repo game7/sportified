@@ -1,7 +1,7 @@
 - edit_mode = %w{edit update}.include?(params[:action]) ? true : false
 = simple_form_for( @penalty, :url => url, :remote => true ) do |f|
   = f.input :time, :label => 'Time' do
-    .form-inline  
+    .form-inline
       = f.input :period, :collection => Hockey::Penalty.periods, :disabled => edit_mode, :label => false
       = f.input :minute, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :label => false
       = f.input :second, :maxlength => 2, :pattern => "[0-9]*", :disabled => edit_mode, :label => false
@@ -17,19 +17,23 @@
       = f.input :start_minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
       = f.input :start_second, :maxlength => 2, :pattern => "[0-9]*", :label => false
   = f.input :end, :label => 'End Time' do
-    .form-inline      
+    .form-inline
       = f.input :end_period, :collection => Hockey::Penalty.periods, :label => false
       = f.input :end_minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
       = f.input :end_second, :maxlength => 2, :pattern => "[0-9]*", :label => false
 :javascript
   function filter_players(changed) {
     var teamId = $('select#hockey_penalty_team_id').val();
-    $('#hockey_penalty_committed_by_id option').hide();        
+    $('#hockey_penalty_committed_by_id option').hide().each(function(index, item){
+      if($(item).val() != '' && $(item).parent('span').length == 0) {
+        $(item).wrap('<span style="display: none;" />');
+      }
+    });
     if (changed) {
       $('#hockey_penalty_committed_by_id').val('');
     }
     if (teamId != '') {
-      $('#hockey_penalty_committed_by_id option[data-team-id=' + teamId + ']').show();
+      $('#hockey_penalty_committed_by_id option[data-team-id=' + teamId + ']').show().unwrap();
     }
   }
   $(document).ready(function(){
