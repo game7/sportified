@@ -2,11 +2,14 @@
   #flash_notice.notice.hidden
 - flash.each do |name, msg|
   - case name
-    - when :success
+    - when 'success'
       = content_tag :div, msg, {:id => "flash_success", :class => "alert alert-success"}
-    - when :notice
+    - when 'notice'
       = content_tag :div, msg, {:id => "flash_notice", :class => "alert alert-info"}
-    - when :warning
-      = content_tag :div, msg, {:id => "flash_warning", :class => "alert"}
-    - when :error 
-      = content_tag :div, msg, {:id => "flash_error", :class => "alert alert-error"}
+    - when 'alert'
+      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}
+    - when 'warning'
+      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}
+    - when 'error'
+      = content_tag :div, msg, {:id => "flash_error", :class => "alert alert-danger"}
+- flash.discard
