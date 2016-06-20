@@ -25,7 +25,7 @@
   function filter_players(changed) {
     var teamId = $('select#hockey_penalty_team_id').val();
     $('#hockey_penalty_committed_by_id option').hide().each(function(index, item){
-      if($(item).val() != '' && $(item).parent('span').length == 0) {
+      if(index > 0 && $(item).parent('span').length == 0) {
         $(item).wrap('<span style="display: none;" />');
       }
     });
