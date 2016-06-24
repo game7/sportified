@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616233629) do
+ActiveRecord::Schema.define(version: 20160624173503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -468,33 +468,35 @@ ActiveRecord::Schema.define(version: 20160616233629) do
 
   add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
-  create_table "registrar_registration_types", force: :cascade do |t|
-    t.integer  "tenant_id"
-    t.integer  "registrar_session_id"
-    t.string   "title",                limit: 30
-    t.text     "description"
-    t.decimal  "price",                           precision: 20, scale: 4
-    t.integer  "quantity_allowed"
-    t.integer  "quantity_available"
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
-  end
-
-  add_index "registrar_registration_types", ["registrar_session_id"], name: "index_registrar_registration_types_on_registrar_session_id", using: :btree
-  add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
-
-  create_table "registrar_sessions", force: :cascade do |t|
-    t.integer  "registrable_id"
-    t.string   "registrable_type"
+  create_table "registrar_registrables", force: :cascade do |t|
+    t.integer  "parent_id"
+    t.string   "parent_type"
     t.string   "title",                   limit: 30
     t.text     "description"
     t.integer  "registrations_allowed"
     t.integer  "registrations_available"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "tenant_id"
   end
 
-  add_index "registrar_sessions", ["registrable_type", "registrable_id"], name: "index_registrar_sessions_on_registrable_type_and_registrable_id", using: :btree
+  add_index "registrar_registrables", ["parent_type", "parent_id"], name: "index_registrar_registrables_on_parent_type_and_parent_id", using: :btree
+  add_index "registrar_registrables", ["tenant_id"], name: "index_registrar_registrables_on_tenant_id", using: :btree
+
+  create_table "registrar_registration_types", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "registrable_id"
+    t.string   "title",              limit: 30
+    t.text     "description"
+    t.decimal  "price",                         precision: 20, scale: 4
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "registrar_registration_types", ["registrable_id"], name: "index_registrar_registration_types_on_registrable_id", using: :btree
+  add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
@@ -595,5 +597,5 @@ ActiveRecord::Schema.define(version: 20160616233629) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "registrar_registration_types", "registrar_sessions"
+  add_foreign_key "registrar_registration_types", "registrar_registrables", column: "registrable_id"
 end
