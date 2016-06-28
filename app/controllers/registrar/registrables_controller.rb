@@ -57,7 +57,7 @@ class Registrar::RegistrablesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def registrable_params
-      params.required(:registrar_registrable).permit(:title, :description, :registrations_allowed,
+      params.required(:registrar_registrable).permit(:title, :description, :quantity_allowed,
         registration_types_attributes: [ :id, :title, :description, :quantity_allowed, :price, :_destroy ])
     end
 end

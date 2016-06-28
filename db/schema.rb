@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624173503) do
+ActiveRecord::Schema.define(version: 20160628173544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -471,12 +471,12 @@ ActiveRecord::Schema.define(version: 20160624173503) do
   create_table "registrar_registrables", force: :cascade do |t|
     t.integer  "parent_id"
     t.string   "parent_type"
-    t.string   "title",                   limit: 30
+    t.string   "title",              limit: 30
     t.text     "description"
-    t.integer  "registrations_allowed"
-    t.integer  "registrations_available"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "tenant_id"
   end
 
