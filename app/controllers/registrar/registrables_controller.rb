@@ -52,7 +52,7 @@ class Registrar::RegistrablesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_registrable
-      @registrable = Registrar::Registrable.find(params[:id])
+      @registrable = Registrar::Registrable.includes(:registration_types).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
