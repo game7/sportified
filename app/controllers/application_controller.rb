@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :store_current_location, unless: :devise_controller?
 
   protect_from_forgery
   helper :layout
@@ -21,6 +22,14 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
     devise_parameter_sanitizer.for(:account_update) << [:first_name, :last_name]
+  end
+
+  def store_current_location
+    store_location_for(:user, request.url)
+  end
+
+  def after_sign_out_path_for(resource)
+    request.referrer || root_path
   end
 
   def load_objects
@@ -104,7 +113,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_is_admin?
 
   def verify_admin
-    redirect_to root_url unless current_user_is_admin?
+    redirect_to new_user_session_path unless current_user_is_admin?
   end
 
   def has_admin_role?(user, tenant_id)

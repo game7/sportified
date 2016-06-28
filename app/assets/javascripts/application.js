@@ -4,6 +4,7 @@
 //= require jquery.remotipart
 //= require bootstrap-sprockets
 //= require jcrop/jquery.Jcrop.min
+//= require cocoon
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
   var $observer = $(observerId);
@@ -113,3 +114,6 @@ $(document).ready(function() {
   if ($tooltip.tooltip) { $tooltip.tooltip(); }
 
 });
+//= require react
+//= require react_ujs
+//= require components
