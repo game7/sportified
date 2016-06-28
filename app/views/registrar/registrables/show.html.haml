@@ -1,6 +1,6 @@
 - title @registrable.title
 - page_actions do
-  = link_to 'Edit', edit_registrar_registrable_path(@registrable), class: 'btn btn-primary'
+  = link_to 'Edit', edit_registrar_registrable_path(@registrable), class: 'btn btn-primary' if current_user_is_admin?
 
 %p= @registrable.description
 

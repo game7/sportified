@@ -1,4 +1,5 @@
 class Registrar::RegistrablesController < ApplicationController
+  before_filter :verify_admin, :except => [:index, :show]
   before_filter :mark_return_point, :only => [:new, :edit]
   before_action :set_registrable, only: [:show, :edit, :update, :destroy]
 
@@ -50,6 +51,7 @@ class Registrar::RegistrablesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_registrable
       @registrable = Registrar::Registrable.includes(:registration_types).find(params[:id])
