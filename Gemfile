@@ -23,6 +23,8 @@ gem 'ember-rails'
 gem 'ember-source', '~> 2.3.1'
 gem 'ember-cli-rails'
 
+gem 'react-rails'
+
 gem 'tenancy'
 gem 'ancestry'
 gem 'acts-as-taggable-on', '~> 3.4'
@@ -42,6 +44,7 @@ gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
 gem 'simple_form', '~> 3.1.0.rc2'
+gem 'cocoon'
 #gem 'delayed_job'
 
 

@@ -20,12 +20,20 @@ class Registrar::Registrable < ActiveRecord::Base
   belongs_to :parent, polymorphic: true
 
   has_many :registration_types
+  accepts_nested_attributes_for :registration_types, reject_if: :all_blank, allow_destroy: true
 
   validates :title, presence: true
   validates :title, length: { maximum: 30 }
 
   validates :description, presence: true
 
-  validates :registrations_allowed, numericality: { only_integer: true }
-  validates :registrations_available, numericality: { only_integer: true }
+  validates :registrations_allowed, numericality: { only_integer: true }, :allow_nil => true
+  validates :registrations_available, numericality: { only_integer: true }, :allow_nil => true
+
+  before_create :set_registrations_available_to_registrations_allowed
+
+  def set_registrations_available_to_registrations_allowed
+    self.registrations_available = self.registrations_allowed
+  end
+
 end

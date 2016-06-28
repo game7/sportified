@@ -1,6 +1,9 @@
 ::Sportified::Application.routes.draw do
 
   namespace :registrar do
+    resources :registrables
+  end
+  namespace :registrar do
     resources :registration_types
   end
   namespace :registrar do

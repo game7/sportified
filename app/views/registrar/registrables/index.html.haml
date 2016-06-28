@@ -1,0 +1,21 @@
+- title 'Registrables'
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Title
+      %th
+
+  %tbody
+    - @registrables.each do |registrable|
+      %tr
+        %td= registrable.title
+        %td
+          = link_to 'Show', registrable
+          \|
+          = link_to 'Edit', edit_registrar_registrable_path(registrable)
+          \|
+          = link_to 'Destroy', registrable, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+
+= link_to 'New Registrable', new_registrar_registrable_path, :class => 'btn btn-primary'
