@@ -42,7 +42,7 @@ class Registrar::RegistrablesController < ApplicationController
     @registrable = Registrar::Registrable.new(registrable_params)
 
     if @registrable.save
-      redirect_to @registrable, notice: 'Registrable was successfully created.'
+      redirect_to [:registrar, @registrable], notice: 'Registrable was successfully created.'
     else
       flash[:error] = "Registrable could not be created"
       render :new
@@ -53,7 +53,7 @@ class Registrar::RegistrablesController < ApplicationController
   def update
     puts registrable_params.to_json
     if @registrable.update(registrable_params)
-      redirect_to @registrable, notice: 'Registrable was successfully updated.'
+      redirect_to [:registrar, @registrable], notice: 'Registrable was successfully updated.'
     else
       flash[:error] = "Registrable could not be created"
       render :edit
@@ -75,7 +75,7 @@ class Registrar::RegistrablesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def registrable_params
-      params.required(:registrar_registrable).permit(:title, :description, :quantity_allowed,
+      params.required(:registrable).permit(:title, :description, :quantity_allowed,
         registration_types_attributes: [ :id, :title, :description, :quantity_allowed, :price, :_destroy ])
     end
 end

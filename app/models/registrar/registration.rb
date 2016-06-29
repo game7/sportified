@@ -3,6 +3,7 @@
 # Table name: registrar_registrations
 #
 #  id                   :integer          not null, primary key
+#  tenant_id            :integer
 #  user_id              :integer
 #  first_name           :string
 #  last_name            :string

@@ -19,7 +19,7 @@ class Registrar::RegistrationType < ActiveRecord::Base
 
   belongs_to :registrable
 
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
 
   validates :title,
             presence: true,

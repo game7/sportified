@@ -19,7 +19,7 @@ class Registrar::Registrable < ActiveRecord::Base
 
   belongs_to :parent, polymorphic: true
 
-  has_many :registration_types
+  has_many :registration_types, dependent: :destroy
   accepts_nested_attributes_for :registration_types, reject_if: :all_blank, allow_destroy: true
 
   has_many :registrations, through: :registration_types
