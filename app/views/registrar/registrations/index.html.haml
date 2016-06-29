@@ -1,0 +1,6 @@
+- title 'Your Registrations'
+
+.list-group
+  - @registrations.each do |registration|
+    .list-group-item
+      %h4.list-group-item-heading= registration.registrable.title

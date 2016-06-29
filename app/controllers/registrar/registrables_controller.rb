@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: registrar_registrables
+#
+#  id                 :integer          not null, primary key
+#  parent_id          :integer
+#  parent_type        :string
+#  title              :string(30)
+#  description        :text
+#  quantity_allowed   :integer
+#  quantity_available :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  tenant_id          :integer
+#
+
 class Registrar::RegistrablesController < ApplicationController
   before_filter :verify_admin, :except => [:index, :show]
   before_filter :mark_return_point, :only => [:new, :edit]
@@ -28,7 +44,7 @@ class Registrar::RegistrablesController < ApplicationController
     if @registrable.save
       redirect_to @registrable, notice: 'Registrable was successfully created.'
     else
-      flash[:error] = "Registrable could not be created" + @registrable.errors.count.to_s
+      flash[:error] = "Registrable could not be created"
       render :new
     end
   end

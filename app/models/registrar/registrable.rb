@@ -2,16 +2,16 @@
 #
 # Table name: registrar_registrables
 #
-#  id                      :integer          not null, primary key
-#  parent_id               :integer
-#  parent_type             :string
-#  title                   :string(30)
-#  description             :text
+#  id                 :integer          not null, primary key
+#  parent_id          :integer
+#  parent_type        :string
+#  title              :string(30)
+#  description        :text
 #  quantity_allowed   :integer
 #  quantity_available :integer
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  tenant_id               :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  tenant_id          :integer
 #
 
 class Registrar::Registrable < ActiveRecord::Base
@@ -22,8 +22,11 @@ class Registrar::Registrable < ActiveRecord::Base
   has_many :registration_types
   accepts_nested_attributes_for :registration_types, reject_if: :all_blank, allow_destroy: true
 
-  validates :title, presence: true
-  validates :title, length: { maximum: 30 }
+  has_many :registrations, through: :registration_types
+
+  validates :title,
+            presence: true,
+            length: { maximum: 30 }
 
   validates :description, presence: true
 

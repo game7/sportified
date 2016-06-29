@@ -20,17 +20,17 @@
                 - child[1].each do |grandchild|
                   %li
                     %a{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
-              - else 
+              - else
                 %li
                   %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
-  
-  
+
+
   %ul{ :class => "nav navbar-nav navbar-right" }
     %li{ :class => "dropdown" }
       %a{ :class => "dropdown-toggle", :href => "#",  :'data-toggle' => "dropdown" }
         Account
         %span.caret
       %ul{ :class => "dropdown-menu", :role => "menu"}
-        = render "devise/menu/login_items"
         = render "devise/menu/user_items"
-              
+        = render "devise/menu/login_items"
+

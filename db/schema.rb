@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628173544) do
+ActiveRecord::Schema.define(version: 20160628234603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -498,6 +498,20 @@ ActiveRecord::Schema.define(version: 20160628173544) do
   add_index "registrar_registration_types", ["registrable_id"], name: "index_registrar_registration_types_on_registrable_id", using: :btree
   add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
 
+  create_table "registrar_registrations", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "registration_type_id"
+  end
+
+  add_index "registrar_registrations", ["tenant_id"], name: "index_registrar_registrations_on_tenant_id", using: :btree
+  add_index "registrar_registrations", ["user_id"], name: "index_registrar_registrations_on_user_id", using: :btree
+
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
     t.string   "pattern"
@@ -598,4 +612,7 @@ ActiveRecord::Schema.define(version: 20160628173544) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrar_registration_types", "registrar_registrables", column: "registrable_id"
+  add_foreign_key "registrar_registrations", "registrar_registration_types", column: "registration_type_id"
+  add_foreign_key "registrar_registrations", "tenants"
+  add_foreign_key "registrar_registrations", "users"
 end

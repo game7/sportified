@@ -2,13 +2,12 @@
 
   namespace :registrar do
     resources :registrables
+    resources :registration_types, :only => [], :shallow => true do
+      resources :registrations, :only => [:new, :create, :show]
+    end
+    resources :registrations, :only => [:index]
   end
-  namespace :registrar do
-    resources :registration_types
-  end
-  namespace :registrar do
-    resources :sessions
-  end
+
   mount_ember_app :calendar, to: 'apps/calendar'
   mount_ember_app :scorebook, to: 'apps/scorebook'
 

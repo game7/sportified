@@ -5,9 +5,9 @@
 .list-group
   - @registrables.each do |registrable|
     .list-group-item
-      %h4.list-group-item-heading= link_to registrable.title, registrable
+      %h4.list-group-item-heading= link_to registrable.title, [:registrar, registrable]
       %p= registrable.description
-      %p.list-group-item-text= link_to 'More Info', registrable
+      %p.list-group-item-text= link_to 'More Info', [:registrar, registrable]
 
 
 

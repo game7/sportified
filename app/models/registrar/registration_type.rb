@@ -19,6 +19,8 @@ class Registrar::RegistrationType < ActiveRecord::Base
 
   belongs_to :registrable
 
+  has_many :registrations
+
   validates :title,
             presence: true,
             length: { maximum: 30 }

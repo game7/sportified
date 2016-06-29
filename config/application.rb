@@ -23,6 +23,8 @@ module Sportified
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += Dir["#{config.root}/app/services/**/*"]
+    config.autoload_paths += %W(#{config.root}/app/validators)
+    config.autoload_paths += Dir["#{config.root}/app/validators/**/*"]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

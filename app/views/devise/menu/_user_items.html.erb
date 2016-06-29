@@ -1,6 +1,9 @@
 <% if user_signed_in? %>
   <li>
-    <%= link_to('Edit User Account', edit_user_registration_path) %>
+    <%= link_to('User Account', edit_user_registration_path) %>
+  </li>
+  <li>
+    <%= link_to('Registrations', registrar_registrations_path) %>
   </li>
 <% elsif 1 == 0 %>
   <li>
@@ -8,8 +11,7 @@
   </li>
 <% end %>
 <% if current_user_is_admin? %>
-  <li role="separator" class="divider"></li>
   <li>
-    <%= link_to('Admin', admin_root_path) %>
+    <%= link_to('Administration', admin_root_path) %>
   </li>
 <% end %>

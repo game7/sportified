@@ -4,6 +4,8 @@
 
 %p= @registrable.description
 
+%pre TODO: allow additional detailed content to appear hear, perhaps allowing the use of Markdown for formatted content
+
 %table.table
   %thead
     %th OPTION
@@ -16,7 +18,7 @@
           .title{style: 'font-weight: bold'}= type.title
           .description= type.description
         %td= type.price ? number_to_currency(type.price) : 'FREE'
-        %td= link_to 'Register', '#', { class: 'btn btn-primary'}
+        %td= link_to 'Register', new_registrar_registration_type_registration_path(type), { class: 'btn btn-primary'}
 
 %hr
 = link_to 'Back', registrar_registrables_path
