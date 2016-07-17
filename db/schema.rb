@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628234603) do
+ActiveRecord::Schema.define(version: 20160717221200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,25 @@ ActiveRecord::Schema.define(version: 20160628234603) do
   end
 
   add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.string   "brand",       limit: 20
+    t.string   "country",     limit: 2
+    t.string   "exp_month",   limit: 2
+    t.string   "exp_year",    limit: 4
+    t.string   "funding",     limit: 10
+    t.string   "last4",       limit: 4
+    t.integer  "customer_id"
+    t.string   "token_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "credit_cards", ["customer_id"], name: "index_credit_cards_on_customer_id", using: :btree
+  add_index "credit_cards", ["tenant_id"], name: "index_credit_cards_on_tenant_id", using: :btree
+  add_index "credit_cards", ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -507,6 +526,7 @@ ActiveRecord::Schema.define(version: 20160628234603) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "registration_type_id"
+    t.integer  "credit_card_id"
   end
 
   add_index "registrar_registrations", ["tenant_id"], name: "index_registrar_registrations_on_tenant_id", using: :btree
@@ -558,6 +578,8 @@ ActiveRecord::Schema.define(version: 20160628234603) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "stripe_secret_api_key"
+    t.string   "stripe_public_api_key"
   end
 
   create_table "tenants_users", id: false, force: :cascade do |t|
@@ -605,6 +627,8 @@ ActiveRecord::Schema.define(version: 20160628234603) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "credit_cards", "tenants"
+  add_foreign_key "credit_cards", "users"
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"
@@ -612,6 +636,7 @@ ActiveRecord::Schema.define(version: 20160628234603) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrar_registration_types", "registrar_registrables", column: "registrable_id"
+  add_foreign_key "registrar_registrations", "credit_cards"
   add_foreign_key "registrar_registrations", "registrar_registration_types", column: "registration_type_id"
   add_foreign_key "registrar_registrations", "tenants"
   add_foreign_key "registrar_registrations", "users"

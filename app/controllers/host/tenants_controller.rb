@@ -1,14 +1,14 @@
 class Host::TenantsController < Host::HostController
-  
+
   before_filter :mark_return_point, :only => [:edit, :new, :destroy]
   before_filter :find_tenant, :only => [:edit, :update, :destroy]
 
   def index
     @tenants = Tenant.all
-  end  
+  end
 
   def edit
-    
+
   end
 
   def new
@@ -36,20 +36,21 @@ class Host::TenantsController < Host::HostController
 
   def destroy
     @tenant.destroy
-    flash[:notice] = "Tenant has been deleted"   
+    flash[:notice] = "Tenant has been deleted"
   end
 
   private
-  
+
   def tenant_params
     params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
-      :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id)
+      :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id,
+      :stripe_secret_api_key, :stripe_public_api_key)
   end
 
   def find_tenant
     @tenant = Tenant.find(params[:id])
   end
-  
+
   def set_breadcrumbs
     super
     add_breadcrumb( "Tenants", host_tenants_path )

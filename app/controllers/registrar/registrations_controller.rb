@@ -11,6 +11,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  registration_type_id :integer
+#  credit_card_id       :integer
 #
 
 class Registrar::RegistrationsController < ApplicationController
@@ -26,9 +27,11 @@ class Registrar::RegistrationsController < ApplicationController
     registration.last_name = current_user.last_name
     registration.email = current_user.email
     registration.email_confirmation = current_user.email
+    registration.credit_card = credit_cards.last if registration.payment_required?
     render locals: {
       registration: registration,
-      registration_type: registration_type
+      registration_type: registration_type,
+      credit_cards: credit_cards
     }
   end
 
@@ -40,12 +43,20 @@ class Registrar::RegistrationsController < ApplicationController
       redirect_to [:registrar, registration]
     else
       flash[:error] = "Registration could not be completed"
-      render :new
+      render :new, locals: {
+        registration: registration,
+        registration_type: registration_type,
+        credit_cards: credit_cards
+      }
     end
   end
 
   def show
     render locals: { registration: registration }
+  end
+
+  def payment
+    render locals: { registration: registration, stripe_public_api_key: Tenant.current.stripe_public_api_key }
   end
 
   private
@@ -59,7 +70,11 @@ class Registrar::RegistrationsController < ApplicationController
   end
 
   def registration_params
-    params.require(:registration).permit(:first_name, :last_name, :email, :email_confirmation)
+    params.require(:registration).permit(:first_name, :last_name, :email, :email_confirmation, :credit_card_id)
+  end
+
+  def credit_cards
+    current_user.credit_cards
   end
 
 end

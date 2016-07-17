@@ -11,6 +11,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  registration_type_id :integer
+#  credit_card_id       :integer
 #
 
 class Registrar::RegistrationSerializer < ActiveModel::Serializer

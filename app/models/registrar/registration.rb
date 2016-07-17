@@ -11,6 +11,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  registration_type_id :integer
+#  credit_card_id       :integer
 #
 
 class Registrar::Registration < ActiveRecord::Base
@@ -19,6 +20,8 @@ class Registrar::Registration < ActiveRecord::Base
   belongs_to :registration_type
 
   has_one :registrable, through: :registration_type
+
+  belongs_to :credit_card
 
   belongs_to :user
 
@@ -44,5 +47,12 @@ class Registrar::Registration < ActiveRecord::Base
 
   validates :email_confirmation,
             presence: true
+
+  validates :credit_card_id,
+            presence: true, if: :payment_required?
+
+  def payment_required?
+    registration_type.present? and registration_type.price.present? and registration_type.price > 0
+  end
 
 end

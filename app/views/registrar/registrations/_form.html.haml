@@ -15,25 +15,12 @@
       .row
         .col-sm-6
           = f.input :email_confirmation
-  / .panel.panel-default
-  /   .panel-heading
-  /     %h3.panel-title Payment Info
-  /   .panel-body
-  /     .row
-  /       .col-sm-3
-  /         .form-group
-  /           %label{ for: "number" } Card Number
-  /           %input#number.form-control{type: 'text', size: '20', data: { stripe: 'number' } }
-  /     .row
-  /       .col-sm-2
-  /         .form-group
-  /           %label{ for: "exp_month" } Expiration (MM/YY)
-  /           .form-inline
-  /             %input#exp_month.form-control{type: 'text', size: '2', data: { stripe: 'exp_month' } }
-  /             %input#exp_year.form-control{type: 'text', size: '2', data: { stripe: 'exp_year' } }
-  /     .row
-  /       .col-sm-1
-  /         .form-group
-  /           %label{ for: "cvc" } CVC
-  /           %input#cvc.form-control{type: 'text', size: '4', data: { stripe: 'cvc' } }
+  - if registration.payment_required?
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Payment Info
+      .panel-body
+        .row
+          .col-sm-6
+            = f.input :credit_card_id, :as => :select, :collection => credit_cards
   = f.button :wrapped, :cancel => return_url

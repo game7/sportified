@@ -2,21 +2,23 @@
 #
 # Table name: tenants
 #
-#  id             :integer          not null, primary key
-#  name           :string
-#  slug           :string
-#  host           :string
-#  description    :text
-#  analytics_id   :string
-#  theme          :string
-#  twitter_id     :string
-#  facebook_id    :string
-#  instagram_id   :string
-#  foursquare_id  :string
-#  google_plus_id :string
-#  mongo_id       :string
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  slug                  :string
+#  host                  :string
+#  description           :text
+#  analytics_id          :string
+#  theme                 :string
+#  twitter_id            :string
+#  facebook_id           :string
+#  instagram_id          :string
+#  foursquare_id         :string
+#  google_plus_id        :string
+#  mongo_id              :string
+#  created_at            :datetime
+#  updated_at            :datetime
+#  stripe_secret_api_key :string
+#  stripe_public_api_key :string
 #
 
 class Tenant < ActiveRecord::Base
@@ -27,6 +29,10 @@ class Tenant < ActiveRecord::Base
   before_save :check_and_set_slug
 
   validates :name, :slug, presence: true
+
+  validates :stripe_secret_api_key, length: { is: 32 }, allow_blank: true
+  validates :stripe_public_api_key, length: { is: 32 }, allow_blank: true
+
 
   scope :for_host, ->(host) { where("host = ?", host) }
 

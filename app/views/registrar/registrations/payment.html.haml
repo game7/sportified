@@ -1,0 +1,84 @@
+%form#payment-form
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Payment Info
+    .panel-body
+      .row
+        .col-sm-4
+          .form-group
+            %label{ for: "number" } Card Number
+            %input#number.form-control{type: 'text', size: '20', value: '4242424242424242', data: { stripe: 'number' } }
+      .row
+        .col-sm-4
+          .form-group
+            %label{ for: "exp_month" } Expiration (MM/YY)
+            .form-inline
+              %input#exp_month.form-control{type: 'text', size: '2', value: '12', data: { stripe: 'exp_month' }}
+              %input#exp_year.form-control{type: 'text', size: '2', value: '17', data: { stripe: 'exp_year' } }
+      .row
+        .col-sm-2
+          .form-group
+            %label{ for: "cvc" } CVC
+            %input#cvc.form-control{type: 'text', size: '4', value: '123', data: { stripe: 'cvc' } }
+  .form-actions
+    %input.submit.btn.btn-primary{ type: 'submit', value: 'Go!' }
+%br
+%pre.debug
+- content_for :javascript do
+  %script{ type: 'text/javascript', src: 'https://js.stripe.com/v2/' }
+  :javascript
+    Stripe.setPublishableKey('#{stripe_public_api_key}');
+    function stripeResponseHandler(status, response) {
+      // Grab the form:
+      var $form = $('#payment-form');
+
+      console.log(status);
+      console.log(response);
+
+      $('.debug').html(JSON.stringify(response, null, 2));
+
+
+      if (response.error) { // Problem!
+
+        // Show the errors on the form:
+        $form.find('.payment-errors').text(response.error.message);
+        $form.find('.submit').prop('disabled', false); // Re-enable submission
+
+      } else { // Token was created!
+
+        // Get the token ID:
+        var token = response.id;
+
+        var payload = {
+          credit_card: {
+            brand: response.card.brand,
+            country: response.card.country,
+            exp_month: response.card.exp_month,
+            exp_year: response.card.exp_year,
+            funding: response.card.funding,
+            last4: response.card.last4,
+            token_id: response.id
+          }
+        };
+
+        $.post('/credit_cards', payload).then(
+          function(credit_card) {
+            console.log(credit_card);
+          },
+          function(errors) {
+            console.log(errors);
+          }
+        );
+
+        // Submit the form:
+        //$form.get(0).submit();
+      }
+    };
+    $(function() {
+      var $form = $('#payment-form');
+      $form.submit(function(event) {
+        $form.find('.submit').prop('disabled', true);
+        Stripe.card.createToken($form, stripeResponseHandler);
+        return false;
+      });
+    });
