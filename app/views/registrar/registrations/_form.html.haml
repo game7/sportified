@@ -22,5 +22,10 @@
       .panel-body
         .row
           .col-sm-6
-            = f.input :credit_card_id, :as => :select, :collection => credit_cards
+            = f.input :credit_card_id,
+                      :as => :select, :collection => credit_cards,
+                      :as => :radio_buttons,
+                      :wrapper => :vertical_radio_and_checkboxes
   = f.button :wrapped, :cancel => return_url
+
+
