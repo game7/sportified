@@ -46,7 +46,7 @@ class Admin::League::GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:season_id, :division_id, :starts_on, :duration,
+    params.require(:game).permit(:program_id, :season_id, :division_id, :starts_on, :duration,
       :location_id, :summary, :description, :show_for_all_teams,
       :away_team_id, :away_team_custom_name, :away_team_name,
       :home_team_id, :home_team_custom_name, :home_team_name,
