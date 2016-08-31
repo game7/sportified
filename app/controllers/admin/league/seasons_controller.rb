@@ -33,7 +33,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
     params[:season][:starts_on] = Chronic.parse(params[:season][:starts_on])
     @season = @league.seasons.build(season_params)
     if @season.save
-      return_to_last_point :success => 'Season was successfully created.'
+      redirect_to([:admin, :league, @season], :success => 'Season was successfully created.')
     else
       flash[:error] = "Season could not be created"
       render :action => "new"
