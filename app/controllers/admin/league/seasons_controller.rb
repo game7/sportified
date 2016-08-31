@@ -11,11 +11,10 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   end
 
   def show
-    @teams = League::Team.joins(:division)
-                         .includes(:division)
-                         .includes(:players)
+    @divisions = @season.divisions.order(:name)
+    @teams = League::Team.includes(:players)
                          .where(season_id: @season.id)
-                         .order('league_divisions.name, league_teams.name')
+                         .order('league_teams.name')
 
     horizon = 3.days
     @recent = League::Game.where(season_id: @season.id).before(DateTime.now.beginning_of_day).after(horizon.ago.beginning_of_day).order(starts_on: :desc)

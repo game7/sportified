@@ -73,7 +73,7 @@
   .col-sm-4
 
     %h3 Teams
-    - @teams.group_by{|t| t.division}.each do |division, teams|
+    - @divisions.each do |division|
       .panel.panel-default
         .panel-heading
           = division.name
@@ -81,14 +81,15 @@
             = link_to icon(:cog) + ' Settings', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
             = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
         .list-group
-          - teams.each do |team|
-            = link_to admin_league_team_path(team), { :class => "list-group-item" } do
-              = image_tag(team.logo.micro.url, size: "25") if team.logo?
-              = team.name
-              .pull-right
-                %span{ :title => "Number of Players"}
-                  = team.players.size
-                  = " "
-                  = icon(:group)
+          - @teams.each do |team|
+            - if team.division_id == division.id
+              = link_to admin_league_team_path(team), { :class => "list-group-item" } do
+                = image_tag(team.logo.micro.url, size: "25") if team.logo?
+                = team.name
+                .pull-right
+                  %span{ :title => "Number of Players"}
+                    = team.players.size
+                    = " "
+                    = icon(:group)
 
 
