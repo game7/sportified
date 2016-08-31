@@ -2,7 +2,7 @@
 - content_for :actions do
   %form.form-inline
     = select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to form-control" })
-    = link_to 'Edit', edit_admin_league_season_path(@season), :class => "btn btn-default"
+    = link_to 'Settings', edit_admin_league_season_path(@season), :class => "btn btn-default"
     = link_to 'New Season', new_admin_league_program_season_path(@season.program), :class => "btn btn-default"
     = link_to 'New Division', new_admin_league_program_division_path(@season.program), :class => "btn btn-default"
 
