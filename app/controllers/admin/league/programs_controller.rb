@@ -4,11 +4,14 @@ class Admin::League::ProgramsController < ApplicationController
   before_filter :find_league, :only => [:edit, :update, :destroy]
 
   def show
-    @league = ::League::Program.find(params[:id])
-    @divisions = ::League::Division.order(:name)
-    @seasons = ::League::Season.order(starts_on: :desc)
+    # @league = ::League::Program.find(params[:id])
+    # @divisions = ::League::Division.order(:name)
+    # @seasons = ::League::Season.order(starts_on: :desc)
 
-    @events = ::Event.where(program: @league).after(Date.current - 7.days).before(Date.current + 7.days).order(:starts_on)
+    season = ::League::Season.where('program_id = ?', params[:id]).most_recent
+    redirect_to [:admin, :league, season]
+
+    # @events = ::Event.where(program: @league).after(Date.current - 7.days).before(Date.current + 7.days).order(:starts_on)
   end
 
   def new
