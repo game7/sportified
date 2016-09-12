@@ -26,6 +26,13 @@
       resources :statsheets, :only => [ :show ]
       resources :goals, :only => [ :create, :update ]
     end
+    namespace :league do
+      resources :programs, :only => [ :index ]
+      resources :seasons, :only => [ :index ]
+      resources :divisions, :only => [ :index ]
+      resources :teams, :only => [ :index ]
+    end
+    resources :locations, :only => [ :index ]
   end
 
   get 'game_result/edit'
