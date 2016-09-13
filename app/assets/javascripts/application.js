@@ -28,7 +28,8 @@ function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue
         });
         if (ok) {
           return $.getJSON(url, function(data) {
-            $.each(data, function(i, object) {
+            var rows = data[Object.keys(data)[0]]
+            $.each(rows, function(i, object) {
               $observer.append($(optionTag).val(object[optionKey]).text(object[optionValue]));
             });
             $observer.attr('disabled', false);
