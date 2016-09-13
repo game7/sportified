@@ -36,7 +36,7 @@ gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
 gem 'haml'
 gem 'kaminari'
 
-gem 'devise'
+gem 'devise', '~>3.5.6'
 gem 'omniauth'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 

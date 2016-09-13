@@ -106,11 +106,12 @@ GEM
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     database_cleaner (1.5.3)
-    devise (4.2.0)
+    devise (3.5.6)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 5.1)
+      railties (>= 3.2.6, < 5)
       responders
+      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     domain_name (0.5.20160826)
@@ -543,7 +544,7 @@ DEPENDENCIES
   chronic
   cocoon
   database_cleaner
-  devise
+  devise (~> 3.5.6)
   ember-cli-rails
   ember-rails
   ember-source (~> 2.3.1)
