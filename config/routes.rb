@@ -16,6 +16,7 @@
   mount_ember_app :scorebook, to: 'apps/scorebook'
 
   namespace :api do
+    resources :tenants
     resources :events, :only => [ :index ]
     resources :programs, :only => [ :index ]
     resources :games, :only => [ :index, :show ] do
@@ -31,6 +32,9 @@
       resources :seasons, :only => [ :index ]
       resources :divisions, :only => [ :index ]
       resources :teams, :only => [ :index ]
+      resources :games do
+        match :batch_create, via: [:post, :options], on: :collection
+      end
     end
     resources :locations, :only => [ :index ]
   end

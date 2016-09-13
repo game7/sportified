@@ -33,8 +33,11 @@ class Tenant < ActiveRecord::Base
   validates :stripe_secret_api_key, length: { is: 32 }, allow_blank: true
   validates :stripe_public_api_key, length: { is: 32 }, allow_blank: true
 
-
   scope :for_host, ->(host) { where("host = ?", host) }
+
+  def url
+    "http://#{host ? host : slug+'.sportified.net'}"
+  end
 
   class << self
     def current
