@@ -10,6 +10,7 @@
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
       = stylesheet_link_tag "application"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Permanent+Marker"
     = javascript_include_tag "application"
     = csrf_meta_tag
     %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
@@ -75,4 +76,3 @@
           $nav.removeClass('subnav-fixed')
         }
       }
-

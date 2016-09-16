@@ -12,6 +12,7 @@ Rails.application.config.assets.version = '1.0'
   Rails.application.config.assets.precompile += [
     'themes/oia.css',
     'themes/styfl.css',
+    'themes/barnburner.css',
     'pages.js',
     "lang/en.js",
     "fullcalendar.css",
