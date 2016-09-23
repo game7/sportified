@@ -35,6 +35,9 @@
       resources :games do
         match :batch_create, via: [:post, :options], on: :collection
       end
+      resources :players do
+        match :batch_create, via: [:post, :options], on: :collection
+      end
     end
     resources :locations, :only => [ :index ]
   end
