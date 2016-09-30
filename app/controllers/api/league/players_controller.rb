@@ -11,8 +11,8 @@ class Api::League::PlayersController < Api::BaseController
       players = ::Player.create! players_params[:player]
       render json: players
     rescue => ex
-      puts players
-      render json: ex, status: 400
+      puts ex
+      render json: ex.to_s, status: 400
     end
 
   end
