@@ -208,8 +208,8 @@ namespace :league do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
       #iterate teams with branding
-      Team.where(:logo => nil).each do |unbranded|
-        if (branded = Team.where(name: unbranded.name).where("logo IS NOT NULL").order(created_at: :desc).first)
+      League::Team.where(:logo => nil).each do |unbranded|
+        if (branded = League::Team.where(name: unbranded.name).where("logo IS NOT NULL").order(created_at: :desc).first)
           unbranded.replace_branding_from branded
           unbranded.save
         end
