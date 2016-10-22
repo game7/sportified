@@ -68,7 +68,9 @@ class TeamsController < BaseLeagueController
 
   def schedule
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
-    @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id).order(:starts_on).includes(:location, :home_team, :away_team)
+    @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id)
+                          .order(:starts_on)
+                          .includes(:location, :home_team, :away_team)
 
     @team_links = links_to_team_schedule(@division, @season)
 
@@ -160,17 +162,18 @@ class TeamsController < BaseLeagueController
 
   def to_ical(events)
     cal = Icalendar::Calendar.new
+    #offset = ActiveSupport::TimeZone.new('America/Arizona').utc_offset()
     events.each do |e|
       event = Icalendar::Event.new
       event.uid = e.id.to_s
-      event.dtstart = e.starts_on
-      event.dtend = e.ends_on
+      event.dtstart = e.starts_on.in_time_zone("America/Phoenix") + 7.hours
+      event.dtend = e.ends_on.in_time_zone("America/Phoenix") + 7.hours
       event.summary = e.summary
-      event.location = e.venue_name
+      event.location = e.location.name
       cal.add_event event
     end
     cal.publish
-    send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season_slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season_slug}-schedule.ics")
+    #send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season.slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season.slug}-schedule.ics")
   end
 
 end
