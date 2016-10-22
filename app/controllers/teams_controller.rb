@@ -173,7 +173,7 @@ class TeamsController < BaseLeagueController
       cal.add_event event
     end
     cal.publish
-    #send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season.slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season.slug}-schedule.ics")
+    send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics")
   end
 
 end
