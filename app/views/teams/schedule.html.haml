@@ -9,8 +9,8 @@
       = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
     .col-sm-4.col-sm-offset-4
       %a.btn.btn-default.btn-block{ :href => url_for(params.merge(:format => :ics))}
-        %i.icon-calendar.icon-white
-        Download As iCal
+        = icon(:calendar)
+        iCal
   .row
     .col-xs-12
       %table.team-schedule.table.table-striped.table-bordered
@@ -27,7 +27,10 @@
   .row.options
     .col-sm-4
       = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
-    .col-sm-4.col-sm-offset-4
+    .col-sm-2.col-sm-offset-6
+      %a.btn.btn-block.btn-default{ :href => url_for(params.merge(:format => :ics))}
+        = icon(:calendar)
+        iCal
   .row
     .col-xs-12
       %table.team-schedule.table.table-striped.table-bordered
@@ -43,4 +46,3 @@
               %td.span4= display_event_summary(event, @team)
               %td.span3= display_time_or_result(event, @team)
               %td.span3= event.try(:location).try(:name)
-
