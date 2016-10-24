@@ -172,6 +172,7 @@ class TeamsController < BaseLeagueController
       event.location = e.location.name
       cal.add_event event
     end
+    cal.x_wr_calname = "#{@team.season.name} #{@team.division.name} #{@team.short_name}"
     cal.publish
     send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics")
   end
