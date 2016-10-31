@@ -33,7 +33,7 @@ class CreditCard < ActiveRecord::Base
   validates :token_id    , presence: true
 
   def name
-    "#{brand.upcase} ending with #{last4}, expiring #{exp_month}/#{exp_year}"
+    new_record? ? "New Credit Card" : "#{brand.upcase} ending with #{last4}, expiring #{exp_month}/#{exp_year}"
   end
 
 end

@@ -1,2 +1,3 @@
 - title 'New Registration'
-= render partial: 'form', locals: { registration: registration, registration_type: registration_type, credit_cards: credit_cards }
+- puts local_assigns
+= render partial: 'form', locals: local_assigns

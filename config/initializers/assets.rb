@@ -14,6 +14,7 @@ Rails.application.config.assets.version = '1.0'
     'themes/styfl.css',
     'themes/barnburner.css',
     'pages.js',
+    'registration.js',
     "lang/en.js",
     "fullcalendar.css",
     "calendar/application.js",

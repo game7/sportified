@@ -31,7 +31,8 @@ class Registrar::RegistrationsController < ApplicationController
     render locals: {
       registration: registration,
       registration_type: registration_type,
-      credit_cards: credit_cards
+      credit_cards: credit_cards,
+      stripe_public_api_key: Tenant.current.stripe_public_api_key
     }
   end
 
@@ -46,7 +47,8 @@ class Registrar::RegistrationsController < ApplicationController
       render :new, locals: {
         registration: registration,
         registration_type: registration_type,
-        credit_cards: credit_cards
+        credit_cards: credit_cards,
+        stripe_public_api_key: Tenant.current.stripe_public_api_key
       }
     end
   end
@@ -74,7 +76,7 @@ class Registrar::RegistrationsController < ApplicationController
   end
 
   def credit_cards
-    current_user.credit_cards
+    current_user.credit_cards.entries << CreditCard.new
   end
 
 end
