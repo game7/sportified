@@ -13,5 +13,6 @@
 #
 
 class ProgramSerializer < ActiveModel::Serializer
+  type :program
   attributes :id, :name, :description, :created_at, :updated_at, :slug
 end
