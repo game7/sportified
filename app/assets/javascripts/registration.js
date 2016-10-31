@@ -34,13 +34,13 @@
 
       $.post('/credit_cards', payload).then(
         function(credit_card) {
-          var template = `
-            <span class="radio">
-              <label for="registration_credit_card_id_${credit_card.id}">
-                <input class="radio_buttons optional" type="radio" value="${credit_card.id}" name="registration[credit_card_id]" id="registration_credit_card_id_${credit_card.id}">
-                  ${credit_card.brand.toUpperCase()} ending with ${credit_card.last4}, expiring ${credit_card.exp_month}/${credit_card.exp_year}
-              </label>
-            </span>`;
+          var template = [
+            '<span class="radio">',
+              '<label for="registration_credit_card_id_' + credit_card.id + '">',
+                '<input class="radio_buttons optional" type="radio" value="' + credit_card.id + '" name="registration[credit_card_id]" id="registration_credit_card_id_' + credit_card.id + '">',
+                  credit_card.brand.toUpperCase() + 'ending with ' + credit_card.last4 + ', expiring ' + credit_card.exp_month + '/' + credit_card.exp_year,
+              '</label>',
+            '</span>'].join('');
           $('#new-form')
           $('.radio').first().before(template);
           $('.radio input').first().prop('checked', true);
@@ -50,7 +50,7 @@
         function(errors) {
           processing = false;
           $form.find('.submit').prop('disabled', false);
-          alert(`oops!  That didn't work`);
+          alert("oops!  That didn't work");
         }
       );
 
