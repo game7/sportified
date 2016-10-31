@@ -30,9 +30,7 @@ class CreditCardsController < ApplicationController
       :description => "#{current_user.first_name} #{current_user.last_name}",
       :email       => current_user.email
     )
-
     credit_card.customer_id = customer.id
-
     if credit_card.save
       render json: credit_card, status: :ok
     else

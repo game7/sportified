@@ -3,15 +3,11 @@
 
   Stripe.setPublishableKey('#{stripe_public_api_key}');
 
+  var processing = false;
+
   function stripeResponseHandler(status, response) {
     // Grab the form:
-    var $form = $('#payment-form');
-
-    console.log(status);
-    console.log(response);
-
-    $('.debug').html(JSON.stringify(response, null, 2));
-
+    var $form = $('form#new_registration');
 
     if (response.error) { // Problem!
 
@@ -38,24 +34,55 @@
 
       $.post('/credit_cards', payload).then(
         function(credit_card) {
-          console.log(credit_card);
+          var template = `
+            <span class="radio">
+              <label for="registration_credit_card_id_${credit_card.id}">
+                <input class="radio_buttons optional" type="radio" value="${credit_card.id}" name="registration[credit_card_id]" id="registration_credit_card_id_${credit_card.id}">
+                  ${credit_card.brand.toUpperCase()} ending with ${credit_card.last4}, expiring ${credit_card.exp_month}/${credit_card.exp_year}
+              </label>
+            </span>`;
+          $('#new-form')
+          $('.radio').first().before(template);
+          $('.radio input').first().prop('checked', true);
+          // Submit the form:
+          $form.get(0).submit();
         },
         function(errors) {
-          console.log(errors);
+          processing = false;
+          $form.find('.submit').prop('disabled', false);
+          alert(`oops!  That didn't work`);
         }
       );
 
-      // Submit the form:
-      //$form.get(0).submit();
+
     }
   };
   $(function() {
     var $form = $('#new_registration');
     $form.submit(function(event) {
-      $form.find('.submit').prop('disabled', true);
-      Stripe.card.createToken($form, stripeResponseHandler);
-      return false;
+      var newCard = $('.radio input').last().prop('checked');
+      if(newCard && !processing) {
+        processing = true
+        $form.find('.submit').prop('disabled', true);
+        Stripe.card.createToken($form, stripeResponseHandler);
+        return false
+      }
     });
+
+    var radios = $('.registration_credit_card_id input');
+    $(radios).prop("checked", false);
+    $(radios[0]).prop("checked", 'checked');
+    if(radios.length > 1) {
+      $('#new-card').hide();
+    }
+    $(radios).change(function() {
+      if($(radios).last().prop("checked")) {
+        $('#new-card').slideDown();
+      } else {
+        $('#new-card').slideUp();
+      }
+    })
+
   });
 
 })();

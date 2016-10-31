@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717221200) do
+ActiveRecord::Schema.define(version: 20161031220739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20160717221200) do
     t.string   "exp_year",    limit: 4
     t.string   "funding",     limit: 10
     t.string   "last4",       limit: 4
-    t.integer  "customer_id"
+    t.string   "customer_id"
     t.string   "token_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -527,6 +527,7 @@ ActiveRecord::Schema.define(version: 20160717221200) do
     t.datetime "updated_at",           null: false
     t.integer  "registration_type_id"
     t.integer  "credit_card_id"
+    t.string   "payment_id"
   end
 
   add_index "registrar_registrations", ["tenant_id"], name: "index_registrar_registrations_on_tenant_id", using: :btree

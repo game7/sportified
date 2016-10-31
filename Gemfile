@@ -47,7 +47,6 @@ gem 'simple_form', '~> 3.1.0.rc2'
 gem 'cocoon'
 #gem 'delayed_job'
 
-
 gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', '~> 2.13.4'

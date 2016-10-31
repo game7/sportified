@@ -40,6 +40,23 @@ class Registrar::RegistrationsController < ApplicationController
     registration = registration_type.registrations.build(registration_params)
     registration.user = current_user
     if registration.save
+      Stripe.api_key = Tenant.current.stripe_secret_api_key
+      # begin
+      charge = Stripe::Charge.create(
+        :amount => (registration.registration_type.price * 100).to_i,
+        :currency => "usd",
+        :customer => registration.credit_card.customer_id,
+        :description => registration.registrable.title,
+        :metadata => {
+          "registration_id" => "#{registration.id}",
+          "registration_type" => "#{registration.registration_type.title}"
+        }
+      )
+      registration.payment_id = charge.id
+      registration.save
+      # rescue
+      #
+      # end
       flash[:success] = "Congratulations!  You are now registered for #{registration.registrable.title}"
       redirect_to [:registrar, registration]
     else
@@ -76,7 +93,7 @@ class Registrar::RegistrationsController < ApplicationController
   end
 
   def credit_cards
-    current_user.credit_cards.entries << CreditCard.new
+    current_user.credit_cards.entries << CreditCard.new(id: "-1")
   end
 
 end
