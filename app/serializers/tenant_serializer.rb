@@ -17,7 +17,7 @@
 #  mongo_id              :string
 #  created_at            :datetime
 #  updated_at            :datetime
-#  stripe_secret_api_key :string
+#  stripe_account_id     :string
 #  stripe_public_api_key :string
 #
 

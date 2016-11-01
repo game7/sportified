@@ -1,8 +1,6 @@
 
 (function () {
 
-  Stripe.setPublishableKey('#{stripe_public_api_key}');
-
   var processing = false;
 
   function stripeResponseHandler(status, response) {

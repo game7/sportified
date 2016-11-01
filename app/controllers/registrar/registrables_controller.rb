@@ -21,7 +21,9 @@ class Registrar::RegistrablesController < ApplicationController
 
   # GET /registrar/registrables
   def index
+    puts ENV
     @registrables = Registrar::Registrable.all
+    @stripe_url = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{ENV['STRIPE_CLIENT_ID']}&scope=read_write"
   end
 
   # GET /registrar/registrables/1

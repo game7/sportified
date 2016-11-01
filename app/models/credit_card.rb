@@ -11,7 +11,7 @@
 #  exp_year    :string(4)
 #  funding     :string(10)
 #  last4       :string(4)
-#  customer_id :integer
+#  customer_id :string
 #  token_id    :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

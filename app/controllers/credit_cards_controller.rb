@@ -23,7 +23,7 @@ class CreditCardsController < ApplicationController
     credit_card = CreditCard.new(credit_card_params)
     credit_card.user = current_user
 
-    Stripe::api_key = Tenant.current.stripe_secret_api_key
+    Stripe::api_key = ENV['STRIPE_SECRET_KEY']
 
     customer = Stripe::Customer.create(
       :source      => credit_card.token_id,

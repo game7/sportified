@@ -21,28 +21,30 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #
+require 'rest_client'
 
 class PagesController < ApplicationController
   before_filter :verify_admin, :except => [:show]
-  before_filter :find_page, :only => [:edit, :update, :destroy]  
+  before_filter :verify_stripe_connect, :only => [:show], :if => :stripe_request?
+  before_filter :find_page, :only => [:edit, :update, :destroy]
   before_filter :load_parent_options, :only => [:new, :edit]
   before_filter :mark_return_point, :only => [:new, :edit]
 
   def index
     @pages = Page.arrange(:order => :position)
   end
-    
+
   def show
     current_user
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.order(:position).first).present?
   end
-  
+
   def edit
-    
+
   end
 
   def update
-    @page.update_attributes(page_params) 
+    @page.update_attributes(page_params)
   end
 
   def new
@@ -60,7 +62,7 @@ class PagesController < ApplicationController
 
   def destroy
     @page.delete
-    flash[:notice] = "Page '#{@page.title}' has been deleted"    
+    flash[:notice] = "Page '#{@page.title}' has been deleted"
   end
 
   def position
@@ -70,42 +72,42 @@ class PagesController < ApplicationController
         page.position = i
         page.save
       end
-    end  
+    end
     render :nothing => true
-  end  
-  
+  end
+
   private
-  
+
   def page_params
-    params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu, 
+    params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu,
                                   :link_url, :skip_to_first_child,
                                   :meta_keywords, :meta_description)
-  end  
-  
+  end
+
   def load_objects
     find_page
   end
-  
+
   def find_page
     @page = params[:id] ? Page.find(params[:id]) : find_page_by_path
   end
-  
+
   def find_page_by_path
     page = Page.find_by_path(params[:path])
     page ||= Page.new(:title => 'Welcome') unless params[:path]
     page
   end
-  
+
   def set_breadcrumbs
     (@page.ancestors + [@page]).each do |parent|
       add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
     end unless @page.root?
   end
-  
+
   def set_area_navigation
     set_child_page_navigation if [:show, :edit].include? params[:action].to_sym
   end
-  
+
   def set_child_page_navigation
     has_children = false
     @page.children.in_menu.order(:position).each do |child|
@@ -114,15 +116,39 @@ class PagesController < ApplicationController
     end unless @page.new_record?
     unless @page.root? or has_children
       @page.siblings.in_menu.order(:position).each do |sibling|
-        add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)        
+        add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)
       end
-    end    
+    end
   end
-  
+
   def load_parent_options
     @parent_options = Page.arrange_as_array(:order => :position).collect do |page|
       [ page.name_for_selects, page.id]
     end
   end
-  
+
+  def stripe_request?
+    params[:code] and params[:scope]
+  end
+
+  def verify_stripe_connect
+    payload = {
+      client_secret: ENV['STRIPE_SECRET_KEY'],
+      code: params[:code],
+      grant_type: 'authorization_code'
+    }
+    puts payload
+    response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
+    parsed = ActiveSupport::JSON.decode(response)
+    puts parsed
+    puts parsed[:stripe_publishable_key]
+    Tenant.current.update_attributes(
+      stripe_account_id: parsed["stripe_user_id"],
+      stripe_access_token: parsed["access_token"],
+      stripe_public_api_key: parsed["stripe_publishable_key"]
+    )
+    puts Tenant.current.errors.to_a
+    redirect_to '/registrar/registrables'
+  end
+
 end
