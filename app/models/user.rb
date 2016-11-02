@@ -21,6 +21,7 @@
 #  confirmation_sent_at   :datetime
 #  first_name             :string
 #  last_name              :string
+#  stripe_customer_id     :string
 #
 
 class User < ActiveRecord::Base

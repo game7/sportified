@@ -32,7 +32,7 @@ class Registrar::RegistrationsController < ApplicationController
       registration: registration,
       registration_type: registration_type,
       credit_cards: credit_cards,
-      stripe_public_api_key: ENV['STRIPE_PUBLIC_KEY']
+      stripe_public_api_key: stripe_public_api_key
     }
   end
 
@@ -40,21 +40,25 @@ class Registrar::RegistrationsController < ApplicationController
     registration = registration_type.registrations.build(registration_params)
     registration.user = current_user
     if registration.save
-      puts ENV['STRIPE_SECRET_KEY']
-      puts Tenant.current.stripe_account_id
+
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
       # begin
-      charge = Stripe::Charge.create(
-          :amount => (registration.registration_type.price * 100).to_i,
-          :currency => "usd",
-          :customer => registration.credit_card.customer_id,
-          :description => registration.registrable.title,
-          :metadata => {
-            "registration_id" => "#{registration.id}",
-            "registration_type" => "#{registration.registration_type.title}"
+      token = Stripe::Token.create(
+        { :customer => registration.credit_card.customer_id },
+        { :stripe_account => Tenant.current.stripe_account_id }
+      )
+      charge = Stripe::Charge.create({
+            :amount => (registration.registration_type.price * 100).to_i,
+            :currency => "usd",
+            :source => token,
+            :description => registration.registrable.title,
+            :metadata => {
+              "registration_id" => "#{registration.id}",
+              "registration_type" => "#{registration.registration_type.title}"
+            },
+            :application_fee => 100
           },
-          :application_fee => 100,
-          :destination => Tenant.current.stripe_account_id
+          { :stripe_account => Tenant.current.stripe_account_id }
       )
 
       registration.payment_id = charge.id
@@ -70,7 +74,7 @@ class Registrar::RegistrationsController < ApplicationController
         registration: registration,
         registration_type: registration_type,
         credit_cards: credit_cards,
-        stripe_public_api_key: ENV['STRIPE_PUBLIC_KEY']
+        stripe_public_api_key: stripe_public_api_key
       }
     end
   end
@@ -80,13 +84,17 @@ class Registrar::RegistrationsController < ApplicationController
   end
 
   def payment
-    render locals: { registration: registration, stripe_public_api_key: ENV['STRIPE_PUBLIC_KEY'] }
+    render locals: { registration: registration, stripe_public_api_key: stripe_public_api_key }
   end
 
   private
 
   def registration
     Registrar::Registration.find(params[:id])
+  end
+
+  def stripe_public_api_key
+    ENV['STRIPE_PUBLIC_KEY']
   end
 
   def registration_type
