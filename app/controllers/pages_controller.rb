@@ -76,6 +76,10 @@ class PagesController < ApplicationController
     render :nothing => true
   end
 
+  def letsencrypt
+    render text: params[:key]
+  end
+
   private
 
   def page_params
