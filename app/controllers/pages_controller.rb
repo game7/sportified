@@ -141,17 +141,17 @@ class PagesController < ApplicationController
       code: params[:code],
       grant_type: 'authorization_code'
     }
-    puts payload
-    response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
+    begin
+      response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
+    rescue => e
+      raise e.response
+    end
     parsed = ActiveSupport::JSON.decode(response)
-    puts parsed
-    puts parsed[:stripe_publishable_key]
     Tenant.current.update_attributes(
       stripe_account_id: parsed["stripe_user_id"],
       stripe_access_token: parsed["access_token"],
       stripe_public_api_key: parsed["stripe_publishable_key"]
     )
-    puts Tenant.current.errors.to_a
     redirect_to '/registrar/registrables'
   end
 
