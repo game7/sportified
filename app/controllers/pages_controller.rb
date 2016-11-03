@@ -24,7 +24,7 @@
 require 'rest_client'
 
 class PagesController < ApplicationController
-  before_filter :verify_admin, :except => [:show, :letsencrypt]
+  before_filter :verify_admin, :except => [:show]
   before_filter :verify_stripe_connect, :only => [:show], :if => :stripe_request?
   before_filter :find_page, :only => [:edit, :update, :destroy]
   before_filter :load_parent_options, :only => [:new, :edit]
@@ -74,10 +74,6 @@ class PagesController < ApplicationController
       end
     end
     render :nothing => true
-  end
-
-  def letsencrypt
-    render text: params[:key]
   end
 
   private

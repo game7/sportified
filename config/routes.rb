@@ -1,7 +1,5 @@
 ::Sportified::Application.routes.draw do
 
-  get '/.well-known/acme-challenge/:key' => 'pages#letsencrypt'
-
   namespace :registrar do
     resources :registrables
     resources :registration_types, :only => [], :shallow => true do
