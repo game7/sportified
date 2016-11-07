@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101234614) do
+ActiveRecord::Schema.define(version: 20161103060519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,19 +44,19 @@ ActiveRecord::Schema.define(version: 20161101234614) do
   create_table "credit_cards", force: :cascade do |t|
     t.integer  "tenant_id"
     t.integer  "user_id"
-    t.string   "brand",       limit: 20
-    t.string   "country",     limit: 2
-    t.string   "exp_month",   limit: 2
-    t.string   "exp_year",    limit: 4
-    t.string   "funding",     limit: 10
-    t.string   "last4",       limit: 4
-    t.string   "customer_id"
+    t.string   "brand",          limit: 20
+    t.string   "country",        limit: 2
+    t.string   "exp_month",      limit: 2
+    t.string   "exp_year",       limit: 4
+    t.string   "funding",        limit: 10
+    t.string   "last4",          limit: 4
+    t.string   "stripe_card_id"
     t.string   "token_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "credit_cards", ["customer_id"], name: "index_credit_cards_on_customer_id", using: :btree
+  add_index "credit_cards", ["stripe_card_id"], name: "index_credit_cards_on_stripe_card_id", using: :btree
   add_index "credit_cards", ["tenant_id"], name: "index_credit_cards_on_tenant_id", using: :btree
   add_index "credit_cards", ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
 

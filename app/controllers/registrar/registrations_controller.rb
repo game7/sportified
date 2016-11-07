@@ -40,11 +40,12 @@ class Registrar::RegistrationsController < ApplicationController
     registration = registration_type.registrations.build(registration_params)
     registration.user = current_user
     if registration.save
-
       Stripe.api_key = ENV['STRIPE_SECRET_KEY']
       # begin
       token = Stripe::Token.create(
-        { :customer => registration.credit_card.customer_id },
+        {
+          :customer =>  current_user.stripe_customer_id
+        },
         { :stripe_account => Tenant.current.stripe_account_id }
       )
       charge = Stripe::Charge.create({
