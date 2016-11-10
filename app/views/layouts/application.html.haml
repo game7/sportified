@@ -3,8 +3,8 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-      = " - " + Tenant.current.name
-    - theme = Tenant.current.theme
+      = " - " + tenant.name
+    - theme = tenant.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "themes/#{theme}"
       = favicon_link_tag "themes/#{theme}/icon.ico"
@@ -28,7 +28,7 @@
               %div
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
-            = link_to Tenant.current.name, root_url, :class => "brand"
+            = link_to tenant.name, root_url, :class => "brand"
         = render "layouts/site_navigation"
     #wrapper.container
       %header

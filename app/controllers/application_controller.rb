@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
       url = get_page_url(child)
     end
     url ||= page.link_url unless page.link_url.blank?
-    url ||= page_friendly_path(page.url_path)
+    url ||= main_app.page_friendly_path(page.url_path)
   end
   helper_method :get_page_url
 
