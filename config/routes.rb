@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  mount Rms::Engine => '/rms'
+
   namespace :registrar do
     resources :registrables
     resources :registration_types, :only => [], :shallow => true do
