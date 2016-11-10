@@ -2,10 +2,12 @@ source 'http://rubygems.org'
 ruby '2.2.0'
 gem 'rails', '~> 4.2'
 
+gem 'rms', path: 'engines/rms'
+
 gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'pg'
-gem 'hstore_accessor', '~> 0.9.0'
+gem 'hstore_accessor', '~> 0.9.3'
 gem 'enumerize'
 gem 'annotate'
 
