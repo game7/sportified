@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_id: 
+  tenant_id: 
+  title: MyString
+  description: MyText
+  price: 9.99
+  quantity_allowed: 1
+  quantity_available: 1
+
+two:
+  item_id: 
+  tenant_id: 
+  title: MyString
+  description: MyText
+  price: 9.99
+  quantity_allowed: 1
+  quantity_available: 1

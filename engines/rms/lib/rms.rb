@@ -6,7 +6,7 @@ module Rms
     attr_accessor :configuration
   end
 
-  
+
   module_function
   def configuration
     @configuration ||= Configuration.new

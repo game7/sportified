@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103060519) do
+ActiveRecord::Schema.define(version: 20161110233314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -533,6 +533,72 @@ ActiveRecord::Schema.define(version: 20161103060519) do
   add_index "registrar_registrations", ["tenant_id"], name: "index_registrar_registrations_on_tenant_id", using: :btree
   add_index "registrar_registrations", ["user_id"], name: "index_registrar_registrations_on_user_id", using: :btree
 
+  create_table "rms_fields", force: :cascade do |t|
+    t.integer  "form_id"
+    t.string   "name",       limit: 40
+    t.integer  "position"
+    t.hstore   "settings"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "rms_fields", ["form_id", "name"], name: "index_rms_fields_on_form_id_and_name", unique: true, using: :btree
+
+  create_table "rms_forms", force: :cascade do |t|
+    t.string   "name",       limit: 40
+    t.integer  "tenant_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "rms_forms", ["tenant_id"], name: "index_rms_forms_on_tenant_id", using: :btree
+
+  create_table "rms_items", force: :cascade do |t|
+    t.integer  "parent_id"
+    t.string   "parent_type"
+    t.string   "title",              limit: 40
+    t.text     "description"
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.integer  "tenant_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "rms_items", ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id", using: :btree
+  add_index "rms_items", ["tenant_id"], name: "index_rms_items_on_tenant_id", using: :btree
+
+  create_table "rms_registrations", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.integer  "variant_id"
+    t.integer  "credit_card_id"
+    t.string   "first_name",     limit: 40
+    t.string   "last_name",      limit: 40
+    t.string   "email"
+    t.string   "payment_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
+  add_index "rms_registrations", ["tenant_id"], name: "index_rms_registrations_on_tenant_id", using: :btree
+  add_index "rms_registrations", ["user_id"], name: "index_rms_registrations_on_user_id", using: :btree
+
+  create_table "rms_variants", force: :cascade do |t|
+    t.integer  "item_id"
+    t.integer  "tenant_id"
+    t.string   "title",              limit: 40
+    t.text     "description"
+    t.decimal  "price",                         precision: 20, scale: 4
+    t.integer  "quantity_allowed"
+    t.integer  "quantity_available"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "rms_variants", ["tenant_id"], name: "index_rms_variants_on_tenant_id", using: :btree
+
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
     t.string   "pattern"
@@ -643,4 +709,13 @@ ActiveRecord::Schema.define(version: 20161103060519) do
   add_foreign_key "registrar_registrations", "registrar_registration_types", column: "registration_type_id"
   add_foreign_key "registrar_registrations", "tenants"
   add_foreign_key "registrar_registrations", "users"
+  add_foreign_key "rms_fields", "rms_forms", column: "form_id"
+  add_foreign_key "rms_forms", "tenants"
+  add_foreign_key "rms_items", "tenants"
+  add_foreign_key "rms_registrations", "credit_cards"
+  add_foreign_key "rms_registrations", "rms_variants", column: "variant_id"
+  add_foreign_key "rms_registrations", "tenants"
+  add_foreign_key "rms_registrations", "users"
+  add_foreign_key "rms_variants", "rms_items", column: "item_id"
+  add_foreign_key "rms_variants", "tenants"
 end

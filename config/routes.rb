@@ -1,16 +1,16 @@
 ::Sportified::Application.routes.draw do
 
-  mount Rms::Engine => '/rms'
+  mount Rms::Engine => '/registrar', as: 'rms'
 
-  namespace :registrar do
-    resources :registrables
-    resources :registration_types, :only => [], :shallow => true do
-      resources :registrations, :only => [:new, :create, :show] do
-        get 'payment', :on => :member
-      end
-    end
-    resources :registrations, :only => [:index]
-  end
+  # namespace :registrar do
+  #   resources :registrables
+  #   resources :registration_types, :only => [], :shallow => true do
+  #     resources :registrations, :only => [:new, :create, :show] do
+  #       get 'payment', :on => :member
+  #     end
+  #   end
+  #   resources :registrations, :only => [:index]
+  # end
 
   resources :credit_cards, :only => [:create]
 

@@ -1,15 +1,14 @@
 <% if user_signed_in? %>
   <li>
     <div class="divider"></div>
-    <%= link_to('Logout', destroy_user_session_path) %>
+    <%= link_to('Logout', main_app.destroy_user_session_path) %>
   </li>
 <% elsif 0 == 1 %>
   <li>
-    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+    <%= link_to "Sign in with Facebook", main_app.user_omniauth_authorize_path(:facebook) %>
   </li>
 <% else %>
   <li>
-    <%= link_to('Login', new_user_session_path) %>
+    <%= link_to('Login', main_app.new_user_session_path) %>
   </li>
 <% end %>
-

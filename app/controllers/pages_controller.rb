@@ -148,7 +148,7 @@ class PagesController < ApplicationController
       stripe_access_token: parsed["access_token"],
       stripe_public_api_key: parsed["stripe_publishable_key"]
     )
-    redirect_to '/registrar/registrables'
+    redirect_to '/registrar/items'
   end
 
 end

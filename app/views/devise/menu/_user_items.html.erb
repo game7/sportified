@@ -1,17 +1,17 @@
 <% if user_signed_in? %>
   <li>
-    <%= link_to('User Account', edit_user_registration_path) %>
+    <%= link_to('User Account', main_app.edit_user_registration_path) %>
   </li>
   <li>
-    <%= link_to('Registrations', registrar_registrations_path) %>
+    <%= link_to('Registrations', rms.registrations_path) %>
   </li>
 <% elsif 1 == 0 %>
   <li>
-    <%= link_to('Create User Account', new_user_registration_path) %>
+    <%= link_to('Create User Account', main_app.new_user_registration_path) %>
   </li>
 <% end %>
 <% if current_user_is_admin? %>
   <li>
-    <%= link_to('Administration', admin_root_path) %>
+    <%= link_to('Administration', main_app.admin_root_path) %>
   </li>
 <% end %>

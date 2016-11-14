@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  form_id: 
+  name: MyString
+  position: 1
+  settings: 
+
+two:
+  form_id: 
+  name: MyString
+  position: 1
+  settings: 

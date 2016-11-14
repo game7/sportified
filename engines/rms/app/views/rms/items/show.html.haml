@@ -1,0 +1,24 @@
+- title @item.title
+- page_actions do
+  = link_to 'Edit', edit_item_path(@item), class: 'btn btn-primary' if current_user_is_admin?
+
+%p= @item.description
+
+%pre TODO: allow additional detailed content to appear here, perhaps allowing the use of Markdown for formatted content
+
+%table.table
+  %thead
+    %th OPTION
+    %th PRICE
+    %th
+  %tbody
+    - @item.variants.each do |variant|
+      %tr
+        %td
+          .title{style: 'font-weight: bold'}= variant.title
+          .description= variant.description
+        %td= variant.price ? number_to_currency(variant.price) : 'FREE'
+        %td= link_to 'Register', new_variant_registration_path(variant), { class: 'btn btn-primary'}
+
+%hr
+= link_to 'Back', items_path
