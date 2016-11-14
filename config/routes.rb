@@ -14,9 +14,6 @@
 
   resources :credit_cards, :only => [:create]
 
-  mount_ember_app :calendar, to: 'apps/calendar'
-  mount_ember_app :scorebook, to: 'apps/scorebook'
-
   namespace :api do
     resources :tenants
     resources :events, :only => [ :index ]

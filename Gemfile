@@ -21,10 +21,6 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.6.2'
 gem 'autoprefixer-rails'
 
-gem 'ember-rails'
-gem 'ember-source', '~> 2.3.1'
-gem 'ember-cli-rails'
-
 gem 'react-rails'
 
 gem 'tenancy'
