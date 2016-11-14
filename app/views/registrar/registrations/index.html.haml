@@ -1,6 +1,0 @@
-- title 'Your Registrations'
-
-.list-group
-  - @registrations.each do |registration|
-    .list-group-item
-      %h4.list-group-item-heading= link_to registration.registrable.title, [:registrar, registration]

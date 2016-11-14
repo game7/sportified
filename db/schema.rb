@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110233314) do
+ActiveRecord::Schema.define(version: 20161114183100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -487,52 +487,6 @@ ActiveRecord::Schema.define(version: 20161110233314) do
 
   add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
-  create_table "registrar_registrables", force: :cascade do |t|
-    t.integer  "parent_id"
-    t.string   "parent_type"
-    t.string   "title",              limit: 30
-    t.text     "description"
-    t.integer  "quantity_allowed"
-    t.integer  "quantity_available"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "tenant_id"
-  end
-
-  add_index "registrar_registrables", ["parent_type", "parent_id"], name: "index_registrar_registrables_on_parent_type_and_parent_id", using: :btree
-  add_index "registrar_registrables", ["tenant_id"], name: "index_registrar_registrables_on_tenant_id", using: :btree
-
-  create_table "registrar_registration_types", force: :cascade do |t|
-    t.integer  "tenant_id"
-    t.integer  "registrable_id"
-    t.string   "title",              limit: 30
-    t.text     "description"
-    t.decimal  "price",                         precision: 20, scale: 4
-    t.integer  "quantity_allowed"
-    t.integer  "quantity_available"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-  end
-
-  add_index "registrar_registration_types", ["registrable_id"], name: "index_registrar_registration_types_on_registrable_id", using: :btree
-  add_index "registrar_registration_types", ["tenant_id"], name: "index_registrar_registration_types_on_tenant_id", using: :btree
-
-  create_table "registrar_registrations", force: :cascade do |t|
-    t.integer  "tenant_id"
-    t.integer  "user_id"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "registration_type_id"
-    t.integer  "credit_card_id"
-    t.string   "payment_id"
-  end
-
-  add_index "registrar_registrations", ["tenant_id"], name: "index_registrar_registrations_on_tenant_id", using: :btree
-  add_index "registrar_registrations", ["user_id"], name: "index_registrar_registrations_on_user_id", using: :btree
-
   create_table "rms_fields", force: :cascade do |t|
     t.integer  "form_id"
     t.string   "name",       limit: 40
@@ -704,11 +658,6 @@ ActiveRecord::Schema.define(version: 20161110233314) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "registrar_registration_types", "registrar_registrables", column: "registrable_id"
-  add_foreign_key "registrar_registrations", "credit_cards"
-  add_foreign_key "registrar_registrations", "registrar_registration_types", column: "registration_type_id"
-  add_foreign_key "registrar_registrations", "tenants"
-  add_foreign_key "registrar_registrations", "users"
   add_foreign_key "rms_fields", "rms_forms", column: "form_id"
   add_foreign_key "rms_forms", "tenants"
   add_foreign_key "rms_items", "tenants"
