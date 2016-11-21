@@ -4,18 +4,18 @@ set -e
 
 bower="$(pwd)/node_modules/.bin/bower"
 
-for app in "client/calendar" "client/scorebook"; do
-  cd $app &&
-    npm install &&
-    $bower install &&
-    cd -
-done
+# for app in "client/calendar" "client/scorebook"; do
+#   cd $app &&
+#     npm install &&
+#     $bower install &&
+#     cd -
+# done
 
 gulp="$(pwd)/public/client/node_modules/.bin/gulp"
 
-for app in "public/client"; do
-  cd $app &&
-    npm install &&
-    $gulp bundle &&
-    cd -
-done
+# for app in "public/client"; do
+#   cd $app &&
+#     npm install &&
+#     $gulp bundle &&
+#     cd -
+# done
