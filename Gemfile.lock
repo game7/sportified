@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/game7/mongoid_taggable.git
-  revision: 70d757409ea67906e028edd501189380f752e86d
-  specs:
-    mongoid_taggable (0.1.7.1)
-
 PATH
   remote: engines/rms
   specs:
@@ -532,7 +526,6 @@ DEPENDENCIES
   machinist_mongo
   mongoid (~> 4.0.1)
   mongoid-tree
-  mongoid_taggable!
   nifty-generators
   oa-oauth
   omniauth

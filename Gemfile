@@ -30,7 +30,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'mongoid', '~> 4.0.1'
 #gem 'bson_ext'
 gem 'mongoid-tree', :require => 'mongoid/tree'
-gem 'mongoid_taggable', :git => 'git://github.com/game7/mongoid_taggable.git'
+
 gem 'haml'
 gem 'kaminari'
 
