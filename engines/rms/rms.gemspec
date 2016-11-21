@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Rms::VERSION
   s.authors     = ["Chris Woodall"]
   s.email       = ["cmwoodall@game7.net"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Rms."
-  s.description = "TODO: Description of Rms."
+  s.homepage    = "https://github.com/game7/sportified"
+  s.summary     = "Sportified Registration Management System (RMS)"
+  s.description = "Sportified Registration Management System (RMS)"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
