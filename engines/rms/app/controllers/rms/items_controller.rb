@@ -5,6 +5,7 @@ module Rms
     before_filter :verify_admin, :except => [:index, :show]
     before_filter :mark_return_point, :only => [:new, :edit]
     before_action :set_item, only: [:show, :edit, :update, :destroy]
+    before_action :get_forms, only: [:edit, :update, :new, :create]
 
     def index
       @items = Item.all
@@ -30,6 +31,7 @@ module Rms
       if @item.save
         redirect_to @item, notice: 'Item was successfully created.'
       else
+        puts @item.errors.messages
         flash[:error] = "Item could not be created"
         render :new
       end
@@ -56,8 +58,12 @@ module Rms
       end
 
       def item_params
-        params.required(:item).permit(:title, :description, :quantity_allowed,
+        params.required(:item).permit(:title, :description, :form_id, :quantity_allowed,
           variants_attributes: [ :id, :title, :description, :quantity_allowed, :price, :_destroy ])
+      end
+
+      def get_forms
+        @forms = Form.all
       end
   end
 end

@@ -15,10 +15,18 @@
       .row
         .col-sm-6
           = f.input :email_confirmation
+  - if registration.entry_required?
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Additional Info
+      .panel-body
+        = f.simple_fields_for :entry do |d|
+          - d.object.fields.each do |field|
+            = render "rms/registrations/fields/#{field.partial}", field: field, builder: d
   - if registration.payment_required?
     .panel.panel-default
       .panel-heading
-        %h3.panel-title Payment Info
+        %h3.panel-title Payment
       .panel-body
         .row
           .col-sm-6
@@ -46,7 +54,6 @@
                 %label{ for: "cvc" } CVC
                 %input#cvc.form-control{type: 'text', size: '4', value: '123', data: { stripe: 'cvc' } }
   = f.button :wrapped, :cancel => return_url
-
 - content_for :javascript do
   = javascript 'https://js.stripe.com/v2'
   = javascript 'rms/registrations'

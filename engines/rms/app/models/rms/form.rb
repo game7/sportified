@@ -13,5 +13,16 @@ module Rms
   class Form < ActiveRecord::Base
     include Sportified::TenantScoped
     belongs_to :tenant
+    has_many :fields
+    has_many :entries
+
+    def field_names
+      fields.collect { |f| f.name }
+    end
+
+    def permitted_params
+      field_names
+    end
+
   end
 end

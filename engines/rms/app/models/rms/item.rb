@@ -9,6 +9,8 @@ module Rms
 
     has_many :registrations, through: :variants
 
+    belongs_to :form
+
     validates :title,
               presence: true,
               length: { maximum: 30 }

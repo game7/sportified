@@ -3,6 +3,10 @@ module Rms
     belongs_to :tenant
     belongs_to :variant
     has_one :item, through: :variant
+
+    belongs_to :entry
+    accepts_nested_attributes_for :entry
+
     belongs_to :user
     belongs_to :credit_card
 
@@ -35,5 +39,10 @@ module Rms
     def payment_required?
       variant.present? and variant.price.present? and variant.price > 0
     end
+
+    def entry_required?
+      item.form.present?
+    end
+    
   end
 end

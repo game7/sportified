@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114184431) do
+ActiveRecord::Schema.define(version: 20161121184859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -487,6 +487,13 @@ ActiveRecord::Schema.define(version: 20161114184431) do
 
   add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
+  create_table "rms_entries", force: :cascade do |t|
+    t.integer  "form_id"
+    t.hstore   "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rms_fields", force: :cascade do |t|
     t.integer  "form_id"
     t.string   "name",       limit: 40
@@ -495,6 +502,7 @@ ActiveRecord::Schema.define(version: 20161114184431) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.string   "type"
+    t.boolean  "required"
   end
 
   add_index "rms_fields", ["form_id", "name"], name: "index_rms_fields_on_form_id_and_name", unique: true, using: :btree
@@ -518,6 +526,7 @@ ActiveRecord::Schema.define(version: 20161114184431) do
     t.integer  "tenant_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "form_id"
   end
 
   add_index "rms_items", ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id", using: :btree
@@ -534,6 +543,7 @@ ActiveRecord::Schema.define(version: 20161114184431) do
     t.string   "payment_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "entry_id"
   end
 
   add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
@@ -659,10 +669,13 @@ ActiveRecord::Schema.define(version: 20161114184431) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
+  add_foreign_key "rms_entries", "rms_forms", column: "form_id"
   add_foreign_key "rms_fields", "rms_forms", column: "form_id"
   add_foreign_key "rms_forms", "tenants"
+  add_foreign_key "rms_items", "rms_forms", column: "form_id"
   add_foreign_key "rms_items", "tenants"
   add_foreign_key "rms_registrations", "credit_cards"
+  add_foreign_key "rms_registrations", "rms_entries", column: "entry_id"
   add_foreign_key "rms_registrations", "rms_variants", column: "variant_id"
   add_foreign_key "rms_registrations", "tenants"
   add_foreign_key "rms_registrations", "users"

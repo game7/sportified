@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   has_many :roles, :class_name => "UserRole"
   has_many :authentications
 
-  has_many :registrations, :class_name => 'Registrar::Registration'
+  has_many :registrations, :class_name => 'Rms::Registration'
 
   validates_presence_of :first_name, :last_name, :email
   validates_uniqueness_of :email, :case_sensitive => false

@@ -1,0 +1,14 @@
+- title 'Registrations'
+
+%table.table.table-bordered.table-striped
+  %tr
+    %th Item
+    %th Variant
+    %th Created By
+    %th Created At
+  - @registrations.each do |registration|
+    %tr
+      %td= registration.item.title
+      %td= registration.variant.title
+      %td= registration.user.email
+      %td= registration.created_at
