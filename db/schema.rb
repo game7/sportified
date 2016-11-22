@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122185944) do
+ActiveRecord::Schema.define(version: 20161122192545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -507,6 +507,40 @@ ActiveRecord::Schema.define(version: 20161122185944) do
 
   add_index "rms_fields", ["form_id", "name"], name: "index_rms_fields_on_form_id_and_name", unique: true, using: :btree
 
+  create_table "rms_form_fields", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "template_id"
+    t.string   "type"
+    t.string   "name",        limit: 40
+    t.integer  "position"
+    t.hstore   "properties"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "rms_form_fields", ["template_id", "name"], name: "index_rms_form_fields_on_template_id_and_name", unique: true, using: :btree
+  add_index "rms_form_fields", ["tenant_id"], name: "index_rms_form_fields_on_tenant_id", using: :btree
+
+  create_table "rms_form_packets", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.string   "name",       limit: 40
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "rms_form_packets", ["tenant_id"], name: "index_rms_form_packets_on_tenant_id", using: :btree
+
+  create_table "rms_form_templates", force: :cascade do |t|
+    t.integer  "tenant_id"
+    t.integer  "packet_id"
+    t.string   "name",       limit: 40
+    t.integer  "position"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "rms_form_templates", ["tenant_id"], name: "index_rms_form_templates_on_tenant_id", using: :btree
+
   create_table "rms_forms", force: :cascade do |t|
     t.string   "name",       limit: 40
     t.integer  "tenant_id"
@@ -672,6 +706,11 @@ ActiveRecord::Schema.define(version: 20161122185944) do
   add_foreign_key "programs", "tenants"
   add_foreign_key "rms_entries", "rms_forms", column: "form_id"
   add_foreign_key "rms_fields", "rms_forms", column: "form_id"
+  add_foreign_key "rms_form_fields", "rms_form_templates", column: "template_id"
+  add_foreign_key "rms_form_fields", "tenants"
+  add_foreign_key "rms_form_packets", "tenants"
+  add_foreign_key "rms_form_templates", "rms_form_packets", column: "packet_id"
+  add_foreign_key "rms_form_templates", "tenants"
   add_foreign_key "rms_forms", "tenants"
   add_foreign_key "rms_items", "rms_forms", column: "form_id"
   add_foreign_key "rms_items", "tenants"
