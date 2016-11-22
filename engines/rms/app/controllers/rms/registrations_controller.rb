@@ -71,6 +71,7 @@ module Rms
         redirect_to registration
       else
         flash[:error] = "Registration could not be completed."
+        puts registration.errors.messages
         render :new, locals: {
           registration: registration,
           variant: variant,

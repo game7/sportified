@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: rms_items
+#
+#  id                 :integer          not null, primary key
+#  parent_id          :integer
+#  parent_type        :string
+#  title              :string(40)
+#  description        :text
+#  quantity_allowed   :integer
+#  quantity_available :integer
+#  tenant_id          :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  form_id            :integer
+#
+
 module Rms
   class Item < ActiveRecord::Base
 

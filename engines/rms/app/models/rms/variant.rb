@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: rms_variants
+#
+#  id                 :integer          not null, primary key
+#  item_id            :integer
+#  tenant_id          :integer
+#  title              :string(40)
+#  description        :text
+#  price              :decimal(20, 4)
+#  quantity_allowed   :integer
+#  quantity_available :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 module Rms
   class Variant < ActiveRecord::Base
     include Sportified::TenantScoped

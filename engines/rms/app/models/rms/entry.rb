@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: rms_entries
+#
+#  id         :integer          not null, primary key
+#  form_id    :integer
+#  data       :hstore
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 module Rms
   class Entry < ActiveRecord::Base
     belongs_to :form
