@@ -9,10 +9,7 @@ module Rms
 
     def index
       @items = Item.all
-      protocol = request.host == 'localhost' ? 'http://' : 'https://'
-      host = request.host
-      host = "#{host}:#{request.port}" if host == 'localhost'
-      @stripe_url = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{ENV['STRIPE_CLIENT_ID']}&scope=read_write&redirect_uri=#{protocol}#{host}"
+      @stripe_url = stripe_url
     end
 
     def show

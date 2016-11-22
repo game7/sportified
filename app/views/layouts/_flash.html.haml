@@ -3,13 +3,13 @@
 - flash.each do |name, msg|
   - case name
     - when 'success'
-      = content_tag :div, msg, {:id => "flash_success", :class => "alert alert-success"}
+      = content_tag :div, msg, {:id => "flash_success", :class => "alert alert-success"}, false
     - when 'notice'
-      = content_tag :div, msg, {:id => "flash_notice", :class => "alert alert-info"}
-    - when 'alert'
-      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}
+      = content_tag :div, msg, {:id => "flash_notice", :class => "alert alert-info"}, false
+    - when 'alert', false
+      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}, false
     - when 'warning'
-      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}
+      = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}, false
     - when 'error'
-      = content_tag :div, msg, {:id => "flash_error", :class => "alert alert-danger"}
+      = content_tag :div, msg, {:id => "flash_error", :class => "alert alert-danger"}, false
 - flash.discard
