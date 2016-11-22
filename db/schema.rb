@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122192545) do
+ActiveRecord::Schema.define(version: 20161122203557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -487,26 +487,6 @@ ActiveRecord::Schema.define(version: 20161122192545) do
 
   add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
-  create_table "rms_entries", force: :cascade do |t|
-    t.integer  "form_id"
-    t.hstore   "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rms_fields", force: :cascade do |t|
-    t.integer  "form_id"
-    t.string   "name",       limit: 40
-    t.integer  "position"
-    t.hstore   "settings"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.string   "type"
-    t.boolean  "required"
-  end
-
-  add_index "rms_fields", ["form_id", "name"], name: "index_rms_fields_on_form_id_and_name", unique: true, using: :btree
-
   create_table "rms_form_fields", force: :cascade do |t|
     t.integer  "tenant_id"
     t.integer  "template_id"
@@ -542,10 +522,12 @@ ActiveRecord::Schema.define(version: 20161122192545) do
   add_index "rms_form_templates", ["tenant_id"], name: "index_rms_form_templates_on_tenant_id", using: :btree
 
   create_table "rms_forms", force: :cascade do |t|
-    t.string   "name",       limit: 40
     t.integer  "tenant_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "registration_id"
+    t.integer  "template_id"
+    t.hstore   "data"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "rms_forms", ["tenant_id"], name: "index_rms_forms_on_tenant_id", using: :btree
@@ -560,7 +542,6 @@ ActiveRecord::Schema.define(version: 20161122192545) do
     t.integer  "tenant_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.integer  "form_id"
   end
 
   add_index "rms_items", ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id", using: :btree
@@ -577,8 +558,8 @@ ActiveRecord::Schema.define(version: 20161122192545) do
     t.string   "payment_id"
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.integer  "entry_id"
     t.decimal  "price",                     precision: 20, scale: 4
+    t.integer  "form_packet_id"
   end
 
   add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
@@ -595,6 +576,7 @@ ActiveRecord::Schema.define(version: 20161122192545) do
     t.integer  "quantity_available"
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
+    t.integer  "form_packet_id"
   end
 
   add_index "rms_variants", ["tenant_id"], name: "index_rms_variants_on_tenant_id", using: :btree
@@ -704,21 +686,21 @@ ActiveRecord::Schema.define(version: 20161122192545) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "rms_entries", "rms_forms", column: "form_id"
-  add_foreign_key "rms_fields", "rms_forms", column: "form_id"
   add_foreign_key "rms_form_fields", "rms_form_templates", column: "template_id"
   add_foreign_key "rms_form_fields", "tenants"
   add_foreign_key "rms_form_packets", "tenants"
   add_foreign_key "rms_form_templates", "rms_form_packets", column: "packet_id"
   add_foreign_key "rms_form_templates", "tenants"
+  add_foreign_key "rms_forms", "rms_form_templates", column: "template_id"
+  add_foreign_key "rms_forms", "rms_registrations", column: "registration_id"
   add_foreign_key "rms_forms", "tenants"
-  add_foreign_key "rms_items", "rms_forms", column: "form_id"
   add_foreign_key "rms_items", "tenants"
   add_foreign_key "rms_registrations", "credit_cards"
-  add_foreign_key "rms_registrations", "rms_entries", column: "entry_id"
+  add_foreign_key "rms_registrations", "rms_form_packets", column: "form_packet_id"
   add_foreign_key "rms_registrations", "rms_variants", column: "variant_id"
   add_foreign_key "rms_registrations", "tenants"
   add_foreign_key "rms_registrations", "users"
+  add_foreign_key "rms_variants", "rms_form_packets", column: "form_packet_id"
   add_foreign_key "rms_variants", "rms_items", column: "item_id"
   add_foreign_key "rms_variants", "tenants"
 end

@@ -5,7 +5,7 @@ module Rms
     before_filter :verify_admin, :except => [:index, :show]
     before_filter :mark_return_point, :only => [:new, :edit]
     before_action :set_item, only: [:show, :edit, :update, :destroy]
-    before_action :get_forms, only: [:edit, :update, :new, :create]
+    before_action :get_form_packets, only: [:edit, :update, :new, :create]
 
     def index
       @items = Item.all
@@ -55,12 +55,12 @@ module Rms
       end
 
       def item_params
-        params.required(:item).permit(:title, :description, :form_id, :quantity_allowed,
-          variants_attributes: [ :id, :title, :description, :quantity_allowed, :price, :_destroy ])
+        params.required(:item).permit(:title, :description, :quantity_allowed,
+          variants_attributes: [ :id, :title, :description, :form_packet_id, :quantity_allowed, :price, :_destroy ])
       end
 
-      def get_forms
-        @forms = Form.all
+      def get_form_packets
+        @form_packets = FormPacket.all
       end
   end
 end

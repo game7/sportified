@@ -13,18 +13,19 @@
 #  payment_id     :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  entry_id       :integer
 #  price          :decimal(20, 4)
+#  form_packet_id :integer
 #
 
 module Rms
   class Registration < ActiveRecord::Base
-    belongs_to :tenant
+    include Sportified::TenantScoped
+
     belongs_to :variant
     has_one :item, through: :variant
 
-    belongs_to :entry
-    accepts_nested_attributes_for :entry
+    has_many :forms
+    accepts_nested_attributes_for :forms
 
     belongs_to :user
     belongs_to :credit_card

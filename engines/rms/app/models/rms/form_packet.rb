@@ -13,9 +13,11 @@ module Rms
   class FormPacket < ActiveRecord::Base
     include Sportified::TenantScoped
 
-    has_many :templates, -> {order(:position)}, class_name: 'Rms:FormTemplate'
+    has_many :templates, -> {order(:position)},
+                         class_name: 'Rms::FormTemplate',
+                         foreign_key: 'packet_id'
 
     validates :name, presence: true
-    
+
   end
 end

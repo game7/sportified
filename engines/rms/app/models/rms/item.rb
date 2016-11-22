@@ -12,7 +12,6 @@
 #  tenant_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  form_id            :integer
 #
 
 module Rms
@@ -26,7 +25,7 @@ module Rms
 
     has_many :registrations, through: :variants
 
-    belongs_to :form
+    belongs_to :form_packet
 
     validates :title,
               presence: true,

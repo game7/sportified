@@ -1,20 +1,13 @@
-# == Schema Information
-#
-# Table name: rms_forms
-#
-#  id         :integer          not null, primary key
-#  name       :string(40)
-#  tenant_id  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
   tenant_id: 
+  registration_id: 
+  template_id: 
+  data: 
 
 two:
-  name: MyString
   tenant_id: 
+  registration_id: 
+  template_id: 
+  data: 

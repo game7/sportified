@@ -15,8 +15,10 @@ module Rms
   class FormTemplate < ActiveRecord::Base
     include Sportified::TenantScoped
 
-    belongs_to :packet, class_name: 'Rms:FormPacket'
-    has_many :fields, -> {order(:position)}, class_name: 'Rms:FormField'
+    belongs_to :packet, class_name: 'Rms::FormPacket'
+    has_many :fields, -> {order(:position)},
+                      class_name: 'Rms::FormField', 
+                      foreign_key: 'template_id'
 
     validates :name, presence: true
     validates :position, presence: true,

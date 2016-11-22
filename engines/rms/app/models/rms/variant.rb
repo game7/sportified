@@ -12,6 +12,7 @@
 #  quantity_available :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  form_packet_id     :integer
 #
 
 module Rms
@@ -19,6 +20,7 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :item
+    belongs_to :form_packet, class_name: 'Rms::FormPacket'
 
     has_many :registrations, dependent: :destroy
 
