@@ -13,7 +13,7 @@ module Rms
         registration.forms.build({ template: template, registration: registration })
       end if variant.form_packet
       if registration.save
-        redirect_to registration
+        redirect_to checkout_registration_path registration
       else
         flash[:error] = "unable to register: #{registration.errors.messages}"
         if referer = request.headers["Referer"]
