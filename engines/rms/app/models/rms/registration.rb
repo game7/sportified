@@ -36,35 +36,19 @@ module Rms
     validates :item,
               presence: true
 
-    validates :first_name,
-              presence: true,
-              length: { in: 1..20 }
-
-    validates :last_name,
-              presence: true,
-              length: { in: 1..20 }
-
     validates :email,
               presence: true,
               email: true,
-              confirmation: true,
               length: { maximum: 100 }
 
-    validates :email_confirmation,
-              presence: true
-
-    validates :credit_card_id,
-              presence: true, if: :payment_required?
+    # validates :credit_card_id,
+    #           presence: true, if: :payment_required?
 
     validates :price,
               presence: true
 
     def payment_required?
       variant.present? and variant.price.present? and variant.price > 0
-    end
-
-    def entry_required?
-      item.form.present?
     end
 
     before_validation :set_price_from_variant

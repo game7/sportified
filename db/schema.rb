@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122203557) do
+ActiveRecord::Schema.define(version: 20161123040813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -496,6 +496,7 @@ ActiveRecord::Schema.define(version: 20161122203557) do
     t.hstore   "properties"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.boolean  "required"
   end
 
   add_index "rms_form_fields", ["template_id", "name"], name: "index_rms_form_fields_on_template_id_and_name", unique: true, using: :btree

@@ -16,7 +16,7 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :registration
-    belongs_to :template
+    belongs_to :template, class_name: 'Rms::FormTemplate'
 
     has_many :fields, -> {order(:position)},
                       through: :template,
@@ -24,21 +24,21 @@ module Rms
 
     store_accessor :data
 
-    validates :registration_id, presence: true
-    validates :template_id, presence: true
+    validates :registration, presence: true
+    validates :template, presence: true
 
     validate :validate_fields
 
     def validate_fields
-      form.fields.each do |field|
+      template.fields.each do |field|
         field.validate(self)
-      end
+      end unless new_record?
     end
 
     after_initialize :add_field_accessors
 
     def add_field_accessors
-      self.form.form.fields.each do |field|
+      self.template.fields.each do |field|
         singleton_class.class_eval { store_accessor :data, field.name }
       end
     end
