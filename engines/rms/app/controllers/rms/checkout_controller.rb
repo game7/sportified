@@ -31,6 +31,9 @@ module Rms
     end
 
     def payment
+
+      redirect_to checkout_registration_path(registration) and return unless registration.payment_required?
+
       render locals: {
         registration: registration,
         credit_cards: credit_cards,
@@ -39,41 +42,39 @@ module Rms
     end
 
     def charge
+
+      redirect_to checkout_registration_path(registration) and return unless registration.payment_required?
+
       if registration.update(payment_params)
 
         Stripe.api_key = Rms.configuration.stripe_private_key
 
-        # begin
-        if registration.payment_required?
-
-          token = Stripe::Token.create(
-            {
-              :customer =>  current_user.stripe_customer_id
-            },
-            { :stripe_account => ::Tenant.current.stripe_account_id }
-          )
-          begin
-            charge = Stripe::Charge.create({
-                  :amount => registration.price_in_cents,
-                  :currency => "usd",
-                  :source => token,
-                  :description => "#{registration.item.title}: #{registration.variant.title}",
-                  :metadata => {
-                    "registration_id" => "#{registration.id}",
-                    "variant" => "#{registration.variant.title}"
-                  },
-                  :application_fee => registration.application_fee_in_cents
+        token = Stripe::Token.create(
+          {
+            :customer =>  current_user.stripe_customer_id
+          },
+          { :stripe_account => ::Tenant.current.stripe_account_id }
+        )
+        begin
+          charge = Stripe::Charge.create({
+                :amount => registration.price_in_cents,
+                :currency => "usd",
+                :source => token,
+                :description => "#{registration.item.title}: #{registration.variant.title}",
+                :metadata => {
+                  "registration_id" => "#{registration.id}",
+                  "variant" => "#{registration.variant.title}"
                 },
-                { :stripe_account => ::Tenant.current.stripe_account_id }
-            )
-            registration.update({ payment_id: charge.id })
-          rescue Stripe::CardError => e
-            flash[:error] = e.message
-          else
-            flash[:success] = 'Payment has been processed'
-            redirect_to checkout_registration_path and return
-          end
-
+                :application_fee => registration.application_fee_in_cents
+              },
+              { :stripe_account => ::Tenant.current.stripe_account_id }
+          )
+          registration.update({ payment_id: charge.id })
+        rescue Stripe::CardError => e
+          flash[:error] = e.message
+        else
+          flash[:success] = 'Payment has been processed'
+          redirect_to checkout_registration_path and return
         end
 
       else

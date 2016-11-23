@@ -25,29 +25,35 @@ class CreditCardsController < ApplicationController
 
     Stripe::api_key = ENV['STRIPE_SECRET_KEY']
 
-    if current_user.stripe_customer_id
-      puts '---> FETCH CUSTOMER'
-      customer = Stripe::Customer::retrieve(current_user.stripe_customer_id)
-      card = customer.sources.create(source: credit_card.token_id)
-      credit_card.stripe_card_id = card.id
+    begin
+      if current_user.stripe_customer_id
+        puts '---> FETCH CUSTOMER'
+        customer = Stripe::Customer::retrieve(current_user.stripe_customer_id)
+        card = customer.sources.create(source: credit_card.token_id)
+        credit_card.stripe_card_id = card.id
+      end
+
+      unless current_user.stripe_customer_id
+        puts '---> MAKE CUSTOMER'
+        customer = Stripe::Customer.create(
+          :source      => credit_card.token_id,
+          :description => "#{current_user.first_name} #{current_user.last_name}",
+          :email       => current_user.email
+        )
+        current_user.update_attributes(stripe_customer_id: customer.id)
+        credit_card.stripe_card_id = customer.sources.data[0].id
+      end
+
+      if credit_card.save
+        render json: credit_card, status: :ok
+      else
+        render json: Sportified::ErrorSerializer.serialize(credit_card.errors), status: :unprocessable_entity
+      end
+
+    rescue Stripe::CardError => e
+      render json: e.to_json, status: :unprocessable_entity
     end
 
-    unless current_user.stripe_customer_id
-      puts '---> MAKE CUSTOMER'
-      customer = Stripe::Customer.create(
-        :source      => credit_card.token_id,
-        :description => "#{current_user.first_name} #{current_user.last_name}",
-        :email       => current_user.email
-      )
-      current_user.update_attributes(stripe_customer_id: customer.id)
-      credit_card.stripe_card_id = customer.sources.data[0].id
-    end
-
-    if credit_card.save
-      render json: credit_card, status: :ok
-    else
-      render json: Sportified::ErrorSerializer.serialize(credit_card.errors), status: :unprocessable_entity
-    end
   end
 
   private

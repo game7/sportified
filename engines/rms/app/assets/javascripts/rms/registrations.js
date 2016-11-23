@@ -5,6 +5,14 @@
 
   var processing = false;
 
+  function errorAlert(text) {
+    $('.alert').remove()
+    $('<div/>').addClass('alert')
+               .addClass('alert-danger')
+               .html(text)
+               .appendTo('#page-header')
+  }
+
   function stripeResponseHandler(status, response) {
     // Grab the form:
     var $form = $('form.edit_registration');
@@ -12,8 +20,9 @@
     if (response.error) { // Problem!
 
       // Show the errors on the form:
-      $form.find('.payment-errors').text(response.error.message);
-      $form.find('.submit').prop('disabled', false); // Re-enable submission
+      errorAlert(response.error.message);
+      processing = false;
+      $form.find(':submit').prop('disabled', false); // Re-enable submission
 
     } else { // Token was created!
 
@@ -47,10 +56,11 @@
           // Submit the form:
           $form.get(0).submit();
         },
-        function(errors) {
+        function(error) {
+          var json = error.responseJSON;
           processing = false;
-          $form.find('.submit').prop('disabled', false);
-          alert("oops!  That didn't work");
+          errorAlert(json.message);
+          $form.find(':submit').prop('disabled', false);
         }
       );
 
@@ -60,10 +70,10 @@
   $(function() {
     var $form = $('form.edit_registration');
     $form.submit(function(event) {
+      $form.find(':submit').prop('disabled', true);
       var newCard = $('.radio input').last().prop('checked');
       if(newCard && !processing) {
         processing = true
-        $form.find('.submit').prop('disabled', true);
         try {
           Stripe.card.createToken($form, stripeResponseHandler);
         }

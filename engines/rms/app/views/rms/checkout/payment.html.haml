@@ -25,7 +25,7 @@
         .form-group
           %label{ for: "cvc" } CVC
           %input#cvc.form-control{type: 'text', size: '4', value: '123', data: { stripe: 'cvc' } }
-  = f.button :wrapped, :cancel => return_url
+  = f.button :wrapped, 'Pay Now', :cancel => return_url
 - content_for :javascript do
   = javascript 'https://js.stripe.com/v2'
   = javascript 'rms/registrations'
