@@ -7,7 +7,7 @@
 
   function stripeResponseHandler(status, response) {
     // Grab the form:
-    var $form = $('form#new_registration');
+    var $form = $('form.edit_registration');
 
     if (response.error) { // Problem!
 
@@ -58,7 +58,7 @@
     }
   };
   $(function() {
-    var $form = $('#new_registration');
+    var $form = $('form.edit_registration');
     $form.submit(function(event) {
       var newCard = $('.radio input').last().prop('checked');
       if(newCard && !processing) {
@@ -76,8 +76,8 @@
     });
 
     var radios = $('.registration_credit_card_id input');
-    $(radios).prop("checked", false);
-    $(radios[0]).prop("checked", 'checked');
+    // $(radios).prop("checked", false);
+    // $(radios[0]).prop("checked", 'checked');
     if(radios.length > 1) {
       $('#new-card').hide();
     }

@@ -30,6 +30,9 @@ module Rms
     belongs_to :user
     belongs_to :credit_card
 
+    validates :variant,
+              presence: true
+
     validates :user,
               presence: true
 
@@ -47,8 +50,22 @@ module Rms
     validates :price,
               presence: true
 
+    def price_in_cents
+      (price * 100).to_i
+    end
+
+    def application_fee_in_cents
+      [
+        (price_in_cents * 0.02).to_i,
+        50
+      ].max
+    end
+
     def payment_required?
-      variant.present? and variant.price.present? and variant.price > 0
+      variant.present? and
+      variant.price.present? and
+      variant.price > 0 and
+      payment_id.blank?
     end
 
     before_validation :set_price_from_variant

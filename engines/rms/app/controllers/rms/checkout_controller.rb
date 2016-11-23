@@ -4,6 +4,7 @@ module Rms
   class CheckoutController < ApplicationController
 
     def redirect
+      puts "payment required: #{registration.payment_required?} (#{registration.payment_id})"
       redirect_to_first_incomplete_form and return if registration.forms.incomplete.any?
       redirect_to_payment and return if registration.payment_required?
       redirect_to_confirmation
@@ -16,7 +17,7 @@ module Rms
       }
     end
 
-    def form_post
+    def submit
       form = get_form
       form.completed = true
       if form.update(form_params(form))
@@ -31,7 +32,58 @@ module Rms
 
     def payment
       render locals: {
-        registration: registration
+        registration: registration,
+        credit_cards: credit_cards,
+        stripe_public_api_key: stripe_public_api_key
+      }
+    end
+
+    def charge
+      if registration.update(payment_params)
+
+        Stripe.api_key = Rms.configuration.stripe_private_key
+
+        # begin
+        if registration.payment_required?
+
+          token = Stripe::Token.create(
+            {
+              :customer =>  current_user.stripe_customer_id
+            },
+            { :stripe_account => ::Tenant.current.stripe_account_id }
+          )
+          begin
+            charge = Stripe::Charge.create({
+                  :amount => registration.price_in_cents,
+                  :currency => "usd",
+                  :source => token,
+                  :description => "#{registration.item.title}: #{registration.variant.title}",
+                  :metadata => {
+                    "registration_id" => "#{registration.id}",
+                    "variant" => "#{registration.variant.title}"
+                  },
+                  :application_fee => registration.application_fee_in_cents
+                },
+                { :stripe_account => ::Tenant.current.stripe_account_id }
+            )
+            registration.update({ payment_id: charge.id })
+          rescue Stripe::CardError => e
+            flash[:error] = e.message
+          else
+            flash[:success] = 'Payment has been processed'
+            redirect_to checkout_registration_path and return
+          end
+
+        end
+
+      else
+        flash[:error] = "Oops!  Something didn't work right."
+      end
+
+      render :payment, locals: {
+        registration: registration,
+        credit_cards: credit_cards,
+        stripe_public_api_key: stripe_public_api_key
       }
     end
 
@@ -47,8 +99,20 @@ module Rms
         Registration.find(params[:id])
       end
 
+      def credit_cards
+        current_user.credit_cards.entries << ::CreditCard.new(id: "-1")
+      end
+
+      def stripe_public_api_key
+        Rms.configuration.stripe_public_key
+      end
+
       def get_form
         Form.find(params[:form_id])
+      end
+
+      def payment_params
+        params.require(:registration).permit(:credit_card_id)
       end
 
       def form_params(form)

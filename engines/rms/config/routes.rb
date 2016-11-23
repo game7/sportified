@@ -10,9 +10,10 @@ Rms::Engine.routes.draw do
     member do
       get 'checkout', to: 'checkout#redirect', as: :checkout
       get 'checkout/payment'
-      get 'checkout/confirmation'      
+      patch 'checkout/payment', to: 'checkout#charge', as: :checkout_charge
+      get 'checkout/confirmation'
       get 'checkout/:form_id', to: 'checkout#form', as: :checkout_form
-      patch 'checkout/:form_id', to: 'checkout#form_post', as: :checkout_form_post
+      patch 'checkout/:form_id', to: 'checkout#submit', as: :checkout_submit
     end
   end
 

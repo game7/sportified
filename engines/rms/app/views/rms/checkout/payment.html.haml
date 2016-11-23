@@ -1,0 +1,33 @@
+- title 'Payment'
+= simple_form_for registration, url: checkout_charge_registration_path(registration) do |f|
+  .row
+    .col-sm-6
+      = f.input :credit_card_id,
+                :label => false,
+                :as => :select, :collection => credit_cards,
+                :as => :radio_buttons,
+                :wrapper => :vertical_radio_and_checkboxes
+  #new-card{ style: 'margin-left: 20px' }
+    .row
+      .col-sm-4
+        .form-group
+          %label{ for: "number" } Card Number
+          %input#number.form-control{type: 'text', size: '20', value: '4242424242424242', data: { stripe: 'number' } }
+    .row
+      .col-sm-4
+        .form-group
+          %label{ for: "exp_month" } Expiration (MM/YY)
+          .form-inline
+            %input#exp_month.form-control{type: 'text', size: '2', value: '12', data: { stripe: 'exp_month' }}
+            %input#exp_year.form-control{type: 'text', size: '2', value: '17', data: { stripe: 'exp_year' } }
+    .row
+      .col-sm-2
+        .form-group
+          %label{ for: "cvc" } CVC
+          %input#cvc.form-control{type: 'text', size: '4', value: '123', data: { stripe: 'cvc' } }
+  = f.button :wrapped, :cancel => return_url
+- content_for :javascript do
+  = javascript 'https://js.stripe.com/v2'
+  = javascript 'rms/registrations'
+  :javascript
+    Stripe.setPublishableKey('#{stripe_public_api_key}');
