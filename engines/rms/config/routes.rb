@@ -4,7 +4,16 @@ Rms::Engine.routes.draw do
   resources :forms
 
   resources :registrations, :only => [:index] do
-    get 'all', on: :collection
+    collection do
+      get 'all'
+    end
+    member do
+      get 'checkout', to: 'checkout#redirect', as: :checkout
+      get 'checkout/payment'
+      get 'checkout/confirmation'      
+      get 'checkout/:form_id', to: 'checkout#form', as: :checkout_form
+      patch 'checkout/:form_id', to: 'checkout#form_post', as: :checkout_form_post
+    end
   end
 
   resources :variants, :only => [] do

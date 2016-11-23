@@ -1,0 +1,6 @@
+- title form.template.name
+= simple_form_for form, url: checkout_form_post_registration_path(registration, form) do |f|
+  - f.object.template.fields.each do |field|
+    = render "rms/registrations/fields/#{field.partial}", field: field, builder: f
+
+  = f.button :wrapped, :cancel => return_url
