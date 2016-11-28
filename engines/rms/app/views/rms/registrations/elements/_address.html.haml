@@ -1,0 +1,15 @@
+= builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
+  .row
+    .col-sm-4
+      = builder.input "#{element.name}-street", { label: false, placeholder: 'Street Address' }
+  .row
+    .col-sm-4
+      = builder.input "#{element.name}-street2", { label: false }
+  .row
+    .col-sm-4
+      = builder.input "#{element.name}-city", { label: false, placeholder: 'City' }
+  .row
+    .col-sm-2.col-xs-4
+      = builder.input "#{element.name}-state", { label: false, placeholder: 'State' }
+    .col-sm-2.col-xs-4
+      = builder.input "#{element.name}-postal", { label: false, placeholder: 'Postal Code' }
