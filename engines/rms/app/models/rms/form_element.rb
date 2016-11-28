@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: rms_form_fields
+# Table name: rms_form_elements
 #
 #  id          :integer          not null, primary key
 #  tenant_id   :integer
@@ -15,7 +15,7 @@
 #
 
 module Rms
-  class FormField < ActiveRecord::Base
+  class FormElement < ActiveRecord::Base
     include Sportified::TenantScoped
 
     belongs_to :template, class_name: 'Rms::FormTemplate'
@@ -39,7 +39,6 @@ module Rms
 
     def accessors
       [ self.name ]
-    end
-
+    end    
   end
 end

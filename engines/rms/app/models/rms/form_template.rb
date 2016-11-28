@@ -16,8 +16,8 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :packet, class_name: 'Rms::FormPacket'
-    has_many :fields, -> {order(:position)},
-                      class_name: 'Rms::FormField',
+    has_many :elements, -> {order(:position)},
+                      class_name: 'Rms::FormElement',
                       foreign_key: 'template_id'
     has_many :forms, foreign_key: 'template_id'
 
@@ -25,12 +25,12 @@ module Rms
     validates :position, presence: true,
                          numericality: { only_integer: true }
 
-    def field_names
-      fields.collect { |f| f.name }
+    def element_names
+      elements.collect { |e| e.name }
     end
 
     def permitted_params
-      fields.collect{|f| f.permitted_params }.flatten
+      elements.collect{|e| e.permitted_params }.flatten
     end
 
   end

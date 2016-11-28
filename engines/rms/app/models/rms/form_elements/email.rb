@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: rms_form_fields
+# Table name: rms_form_elements
 #
 #  id          :integer          not null, primary key
 #  tenant_id   :integer
@@ -15,7 +15,7 @@
 #
 
 module Rms
-  class FormFields::Email < FormField
+  class FormElements::Email < FormElement
 
     def validate(record)
       super(record)

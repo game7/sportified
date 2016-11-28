@@ -19,28 +19,28 @@ module Rms
     belongs_to :registration
     belongs_to :template, class_name: 'Rms::FormTemplate'
 
-    has_many :fields, -> {order(:position)},
+    has_many :element, -> {order(:position)},
                       through: :template,
-                      class_name: 'Rms::FormField'
+                      class_name: 'Rms::FormElement'
 
     store_accessor :data
 
     validates :registration, presence: true
     validates :template, presence: true
 
-    validate :validate_fields
-    def validate_fields
-      template.fields.each do |field|
-        field.validate(self)
+    validate :validate_elements
+    def validate_elements
+      template.elements.each do |element|
+        element.validate(self)
       end unless new_record?
     end
 
     scope :incomplete, -> { where.not(completed: true) }
 
-    after_initialize :add_field_accessors
-    def add_field_accessors
-      self.template.fields.each do |field|
-        field.accessors.each do |accessor|
+    after_initialize :add_element_accessors
+    def add_element_accessors
+      self.template.elements.each do |element|
+        element.accessors.each do |accessor|
           singleton_class.class_eval { store_accessor :data, accessor }
         end
       end

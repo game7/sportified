@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: rms_form_fields
+# Table name: rms_form_elements
 #
 #  id          :integer          not null, primary key
 #  tenant_id   :integer
@@ -15,6 +15,6 @@
 #
 
 module Rms
-  class FormFields::Text < FormField
+  class FormElements::Text < FormElement
   end
 end

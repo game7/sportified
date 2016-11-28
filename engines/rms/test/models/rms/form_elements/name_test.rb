@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module Rms
-  class FormFieldTest < ActiveSupport::TestCase
+  class FormElements::NameTest < ActiveSupport::TestCase
     # test "the truth" do
     #   assert true
     # end

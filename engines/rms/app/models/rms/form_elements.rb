@@ -1,7 +1,7 @@
 module Rms
-  module FormFields
+  module FormElements
     def self.table_name_prefix
-      'rms_form_fields_'
+      'rms_form_elements_'
     end
   end
 end

@@ -1,0 +1,6 @@
+= builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
+  .row
+    .col-sm-4
+      = builder.input "#{element.name}-first", { label: false, placeholder: 'First Name' }
+    .col-sm-4
+      = builder.input "#{element.name}-last", { label: false, placeholder: 'Last Name' }

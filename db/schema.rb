@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123062539) do
+ActiveRecord::Schema.define(version: 20161128210639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -487,7 +487,7 @@ ActiveRecord::Schema.define(version: 20161123062539) do
 
   add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
-  create_table "rms_form_fields", force: :cascade do |t|
+  create_table "rms_form_elements", force: :cascade do |t|
     t.integer  "tenant_id"
     t.integer  "template_id"
     t.string   "type"
@@ -499,8 +499,8 @@ ActiveRecord::Schema.define(version: 20161123062539) do
     t.boolean  "required"
   end
 
-  add_index "rms_form_fields", ["template_id", "name"], name: "index_rms_form_fields_on_template_id_and_name", unique: true, using: :btree
-  add_index "rms_form_fields", ["tenant_id"], name: "index_rms_form_fields_on_tenant_id", using: :btree
+  add_index "rms_form_elements", ["template_id", "name"], name: "index_rms_form_elements_on_template_id_and_name", unique: true, using: :btree
+  add_index "rms_form_elements", ["tenant_id"], name: "index_rms_form_elements_on_tenant_id", using: :btree
 
   create_table "rms_form_packets", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -688,8 +688,8 @@ ActiveRecord::Schema.define(version: 20161123062539) do
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "rms_form_fields", "rms_form_templates", column: "template_id"
-  add_foreign_key "rms_form_fields", "tenants"
+  add_foreign_key "rms_form_elements", "rms_form_templates", column: "template_id"
+  add_foreign_key "rms_form_elements", "tenants"
   add_foreign_key "rms_form_packets", "tenants"
   add_foreign_key "rms_form_templates", "rms_form_packets", column: "packet_id"
   add_foreign_key "rms_form_templates", "tenants"
