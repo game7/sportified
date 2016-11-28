@@ -2,6 +2,9 @@
 %h3= registration.item.title
 %p= registration.item.description
 
+- registration.forms.each do |form|
+  = render partial: 'show_form', locals: { form: form }
+
 
 %h3 Payments
 

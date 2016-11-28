@@ -19,7 +19,7 @@ module Rms
     belongs_to :registration
     belongs_to :template, class_name: 'Rms::FormTemplate'
 
-    has_many :element, -> {order(:position)},
+    has_many :elements, -> {order(:position)},
                       through: :template,
                       class_name: 'Rms::FormElement'
 
