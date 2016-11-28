@@ -19,7 +19,8 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :template, class_name: 'Rms::FormTemplate'
-
+    validates :template, presence: true
+    
     validates :name, presence: true
     validates :type, presence: true
     validates :position, presence: true,
@@ -39,6 +40,6 @@ module Rms
 
     def accessors
       [ self.name ]
-    end    
+    end
   end
 end
