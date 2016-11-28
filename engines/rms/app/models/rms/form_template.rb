@@ -30,7 +30,7 @@ module Rms
     end
 
     def permitted_params
-      field_names
+      fields.collect{|f| f.permitted_params }.flatten
     end
 
   end

@@ -9,7 +9,7 @@
 #  data            :hstore
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  completed       :boolean
+#  completed       :boolean          default(FALSE), not null
 #
 
 module Rms
@@ -40,7 +40,9 @@ module Rms
     after_initialize :add_field_accessors
     def add_field_accessors
       self.template.fields.each do |field|
-        singleton_class.class_eval { store_accessor :data, field.name }
+        field.accessors.each do |accessor|
+          singleton_class.class_eval { store_accessor :data, accessor }
+        end
       end
     end
 

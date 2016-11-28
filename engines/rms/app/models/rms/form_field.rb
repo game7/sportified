@@ -33,5 +33,13 @@ module Rms
         record.errors.add(name, "Can't be blank") if required? and record.data[name].blank?
     end
 
+    def permitted_params
+      [ self.name ]
+    end
+
+    def accessors
+      [ self.name ]
+    end
+
   end
 end
