@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %meta{ :content => 'text/html; charset=UTF-8', :'http-equiv' => 'Content-Type' }
+  %body
+    %h1= "Hello #{@registration.user.first_name}"
+    %p
+      You have successfully signed up for
+      = @registration.item.title
+    %p Thanks for registering and have a great day!

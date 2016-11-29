@@ -73,6 +73,7 @@ module Rms
         rescue Stripe::CardError => e
           flash[:error] = e.message
         else
+          RegistrationMailer.confirmation_email(Tenant.current, registration).deliver_now          
           flash[:success] = 'Payment has been processed'
           redirect_to checkout_registration_path and return
         end
