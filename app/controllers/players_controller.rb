@@ -19,33 +19,36 @@
 #
 
 class PlayersController < BaseLeagueController
-  before_filter :get_season_options, :only => [:index]
 
   def index
-
-    @players = Player.joins(:team).includes(:team).where('league_teams.season_id = ? AND league_teams.division_id = ?', @season.id, @division.id).order(last_name: :asc)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @players }
-    end
+    render locals: {
+      players: players,
+      season_options: season_options
+    }
   end
 
   def show
-
-    @player = Player.find(params[:id])
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @player }
-    end
-
+    player = Player.find(params[:id])
+    render locals: {
+      player: player,
+      skater_stats: Hockey::Skater::Result.where('player_id = ?', player.id).includes(:game, :team).order('events.starts_on'),
+      goalie_stats: Hockey::Goaltender::Result.where('player_id = ?', player.id).includes(:game, :team).order('events.starts_on')
+    }
   end
 
   private
 
-  def get_season_options
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_players_path(@program.slug, @division.slug, s.slug)]}
-  end
+    def players
+      Player.joins(:team)
+            .includes(:team)
+            .where('league_teams.season_id = ? AND league_teams.division_id = ?', @season.id, @division.id)
+            .order(last_name: :asc)
+    end
+
+    def season_options
+      @division.seasons.all
+                       .order(starts_on: :desc)
+                       .collect{|s| [s.name, league_players_path(@program.slug, @division.slug, s.slug)]}
+    end
 
 end

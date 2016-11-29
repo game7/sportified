@@ -1,8 +1,8 @@
 - title 'Players'
 .row.options
   .col-sm-4
-    = render :partial => 'shared/season_options', :object => @season_options
-- last_initials = @players.group_by{|player| player.last_name.first}
+    = render :partial => 'shared/season_options', :object => season_options
+- last_initials = players.group_by{|player| player.last_name.first}
 
 %table.table.table-striped.table-bordered
   %tbody

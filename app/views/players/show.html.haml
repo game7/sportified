@@ -1,5 +1,5 @@
 
-%h1= "#{@player.first_name} #{@player.last_name}"
+%h1= "#{player.first_name} #{player.last_name}"
 %h3 Player Statistics
 %table.table.table-striped.table-bordered
   %thead
@@ -16,7 +16,7 @@
       %th.span1 MSC
       %th.span1 GAME
     %tbody
-      - Hockey::Skater::Result.where('player_id = ?', @player.id).includes(:game, :team).order('events.starts_on').each do |result|
+      - skater_stats.each do |result|
         %tr
           %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
           %td= result.game.opponent_name(result.team)
@@ -45,7 +45,7 @@
       %th.span1 SV
       %th.span1 SV%
     %tbody
-      - Hockey::Goaltender::Result.where('player_id = ?', @player.id).includes(:game, :team).order('events.starts_on').each do |result|
+      - goalie_stats.each do |result|
         - if result.games_played == 1
           %tr
             %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
