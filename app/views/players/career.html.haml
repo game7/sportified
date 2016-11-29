@@ -5,6 +5,7 @@
   %thead
     %tr
       %th SEASON
+      %th DIVISION
       %th TEAM
       %th.span1 GP
       %th.span1 G
@@ -20,6 +21,7 @@
       - skater_records.each do |record|
         %tr
           %td= record.player.season.name
+          %td= record.player.division.name
           %td= record.player.team.name
           %td= record.games_played
           %td= record.goals

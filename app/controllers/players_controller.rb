@@ -40,7 +40,7 @@ class PlayersController < BaseLeagueController
     player = Player.find(params[:id])
     skater_records = Hockey::Skater::Record.joins(player: { team: [ :season, :division ]})
                                            .where('players.email = ?', player.email)
-                                           .order('league_seasons.starts_on')
+                                           .order('league_seasons.starts_on, league_divisions.name')
                                            .includes(:player)
                     #.order_by_season
     render locals: {
