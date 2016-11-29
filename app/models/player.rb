@@ -23,15 +23,15 @@ class Player < ActiveRecord::Base
 
   belongs_to :tenant
   belongs_to :team, class_name: 'League::Team'
-  has_one :division, through: :team
-  has_one :season, through: :team
+  has_one :division, through: :team, class_name: 'League::Division'
+  has_one :season, through: :team, class_name: 'League::Season'
+
+  has_many :results, class_name: 'Hockey::Skater::Result'
 
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :team_id, presence: true
   validates :position, length: { maximum: 5 }
-
-  #embeds_one :record, :class_name => "Hockey::Player::Record"
 
   before_save :ensure_record
   before_save :set_slug

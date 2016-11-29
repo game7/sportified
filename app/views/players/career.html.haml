@@ -1,0 +1,56 @@
+
+%h1= "#{player.first_name} #{player.last_name}"
+%h3 Player Statistics
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th SEASON
+      %th TEAM
+      %th.span1 GP
+      %th.span1 G
+      %th.span1 A
+      %th.span1 PTS
+      %th.span1 PEN
+      %th.span1 PIM
+      %th.span1 MNR
+      %th.span1 MJR
+      %th.span1 MSC
+      %th.span1 GAME
+    %tbody
+      - skater_records.each do |record|
+        %tr
+          %td= record.player.season.name
+          %td= record.player.team.name
+          %td= record.games_played
+          %td= record.goals
+          %td= record.assists
+          %td= record.points
+          %td= record.penalties
+          %td= record.penalty_minutes
+          %td= record.minor_penalties
+          %td= record.major_penalties
+          %td= record.misconduct_penalties
+          %td= record.game_misconduct_penalties
+
+-# %h3 Goaltending Statistics
+-# %table.table.table-striped.table-bordered
+-#   %thead
+-#     %tr
+-#       %th DATE
+-#       %th OPPONENT
+-#       %th.span1 TOI
+-#       %th.span1 SA
+-#       %th.span1 GA
+-#       %th.span1 SV
+-#       %th.span1 SV%
+-#     %tbody
+-#       - goalie_stats.each do |result|
+-#         - if result.games_played == 1
+-#           %tr
+-#             %td= result.game.starts_on.to_date.strftime("%-m/%d/%y")
+-#             %td= result.game.opponent_name(result.team)
+-#             %td= result.minutes_played
+-#             %td= result.shots_against
+-#             %td= result.goals_against
+-#             %td= result.saves
+-#             %td= number_with_precision result.save_percentage, :precision => 3
