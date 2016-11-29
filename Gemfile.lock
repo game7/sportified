@@ -554,3 +554,9 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   webrat
+
+RUBY VERSION
+   ruby 2.2.0p0
+
+BUNDLED WITH
+   1.13.6
