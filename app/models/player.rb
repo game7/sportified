@@ -27,6 +27,7 @@ class Player < ActiveRecord::Base
   has_one :season, through: :team, class_name: 'League::Season'
 
   has_many :results, class_name: 'Hockey::Skater::Result'
+  has_one :record, class_name: 'Hockey::Skater::Record'
 
   validates :first_name, presence: true
   validates :last_name, presence: true

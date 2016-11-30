@@ -6,6 +6,15 @@ require 'chronic'
 
 namespace :league do
 
+  task :correct_game_misconduct_penalties => :environment do
+    Hockey::Penalty.where(severity: 'Game misconduct').each do |penalty|
+      next unless penalty.committed_by
+      penalty.committed_by.game_misconduct_penalties += 1
+      penalty.committed_by.save
+      puts "#{penalty.committed_by.id}: #{penalty.committed_by.game_misconduct_penalties}"
+    end
+  end
+
   desc "correct inverted player names"
   task :correct_inverted_player_names => :environment do
     exceptions = [

@@ -31,10 +31,10 @@ class Hockey::PenaltyService
   def increment_statistics!(penalty, factor)
     penalty.committed_by.penalties                 += factor
     penalty.committed_by.penalty_minutes           += penalty.duration * factor
-    penalty.committed_by.minor_penalties           += factor if penalty.severity == 'minor'
-    penalty.committed_by.major_penalties           += factor if penalty.severity == 'major'
-    penalty.committed_by.misconduct_penalties      += factor if penalty.severity == 'misconduct'
-    penalty.committed_by.game_misconduct_penalties += factor if penalty.severity == 'game_misconduct'
+    penalty.committed_by.minor_penalties           += factor if penalty.severity == 'Minor'
+    penalty.committed_by.major_penalties           += factor if penalty.severity == 'Major'
+    penalty.committed_by.misconduct_penalties      += factor if penalty.severity == 'Misconduct'
+    penalty.committed_by.game_misconduct_penalties += factor if penalty.severity == 'Game misconduct'
     penalty.committed_by.save!
   end
 
