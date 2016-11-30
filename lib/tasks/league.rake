@@ -6,6 +6,31 @@ require 'chronic'
 
 namespace :league do
 
+  desc "correct inverted player names"
+  task :correct_inverted_player_names => :environment do
+    exceptions = [
+      (5670..5678).to_a,
+      5684,
+      5692,
+      (5694..5695).to_a,
+      (5699..5701).to_a,
+      (5715..5729).to_a,
+      (5993..6466).to_a
+    ].flatten
+    puts "exceptions: #{exceptions}"
+    players = Player.joins(:team)
+                    .where("league_teams.season_id = 5 AND league_teams.division_id IN (1,2,5)")
+                    .order(:id)
+    players.each do |player|
+      if exceptions.include?(player.id)
+        puts "skipping #{player.id} - #{player.first_name} #{player.last_name}"
+      else
+        puts "inverting #{player.id} - #{player.first_name} #{player.last_name}"
+        player.update_attributes first_name: player.last_name, last_name: player.first_name
+      end
+    end
+  end
+
   desc "exclude prefixed games from standings"
   task :exclude_prefixed_games => :environment do
     Game.where('text_before IS NOT NULL').where("text_before != ''").each do |game|
