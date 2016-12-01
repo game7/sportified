@@ -33,11 +33,8 @@
 class Hockey::Skater::Record < Hockey::Skater
 
   def add_result(result)
-    puts result.to_json
     STATS.each do |stat|
-      puts "updating #{stat} from #{self.send(stat)} by adding #{result.send(stat)}"
       self.send("#{stat}=", self.send(stat) + (result.send(stat) || 0))
-      puts "to #{self.send(stat)}"
     end
   end
 
@@ -62,6 +59,11 @@ class Hockey::Skater::Record < Hockey::Skater
     Hockey::Skater::Result.where('player_id = ?', self.player_id).each do |result|
       add_result(result)
     end
+  end
+
+  def recalculate!
+    recalculate
+    save
   end
 
 end

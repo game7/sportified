@@ -65,11 +65,13 @@ class Hockey::Skater::Result < Hockey::Skater
   end
 
   def recalculate_penalty_types
+    self.penalty_minutes = 0
     self.minor_penalties = 0
     self.major_penalties = 0
     self.misconduct_penalties = 0
     self.game_misconduct_penalties = 0
     ::Hockey::Penalty.where(committed_by: self).each do |penalty|
+      self.penalty_minutes           += penalty.duration
       self.minor_penalties           += 1 if penalty.severity == 'Minor'
       self.major_penalties           += 1 if penalty.severity == 'Major'
       self.misconduct_penalties      += 1 if penalty.severity == 'Misconduct'

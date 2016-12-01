@@ -14,6 +14,27 @@ namespace :league do
     end
   end
 
+  task :recalculate_skater_records_for_penalties => :environment do
+    count = Hockey::Skater::Record.where('penalties > 0').count
+    Hockey::Skater::Record.where('penalties > 0').each_with_index do |result, i|
+      puts "#{i} of #{count}"
+      result.recalculate!
+    end
+  end
+
+  task :fix_erroneous_penalty_minutes => :environment do
+    penalties = Hockey::Penalty.where('duration NOT IN (2,4,5,10)')
+    count = penalties.count
+    penalties.each_with_index do |penalty, i|
+      puts "#{i} of #{count}"
+      penalty.duration = 2  if penalty.severity == 'Minor'
+      penalty.duration = 5  if penalty.severity == 'Major'
+      penalty.duration = 10 if penalty.severity == 'Misconduct'
+      penalty.duration = 10 if penalty.severity == 'Game misconduct'
+      penalty.save
+    end
+  end
+
   task :correct_game_misconduct_penalties => :environment do
     Hockey::Penalty.where(severity: 'Game misconduct').each do |penalty|
       next unless penalty.committed_by
