@@ -51,15 +51,23 @@ module Rms
 
         token = Stripe::Token.create(
           {
-            :customer =>  current_user.stripe_customer_id
+            :customer =>  current_user.stripe_customer_id,
+            :card => registration.credit_card.stripe_card_id
           },
           { :stripe_account => ::Tenant.current.stripe_account_id }
         )
         begin
+          customer = Stripe::Customer.create({
+              :source => token,
+              :email => current_user.email,
+              :description => current_user.full_name
+            },
+            { :stripe_account => ::Tenant.current.stripe_account_id }
+          )
           charge = Stripe::Charge.create({
                 :amount => registration.price_in_cents,
                 :currency => "usd",
-                :source => token,
+                :customer => customer.id,
                 :description => "#{registration.item.title}: #{registration.variant.title}",
                 :metadata => {
                   "registration_id" => "#{registration.id}",
@@ -73,7 +81,7 @@ module Rms
         rescue Stripe::CardError => e
           flash[:error] = e.message
         else
-          RegistrationMailer.confirmation_email(Tenant.current, registration).deliver_now          
+          RegistrationMailer.confirmation_email(Tenant.current, registration).deliver_now
           flash[:success] = 'Payment has been processed'
           redirect_to checkout_registration_path and return
         end

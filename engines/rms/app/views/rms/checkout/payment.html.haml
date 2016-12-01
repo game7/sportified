@@ -14,14 +14,14 @@
           %label{ for: "number" } Card Number
           %input#number.form-control{type: 'text', size: '20', value: '4242424242424242', data: { stripe: 'number' } }
     .row
-      .col-sm-4
+      .col-sm-4.col-xs-6
         .form-group
           %label{ for: "exp_month" } Expiration (MM/YY)
           .form-inline
             %input#exp_month.form-control{type: 'text', size: '2', value: '12', data: { stripe: 'exp_month' }}
             %input#exp_year.form-control{type: 'text', size: '2', value: '17', data: { stripe: 'exp_year' } }
     .row
-      .col-sm-2
+      .col-sm-2.col-xs-4
         .form-group
           %label{ for: "cvc" } CVC
           %input#cvc.form-control{type: 'text', size: '4', value: '123', data: { stripe: 'cvc' } }

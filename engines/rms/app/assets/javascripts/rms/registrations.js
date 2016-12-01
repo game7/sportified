@@ -86,8 +86,11 @@
     });
 
     var radios = $('.registration_credit_card_id input');
-    // $(radios).prop("checked", false);
-    // $(radios[0]).prop("checked", 'checked');
+
+    if(radios.length == 1) {
+      $(radios).prop("checked", false);
+      $(radios[0]).prop("checked", 'checked');
+    }
     if(radios.length > 1) {
       $('#new-card').hide();
     }

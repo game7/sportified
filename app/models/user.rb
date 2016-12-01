@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
     return !!(self.roles.find_by_name(role.to_s).first)
   end
 
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
   class << self
     def for_tenant(t)
       id = t.class.to_s == "Tenant" ? t.id : t
