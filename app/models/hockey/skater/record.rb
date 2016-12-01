@@ -33,25 +33,35 @@
 class Hockey::Skater::Record < Hockey::Skater
 
   def add_result(result)
+    puts result.to_json
     STATS.each do |stat|
+      puts "updating #{stat} from #{self.send(stat)} by adding #{result.send(stat)}"
       self.send("#{stat}=", self.send(stat) + (result.send(stat) || 0))
+      puts "to #{self.send(stat)}"
     end
   end
-  
+
   def add_result!(result)
     self.add_result result
     self.save
   end
-  
+
   def remove_result(result)
     STATS.each do |stat|
       self.send("#{stat}=", [self.send(stat) - (result.send(stat) || 0), 0].max)
     end
   end
-  
+
   def remove_result!(result)
     self.remove_result result
     self.save
   end
-  
+
+  def recalculate
+    self.reset
+    Hockey::Skater::Result.where('player_id = ?', self.player_id).each do |result|
+      add_result(result)
+    end
+  end
+
 end

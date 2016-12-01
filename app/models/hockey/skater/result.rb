@@ -64,6 +64,24 @@ class Hockey::Skater::Result < Hockey::Skater
     calculate_gordie_howes
   end
 
+  def recalculate_penalty_types
+    self.minor_penalties = 0
+    self.major_penalties = 0
+    self.misconduct_penalties = 0
+    self.game_misconduct_penalties = 0
+    ::Hockey::Penalty.where(committed_by: self).each do |penalty|
+      self.minor_penalties           += 1 if penalty.severity == 'Minor'
+      self.major_penalties           += 1 if penalty.severity == 'Major'
+      self.misconduct_penalties      += 1 if penalty.severity == 'Misconduct'
+      self.game_misconduct_penalties += 1 if penalty.severity == 'Game misconduct'
+    end
+  end
+
+  def recalculate_penalty_types!
+    recalculate_penalty_types
+    save
+  end
+
   private
 
   def calculate_points

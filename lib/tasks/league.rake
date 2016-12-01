@@ -6,6 +6,14 @@ require 'chronic'
 
 namespace :league do
 
+  task :recalculate_penalty_types => :environment do
+    count = Hockey::Skater::Result.where('penalties > 0').count
+    Hockey::Skater::Result.where('penalties > 0').each_with_index do |result, i|
+      puts "#{i} of #{count}"
+      result.recalculate_penalty_types!
+    end
+  end
+
   task :correct_game_misconduct_penalties => :environment do
     Hockey::Penalty.where(severity: 'Game misconduct').each do |penalty|
       next unless penalty.committed_by
