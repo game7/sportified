@@ -4,7 +4,7 @@
   - case name
     - when 'success'
       = content_tag :div, msg, {:id => "flash_success", :class => "alert alert-success"}, false
-    - when 'notice'
+    - when 'notice', 'info'
       = content_tag :div, msg, {:id => "flash_notice", :class => "alert alert-info"}, false
     - when 'alert', false
       = content_tag :div, msg, {:id => "flash_warning", :class => "alert alert-warning"}, false

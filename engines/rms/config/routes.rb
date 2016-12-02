@@ -18,6 +18,7 @@ Rms::Engine.routes.draw do
   end
 
   resources :variants, :only => [] do
+    resources :registrations, :only => [:new, :create]
     get 'register', on: :member
   end
 

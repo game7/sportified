@@ -55,7 +55,7 @@
 
   match 'users/auth/facebook/setup' => 'sessions#setup', via: :get
   match 'users/auth/:provider/callback' => 'authentications#create', via: :get
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users, :only => :show
   resources :authentications
 
@@ -86,7 +86,7 @@
   match "league/:league_slug/teams/:division_slug/:season_slug/:team_slug/statistics" => "teams#statistics"     , :as => :league_team_statistics , :via => :get
   match "league/:league_slug/players/:division_slug(/:season_slug)" => "players#index"                          , :as => :league_players         , :via => :get
   match "league/:league_slug/players/:division_slug/:season_slug/:team_slug/:player_slug/:id" => "players#show" , :as => :league_player          , :via => :get
-  match "league/:league_slug/players/:division_slug/:season_slug/:team_slug/:player_slug/:id/career" => "players#career" , :as => :league_player_career          , :via => :get  
+  match "league/:league_slug/players/:division_slug/:season_slug/:team_slug/:player_slug/:id/career" => "players#career" , :as => :league_player_career          , :via => :get
   match "league/:league_slug/game/:id/box_score" => "games#box_score"                                           , :as => :league_game_box_score  , :via => :get
 
 
