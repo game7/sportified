@@ -14,7 +14,7 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
   require 'devise/orm/mongoid'
-  
+
   # config.omniauth :facebook, '109262979133564', '258cba5e2120cde7bc3818ea186e1263'
   #config.omniauth :facebook, nil, nil, :setup => true
 
@@ -64,7 +64,7 @@ Devise.setup do |config|
   # You can use this to let your user access some features of your application
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
-  # config.confirm_within = 2.days
+  config.allow_unconfirmed_access_for = 2.days
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
