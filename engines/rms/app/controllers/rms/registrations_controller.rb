@@ -2,6 +2,8 @@ require_dependency "rms/application_controller"
 
 module Rms
   class RegistrationsController < ApplicationController
+    before_action :verify_user, only: [:index, :show]
+    before_action :verify_admin, only: [:all]
 
     def index
       @registrations = current_user.registrations.includes(:item, :variant)
@@ -64,7 +66,7 @@ module Rms
     private
 
     def registration
-      Registration.find(params[:id])
+      Registration.find_by!(id: params[:id], user_id: current_user.id)
     end
 
     def variant

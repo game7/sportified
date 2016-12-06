@@ -2,6 +2,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class CheckoutController < ApplicationController
+    before_action :verify_user
 
     def redirect
       puts "payment required: #{registration.payment_required?} (#{registration.payment_id})"
@@ -106,7 +107,7 @@ module Rms
     private
 
       def registration
-        Registration.find(params[:id])
+        Registration.find_by!(id: params[:id], user_id: current_user.id)
       end
 
       def credit_cards
