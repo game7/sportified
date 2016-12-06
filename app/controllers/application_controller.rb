@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def redirect_https
+    if Rails.env.production?
+      secure_url = "https://#{Tenant.current.slug}.sportified.net#{request.fullpath}"
+      redirect_to secure_url unless request.ssl?
+    end
+    return true
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
     devise_parameter_sanitizer.for(:account_update) << [:first_name, :last_name]

@@ -55,7 +55,7 @@
 
   match 'users/auth/facebook/setup' => 'sessions#setup', via: :get
   match 'users/auth/:provider/callback' => 'authentications#create', via: :get
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
   resources :users, :only => :show
   resources :authentications
 
