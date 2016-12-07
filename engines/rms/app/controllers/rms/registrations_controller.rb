@@ -28,6 +28,9 @@ module Rms
         registration.email = current_user.email
         registration.first_name = current_user.first_name
         registration.last_name = current_user.last_name
+        variant.form_packet.templates.each do |template|
+          registration.forms.build({ template: template, registration: registration })
+        end if variant.form_packet        
       else
         registration.assign_attributes registration_params
       end
