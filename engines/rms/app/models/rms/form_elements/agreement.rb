@@ -15,12 +15,13 @@
 #
 
 module Rms
-  class FormElements::Note < FormElement
+  class FormElements::Agreement < FormElement
 
-    store_accessor :properties, :rows
+    store_accessor :properties, :terms
 
-    def rows
-      super || 3
+    def validate(record)
+      puts "#{self.name}: #{record.data[self.name]}"
+      record.errors.add(self.name, "Must accept #{self.name}") unless record.data[self.name] == "true"
     end
 
   end
