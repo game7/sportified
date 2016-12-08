@@ -44,7 +44,7 @@ class Host::TenantsController < Host::HostController
   def tenant_params
     params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
       :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id,
-      :stripe_account_id, :stripe_public_api_key)
+      :stripe_account_id, :stripe_public_api_key, :google_fonts)
   end
 
   def find_tenant
