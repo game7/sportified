@@ -3,8 +3,18 @@
   %head
     %meta{ :content => 'text/html; charset=UTF-8', :'http-equiv' => 'Content-Type' }
   %body
-    %h1= "Hello #{@registration.user.first_name}"
+    %p= "Congratulations #{@registration.user.first_name}!"
     %p
-      You have successfully signed up for
-      = @registration.item.title
-    %p Thanks for registering and have a great day!
+      = "You have successfully registered for #{@registration.item.title}."
+      - unless @registration.payment_id.blank?
+        We've charged
+        = number_to_currency @registration.price
+        to your
+        = @registration.credit_card.name
+        and your confirmation code is
+        = "#{@registration.confirmation_code}."
+    %p
+      Thank you for registering with
+      %strong= @registration.tenant.name
+      and
+      %strong sportified.net
