@@ -2,7 +2,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class RegistrationsController < ApplicationController
-    around_action :set_time_zone    
+    around_action :set_time_zone
     before_action :verify_user, only: [:index, :show]
     before_action :verify_admin, only: [:all]
 
@@ -11,7 +11,7 @@ module Rms
     end
 
     def all
-      @registrations = Registration.includes(:item, :variant, :user).all.order("created_at DESC")
+      @registrations = Registration.includes(:item, :variant, :user).all.order("created_at DESC").page params[:page]
     end
 
     def new

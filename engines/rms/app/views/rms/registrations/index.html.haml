@@ -2,29 +2,4 @@
 
 .row
   .col-md-6
-    - @registrations.each do |registration|
-      .panel.panel-default
-        .panel-heading.clearfix
-          %h3.panel-title.pull-left
-            = link_to registration.item.title, registration
-          .status.pull-right
-            - if registration.completed?
-              .label.label-success Completed
-            - unless registration.completed?
-              .label.label-danger Incomplete
-        .panel-body
-          .status.pull-right.hidden-xs
-          %ul{ style: 'padding-left: 15px; list-style-type: square; margin-bottom: 0;'}
-            %li
-              Registered
-              = registration.created_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P")
-            - if registration.paid?
-              %li= "Paid #{number_to_currency registration.price} using #{registration.credit_card.short_name}"
-            - if registration.completed?
-              %li
-                Completed
-                = registration.updated_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P")
-        .panel-footer
-          %a.btn.btn-sm.btn-default{ href: url_for(registration) } View Details
-          - unless registration.completed?
-            %a.btn.btn-sm.btn-primary{ href: checkout_registration_path(registration) } Checkout
+    = render partial: "registration", collection: @registrations, locals: { admin: false }

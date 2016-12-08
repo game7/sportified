@@ -1,16 +1,10 @@
 - title 'Registrations'
 
-%table.table.table-bordered.table-striped
-  %tr
-    %th Item
-    %th Variant
-    %th Price
-    %th Created By
-    %th Created At
-  - @registrations.each do |registration|
-    %tr
-      %td= registration.item.title
-      %td= registration.variant.title
-      %td= registration.price
-      %td= registration.user.email
-      %td= registration.created_at
+.row
+  .col-md-6
+    .paginator= paginate @registrations
+    .summary!= page_entries_info @registrations
+    %hr
+    = render partial: "registration", collection: @registrations, locals: { admin: true }
+    .paginator= paginate @registrations
+    .summary!= page_entries_info @registrations

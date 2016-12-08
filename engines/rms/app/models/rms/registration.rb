@@ -51,6 +51,8 @@ module Rms
     validates :price,
               presence: true
 
+    paginates_per 10              
+
     def price_in_cents
       (price * 100).to_i
     end
