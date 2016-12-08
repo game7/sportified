@@ -1,5 +1,30 @@
 - title 'Confirmation'
-%p Need to explain what next
+.row
+  .col-sm-6
+    %br
+    %p
+      %strong= "Congratulations #{user.first_name}!  "
+    %p
+      =  "You have successfully completed registration for #{registration.item.title}. "
+      - unless registration.payment_id.blank?
+        We have successfully charged
+        = number_to_currency registration.price
+        to your
+        = registration.credit_card.name
+        and a confirmation code has been provided below.
+    %p
+      Thank you for registering with
+      %strong= Tenant.current.name
+      and
+      %strong sportified.net
+    %br
+.row
+  .col-sm-6
+    .well{ style: 'text-align: center;' }
+      CONFIRMATION CODE
+      %h2= registration.confirmation_code
+
+
 %hr
 = link_to 'Your Registrations', registrations_path
 \|

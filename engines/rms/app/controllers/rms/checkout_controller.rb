@@ -83,7 +83,7 @@ module Rms
           flash[:error] = e.message
         else
           RegistrationMailer.confirmation_email(Tenant.current, registration).deliver_now
-          flash[:success] = 'Payment has been processed'
+          flash[:success] = "Payment has been processed.  You're Good!"
           redirect_to checkout_registration_path and return
         end
 
@@ -100,7 +100,8 @@ module Rms
 
     def confirmation
       render locals: {
-        registration: registration
+        registration: registration,
+        user: current_user
       }
     end
 
