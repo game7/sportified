@@ -13,6 +13,7 @@ Rails.application.config.assets.version = '1.0'
     'themes/oia.css',
     'themes/styfl.css',
     'themes/barnburner.css',
+    'themes/sportified.css',
     'pages.js',
     "lang/en.js",
     "fullcalendar.css",
