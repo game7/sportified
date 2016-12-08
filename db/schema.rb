@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129224140) do
+ActiveRecord::Schema.define(version: 20161208165252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -555,14 +555,15 @@ ActiveRecord::Schema.define(version: 20161129224140) do
     t.integer  "user_id"
     t.integer  "variant_id"
     t.integer  "credit_card_id"
-    t.string   "first_name",     limit: 40
-    t.string   "last_name",      limit: 40
+    t.string   "first_name",        limit: 40
+    t.string   "last_name",         limit: 40
     t.string   "email"
     t.string   "payment_id"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.decimal  "price",                     precision: 20, scale: 4
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.decimal  "price",                        precision: 20, scale: 4
     t.integer  "form_packet_id"
+    t.string   "confirmation_code"
   end
 
   add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree

@@ -2,19 +2,20 @@
 #
 # Table name: rms_registrations
 #
-#  id             :integer          not null, primary key
-#  tenant_id      :integer
-#  user_id        :integer
-#  variant_id     :integer
-#  credit_card_id :integer
-#  first_name     :string(40)
-#  last_name      :string(40)
-#  email          :string
-#  payment_id     :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  price          :decimal(20, 4)
-#  form_packet_id :integer
+#  id                :integer          not null, primary key
+#  tenant_id         :integer
+#  user_id           :integer
+#  variant_id        :integer
+#  credit_card_id    :integer
+#  first_name        :string(40)
+#  last_name         :string(40)
+#  email             :string
+#  payment_id        :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  price             :decimal(20, 4)
+#  form_packet_id    :integer
+#  confirmation_code :string
 #
 
 module Rms
@@ -69,11 +70,17 @@ module Rms
     end
 
     before_validation :set_price_from_variant
+    before_save :generate_confiramtion_code, unless: "confirmation_code?"
 
     private
 
       def set_price_from_variant
         self.price = self.variant.price if self.price.blank? and self.variant.present?
+      end
+
+      def generate_confiramtion_code
+        charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z}
+        self.confirmation_code = (0...6).map{ charset.to_a[rand(charset.size)] }.join
       end
 
   end
