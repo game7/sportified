@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208200146) do
+ActiveRecord::Schema.define(version: 20161208224150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -635,6 +635,7 @@ ActiveRecord::Schema.define(version: 20161208200146) do
     t.string   "stripe_public_api_key"
     t.string   "stripe_access_token"
     t.string   "google_fonts"
+    t.string   "time_zone",             default: "UTC"
   end
 
   create_table "tenants_users", id: false, force: :cascade do |t|

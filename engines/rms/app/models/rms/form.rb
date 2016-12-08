@@ -43,7 +43,7 @@ module Rms
         element.accessors.each do |accessor|
           singleton_class.class_eval { store_accessor :data, accessor }
         end
-      end
+      end unless new_record?
     end
 
   end

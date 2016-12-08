@@ -20,6 +20,8 @@
 #  stripe_account_id     :string
 #  stripe_public_api_key :string
 #  stripe_access_token   :string
+#  google_fonts          :string
+#  time_zone             :string           default("UTC")
 #
 
 class Tenant < ActiveRecord::Base

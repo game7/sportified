@@ -2,11 +2,12 @@ require_dependency "rms/application_controller"
 
 module Rms
   class RegistrationsController < ApplicationController
+    around_action :set_time_zone    
     before_action :verify_user, only: [:index, :show]
     before_action :verify_admin, only: [:all]
 
     def index
-      @registrations = current_user.registrations.includes(:item, :variant)
+      @registrations = current_user.registrations.includes(:item, :variant).order("created_at DESC")
     end
 
     def all
@@ -30,7 +31,7 @@ module Rms
         registration.last_name = current_user.last_name
         variant.form_packet.templates.each do |template|
           registration.forms.build({ template: template, registration: registration })
-        end if variant.form_packet        
+        end if variant.form_packet
       else
         registration.assign_attributes registration_params
       end

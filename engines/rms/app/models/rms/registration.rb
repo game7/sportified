@@ -63,10 +63,19 @@ module Rms
     end
 
     def payment_required?
-      variant.present? and
-      variant.price.present? and
-      variant.price > 0 and
-      payment_id.blank?
+      !price.blank? and price > 0 and payment_id.blank?
+    end
+
+    def forms_completed?
+      forms.all? {|form| form.completed?}
+    end
+
+    def completed?
+      forms_completed? and (payment_required? ? paid? : true)
+    end
+
+    def paid?
+      !payment_id.blank?
     end
 
     before_validation :set_price_from_variant
