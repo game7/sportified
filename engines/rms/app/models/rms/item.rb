@@ -16,6 +16,7 @@
 
 module Rms
   class Item < ActiveRecord::Base
+    include Sportified::TenantScoped
 
     belongs_to :parent, polymorphic: true
 
