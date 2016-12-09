@@ -25,7 +25,7 @@ module Rms
     belongs_to :variant
     has_one :item, through: :variant
 
-    has_many :forms
+    has_many :forms, dependent: :destroy
     accepts_nested_attributes_for :forms
 
     belongs_to :user
@@ -51,7 +51,7 @@ module Rms
     validates :price,
               presence: true
 
-    paginates_per 10              
+    paginates_per 10
 
     def price_in_cents
       (price * 100).to_i

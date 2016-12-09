@@ -1,0 +1,13 @@
+.row
+  .col-sm-6
+    - if element.options_as_list.count < 6
+      = builder.input element.name,
+                      as: :radio_buttons,
+                      required: element.required?,
+                      wrapper: :vertical_radio_and_checkboxes,
+                      collection: element.options_as_list
+    - else
+      = builder.input element.name,
+                      as: :select,
+                      required: element.required?,
+                      collection: element.options_as_list

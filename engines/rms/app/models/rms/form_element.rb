@@ -20,7 +20,7 @@ module Rms
 
     belongs_to :template, class_name: 'Rms::FormTemplate'
     validates :template, presence: true
-    
+
     validates :name, presence: true
     validates :type, presence: true
     validates :position, presence: true,
@@ -31,7 +31,7 @@ module Rms
     end
 
     def validate(record)
-        record.errors.add(name, "Can't be blank") if required? and record.data[name].blank?
+      record.errors.add(name, "Can't be blank") if required? and record.try(:data).try(:[], name).blank?
     end
 
     def permitted_params

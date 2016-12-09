@@ -1,5 +1,6 @@
 - title form.template.name
 = simple_form_for form, url: checkout_submit_registration_path(registration, form) do |f|
+  %input{ type: 'hidden', name: 'form[hidden]' }
   - f.object.template.elements.each do |element|
     = render "rms/registrations/elements/#{element.partial}", element: element, builder: f
 
