@@ -16,6 +16,8 @@
 #  price             :decimal(20, 4)
 #  form_packet_id    :integer
 #  confirmation_code :string
+#  active            :boolean
+#  birthdate         :date
 #
 
 module Rms
@@ -40,10 +42,21 @@ module Rms
     validates :item,
               presence: true
 
+    validates :first_name,
+              presence: true,
+              length: { maximum: 40 }
+
+    validates :last_name,
+              presence: true,
+              length: { maximum: 40 }
+
     validates :email,
               presence: true,
               email: true,
               length: { maximum: 100 }
+
+    validates :birthdate,
+              presence: true
 
     # validates :credit_card_id,
     #           presence: true, if: :payment_required?

@@ -15,7 +15,6 @@ module Rms
     end
 
     def new
-      create and return if current_user
       render locals: {
         variant: variant,
         registration: variant.registrations.build
@@ -23,12 +22,10 @@ module Rms
     end
 
     def create
-      registration = variant.registrations.build
+      registration = variant.registrations.build(registration_params)
       if current_user
         registration.user = current_user
         registration.email = current_user.email
-        registration.first_name = current_user.first_name
-        registration.last_name = current_user.last_name
         variant.form_packet.templates.each do |template|
           registration.forms.build({ template: template, registration: registration })
         end if variant.form_packet
@@ -39,7 +36,7 @@ module Rms
       if registration.save
         redirect_to checkout_registration_path registration
       else
-        if(registration.errors[:email].blank?)
+        if(registration.errors[:email].blank? && registration.errors[:first_name].blank?)
           if(user = User.where(email: registration.email).first)
             flash[:info] = "Welcome back #{user.first_name}.  Please sign in to continue your registration"
             store_location_for :user, new_variant_registration_path(variant)
@@ -78,7 +75,7 @@ module Rms
     end
 
     def registration_params
-      params.require(:registration).permit(:first_name, :last_name, :email)
+      params.require(:registration).permit(:first_name, :last_name, :birthdate, :email)
     end
 
   end

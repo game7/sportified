@@ -1,2 +1,5 @@
 - title 'New Registration'
-= render partial: 'form', locals: local_assigns
+- if current_user
+  = render partial: 'form', locals: local_assigns
+- else
+  = render partial: 'email', locals: local_assigns

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208224150) do
+ActiveRecord::Schema.define(version: 20161212232250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -564,6 +564,8 @@ ActiveRecord::Schema.define(version: 20161208224150) do
     t.decimal  "price",                        precision: 20, scale: 4
     t.integer  "form_packet_id"
     t.string   "confirmation_code"
+    t.boolean  "active"
+    t.date     "birthdate"
   end
 
   add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree

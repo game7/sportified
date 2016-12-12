@@ -1,5 +1,13 @@
 = simple_form_for [variant, registration] do |f|
-  .row
-    .col-sm-6
-      = f.input :email
+  %fieldset
+    %legend Participant Info
+    .row
+      .col-sm-4
+        = f.input :first_name
+    .row
+      .col-sm-4
+        = f.input :last_name
+    .row
+      .col-sm-4
+        = f.input :birthdate, include_blank: true, start_year: Date.today.year - 110, end_year: Date.today.year
   = f.button :wrapped, :cancel => return_url
