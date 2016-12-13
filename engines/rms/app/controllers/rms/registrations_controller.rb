@@ -36,7 +36,7 @@ module Rms
       if registration.save
         redirect_to checkout_registration_path registration
       else
-        if(registration.errors[:email].blank? && registration.errors[:first_name].blank?)
+        if(!current_user and registration.errors[:email].blank?)
           if(user = User.where(email: registration.email).first)
             flash[:info] = "Welcome back #{user.first_name}.  Please sign in to continue your registration"
             store_location_for :user, new_variant_registration_path(variant)
