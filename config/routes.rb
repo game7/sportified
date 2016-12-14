@@ -1,6 +1,7 @@
 ::Sportified::Application.routes.draw do
 
   mount Rms::Engine => '/registrar', as: 'rms'
+  mount ExceptionLogger::Engine => "/exception_logger"
 
   # namespace :registrar do
   #   resources :registrables

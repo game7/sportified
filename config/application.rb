@@ -37,5 +37,34 @@ module Sportified
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.after_initialize do
+      ExceptionLogger::LoggedExceptionsController.class_eval do
+        before_action :verify_admin
+
+        def current_user_is_host?
+          current_user and current_user.role? :super_admin
+        end
+        helper_method :current_user_is_host?
+
+        def current_user_is_admin?
+          current_user_is_host? || has_admin_role?(current_user, Tenant.current.id)
+        end
+        helper_method :current_user_is_admin?
+
+        def verify_admin
+          redirect_to main_app.new_user_session_path unless current_user_is_admin?
+        end
+
+        def has_admin_role?(user, tenant_id)
+          result = false
+          user.roles.find_by_name(:admin).each do |role|
+            result = true if role.tenant_id == tenant_id
+          end if user
+          result
+        end
+
+      end
+    end
+
   end
 end

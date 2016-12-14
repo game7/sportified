@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212232250) do
+ActiveRecord::Schema.define(version: 20161214043158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -417,6 +417,17 @@ ActiveRecord::Schema.define(version: 20161212232250) do
   end
 
   add_index "locations", ["tenant_id"], name: "index_locations_on_tenant_id", using: :btree
+
+  create_table "logged_exceptions", force: :cascade do |t|
+    t.string   "exception_class"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.text     "message"
+    t.text     "backtrace"
+    t.text     "environment"
+    t.text     "request"
+    t.datetime "created_at"
+  end
 
   create_table "pages", force: :cascade do |t|
     t.integer  "tenant_id"

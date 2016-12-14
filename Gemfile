@@ -59,6 +59,8 @@ gem "RedCloth"
 
 gem 'unicorn'
 
+gem "exception_logger", :github => "ryancheung/exception_logger"
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
 end
