@@ -48,8 +48,16 @@ class User < ActiveRecord::Base
 
   scope :with_email, ->(email) { where(:email => email) }
 
-  def role?(role)
-    return !!(self.roles.find_by_name(role.to_s).first)
+  def admin?(tenant_id)
+    self.roles.where(name: 'admin', tenant_id: tenant_id).any?
+  end
+
+  def host?
+    self.roles.where(name: 'super_admin').any?
+  end
+
+  def host_or_admin?
+    host? or admin?
   end
 
   def full_name

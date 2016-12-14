@@ -67,7 +67,9 @@ module Rms
     private
 
     def registration
-      Registration.find_by!(id: params[:id], user_id: current_user.id)
+      where = { id: params[:id] }
+      where[:user_id] = current_user.id unless current_user.host_or_admin?
+      Registration.find_by!(where)
     end
 
     def variant

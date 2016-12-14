@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
 
 
   def current_user_is_host?
-    current_user and current_user.role? :super_admin
+    current_user and current_user.host?
   end
   helper_method :current_user_is_host?
 
@@ -131,11 +131,7 @@ class ApplicationController < ActionController::Base
   end
 
   def has_admin_role?(user, tenant_id)
-    result = false
-    user.roles.find_by_name(:admin).each do |role|
-      result = true if role.tenant_id == tenant_id
-    end if user
-    result
+    user and user.admin?(tenant_id)
   end
 
   def verify_user

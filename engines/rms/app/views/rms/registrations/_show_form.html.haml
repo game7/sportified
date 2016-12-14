@@ -4,5 +4,5 @@
   - form.elements.each do |element|
     - element.permitted_params.each do |param|
       %tr
-        %th= param
-        %td= form.data[param]
+        %th{ style: 'width: 30%;'}= param.titleize
+        %td= form.data[param] if form.data

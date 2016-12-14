@@ -1,12 +1,39 @@
 
 %h3= registration.item.title
-%p= registration.item.description
+.row
+  .col-sm-6
+    %table.table.table-striped.table-bordered
+      %tr
+        %th{ style: 'width: 30%;'} Customer Name
+        %td= "#{registration.user.first_name} #{registration.user.last_name}"
+      %tr
+        %th{ style: 'width: 30%;'} Customer Email
+        %td= registration.user.email   
+      %tr
+        %th{ style: 'width: 30%;'} Locator
+        %td= registration.confirmation_code
+      %tr
+        %th{ style: 'width: 30%;'} Price
+        %td= number_to_currency registration.price
+      %tr
+        %th{ style: 'width: 30%;'} Payment Id
+        %td= registration.payment_id
+      %tr
+        %th{ style: 'width: 30%;'} Participant Name
+        %td= "#{registration.first_name} #{registration.last_name}"
+      %tr
+        %th{ style: 'width: 30%;'} Participant Birthdate
+        %td= registration.birthdate.strftime('%-m/%-d/%Y')
+      %tr
+        %th{ style: 'width: 30%;'} Created At
+        %td= registration.created_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
+      %tr
+        %th{ style: 'width: 30%;'} Updated At
+        %td= registration.updated_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
 
-- registration.forms.each do |form|
-  = render partial: 'show_form', locals: { form: form }
+    - registration.forms.each do |form|
+      = render partial: 'show_form', locals: { form: form }
 
-
-%h3 Payments
 
 = link_to 'Your Registrations', registrations_path
 \|
