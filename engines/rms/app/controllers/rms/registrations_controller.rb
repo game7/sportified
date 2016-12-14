@@ -68,7 +68,7 @@ module Rms
 
     def registration
       where = { id: params[:id] }
-      where[:user_id] = current_user.id unless current_user.host_or_admin?
+      where[:user_id] = current_user.id unless current_user.host_or_admin?(Tenant.current.id)
       Registration.find_by!(where)
     end
 

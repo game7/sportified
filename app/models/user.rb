@@ -56,8 +56,8 @@ class User < ActiveRecord::Base
     self.roles.where(name: 'super_admin').any?
   end
 
-  def host_or_admin?
-    host? or admin?
+  def host_or_admin?(tenant_id)
+    host? or admin?(tenant_id)
   end
 
   def full_name
