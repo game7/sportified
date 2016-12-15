@@ -127,7 +127,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_is_admin?
 
   def verify_admin
-    redirect_to main_app.new_user_session_path unless current_user_is_admin?
+    unless current_user_is_admin?
+      if current_user
+        render :file => "public/401.html", :status => :unauthorized, :layout => false
+      else
+        redirect_to main_app.new_user_session_path
+      end
+    end
   end
 
   def has_admin_role?(user, tenant_id)
