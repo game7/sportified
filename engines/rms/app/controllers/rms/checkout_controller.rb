@@ -71,8 +71,13 @@ module Rms
                 :customer => customer.id,
                 :description => "#{registration.item.title}: #{registration.variant.title}",
                 :metadata => {
-                  "registration_id" => "#{registration.id}",
-                  "variant" => "#{registration.variant.title}"
+                  :registration_id => registration.id,
+                  :item => registration.item.title,
+                  :variant => registration.variant.title,
+                  :locator => registration.confirmation_code,
+                  :customer_name => registration.user.full_name,
+                  :customer_email => registration.user.email,
+                  :participant_name => registration.full_name
                 },
                 :application_fee => registration.application_fee_in_cents
               },

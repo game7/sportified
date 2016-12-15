@@ -93,6 +93,10 @@ module Rms
       !payment_id.blank?
     end
 
+    def full_name
+      "#{self.first_name} #{self.last_name}"
+    end
+
     before_validation :set_price_from_variant
     before_save :generate_confiramtion_code, unless: "confirmation_code?"
 
