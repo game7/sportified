@@ -148,6 +148,7 @@ class PagesController < ApplicationController
       stripe_access_token: parsed["access_token"],
       stripe_public_api_key: parsed["stripe_publishable_key"]
     )
+    flash[:success] = "Sweet!  Your Stripe account is now connected."
     redirect_to '/registrar/items'
   end
 
