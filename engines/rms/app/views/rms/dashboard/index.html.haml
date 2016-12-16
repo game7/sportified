@@ -1,0 +1,22 @@
+- title 'Dashboard'
+.btn-group{ role: 'group', 'aria-label': '...'}
+  %a.btn.btn-default{ class: "#{'active' unless params[:period] }", href: url_for() } Total
+  %a.btn.btn-default{ class: "#{'active' if params[:period] == 'month' }", href: url_for(params.merge(:period => 'month')) } Month
+  %a.btn.btn-default{ class: "#{'active' if params[:period] == 'week' }", href: url_for(params.merge(:period => 'week')) } Week
+  %a.btn.btn-default{ class: "#{'active' if params[:period] == 'day' }", href: url_for(params.merge(:period => 'day')) } Today
+%br
+%br
+%table.table.table-bordered.table-striped
+  %tr
+    %td{ style: 'width: 40%;'} Item
+    %td{ style: 'width: 15%;'} Pending
+    %td{ style: 'width: 15%;'} Completed
+    %td{ style: 'width: 15%;'} Total
+    %td{ style: 'width: 15%;'} Revenue
+  - items.each do |item|
+    %tr
+      %td= item.title
+      %td= item.registrations.created_on_or_after(from_date).pending.count
+      %td= item.registrations.created_on_or_after(from_date).completed.count
+      %td= item.registrations.created_on_or_after(from_date).count
+      %td= number_to_currency item.registrations.created_on_or_after(from_date).sum(:price)

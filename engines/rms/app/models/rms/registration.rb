@@ -66,6 +66,10 @@ module Rms
 
     paginates_per 10
 
+    scope :pending, -> { where('payment_id is null') }
+    scope :completed, -> { where('payment_id is not null') }
+    scope :created_on_or_after, ->(date) { where('rms_registrations.created_at >= ?', date)}
+
     def price_in_cents
       (price * 100).to_i
     end

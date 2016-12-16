@@ -1,4 +1,6 @@
 Rms::Engine.routes.draw do
+  
+  get 'dashboard', to: 'dashboard#index'
 
   resources :items
   resources :forms
