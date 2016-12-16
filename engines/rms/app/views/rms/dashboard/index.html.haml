@@ -19,4 +19,4 @@
       %td= item.registrations.created_on_or_after(from_date).pending.count
       %td= item.registrations.created_on_or_after(from_date).completed.count
       %td= item.registrations.created_on_or_after(from_date).count
-      %td= number_to_currency item.registrations.created_on_or_after(from_date).sum(:price)
+      %td= number_to_currency item.registrations.created_on_or_after(from_date).completed.sum(:price)
