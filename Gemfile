@@ -1,13 +1,12 @@
 source 'http://rubygems.org'
 ruby '2.3.3'
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 5.0.1'
 
 gem 'rms', path: 'engines/rms'
 
 gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'pg'
-gem 'hstore_accessor', '~> 0.9.3'
 gem 'enumerize'
 gem 'annotate'
 
@@ -25,30 +24,26 @@ gem 'react-rails'
 
 gem 'tenancy'
 gem 'ancestry'
-gem 'acts-as-taggable-on', '~> 3.4'
-
-gem 'mongoid', '~> 4.0.1'
-#gem 'bson_ext'
-gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'acts-as-taggable-on', '~> 4.0'
 
 gem 'haml'
 gem 'kaminari'
 
-gem 'devise', '~>3.5.6'
+gem 'devise', '~>4.2.0'
 gem 'omniauth'
-gem 'oa-oauth', :require => 'omniauth/oauth'
+# gem 'oa-oauth', :require => 'omniauth/oauth'
 
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
-gem 'simple_form', '~> 3.1.0.rc2'
+gem 'simple_form', '~> 3.4.0'
 gem 'cocoon'
 #gem 'delayed_job'
 
 gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', '~> 2.13.4'
-gem 'remotipart', '~> 1.0'
+gem 'remotipart', '~> 1.3.1'
 
 gem "simple_calendar", "~> 2.0"
 
@@ -74,15 +69,14 @@ end
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :test do
-
-  gem 'rspec', '>= 2.0.1'
-  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec', '>= 3.5'
+  gem 'rspec-rails', '~> 3.5'
   gem "remarkable_mongoid", ">= 0.5.0"
   gem 'machinist_mongo', :require => 'machinist/mongoid'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'webrat'
-  gem 'capybara'
+  # gem 'capybara'
   gem 'launchy'   # so we can use : Then show me the page
   gem 'autotest'
   gem 'autotest-rails'
@@ -95,8 +89,7 @@ end
 group :development do
   gem "spring"
   gem 'haml-rails'
-  gem 'nifty-generators'
-  gem 'quiet_assets'
+  gem 'byebug'
 end
 
 gem 'jquery-rails'

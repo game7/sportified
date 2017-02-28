@@ -17,15 +17,14 @@
 
 module Blocks
   class Text < Block
-    
-    def self.actions 
+
+    def self.actions
       %w{ edit }
     end
-    
-    hstore_accessor :options,
-      title: :string,
-      caption: :string,
-      body: :string
-    
+
+    store_accessor :options, :title,
+                             :caption,
+                             :body
+
   end
 end

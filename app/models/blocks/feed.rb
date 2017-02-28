@@ -18,17 +18,24 @@
 module Blocks
   class Feed < Block
 
-    def self.actions 
+    def self.actions
       %w{ edit }
     end
-    
-    hstore_accessor :options,
-      post_count: :integer,
-      tags: :array
-  
+
+    store_accessor :options, :post_count,
+                             :tags
+
+    def tags=(array)
+      super(array.join('||'))
+    end
+
+    def tags
+      super.split('||')
+    end
+
     def posts
       Post.tagged_with(self.tags, :any => true).newest_first.limit(self.post_count)
     end
-    
+
   end
 end

@@ -17,13 +17,12 @@
 
 module Blocks
   class Markup < Block
-    
-    def self.actions 
+
+    def self.actions
       %w{ edit }
     end
-    
-    hstore_accessor :options,
-      body: :string
-    
+
+    store_accessor :options, :body
+
   end
 end

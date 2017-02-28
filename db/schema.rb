@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214043158) do
+ActiveRecord::Schema.define(version: 20170226202950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +36,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
   end
-
-  add_index "clubs", ["tenant_id"], name: "index_clubs_on_tenant_id", using: :btree
 
   create_table "credit_cards", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -54,11 +52,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "token_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["stripe_card_id"], name: "index_credit_cards_on_stripe_card_id", using: :btree
+    t.index ["tenant_id"], name: "index_credit_cards_on_tenant_id", using: :btree
+    t.index ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
   end
-
-  add_index "credit_cards", ["stripe_card_id"], name: "index_credit_cards_on_stripe_card_id", using: :btree
-  add_index "credit_cards", ["tenant_id"], name: "index_credit_cards_on_tenant_id", using: :btree
-  add_index "credit_cards", ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -94,19 +91,18 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.integer  "home_team_locker_room_id"
     t.integer  "away_team_locker_room_id"
     t.integer  "program_id"
+    t.index ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
+    t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
+    t.index ["division_id"], name: "index_events_on_division_id", using: :btree
+    t.index ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
+    t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
+    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
+    t.index ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
+    t.index ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
+    t.index ["program_id"], name: "index_events_on_program_id", using: :btree
+    t.index ["season_id"], name: "index_events_on_season_id", using: :btree
+    t.index ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
   end
-
-  add_index "events", ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
-  add_index "events", ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
-  add_index "events", ["division_id"], name: "index_events_on_division_id", using: :btree
-  add_index "events", ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
-  add_index "events", ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
-  add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
-  add_index "events", ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
-  add_index "events", ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
-  add_index "events", ["program_id"], name: "index_events_on_program_id", using: :btree
-  add_index "events", ["season_id"], name: "index_events_on_season_id", using: :btree
-  add_index "events", ["tenant_id"], name: "index_events_on_tenant_id", using: :btree
 
   create_table "facilities", force: :cascade do |t|
     t.string   "type"
@@ -117,11 +113,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "preference"
+    t.index ["location_id"], name: "index_facilities_on_location_id", using: :btree
+    t.index ["parent_id"], name: "index_facilities_on_parent_id", using: :btree
+    t.index ["tenant_id"], name: "index_facilities_on_tenant_id", using: :btree
   end
-
-  add_index "facilities", ["location_id"], name: "index_facilities_on_location_id", using: :btree
-  add_index "facilities", ["parent_id"], name: "index_facilities_on_parent_id", using: :btree
-  add_index "facilities", ["tenant_id"], name: "index_facilities_on_tenant_id", using: :btree
 
   create_table "hockey_goals", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -141,11 +136,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "scored_by_number"
     t.string   "assisted_by_number"
     t.string   "also_assisted_by_number"
+    t.index ["mongo_id"], name: "index_hockey_goals_on_mongo_id", using: :btree
+    t.index ["statsheet_id"], name: "index_hockey_goals_on_statsheet_id", using: :btree
+    t.index ["tenant_id"], name: "index_hockey_goals_on_tenant_id", using: :btree
   end
-
-  add_index "hockey_goals", ["mongo_id"], name: "index_hockey_goals_on_mongo_id", using: :btree
-  add_index "hockey_goals", ["statsheet_id"], name: "index_hockey_goals_on_statsheet_id", using: :btree
-  add_index "hockey_goals", ["tenant_id"], name: "index_hockey_goals_on_tenant_id", using: :btree
 
   create_table "hockey_goaltenders", force: :cascade do |t|
     t.string   "type"
@@ -178,13 +172,12 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "jersey_number"
     t.string   "first_name"
     t.string   "last_name"
+    t.index ["mongo_id"], name: "index_hockey_goaltenders_on_mongo_id", using: :btree
+    t.index ["player_id"], name: "index_hockey_goaltenders_on_player_id", using: :btree
+    t.index ["statsheet_id"], name: "index_hockey_goaltenders_on_statsheet_id", using: :btree
+    t.index ["team_id"], name: "index_hockey_goaltenders_on_team_id", using: :btree
+    t.index ["tenant_id"], name: "index_hockey_goaltenders_on_tenant_id", using: :btree
   end
-
-  add_index "hockey_goaltenders", ["mongo_id"], name: "index_hockey_goaltenders_on_mongo_id", using: :btree
-  add_index "hockey_goaltenders", ["player_id"], name: "index_hockey_goaltenders_on_player_id", using: :btree
-  add_index "hockey_goaltenders", ["statsheet_id"], name: "index_hockey_goaltenders_on_statsheet_id", using: :btree
-  add_index "hockey_goaltenders", ["team_id"], name: "index_hockey_goaltenders_on_team_id", using: :btree
-  add_index "hockey_goaltenders", ["tenant_id"], name: "index_hockey_goaltenders_on_tenant_id", using: :btree
 
   create_table "hockey_penalties", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -207,11 +200,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "committed_by_number"
+    t.index ["mongo_id"], name: "index_hockey_penalties_on_mongo_id", using: :btree
+    t.index ["statsheet_id"], name: "index_hockey_penalties_on_statsheet_id", using: :btree
+    t.index ["tenant_id"], name: "index_hockey_penalties_on_tenant_id", using: :btree
   end
-
-  add_index "hockey_penalties", ["mongo_id"], name: "index_hockey_penalties_on_mongo_id", using: :btree
-  add_index "hockey_penalties", ["statsheet_id"], name: "index_hockey_penalties_on_statsheet_id", using: :btree
-  add_index "hockey_penalties", ["tenant_id"], name: "index_hockey_penalties_on_tenant_id", using: :btree
 
   create_table "hockey_skaters", force: :cascade do |t|
     t.string   "type"
@@ -239,13 +231,12 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.index ["mongo_id"], name: "index_hockey_skaters_on_mongo_id", using: :btree
+    t.index ["player_id"], name: "index_hockey_skaters_on_player_id", using: :btree
+    t.index ["statsheet_id"], name: "index_hockey_skaters_on_statsheet_id", using: :btree
+    t.index ["team_id"], name: "index_hockey_skaters_on_team_id", using: :btree
+    t.index ["tenant_id"], name: "index_hockey_skaters_on_tenant_id", using: :btree
   end
-
-  add_index "hockey_skaters", ["mongo_id"], name: "index_hockey_skaters_on_mongo_id", using: :btree
-  add_index "hockey_skaters", ["player_id"], name: "index_hockey_skaters_on_player_id", using: :btree
-  add_index "hockey_skaters", ["statsheet_id"], name: "index_hockey_skaters_on_statsheet_id", using: :btree
-  add_index "hockey_skaters", ["team_id"], name: "index_hockey_skaters_on_team_id", using: :btree
-  add_index "hockey_skaters", ["tenant_id"], name: "index_hockey_skaters_on_tenant_id", using: :btree
 
   create_table "hockey_statsheets", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -270,10 +261,9 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["mongo_id"], name: "index_hockey_statsheets_on_mongo_id", using: :btree
+    t.index ["tenant_id"], name: "index_hockey_statsheets_on_tenant_id", using: :btree
   end
-
-  add_index "hockey_statsheets", ["mongo_id"], name: "index_hockey_statsheets_on_mongo_id", using: :btree
-  add_index "hockey_statsheets", ["tenant_id"], name: "index_hockey_statsheets_on_tenant_id", using: :btree
 
   create_table "invoicing_ledger_items", force: :cascade do |t|
     t.integer  "sender_id"
@@ -332,17 +322,15 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "updated_at"
     t.string   "standings_schema_id"
     t.integer  "program_id"
+    t.index ["program_id"], name: "index_league_divisions_on_program_id", using: :btree
   end
-
-  add_index "league_divisions", ["program_id"], name: "index_league_divisions_on_program_id", using: :btree
 
   create_table "league_divisions_seasons", force: :cascade do |t|
     t.integer "division_id"
     t.integer "season_id"
+    t.index ["division_id"], name: "index_league_divisions_seasons_on_division_id", using: :btree
+    t.index ["season_id"], name: "index_league_divisions_seasons_on_season_id", using: :btree
   end
-
-  add_index "league_divisions_seasons", ["division_id"], name: "index_league_divisions_seasons_on_division_id", using: :btree
-  add_index "league_divisions_seasons", ["season_id"], name: "index_league_divisions_seasons_on_season_id", using: :btree
 
   create_table "league_seasons", force: :cascade do |t|
     t.string   "name"
@@ -353,9 +341,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "program_id"
+    t.index ["program_id"], name: "index_league_seasons_on_program_id", using: :btree
   end
-
-  add_index "league_seasons", ["program_id"], name: "index_league_seasons_on_program_id", using: :btree
 
   create_table "league_teams", force: :cascade do |t|
     t.string   "name"
@@ -400,12 +387,11 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.integer  "current_run"
     t.integer  "longest_win_streak"
     t.integer  "longest_loss_streak"
+    t.index ["club_id"], name: "index_league_teams_on_club_id", using: :btree
+    t.index ["division_id"], name: "index_league_teams_on_division_id", using: :btree
+    t.index ["season_id"], name: "index_league_teams_on_season_id", using: :btree
+    t.index ["tenant_id"], name: "index_league_teams_on_tenant_id", using: :btree
   end
-
-  add_index "league_teams", ["club_id"], name: "index_league_teams_on_club_id", using: :btree
-  add_index "league_teams", ["division_id"], name: "index_league_teams_on_division_id", using: :btree
-  add_index "league_teams", ["season_id"], name: "index_league_teams_on_season_id", using: :btree
-  add_index "league_teams", ["tenant_id"], name: "index_league_teams_on_tenant_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -414,9 +400,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["tenant_id"], name: "index_locations_on_tenant_id", using: :btree
   end
-
-  add_index "locations", ["tenant_id"], name: "index_locations_on_tenant_id", using: :btree
 
   create_table "logged_exceptions", force: :cascade do |t|
     t.string   "exception_class"
@@ -447,10 +432,9 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["ancestry"], name: "index_pages_on_ancestry", using: :btree
+    t.index ["tenant_id"], name: "index_pages_on_tenant_id", using: :btree
   end
-
-  add_index "pages", ["ancestry"], name: "index_pages_on_ancestry", using: :btree
-  add_index "pages", ["tenant_id"], name: "index_pages_on_tenant_id", using: :btree
 
   create_table "players", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -466,12 +450,11 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "updated_at"
     t.boolean  "substitute"
     t.string   "position"
+    t.index ["email"], name: "index_players_on_email", using: :btree
+    t.index ["mongo_id"], name: "index_players_on_mongo_id", using: :btree
+    t.index ["team_id"], name: "index_players_on_team_id", using: :btree
+    t.index ["tenant_id"], name: "index_players_on_tenant_id", using: :btree
   end
-
-  add_index "players", ["email"], name: "index_players_on_email", using: :btree
-  add_index "players", ["mongo_id"], name: "index_players_on_mongo_id", using: :btree
-  add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
-  add_index "players", ["tenant_id"], name: "index_players_on_tenant_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -483,9 +466,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["tenant_id"], name: "index_posts_on_tenant_id", using: :btree
   end
-
-  add_index "posts", ["tenant_id"], name: "index_posts_on_tenant_id", using: :btree
 
   create_table "programs", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -495,9 +477,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "slug"
+    t.index ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
   end
-
-  add_index "programs", ["tenant_id"], name: "index_programs_on_tenant_id", using: :btree
 
   create_table "rms_form_elements", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -509,19 +490,17 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.boolean  "required"
+    t.index ["template_id", "name"], name: "index_rms_form_elements_on_template_id_and_name", unique: true, using: :btree
+    t.index ["tenant_id"], name: "index_rms_form_elements_on_tenant_id", using: :btree
   end
-
-  add_index "rms_form_elements", ["template_id", "name"], name: "index_rms_form_elements_on_template_id_and_name", unique: true, using: :btree
-  add_index "rms_form_elements", ["tenant_id"], name: "index_rms_form_elements_on_tenant_id", using: :btree
 
   create_table "rms_form_packets", force: :cascade do |t|
     t.integer  "tenant_id"
     t.string   "name",       limit: 40
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["tenant_id"], name: "index_rms_form_packets_on_tenant_id", using: :btree
   end
-
-  add_index "rms_form_packets", ["tenant_id"], name: "index_rms_form_packets_on_tenant_id", using: :btree
 
   create_table "rms_form_templates", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -530,9 +509,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.integer  "position"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["tenant_id"], name: "index_rms_form_templates_on_tenant_id", using: :btree
   end
-
-  add_index "rms_form_templates", ["tenant_id"], name: "index_rms_form_templates_on_tenant_id", using: :btree
 
   create_table "rms_forms", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -542,9 +520,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.boolean  "completed",       default: false, null: false
+    t.index ["tenant_id"], name: "index_rms_forms_on_tenant_id", using: :btree
   end
-
-  add_index "rms_forms", ["tenant_id"], name: "index_rms_forms_on_tenant_id", using: :btree
 
   create_table "rms_items", force: :cascade do |t|
     t.integer  "parent_id"
@@ -556,10 +533,9 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.integer  "tenant_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.index ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id", using: :btree
+    t.index ["tenant_id"], name: "index_rms_items_on_tenant_id", using: :btree
   end
-
-  add_index "rms_items", ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id", using: :btree
-  add_index "rms_items", ["tenant_id"], name: "index_rms_items_on_tenant_id", using: :btree
 
   create_table "rms_registrations", force: :cascade do |t|
     t.integer  "tenant_id"
@@ -577,11 +553,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "confirmation_code"
     t.boolean  "active"
     t.date     "birthdate"
+    t.index ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
+    t.index ["tenant_id"], name: "index_rms_registrations_on_tenant_id", using: :btree
+    t.index ["user_id"], name: "index_rms_registrations_on_user_id", using: :btree
   end
-
-  add_index "rms_registrations", ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
-  add_index "rms_registrations", ["tenant_id"], name: "index_rms_registrations_on_tenant_id", using: :btree
-  add_index "rms_registrations", ["user_id"], name: "index_rms_registrations_on_user_id", using: :btree
 
   create_table "rms_variants", force: :cascade do |t|
     t.integer  "item_id"
@@ -594,9 +569,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.integer  "form_packet_id"
+    t.index ["tenant_id"], name: "index_rms_variants_on_tenant_id", using: :btree
   end
-
-  add_index "rms_variants", ["tenant_id"], name: "index_rms_variants_on_tenant_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
     t.integer  "page_id"
@@ -605,9 +579,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["page_id"], name: "index_sections_on_page_id", using: :btree
   end
-
-  add_index "sections", ["page_id"], name: "index_sections_on_page_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -617,17 +590,22 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
   end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "tenants", force: :cascade do |t|
     t.string   "name"
@@ -654,10 +632,9 @@ ActiveRecord::Schema.define(version: 20161214043158) do
   create_table "tenants_users", id: false, force: :cascade do |t|
     t.integer "tenant_id"
     t.integer "user_id"
+    t.index ["tenant_id"], name: "index_tenants_users_on_tenant_id", using: :btree
+    t.index ["user_id"], name: "index_tenants_users_on_user_id", using: :btree
   end
-
-  add_index "tenants_users", ["tenant_id"], name: "index_tenants_users_on_tenant_id", using: :btree
-  add_index "tenants_users", ["user_id"], name: "index_tenants_users_on_user_id", using: :btree
 
   create_table "user_roles", force: :cascade do |t|
     t.integer  "user_id"
@@ -667,9 +644,8 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "mongo_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id", using: :btree
   end
-
-  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -691,11 +667,10 @@ ActiveRecord::Schema.define(version: 20161214043158) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "stripe_customer_id"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "credit_cards", "tenants"
   add_foreign_key "credit_cards", "users"

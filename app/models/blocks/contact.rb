@@ -17,18 +17,17 @@
 
 module Blocks
   class Contact < Block
-    
-    def self.actions 
+
+    def self.actions
       %w{ edit }
     end
-    
-    hstore_accessor :options,
-      first: :string,
-      last: :string,
-      title: :string,
-      phone: :string,
-      email: :string,
-      show_email: :boolean
-      
+
+    store_accessor :options, :first,
+                             :last,
+                             :title,
+                             :phone,
+                             :email,
+                             :show_email
+
   end
 end
