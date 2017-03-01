@@ -7,9 +7,6 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 today = Date.today
 
-puts 'EMPTY THE MONGODB DATABASE'
-Mongoid.purge!
-
 puts 'TENANT'
 Tenant.current = Tenant.create!(:name => 'Sportified Test', :host => 'localhost', :theme => 'oia', :link_url => '')
 
@@ -107,6 +104,3 @@ rounds.times do |round|
   game_times.push @a
   game_date = game_date.advance(:weeks => 1)
 end
-
-
-

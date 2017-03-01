@@ -71,8 +71,6 @@ end
 group :test do
   gem 'rspec', '>= 3.5'
   gem 'rspec-rails', '~> 3.5'
-  gem "remarkable_mongoid", ">= 0.5.0"
-  gem 'machinist_mongo', :require => 'machinist/mongoid'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'webrat'
