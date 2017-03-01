@@ -60,6 +60,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
 end
 
+gem 'webpacker', github: 'rails/webpacker'
+
 
 #gem 'pages', :path => "vendor/engines/pages"
 
