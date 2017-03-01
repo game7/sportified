@@ -123,8 +123,8 @@
     # end
 
     resources :teams, :only => :index
-    resources :events
-    resources :games do
+    # resources :events
+    resources :games, :only => [] do
       resource :result, :controller => :game_result, :only => [:edit, :update]
       resource :statsheet, :only => [:edit] do
         get 'print', on: :member
