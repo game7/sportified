@@ -76,7 +76,7 @@ module Rms
 
     def application_fee_in_cents
       [
-        (price_in_cents * 0.02).to_i,
+        (price_in_cents * 0.04).to_i,
         50
       ].max
     end
