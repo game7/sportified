@@ -1,9 +1,13 @@
 Rms::Engine.routes.draw do
-  
+
+
   get 'dashboard', to: 'dashboard#index'
 
   resources :items
   resources :forms
+  resources :form_templates, shallow: true do
+    resources :form_elements, except: [:index, :show]
+  end
 
   resources :registrations, :only => [:index] do
     collection do

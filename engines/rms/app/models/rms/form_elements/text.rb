@@ -16,5 +16,8 @@
 
 module Rms
   class FormElements::Text < FormElement
+    def self.model_name
+      FormElement.model_name
+    end
   end
 end

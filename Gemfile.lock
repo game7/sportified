@@ -10,7 +10,7 @@ PATH
   remote: engines/rms
   specs:
     rms (0.0.1)
-      haml
+      haml-rails
       rails (~> 5.0.1)
 
 GEM

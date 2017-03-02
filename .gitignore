@@ -12,3 +12,4 @@ bower_components/
 jspm_packages/
 public/client/dist/**/*
 .idea
+.byebug_history

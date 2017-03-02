@@ -1,0 +1,28 @@
+
+%h1 Form Templates
+
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Type
+
+  %tbody
+    - @form_template.elements.each do |element|
+      %tr
+        %td= element.name
+        %td= element.type.demodulize
+        %td
+          = link_to 'Edit', edit_form_element_path(element)
+          = " | "
+          -# = link_to 'Destroy', element, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+.btn-group
+  %button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown")
+    New Form Element
+    %span.caret
+  %ul.dropdown-menu
+    %li= link_to "Text", new_form_template_form_element_path(@form_template, type: :text)
+    %li= link_to "Note", new_form_template_form_element_path(@form_template, type: :note)

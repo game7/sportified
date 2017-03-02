@@ -16,7 +16,7 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :packet, class_name: 'Rms::FormPacket'
-    has_many :elements, -> {order(:position)},
+    has_many :elements, -> { order(:position) },
                       class_name: 'Rms::FormElement',
                       foreign_key: 'template_id'
     has_many :forms, foreign_key: 'template_id'

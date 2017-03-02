@@ -1,0 +1,7 @@
+= simple_form_for [template, element] do |f|
+  = f.input :type, :as => :hidden
+  .row
+    .col-sm-6
+      = f.input :name
+
+  = f.button :wrapped, :cancel => return_url
