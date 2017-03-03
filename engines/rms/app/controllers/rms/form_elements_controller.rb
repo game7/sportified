@@ -12,7 +12,7 @@ module Rms
 
     def create
       @element = @template.elements.build(element_params)
-      @element.position = @template.elements.count + 1
+      @element.position = @template.elements.count + 1 unless @element.position.present?
       if @element.save
         redirect_to @template, notice: 'Form Element was successfully created.'
       else
