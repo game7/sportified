@@ -1,8 +1,0 @@
-class CreateRmsFormElements < ActiveRecord::Migration[5.0]
-  def change
-    create_table :rms_form_elements do |t|
-
-      t.timestamps
-    end
-  end
-end
