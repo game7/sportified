@@ -37,6 +37,24 @@
 #  away_team_locker_room_id  :integer
 #  program_id                :integer
 #
+# Indexes
+#
+#  index_events_on_away_team_id              (away_team_id)
+#  index_events_on_away_team_locker_room_id  (away_team_locker_room_id)
+#  index_events_on_division_id               (division_id)
+#  index_events_on_home_team_id              (home_team_id)
+#  index_events_on_home_team_locker_room_id  (home_team_locker_room_id)
+#  index_events_on_location_id               (location_id)
+#  index_events_on_mongo_id                  (mongo_id)
+#  index_events_on_playing_surface_id        (playing_surface_id)
+#  index_events_on_program_id                (program_id)
+#  index_events_on_season_id                 (season_id)
+#  index_events_on_tenant_id                 (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_9a9b98078e  (program_id => programs.id)
+#
 
 class League::Event < ::Event
 

@@ -10,6 +10,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_locations_on_tenant_id  (tenant_id)
+#
 
 class Location < ActiveRecord::Base
   include Sportified::TenantScoped

@@ -21,6 +21,11 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #
+# Indexes
+#
+#  index_pages_on_ancestry   (ancestry)
+#  index_pages_on_tenant_id  (tenant_id)
+#
 
 class Page < ActiveRecord::Base
   has_ancestry orphan_strategy: :rootify, cache_depth: true, touch: true

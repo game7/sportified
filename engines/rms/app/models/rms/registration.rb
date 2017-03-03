@@ -19,6 +19,20 @@
 #  active            :boolean
 #  birthdate         :date
 #
+# Indexes
+#
+#  index_rms_registrations_on_credit_card_id  (credit_card_id)
+#  index_rms_registrations_on_tenant_id       (tenant_id)
+#  index_rms_registrations_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_0d5c6ccd80  (form_packet_id => rms_form_packets.id)
+#  fk_rails_aab63f75e7  (user_id => users.id)
+#  fk_rails_bb8c231558  (variant_id => rms_variants.id)
+#  fk_rails_bf80a14f52  (tenant_id => tenants.id)
+#  fk_rails_e8e25427ad  (credit_card_id => credit_cards.id)
+#
 
 module Rms
   class Registration < ActiveRecord::Base

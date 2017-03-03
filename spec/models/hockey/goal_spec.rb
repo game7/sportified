@@ -21,6 +21,12 @@
 #  assisted_by_number      :string
 #  also_assisted_by_number :string
 #
+# Indexes
+#
+#  index_hockey_goals_on_mongo_id      (mongo_id)
+#  index_hockey_goals_on_statsheet_id  (statsheet_id)
+#  index_hockey_goals_on_tenant_id     (tenant_id)
+#
 
 require 'rails_helper'
 

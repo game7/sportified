@@ -13,6 +13,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_posts_on_tenant_id  (tenant_id)
+#
 
 class Post < ActiveRecord::Base
   include Sportified::TenantScoped  

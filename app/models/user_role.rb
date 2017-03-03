@@ -11,6 +11,10 @@
 #  updated_at :datetime
 #  mongo_id   :string
 #
+# Indexes
+#
+#  index_user_roles_on_user_id  (user_id)
+#
 
 class UserRole < ActiveRecord::Base
 

@@ -26,6 +26,11 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+# Indexes
+#
+#  index_hockey_statsheets_on_mongo_id   (mongo_id)
+#  index_hockey_statsheets_on_tenant_id  (tenant_id)
+#
 
 class Hockey::StatsheetSerializer < ActiveModel::Serializer
   type 'hockey/statsheet'

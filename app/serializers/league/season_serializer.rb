@@ -12,6 +12,15 @@
 #  updated_at :datetime
 #  program_id :integer
 #
+# Indexes
+#
+#  index_league_seasons_on_program_id  (program_id)
+#
+# Foreign Keys
+#
+#  fk_rails_43f69705ce  (program_id => programs.id)
+#  fk_rails_9ae86e9659  (program_id => programs.id)
+#
 
 class League::SeasonSerializer < ActiveModel::Serializer
   type :season

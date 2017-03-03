@@ -16,6 +16,14 @@
 #  standings_schema_id :string
 #  program_id          :integer
 #
+# Indexes
+#
+#  index_league_divisions_on_program_id  (program_id)
+#
+# Foreign Keys
+#
+#  fk_rails_a1b344ef36  (program_id => programs.id)
+#
 
 require 'rails_helper'
 

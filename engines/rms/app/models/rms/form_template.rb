@@ -10,6 +10,15 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_rms_form_templates_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_1790a1d43c  (tenant_id => tenants.id)
+#  fk_rails_6f2a664330  (packet_id => rms_form_packets.id)
+#
 
 module Rms
   class FormTemplate < ActiveRecord::Base

@@ -21,6 +21,11 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #
+# Indexes
+#
+#  index_pages_on_ancestry   (ancestry)
+#  index_pages_on_tenant_id  (tenant_id)
+#
 
 require 'rails_helper'
 
