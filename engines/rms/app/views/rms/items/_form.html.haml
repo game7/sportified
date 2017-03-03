@@ -9,6 +9,9 @@
       .row
         .col-xs-12
           = f.input :description
+      .row
+        .col-xs-12
+          = f.input :active, :wrapper => :vertical_boolean
       -# .row
       -#   .col-sm-2
       -#     = f.input :quantity_allowed, { placeholder: 'No Limit' }

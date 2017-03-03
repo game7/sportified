@@ -1,7 +1,7 @@
 <% if user_signed_in? %>
   <li>
     <div class="divider"></div>
-    <%= link_to('Logout', main_app.destroy_user_session_path) %>
+    <%= link_to('Logout', main_app.destroy_user_session_path, :method => :delete) %>
   </li>
 <% elsif 0 == 1 %>
   <li>

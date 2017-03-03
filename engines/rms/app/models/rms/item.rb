@@ -51,6 +51,8 @@ module Rms
       self.quantity_available = self.quantity_allowed
     end
 
+    scope :active, -> { where(active: true) }
+
   end
 
 end
