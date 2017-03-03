@@ -29,7 +29,7 @@ module Rms
       if current_user_is_admin?
         add_area_menu_item 'Home'   , items_path
         add_area_menu_item 'Dashboard' , dashboard_path
-        add_area_menu_item 'Forms', form_templates_path
+        add_area_menu_item 'Forms', form_packets_path
       end
     end
 
