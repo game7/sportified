@@ -2,6 +2,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class FormPacketsController < ApplicationController
+    before_action :verify_admin
     before_action :set_form_packet, only: [:show, :edit, :update, :destroy]
     before_action :mark_return_point, only: [:new, :edit, :destroy]
 
