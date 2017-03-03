@@ -27,6 +27,10 @@
 module Rms
   class FormElements::Agreement < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end    
+
     store_accessor :properties, :terms
 
     def validate(record)

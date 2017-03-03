@@ -27,6 +27,10 @@
 module Rms
   class FormElements::Address < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end    
+
     def validate(record)
       if required?
         permitted_params.select{|p| p !~ /street2/}.each do |param|

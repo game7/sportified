@@ -27,11 +27,18 @@
 module Rms
   class FormElements::Note < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end
+
     store_accessor :properties, :rows
 
     def rows
       super || 3
     end
+
+    validates :rows, presence: true,
+                     numericality: { integer_only: true }
 
   end
 end

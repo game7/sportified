@@ -27,6 +27,10 @@
 module Rms
   class FormElements::Email < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end    
+
     def validate(record)
       super(record)
       record.errors.add(name, "is not an email address") unless

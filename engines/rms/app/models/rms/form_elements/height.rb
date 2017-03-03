@@ -27,6 +27,10 @@
 module Rms
   class FormElements::Height < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end    
+
     def options
       ('4'..'6').to_a.collect{|f| ('0'..'11').to_a.collect{|i| "#{f}-#{i}"} }.flatten
     end

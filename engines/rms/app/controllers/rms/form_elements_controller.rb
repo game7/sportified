@@ -2,35 +2,40 @@ require_dependency "rms/application_controller"
 
 module Rms
   class FormElementsController < ApplicationController
-    before_action :mark_return_point, only: [:new, :edit]
+    before_action :set_template, only: [:new, :create]
+    before_action :set_element, only: [:edit, :update, :destroy]
+    before_action :mark_return_point, only: [:new, :edit, :destroy]
 
     def new
-      render locals: {
-        template: template,
-        element: template.elements.build(type: element_type)
-      }
+      @element = @template.elements.build(type: "Rms::FormElements::#{params[:type].classify}")
     end
 
     def create
-      element = template.elements.build(element_params)
-      if element.save
-        redirect_to template, notice: 'Form Element was successfully created.'
+      @element = @template.elements.build(element_params)
+      @element.position = @template.elements.count + 1
+      if @element.save
+        redirect_to @template, notice: 'Form Element was successfully created.'
       else
-        puts element.errors.messages
         flash[:error] = "Form Element could not be created"
         render :new
       end
     end
 
     def edit
-      render locals: {
-        template: nil,
-        element: element
-      }
     end
 
     def update
+      if @element.update_attributes(element_params)
+        redirect_to @element.template, notice: 'Form Element was successfully updated.'
+      else
+        flash[:error] = "Form Element could not be updated"
+        render :edit
+      end
+    end
 
+    def destroy
+      @element.destroy
+      redirect_to @element.template, notice: 'Element was successfully deleted.'
     end
 
     private
@@ -39,16 +44,12 @@ module Rms
         params.require(:form_element).permit!
       end
 
-      def element_type
-        "Rms::FormElements::#{params[:type].classify}"
+      def set_template
+        @template = FormTemplate.find(params[:form_template_id])
       end
 
-      def template
-        FormTemplate.find(params[:form_template_id])
-      end
-
-      def element
-        FormElement.find(params[:id])
+      def set_element
+        @element = FormElement.find(params[:id])
       end
 
   end

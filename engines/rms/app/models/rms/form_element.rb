@@ -51,5 +51,12 @@ module Rms
     def accessors
       [ self.name ]
     end
+
+    before_save :format_name
+
+    def format_name
+      self.name = self.name.parameterize(separator: '_')
+    end
+
   end
 end

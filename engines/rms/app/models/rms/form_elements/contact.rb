@@ -27,6 +27,10 @@
 module Rms
   class FormElements::Contact < FormElement
 
+    def self.model_name
+      FormElement.model_name
+    end    
+
     def validate(record)
       if required?
         permitted_params.each do |param|

@@ -25,21 +25,14 @@
 #
 
 module Rms
-  class FormElements::Choice < FormElement
-
+  class FormElements::Weight < FormElement
     def self.model_name
       FormElement.model_name
-    end    
-
-    store_accessor :properties, :options
-
-    def options
-      super || ''
     end
 
-    def options_as_list
-      options.split(/\r?\n/)
+    def validate(record)
+      super(record)
+      record.errors.add(name, "is not a valid weight") unless 40..350.include?(record.data[name])
     end
-
   end
 end
