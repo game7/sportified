@@ -1,5 +1,5 @@
 require 'haml'
-require 'byebug'
+
 module Rms
   class Engine < ::Rails::Engine
     isolate_namespace Rms
