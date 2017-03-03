@@ -3,6 +3,7 @@ module Rms
     protect_from_forgery with: :exception
     layout 'application'
     before_filter :check_stripe_configuration
+    before_filter :set_area_navigation
 
     protected
 
@@ -22,5 +23,15 @@ module Rms
                        "  In order to receive payments you must first "\
                        " <a href=\"#{stripe_url}\">connect to stripe</a>."
     end
+
+    def set_area_navigation
+      super
+      if current_user_is_admin?
+        add_area_menu_item 'Home'   , items_path
+        add_area_menu_item 'Dashboard' , dashboard_path
+        add_area_menu_item 'Forms', form_templates_path
+      end
+    end
+
   end
 end
