@@ -8,7 +8,7 @@
       %th Type
 
   %tbody
-    - @form_template.elements.each do |element|
+    - @form_template.elements.order(:position).each do |element|
       %tr
         %td= element.name
         %td= element.type.demodulize
