@@ -1,10 +1,10 @@
 - title 'Dashboard'
 - period = params[:period]
 .btn-group{ role: 'group', 'aria-label': '...'}
-  %a.btn.btn-default{ class: "#{'active' unless period }", href: url_for() } Total
-  %a.btn.btn-default{ class: "#{'active' if period == 'month' }", href: url_for(params.permit(:period).merge(:period => 'month')) } Month
-  %a.btn.btn-default{ class: "#{'active' if period == 'week' }", href: url_for(params.permit(:period).merge(:period => 'week')) } Week
   %a.btn.btn-default{ class: "#{'active' if period == 'day' }", href: url_for(params.permit(:period).merge(:period => 'day')) } Today
+  %a.btn.btn-default{ class: "#{'active' if period == 'week' }", href: url_for(params.permit(:period).merge(:period => 'week')) } Week
+  %a.btn.btn-default{ class: "#{'active' if period == 'month' }", href: url_for(params.permit(:period).merge(:period => 'month')) } Month
+  %a.btn.btn-default{ class: "#{'active' unless period }", href: url_for() } Total
 %br
 %br
 %table.table.table-bordered.table-striped
