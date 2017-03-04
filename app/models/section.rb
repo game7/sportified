@@ -10,6 +10,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_sections_on_page_id  (page_id)
+#
 
 class Section < ActiveRecord::Base
 

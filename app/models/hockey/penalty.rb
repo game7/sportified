@@ -24,6 +24,12 @@
 #  updated_at          :datetime
 #  committed_by_number :string
 #
+# Indexes
+#
+#  index_hockey_penalties_on_mongo_id      (mongo_id)
+#  index_hockey_penalties_on_statsheet_id  (statsheet_id)
+#  index_hockey_penalties_on_tenant_id     (tenant_id)
+#
 
 class Hockey::Penalty < ActiveRecord::Base
   include Sportified::TenantScoped

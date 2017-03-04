@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @form_packet.name
+
+= link_to 'Edit', edit_form_packet_path(@form_packet)
+\|
+= link_to 'Back', form_packets_path

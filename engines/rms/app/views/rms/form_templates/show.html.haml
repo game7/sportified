@@ -1,0 +1,25 @@
+
+- title @form_template.name
+- page_actions do
+  .btn-group
+    %button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown")
+      New Form Element
+      %span.caret
+    %ul.dropdown-menu
+      %li= link_to "Text", new_form_template_form_element_path(@form_template, type: :text)
+      %li= link_to "Note", new_form_template_form_element_path(@form_template, type: :note)
+      %li= link_to "Choice", new_form_template_form_element_path(@form_template, type: :choice)
+      %li= link_to "Email", new_form_template_form_element_path(@form_template, type: :email)
+      %li= link_to "Contact", new_form_template_form_element_path(@form_template, type: :contact)
+      %li= link_to "Height", new_form_template_form_element_path(@form_template, type: :height)
+      %li= link_to "Weight", new_form_template_form_element_path(@form_template, type: :weight)
+      %li= link_to "Agreement", new_form_template_form_element_path(@form_template, type: :agreement)
+
+= simple_form_for :form do |f|
+  .list-group
+    - @form_template.elements.each do |element|
+      .list-group-item
+        .actions.pull-right
+          = link_to 'Edit', edit_form_element_path(element), class: 'btn btn-default btn-sm'
+          = link_to 'Delete', form_element_path(element), :method => :delete, :class => 'btn btn-default btn-sm', :data => { :confirm => 'Are you sure?' }
+        = render "rms/registrations/elements/#{element.partial}", element: element, builder: f

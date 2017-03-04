@@ -8,6 +8,14 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_rms_form_packets_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_b14511831d  (tenant_id => tenants.id)
+#
 
 module Rms
   class FormPacket < ActiveRecord::Base

@@ -1,5 +1,5 @@
 <div class="btn-group">
-  <%= link_to icon('chevron-left'), url_for(params.merge(date: prev_date, view: params[:view])), :class => "btn btn-default" %>
+  <%= link_to icon('chevron-left'), url_for(params.merge(date: prev_date, view: params.permit![:view])), :class => "btn btn-default" %>
   <%= link_to icon('chevron-right'), url_for(params.merge(date: next_date, view: params[:view])), :class => "btn btn-default" %>
 </div>
 <%= link_to "Today", url_for(params.merge(date: nil, view: params[:view])), :class => "btn btn-default #{'active' unless params[:date]}" %>

@@ -12,6 +12,16 @@
 #  updated_at  :datetime         not null
 #  preference  :string
 #
+# Indexes
+#
+#  index_facilities_on_location_id  (location_id)
+#  index_facilities_on_parent_id    (parent_id)
+#  index_facilities_on_tenant_id    (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_4d0a4ebac5  (location_id => locations.id)
+#
 
 class PlayingSurface < Facility
 

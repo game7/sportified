@@ -5,6 +5,12 @@
 .list-group
   - @items.each do |item|
     .list-group-item
-      %h4.list-group-item-heading= link_to item.title, item
+      %h4.list-group-item-heading
+        = link_to item.title, item
+        - if current_user_is_admin?
+          - if item.active?
+            .label.label-success.pull-right Active
+          - else
+            .label.label-default.pull-right Inactive
       %p= item.description
       %p.list-group-item-text= link_to 'More Info', item

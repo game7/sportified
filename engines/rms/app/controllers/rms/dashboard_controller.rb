@@ -2,6 +2,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class DashboardController < ApplicationController
+    before_action :verify_admin
 
     def index
       items = Item.all.order(:title)

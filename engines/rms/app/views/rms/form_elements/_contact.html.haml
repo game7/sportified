@@ -1,0 +1,13 @@
+= simple_form_for [@template, @element] do |f|
+  = f.input :type, :as => :hidden
+  .row
+    .col-sm-6
+      = f.input :name
+  .row
+    .col-sm-2
+      = f.input :position
+  .row
+    .col-sm-6
+      = f.input :required, wrapper: :vertical_boolean                
+
+  = f.button :wrapped, :cancel => return_url

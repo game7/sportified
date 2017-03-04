@@ -10,6 +10,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_clubs_on_tenant_id  (tenant_id)
+#
 
 require 'rails_helper'
 

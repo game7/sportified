@@ -16,6 +16,17 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
+# Indexes
+#
+#  index_credit_cards_on_stripe_card_id  (stripe_card_id)
+#  index_credit_cards_on_tenant_id       (tenant_id)
+#  index_credit_cards_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_069bf994f3  (user_id => users.id)
+#  fk_rails_a4103226a4  (tenant_id => tenants.id)
+#
 
 class CreditCard < ActiveRecord::Base
   include Sportified::TenantScoped

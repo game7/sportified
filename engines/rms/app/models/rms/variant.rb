@@ -14,6 +14,16 @@
 #  updated_at         :datetime         not null
 #  form_packet_id     :integer
 #
+# Indexes
+#
+#  index_rms_variants_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_3b7c9ecab7  (form_packet_id => rms_form_packets.id)
+#  fk_rails_465b879057  (item_id => rms_items.id)
+#  fk_rails_8455748692  (tenant_id => tenants.id)
+#
 
 module Rms
   class Variant < ActiveRecord::Base

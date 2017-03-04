@@ -1,0 +1,25 @@
+- title 'Form Packets'
+- page_actions do
+  = link_to 'New Form packet', new_form_packet_path, class: 'btn btn-primary'
+
+
+- @form_packets.each do |form_packet|
+  .panel.panel-default
+    .panel-heading
+      = form_packet.name
+      .pull-right
+        = link_to 'Edit', edit_form_packet_path(form_packet)
+        = " | "
+        = link_to 'Destroy', form_packet, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+
+    .list-group
+      - form_packet.templates.each do |template|
+        .list-group-item
+          = template.name
+          .actions.pull-right
+            = link_to 'Show', template
+            = " | "
+            = link_to 'Edit', edit_form_template_path(template)
+            = " | "
+            = link_to 'Destroy', template, :method => :delete, :data => { :confirm => 'Are you sure?' }

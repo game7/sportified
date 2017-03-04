@@ -12,6 +12,16 @@
 #  tenant_id          :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  active             :boolean
+#
+# Indexes
+#
+#  index_rms_items_on_parent_type_and_parent_id  (parent_type,parent_id)
+#  index_rms_items_on_tenant_id                  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_e5f42e0afb  (tenant_id => tenants.id)
 #
 
 module Rms
@@ -40,6 +50,8 @@ module Rms
     def set_quantity_available_to_quantity_allowed
       self.quantity_available = self.quantity_allowed
     end
+
+    scope :active, -> { where(active: true) }
 
   end
 

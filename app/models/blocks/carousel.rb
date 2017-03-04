@@ -12,7 +12,7 @@
 #  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
-#  file       :string`
+#  file       :string
 #
 
 module Blocks

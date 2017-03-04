@@ -46,6 +46,13 @@
 #  longest_win_streak  :integer
 #  longest_loss_streak :integer
 #
+# Indexes
+#
+#  index_league_teams_on_club_id      (club_id)
+#  index_league_teams_on_division_id  (division_id)
+#  index_league_teams_on_season_id    (season_id)
+#  index_league_teams_on_tenant_id    (tenant_id)
+#
 
 class League::TeamSerializer < ActiveModel::Serializer
   type :team

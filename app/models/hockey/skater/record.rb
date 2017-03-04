@@ -29,6 +29,14 @@
 #  first_name                :string
 #  last_name                 :string
 #
+# Indexes
+#
+#  index_hockey_skaters_on_mongo_id      (mongo_id)
+#  index_hockey_skaters_on_player_id     (player_id)
+#  index_hockey_skaters_on_statsheet_id  (statsheet_id)
+#  index_hockey_skaters_on_team_id       (team_id)
+#  index_hockey_skaters_on_tenant_id     (tenant_id)
+#
 
 class Hockey::Skater::Record < Hockey::Skater
 

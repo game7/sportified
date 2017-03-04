@@ -16,7 +16,8 @@
           .title{style: 'font-weight: bold'}= variant.title
           .description= variant.description
         %td= variant.price ? number_to_currency(variant.price) : 'FREE'
-        %td= link_to 'Register', new_variant_registration_path(variant), { class: 'btn btn-primary'}
+        - if @item.active
+          %td= link_to 'Register', new_variant_registration_path(variant), { class: 'btn btn-primary'}
 
 %hr
 = link_to 'Back', items_path

@@ -17,6 +17,13 @@
 #  substitute    :boolean
 #  position      :string
 #
+# Indexes
+#
+#  index_players_on_email      (email)
+#  index_players_on_mongo_id   (mongo_id)
+#  index_players_on_team_id    (team_id)
+#  index_players_on_tenant_id  (tenant_id)
+#
 
 class Player < ActiveRecord::Base
   include Sportified::TenantScoped

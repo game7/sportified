@@ -9,6 +9,7 @@ module Rms
 
     def index
       @items = Item.all
+      @items = @items.active unless current_user_is_admin?
       @stripe_url = stripe_url
     end
 
@@ -55,7 +56,7 @@ module Rms
       end
 
       def item_params
-        params.required(:item).permit(:title, :description, :quantity_allowed,
+        params.required(:item).permit(:title, :description, :quantity_allowed, :active,
           variants_attributes: [ :id, :title, :description, :form_packet_id, :quantity_allowed, :price, :_destroy ])
       end
 
