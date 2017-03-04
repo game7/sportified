@@ -13,3 +13,4 @@ jspm_packages/
 public/client/dist/**/*
 .idea
 .byebug_history
+yarn.lock
