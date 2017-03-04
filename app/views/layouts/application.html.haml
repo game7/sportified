@@ -48,6 +48,7 @@
       #main
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
+        = javascript_pack_tag 'application'
         = yield
     #footer.container
       = render 'layouts/social'

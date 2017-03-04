@@ -15,6 +15,9 @@ gem 'sass-rails', '~> 5.0.4'
 gem "sprockets"
 gem "sprockets-es6"
 
+gem 'webpacker', github: 'rails/webpacker'
+
+
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-sass', '~> 4.6.2'
@@ -45,6 +48,8 @@ gem 'fog'
 gem 'rmagick', '~> 2.13.4'
 gem 'remotipart', '~> 1.3.1'
 
+gem 'haml-rails'
+
 gem "simple_calendar", "~> 2.0"
 
 gem 'invoicing', '~> 1.0.1'
@@ -60,7 +65,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
 end
 
-gem 'webpacker', github: 'rails/webpacker'
 
 
 #gem 'pages', :path => "vendor/engines/pages"
@@ -88,8 +92,8 @@ end
 
 group :development do
   gem "spring"
-  gem 'haml-rails'
   gem 'byebug'
+  gem 'foreman'
 end
 
 gem 'jquery-rails'
