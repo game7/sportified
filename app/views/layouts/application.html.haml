@@ -49,8 +49,9 @@
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
         = yield
-    #footer.container
-      = render 'layouts/social'
+    #footer.jagged-border
+      = render 'layouts/footer'
+      -# = render 'layouts/social'
     = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript

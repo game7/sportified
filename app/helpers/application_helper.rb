@@ -1,8 +1,12 @@
 module ApplicationHelper
 
 
-  def icon(css_class, label = nil)
-    content_tag(:i, nil, :class => "fa fa-#{css_class}") + label
+  def icon(name, label = nil)
+    content_tag(:i, nil, :class => "fa fa-#{name}") + ' ' + label
+  end
+
+  def iconify(name, label)
+    icon(name, label)
   end
 
   def theme

@@ -1,4 +1,4 @@
-.social
+.social.clearfix
   - unless Tenant.current.twitter_id.blank?
     = link_to(icon('twitter'), "http://twitter.com/" + Tenant.current.twitter_id, { :target => "_blank", :class => "twitter", :title => "Follow us on Twitter" })
   - unless Tenant.current.facebook_id.blank?
