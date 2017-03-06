@@ -1,5 +1,5 @@
 class ScheduleController < BaseLeagueController
-  before_filter :get_team_options, :unless => :all_divisions?
+  before_action :get_team_options, :unless => :all_divisions?
 
   def index
 

@@ -1,5 +1,5 @@
 class StandingsController < BaseLeagueController
-  before_filter :get_season_options
+  before_action :get_season_options
 
   def index
     @teams = @division.teams.for_season(@season).where(show_in_standings: true)

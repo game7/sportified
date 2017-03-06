@@ -1,8 +1,8 @@
 class Admin::ClubsController < Admin::BaseLeagueController
   
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_clubs_breadcrumb
-  before_filter :load_club, :only => [:show, :edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :add_clubs_breadcrumb
+  before_action :load_club, :only => [:show, :edit, :update, :destroy]
 
   def index
     @clubs = Club.order(:name)

@@ -39,7 +39,7 @@
 #
 
 class GamesController < BaseLeagueController
-  before_filter :find_game, :only => [:box_score]
+  before_action :find_game, :only => [:box_score]
 
   def box_score
     @stats = @game.statsheet

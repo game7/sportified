@@ -1,8 +1,8 @@
 class Admin::LocationsController < Admin::BaseLeagueController
   
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_locations_breadcrumb
-  before_filter :load_location, :only => [:show, :edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :add_locations_breadcrumb
+  before_action :load_location, :only => [:show, :edit, :update, :destroy]
 
   def index
     @locations = Location.order(:name)

@@ -1,7 +1,7 @@
 class Admin::Activity::ProgramsController < Admin::AdminController
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_breadcrumbs
-  before_filter :find_activity, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :add_breadcrumbs
+  before_action :find_activity, :only => [:edit, :update, :destroy]
 
   def new
     @activity = ::Activity::Program.new

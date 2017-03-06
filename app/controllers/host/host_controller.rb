@@ -1,5 +1,5 @@
 class Host::HostController < ApplicationController
-  before_filter :verify_host
+  before_action :verify_host
 
   private 
 

@@ -2,8 +2,8 @@ module Rms
   class ApplicationController < Rms.configuration.base_controller.constantize
     protect_from_forgery with: :exception
     layout 'application'
-    before_filter :check_stripe_configuration
-    before_filter :set_area_navigation
+    before_action :check_stripe_configuration
+    before_action :set_area_navigation
 
     protected
 

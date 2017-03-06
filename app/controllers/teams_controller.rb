@@ -50,11 +50,11 @@
 require 'icalendar'
 
 class TeamsController < BaseLeagueController
-  before_filter :verify_admin, :except => [:show, :index, :schedule, :roster, :statistics]
-  before_filter :get_season_options, :only => [:index]
-  before_filter :find_team, :only => [:edit, :update, :destroy]
-  before_filter :load_division_options, :only => [:new]
-  before_filter :load_club_options, :only => [:new, :edit]
+  before_action :verify_admin, :except => [:show, :index, :schedule, :roster, :statistics]
+  before_action :get_season_options, :only => [:index]
+  before_action :find_team, :only => [:edit, :update, :destroy]
+  before_action :load_division_options, :only => [:new]
+  before_action :load_club_options, :only => [:new, :edit]
 
   def index
 

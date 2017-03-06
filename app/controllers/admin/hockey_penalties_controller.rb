@@ -1,8 +1,8 @@
 class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
 
-  before_filter :load_statsheet
-  before_filter :load_penalty, :only => [:edit, :update, :destroy]
-  before_filter :list_players, :only => [:new, :edit]
+  before_action :load_statsheet
+  before_action :load_penalty, :only => [:edit, :update, :destroy]
+  before_action :list_players, :only => [:new, :edit]
 
   def new
     @penalty = Hockey::Penalty.new

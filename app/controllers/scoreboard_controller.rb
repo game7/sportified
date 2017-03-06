@@ -1,6 +1,6 @@
 class ScoreboardController < ::BaseLeagueController
 
-  before_filter :get_dates
+  before_action :get_dates
   def get_dates
     date = params[:date] ? Date.parse(params[:date]) : Date.current
     @days_in_future = 0

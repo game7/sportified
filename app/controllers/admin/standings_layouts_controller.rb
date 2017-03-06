@@ -1,9 +1,9 @@
 class Admin::StandingsLayoutsController < Admin::BaseLeagueController
   
-  before_filter :add_standings_layout_breadcrumb
-  before_filter :load_layout, :only => [:show, :edit, :update, :destroy, :columns]
-  before_filter :load_layouts, :only => [:index]
-  before_filter :mark_return_point, :only => [:new, :edit]
+  before_action :add_standings_layout_breadcrumb
+  before_action :load_layout, :only => [:show, :edit, :update, :destroy, :columns]
+  before_action :load_layouts, :only => [:index]
+  before_action :mark_return_point, :only => [:new, :edit]
 
   def add_standings_layout_breadcrumb
     add_breadcrumb 'Standings Layout', admin_standings_layouts_path    

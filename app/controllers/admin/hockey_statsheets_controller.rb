@@ -1,6 +1,6 @@
 class Admin::HockeyStatsheetsController < Admin::BaseLeagueController
-  before_filter :mark_return_point, :only => [:edit]   
-  before_filter :load_statsheet
+  before_action :mark_return_point, :only => [:edit]   
+  before_action :load_statsheet
 
   def edit
     @partial = "admin/hockey_statsheets/#{params['form']}_form.html.haml"  

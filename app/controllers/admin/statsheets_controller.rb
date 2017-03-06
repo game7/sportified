@@ -1,11 +1,11 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
   layout "print", :only => [:print]
-  before_filter :mark_return_point, :only => [:edit]
-  before_filter :find_game
-  before_filter :find_season
-  before_filter :find_or_build_statsheet, :only => [:edit, :print]
-  before_filter :add_games_breadcrumb
-  before_filter :add_stats_breadcrumb
+  before_action :mark_return_point, :only => [:edit]
+  before_action :find_game
+  before_action :find_season
+  before_action :find_or_build_statsheet, :only => [:edit, :print]
+  before_action :add_games_breadcrumb
+  before_action :add_stats_breadcrumb
 
   def edit
 

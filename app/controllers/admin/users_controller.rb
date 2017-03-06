@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::AdminController
 
-  before_filter :load_user, :only => :show
+  before_action :load_user, :only => :show
 
   def load_user
     @user = User.for_tenant(Tenant.current).find(params[:id])

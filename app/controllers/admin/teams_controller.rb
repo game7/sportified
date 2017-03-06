@@ -1,13 +1,13 @@
 class Admin::TeamsController < Admin::BaseLeagueController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_teams_breadcrumb
-  before_filter :find_season, :only => [:index, :new, :create]
-  before_filter :load_season_links, :only => [:index]
-  before_filter :load_division_links, :only => [:index]
-  before_filter :find_team, :only => [:show, :edit, :update, :destroy]
-  before_filter :load_division_options, :only => [:new]
-  before_filter :load_club_options, :only => [:new, :edit]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :add_teams_breadcrumb
+  before_action :find_season, :only => [:index, :new, :create]
+  before_action :load_season_links, :only => [:index]
+  before_action :load_division_links, :only => [:index]
+  before_action :find_team, :only => [:show, :edit, :update, :destroy]
+  before_action :load_division_options, :only => [:new]
+  before_action :load_club_options, :only => [:new, :edit]
 
   def index
     @teams = ::League::Team

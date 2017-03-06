@@ -1,7 +1,7 @@
 class Host::TenantsController < Host::HostController
 
-  before_filter :mark_return_point, :only => [:edit, :new, :destroy]
-  before_filter :find_tenant, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:edit, :new, :destroy]
+  before_action :find_tenant, :only => [:edit, :update, :destroy]
 
   def index
     @tenants = Tenant.all

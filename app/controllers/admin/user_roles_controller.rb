@@ -1,6 +1,6 @@
 class Admin::UserRolesController < Admin::AdminController
   
-  before_filter :load_user, :only => [:create, :destroy]
+  before_action :load_user, :only => [:create, :destroy]
 
   def load_user
     @user = User.for_site(Site.current).find(params[:user_id])

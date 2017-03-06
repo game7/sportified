@@ -1,7 +1,7 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController  
-  before_filter :load_statsheet
-  before_filter :load_player, :only => [:edit, :update, :destroy]
-  before_filter :prepare_team_options, :only => [:new, :create]
+  before_action :load_statsheet
+  before_action :load_player, :only => [:edit, :update, :destroy]
+  before_action :prepare_team_options, :only => [:new, :create]
 
   def new
     @player = @statsheet.skaters.build(:games_played => true)

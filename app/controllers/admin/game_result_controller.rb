@@ -1,6 +1,6 @@
 class Admin::GameResultController < Admin::BaseLeagueController
 
-  before_filter :find_game, :only => [:edit, :result, :update]
+  before_action :find_game, :only => [:edit, :result, :update]
 
   def edit
   end

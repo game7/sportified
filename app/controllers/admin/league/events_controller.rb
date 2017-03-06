@@ -1,7 +1,7 @@
 class Admin::League::EventsController < ApplicationController
-  before_filter :mark_return_point, :only => [:new, :edit]
-  before_filter :load_event, :only => [:edit, :update, :destroy]
-  before_filter :load_options, :only => [:new, :edit]
+  before_action :mark_return_point, :only => [:new, :edit]
+  before_action :load_event, :only => [:edit, :update, :destroy]
+  before_action :load_options, :only => [:new, :edit]
 
   def new
     if params[:clone]

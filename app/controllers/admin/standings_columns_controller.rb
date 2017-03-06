@@ -1,7 +1,7 @@
 class Admin::StandingsColumnsController < Admin::BaseLeagueController
   
-  before_filter :load_layout
-  before_filter :load_columns, :only => [:index, :push_left, :push_right]
+  before_action :load_layout
+  before_action :load_columns, :only => [:index, :push_left, :push_right]
 
   def load_layout
     @layout = StandingsLayout.for_site(Site.current).find(params[:standings_layout_id])

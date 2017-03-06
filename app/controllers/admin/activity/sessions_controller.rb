@@ -1,7 +1,7 @@
 class Admin::Activity::SessionsController < ApplicationController
-  before_filter :mark_return_point, :only => [:new, :edit]
-  before_filter :load_session, :only => [:edit, :update, :destroy]
-  before_filter :load_options, :only => [:new, :create, :edit, :update]
+  before_action :mark_return_point, :only => [:new, :edit]
+  before_action :load_session, :only => [:edit, :update, :destroy]
+  before_action :load_options, :only => [:new, :create, :edit, :update]
 
   def new
     if params[:clone]

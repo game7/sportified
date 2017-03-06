@@ -1,11 +1,11 @@
 class Admin::League::SeasonsController < Admin::BaseLeagueController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :find_league, :only => [:index, :new, :create]
-  before_filter :find_season, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_seasons, :only => [:index]
-  before_filter :get_season_options, :only => [:show]
-  before_filter :add_breadcrumbs, :except => [:destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :find_league, :only => [:index, :new, :create]
+  before_action :find_season, :only => [:show, :edit, :update, :destroy]
+  before_action :find_seasons, :only => [:index]
+  before_action :get_season_options, :only => [:show]
+  before_action :add_breadcrumbs, :except => [:destroy]
 
   def index
   end

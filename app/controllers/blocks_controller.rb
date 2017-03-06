@@ -16,9 +16,9 @@
 #
 
 class BlocksController < ApplicationController
-  before_filter :verify_admin
-  before_filter :find_page, :only => [:create, :edit, :update, :destroy]
-  before_filter :find_block, :only => [:edit, :update, :destroy]
+  before_action :verify_admin
+  before_action :find_page, :only => [:create, :edit, :update, :destroy]
+  before_action :find_block, :only => [:edit, :update, :destroy]
 
   def create
     @block = block_type.create({ section_id: params[:section_id], column: params[:column]}) do |block|
