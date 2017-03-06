@@ -18,6 +18,8 @@
     "node_modules"
   ],
   "dependencies": {
+    "@types/react": "^15.0.14",
+    "@types/react-dom": "^0.14.23",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
     "babel-preset-latest": "^6.22.0",
@@ -27,6 +29,10 @@
     "glob": "^7.1.1",
     "path-complete-extname": "^0.1.0",
     "rails-erb-loader": "^3.2.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "ts-loader": "^2.0.1",
+    "typescript": "^2.2.1",
     "webpack": "^2.2.1",
     "webpack-merge": "^3.0.0"
   }

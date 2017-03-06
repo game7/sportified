@@ -45,6 +45,10 @@ const config = {
         options: {
           runner: 'DISABLE_SPRING=1 bin/rails runner'
         }
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
       }
     ]
   },
@@ -54,7 +58,7 @@ const config = {
   ],
 
   resolve: {
-    extensions: ['.js', '.coffee'],
+    extensions: ['.js', '.coffee', '.ts', '.tsx'],
     modules: [
       path.resolve('app/javascript'),
       path.resolve('node_modules')
