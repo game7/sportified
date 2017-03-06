@@ -3,8 +3,12 @@
 
 - if current_user_is_admin?
   - content_for :actions do
-    = link_to icon('plus')+" New Event", new_admin_league_event_path(:season_id => @season, :division_id => @division), :class => 'btn btn-primary'
-    = link_to icon('plus')+" New Game", new_admin_league_game_path(:season_id => @season, :division_id => @division), { :class => 'btn btn-primary', :role => 'button' }
+    .btn-group
+      %button.btn.btn-primary.dropdown-toggle(data-toggle="dropdown")
+        = icon('plus')
+      %ul.dropdown-menu.dropdown-menu-right
+        %li= link_to "New Event", new_admin_league_event_path(:season_id => @season, :division_id => @division)
+        %li= link_to "New Game", new_admin_league_game_path(:season_id => @season, :division_id => @division)
 
 .row.options
   .col-sm-8
