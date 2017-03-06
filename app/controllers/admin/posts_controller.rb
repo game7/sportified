@@ -1,8 +1,8 @@
 class Admin::PostsController < Admin::AdminController
 
-  before_filter :find_post, :only => [:edit, :update, :destroy]
-  before_filter :mark_return_point, :only => [:new, :edit]
-  before_filter :add_posts_breadcrumb
+  before_action :find_post, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:new, :edit]
+  before_action :add_posts_breadcrumb
 
   def index
     @posts = Post.all.newest_first.includes(:tags).page(params[:page])

@@ -2,8 +2,8 @@ require_dependency "rms/application_controller"
 
 module Rms
   class ItemsController < ApplicationController
-    before_filter :verify_admin, :except => [:index, :show]
-    before_filter :mark_return_point, :only => [:new, :edit]
+    before_action :verify_admin, :except => [:index, :show]
+    before_action :mark_return_point, :only => [:new, :edit]
     before_action :set_item, only: [:show, :edit, :update, :destroy]
     before_action :get_form_packets, only: [:edit, :update, :new, :create]
 

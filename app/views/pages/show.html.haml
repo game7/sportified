@@ -3,15 +3,13 @@
 - if current_user_is_admin?
   - content_for :actions do
     .btn-group
-      %button.btn.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" } 
-        = icon('wrench')+' Page'
+      %button.btn.btn-primary.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Settings" }
+        = icon('cog')
         %span.caret
       %ul.dropdown-menu.pull-right{ role: "menu" }
         %li.dropdown-header THIS PAGE
         %li= link_to icon('pencil')+' Edit', edit_page_path(@page)
         %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
         %li.dropdown-header OTHER PAGES
-        %li= link_to icon('th-list')+" List", pages_path        
+        %li= link_to icon('th-list')+" List", pages_path
         %li= link_to icon('plus')+" New", new_page_path
-
-

@@ -1,9 +1,9 @@
 require "chronic"
 class Admin::EventsController < Admin::AdminController
 
-  before_filter :mark_return_point, :only => [:destroy]
-  before_filter :add_events_breadcrumb
-  before_filter :load_event, :only => [:destroy]
+  before_action :mark_return_point, :only => [:destroy]
+  before_action :add_events_breadcrumb
+  before_action :load_event, :only => [:destroy]
 
   def index
 

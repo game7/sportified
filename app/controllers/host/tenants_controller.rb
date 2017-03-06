@@ -1,7 +1,7 @@
 class Host::TenantsController < Host::HostController
 
-  before_filter :mark_return_point, :only => [:edit, :new, :destroy]
-  before_filter :find_tenant, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:edit, :new, :destroy]
+  before_action :find_tenant, :only => [:edit, :update, :destroy]
 
   def index
     @tenants = Tenant.all
@@ -44,7 +44,7 @@ class Host::TenantsController < Host::HostController
   def tenant_params
     params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
       :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id,
-      :stripe_account_id, :stripe_public_api_key, :google_fonts, :time_zone)
+      :stripe_account_id, :stripe_public_api_key, :google_fonts, :time_zone, :address)
   end
 
   def find_tenant

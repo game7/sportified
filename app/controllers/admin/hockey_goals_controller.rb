@@ -1,7 +1,7 @@
 class Admin::HockeyGoalsController < Admin::BaseLeagueController
 
-  before_filter :load_statsheet
-  before_filter :list_players, :only => [:new, :edit]
+  before_action :load_statsheet
+  before_action :list_players, :only => [:new, :edit]
 
   def new
     @goal = Hockey::Goal.new{|goal| goal.strength = '5-5' }

@@ -22,6 +22,7 @@
 #  stripe_access_token   :string
 #  google_fonts          :string
 #  time_zone             :string           default("UTC")
+#  address               :text
 #
 
 class Tenant < ActiveRecord::Base

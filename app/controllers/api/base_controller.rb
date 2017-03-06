@@ -1,8 +1,8 @@
 class Api::BaseController < ApplicationController
 
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
-  before_filter :cors_preflight_check
+  before_action :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
   def cors_set_access_control_headers
@@ -24,7 +24,7 @@ class Api::BaseController < ApplicationController
   end
 
   # Convert lowerCamelCase params to snake_case automatically
-  before_filter :deep_snake_case_params!
+  before_action :deep_snake_case_params!
   def deep_snake_case_params!(val = params)
     case val
     when Array

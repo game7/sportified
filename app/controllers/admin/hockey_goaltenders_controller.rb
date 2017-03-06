@@ -1,8 +1,8 @@
 class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
 
-  before_filter :find_statsheet
-  before_filter :find_goaltender, :only => [:edit, :update, :destroy]
-  before_filter :list_players, :only => [:new, :edit]
+  before_action :find_statsheet
+  before_action :find_goaltender, :only => [:edit, :update, :destroy]
+  before_action :list_players, :only => [:new, :edit]
 
   def new
     @goaltender = @statsheet.goaltenders.build()

@@ -1,8 +1,8 @@
 class Admin::League::DivisionsController < Admin::BaseLeagueController
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :find_league, :only => [:index, :new, :create]
-  before_filter :find_division, :only => [:edit, :update, :destroy]
-  before_filter :add_breadcrumbs, :except => [:destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :find_league, :only => [:index, :new, :create]
+  before_action :find_division, :only => [:edit, :update, :destroy]
+  before_action :add_breadcrumbs, :except => [:destroy]
 
   def index
     @divisions = @league.divisions.order(:name)

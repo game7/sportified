@@ -1,7 +1,7 @@
 class Admin::League::ProgramsController < ApplicationController
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :add_breadcrumbs
-  before_filter :find_league, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :add_breadcrumbs
+  before_action :find_league, :only => [:edit, :update, :destroy]
 
   def show
     # @league = ::League::Program.find(params[:id])

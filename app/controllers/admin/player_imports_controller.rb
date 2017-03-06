@@ -3,11 +3,11 @@ require 'open-uri'
 
 class Admin::PlayerImportsController < Admin::BaseLeagueController
 
-  before_filter :add_players_breadcrumb
-  before_filter :find_player_import, :only => [:edit, :update, :complete]
-  before_filter :load_season_options, :only => [:new]
-  before_filter :load_division_options, :only => [:new]
-  before_filter :load_team_options, :only => [:edit, :update]
+  before_action :add_players_breadcrumb
+  before_action :find_player_import, :only => [:edit, :update, :complete]
+  before_action :load_season_options, :only => [:new]
+  before_action :load_division_options, :only => [:new]
+  before_action :load_team_options, :only => [:edit, :update]
 
   def new
     add_breadcrumb 'New'

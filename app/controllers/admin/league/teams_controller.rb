@@ -1,10 +1,10 @@
 class Admin::League::TeamsController < Admin::BaseLeagueController
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :find_team, except: [:new, :create]
-  before_filter :find_division, only: [:new, :create]
-  before_filter :find_program
-  before_filter :load_options
-  before_filter :add_breadcrumbs, :except => [:destroy]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :find_team, except: [:new, :create]
+  before_action :find_division, only: [:new, :create]
+  before_action :find_program
+  before_action :load_options
+  before_action :add_breadcrumbs, :except => [:destroy]
 
   def show
     @team = ::League::Team.includes(:division, :season, :program, :players).find(params[:id])

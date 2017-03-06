@@ -1,6 +1,6 @@
 class Host::UsersController < Host::HostController
   
-  before_filter :find_user, :only => :show
+  before_action :find_user, :only => :show
 
   def set_breadcrumbs
     super

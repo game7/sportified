@@ -32,7 +32,16 @@ module Rms
 
     def validate(record)
       super(record)
-      record.errors.add(name, "is not a valid weight") unless 40..350.include?(record.data[name])
+      begin
+        weight = Integer(record.data[name])
+        if weight > 350
+          record.errors.add(name, "seems a little too heavy")
+        elsif weight < 40
+          record.errors.add(name, "doesn't seem heavy enough")
+        end
+      rescue
+        record.errors.add(name, "that's not a number!")
+      end
     end
   end
 end

@@ -12,9 +12,9 @@
 #
 
 class SectionsController < Admin::AdminController
-  before_filter :verify_admin
-  before_filter :find_page
-  before_filter :find_section, :only => [:destroy]
+  before_action :verify_admin
+  before_action :find_page
+  before_action :find_section, :only => [:destroy]
 
   def create
     @section = @page.sections.create({ :pattern => params[:pattern] }) 

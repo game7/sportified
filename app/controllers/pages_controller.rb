@@ -24,11 +24,11 @@
 require 'rest_client'
 
 class PagesController < ApplicationController
-  before_filter :verify_admin, :except => [:show]
-  before_filter :verify_stripe_connect, :only => [:show], :if => :stripe_request?
-  before_filter :find_page, :only => [:edit, :update, :destroy]
-  before_filter :load_parent_options, :only => [:new, :edit]
-  before_filter :mark_return_point, :only => [:new, :edit]
+  before_action :verify_admin, :except => [:show]
+  before_action :verify_stripe_connect, :only => [:show], :if => :stripe_request?
+  before_action :find_page, :only => [:edit, :update, :destroy]
+  before_action :load_parent_options, :only => [:new, :edit]
+  before_action :mark_return_point, :only => [:new, :edit]
 
   def index
     @pages = Page.arrange(:order => :position)

@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :layout
 
-  before_filter :find_current_tenant
-  before_filter :add_stylesheets
-  before_filter :load_objects
-  before_filter :set_breadcrumbs
-  before_filter :set_area_navigation
+  before_action :find_current_tenant
+  before_action :add_stylesheets
+  before_action :load_objects
+  before_action :set_breadcrumbs
+  before_action :set_area_navigation
 
   def initialize
     super

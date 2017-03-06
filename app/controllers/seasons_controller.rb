@@ -14,8 +14,8 @@
 
 class SeasonsController < BaseLeagueController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]    
-  before_filter :load_for_season, :only => [:show, :edit]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]    
+  before_action :load_for_season, :only => [:show, :edit]
 
   def load_for_season
     

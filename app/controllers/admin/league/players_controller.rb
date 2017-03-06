@@ -1,10 +1,10 @@
 require 'chronic'
 class Admin::League::PlayersController < Admin::BaseLeagueController
 
-  before_filter :mark_return_point, :only => [:new, :edit, :destroy]
-  before_filter :find_player, :only => [:edit, :update, :destroy]
-  before_filter :find_team, :only => [:index, :new, :create]
-  before_filter :add_team_breadcrumbs, :only => [:index]
+  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :find_player, :only => [:edit, :update, :destroy]
+  before_action :find_team, :only => [:index, :new, :create]
+  before_action :add_team_breadcrumbs, :only => [:index]
 
   def index
     @players = @team.players.order(:last_name)

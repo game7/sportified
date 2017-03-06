@@ -1,5 +1,5 @@
 class Admin::ProgramsController < Admin::AdminController
-  before_filter :mark_return_point, :only => [:destroy]
+  before_action :mark_return_point, :only => [:destroy]
 
   def index
     @programs = ::Program.all.order(:name)

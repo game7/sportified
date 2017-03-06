@@ -8,7 +8,7 @@
     .col-sm-4
       = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
     .col-sm-4.col-sm-offset-4
-      %a.btn.btn-default.btn-block{ :href => url_for(params.merge(:format => :ics))}
+      %a.btn.btn-default.btn-block{ :href => url_for(params.permit.merge(:format => :ics))}
         = icon(:calendar)
         iCal
   .row
@@ -28,7 +28,7 @@
     .col-sm-4
       = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
     .col-sm-2.col-sm-offset-6
-      %a.btn.btn-block.btn-default{ :href => url_for(params.merge(:format => :ics))}
+      %a.btn.btn-block.btn-default{ :href => url_for(params.permit.merge(:format => :ics))}
         = icon(:calendar)
         iCal
   .row
