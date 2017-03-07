@@ -49,6 +49,10 @@ const config = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader'
+      },
+      {
+        test: /\.css?$/,
+        loader: [ 'style-loader', 'css-loader' ]
       }
     ]
   },
