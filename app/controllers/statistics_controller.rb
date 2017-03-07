@@ -20,7 +20,7 @@ class StatisticsController < BaseLeagueController
     @view = params[:view]
     @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_statistic_path(@program.slug, @division.slug, s.slug, @view)]}
 
-    @token = params[:token] || Hockey::Player::Record.default_token(params[:view])
+    @token = params[:token] || Hockey::Skater::Record.default_token(params[:view])
     @players = (@view == 'goaltending') ? goalies(@token, 25) : skaters(@token, 25)
 
   end

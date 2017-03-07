@@ -39,6 +39,7 @@
 #
 
 class Hockey::Skater::Record < Hockey::Skater
+  include Stats
 
   def add_result(result)
     STATS.each do |stat|
