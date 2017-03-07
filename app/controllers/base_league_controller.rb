@@ -26,7 +26,7 @@ class BaseLeagueController < ApplicationController
   end
 
   def find_program
-    @program = ::League::Program.with_slug(params[:league_slug]).first if params[:league_slug]
+    @program = ::League::Program.find_by!(slug: params[:league_slug]) if params[:league_slug]
     add_breadcrumb(@program.name, program_path(@program.slug)) if @program
   end
 
