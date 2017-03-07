@@ -49,7 +49,7 @@
         #page-header
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
         = yield
-    #footer.jagged-border
+    #footer.container
       = render 'layouts/footer'
       -# = render 'layouts/social'
     = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
