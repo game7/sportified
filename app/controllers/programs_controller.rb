@@ -19,7 +19,7 @@ class ProgramsController < ApplicationController
   end
 
   def show
-    @program = Program.find_by(slug: params[:slug])
+    @program = Program.find_by!(slug: params[:slug])
   end
 
 end

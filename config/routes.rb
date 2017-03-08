@@ -74,7 +74,7 @@
     end
   end
 
-  resources :programs, only: [:index, :show], param: :slug
+  resources :programs, only: [:index, :show, :delete], param: :slug
 
   match "league/:league_slug/schedule/:division_slug" => "schedule#index"                                       , :as => :league_schedule        , :via => :get
   match "league/:league_slug/scoreboard/:division_slug" => "scoreboard#index"                                   , :as => :league_scoreboard      , :via => :get

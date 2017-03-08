@@ -12,6 +12,7 @@
         %td= program.type
         %td
           = link_to 'Edit', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-primary'
-          = link_to 'Delete', [:admin, program.module_name, program], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
+          != " "
+          = link_to 'Delete', [:admin, program], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
 = link_to 'New Activity', new_admin_activity_program_path, :class => "btn btn-primary"
 = link_to 'New League', new_admin_league_program_path, :class => "btn btn-primary"

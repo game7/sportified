@@ -1,6 +1,6 @@
 %thead
   %tr.title
-    %th{ :colspan => 6 } 
+    %th{ :colspan => 6 }
       = side == 'away' ? @stats.away_team.name : @stats.home_team.name
   %tr.columns
     %th.player Player
@@ -15,10 +15,10 @@
     - reset_cycle
     - skaters.each do |skater|
       %tr{ :class => "#{cycle('odd', 'even')}" }
-        %td.player 
+        %td.player
           = skater.full_name
-          = "##{skater.jersey_number}" unless skater.jersey_number.blank?
-          = " *" unless skater.player_id
+          = "*" unless skater.player_id
+          != " ##{skater.jersey_number}" unless skater.jersey_number.blank?
         %td.goal #{skater.goals}
         %td.assists #{skater.assists}
         %td.points #{skater.points}
@@ -27,5 +27,3 @@
   - else
     %tr
       %td{ :colpsan => 6 } No player data has been maintained
-
-    

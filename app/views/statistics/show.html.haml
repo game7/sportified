@@ -15,12 +15,12 @@
     %tr
       %th
       %th Player
-      - for token in Hockey::Player::Record.tokens @view
-        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Player::Record.column(token), league_statistic_path(:league_slug => @program.slug, :divisionslug => @division.slug, :season_slug => @season.slug, :view => @view, :token => token)
+      - for token in Hockey::Skater::Record.tokens @view
+        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Skater::Record.column(token), league_statistic_path(:league_slug => @program.slug, :divisionslug => @division.slug, :season_slug => @season.slug, :view => @view, :token => token)
   %tbody
     - for record in @players
       %tr
         %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
         %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
-        - for token in Hockey::Player::Record.tokens @view
+        - for token in Hockey::Skater::Record.tokens @view
           %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(record[token], :precision => 3) : format_with.call(record[token])

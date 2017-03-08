@@ -67,7 +67,7 @@ class TeamsController < BaseLeagueController
   end
 
   def schedule
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
+    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id)
                           .order(:starts_on)
                           .includes(:location, :home_team, :away_team)
@@ -91,13 +91,13 @@ class TeamsController < BaseLeagueController
   end
 
   def roster
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
+    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @players = @team.players.order(:last_name)
     @team_links = links_to_team_roster(@division, @season)
   end
 
   def statistics
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
+    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(points: :desc)
     @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(save_percentage: :desc)
   end
@@ -133,7 +133,6 @@ class TeamsController < BaseLeagueController
   end
 
   def set_area_navigation
-    puts params[:action]
     super unless [:edit,:update,:new,:create].include? params[:action].to_sym
   end
 
