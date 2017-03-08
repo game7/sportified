@@ -67,7 +67,7 @@ class TeamsController < BaseLeagueController
   end
 
   def schedule
-    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first
+    @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @events = League::Game.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id)
                           .order(:starts_on)
                           .includes(:location, :home_team, :away_team)
