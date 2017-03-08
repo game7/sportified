@@ -25,8 +25,8 @@
                 %th.period 1
                 %th.period 2
                 %th.period 3
-                - if stats.overtime?
-                  %th.period OT
+                -# - if stats.overtime?
+                -#   %th.period OT
                 %th.final T
             %tbody
               %tr
@@ -34,16 +34,14 @@
                 %td.period= stats.goals.away.period1.count
                 %td.period= stats.goals.away.period2.count
                 %td.period= stats.goals.away.period3.count
-                - if stats.overtime?
-                  %td.period= stats.goals.away.overtime.count
+                -# - if stats.overtime?
+                -#   %td.period= stats.goals.away.overtime.count
                 %td.final= stats.goals.away.count
               %tr
                 %td= game.home_team_name
                 %td.period= stats.goals.home.period1.count
                 %td.period= stats.goals.home.period2.count
                 %td.period= stats.goals.home.period3.count
-                - if stats.overtime?
-                  %td.period= stats.goals.home.overtime.count
+                -# - if stats.overtime?
+                -#   %td.period= stats.goals.home.overtime.count
                 %td.final= stats.goals.home.count
-
-

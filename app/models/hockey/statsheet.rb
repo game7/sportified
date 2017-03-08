@@ -84,7 +84,7 @@ class Hockey::Statsheet < ActiveRecord::Base
       where('period = ?', '3')
     end
     def overtime
-      where('period = ?' 'OT')
+      where('period = ?', 'OT')
     end
     def home
       where("hockey_goals.team_id = ?", proxy_association.owner.game.home_team_id)
