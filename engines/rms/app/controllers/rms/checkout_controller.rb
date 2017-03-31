@@ -92,8 +92,6 @@ module Rms
           redirect_to checkout_registration_path and return
         end
 
-      else
-        flash[:error] = "Oops!  Something didn't work right."
       end
 
       render :payment, locals: {
@@ -113,7 +111,7 @@ module Rms
     private
 
       def registration
-        Registration.find_by!(id: params[:id], user_id: current_user.id)
+        @registration || @registration = Registration.find_by!(id: params[:id], user_id: current_user.id)
       end
 
       def credit_cards

@@ -72,8 +72,9 @@ module Rms
     validates :birthdate,
               presence: true
 
-    # validates :credit_card_id,
-    #           presence: true, if: :payment_required?
+    validates :credit_card_id,
+              presence: true,
+              if: :payment_required?
 
     validates :price,
               presence: true
