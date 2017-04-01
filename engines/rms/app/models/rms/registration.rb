@@ -97,7 +97,7 @@ module Rms
     end
 
     def payment_required?
-      !price.blank? and price > 0 and payment_id.blank?
+      !self.new_record? and !price.blank? and price > 0 and payment_id.blank?
     end
 
     def forms_completed?
