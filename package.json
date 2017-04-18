@@ -33,12 +33,14 @@
     "path-complete-extname": "^0.1.0",
     "rails-erb-loader": "^3.2.0",
     "react": "^15.4.2",
+    "react-ace": "^4.1.6",
     "react-big-calendar": "^0.12.3",
     "react-dom": "^15.4.2",
     "style-loader": "^0.13.2",
     "ts-loader": "^2.0.1",
     "typescript": "^2.2.1",
     "webpack": "^2.2.1",
-    "webpack-merge": "^3.0.0"
+    "webpack-merge": "^3.0.0",
+    "whatwg-fetch": "^2.0.3"
   }
 }

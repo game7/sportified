@@ -13,6 +13,8 @@
   #   resources :registrations, :only => [:index]
   # end
 
+  match "markdown" => "markdown#preview", :as => :markdown, :via => :post
+
   resources :credit_cards, :only => [:create]
 
   namespace :api do

@@ -57,4 +57,7 @@ Rails.application.configure do
 
   config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 
+  # don't buffer stdout (http://stackoverflow.com/a/9956069)
+  $stdout.sync = true
+
 end

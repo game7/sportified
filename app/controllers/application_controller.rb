@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :store_current_location, unless: :devise_controller?
 
   protect_from_forgery
+  skip_before_action :verify_authenticity_token, if: :json_request?
+
   helper :layout
 
   before_action :find_current_tenant
@@ -20,6 +22,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def json_request?
+    request.format.json?
+  end
 
   def redirect_https
     if Rails.env.production?

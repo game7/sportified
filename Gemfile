@@ -56,6 +56,7 @@ gem 'invoicing', '~> 1.0.1'
 gem 'stripe'
 
 gem "RedCloth"
+gem 'redcarpet', '~> 3.4.0'
 
 gem 'unicorn'
 
