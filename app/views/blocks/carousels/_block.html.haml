@@ -2,13 +2,20 @@
   .carousel-inner
     - block.posts.each_with_index do |post, index|
       %div{ :class => "item#{' active' if index == 0}" }
-        = image_tag post.image.url if index == 0
+        - if index == 0
+          - if post.link_url.present?
+            = link_to post.link_url do
+              = image_tag post.image.url
+          - else
+            = image_tag post.image.url
         - unless index == 0
-          %img{ :"data-src" => post.image.url, :alt => image_alt(post.image.url), :"data-link" => "#{post.link_url}" }
-        - unless post.title.blank?
-          .carousel-caption
-            %h4= post.title
-            %p= post.summary
+          %img{ :"data-src" => post.image.url,
+                :alt => image_alt(post.image.url),
+                :"data-link" => "#{post.link_url}" }
+        -# - unless post.title.blank?
+        -#   .carousel-caption
+        -#     %h4= post.title
+        -#     %p= post.summary
   %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
   %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
 
@@ -20,8 +27,8 @@
       });
       $("#carousel_#{block.id} img[data-link]").each(function(index){
         if ( $(this).attr('data-link') != '' ) {
-          var link = $('<a/>').attr('href', $(this).attr('data-link')).attr('target', '_blank');
+          var link = $('<a/>').attr('href', $(this).attr('data-link'));/*.attr('target', '_blank');*/
           $(this).wrap(link);
         }
-      });    
+      });
     });
