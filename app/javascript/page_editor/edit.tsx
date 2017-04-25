@@ -134,7 +134,7 @@ export class Edit extends React.Component<{},IState> {
           <Editor onChange={this.handleContentChange} value={content}/>
         </div>
         <div style={{ display: viewName == 'HTML' ? 'block' : 'none' }} >
-          <div dangerouslySetInnerHTML={{ __html: toc }} />
+          <div className="toc" dangerouslySetInnerHTML={{ __html: toc }} />
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>

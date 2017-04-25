@@ -8,7 +8,7 @@
       content: document.getElementById('content').innerText
     }
   }
-= javascript_pack_tag 'page_editor'
+= javascript_pack_tag 'page_editor' if current_user_is_admin?
 = render :partial => 'sections/section', :collection => @page.sections.order(:position)
 - if current_user_is_admin?
   - content_for :actions do

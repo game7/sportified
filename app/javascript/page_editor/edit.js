@@ -108,7 +108,7 @@ var Edit = (function (_super) {
             React.createElement("div", { style: { display: viewName == 'MARKDOWN' ? 'block' : 'none' } },
                 React.createElement(editor_1.Editor, { onChange: this.handleContentChange, value: content })),
             React.createElement("div", { style: { display: viewName == 'HTML' ? 'block' : 'none' } },
-                React.createElement("div", { dangerouslySetInnerHTML: { __html: toc } }),
+                React.createElement("div", { className: "toc", dangerouslySetInnerHTML: { __html: toc } }),
                 React.createElement("div", { dangerouslySetInnerHTML: { __html: html } }))));
     };
     return Edit;
