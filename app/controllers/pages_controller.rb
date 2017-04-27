@@ -81,7 +81,8 @@ class PagesController < ApplicationController
   def page_params
     params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu,
                                   :link_url, :skip_to_first_child,
-                                  :meta_keywords, :meta_description)
+                                  :meta_keywords, :meta_description,
+                                  :content)
   end
 
   def load_objects

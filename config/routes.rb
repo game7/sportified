@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get 'pack' => 'client#index'
+
   mount Rms::Engine => '/registrar', as: 'rms'
   mount ExceptionLogger::Engine => "/exception_logger"
 
@@ -12,6 +14,8 @@
   #   end
   #   resources :registrations, :only => [:index]
   # end
+
+  match "markdown" => "markdown#preview", :as => :markdown, :via => :post
 
   resources :credit_cards, :only => [:create]
 

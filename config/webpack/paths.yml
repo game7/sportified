@@ -1,0 +1,20 @@
+# Restart webpack-watcher or webpack-dev-server if you make changes here
+config: config/webpack
+entry: packs
+output: public
+node_modules: node_modules
+source: app/javascript
+extensions:
+  - .coffee
+  - .js
+  - .jsx
+  - .ts
+  - .tsx
+  - .vue
+  - .sass
+  - .scss
+  - .css
+  - .png
+  - .svg
+  - .gif
+  - .jpeg

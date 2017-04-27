@@ -1,4 +1,14 @@
 - title @page.title
+%pre#content(style='display: none;')= @page.content
+:javascript
+  Window['sportified'] = {
+    page: {
+      id: '#{@page.id}',
+      title: '#{@page.title}',
+      content: document.getElementById('content').innerText
+    }
+  }
+= javascript_pack_tag 'page_editor' if current_user_is_admin?
 = render :partial => 'sections/section', :collection => @page.sections.order(:position)
 - if current_user_is_admin?
   - content_for :actions do

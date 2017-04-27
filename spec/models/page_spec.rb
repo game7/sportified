@@ -20,6 +20,7 @@
 #  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
+#  content             :text
 #
 # Indexes
 #
