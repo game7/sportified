@@ -15,7 +15,7 @@ gem 'sass-rails', '~> 5.0.4'
 gem "sprockets"
 gem "sprockets-es6"
 
-gem 'webpacker', github: 'rails/webpacker'
+gem 'webpacker'
 
 
 gem 'uglifier', '>=1.3.0'

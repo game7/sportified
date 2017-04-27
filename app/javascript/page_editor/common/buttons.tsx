@@ -8,14 +8,7 @@ export const ButtonGroup = (props: { children?: JSX.Element[] }) => (
   </div>
 )
 
-<<<<<<< Updated upstream
-type ButtonType = 'primary' | 'default';
-
 interface ButtonProps {
-  type?: ButtonType
-=======
-interface ButtonProps {
->>>>>>> Stashed changes
   icon?: string;
   label?: string;
   active?: boolean;

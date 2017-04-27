@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get 'pack' => 'client#index'
+
   mount Rms::Engine => '/registrar', as: 'rms'
   mount ExceptionLogger::Engine => "/exception_logger"
 

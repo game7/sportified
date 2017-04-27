@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/rails/webpacker.git
-  revision: b2aa325bdbe286bc53ea6e7a0b356dd52432c689
-  specs:
-    webpacker (1.0)
-      activesupport (>= 4.2)
-      multi_json (~> 1.2)
-      railties (>= 4.2)
-
-GIT
   remote: git://github.com/ryancheung/exception_logger.git
   revision: 47b0053cc709a02ea0645b269056586c8766fff0
   specs:
@@ -438,7 +429,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.5)
     trollop (2.1.2)
-    tzinfo (1.2.2)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
@@ -450,6 +441,10 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.7)
       rack (>= 1.0)
+    webpacker (1.1)
+      activesupport (>= 4.2)
+      multi_json (~> 1.2)
+      railties (>= 4.2)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -518,7 +513,7 @@ DEPENDENCIES
   tenancy
   uglifier (>= 1.3.0)
   unicorn
-  webpacker!
+  webpacker
   webrat
 
 RUBY VERSION

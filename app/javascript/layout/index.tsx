@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import 'whatwg-fetch';
-import { Edit } from './edit';
+import 'semantic-ui-css/semantic.min.css';
+import Main from './main'
+
+const App = () => (
+  <Main/>
+)
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Edit/>,
-    document.getElementById('main').appendChild(document.createElement('div'))
+    <App/>,
+    document.getElementById('main')
   );
 })
