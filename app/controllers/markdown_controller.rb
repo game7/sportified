@@ -3,7 +3,8 @@ class MarkdownController < ApplicationController
 
   def preview
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({
-                                        with_toc_data: true
+                                        with_toc_data: true,
+                                        hard_wrap: true
                                        }),
                                        autolink: true,
                                        no_intra_emphasis: true,
