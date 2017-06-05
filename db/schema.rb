@@ -72,29 +72,13 @@ ActiveRecord::Schema.define(version: 20170308225118) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "home_team_id"
-    t.integer  "away_team_id"
-    t.integer  "statsheet_id"
-    t.string   "statsheet_type"
-    t.integer  "home_team_score",           default: 0
-    t.integer  "away_team_score",           default: 0
-    t.string   "home_team_name"
-    t.string   "away_team_name"
-    t.boolean  "home_team_custom_name"
-    t.boolean  "away_team_custom_name"
-    t.string   "text_before"
-    t.string   "text_after"
-    t.string   "result"
-    t.string   "completion"
     t.boolean  "exclude_from_team_records"
     t.integer  "playing_surface_id"
     t.integer  "home_team_locker_room_id"
     t.integer  "away_team_locker_room_id"
     t.integer  "program_id"
-    t.index ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
     t.index ["division_id"], name: "index_events_on_division_id", using: :btree
-    t.index ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
     t.index ["location_id"], name: "index_events_on_location_id", using: :btree
     t.index ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
@@ -525,8 +509,8 @@ ActiveRecord::Schema.define(version: 20170308225118) do
   end
 
   create_table "rms_items", force: :cascade do |t|
-    t.integer  "parent_id"
     t.string   "parent_type"
+    t.integer  "parent_id"
     t.string   "title",              limit: 40
     t.text     "description"
     t.integer  "quantity_allowed"
@@ -553,7 +537,6 @@ ActiveRecord::Schema.define(version: 20170308225118) do
     t.decimal  "price",                        precision: 20, scale: 4
     t.integer  "form_packet_id"
     t.string   "confirmation_code"
-    t.boolean  "active"
     t.date     "birthdate"
     t.index ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id", using: :btree
     t.index ["tenant_id"], name: "index_rms_registrations_on_tenant_id", using: :btree
@@ -586,10 +569,10 @@ ActiveRecord::Schema.define(version: 20170308225118) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.integer  "taggable_id"
     t.string   "taggable_type"
-    t.integer  "tagger_id"
+    t.integer  "taggable_id"
     t.string   "tagger_type"
+    t.integer  "tagger_id"
     t.string   "context",       limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context", using: :btree

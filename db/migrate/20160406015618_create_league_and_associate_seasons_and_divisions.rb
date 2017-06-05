@@ -1,8 +1,8 @@
 class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
 
   def up
-    create_and_assign_league 'oceanside', 'OAHL'
-    create_and_assign_league 'styfl', 'STYFL'
+    # create_and_assign_league 'oceanside', 'OAHL'
+    # create_and_assign_league 'styfl', 'STYFL'
   end
 
   def down
