@@ -21,7 +21,6 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #
-require 'rest_client'
 
 class PagesController < ApplicationController
   before_action :verify_admin, :except => [:show]

@@ -1,0 +1,2 @@
+
+import '../rms/admin/index';

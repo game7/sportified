@@ -47,7 +47,7 @@ module Rms
 
     scope :incomplete, -> { where.not(completed: true) }
 
-    after_initialize :add_element_accessors
+    # after_initialize :add_element_accessors
     def add_element_accessors
       self.template.elements.each do |element|
         element.accessors.each do |accessor|

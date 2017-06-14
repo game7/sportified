@@ -1,12 +1,19 @@
 Rms::Engine.routes.draw do
 
+  get 'admin(/*route)', to: 'admin#index'
+
+  namespace :api do
+    resources :items, only: [:index, :show] do
+      get 'extract', on: :member
+    end
+  end
 
   resources :form_packets
   get 'dashboard', to: 'dashboard#index'
 
   resources :items
   resources :forms
-  
+
   resources :form_packets, shallow: true do
     resources :form_templates, shallow: true do
       resources :form_elements, except: [:index, :show]

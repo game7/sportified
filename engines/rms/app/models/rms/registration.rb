@@ -16,7 +16,6 @@
 #  price             :decimal(20, 4)
 #  form_packet_id    :integer
 #  confirmation_code :string
-#  active            :boolean
 #  birthdate         :date
 #
 # Indexes
