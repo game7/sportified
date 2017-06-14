@@ -1,6 +1,8 @@
 module Rms
-  class Api::ItemSerializer < ActiveModel::Serializer
-    type 'item'
-    attributes :id, :title
+  module Api
+    class ItemSerializer < ActiveModel::Serializer
+      type 'item'
+      attributes :id, :title
+    end
   end
 end
