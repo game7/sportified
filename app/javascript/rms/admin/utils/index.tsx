@@ -47,7 +47,6 @@ export function Sort<T>(array: T[]) {
 }
 
 export function Export(filename: string, rows: any[]) {
-  debugger;
   var processRow = function (row) {
       var finalVal = '';
       for (var j = 0; j < row.length; j++) {

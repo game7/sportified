@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Item, Registration } from '../../../data';
 import { Format, Sort } from '../../../utils';
-import { Grid, Statistic, Card, Icon, Button, Form } from 'semantic-ui-react';
+import { Grid, Statistic, Card, Icon, Button, Form, Divider } from 'semantic-ui-react';
 import * as moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
@@ -61,12 +61,13 @@ export default class ItemDashboard extends React.Component<Props,State> {
 
     return (
       <div>
-        <h4>{item.title}</h4>
+        <Divider/>
         {this.renderStatistics(registrations)}
+        <Divider/>
         <Grid>
           <Grid.Row>
             <Grid.Column width={16}>
-              <div style={{ marginBottom: 10 }}>
+              <div style={{ marginBottom: 15 }}>
                 <Button.Group>
                   <Button
                     active={view == 'daily'}

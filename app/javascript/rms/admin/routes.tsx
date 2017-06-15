@@ -26,7 +26,7 @@ const About: React.SFC<{}> = () => (
 );
 
 const HomeMenu = () => (
-  <Menu  fluid vertical >
+  <Menu fluid vertical >
     <Menu.Item>
       <Menu.Header>Registrar</Menu.Header>
       <Menu.Menu>
@@ -43,13 +43,7 @@ class ItemMenu extends React.Component<RouteComponentProps<{ id: string }>,{}> {
   render() {
     const id = this.props.match.params.id;
     return (
-      <Menu  fluid vertical >
-        <Menu.Item>
-          <Menu.Header>Registrar</Menu.Header>
-          <Menu.Menu>
-            <Menu.Item as={Link} to='/'>Home</Menu.Item>
-          </Menu.Menu>
-        </Menu.Item>
+      <Menu fluid vertical >
         <Menu.Item>
           <Menu.Header>Item Menu</Menu.Header>
           <Menu.Menu>
@@ -64,19 +58,9 @@ class ItemMenu extends React.Component<RouteComponentProps<{ id: string }>,{}> {
 
 
 export default () => (
-  <Router basename="registrar/admin">
-    <Grid>
-      <Grid.Column width={3} >
-        <Route exact path="/" component={HomeMenu}/>
-        <Route exact path="/items/" component={HomeMenu}/>
-        <Route path="/items/:id" component={ItemMenu}/>
-      </Grid.Column>
-
-      <Grid.Column stretched width={13} style={{}}>
-          <Route exact path="/" component={Home}/>
-          <Route path="/items" component={Items}/>
-          <Route path="/about" component={About}/>
-      </Grid.Column>
-    </Grid>
-  </Router>
+  <div>
+    <Route exact path="/" component={Home}/>
+    <Route path="/items" component={Items}/>
+    <Route path="/about" component={About}/>
+  </div>
 );

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Item } from '../../data';
+import { Card } from 'semantic-ui-react';
 
 interface Props extends RouteComponentProps<{}> {
 
@@ -26,13 +27,25 @@ export default class ItemsList extends React.Component<Props,State> {
   render() {
     const { items } = this.state;
     return (
-      <ul>
+      <div>
         {items.map(item => (
-          <li key={item.id}>
-            <Link to={`/items/${item.id}`} >{item.title}</Link> ({item.id})
-          </li>
+          <Card key={item.id} fluid>
+            <Card.Content>
+              <Card.Header>
+                {item.title}
+              </Card.Header>
+              <Card.Description>
+                {item.description}
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Link to={`/items/${item.id}`}>Dashboard</Link>
+              {" | "}
+              <Link to={`/items/${item.id}/registrations`}>Registrations</Link>
+            </Card.Content>
+          </Card>
         ))}
-      </ul>
+      </div>
     )
 
   }

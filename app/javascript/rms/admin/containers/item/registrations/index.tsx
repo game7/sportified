@@ -40,7 +40,6 @@ export default class ItemRegistrations extends React.Component<Props,State> {
     const sorted = Sort(registrations).desc(r => r.id);
     return (
       <div>
-        <h4>{item.title} Registrations</h4>
         <Button onClick={this.handleExportClick} loading={exporting}>
           Export All
         </Button>
