@@ -5,7 +5,6 @@ module Rms
     before_action :verify_user
 
     def redirect
-      puts "payment required: #{registration.payment_required?} (#{registration.payment_id})"
       redirect_to_first_incomplete_form and return if registration.forms.incomplete.any?
       redirect_to_payment and return if registration.payment_required?
       redirect_to_confirmation
@@ -123,7 +122,7 @@ module Rms
       end
 
       def get_form
-        Form.find(params[:form_id])
+        Form.find(params[:form_id]).add_element_accessors
       end
 
       def payment_params
