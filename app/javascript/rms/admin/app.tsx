@@ -6,8 +6,10 @@ import {
   RouteComponentProps
 } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
+
 import Menu from './menu';
 import Items from './containers/items';
+import Registrations from './containers/registrations';
 
 const Home: React.SFC<{}> = () => (
   <div>
@@ -28,6 +30,7 @@ export const App = (props: RouteComponentProps<{}>) => {
       <Container>
         <Route exact path="/" component={Home}/>
         <Route path="/items" component={Items}/>
+        <Route path="/registrations" component={Registrations}/>
         <Route path="/about" component={About}/>
       </Container>
     </div>

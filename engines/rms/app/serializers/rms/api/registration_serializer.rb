@@ -17,6 +17,8 @@ module Rms
 
     has_many :forms
 
+    belongs_to :variant
+
     def status
       object.payment_id.present? ? 'Completed' : 'Started'
     end

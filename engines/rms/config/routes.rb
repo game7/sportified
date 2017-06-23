@@ -6,6 +6,7 @@ Rms::Engine.routes.draw do
     resources :items, only: [:index, :show] do
       get 'extract', on: :member
     end
+    resources :registrations, only: [:index, :show]
   end
 
   resources :form_packets
