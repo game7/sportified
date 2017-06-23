@@ -1,6 +1,6 @@
 %thead
   %tr.team
-    %th{ :colspan => 7 } 
+    %th{ :colspan => 7 }
       = side == 'away' ? @stats.away_team.name : @stats.home_team.name
   %tr.columns
     %th.player Player
@@ -16,9 +16,9 @@
     - reset_cycle
     - goalies.each do |goalie|
       %tr
-        %td.player 
+        %td.player
           = goalie.full_name
-          = "##{goalie.jersey_number}" unless goalie.jersey_number.blank?
+          != " ##{goalie.jersey_number}" unless goalie.jersey_number.blank?
         %td.minutes #{goalie.minutes_played}
         %td.shots #{goalie.shots_against}
         %td.goals #{goalie.goals_against}
