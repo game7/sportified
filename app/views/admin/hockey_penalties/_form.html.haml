@@ -43,9 +43,8 @@
     });
   });
   $(function() {
-    var penalties = #{Hockey::Penalty.infractions.to_json};
+    var penalties = #{raw Hockey::Penalty.infractions.to_json};
     $('#hockey_penalty_infraction').autocomplete({
       source: penalties
     });
   });
-
