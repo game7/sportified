@@ -51,7 +51,7 @@
   :javascript
     (function() {
 
-      var playingSurfaces = #{@playing_surface_options.to_json};
+      var playingSurfaces = #{raw @playing_surface_options.to_json};
       var playingSurfaceId = "#{@game.playing_surface_id}";
 
       var lockerRooms = #{@locker_room_options.to_json};
@@ -170,6 +170,3 @@
           };
       });
     });
-
-
-

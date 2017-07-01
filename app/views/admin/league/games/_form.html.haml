@@ -53,10 +53,10 @@
 - content_for :javascript do
   :javascript
     $(function() {
-      var seasons = #{@options[:seasons].to_json};
-      var divisions = #{@options[:divisions].to_json};
-      var playing_surfaces = #{@options[:playing_surfaces].to_json};
-      var locker_rooms = #{@options[:locker_rooms].to_json};
+      var seasons = #{raw @options[:seasons].to_json};
+      var divisions = #{raw @options[:divisions].to_json};
+      var playing_surfaces = #{raw @options[:playing_surfaces].to_json};
+      var locker_rooms = #{raw @options[:locker_rooms].to_json};
       var teams_path = '#{admin_teams_path}?season_id=::game_season_id::&division_id=::game_division_id::';
       $(function() {
         bindSelect('#game_division_id', '#game_program_id', divisions, 'id', 'name', '#{@game.division_id}');
@@ -76,4 +76,3 @@
         $('#game_home_team_name').closest('.form-group').slideToggle('slow');
       });
     });
-

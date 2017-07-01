@@ -28,7 +28,7 @@ function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue
         });
         if (ok) {
           return $.getJSON(url, function(data) {
-            var rows = data[Object.keys(data)[0]]
+            var rows = data
             $.each(rows, function(i, object) {
               $observer.append($(optionTag).val(object[optionKey]).text(object[optionValue]));
             });
