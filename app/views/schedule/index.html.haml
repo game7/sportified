@@ -5,7 +5,7 @@
   - content_for :actions do
     .btn-group
       %button.btn.btn-primary.dropdown-toggle(data-toggle="dropdown")
-        = icon('plus')
+        = icon('plus', 'Add')
       %ul.dropdown-menu.dropdown-menu-right
         %li= link_to "New Event", new_admin_league_event_path(:season_id => @season, :division_id => @division)
         %li= link_to "New Game", new_admin_league_game_path(:season_id => @season, :division_id => @division)
@@ -37,6 +37,7 @@
           - if current_user_is_admin?
             .pull-right
               = link_to "Edit", edit_polymorphic_path([:admin, event.module_name, event]), :class => 'btn btn-primary btn-xs'
+              != ' '
               = link_to "Clone", new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), :class => 'btn btn-primary btn-xs'
         %td
           - if event.location

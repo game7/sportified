@@ -42,6 +42,7 @@
           - if team.last_result == 'W' and team.current_run > 2
             .badge{ :style  => "background-color: red; color: white;" }
               = team.streak
+              != " "
               - if team.current_run >= 5
                 %i.glyphicon.glyphicon-fire{ :style => "color: yellow;"}
               - if team.current_run < 5
@@ -55,4 +56,3 @@
                 %i.fa.fa-arrow-down
           - if team.current_run <= 2
             = team.streak
-

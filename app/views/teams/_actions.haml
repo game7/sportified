@@ -2,7 +2,7 @@
   .buttons.pull-right
     .btn-group
       %button.btn.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Team Tools" }
-        = icon('wrench')
+        != icon('wrench')
         %span.caret
       %ul.dropdown-menu.pull-right{ :role => :menu }
         %li.dropdown-header{ :role => :presentation } EDIT

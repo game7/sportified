@@ -7,11 +7,8 @@
     .links
       = link_to "Schedule", league_team_schedule_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
       - if @division.show_players
-        %span{ :style=> "color: #{team.secondary_color}"}= " | "
+        %span{ :style=> "color: #{team.secondary_color}"}!= " | "
         = link_to "Roster", league_team_roster_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
       - if @division.show_statistics
-        %span{ :style=> "color: #{team.secondary_color}"}= " | "
+        %span{ :style=> "color: #{team.secondary_color}"}!= " | "
         = link_to "Statistics", league_team_statistics_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
-
-
-
