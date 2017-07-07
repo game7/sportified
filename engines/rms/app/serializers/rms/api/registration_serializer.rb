@@ -17,6 +17,7 @@ module Rms
 
     has_many :forms
 
+    belongs_to :item
     belongs_to :variant
 
     def status

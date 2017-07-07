@@ -12,7 +12,10 @@ export const Format = {
 
   timeAgo: (date: Date) => moment(new Date(date)).fromNow(),
 
-  shortDate: (date: Date) => moment(date).format('M/D/YY')
+  shortDate: (date: Date) => moment(date).format('M/D/YY'),
+
+  titleize: (str: string) => str.replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, (s) => { return s.toUpperCase(); })
 
 }
 
