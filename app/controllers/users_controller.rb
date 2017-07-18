@@ -29,6 +29,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    team_ids = Player.where(email: @user.email).collect{|p| p.team_id}
+    @games = League::Game.in_the_future
+                        .where('home_team_id IN (?) OR away_team_id IN (?)', team_ids, team_ids)
+                        .order(:starts_on)
+                        .includes(:location, :home_team, :away_team)
   end
 
 end
