@@ -9,6 +9,7 @@
         - unless root[1].length == 0
           %a{ :class => "dropdown-toggle", :href => "#", :'data-toggle' => "dropdown" }
             = page.title_in_menu.presence || page.title
+            != ' '
             %span.caret
           %ul{ :class => "dropdown-menu", :role => "menu" }
             - root[1].each_with_index do |child, i|
@@ -29,8 +30,8 @@
     %li{ :class => "dropdown" }
       %a{ :class => "dropdown-toggle", :href => "#",  :'data-toggle' => "dropdown" }
         Account
+        != ' '
         %span.caret
       %ul{ :class => "dropdown-menu", :role => "menu"}
         = render "devise/menu/user_items"
         = render "devise/menu/login_items"
-

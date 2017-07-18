@@ -3,6 +3,7 @@
     .btn-group
       %button.btn.btn-primary.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Tools" }
         = icon('cog')
+        != ' '
         %span.caret
       %ul.dropdown-menu.pull-right{ role: "menu" }
         %li.dropdown-header THIS PAGE
@@ -12,6 +13,7 @@
         %li.dropdown-header OTHER PAGES
         %li= link_to icon('th-list')+" List", pages_path
         %li= link_to icon('plus')+" New", new_page_path
+    != ' '        
     .btn-group{:"data-toggle" => "buttons"}
       %label#toggle-edit.btn.btn-default.active{ rel: "tooltip", title: "Edit" }
         %input{ type: "radio", name: "options", checked: true }= icon("pencil")

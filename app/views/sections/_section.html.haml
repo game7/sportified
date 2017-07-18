@@ -5,8 +5,9 @@
       .title= Section
       .buttons
         .btn-group
-          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Section Tools" } 
-            = icon('wrench')
+          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Section Tools" }
+            = icon('cog')
+            != ' '
             %span.caret
           %ul.dropdown-menu.pull-right
             %li.dropdown-header ACTIONS
@@ -16,13 +17,13 @@
             %li
               %a.move_section_up{ :href => "#" }= icon(:"arrow-up")+' Up'
             %li
-              %a.move_section_down{ :href => "#" }= icon(:"arrow-down")+' Down'            
-      .clear  
+              %a.move_section_down{ :href => "#" }= icon(:"arrow-down")+' Down'
+      .clear
   .content.columns.row
     - section.columns.each_with_index do |column, index|
       .column{ :class => width_to_span(column), :"data-column" => index }
         .column-inner
           .blocks.row-fluid
             = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
-          - if editable  
+          - if editable
             %a.add-block.btn.btn-default{ :role => "button", :"data-toggle" => "modal", :"data-column" => index, :"data-section_id" => section.id.to_s, :"href" => "#block-catalog"}= icon('plus')+" Add Block Here"
