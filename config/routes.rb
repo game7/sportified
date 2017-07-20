@@ -61,6 +61,10 @@
   match 'users/auth/facebook/setup' => 'sessions#setup', via: :get
   match 'users/auth/:provider/callback' => 'authentications#create', via: :get
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
+  devise_scope :user do
+    get '/users/sign_out' => 'sessions#destroy'
+  end
+
   resources :users, :only => :show
   resources :authentications
 
