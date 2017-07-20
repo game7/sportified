@@ -168,7 +168,7 @@ class TeamsController < BaseLeagueController
       event.dtstart = e.starts_on.in_time_zone("America/Phoenix") + 7.hours
       event.dtend = e.ends_on.in_time_zone("America/Phoenix") + 7.hours
       event.summary = e.summary
-      event.location = e.location.name
+      event.location = e.location&.name
       cal.add_event event
     end
     cal.x_wr_calname = "#{@team.season.name} #{@team.division.name} #{@team.short_name}"
