@@ -27,7 +27,7 @@ require 'icalendar'
 
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [ :schedule ]
 
   def schedule
     @user = params[:id] ? User.find(params[:id]) : current_user
