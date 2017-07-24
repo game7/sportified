@@ -9,6 +9,7 @@
         - unless root[1].length == 0
           %a{ :class => "dropdown-toggle", :href => "#", :'data-toggle' => "dropdown" }
             = page.title_in_menu.presence || page.title
+            != ' '
             %span.caret
           %ul{ :class => "dropdown-menu", :role => "menu" }
             - root[1].each_with_index do |child, i|
@@ -24,13 +25,17 @@
                 %li
                   %a{ :href => child_url }= child[0].title_in_menu.presence || child[0].title
 
-
   %ul{ :class => "nav navbar-nav navbar-right" }
-    %li{ :class => "dropdown" }
-      %a{ :class => "dropdown-toggle", :href => "#",  :'data-toggle' => "dropdown" }
-        Account
-        %span.caret
-      %ul{ :class => "dropdown-menu", :role => "menu"}
-        = render "devise/menu/user_items"
-        = render "devise/menu/login_items"
-
+    - if user_signed_in?
+      %li{ :class => "dropdown" }
+        %a{ :class => "dropdown-toggle", :href => "#",  :'data-toggle' => "dropdown" }
+          = icon(:user)
+          != ' '
+          = current_user.full_name
+          != ' '
+          %span.caret
+        %ul{ :class => "dropdown-menu", :role => "menu"}
+          = render "devise/menu/user_items"
+          = render "devise/menu/login_items"
+    - else
+      %li= link_to('Login', main_app.new_user_session_path)

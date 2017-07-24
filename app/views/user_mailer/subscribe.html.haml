@@ -1,0 +1,6 @@
+%p
+  != "A subscription has been requested for #{@name}'s "
+  != " schedule at #{@tenant}.  "
+  You can activate this subscription using the link below.
+%p
+  %a{ href: @url }= @url

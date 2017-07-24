@@ -61,8 +61,12 @@
   match 'users/auth/facebook/setup' => 'sessions#setup', via: :get
   match 'users/auth/:provider/callback' => 'authentications#create', via: :get
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
-  resources :users, :only => :show
   resources :authentications
+
+  match 'user/schedule' => 'users#schedule', via: :get, as: :user_schedule
+  match 'user/subscribe' => 'users#subscribe', via: :post, as: :subscribe_user 
+  match 'users/:id/schedule' => 'users#schedule', via: :get, as: :users_schedule
+
 
   namespace :host do
     root :to => "dashboard#index"
