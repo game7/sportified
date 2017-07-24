@@ -42,6 +42,10 @@ class Tenant < ActiveRecord::Base
     "http://#{host ? host : slug+'.sportified.net'}"
   end
 
+  def secure_url
+    "https://#{slug}.sportified.net"
+  end
+
   class << self
     def current
       Thread.current[:current_tenant] = Thread.current[:current_tenant] || Tenant.first

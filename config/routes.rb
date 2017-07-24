@@ -65,8 +65,12 @@
     get '/users/sign_out' => 'sessions#destroy'
   end
 
-  resources :users, :only => :show
   resources :authentications
+
+  match 'user/schedule' => 'users#schedule', via: :get, as: :user_schedule
+  match 'user/subscribe' => 'users#subscribe', via: :post, as: :subscribe_user
+  match 'users/:id/schedule' => 'users#schedule', via: :get, as: :users_schedule
+
 
   namespace :host do
     root :to => "dashboard#index"
