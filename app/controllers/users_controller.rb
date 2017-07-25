@@ -29,6 +29,13 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, except: [ :schedule ]
 
+  def teams
+    @teams = League::Team.joins(:players)
+                         .includes(:division, :season)
+                         .order(created_at: :desc)
+                         .where('players.email = ?', current_user.email)
+  end
+
   def schedule
     @user = params[:id] ? User.find(params[:id]) : current_user
     team_ids = Player.where(email: @user.email).collect{|p| p.team_id}

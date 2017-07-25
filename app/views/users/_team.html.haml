@@ -1,0 +1,14 @@
+%tr
+  %td{ style: 'padding: 0; text-align: center; width: 100px; height: 100px;'}
+    = image_tag team.logo.thumb.url.to_s
+  %td
+    .team{ style: 'font-size: 18px; font-weight: bold;' }= team.name
+    .division= "#{team.season&.name} - #{team.division&.name}"
+    .links
+      = link_to "Schedule", league_team_schedule_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if team.division.show_players
+        %span!= " | "
+        = link_to "Roster", league_team_roster_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+      - if team.division.show_statistics
+        %span!= " | "
+        = link_to "Statistics", league_team_statistics_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
