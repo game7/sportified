@@ -1,7 +1,8 @@
 %thead
   %tr.team
     %th{ :colspan => 7 }
-      = side == 'away' ? @stats.away_team.name : @stats.home_team.name
+      = side == 'away' ? @stats.away_team&.name : @stats.home_team&.name
+      &nbsp;
   %tr.columns
     %th.player Player
     %th.minutes MIN
@@ -27,4 +28,4 @@
         %td.pim 0
   - else
     %tr
-      %td{ :colpsan => 14 } xNo goaltender data has been maintained
+      %td{ colspan: 7 } No goaltender data has been maintained

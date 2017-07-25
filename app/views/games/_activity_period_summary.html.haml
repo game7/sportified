@@ -16,12 +16,12 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{goal.time}
         %td.team
-          = goal.team.name
-        %td.goal 
+          = goal.team&.name
+        %td.goal
           = "##{goal.scored_by_number} #{goal.scored_by.player.full_name if goal.scored_by && goal.scored_by.player}"
           .assists
             - if goal.assisted_by
-              Assists: 
+              Assists:
               = "##{goal.assisted_by_number} #{goal.assisted_by.player.full_name if goal.assisted_by && goal.assisted_by.player}"
               - if goal.also_assisted_by
                 = "##{goal.also_assisted_by_number} #{goal.also_assisted_by.player.full_name if goal.also_assisted_by && goal.also_assisted_by.player}"
@@ -43,10 +43,8 @@
       %tr{ :class => "#{cycle('odd', 'even')}" }
         %td.time #{penalty.time}
         %td.team
-          = penalty.team.name
+          = penalty.team&.name
         %td.penalty
           = "##{penalty.committed_by_number}"
-          = " #{penalty.committed_by.player.full_name}:" if penalty.committed_by && penalty.committed_by.player
-          = " #{penalty.duration} Minutes for #{penalty.infraction}"
-
-
+          != " #{penalty.committed_by.player.full_name}:" if penalty.committed_by && penalty.committed_by.player
+          != " #{penalty.duration} Minutes for #{penalty.infraction}"
