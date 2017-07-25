@@ -8,7 +8,7 @@ class UserMailer < ApplicationMailer
   def subscribe(tenant, user)
     @tenant = tenant.name
     @name = user.full_name
-    @url = users_schedule_url(user.id, host: tenant.secure_url)
+    @url = users_schedule_url(user.id, host: tenant.secure_url, format: :ics)
     mail to: user.email,
          subject: "#{@tenant} Schedule for #{@name}"
   end
