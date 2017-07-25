@@ -1,21 +1,5 @@
 - title 'Upcoming Games'
 - page_actions do
   = link_to 'Subscribe', subscribe_user_path, :class => 'btn btn-primary', method: :post
-%table.table.table-bordered.table-striped
-  %thead
-    %tr
-      %th Date
-      %th Time
-      %th Division
-      %th Matchup
-      %th Location
-  %tbody
-    - @games.each do |game|
-      %tr
-        %td= game.starts_on.to_date.strftime("%A, %B %e %Y")
-        %td
-          .visible-xs= game.starts_on.strftime("%l:%M%P").gsub("m","")
-          .hidden-xs= game.starts_on.strftime("%l:%M %P")
-        %td= game.division&.name
-        %td= game.summary
-        %td= game.location&.name
+
+= render partial: 'month', collection: @games.group_by{|g| g.starts_on.beginning_of_month}

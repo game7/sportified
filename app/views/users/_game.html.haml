@@ -1,0 +1,8 @@
+%tr
+  %td{ style: 'text-align: center; width: 100px; height: 100px;'}
+    %span{ style: 'font-size: 48px;'}= game.starts_on.to_date.strftime("%e")
+    %span{ style: 'display: block;'}= game.starts_on.to_date.strftime("%A").upcase
+  %td{ style: 'vertical-align: middle;' }
+    .summary{ style: 'font-size: 18px; font-weight: bold;' }= game.summary
+    .location= game.location&.name
+    .time= game.starts_on.strftime("%l:%M%P").gsub("m","")

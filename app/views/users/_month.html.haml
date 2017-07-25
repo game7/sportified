@@ -1,0 +1,7 @@
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th{ colspan: 2 }= month[0].strftime('%B')
+  %tbody
+    %tr
+      = render partial: 'game', collection: month[1]
