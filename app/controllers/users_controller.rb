@@ -38,6 +38,7 @@ class UsersController < ApplicationController
 
   def schedule
     @user = params[:id] ? User.find(params[:id]) : current_user
+    authenticate_user! unless @user
     team_ids = Player.where(email: @user.email).collect{|p| p.team_id}
     @games = League::Game.where('home_team_id IN (?) OR away_team_id IN (?)', team_ids, team_ids)
                          .order(:starts_on)
