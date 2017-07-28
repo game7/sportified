@@ -111,7 +111,7 @@
   .clear
 .top
   .away-team
-    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "HOME TEAM", skaters: @statsheet.skaters.away.order(:last_name) }
+    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "AWAY TEAM", skaters: @statsheet.skaters.away.order(:last_name) }
   .game-info
     .overview
       %table
@@ -148,7 +148,7 @@
         = render partial: 'admin/hockey_statsheets/print/shots_table'
       .clear
   .home-team
-    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "AWAY TEAM", skaters: @statsheet.skaters.home.order(:last_name) }
+    = render partial: 'admin/hockey_statsheets/print/roster_table', locals: { header: "HOME TEAM", skaters: @statsheet.skaters.home.order(:last_name) }
   .clear
 .middle
   .goals
@@ -169,7 +169,3 @@
   $(function() {
     window.print();
   });
-
-
-
-
