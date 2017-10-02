@@ -1,0 +1,58 @@
+- title 'Recent & Upcoming Games'
+
+.paginator= paginate @games
+
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th Date
+      %th Time
+      %th Division
+      %th Summary
+      %th Actions
+  %tbody
+    - @games.each do |game|
+      %tr
+        %td= game.starts_on.strftime('%a %-m/%-d/%Y')
+        %td= game.starts_on.strftime('%l:%M%P').gsub("m","")
+        %td= game.division.name
+        %td= game.summary
+        %td
+          .btn-toolbar
+            = link_to iconify(game.result.final? ? 'check-square-o' : 'square-o', 'Result'),
+                      edit_admin_game_result_path(game),
+                      class: "btn btn-sm #{game.result.try(:final?) ? 'btn-primary' : 'btn-default'}"
+            = link_to iconify(game.statsheet.try(:posted?) ? 'check-square-o' : 'square-o', 'Stats'),
+                      edit_admin_game_statsheet_path(game),
+                      class: "btn btn-sm #{game.statsheet.try(:posted?) ? 'btn-primary' : 'btn-default'}"
+            = link_to 'Print Scoresheet',
+                      print_admin_game_statsheet_path(game),
+                      class: 'btn btn-sm btn-default',
+                      target: "_blank"
+
+
+.paginator= paginate @games if @games.count > 20
+
+#dialog-modal
+
+:javascript
+  $(function() {
+
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+
+    var scroll = getParameterByName('scroll');
+    if(scroll) {
+      window.scrollTo(0, scroll);
+    }
+
+    $('.btn-toolbar a').click(function(e) {
+      if(history.pushState) {
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?scroll=' + window.scrollY;
+        window.history.pushState({ path: newurl },'',newurl);
+      }
+    })
+
+  })

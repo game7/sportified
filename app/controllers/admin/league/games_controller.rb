@@ -1,7 +1,15 @@
-class Admin::League::GamesController < ApplicationController
+class Admin::League::GamesController < Admin::AdminController
   before_action :mark_return_point, :only => [:new, :edit]
   before_action :load_event, :only => [:edit, :update, :destroy]
   before_action :load_options, :only => [:new, :edit]
+
+  def index
+    add_breadcrumb 'Games', admin_league_games_path
+    @games = ::League::Game.before(1.day.from_now)
+                           .includes(:division)
+                           .order(starts_on: :desc)
+                           .page(params[:page])
+  end
 
   def new
     if params[:clone]

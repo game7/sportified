@@ -264,25 +264,42 @@ select {
   }
 }
 
+// .tiled {
+//   .dummy {
+//     margin-top: 100%
+//   }
+//   .tile {
+//     @extend .thumbnail;
+//     position: absolute;
+//     top: 15px;
+//     bottom: 0;
+//     left: 15px;
+//     right: 15px;
+//     text-align:center;
+//     padding-top:calc(50% - 45px);
+//     //background-color: $brand-primary
+//   }
+//   i.fa {
+//     font-size: 3em;
+//   }
+// }
+
 .tiled {
-  .dummy {
-    margin-top: 100%
-  }
+
   .tile {
     @extend .thumbnail;
-    position: absolute;
-    top: 15px;
-    bottom: 0;
-    left: 15px;
-    right: 15px;
-    text-align:center;
-    padding-top:calc(50% - 45px);
-    //background-color: $brand-primary
+    padding: 15px;
+    display: flex;
+    ////justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
+
   i.fa {
     font-size: 3em;
   }
 }
+
 
 .social-link {
   a {

@@ -24,6 +24,8 @@ module Sportified
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += Dir["#{config.root}/app/services/**/*"]
+    config.autoload_paths += %W(#{config.root}/app/forms)
+    config.autoload_paths += Dir["#{config.root}/app/forms/**/*"]
     config.autoload_paths += %W(#{config.root}/app/validators)
     config.autoload_paths += Dir["#{config.root}/app/validators/**/*"]
 

@@ -125,7 +125,7 @@
         resources :seasons
       end
       resources :events, :only => [:new, :create, :edit, :update]
-      resources :games, :only => [:new, :create, :edit, :update]
+      resources :games, :only => [:index, :new, :create, :edit, :update]
     end
 
     # resources :seasons, :only => [:index, :show, :create, :new, :edit, :update, :delete], :shallow => true do

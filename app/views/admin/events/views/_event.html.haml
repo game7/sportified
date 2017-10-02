@@ -10,6 +10,6 @@
     - if event.class.to_s == 'League::Game'
       %li.divider{role: "separator"}
       %li.dropdown-header Game
-      %li= link_to 'Result', edit_admin_game_result_path(event.id), :remote => true
+      %li= link_to 'Result', edit_admin_game_result_path(event.id)
       %li= link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
       %li= link_to 'Print Scoresheet', print_admin_game_statsheet_path(event.id), :target => "_blank"

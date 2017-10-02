@@ -40,7 +40,7 @@
 #  fk_rails_9a9b98078e  (program_id => programs.id)
 #
 
-class League::Event < ::Event
+class League::Event < Event
 
   belongs_to :division
   validates_presence_of :division_id

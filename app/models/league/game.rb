@@ -153,7 +153,7 @@ class League::Game < League::Event
   end
 
   def has_statsheet?
-    self.statsheet
+    self.statsheet_id.present?
   end
 
   def can_add_statsheet?
