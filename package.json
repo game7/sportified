@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "7.2"
+    "node": "7.10.0"
   },
   "scripts": {
     "postinstall": "./bin/heroku_install"
