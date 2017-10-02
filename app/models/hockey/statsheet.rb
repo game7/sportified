@@ -167,8 +167,8 @@ class Hockey::Statsheet < ActiveRecord::Base
   end
 
   def load_players(game = self.game)
-    load_team_players(game.away_team)
-    load_team_players(game.home_team)
+    load_team_players(game.away_team) if game.away_team
+    load_team_players(game.home_team) if game.home_team
   end
 
   def load_team_players(team)
