@@ -15,9 +15,13 @@ module Rms
     end
 
     def new
+      registration_attrs = {
+        first_name: current_user.first_name,
+        last_name: current_user.last_name
+      }
       render locals: {
         variant: variant,
-        registration: variant.registrations.build
+        registration: variant.registrations.build(registration_attrs)
       }
     end
 
