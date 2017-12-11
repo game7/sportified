@@ -12,6 +12,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  required    :boolean
+#  hint        :string
 #
 # Indexes
 #
@@ -45,11 +46,11 @@ module Rms
     end
 
     def permitted_params
-      [ self.name ]
+      [ self.name, self.hint ]
     end
 
     def accessors
-      [ self.name ]
+      [ self.name, self.hint ]
     end
 
     before_save :format_name

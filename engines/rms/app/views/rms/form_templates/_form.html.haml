@@ -1,4 +1,4 @@
-= simple_form_for @form_template do |f|
+= simple_form_for [@form_packet, @form_template] do |f|
   .row
     .col-sm-6
       = f.input :name

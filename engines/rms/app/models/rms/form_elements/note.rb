@@ -12,6 +12,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  required    :boolean
+#  hint        :string
 #
 # Indexes
 #

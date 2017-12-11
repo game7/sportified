@@ -8,9 +8,13 @@
       = f.input :position
   .row
     .col-sm-6
-      = f.input :required, wrapper: :vertical_boolean       
+      = f.input :required, wrapper: :vertical_boolean
+      = f.input :allow_multiple, as: :boolean, wrapper: :vertical_boolean
   .row
     .col-sm-6
       = f.input :options, as: :text, input_html: { rows: 6 }
+  .row
+    .col-sm-6
+      = f.input :hint
 
   = f.button :wrapped, :cancel => return_url

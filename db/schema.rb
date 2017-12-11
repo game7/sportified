@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308225118) do
+ActiveRecord::Schema.define(version: 20171211211252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,13 +72,29 @@ ActiveRecord::Schema.define(version: 20170308225118) do
     t.string   "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "home_team_id"
+    t.integer  "away_team_id"
+    t.integer  "statsheet_id"
+    t.string   "statsheet_type"
+    t.integer  "home_team_score",           default: 0
+    t.integer  "away_team_score",           default: 0
+    t.string   "home_team_name"
+    t.string   "away_team_name"
+    t.boolean  "home_team_custom_name"
+    t.boolean  "away_team_custom_name"
+    t.string   "text_before"
+    t.string   "text_after"
+    t.string   "result"
+    t.string   "completion"
     t.boolean  "exclude_from_team_records"
     t.integer  "playing_surface_id"
     t.integer  "home_team_locker_room_id"
     t.integer  "away_team_locker_room_id"
     t.integer  "program_id"
+    t.index ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
     t.index ["division_id"], name: "index_events_on_division_id", using: :btree
+    t.index ["home_team_id"], name: "index_events_on_home_team_id", using: :btree
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
     t.index ["location_id"], name: "index_events_on_location_id", using: :btree
     t.index ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
@@ -475,6 +491,7 @@ ActiveRecord::Schema.define(version: 20170308225118) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.boolean  "required"
+    t.string   "hint"
     t.index ["template_id", "name"], name: "index_rms_form_elements_on_template_id_and_name", unique: true, using: :btree
     t.index ["tenant_id"], name: "index_rms_form_elements_on_tenant_id", using: :btree
   end
@@ -509,8 +526,8 @@ ActiveRecord::Schema.define(version: 20170308225118) do
   end
 
   create_table "rms_items", force: :cascade do |t|
-    t.string   "parent_type"
     t.integer  "parent_id"
+    t.string   "parent_type"
     t.string   "title",              limit: 40
     t.text     "description"
     t.integer  "quantity_allowed"
@@ -569,10 +586,10 @@ ActiveRecord::Schema.define(version: 20170308225118) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.string   "taggable_type"
     t.integer  "taggable_id"
-    t.string   "tagger_type"
+    t.string   "taggable_type"
     t.integer  "tagger_id"
+    t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context", using: :btree

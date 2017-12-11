@@ -12,6 +12,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  required    :boolean
+#  hint        :string
 #
 # Indexes
 #
@@ -29,12 +30,16 @@ module Rms
 
     def self.model_name
       FormElement.model_name
-    end    
+    end
 
-    store_accessor :properties, :options
+    store_accessor :properties, :options, :allow_multiple
 
     def options
       super || ''
+    end
+
+    def allow_multiple
+      super
     end
 
     def options_as_list

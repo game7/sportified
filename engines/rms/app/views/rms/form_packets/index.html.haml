@@ -8,9 +8,11 @@
     .panel-heading
       = form_packet.name
       .pull-right
+        = link_to 'Add Form', new_form_packet_form_template_path(form_packet)
+        != " | "
         = link_to 'Edit', edit_form_packet_path(form_packet)
-        = " | "
-        = link_to 'Destroy', form_packet, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        != " | "
+        = link_to 'Delete', form_packet, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 
     .list-group
@@ -19,7 +21,7 @@
           = template.name
           .actions.pull-right
             = link_to 'Show', template
-            = " | "
+            != " | "
             = link_to 'Edit', edit_form_template_path(template)
-            = " | "
-            = link_to 'Destroy', template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+            != " | "
+            = link_to 'Delete', template, :method => :delete, :data => { :confirm => 'Are you sure?' }
