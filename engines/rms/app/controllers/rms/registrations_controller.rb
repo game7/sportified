@@ -16,8 +16,8 @@ module Rms
 
     def new
       registration_attrs = {
-        first_name: current_user.first_name,
-        last_name: current_user.last_name
+        first_name: current_user&.first_name,
+        last_name: current_user&.last_name
       }
       render locals: {
         variant: variant,
