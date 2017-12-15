@@ -46,11 +46,11 @@ module Rms
     end
 
     def permitted_params
-      [ self.name, self.hint ]
+      [ self.name ]
     end
 
     def accessors
-      [ self.name, self.hint ]
+      [ self.name ]
     end
 
     before_save :format_name
