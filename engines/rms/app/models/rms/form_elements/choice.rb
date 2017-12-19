@@ -38,12 +38,16 @@ module Rms
       super || ''
     end
 
-    def allow_multiple
-      super
-    end
-
     def options_as_list
       options.split(/\r?\n/)
+    end
+
+    def allow_multiple
+      ['true', true, 1, '1'].include?(super)
+    end
+
+    def allow_multiple=(value)
+      super ['true', true, 1, '1'].include?(value)
     end
 
   end

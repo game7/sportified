@@ -1,54 +1,60 @@
-= simple_form_for [:admin, :league, @game] do |f|
-  .panel.panel-default
-    .panel-heading Logistics
-    .panel-body
-      - if %w{new create edit update}.include? params[:action]
-        .row
-          .col-sm-6
-            = f.input :program_id, :as => :select, :collection => @options[:programs]
-        .row
-          .col-sm-6
-            = f.input :season_id, :as => :select, :collection => @season_options
-          .col-sm-6
-            = f.input :division_id, :as => :select, :collection => @division_options
-      .row
-        .col-sm-4
-          = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
-        .col-sm-2
-          = f.input :duration
-      .row
-        .col-sm-4
-          = f.input :location_id, :as => :select, :collection => @options[:locations]
-        .col-sm-4
-          = f.input :playing_surface_id, :as => :select, :collection => []
-  .row
-    .col-sm-6
-      .panel.panel-default
-        .panel-heading Away Team
-        .panel-body
-          = f.input :away_team_id, :as => :select, :collection => []
-          = f.input :away_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
-          = f.input :away_team_name
-          = f.input :away_team_locker_room_id, :as => :select, :collection => []
-    .col-sm-6
-      .panel.panel-default
-        .panel-heading Home Team
-        .panel-body
-          = f.input :home_team_id, :as => :select, :collection => []
-          = f.input :home_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
-          = f.input :home_team_name
-          = f.input :home_team_locker_room_id, :as => :select, :collection => []
+.row
+  .col-md-3
 
-  .panel.panel-default
-    .panel-heading Display
-    .panel-body
+  .col-md-9
+
+    = simple_form_for [:admin, :league, @game] do |f|
+      .panel.panel-default
+        .panel-heading Logistics
+        .panel-body
+          - if %w{new create edit update}.include? params[:action]
+            .row
+              .col-sm-6
+                = f.input :program_id, :as => :select, :collection => @options[:programs]
+            .row
+              .col-sm-6
+                = f.input :season_id, :as => :select, :collection => @season_options
+            .row
+              .col-sm-6
+                = f.input :division_id, :as => :select, :collection => @division_options
+          .row
+            .col-sm-4
+              = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
+            .col-sm-2
+              = f.input :duration
+          .row
+            .col-sm-4
+              = f.input :location_id, :as => :select, :collection => @options[:locations]
+            .col-sm-4
+              = f.input :playing_surface_id, :as => :select, :collection => []
       .row
         .col-sm-6
-          = f.input :text_before
+          .panel.panel-default
+            .panel-heading Away Team
+            .panel-body
+              = f.input :away_team_id, :as => :select, :collection => []
+              = f.input :away_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
+              = f.input :away_team_name
+              = f.input :away_team_locker_room_id, :as => :select, :collection => []
         .col-sm-6
-          = f.input :text_after
+          .panel.panel-default
+            .panel-heading Home Team
+            .panel-body
+              = f.input :home_team_id, :as => :select, :collection => []
+              = f.input :home_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
+              = f.input :home_team_name
+              = f.input :home_team_locker_room_id, :as => :select, :collection => []
 
-  = f.button :wrapped, :cancel => return_url
+      .panel.panel-default
+        .panel-heading Display
+        .panel-body
+          .row
+            .col-sm-6
+              = f.input :text_before
+            .col-sm-6
+              = f.input :text_after
+
+      = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do
   :javascript
