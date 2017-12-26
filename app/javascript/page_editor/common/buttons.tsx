@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormEvent, ReactNode } from 'react';
+import { FormEvent } from 'react';
 import { Icon } from './icons';
 
 export const ButtonGroup = (props: { children?: JSX.Element[] }) => (
