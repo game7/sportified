@@ -1,5 +1,9 @@
 ::Sportified::Application.routes.draw do
 
+  resources :tenants, :only => :index do
+    put :select, :on => :member
+  end unless Rails.env.production?
+
   get 'pack' => 'client#index'
 
   mount Rms::Engine => '/registrar', as: 'rms'

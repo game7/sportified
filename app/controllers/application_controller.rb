@@ -88,12 +88,16 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_tenant
-    # find current tenant by either full hostname or subdomain
-    host = request.host.gsub("www.","").downcase
-    slug = request.host.split(".").first.downcase
-    ::Tenant.current = ::Tenant.where("host = ? OR slug = ?", host, slug).first
-    # raise routing exception if tenant not found
-    raise ActionController::RoutingError.new("Not Found") unless Tenant.current
+    if Rails.env.production?
+      slug = request.subdomain.downcase
+      ::Tenant.current = ::Tenant.find_by!('host = ? OR slug = ?', request.domain, slug)
+    else
+      if session[:tenant_id]
+        ::Tenant.current = ::Tenant.find(session[:tenant_id])
+      else
+        redirect_to tenants_path unless controller_name == 'tenants'
+      end
+    end
   end
 
   def add_stylesheets
