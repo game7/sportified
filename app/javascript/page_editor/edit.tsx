@@ -5,6 +5,7 @@ import { debounce } from './common/utils';
 import { PageTitle } from './editor/page-title';
 import { Editor } from './editor/editor';
 
+
 interface IState {
   id: number;
   title: string;
@@ -48,11 +49,14 @@ export class Edit extends React.Component<{},IState> {
 
   refreshPreview = debounce(() => {
     const { content } = this.state;
+
     return fetch('/markdown', {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({ markdown: content }),
+      credentials: 'same-origin',
       headers: {
-        "Content-Type": "application/json"
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
     }).then(response => response.json() as any)
       .then(json => this.setState({

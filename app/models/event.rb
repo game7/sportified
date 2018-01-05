@@ -36,6 +36,7 @@
 #  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
 #  program_id                :integer
+#  page_id                   :integer
 #
 # Indexes
 #
@@ -46,6 +47,7 @@
 #  index_events_on_home_team_locker_room_id  (home_team_locker_room_id)
 #  index_events_on_location_id               (location_id)
 #  index_events_on_mongo_id                  (mongo_id)
+#  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)
 #  index_events_on_season_id                 (season_id)
@@ -53,6 +55,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_4fb4636be6  (page_id => pages.id)
 #  fk_rails_9a9b98078e  (program_id => programs.id)
 #
 
@@ -60,12 +63,18 @@ class Event < ActiveRecord::Base
   include Sportified::TenantScoped
 
   belongs_to :program
-  validates :program_id, presence: true
-
+  belongs_to :page, required: true
   belongs_to :location
-  # validates_presence_of :location_id
 
   validates_presence_of :starts_on
+  validate :starts_on_cannot_be_in_the_past
+
+  def starts_on_cannot_be_in_the_past
+    if new_record? && starts_on.past?
+      errors.add(:starts_on, "can't be in the past")
+    end
+  end
+
   before_save :set_starts_on
   def set_starts_on
     self.starts_on = starts_on.change(:hour => 0) if all_day

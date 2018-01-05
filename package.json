@@ -31,6 +31,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-latest": "^6.24.1",
+    "bootstrap-datetime-picker": "^2.4.4",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.6",
     "compression-webpack-plugin": "^0.4.0",

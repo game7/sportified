@@ -59,8 +59,8 @@
 #  fk_rails_9a9b98078e  (program_id => programs.id)
 #
 
-require 'rails_helper'
+class General::Event < ::Event
 
-RSpec.describe League::Event, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  validates_presence_of :summary
+
 end

@@ -115,10 +115,6 @@
   namespace :admin do
 
     resources :programs, :only => [:index, :destroy]
-    namespace :activity do
-      resources :programs, :except => [:index, :destroy]
-      resources :sessions, :except => [:index, :destroy]
-    end
     namespace :league do
       resources :programs, :except => [:index, :destroy], :shallow => true do
         resources :divisions, :except => [:show] do
@@ -153,7 +149,10 @@
       resources :playing_surfaces
       resources :locker_rooms
     end
-    resources :events
+    resources :events, only: [:index, :destroy]
+    namespace :general do
+      resources :events, only: [:new, :create, :edit, :update]
+    end
     resources :game_imports do
       post 'complete', :on => :member
     end
@@ -189,7 +188,10 @@
   match "admin/game_results" => "admin/games/results#index", :as => :admin_game_results, :via => :get
 
   resources :pages, :except => [ :show ] do
-    post 'position', :on => :collection
+    member do
+      post :move_up
+      post :move_down
+    end
     resources :sections, :only => [ :create, :destroy ] do
       post 'position', :on => :collection
     end

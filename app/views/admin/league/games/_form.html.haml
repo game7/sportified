@@ -58,6 +58,7 @@
 
 - content_for :javascript do
   :javascript
+
     $(function() {
       var seasons = #{raw @options[:seasons].to_json};
       var divisions = #{raw @options[:divisions].to_json};
@@ -80,5 +81,10 @@
       });
       $('#game_home_team_custom_name').change(function(){
         $('#game_home_team_name').closest('.form-group').slideToggle('slow');
+      });
+      $('input#game_starts_on').datetimepicker({
+        format: 'm/dd/yyyy H:ii P',
+        showMeridian: true,
+        startDate: new Date()
       });
     });

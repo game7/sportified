@@ -1,0 +1,44 @@
+.row
+  .col-sm-3
+    .list-group
+      = link_to 'Date / Time', { anchor: :date_time }, class: 'list-group-item list-group-item-action'
+      = link_to 'Location', { anchor: :location }, class: 'list-group-item list-group-item-action'
+      = link_to 'Details', { anchor: :details }, class: 'list-group-item list-group-item-action'
+  .col-sm-9
+    = simple_form_for [:admin, :general, @event] do |f|
+
+      #date_time
+      %fieldset
+        %legend Date / Time
+        = f.input :starts_on, as: :string, input_html: { value: @event.starts_on ? I18n.l(@event.starts_on) : '' }
+        = f.input :duration
+        = f.input :all_day, as: :boolean, wrapper: :vertical_boolean
+      #location
+      %fieldset
+        %legend Location
+        - if @options[:locations].length < 6
+          = f.input :location_id,
+            as: :radio_buttons,
+            collection: @options[:locations],
+            wrapper: :vertical_radio_and_checkboxes
+        - else
+          = f.input :location_id,
+            as: :select,
+            collection: @options[:locations]
+      #details
+      %fieldset
+        %legend Details
+        = f.input :page_id, collection: @options[:pages]
+        = f.input :summary
+        = f.input :description, as: :text, rows: 4
+
+      = f.button :wrapped, :cancel => return_url
+
+:javascript
+  $(function() {
+    $('input#event_starts_on').datetimepicker({
+      format: 'm/dd/yyyy H:ii P',
+      showMeridian: true,
+      startDate: new Date()
+    });
+  })

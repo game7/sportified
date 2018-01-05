@@ -17,15 +17,15 @@ class MarkdownController < ApplicationController
                                        tables: true)
     toc = Redcarpet::Markdown.new(Redcarpet::Render::HTML_TOC)
 
-    render json: { markdown: markdown_params,
-                   html: markdown.render(markdown_params),
-                   toc: toc.render(markdown_params)}, status: :ok
+    render json: { markdown: markdown_param,
+                   html: markdown.render(markdown_param),
+                   toc: toc.render(markdown_param)}, status: :ok
   end
 
   private
 
-    def markdown_params
-      params.require(:markdown)
+    def markdown_param
+      params.permit(:markdown)[:markdown]
     end
 
 end
