@@ -1,7 +1,9 @@
 %h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
 .well
   = link_to 'Post Statistics', post_admin_hockey_statsheet_path(@statsheet), :confirm => "This post the statistcs from this game to player's record.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary' unless @statsheet.posted?
+  != ' '
   = link_to 'Unpost Statistics', unpost_admin_hockey_statsheet_path(@statsheet), :confirm => "This post the statistcs from this game to each player's record.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary' if @statsheet.posted?
+  != ' '
   = link_to "Done", return_url, :class => "btn btn-sm btn-primary"
 .tabbable
   %ul.nav.nav-tabs
@@ -14,15 +16,15 @@
   #summary.tab-pane.active
     = render 'admin/hockey_statsheets/periods_sum'
     = render 'admin/hockey_statsheets/goals_sum'
-    = render 'admin/hockey_statsheets/shots_sum'  
+    = render 'admin/hockey_statsheets/shots_sum'
   #players.tab-pane
-    = render 'admin/hockey_statsheets/players'  
+    = render 'admin/hockey_statsheets/players'
   #goals.tab-pane
-    = render 'admin/hockey_statsheets/goals'  
+    = render 'admin/hockey_statsheets/goals'
   #penalties.tab-pane
-    = render 'admin/hockey_statsheets/penalties'  
+    = render 'admin/hockey_statsheets/penalties'
   #goaltending.tab-pane
-    = render 'admin/hockey_statsheets/goaltenders'  
+    = render 'admin/hockey_statsheets/goaltenders'
 
 #dialog-modal
 
@@ -34,14 +36,14 @@
        var form = chk.closest('form');
        form.submit();
      });
-     
+
      var hash = window.location.hash;
      var prefix = "tab-";
-     
+
      if (hash) {
        $(".nav-tabs a[href='" + hash.replace(prefix, "") + "']").tab('show');
      }
-     
+
      $('.nav-tabs a').on('show.bs.tab', function(e) {
        console.log('hash: ' + e.target.hash);
        window.location.hash = e.target.hash.replace('#', prefix);

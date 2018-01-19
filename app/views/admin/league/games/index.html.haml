@@ -51,6 +51,10 @@
     $('.btn-toolbar a').click(function(e) {
       if(history.pushState) {
         var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?scroll=' + window.scrollY;
+        var page = getParameterByName('page');
+        if(page) {
+          newurl = newurl + '&page=' + page;
+        }
         window.history.pushState({ path: newurl },'',newurl);
       }
     })
