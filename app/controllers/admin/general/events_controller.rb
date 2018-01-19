@@ -8,14 +8,13 @@ class Admin::General::EventsController < ApplicationController
       @event = ::General::Event.find(params[:clone]).dup
     else
       @event = ::General::Event.new
+      @form = ::General::Events::CreateForm.new @event
     end
   end
 
   def create
-    Chronic.time_class = Time.zone
-    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    @event = ::General::Event.new(event_params)
-    if @event.save
+    @form = ::General::Events::CreateForm.new ::General::Event.new
+    if @form.submit(params)
       return_to_last_point :success => 'Event was successfully created.'
     else
       flash[:error] = 'Event could not be created.'
@@ -25,13 +24,12 @@ class Admin::General::EventsController < ApplicationController
 
 
   def edit
+    @form = ::General::Events::UpdateForm.new @event
   end
 
   def update
-    Chronic.time_class = Time.zone
-    params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    puts "(#{params[:event][:starts_on]})"
-    if @event.update_attributes(event_params)
+    @form = ::General::Events::UpdateForm.new @event
+    if @form.submit(params)
       return_to_last_point(:notice => 'Event was successfully updated.')
     else
       flash[:error] = 'Event could not be updated.'
@@ -41,11 +39,6 @@ class Admin::General::EventsController < ApplicationController
   end
 
   private
-
-    def event_params
-      params.require(:event).permit(:program_id, :starts_on, :duration, :page_id,
-                                    :all_day, :location_id, :summary, :description)
-    end
 
     def load_options
       @options = {

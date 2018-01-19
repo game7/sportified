@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include ExceptionLogger::ExceptionLoggable
-  rescue_from StandardError, :with => :log_exception_handler
+  rescue_from StandardError, :with => :log_exception_handler unless Rails.env.development?
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :store_current_location, unless: :devise_controller?
 

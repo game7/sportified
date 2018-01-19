@@ -41,6 +41,8 @@ gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
 gem 'simple_form', '~> 3.4.0'
+gem 'virtus', '~> 1.0.5'
+
 gem 'cocoon'
 #gem 'delayed_job'
 
