@@ -90,8 +90,11 @@ class ApplicationController < ActionController::Base
 
   def find_current_tenant
     if Rails.env.production?
-      slug = request.subdomain.downcase
-      ::Tenant.current = ::Tenant.find_by!('host = ? OR slug = ?', request.domain, slug)
+      if request.subdomain == 'www'
+        ::Tenant.current = ::Tenant.find_by!(host: request.domain.downcase)
+      else
+        ::Tenant.current = ::Tenant.find_by!(slug: request.subdomain.downcase)
+      end
     else
       if session[:tenant_id]
         ::Tenant.current = ::Tenant.find(session[:tenant_id])
