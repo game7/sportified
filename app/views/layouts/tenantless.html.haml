@@ -1,0 +1,52 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+    = stylesheet_link_tag 'themes/application'
+    = javascript_include_tag :application
+    = csrf_meta_tag
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
+    = yield(:head)
+  %body
+    #wrapper.container
+      %header
+        #banner
+          #{yield :banner}
+        - if content_for?(:title)
+          .page-title.clearfix
+            %h1.pull-left
+              %span#page-title= yield(:title)
+              = content_tag :small, yield(:title_small) if content_for?(:title_small)
+            .actions.pull-right
+              = yield(:actions)
+      #main
+        #page-header
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
+        = yield
+    = yield :javascript
+    :javascript
+
+      var $dropdown = $('.dropdown-toggle');
+      if ($dropdown.dropdown) { $dropdown.dropdown(); }
+
+      // fix sub nav on scroll
+      var $win = $(window)
+        , $nav = $('.subnav')
+        , navTop = $('.subnav').length && $('.subnav').offset().top - 40
+        , isFixed = 0
+
+      processScroll()
+
+      $win.on('scroll', processScroll)
+
+      function processScroll() {
+        var i, scrollTop = $win.scrollTop()
+        if (scrollTop >= navTop && !isFixed) {
+          isFixed = 1
+          $nav.addClass('subnav-fixed')
+        } else if (scrollTop <= navTop && isFixed) {
+          isFixed = 0
+          $nav.removeClass('subnav-fixed')
+        }
+      }

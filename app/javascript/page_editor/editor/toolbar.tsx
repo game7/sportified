@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Icon } from '../common/icons';
 import { Spacer } from '../common';
 import { ButtonGroup, DefaultButton } from '../common/buttons';
 

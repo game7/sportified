@@ -3,31 +3,57 @@
 - content_for :actions do
   = link_to icon('plus')+" New Page", new_page_path, :class => 'btn btn-default'
 
-- content_for :javascript do
-  :javascript
-    $(function() {
-      $("#pages ul").sortable({
-        handle: ".handle",
-        revert: "true",
-        opacity: 0.7,
-        placeholder: "ui-state-highlight",
-        update: function( event, ui ) {  
-          var items = $(this).sortable('serialize');
-          $.ajax({
-            type: 'post',
-            data: items ,
-            dataType: 'json',
-            url: '#{position_pages_path(@page)}'
-          }); 
-        }
-      });
-      $("a[rel='tooltip']").tooltip();
-    });
 
-%section#pages.tree.well
-  %ul.trunk
-    - @pages.each do |page|
-      = render :partial => 'branch', :object => page
-
-:css
-  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+%table.table.table-bordered.table-striped#pages_table
+  %thead
+    %tr
+      %th Title
+      %th{ style: 'text-align: center;' } Position
+      %th{ style: 'text-align: center;' } Actions
+  %tbody
+    - @pages.each_with_index do |page, i|
+      - positioned_first = page.position.to_i == 0
+      - positioned_last = page.parent_id != @pages[i+1]&.parent_id
+      %tr[page]
+        %td
+          - page.ancestry_depth.times do
+            %div{ style: 'width: 20px; display: inline-block;' }
+          = link_to page.title, page
+          .pull-right
+            - if page.draft
+              %em (draft)
+            - unless page.show_in_menu
+              %span{ data: { toggle: :tooltip }, title: 'Page is not visible in Menu' }
+                %span.label.label-default
+                  = icon('eye-slash')
+                  != ' '
+                  Hidden
+            - unless page.link_url.blank?
+              %span{ data: { toggle: :tooltip }, title: 'Menu links to custom location' }
+                %span.label.label-default
+                  = icon('share')
+                  != ' '
+                  Link
+            - if page.skip_to_first_child
+              %span{ data: { toggle: :tooltip }, title: 'Menu links to first child page' }
+                %span.label.label-default
+                  = icon('arrow-down')
+                  != ' '
+                  First Child
+        %td{ style: 'text-align: center;' }
+          = link_to icon(:arrow_up), [:move_up, page], class: "btn btn-xs #{positioned_first ? 'btn-default' : 'btn-primary'}",
+                                                       disabled: positioned_first,
+                                                       method: :post,
+                                                       title: 'Move Up'
+          != ' '
+          = link_to icon(:arrow_down), [:move_up, page], class: "btn btn-xs #{positioned_last ? 'btn-default' : 'btn-primary'}",
+                                                         disabled: positioned_last,
+                                                         method: :post,
+                                                         title: 'Move Down'
+        %td{ style: 'text-align: center;' }
+          = link_to iconify(:pencil, 'Edit'), [:edit, page], class: 'btn btn-xs btn-primary'
+          != ' '
+          = link_to iconify(:trash, 'Delete'), page, :confirm => 'Are you sure?',
+            :method => :delete,
+            :remote => true,
+            :class => 'btn btn-xs btn-primary'

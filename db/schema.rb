@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211211252) do
+ActiveRecord::Schema.define(version: 20180103040709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20171211211252) do
     t.integer  "home_team_locker_room_id"
     t.integer  "away_team_locker_room_id"
     t.integer  "program_id"
+    t.integer  "page_id"
     t.index ["away_team_id"], name: "index_events_on_away_team_id", using: :btree
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id", using: :btree
     t.index ["division_id"], name: "index_events_on_division_id", using: :btree
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 20171211211252) do
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id", using: :btree
     t.index ["location_id"], name: "index_events_on_location_id", using: :btree
     t.index ["mongo_id"], name: "index_events_on_mongo_id", using: :btree
+    t.index ["page_id"], name: "index_events_on_page_id", using: :btree
     t.index ["playing_surface_id"], name: "index_events_on_playing_surface_id", using: :btree
     t.index ["program_id"], name: "index_events_on_program_id", using: :btree
     t.index ["season_id"], name: "index_events_on_season_id", using: :btree
@@ -678,6 +680,7 @@ ActiveRecord::Schema.define(version: 20171211211252) do
 
   add_foreign_key "credit_cards", "tenants"
   add_foreign_key "credit_cards", "users"
+  add_foreign_key "events", "pages"
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"

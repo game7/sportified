@@ -1,3 +1,3 @@
 $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
 $("#flash_notice").slideDown();
-$("#page_<%= @page.id %>").fadeOut();
+$("#page_<%= @page.id %>").remove();

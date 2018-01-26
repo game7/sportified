@@ -41,7 +41,7 @@ export class Editor extends React.Component<IProps, IState> {
     return (
       <div>
         <Toolbar onAction={this.insertSnippet}/>
-        <div style={{ border: "1px solid #ccc ", borderRadius: 4 }}>
+        <div style={{ border: "1px solid #ccc " }}>
           <AceEditor
             mode="markdown"
             theme="chrome"

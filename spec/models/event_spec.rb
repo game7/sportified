@@ -36,6 +36,7 @@
 #  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
 #  program_id                :integer
+#  page_id                   :integer
 #
 # Indexes
 #
@@ -46,6 +47,7 @@
 #  index_events_on_home_team_locker_room_id  (home_team_locker_room_id)
 #  index_events_on_location_id               (location_id)
 #  index_events_on_mongo_id                  (mongo_id)
+#  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)
 #  index_events_on_season_id                 (season_id)
@@ -53,6 +55,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_4fb4636be6  (page_id => pages.id)
 #  fk_rails_9a9b98078e  (program_id => programs.id)
 #
 

@@ -1,9 +1,10 @@
 require "chronic"
 class Admin::EventsController < Admin::AdminController
 
-  before_action :mark_return_point, :only => [:destroy]
+  before_action :mark_return_point, only: [:destroy]
   before_action :add_events_breadcrumb
-  before_action :load_event, :only => [:destroy]
+  before_action :load_event, only: [:destroy]
+  before_action :load_options, only: [:new, :create]
 
   def index
 
@@ -29,21 +30,32 @@ class Admin::EventsController < Admin::AdminController
 
   end
 
-
   def destroy
     @event.destroy
     return_to_last_point :success => 'Event has been deleted.'
   end
 
-
   private
 
-  def add_events_breadcrumb
-    add_breadcrumb 'Events', admin_events_path
-  end
+    def event_params
+      params.require(:event).permit(:program_id, :starts_on, :duration, :page_id,
+                                      :all_day, :location_id, :summary, :description)
+    end
 
-  def load_event
-    @event = Event.find(params[:id])
-  end
+    def add_events_breadcrumb
+      add_breadcrumb 'Events', admin_events_path
+    end
+
+    def load_event
+      @event = Event.find(params[:id])
+    end
+
+    def load_options
+      @options = {
+        pages: Page.options,
+        programs: [],
+        locations: Location.order(:name).pluck(:name, :id)
+      }
+    end
 
 end

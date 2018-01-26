@@ -30,7 +30,7 @@ class PagesController < ApplicationController
   before_action :mark_return_point, :only => [:new, :edit]
 
   def index
-    @pages = Page.arrange(:order => :position)
+    @pages = Page.arrange_as_array(order: :position)
   end
 
   def show
@@ -52,104 +52,122 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(page_params)
+    @page.position = @page.parent.children.count
     if @page.save
-      return_to_last_point(:notice => 'Page was successfully created.')
+      return_to_last_point(success: 'Page was successfully created.')
     else
-      render :action => "new"
+      render action: :new
     end
   end
 
   def destroy
     @page.delete
     flash[:notice] = "Page '#{@page.title}' has been deleted"
+    @pages = Page.arrange_as_array(order: :position)
   end
 
-  def position
-    params['page'].each_with_index do |id, i|
-      page = Page.find(id);
-      if page
-        page.position = i
-        page.save
-      end
+  def move_up
+    page = Page.find(params[:id])
+    siblings = page.siblings.order(:position).pluck(:id)
+    current_position = siblings.index(page.id)
+    puts current_position
+    puts siblings.to_json
+    if (current_position > 0)
+      siblings = siblings.insert(current_position - 1, siblings.delete_at(current_position))
     end
-    render :nothing => true
+    puts siblings.to_json
+    siblings.each_with_index{|id, i| Page.update(id, position: i)}
+    redirect_to pages_path, notice: 'Page has been moved up'
+    # @pages = Page.arrange_as_array(order: :position)
   end
+
+  def move_down
+    page = Page.find(params[:id])
+    siblings = page.siblings.order(:position).pluck(:id)
+    current_position = siblings.index(page.id)
+    if (current_position < siblings.length - 1)
+      siblings = siblings.insert(current_position, siblings.delete_at(current_position - 1))
+    end
+    siblings.each_with_index{|id, i| Page.update(id, position: i)}
+
+    redirect_to pages_path, notice: 'Page has been moved down'
+    # @pages = Page.arrange_as_array(order: :position)
+  end
+
 
   private
 
-  def page_params
-    params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu,
-                                  :link_url, :skip_to_first_child,
-                                  :meta_keywords, :meta_description,
-                                  :content)
-  end
+    def page_params
+      params.required(:page).permit(:title, :parent_id, :show_in_menu, :title_in_menu,
+                                    :link_url, :skip_to_first_child,
+                                    :meta_keywords, :meta_description,
+                                    :content)
+    end
 
-  def load_objects
-    find_page
-  end
+    def load_objects
+      find_page
+    end
 
-  def find_page
-    @page = params[:id] ? Page.find(params[:id]) : find_page_by_path
-  end
+    def find_page
+      @page = params[:id] ? Page.find(params[:id]) : find_page_by_path
+    end
 
-  def find_page_by_path
-    page = Page.find_by_path(params[:path])
-    page ||= Page.new(:title => 'Welcome') unless params[:path]
-    page
-  end
+    def find_page_by_path
+      page = Page.find_by_path(params[:path])
+      page ||= Page.new(:title => 'Welcome') unless params[:path]
+      page
+    end
 
-  def set_breadcrumbs
-    (@page.ancestors + [@page]).each do |parent|
-      add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
-    end unless @page.root?
-  end
+    def set_breadcrumbs
+      (@page.ancestors + [@page]).each do |parent|
+        add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
+      end unless @page.root?
+    end
 
-  def set_area_navigation
-    set_child_page_navigation if [:show, :edit].include? params[:action].to_sym
-  end
+    def set_area_navigation
+      set_child_page_navigation if [:show, :edit].include? params[:action].to_sym
+    end
 
-  def set_child_page_navigation
-    has_children = false
-    @page.children.in_menu.order(:position).each do |child|
-      has_children = true
-      add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
-    end unless @page.new_record?
-    unless @page.root? or has_children
-      @page.siblings.in_menu.order(:position).each do |sibling|
-        add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)
+    def set_child_page_navigation
+      has_children = false
+      @page.children.in_menu.order(:position).each do |child|
+        has_children = true
+        add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
+      end unless @page.new_record?
+      unless @page.root? or has_children
+        @page.siblings.in_menu.order(:position).each do |sibling|
+          add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)
+        end
       end
     end
-  end
 
-  def load_parent_options
-    @parent_options = Page.arrange_as_array(:order => :position).collect do |page|
-      [ page.name_for_selects, page.id]
+    def load_parent_options
+      @parent_options = Page.options
     end
-  end
 
-  def stripe_request?
-    params[:code] and params[:scope]
-  end
-
-  def verify_stripe_connect
-    payload = {
-      client_secret: ENV['STRIPE_SECRET_KEY'],
-      code: params[:code],
-      grant_type: 'authorization_code'
-    }
-    begin
-      response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
-    rescue => e
-      raise e.response
+    def stripe_request?
+      params[:code] and params[:scope]
     end
-    parsed = ActiveSupport::JSON.decode(response)
-    Tenant.current.update_attributes(
-      stripe_account_id: parsed["stripe_user_id"],
-      stripe_access_token: parsed["access_token"],
-      stripe_public_api_key: parsed["stripe_publishable_key"]
-    )
-    flash[:success] = "Sweet!  Your Stripe account is now connected."
-    redirect_to '/registrar/items'
-  end
+
+    def verify_stripe_connect
+      payload = {
+        client_secret: ENV['STRIPE_SECRET_KEY'],
+        code: params[:code],
+        grant_type: 'authorization_code'
+      }
+      begin
+        response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
+      rescue => e
+        raise e.response
+      end
+      parsed = ActiveSupport::JSON.decode(response)
+      Tenant.current.update_attributes(
+        stripe_account_id: parsed["stripe_user_id"],
+        stripe_access_token: parsed["access_token"],
+        stripe_public_api_key: parsed["stripe_publishable_key"]
+      )
+      flash[:success] = "Sweet!  Your Stripe account is now connected."
+      redirect_to '/registrar/items'
+    end
 
 end

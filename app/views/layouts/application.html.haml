@@ -3,39 +3,39 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-      = " - " + tenant.name
-    - theme = tenant.theme
+      = " - #{tenant.name}" if tenant
+    - theme = tenant&.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "themes/#{theme}"
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
-      = stylesheet_link_tag "application"
-    - if Tenant.current.google_fonts
-      - Tenant.current.google_fonts.split(/\r?\n/).each do |font|
+      = stylesheet_link_tag :application
+    - if tenant&.google_fonts
+      - tenant.google_fonts.split(/\r?\n/).each do |font|
         = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"
-    = javascript_include_tag "application"
+    = javascript_include_tag :application
     = csrf_meta_tag
-    %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
   %body
     .navbar.navbar-default.navbar-fixed-top{ :role => 'navigation'}
       .container
         .navbar-header
-          %button.navbar-toggle{ :type => "button", :"data-toggle" => "collapse", :"data-target" => ".navbar-collapse" }
+          %button.navbar-toggle{ type: :button, data: { toggle: :collapse, target: '.navbar-collapse' } }
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
           #site_logo
-            = link_to "/", :class => "navbar-brand" do
+            = link_to "/", class: 'navbar-brand' do
               %div
             =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
           #site_name
-            = link_to tenant.name, main_app.root_url, :class => "brand"
-        = render "layouts/site_navigation"
+            = link_to tenant.name, main_app.root_url, :class => 'brand'
+        = render 'layouts/site_navigation'
     #wrapper.container
       %header
-        = render "layouts/area_navigation" if @area_menu_items
-        = render "layouts/breadcrumbs" if @breadcrumbs
+        = render 'layouts/area_navigation' if @area_menu_items
+        = render 'layouts/breadcrumbs' if @breadcrumbs
         #banner
           #{yield :banner}
         - if content_for?(:title)

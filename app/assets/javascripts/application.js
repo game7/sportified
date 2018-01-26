@@ -4,6 +4,7 @@
 //= require jquery.remotipart
 //= require bootstrap-sprockets
 //= require jcrop/jquery.Jcrop.min
+//= require bootstrap-datetimepicker
 //= require cocoon
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
