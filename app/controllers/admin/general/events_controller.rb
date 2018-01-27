@@ -8,8 +8,8 @@ class Admin::General::EventsController < ApplicationController
       @event = ::General::Event.find(params[:clone]).dup
     else
       @event = ::General::Event.new
-      @form = ::General::Events::CreateForm.new @event
     end
+    @form = ::General::Events::CreateForm.new @event
   end
 
   def create
