@@ -63,7 +63,7 @@ class Event < ActiveRecord::Base
   include Sportified::TenantScoped
 
   belongs_to :program
-  belongs_to :page, required: true
+  belongs_to :page, required: false
   belongs_to :location
 
   validates_presence_of :starts_on
