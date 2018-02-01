@@ -12,8 +12,7 @@ class General::Events::CreateForm
 
   def initialize(event)
     @event = event
-    self.attributes.keys
-    assign_attributes event.attributes.slice(*self.attributes.keys)
+    assign_attributes event.attributes.slice(*self.attributes.keys.collect(&:to_s))
   end
 
   def self.model_name
