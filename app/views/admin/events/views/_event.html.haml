@@ -1,5 +1,10 @@
+- color = @color_map[event.color_key]
+- offset = (event.starts_on.seconds_since_midnight - (6 * 60 * 60)) / 60
+- style = "vertical-align: top; border-left: 10px solid #{color}; border-radius: 0;"
+-#- style += " top: #{offset}px;" unless @view == 'month'
+- style += " height: #{event.duration}px;" unless @view == 'month'
 .dropdown
-  %button.btn.btn-default.event{ :type => :button, :data => { :toggle => :dropdown }}
+  %button.btn.btn-default.event{ :type => :button, :data => { :toggle => :dropdown }, :style => style }
     .time= event.starts_on.strftime('%l:%M%P').gsub('m', '')
     .summary= event.summary
   %ul.dropdown-menu

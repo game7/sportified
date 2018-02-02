@@ -7,7 +7,7 @@ class Admin::EventsController < Admin::AdminController
   before_action :load_options, only: [:new, :create]
 
   def index
-
+    @view = params[:view] || 'day'
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
 
     puts "date: #{@date}"
@@ -22,6 +22,8 @@ class Admin::EventsController < Admin::AdminController
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
     end
+
+    @color_map = color_map(@events)
 
     respond_to do |format|
       format.html
@@ -55,6 +57,31 @@ class Admin::EventsController < Admin::AdminController
         pages: Page.options,
         programs: [],
         locations: Location.order(:name).pluck(:name, :id)
+      }
+    end
+
+    def color_map(events)
+      events.collect(&:color_key).uniq.reduce({}){|a,b| a[b] = colors[a.length]; a}
+    end
+
+    def colors
+      %w{
+        #b60205
+        #d93f0b
+        #fbca04
+        #0e8a16
+        #006b75
+        #1d76db
+        #0052cc
+        #5319e7
+        #e99695
+        #f9d0c4
+        #fef2c0
+        #c2e0c6
+        #bfdadc
+        #c5def5
+        #bfd4f2
+        #d4c5f9
       }
     end
 

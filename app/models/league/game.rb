@@ -188,4 +188,8 @@ class League::Game < League::Event
     end
   end
 
+  def color_key
+    "division-#{division_id}"
+  end
+
 end
