@@ -1,20 +1,20 @@
 - color = @color_map[event.color_key]
 - offset = (event.starts_on.seconds_since_midnight - (6 * 60 * 60)) / 60
-- style = "vertical-align: top; border-left: 10px solid #{color}; border-radius: 0;"
+- style = "vertical-align: top; border: 1px solid #{color}; border-left: 10px solid #{color}; border-radius: 0; background"
 -#- style += " top: #{offset}px;" unless @view == 'month'
 - style += " height: #{event.duration}px;" unless @view == 'month'
 .dropdown
-  %button.btn.btn-default.event{ :type => :button, :data => { :toggle => :dropdown }, :style => style }
+  .event{ :type => :button, :data => { :toggle => :dropdown }, :style => style }
     .time= event.starts_on.strftime('%l:%M%P').gsub('m', '')
     .summary= event.summary
   %ul.dropdown-menu
     %li.dropdown-header Event
     %li= link_to 'Edit', edit_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event])
     %li= link_to 'Clone', new_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event.class], :clone => event.id)
-    %li= link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+    %li= link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
     - if event.class.to_s == 'League::Game'
-      %li.divider{role: "separator"}
+      %li.divider{role: :separator}
       %li.dropdown-header Game
       %li= link_to 'Result', edit_admin_game_result_path(event.id)
       %li= link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
-      %li= link_to 'Print Scoresheet', print_admin_game_statsheet_path(event.id), :target => "_blank"
+      %li= link_to 'Print Scoresheet', print_admin_game_statsheet_path(event.id), :target => :blank
