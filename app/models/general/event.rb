@@ -63,4 +63,8 @@ class General::Event < ::Event
 
   validates_presence_of :summary
 
+  def color_key
+    "page-#{page_id}"
+  end
+
 end

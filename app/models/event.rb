@@ -105,4 +105,8 @@ class Event < ActiveRecord::Base
     self.class.name.deconstantize.underscore.presence
   end
 
+  def color_key
+    raise "color_key must be implemented by subclass #{self.class.name}"
+  end
+
 end
