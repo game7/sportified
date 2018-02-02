@@ -1,6 +1,6 @@
 - color = @color_map[event.color_key]
 - offset = (event.starts_on.seconds_since_midnight - (6 * 60 * 60)) / 60
-- style = "vertical-align: top; border: 1px solid #{color}; border-left: 10px solid #{color}; border-radius: 0; background"
+- style = "background: #fff; vertical-align: top; border: 1px solid #{color}; border-left: 10px solid #{color}; border-radius: 0;"
 -#- style += " top: #{offset}px;" unless @view == 'month'
 - style += " height: #{event.duration}px;" unless @view == 'month'
 .dropdown
