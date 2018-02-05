@@ -9,10 +9,7 @@ class Admin::EventsController < Admin::AdminController
   def index
     @view = params[:view] || 'day'
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
-
-    puts "date: #{@date}"
-    puts "start: #{@date.at_beginning_of_week.beginning_of_day}"
-    puts "end: #{@date.at_end_of_week.end_of_day}"
+    Date.beginning_of_week = :sunday
     @events = Event.all.includes(:location, :program)
     @events = @events.after(@date.beginning_of_day).before(@date.end_of_day) unless params[:view]
     @events = @events.after(@date.days_ago(1).beginning_of_day).before(@date.days_since(3).end_of_day) if params[:view] == 'fourday'
