@@ -1,4 +1,4 @@
-class Admin::PlayingSurfacesController < ApplicationController
+class Admin::PlayingSurfacesController < Admin::AdminController
 
   before_action :mark_return_point, only: [:new, :edit, :destroy]
   before_action :set_playing_surface, only: [:show, :edit, :update, :destroy]

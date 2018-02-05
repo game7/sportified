@@ -28,8 +28,10 @@ class PagesController < ApplicationController
   before_action :find_page, :only => [:edit, :update, :destroy]
   before_action :load_parent_options, :only => [:new, :edit]
   before_action :mark_return_point, :only => [:new, :edit]
+  layout 'admin', only: :index
 
   def index
+
     @pages = Page.arrange_as_array(order: :position)
   end
 

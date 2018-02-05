@@ -41,12 +41,12 @@
                   != ' '
                   First Child
         %td{ style: 'text-align: center;' }
-          = link_to icon(:arrow_up), [:move_up, page], class: "btn btn-xs #{positioned_first ? 'btn-default' : 'btn-primary'}",
+          = link_to icon(:'arrow-up'), [:move_up, page], class: "btn btn-xs #{positioned_first ? 'btn-default' : 'btn-primary'}",
                                                        disabled: positioned_first,
                                                        method: :post,
                                                        title: 'Move Up'
           != ' '
-          = link_to icon(:arrow_down), [:move_up, page], class: "btn btn-xs #{positioned_last ? 'btn-default' : 'btn-primary'}",
+          = link_to icon(:'arrow-down'), [:move_up, page], class: "btn btn-xs #{positioned_last ? 'btn-default' : 'btn-primary'}",
                                                          disabled: positioned_last,
                                                          method: :post,
                                                          title: 'Move Down'

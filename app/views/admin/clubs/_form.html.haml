@@ -1,4 +1,6 @@
 = simple_form_for [:admin, @club] do |f|
-  = f.input :name
-  = f.input :short_name
+  .panel.panel-default
+    .panel-body
+      = f.input :name
+      = f.input :short_name
   = f.button :wrapped, :cancel => return_url

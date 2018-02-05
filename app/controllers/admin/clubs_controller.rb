@@ -1,5 +1,5 @@
 class Admin::ClubsController < Admin::BaseLeagueController
-  
+
   before_action :mark_return_point, :only => [:new, :edit, :destroy]
   before_action :add_clubs_breadcrumb
   before_action :load_club, :only => [:show, :edit, :update, :destroy]
@@ -42,20 +42,20 @@ class Admin::ClubsController < Admin::BaseLeagueController
     @club.destroy
     return_to_last_point :success => 'Club has been deleted.'
   end
-  
-  private
-  
-  def club_params
-    params.required(:club).permit(:name, :short_name)
-  end
-  
-  def add_clubs_breadcrumb
-    add_breadcrumb 'Clubs', admin_clubs_path  
-  end
 
-  def load_club
-    @club = Club.find(params[:id])
-    add_breadcrumb @club.name
-  end
-  
+  private
+
+    def club_params
+      params.required(:club).permit(:name, :short_name)
+    end
+
+    def add_clubs_breadcrumb
+      add_breadcrumb 'Clubs', admin_clubs_path
+    end
+
+    def load_club
+      @club = Club.find(params[:id])
+      add_breadcrumb @club.name
+    end
+
 end

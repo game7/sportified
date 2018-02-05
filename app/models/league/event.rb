@@ -77,7 +77,7 @@ class League::Event < Event
       where( :division_id => id)
     end
   end
-  
+
   def color_key
     "division-#{division_id}"
   end

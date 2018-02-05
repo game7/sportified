@@ -1,6 +1,6 @@
 class Admin::AdminController < ApplicationController
   before_action :verify_admin
-  #layout 'admin'
+  layout 'admin'
 
   def set_breadcrumbs
     super

@@ -1,4 +1,4 @@
-class Admin::LockerRoomsController < ApplicationController
+class Admin::LockerRoomsController < Admin::AdminController
 
   before_action :mark_return_point, only: [:new, :edit, :destroy]
   before_action :set_locker_room, only: [:show, :edit, :update, :destroy]
@@ -76,6 +76,6 @@ class Admin::LockerRoomsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def locker_room_params
-      params[:locker_room].permit(:name, :parent_id, :preference)
+      params[:locker_room].permit(:name, :parent_id, :playing_surface_id, :preference)
     end
 end

@@ -1,11 +1,7 @@
 = simple_form_for [:admin, @location, @locker_room] do |f|
-  .row
-    .col-sm-4
+  .panel.panel-default
+    .panel-body
       = f.input :name
-  .row
-    .col-sm-4
       = f.input :playing_surface_id, :collection => @playing_surfaces
-  .row
-    .col-sm-4
       = f.input :preference, :collection => @preferences
-  = f.button :wrapped, :cancel => return_url
+      = f.button :wrapped, :cancel => return_url

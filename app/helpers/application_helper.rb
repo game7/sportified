@@ -1,9 +1,9 @@
 module ApplicationHelper
 
 
-  def icon(name, label = nil)
-    content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}") + ' ' + label
-  end
+  # def icon(name, label = nil)
+  #   content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}") + ' ' + label
+  # end
 
   def iconify(name, label)
     icon(name, label)

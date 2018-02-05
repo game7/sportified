@@ -105,3 +105,10 @@ header {
 table {
   background-color: #fff;
 }
+
+#content {
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s;
+  background: #fafafa ;
+}

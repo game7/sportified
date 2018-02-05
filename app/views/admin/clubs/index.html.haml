@@ -1,15 +1,16 @@
 - title "Clubs"
-
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th Name
-      %th Actions
-  %tbody
-    - @clubs.each do |club|
+.container
+  %table.table.table-striped.table-bordered
+    %thead
       %tr
-        %td #{club.name}
-        %td
-          = link_to 'Edit', edit_admin_club_path(club), :class => 'btn btn-xs btn-primary'
-          = link_to 'Delete', [:admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
-= link_to 'New Club', new_admin_club_path, :class => 'btn btn-primary'
+        %th Name
+        %th Actions
+    %tbody
+      - @clubs.each do |club|
+        %tr
+          %td #{club.name}
+          %td
+            .btn-group
+              = link_to 'Edit', edit_admin_club_path(club), :class => 'btn btn-xs btn-default'
+              = link_to 'Delete', [:admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'
+  = link_to 'New Club', new_admin_club_path, :class => 'btn btn-primary'

@@ -11,6 +11,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += [
   'themes/application.css',
+  'themes/admin.css',
   'themes/oia.css',
   'themes/styfl.css',
   'themes/barnburner.css',

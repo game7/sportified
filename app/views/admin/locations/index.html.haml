@@ -1,27 +1,39 @@
 - title "Locations"
 
-- @locations.each do |location|
-  .panel.panel-default
-    .panel-heading
-      = location.name
-      .pull-right
-        = link_to 'Edit', edit_admin_location_path(location), :class => 'btn btn-primary btn-xs'
-        = link_to 'Add Playing Surface', new_admin_location_playing_surface_path(location), :class => 'btn btn-primary btn-xs'
-        = link_to 'Add Locker Room', new_admin_location_locker_room_path(location), :class => 'btn btn-primary btn-xs'
-        = link_to 'Delete', [:admin, location], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
-    %ul.list-group
-      - location.facilities.playing_surfaces.each do |surface|
-        %li.list-group-item
-          = surface.name
-          .pull-right
-            = link_to 'Edit', edit_polymorphic_path([:admin, location, surface]), :class => 'btn btn-primary btn-xs'
-            = link_to 'Delete', [:admin, location, surface], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
-        - surface.locker_rooms.each do |locker_room|
-          %li.list-group-item
-            %span{ :style => 'padding-left: 20px;'}= locker_room.name
-            .pull-right
-              = link_to 'Edit', edit_polymorphic_path([:admin, location, locker_room]), :class => 'btn btn-primary btn-xs'
-              = link_to 'Delete', [:admin, location, locker_room], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
+.container
+  - @locations.each do |location|
+    .panel.panel-default
+      .panel-heading
+        = location.name
+        .btn-group.pull-right{ role: :button }
+          = link_to 'Edit', edit_admin_location_path(location), class: 'btn btn-default btn-xs'
+          = link_to 'Delete', [:admin, location], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-default btn-xs'
+      .panel-body
+        .row
+          .col-sm-6
+            .panel.panel-default
+              .panel-heading
+                Playing Surfaces
+                = link_to 'Add Playing Surface', new_admin_location_playing_surface_path(location), class: 'btn btn-default btn-xs pull-right'
+              %ul.list-group
+                - location.facilities.playing_surfaces.each do |surface|
+                  %li.list-group-item
+                    = surface.name
+                    .btn-group.pull-right
+                      = link_to 'Edit', edit_polymorphic_path([:admin, location, surface]), class: 'btn btn-default btn-xs'
+                      = link_to 'Delete', [:admin, location, surface], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-default btn-xs'
+          .col-sm-6
+            .panel.panel-default
+              .panel-heading
+                Locker Rooms
+                = link_to 'Add Locker Room', new_admin_location_locker_room_path(location), class: 'btn btn-default btn-xs pull-right'
+              %ul.list-group
+                - location.facilities.locker_rooms.each do |locker_room|
+                  %li.list-group-item
+                    %span{ :style => 'padding-left: 20px;'}= locker_room.name
+                    .btn-group.pull-right
+                      = link_to 'Edit', edit_polymorphic_path([:admin, location, locker_room]), class: 'btn btn-default btn-xs'
+                      = link_to 'Delete', [:admin, location, locker_room], data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-default btn-xs'
 
 
-= link_to 'New Location', new_admin_location_path, :class => 'btn btn-primary'
+  = link_to 'New Location', new_admin_location_path, :class => 'btn btn-primary'
