@@ -1,44 +1,86 @@
-.row
-  .col-sm-3
-    .list-group
-      = link_to 'Date / Time', { anchor: :date_time }, class: 'list-group-item list-group-item-action'
-      = link_to 'Location', { anchor: :location }, class: 'list-group-item list-group-item-action'
-      = link_to 'Details', { anchor: :details }, class: 'list-group-item list-group-item-action'
-  .col-sm-9
-    = simple_form_for [:admin, @form] do |f|
-      - puts @form.starts_on
-      #date_time
-      %fieldset
-        %legend Date / Time
-        = f.input :starts_on, as: :string, input_html: { value: @form.starts_on ? I18n.l(@form.starts_on) : '' }
-        = f.input :duration
-        = f.input :all_day, as: :boolean, wrapper: :vertical_boolean
-      #location
-      %fieldset
-        %legend Location
-        - if @options[:locations].length < 6
-          = f.input :location_id,
-            as: :radio_buttons,
-            collection: @options[:locations],
-            wrapper: :vertical_radio_and_checkboxes
-        - else
-          = f.input :location_id,
-            as: :select,
-            collection: @options[:locations]
-      #details
-      %fieldset
-        %legend Details
-        = f.input :page_id, collection: @options[:pages]
-        = f.input :summary
-        = f.input :description, as: :text, rows: 4
+= simple_form_for [:admin, @form] do |f|
 
-      = f.button :wrapped, :cancel => return_url
+  .panel.panel-default
+    .panel-body
+      = f.input :starts_on, as: :string, input_html: { value: @form.starts_on ? I18n.l(@form.starts_on) : '' }
+      = f.input :duration
+      = f.input :all_day, as: :boolean, wrapper: :vertical_boolean
+  .panel.panel-default
+    .panel-body
+      - if @options[:locations].length < 6
+        = f.input :location_id,
+          as: :radio_buttons,
+          collection: @options[:locations],
+          wrapper: :vertical_radio_and_checkboxes
+      - else
+        = f.input :location_id,
+          as: :select,
+          collection: @options[:locations]
+  .panel.panel-default
+    .panel-body
+      = f.input :summary
+      = f.input :page_id, collection: @options[:pages]
+      = f.input :description, as: :text, rows: 4
+  - if @form.respond_to?(:repeat)
+    .panel.panel-default
+      .panel-body
+        = f.input :repeat, as: :boolean, wrapper: :vertical_boolean
+        .repeat-fields
+          %hr
+          = f.input :repeat_on_sunday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_monday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_tuesday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_wednesday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_thursday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_friday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :repeat_on_saturday, as: :boolean, wrapper: :vertical_boolean
+          = f.input :ends, as: :radio_buttons,
+                           label: 'Ending',
+                           collection: @form.class.ends_options,
+                           wrapper: :vertical_radio_and_checkboxes
+          = f.input :ends_on, label: false
+          = f.input :ends_after_occurrences, label: false, wrapper: :input_group do
+            = f.input_field :ends_after_occurrences, class: 'form-control'
+            = content_tag :span, 'occurrences', class: 'input-group-addon'
+
+
+
+
+  = f.button :wrapped, :cancel => return_url
 
 :javascript
   $(function() {
+
     $('input#event_starts_on').datetimepicker({
       format: 'm/dd/yyyy H:ii P',
       showMeridian: true,
       startDate: new Date()
     });
+
+    function toggleEnds(ends) {
+      console.log(ends);
+      if(ends == 'on') {
+        $('.general_event_ends_on').show();
+        $('.general_event_ends_after_occurrences').hide();
+      } else {
+        $('.general_event_ends_on').hide();
+        $('.general_event_ends_after_occurrences').show();
+      }
+    }
+
+    $('.general_event_ends input').on('change', function() {
+      toggleEnds($(this).val());
+    });
+
+    $('.general_event_repeat input').on('change', function() {
+      $('.repeat-fields').toggle();
+    })
+
+    if("#{@form.try(:repeat)}" == 'false') {
+      $('.repeat-fields').hide();
+    }
+
+    toggleEnds("#{@form.try(:ends)}");
+
+
   })

@@ -1,4 +1,4 @@
-class Admin::General::EventsController < ApplicationController
+class Admin::General::EventsController < Admin::AdminController
   before_action :load_event, :only => [:edit, :update]
   before_action :mark_return_point, only: [:new, :edit]
   before_action :load_options, only: [:new, :create, :edit, :update]

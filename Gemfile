@@ -63,6 +63,8 @@ gem 'redcarpet', '~> 3.4.0'
 
 gem 'unicorn'
 
+gem 'ice_cube', '~> 0.16.2'
+
 gem "exception_logger", :github => "ryancheung/exception_logger"
 
 source 'https://rails-assets.org' do
