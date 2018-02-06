@@ -5,8 +5,6 @@ class Api::EventsController < Api::BaseController
     puts from
     puts to
     events = Event.all.after(from).before(to).order(:starts_on).includes(:program, :location)
-    respond_to do |format|
-      format.json { render json: events }
-    end
+    render json: events
   end
 end

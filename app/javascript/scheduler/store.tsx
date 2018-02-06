@@ -12,9 +12,13 @@ export class Store {
 
     const from = moment(date).format("YYYY-MM-01");
     const to = moment(date).format("YYYY-MM-") + moment(date).daysInMonth();
-
-    return fetch(`/api/events?from=${from}&to=${to}`)
-      .then(response => response.json())
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    return fetch(`/api/events?from=${from}&to=${to}`, {
+      credentials: 'same-origin',
+      headers: headers
+    }).then(response => response.json())
       .then(json => json['events'])
       .then(data => data.map(event => {
         return {
