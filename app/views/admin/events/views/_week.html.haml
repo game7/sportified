@@ -1,4 +1,5 @@
 = week_calendar events: @events, start_date: @date do |date, events|
   .date= date.day
-  .events
+  -#.events
+  .event-box{ style: 'position: relative;' }
     = render :partial => 'admin/events/views/event', :collection => events
