@@ -2,6 +2,7 @@ class General::Events::UpdateForm
   include ActiveModel::Model
   include Virtus::Model
 
+  attribute :id, Integer
   attribute :starts_on, DateTime
   attribute :duration, Integer
   attribute :all_day, Boolean, default: false
@@ -20,7 +21,11 @@ class General::Events::UpdateForm
   end
 
   def persisted?
-    false
+    true
+  end
+
+  def audits
+    @event.audits
   end
 
   validates_presence_of :starts_on,

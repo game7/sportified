@@ -79,6 +79,8 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 12.0)
     arel (7.1.4)
+    audited (4.6.0)
+      activerecord (>= 4.0, < 5.2)
     autoprefixer-rails (7.1.1)
       execjs
     autotest (4.4.6)
@@ -376,6 +378,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 4.0)
   ancestry
   annotate
+  audited (~> 4.6)
   autoprefixer-rails
   autotest
   autotest-notification

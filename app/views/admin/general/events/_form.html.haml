@@ -43,6 +43,24 @@
             = f.input_field :ends_after_occurrences, class: 'form-control'
             = content_tag :span, 'occurrences', class: 'input-group-addon'
 
+  - if @form.persisted?
+    .panel.panel-default
+      .panel-body
+        %table.table
+          %thead
+            %tr
+              %th Time
+              %th Action
+              %th User
+          %tbody
+            - @form.audits.each do |audit|
+              %tr
+                %td= "#{time_ago_in_words(audit.created_at)} ago"
+                %td= audit.action
+                %td= audit.user.full_name
+                -#%td
+                -#  - audit.audited_changes.each do |change|
+                -#    .change= change
 
 
 

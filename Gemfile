@@ -42,6 +42,7 @@ gem 'chronic'
 
 gem 'simple_form', '~> 3.4.0'
 gem 'virtus', '~> 1.0.5'
+gem 'audited', '~> 4.6'
 
 gem 'cocoon'
 #gem 'delayed_job'

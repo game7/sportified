@@ -61,6 +61,7 @@
 
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
+  audited
 
   belongs_to :program
   belongs_to :page, required: false
