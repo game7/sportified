@@ -1,6 +1,5 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
-  layout 'print', only: :print
-  layout 'admin', except: :print
+  layout :resolve_layout
   before_action :mark_return_point, only: :edit
   before_action :find_game
   before_action :find_season
@@ -17,6 +16,15 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
   end
 
   private
+
+    def resolve_layout
+      case action_name
+        when 'print'
+          'print'
+        else
+          'admin'
+      end
+    end
 
     def find_or_build_statsheet
       unless @game.has_statsheet?
