@@ -20,7 +20,6 @@ gem 'webpacker'
 
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'
-gem 'font-awesome-sass', '~> 4.7.0'
 gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git'
 gem 'autoprefixer-rails'
 

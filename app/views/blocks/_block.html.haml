@@ -14,7 +14,7 @@
             - block.class.actions.each do |action|
               %li
                 = link_to icon(action)+" "+action.humanize, { :controller => "blocks", :action => "edit", :page_id => @page.id, :id => block.id }, :remote => true
-            %li= link_to icon(:"trash-o")+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true
+            %li= link_to icon(:"trash")+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true
             %li.divider
             %li.dropdown-header MOVE
             %li

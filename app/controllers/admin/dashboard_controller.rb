@@ -1,4 +1,6 @@
 class Admin::DashboardController < Admin::AdminController
-  def show
+
+  def index
   end
+
 end

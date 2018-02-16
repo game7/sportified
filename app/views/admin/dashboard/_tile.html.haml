@@ -1,5 +1,5 @@
 .col-sm-2.col-xs-6
   %a.tile{ :href => url }
-    .icon
-      %i{ class: "fa fa-#{icon}"}
+    .icon{ style: 'margin-bottom: 5px;'}
+      = icon(icon_name, class: 'fa-3x')
     .title= title

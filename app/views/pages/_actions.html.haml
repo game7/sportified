@@ -9,11 +9,11 @@
         %li.dropdown-header THIS PAGE
         %li= link_to icon('cog')+" Settings", [:edit, @page], :remote => true
         %li= link_to icon('share')+' Go To', get_page_url(@page)
-        %li= link_to icon('trash-o')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
+        %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
         %li.dropdown-header OTHER PAGES
         %li= link_to icon('th-list')+" List", pages_path
         %li= link_to icon('plus')+" New", new_page_path
-    != ' '        
+    != ' '
     .btn-group{:"data-toggle" => "buttons"}
       %label#toggle-edit.btn.btn-default.active{ rel: "tooltip", title: "Edit" }
         %input{ type: "radio", name: "options", checked: true }= icon("pencil")
