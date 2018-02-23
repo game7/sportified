@@ -1,0 +1,6 @@
+<% if @form.errors.any? %>
+
+<% else %>
+
+<% end %>
+$("#new_event").replaceWith("<%= escape_javascript( render(:partial => "admin/events/assign_form", :locals => { :form => @form } ) )%>");

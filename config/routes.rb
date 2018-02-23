@@ -149,7 +149,11 @@
       resources :playing_surfaces
       resources :locker_rooms
     end
-    resources :events, only: [:index, :destroy]
+
+    resources :events, only: [:index, :destroy] do
+      patch :assign, on: :collection
+    end
+
     namespace :general do
       resources :events, only: [:new, :create, :edit, :update]
     end

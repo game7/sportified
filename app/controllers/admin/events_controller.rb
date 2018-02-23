@@ -34,6 +34,11 @@ class Admin::EventsController < Admin::AdminController
     return_to_last_point :success => 'Event has been deleted.'
   end
 
+  def assign
+    @form = Admin::Events::AssignForm.new(Date.parse(params['event']['date']))
+    @form.submit(params)
+  end
+
   private
 
     def event_params
