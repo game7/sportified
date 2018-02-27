@@ -34,8 +34,11 @@
             = link_to admin_league_games_path do
               = icon(:'calendar-check', 'Games')
           %li
+            = link_to admin_programs_path do
+              = icon(:'cubes', 'Programs')
+          %li
             = link_to pages_path do
-              = icon(:sitemap, 'Pages')
+              = icon(:'file-alt', 'Pages')
           %li
             = link_to admin_posts_path do
               = icon(:'sticky-note', 'Posts')
