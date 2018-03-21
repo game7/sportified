@@ -15,8 +15,8 @@ interface State {
 
 export default class Calendar extends React.Component<{}, State> {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       events: []
     };

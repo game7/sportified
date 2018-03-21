@@ -13,8 +13,8 @@
   "exclude": [
     "**/*.spec.ts",
     "node_modules",
-    "public",
-    "vendor/bundle"
+    "vendor",
+    "public"
   ],
   "compileOnSave": false
 }

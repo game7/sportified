@@ -1,24 +1,23 @@
 import * as React from 'react';
 
 interface RowProps {
-  children?: JSX.Element[]
+
 }
 
-export const Row = (props: RowProps) => (
+export const Row: React.SFC<RowProps> = (props) => (
   <div className="row">
     {props.children}
   </div>
 )
 
 interface ColProps {
-  children?: JSX.Element[],
   xs?: number;
   sm?: number;
   md?: number;
   lg?: number;
 }
 
-export const Col = (props: ColProps) => {
+export const Col: React.SFC<ColProps> = (props) => {
   let classes = [];
   "xs|sm|md|lg".split("|").forEach(brk => {
     if(props[brk]) {

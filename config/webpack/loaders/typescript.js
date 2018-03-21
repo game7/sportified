@@ -1,5 +1,6 @@
-
 module.exports = {
-  test: /\.tsx?$/,
-  loader: 'ts-loader'
+  test: /\.(ts|tsx)?(\.erb)?$/,
+  use: [{
+    loader: 'ts-loader'
+  }]
 }

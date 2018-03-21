@@ -15,8 +15,8 @@ interface IState {
 
 export class Editor extends React.Component<IProps, IState> {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleLoad = this.handleLoad.bind(this);
     this.insertSnippet = this.insertSnippet.bind(this);
   }

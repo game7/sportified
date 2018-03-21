@@ -11,8 +11,8 @@ export class PageTitle extends React.Component<PageTitleProps, {}> {
   private lastHtml = '';
   private element: HTMLHeadingElement;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.emitChange = this.emitChange.bind(this);
   }
 
@@ -27,7 +27,7 @@ export class PageTitle extends React.Component<PageTitleProps, {}> {
     if (nextProps.title !== ReactDOM.findDOMNode(this).innerHTML) {
         return true;
     }
-    return false; 
+    return false;
   }
 
   emitChange() {

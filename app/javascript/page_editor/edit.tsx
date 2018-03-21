@@ -21,8 +21,8 @@ interface IState {
 
 export class Edit extends React.Component<{},IState> {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     [
       'handleViewChange',
       'handleTitleChange',
