@@ -60,6 +60,7 @@
 #
 
 class General::Event < ::Event
+  acts_as_ordered_taggable
 
   validates_presence_of :summary
 

@@ -1,0 +1,32 @@
+import * as React from 'react';
+import {
+  Route,
+  Link,
+  BrowserRouter as Router
+} from 'react-router-dom';
+
+import App from './app';
+import Games from './games';
+import Events from './events';
+import Players from './players';
+
+const Home = () => (
+  <ul>
+    <li><Link to="/events">Events</Link></li>
+    <li><Link to="/games">Games</Link></li>
+    <li><Link to="/players">Players</Link></li>
+  </ul>
+);
+
+export default () => (
+  <Router basename="/admin/uploads">
+    <div>
+      <App>
+        <Route path="/" exact component={Home}/>
+        <Route path="/games" component={Games}/>
+        <Route path="/events" component={Events}/>
+        <Route path="/players" component={Players}/>
+      </App>
+    </div>
+  </Router>
+);

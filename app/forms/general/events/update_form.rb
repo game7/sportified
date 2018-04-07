@@ -10,10 +10,13 @@ class General::Events::UpdateForm
   attribute :page_id, Integer
   attribute :summary, String
   attribute :description, String
+  attribute :tag_list, String
 
   def initialize(event)
     @event = event
+    puts @event.tag_list
     assign_attributes event.attributes.slice(*self.attributes.stringify_keys.keys)
+    self.tag_list = event.tag_list
   end
 
   def self.model_name
@@ -31,7 +34,6 @@ class General::Events::UpdateForm
   validates_presence_of :starts_on,
                         :duration,
                         :location_id,
-                        :page_id,
                         :summary
 
 
@@ -46,7 +48,7 @@ class General::Events::UpdateForm
     Chronic.time_class = Time.zone
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
     params.require(:general_event)
-          .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description)
+          .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description, :tag_list)
   end
 
 end

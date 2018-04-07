@@ -68,7 +68,7 @@ class Event < ActiveRecord::Base
   belongs_to :location
 
   validates_presence_of :starts_on
-  validate :starts_on_cannot_be_in_the_past
+  # validate :starts_on_cannot_be_in_the_past
 
   def starts_on_cannot_be_in_the_past
     if new_record? && starts_on.past?

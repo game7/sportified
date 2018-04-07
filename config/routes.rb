@@ -1,5 +1,6 @@
 ::Sportified::Application.routes.draw do
 
+
   resources :tenants, :only => :index do
     put :select, :on => :member
   end unless Rails.env.production?
@@ -34,6 +35,11 @@
     namespace :hockey do
       resources :statsheets, :only => [ :show ]
       resources :goals, :only => [ :create, :update ]
+    end
+    namespace :general do
+      resources :events, :only => [] do
+        match :batch_create, via: [:post, :options], on: :collection
+      end
     end
     namespace :league do
       resources :programs, :only => [ :index ]
@@ -86,6 +92,9 @@
 
   namespace :admin do
     root :to => "dashboard#index"
+
+    get 'uploads(/*path)', to: 'uploads#index', :as => :uploads
+
     resources :users do
       resources :user_roles, :only => [ :create, :destroy ]
     end
