@@ -3,7 +3,7 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-      = " - #{tenant.name}" if tenant
+      != " :: #{tenant.name}" if tenant
     = stylesheet_link_tag "themes/admin"
     -#= favicon_link_tag "themes/#{theme}/icon.ico"
     = javascript_include_tag :application

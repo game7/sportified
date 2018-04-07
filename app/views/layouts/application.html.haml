@@ -3,7 +3,7 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-      != " - #{tenant.name}" if tenant
+      != " :: #{tenant.name}" if tenant
     - theme = tenant&.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "themes/#{theme}"
