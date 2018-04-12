@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 
-import Context from './context';
 import File from './file';
 import Data from './data';
 import Columns from './columns';

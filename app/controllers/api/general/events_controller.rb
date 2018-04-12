@@ -9,8 +9,10 @@ class Api::General::EventsController < Api::BaseController
     end
 
     begin
-      events = ::General::Event.create! events_params[:event]
-      render json: events
+      ::General::Event.transaction do
+        events = ::General::Event.create! events_params[:event]
+        render json: events
+      end
     rescue => ex
       render json: ex, status: 400
     end
@@ -20,7 +22,18 @@ class Api::General::EventsController < Api::BaseController
   private
 
     def events_params
-      params.permit(event: [ :starts_on, :duration, :location_id, :away_team_custom_name, :home_team_custom_name, :summary, :tag_list ])
+      params.permit(
+        event: [
+          :starts_on,
+          :duration,
+          :all_day,
+          :location_id,
+          :away_team_custom_name,
+          :home_team_custom_name,
+          :summary,
+          :tag_list
+        ]
+      )
     end
 
     def set_summary(event)

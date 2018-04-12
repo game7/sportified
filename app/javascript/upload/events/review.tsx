@@ -39,6 +39,7 @@ const parseDuration = (value: string) => {
 
 const mergeTags = (existing: string, next:string) => {
   if(!existing) return next;
+  if(!next) return existing;
   const tags = existing.split(',');
   return [...tags, next].join(',')
 }
@@ -46,7 +47,7 @@ const mergeTags = (existing: string, next:string) => {
 export function makeEvents(state: IReviewState): EventUpload[] {
   let { rows, hasHeader, locations } = state;
   if(hasHeader) [ , ...rows] = rows;
-
+  console.log(state.locationMaps)
   // for each row
   const data = rows.map(row => {
     let item = {}
@@ -60,8 +61,11 @@ export function makeEvents(state: IReviewState): EventUpload[] {
         case 'location':
           item[key] = state.locationMaps.filter(map => map.key == row[i])[0];
           break;
-        case 'tags':
-          item[key] = mergeTags(item[key], row[i])
+        case 'prependTags':
+          item['tags'] = mergeTags(row[i], item['tags'])
+          break;
+        case 'appendTags':
+          item['tags'] = mergeTags(item['tags'], row[i])
           break;
         default:
           item[key] = row[i];
@@ -75,7 +79,7 @@ export function makeEvents(state: IReviewState): EventUpload[] {
     return {
       startsOn: item.date + ' ' + item.time,
       duration: item.duration,
-      location: getLocation(locations, item.location.id),
+      location: item.location ? getLocation(locations, item.location.id) : {},
       homeTeam: item.homeTeam,
       awayTeam: item.awayTeam,
       tags: item.tags,
@@ -116,13 +120,16 @@ export default class Review extends Component<{},IReviewState> {
     const { leagueId, seasonId, divisionId } = this.state;
     let payload = {
       event: this.state.games.map(g => {
+        const all_day_duration = (24 * 60);
+        const duration = g.duration || all_day_duration;
         return {
           starts_on: moment(new Date(g.startsOn)).format('M/D/YY h:mm a'),
-          duration: g.duration,
+          duration: duration,
           home_team_custom_name: g.homeTeam,
           away_team_custom_name: g.awayTeam,
           location_id: g.location.id,
-          tag_list: g.tags
+          tag_list: g.tags,
+          all_day: (duration == all_day_duration)
         }
       })
     }

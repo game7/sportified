@@ -49,7 +49,8 @@ export const Properties = {
   homeTeam: 'Home Team',
   awayTeam: 'Away Team',
   summary: 'Summary',
-  tags: 'Tags',
+  prependTags: 'Tags - Prepend',
+  appendTags: 'Tags - Append',
   location: 'Location',
   unused: 'Not Used'
 };
