@@ -102,6 +102,8 @@
 
   resources :programs, only: [:index, :show, :delete], param: :slug
 
+  match "schedule" => "schedule#index", :as => :schedule, :via => :get
+
   match "league/:league_slug/schedule/:division_slug" => "schedule#index"                                       , :as => :league_schedule        , :via => :get
   match "league/:league_slug/scoreboard/:division_slug" => "scoreboard#index"                                   , :as => :league_scoreboard      , :via => :get
   match "league/:league_slug/standings/:division_slug(/:season_slug)" => "standings#index"                      , :as => :league_standings       , :via => :get
