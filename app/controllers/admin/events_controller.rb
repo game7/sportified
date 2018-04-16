@@ -10,15 +10,36 @@ class Admin::EventsController < Admin::AdminController
     @view = params[:view] || 'day'
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     Date.beginning_of_week = :sunday
-    @events = Event.all.includes(:location, :program)
-    @events = @events.after(@date.beginning_of_day).before(@date.end_of_day) unless params[:view]
-    @events = @events.after(@date.days_ago(1).beginning_of_day).before(@date.days_since(3).end_of_day) if params[:view] == 'fourday'
-    @events = @events.after(@date.at_beginning_of_week.beginning_of_day).before(@date.at_end_of_week.end_of_day) if params[:view] == 'week'
-    @events = @events.after(@date.at_beginning_of_month.beginning_of_day).before(@date.at_end_of_month.end_of_day) if params[:view] == 'month'
-    @events = @events.order(:starts_on)
+
+    start_at = @date
+    end_at = @date
+
+    case @view
+      when 'day'
+        @title = @date.strftime('%A %B %-e, %Y')
+      when 'fourday'
+        start_at = @date.days_ago(1)
+        end_at = @date.days_since(3)
+        @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
+      when 'week'
+        start_at = @date.at_beginning_of_week
+        end_at = @date.at_end_of_week
+        @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
+      when 'month'
+        start_at = @date.at_beginning_of_month
+        end_at = @date.at_end_of_month
+        @title = @date.strftime('%B %Y')
+    end
+
+    @events = Event.includes(:location, :program)
+                   .after(start_at.beginning_of_day)
+                   .before(end_at.end_of_day)
+                   .order(:starts_on)
+
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
     end
+
 
     @color_map = color_map(@events)
 

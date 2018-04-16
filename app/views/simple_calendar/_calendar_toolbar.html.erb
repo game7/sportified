@@ -1,25 +1,34 @@
-<div class="btn-group">
-  <%= link_to icon('chevron-left'), url_for(params.merge(date: prev_date, view: params.permit![:view])), :class => "btn btn-default" %>
-  <%= link_to icon('chevron-right'), url_for(params.merge(date: next_date, view: params[:view])), :class => "btn btn-default" %>
-</div>
-<%= link_to "Today", url_for(params.merge(date: nil, view: params[:view])), :class => "btn btn-default #{'active' unless params[:date]}" %>
-<div class="pull-right">
-  <div class="btn-group" role="group">
-    <%= link_to "Day", url_for(:date => params[:date]), :class => "btn btn-default #{'active' unless params[:view]}" %>
-    <%= link_to "4 Days", url_for(:view => 'fourday', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'fourday'}" %>
-    <%= link_to "Week", url_for(:view => 'week', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'week'}" %>
-    <%= link_to "Month", url_for(:view => 'month', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'month'}" %>
+<div style="display: flex;">
+  <div>
+    <div class="btn-group">
+      <%= link_to icon('chevron-left'), url_for(params.merge(date: prev_date, view: params.permit![:view])), :class => "btn btn-default" %>
+      <%= link_to icon('chevron-right'), url_for(params.merge(date: next_date, view: params[:view])), :class => "btn btn-default" %>
+    </div>
+    <%= link_to "Today", url_for(params.merge(date: nil, view: params[:view])), :class => "btn btn-default #{'active' unless params[:date]}" %>
   </div>
-  <div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-      New Event <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li class="dropdown-header">General</li>
-      <li><%= link_to "Event", new_admin_general_event_path %></li>
-      <li class="dropdown-header">League</li>
-      <li><%= link_to "Game", new_admin_league_game_path %></li>
-      <li><%= link_to "Event", new_admin_league_event_path %></li>
-    </ul>
+  <div style="flex-grow: 1; text-align: center; font-weight: bold; font-size: 18px;">
+    <%= @title %>
+  </div>
+  <div>
+    <div class="pull-right">
+      <div class="btn-group" role="group">
+        <%= link_to "Day", url_for(:date => params[:date]), :class => "btn btn-default #{'active' unless params[:view]}" %>
+        <%= link_to "4 Days", url_for(:view => 'fourday', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'fourday'}" %>
+        <%= link_to "Week", url_for(:view => 'week', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'week'}" %>
+        <%= link_to "Month", url_for(:view => 'month', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'month'}" %>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+          New Event <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li class="dropdown-header">General</li>
+          <li><%= link_to "Event", new_admin_general_event_path %></li>
+          <li class="dropdown-header">League</li>
+          <li><%= link_to "Game", new_admin_league_game_path %></li>
+          <li><%= link_to "Event", new_admin_league_event_path %></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
