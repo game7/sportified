@@ -9,7 +9,7 @@ class ScheduleController < BaseLeagueController
       @date = params[:date] ? Date.parse(params[:date]) : Date.current
       @days_in_future = 14
       @days_in_past = 0
-      @start_date = @date - @days_in_past - 1
+      @start_date = @date - @days_in_past
       @end_date = @date + @days_in_future + 1
       @next_date = @date + @days_in_future + @days_in_past
       @prev_date = @date - @days_in_future - @days_in_past
