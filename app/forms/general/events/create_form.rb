@@ -9,6 +9,7 @@ class General::Events::CreateForm
   attribute :page_id, Integer
   attribute :summary, String
   attribute :description, String
+  attribute :tag_list, String
 
   attribute :repeat, Boolean
   attribute :repeat_on_sunday, Boolean
@@ -28,6 +29,7 @@ class General::Events::CreateForm
     self.repeat = false
     self.ends = 'on'
     self.ends_after_occurrences = 10
+    self.tag_list = event.tag_list
   end
 
   def self.model_name
@@ -41,7 +43,6 @@ class General::Events::CreateForm
   validates_presence_of :starts_on,
                         :duration,
                         :location_id,
-                        :page_id,
                         :summary
 
   validates :ends_on, presence: { if: :repeating_with_end_date? }
@@ -63,11 +64,9 @@ class General::Events::CreateForm
 
   def submit(params)
     assign_attributes(whitelist(params))
-    puts valid?
-    puts errors.messages.to_json
     return false unless valid?
     Event.transaction do
-      @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary))
+      @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list))
       @event.save
       if(repeating?)
         schedule = IceCube::Schedule.new(now = starts_on) do |schedule|

@@ -14,7 +14,6 @@ class General::Events::UpdateForm
 
   def initialize(event)
     @event = event
-    puts @event.tag_list
     assign_attributes event.attributes.slice(*self.attributes.stringify_keys.keys)
     self.tag_list = event.tag_list
   end
