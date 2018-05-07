@@ -89,13 +89,13 @@ interface HeaderProps {
 }
 
 export const Header = (props: HeaderProps) => {
-  let styles = {
+  const styles = {
     buttons: {
       float: 'right'
-    },
+    } as React.CSSProperties,
     clearfix: {
       clear: 'both'
-    }
+    } as React.CSSProperties
   }
   return (
     <h1 className="page-header">

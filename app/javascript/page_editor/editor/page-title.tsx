@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 interface PageTitleProps {
@@ -17,21 +17,22 @@ export class PageTitle extends React.Component<PageTitleProps, {}> {
   }
 
   componentWillUpdate(nextProps: PageTitleProps) {
-    const element = ReactDOM.findDOMNode(this);
+    const element = ReactDOM.findDOMNode(this) as Element;
     if (nextProps.title !== element.innerHTML) {
         element.innerHTML = nextProps.title;
     }
   }
 
   shouldComponentUpdate(nextProps: PageTitleProps) {
-    if (nextProps.title !== ReactDOM.findDOMNode(this).innerHTML) {
+    const element = ReactDOM.findDOMNode(this) as Element;
+    if (nextProps.title !== element.innerHTML) {
         return true;
     }
     return false;
   }
 
   emitChange() {
-    let element = ReactDOM.findDOMNode(this);
+    let element = ReactDOM.findDOMNode(this) as Element;
     const title = element.innerHTML;
     if (this.props.onChange && title !== this.lastHtml) {
         this.props.onChange(title);
