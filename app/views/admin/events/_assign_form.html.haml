@@ -20,7 +20,9 @@
               = ef.input :home_team_name, label: 'Home'
               .form-group
                 .btn-group{ data: { toggle: :buttons }}
-                  - ef.object.locker_rooms.each do |locker_room|
+                  - unless ef.object.locker_rooms
+                    %em No Location assigned for this game
+                  - ef.object.locker_rooms&.each do |locker_room|
                     - checked = (locker_room.id == ef.object.home_team_locker_room_id)
                     %label.btn.btn-default{ class: checked ? 'active' : '' }
                       %input{ type: :radio, name: "event[events_attributes][#{i}][home_team_locker_room_id]", value: locker_room.id, checked: checked}
@@ -29,7 +31,9 @@
               = ef.input :away_team_name, label: 'Away'
               .form-group
                 .btn-group{ data: { toggle: :buttons }}
-                  - ef.object.locker_rooms.each do |locker_room|
+                  - unless ef.object.locker_rooms
+                    %em No Location assigned for this game
+                  - ef.object.locker_rooms&.each do |locker_room|
                     - checked = (locker_room.id == ef.object.away_team_locker_room_id)
                     %label.btn.btn-default{ class: checked ? 'active' : '' }
                       %input{ type: :radio, name: "event[events_attributes][#{i}][away_team_locker_room_id]", value: locker_room.id, checked: checked}
