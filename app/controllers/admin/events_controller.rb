@@ -84,7 +84,13 @@ class Admin::EventsController < Admin::AdminController
     end
 
     def color_map(events)
-      events.collect(&:color_key).uniq.reduce({}){|a,b| a[b] = colors[a.length]; a}
+      events.collect(&:color_key).uniq.reduce({}){|a,b| a[b] = '#' + colorize(b); a}
+    end
+
+    require 'digest/md5'
+
+    def colorize(string)
+      Digest::MD5.hexdigest(string)[0..5]
     end
 
     def colors
