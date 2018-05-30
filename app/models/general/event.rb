@@ -60,12 +60,11 @@
 #
 
 class General::Event < ::Event
-  acts_as_ordered_taggable
 
   validates_presence_of :summary
 
   def color_key
-    "page-#{page_id}"
+    taggings.reduce([]){|result, tagging| result.push(tagging.tag.name)}.join('-')
   end
 
 end

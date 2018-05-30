@@ -61,6 +61,7 @@
 
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
+  acts_as_ordered_taggable
   audited
 
   belongs_to :program

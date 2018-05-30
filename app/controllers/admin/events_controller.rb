@@ -31,7 +31,7 @@ class Admin::EventsController < Admin::AdminController
         @title = @date.strftime('%B %Y')
     end
 
-    @events = Event.includes(:location, :program)
+    @events = Event.includes(:location, :program, :taggings => :tag)
                    .after(start_at.beginning_of_day)
                    .before(end_at.end_of_day)
                    .order(:starts_on)
