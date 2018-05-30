@@ -5,7 +5,9 @@ class Admin::General::EventsController < Admin::AdminController
 
   def new
     if params[:clone]
-      @event = ::General::Event.find(params[:clone]).dup
+      original = ::General::Event.find(params[:clone])
+      @event = original.dup
+      @event.tag_list = original.tag_list
     else
       @event = ::General::Event.new
     end
