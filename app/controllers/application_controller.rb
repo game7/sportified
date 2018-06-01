@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   helper :layout
 
+  around_action :with_time_zone
   before_action :find_current_tenant
   before_action :add_stylesheets
   before_action :load_objects
@@ -156,6 +157,10 @@ class ApplicationController < ActionController::Base
 
   def verify_user
     redirect_to main_app.new_user_session_path unless current_user
+  end
+
+  def with_time_zone
+    Time.use_zone('Arizona') { yield }
   end
 
 end
