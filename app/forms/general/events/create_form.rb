@@ -69,17 +69,30 @@ class General::Events::CreateForm
       @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list))
       @event.save
       if(repeating?)
-        schedule = IceCube::Schedule.new(now = starts_on) do |schedule|
+        schedule = IceCube::Schedule.new(now = @event.starts_on + 1.days) do |schedule|
           schedule.add_recurrence_rule IceCube::Rule.weekly.day(*repeat_days)
         end
         slots = (ends == 'after') ?
-                  schedule.first(ends_after_occurrences) :
+                  schedule.first(ends_after_occurrences - 1) :
                   schedule.occurrences(Chronic.parse(ends_on).end_of_day)
         slots.each do |slot|
-          r = @event.dup
-          r.starts_on = DateTime.new(slot.year, slot.month, slot.day, r.starts_on.hour, r.starts_on.min)
-          puts r.starts_on
-          r.save
+          recurrence = @event.dup
+          date = Time.zone.local(
+            slot.year,
+            slot.month,
+            slot.day,
+            recurrence.starts_on.hour,
+            recurrence.starts_on.min,
+          )
+          recurrence.starts_on = date
+          puts '-----------------------------------------'
+          puts "date: #{date}"
+          puts '-----------------------------------------'
+          puts "@event starts on: #{@event.starts_on}"
+          puts '-----------------------------------------'
+          puts "recurrence starts on: #{recurrence.starts_on}"
+          puts '-----------------------------------------'
+          recurrence.save
         end
       end
     end
