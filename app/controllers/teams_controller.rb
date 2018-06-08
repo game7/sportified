@@ -165,8 +165,8 @@ class TeamsController < BaseLeagueController
     events.each do |e|
       event = Icalendar::Event.new
       event.uid = e.id.to_s
-      event.dtstart = e.starts_on.in_time_zone("America/Phoenix") + 7.hours
-      event.dtend = e.ends_on.in_time_zone("America/Phoenix") + 7.hours
+      event.dtstart = e.starts_on
+      event.dtend = e.ends_on
       event.summary = e.summary
       event.location = e.location&.name
       cal.add_event event
