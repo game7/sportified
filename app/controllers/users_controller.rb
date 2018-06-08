@@ -60,12 +60,11 @@ class UsersController < ApplicationController
 
   def to_ical(user, events)
     cal = Icalendar::Calendar.new
-    #offset = ActiveSupport::TimeZone.new('America/Arizona').utc_offset()
     events.each do |e|
       event = Icalendar::Event.new
       event.uid = "#{Tenant.current.name.parameterize}-#{e.id}"
-      event.dtstart = e.starts_on.in_time_zone("America/Phoenix") + 7.hours
-      event.dtend = e.ends_on.in_time_zone("America/Phoenix") + 7.hours
+      event.dtstart = e.starts_on
+      event.dtend = e.ends_on
       event.summary = e.summary
       event.location = e.location&.name
       cal.add_event event
