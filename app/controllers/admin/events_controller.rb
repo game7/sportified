@@ -50,6 +50,10 @@ class Admin::EventsController < Admin::AdminController
 
   end
 
+  def proto
+    index
+  end
+
   def destroy
     @event.destroy
     return_to_last_point :success => 'Event has been deleted.'

@@ -64,4 +64,10 @@ class EventSerializer < ActiveModel::Serializer
   attributes :id, :starts_on, :ends_on, :duration, :description, :summary, :program_id, :location_id
   has_one :program
   has_one :location
+  has_many :tags do
+    object.tags.pluck(:id).collect(&:to_s)
+  end
+  def id
+    object.id.to_s
+  end
 end

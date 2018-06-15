@@ -1,7 +1,7 @@
 - color = @color_map[event.color_key]
-- offset = (event.starts_on.seconds_since_midnight - (6 * 60 * 60)) / 60
+- offset = (event.starts_on.seconds_since_midnight) / 60
 - style = "background: #fff; cursor: pointer; vertical-align: top; border: 1px solid #{color}; border-left: 10px solid #{color}; border-radius: 0;"
--#- style += " top: #{offset}px;" unless @view == 'month'
+- style += " top: #{offset}px; position: absolute;" unless @view == 'month'
 - style += " height: #{event.duration}px;" unless @view == 'month'
 -#.dropdown{ :style => "position: absolute; top: #{offset}px; width: 100%;"}
 .dropdown

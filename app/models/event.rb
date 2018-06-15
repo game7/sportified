@@ -79,19 +79,20 @@ class Event < ActiveRecord::Base
 
   before_save :set_starts_on
   def set_starts_on
-    self.starts_on = starts_on.change(:hour => 0) if all_day
+    self.starts_on = starts_on.beginning_of_day if all_day
   end
 
   validates_presence_of :duration
   validates_numericality_of :duration, :only_integer => true
+
   before_save :set_duration
   def set_duration
-    self.duration = 24 * 60 if all_day
+    self.duration = (24 * 60) if all_day
   end
 
   before_save :set_ends_on
   def set_ends_on
-    self.ends_on = all_day ? self.starts_on.change(:day => starts_on.day + 1) : self.starts_on.advance(:minutes => self.duration)
+    self.ends_on = self.starts_on.beginning_of_day
   end
 
   scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }

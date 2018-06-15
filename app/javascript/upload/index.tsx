@@ -5,13 +5,13 @@ import './index.css';
 
 // Hot Module Reload for typescript
 // http://blog.tomduncalf.com/posts/setting-up-typescript-and-react/#adding-hot-module-reloading
-declare var module: { hot: any };
-declare var require: {
-    (path: string): any;
-    <T>(path: string): T;
-    (paths: string[], callback: (...modules: any[]) => void): void;
-    ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
-};
+// declare var module: { hot: any };
+// declare var require: {
+//     (path: string): any;
+//     <T>(path: string): T;
+//     (paths: string[], callback: (...modules: any[]) => void): void;
+//     ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
+// };
 
 process.env.API_BASE = '/';
 

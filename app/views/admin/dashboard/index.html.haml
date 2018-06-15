@@ -3,6 +3,7 @@
 .tiled
   .row
     = render partial: 'tile', locals: { title: 'Calendar', url: admin_events_path, icon_name: 'calendar-alt' }
+    = render partial: 'tile', locals: { title: 'New Calendar', url: proto_admin_events_path, icon_name: 'calendar-alt' }
     = render partial: 'tile', locals: { title: 'Games', url: admin_league_games_path, icon_name: 'calendar-check' }
     = render partial: 'tile', locals: { title: 'Programs', url: admin_programs_path, icon_name: 'cubes' }
     = render partial: 'tile', locals: { title: 'Pages', url: pages_path, icon_name: 'file-alt' }

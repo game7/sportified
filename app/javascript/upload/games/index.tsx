@@ -13,7 +13,7 @@ class Layout extends React.Component<any, any> {
   }
 }
 
-const module: React.SFC<RouteComponentProps<{}>> = (props) => (
+const Index: React.SFC<RouteComponentProps<{}>> = (props) => (
   <Layout>
     <Switch>
       <Route path={`${props.match.path}/`} exact component={List}/>
@@ -22,4 +22,4 @@ const module: React.SFC<RouteComponentProps<{}>> = (props) => (
   </Layout>
 )
 
-export default module;
+export default Index;

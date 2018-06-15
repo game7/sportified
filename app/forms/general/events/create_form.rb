@@ -85,13 +85,6 @@ class General::Events::CreateForm
             recurrence.starts_on.min,
           )
           recurrence.starts_on = date
-          puts '-----------------------------------------'
-          puts "date: #{date}"
-          puts '-----------------------------------------'
-          puts "@event starts on: #{@event.starts_on}"
-          puts '-----------------------------------------'
-          puts "recurrence starts on: #{recurrence.starts_on}"
-          puts '-----------------------------------------'
           recurrence.save
         end
       end

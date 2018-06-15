@@ -54,6 +54,7 @@
       end
     end
     resources :locations, :only => [ :index ]
+    resources :tags, :only => [ :index ]
   end
 
   get 'game_result/edit'
@@ -163,6 +164,7 @@
 
     resources :events, only: [:index, :destroy] do
       patch :assign, on: :collection
+      get :proto, on: :collection
     end
 
     namespace :general do
