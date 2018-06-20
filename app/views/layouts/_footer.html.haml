@@ -7,16 +7,16 @@
     .col-sm-4
       - unless Tenant.current.twitter_id.blank?
         .social-link
-          = link_to(iconify('twitter', 'Follow us on Twitter'), "http://twitter.com/" + Tenant.current.twitter_id, { :target => "_blank", :title => "Follow us on Twitter" })
+          = link_to(brandify('twitter', 'Follow us on Twitter'), "http://twitter.com/" + Tenant.current.twitter_id, { :target => "_blank", :title => "Follow us on Twitter" })
       - unless Tenant.current.facebook_id.blank?
         .social-link
-          = link_to(iconify('facebook', 'Like us on Facebook'), "https://www.facebook.com/" + Tenant.current.facebook_id, { :target => "_blank", :title => "Like us on Facebook" })
+          = link_to(brandify('facebook', 'Like us on Facebook'), "https://www.facebook.com/" + Tenant.current.facebook_id, { :target => "_blank", :title => "Like us on Facebook" })
       - unless Tenant.current.google_plus_id.blank?
         .social-link
-          = link_to(iconify('google-plus', 'Follow us on Google+'), "https://plus.google.com/+" + Tenant.current.google_plus_id, { :target => "_blank", :title => "Follow us on Google+" })
+          = link_to(brandify('google-plus', 'Follow us on Google+'), "https://plus.google.com/+" + Tenant.current.google_plus_id, { :target => "_blank", :title => "Follow us on Google+" })
       - unless Tenant.current.instagram_id.blank?
         .social-link
-          = link_to(iconify('instagram', 'Check us out on Instagram'), "http://instagram.com/" + Tenant.current.instagram_id, { :target => "_blank", :title => "Check us out on Instagram" })
+          = link_to(brandify('instagram', 'Check us out on Instagram'), "http://instagram.com/" + Tenant.current.instagram_id, { :target => "_blank", :title => "Check us out on Instagram" })
       - unless Tenant.current.foursquare_id.blank?
         .social-link
-          = link_to(iconify('foursquare', 'Visit us on Foursquare'), "https://foursquare.com/v/" + Tenant.current.foursquare_id, { :target => "_blank",  :title => "Visit us on Foursquare" })
+          = link_to(brandify('foursquare', 'Visit us on Foursquare'), "https://foursquare.com/v/" + Tenant.current.foursquare_id, { :target => "_blank",  :title => "Visit us on Foursquare" })

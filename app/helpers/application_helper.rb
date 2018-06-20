@@ -5,8 +5,7 @@ module ApplicationHelper
   #   content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}") + ' ' + label
   # end
 
-  def icon(name, text = nil, html_options = {})
-    style = 'far'
+  def icon(name, text = nil, html_options = {}, style = 'far')
     text, html_options = nil, text if text.is_a?(Hash)
 
     content_class = "#{style} fa-#{name}"
@@ -20,6 +19,10 @@ module ApplicationHelper
 
   def iconify(name, label)
     icon(name, label)
+  end
+
+  def brandify(name, label)
+    icon(name, label, { class: 'fa-fw' }, 'fab')
   end
 
   def theme
