@@ -31,12 +31,11 @@ class PagesController < ApplicationController
   layout 'admin', only: :index
 
   def index
-
     @pages = Page.arrange_as_array(order: :position)
   end
 
   def show
-    current_user
+    redirect_to @page.link_url if @page.link_url.present?
     redirect_to first_live_child.url if @page.skip_to_first_child and (first_live_child = @page.children.live.order(:position).first).present?
   end
 
