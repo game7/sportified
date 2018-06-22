@@ -9,18 +9,29 @@ import Select from 'react-select';
 import { Option } from 'react-select';
 import 'react-select/dist/react-select.css';
 import './styles.css'
+import { withRouter, RouteComponentProps } from 'react-router';
 
+const Params = {
+  parse: (search: string) => {
+    const qs = search.split('?')[1] || '';
+    if (qs == '') return {};
+    const pairs = qs.split('&');
+    const sets = pairs.map(pair => pair.split('='));
+    const params = sets.reduce((result, curr) => { result[curr[0]] = curr[1]; return result; }, {});
+    return params;
+  },
+  stringify: (params: any) => {
+    const keys = Object.keys(params);
+    if(keys.length == 0) return '';
+    return '?' + keys.map(key => `${key}=${params[key]}`).join('&')
+  }
+}
 
 BigCalendar.momentLocalizer(moment);
 
 interface TagMap {
   [id: string]: Tag
 }
-
-interface Filter {
-  tags: string;
-}
-
 interface State {
   events: Event[];
   tags: TagMap;
@@ -29,7 +40,7 @@ interface State {
   selectedEvent: Event;
 }
 
-export default class Calendar extends React.Component<{}, State> {
+class Calendar extends React.Component<RouteComponentProps<{}>, State> {
 
   readonly state: State = {
     events: [],
@@ -46,18 +57,28 @@ export default class Calendar extends React.Component<{}, State> {
     this.fetchTags();
   }
 
+  private push(params: any) {
+    const current = Params.parse(this.props.location.search);
+    const updated = {...current, ...params};
+    const search = Params.stringify(updated);
+    this.props.history.push({ search });
+  }
+
   private onNavigate = (date: Date, view: string) => {
-    console.log('new date', date);
+    console.log('onNavigate', date, view);
     this.fetchEvents(date);
+    const short = date.toISOString().split('T')[0]
+    this.push({ date: short })
     this.findStartAndEndDate(date, view);
   }
 
   onView(view: string) {
-    console.log(view)
+    console.log('onView', view)
+    this.push({ view });
   }
 
   onRangeChange(range: any) {
-    console.log(range)
+    console.log('onRangeChange', range)
   }
 
   private handleSelectEvent = (event: Event) => {
@@ -68,7 +89,6 @@ export default class Calendar extends React.Component<{}, State> {
     const { filter } = this.state;
     const updated = {...filter, tags: value};
     this.setState({ filter: updated });
-    console.log(value)
   }
 
   private closeModal = () => {
@@ -107,7 +127,7 @@ export default class Calendar extends React.Component<{}, State> {
       start = moment(date).startOf('day');
       end   = moment(date).endOf('day').add(1, 'month');
     }
-    console.log(start.toString(), end.toString())
+    // console.log(start.toString(), end.toString())
   }
 
   fetchEvents(date: Date) {
@@ -158,7 +178,10 @@ export default class Calendar extends React.Component<{}, State> {
   }
 
   render() {
-    const { events, tags, eventTags, filter } = this.state;
+    const { events, tags, eventTags, filter } = this.state;;
+    const params = Params.parse(this.props.location.search);
+    const view = params['view'] as string || 'month'
+    const date = params['date'] ? new Date(Date.parse(params['date'])) : new Date();
 
     type stringOrDate = string | Date;
     const eventPropGetter = (event: Object, start: stringOrDate, end: stringOrDate, isSelected: boolean) => {
@@ -172,6 +195,8 @@ export default class Calendar extends React.Component<{}, State> {
         }
       };
     }
+
+    const min = moment().startOf('day').add(6, 'hour').toDate();
 
     const keys = Object.keys(tags).filter(key => eventTags.has(key));
     const options = keys.map(key => tags[key]).map(tag => ({ label: tag.name, value: tag.id } as Option<string>));
@@ -191,18 +216,11 @@ export default class Calendar extends React.Component<{}, State> {
             {/*<TagList tags={tags} visible={eventTags}/>*/}
           {/*</Col>*/}
           <Col sm={12}>
-            {/*<div className="btn-group" role="group" >*/}
-              {/*<button type="button" className="btn btn-default">Today</button>*/}
-              {/*<button type="button" className="btn btn-default">Back</button>*/}
-              {/*<button type="button" className="btn btn-default">Next</button>*/}
-            {/*</div>*/}
-            {/*<div className="btn-group" role="group" >*/}
-              {/*<button type="button" className="btn btn-default">Month</button>*/}
-              {/*<button type="button" className="btn btn-default">Week</button>*/}
-              {/*<button type="button" className="btn btn-default">Work Week</button>*/}
-              {/*<button type="button" className="btn btn-default">Day</button>*/}
-              {/*<button type="button" className="btn btn-default">Agenda</button>*/}
-            {/*</div>*/}
+            <div style={{marginBottom: 10}}>
+              <DaySelector />
+              {" "}
+              <ViewSelector />
+            </div>
             <Select
               multi
               onChange={this.handleSelectChange}
@@ -213,6 +231,8 @@ export default class Calendar extends React.Component<{}, State> {
             />
             <div style={{height: 800, marginTop: 20}}>
               <BigCalendar
+                date={date}
+                view={view}
                 events={filteredEvents}
                 startAccessor='startsOn'
                 endAccessor='endsOn'
@@ -225,6 +245,8 @@ export default class Calendar extends React.Component<{}, State> {
                 defaultDate={new Date()}
                 selectable
                 onSelectEvent={this.handleSelectEvent}
+                onRangeChange={this.onRangeChange}
+                min={min}
               />
             </div>
           </Col>
@@ -232,6 +254,41 @@ export default class Calendar extends React.Component<{}, State> {
       </div>
     );
   }
+}
+
+interface DaySelectorProps {
+
+}
+
+const DaySelector: React.SFC<DaySelectorProps> = (props) => {
+  return (
+    <div className="btn-group" role="group" >
+      <button type="button" className="btn btn-default">Today</button>
+      <button type="button" className="btn btn-default">Back</button>
+      <button type="button" className="btn btn-default">Next</button>
+    </div>
+  )
+}
+
+interface ViewSelectorProps {
+
+}
+
+const ViewSelector: React.SFC<ViewSelectorProps> = (props) => {
+  return (
+    <div className="btn-group" role="group" >
+      <button type="button" className="btn btn-default">Month</button>
+      <button type="button" className="btn btn-default">Week</button>
+      <button type="button" className="btn btn-default">Work Week</button>
+      <button type="button" className="btn btn-default">Day</button>
+      <button type="button" className="btn btn-default">Agenda</button>
+    </div>
+  )
+}
+
+
+interface Filter {
+  tags: string;
 }
 
 
@@ -254,3 +311,5 @@ const TagList: React.SFC<TagListProps> = (props) => {
     </div>
   )
 }
+
+export default withRouter(Calendar);

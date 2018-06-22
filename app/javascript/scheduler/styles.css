@@ -5,3 +5,9 @@
 .Select.is-open {
   z-index: 5;
 }
+
+.rbc-btn-group > button {
+  padding: 6px 12px;
+  text-transform: capitalize;
+  font-size: 14px;
+}
