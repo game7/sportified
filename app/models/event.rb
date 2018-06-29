@@ -92,7 +92,7 @@ class Event < ActiveRecord::Base
 
   before_save :set_ends_on
   def set_ends_on
-    self.ends_on = self.starts_on.beginning_of_day
+    self.ends_on = self.starts_on.advance(:minutes => self.duration)
   end
 
   scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }
