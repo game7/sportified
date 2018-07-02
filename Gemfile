@@ -17,6 +17,8 @@ gem "sprockets-es6"
 
 gem 'webpacker', '~> 3.3.1'
 
+gem 'paranoia', '~> 2.3.1'
+
 
 gem 'uglifier', '>=1.3.0'
 gem 'bootstrap-sass', '~> 3.2.0'

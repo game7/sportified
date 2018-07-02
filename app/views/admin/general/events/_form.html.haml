@@ -7,19 +7,18 @@
       = f.input :all_day, as: :boolean, wrapper: :vertical_boolean
   .panel.panel-default
     .panel-body
-      - if @options[:locations].length < 6
+      - if @form.location_options.length < 6
         = f.input :location_id,
           as: :radio_buttons,
-          collection: @options[:locations],
+          collection: @form.location_options,
           wrapper: :vertical_radio_and_checkboxes
       - else
         = f.input :location_id,
           as: :select,
-          collection: @options[:locations]
+          collection: @form.location_options
   .panel.panel-default
     .panel-body
       = f.input :summary
-      = f.input :page_id, collection: @options[:pages]
       = f.input :description, as: :text, rows: 4
       = f.input :tag_list, input_html: { value: f.object.tag_list.to_s }
 

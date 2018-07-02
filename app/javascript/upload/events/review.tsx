@@ -77,6 +77,7 @@ export function makeEvents(state: IReviewState): EventUpload[] {
   // get mapped value
   const games = data.map((item: any) => {
     return {
+      summary: item.summary,
       startsOn: item.date + ' ' + item.time,
       duration: item.duration,
       location: item.location ? getLocation(locations, item.location.id) : {},
@@ -125,6 +126,7 @@ export default class Review extends Component<{},IReviewState> {
         return {
           starts_on: moment(new Date(g.startsOn)).format('M/D/YY h:mm a'),
           duration: duration,
+          summary: g.summary,
           home_team_custom_name: g.homeTeam,
           away_team_custom_name: g.awayTeam,
           location_id: g.location.id,
@@ -165,6 +167,7 @@ export default class Review extends Component<{},IReviewState> {
               <th>Date / Time</th>
               <th>Duration</th>
               <th>Location</th>
+              <th>Summary</th>
               <th>Home</th>
               <th>Away</th>
               <th>Tags</th>
@@ -181,6 +184,7 @@ export default class Review extends Component<{},IReviewState> {
                 <td>{moment(new Date(g['startsOn'])).format('ddd M/D/YY h:mma').replace('m','')}</td>
                 <td>{g['duration']}</td>
                 <td>{g['location']['name']}</td>
+                <td>{g['summary']}</td>
                 <td>{g['homeTeam']}</td>
                 <td>{g['awayTeam']}</td>
                 <td>{g['tags']}</td>

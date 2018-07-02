@@ -59,7 +59,8 @@ export interface GameUpload {
 }
 
 export interface EventUpload {
-  id: string;
+  id?: string;
+  summary?: string;
   startsOn: string;
   duration: string;
   homeTeam: string;

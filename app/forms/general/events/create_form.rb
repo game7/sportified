@@ -30,6 +30,7 @@ class General::Events::CreateForm
     self.ends = 'on'
     self.ends_after_occurrences = 10
     self.tag_list = event.tag_list
+    self.location_id = location_options[0][1] if location_options.length == 1
   end
 
   def self.model_name
@@ -112,5 +113,10 @@ class General::Events::CreateForm
   def self.ends_options
     %w{on after}
   end
+
+  def location_options
+    @location_options ||= Location.order(:name).pluck(:name, :id)
+  end
+
 
 end

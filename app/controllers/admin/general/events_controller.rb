@@ -1,7 +1,6 @@
 class Admin::General::EventsController < Admin::AdminController
   before_action :load_event, :only => [:edit, :update]
   before_action :mark_return_point, only: [:new, :edit]
-  before_action :load_options, only: [:new, :create, :edit, :update]
 
   def new
     if params[:clone]
@@ -41,14 +40,6 @@ class Admin::General::EventsController < Admin::AdminController
   end
 
   private
-
-    def load_options
-      @options = {
-        pages: Page.options,
-        programs: [],
-        locations: Location.order(:name).pluck(:name, :id)
-      }
-    end
 
     def load_event
       @event = ::General::Event.find(params[:id])

@@ -5,7 +5,7 @@ class Api::General::EventsController < Api::BaseController
     Chronic.time_class = Time.zone
     params[:event].each do |event|
       event[:starts_on] = Chronic.parse(event[:starts_on])
-      set_summary event
+      set_summary(event) unless event[:summary]
     end
 
     begin
