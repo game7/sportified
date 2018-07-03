@@ -50,4 +50,8 @@ class General::Events::UpdateForm
           .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description, :tag_list)
   end
 
+  def location_options
+    @location_options ||= Location.order(:name).pluck(:name, :id)
+  end
+
 end

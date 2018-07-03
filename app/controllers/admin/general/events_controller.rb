@@ -34,7 +34,6 @@ class Admin::General::EventsController < Admin::AdminController
       return_to_last_point(:notice => 'Event was successfully updated.')
     else
       flash[:error] = 'Event could not be updated.'
-      load_options
       render :action => :edit
     end
   end
