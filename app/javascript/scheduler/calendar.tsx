@@ -10,6 +10,8 @@ import { Option } from 'react-select';
 import 'react-select/dist/react-select.css';
 import './styles.css'
 import { withRouter, RouteComponentProps } from 'react-router';
+import ColorPicker from './color-picker';
+import TagList from './tag-list';
 
 const Params = {
   parse: (search: string) => {
@@ -164,6 +166,8 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
               </div>
               <div className="modal-body">
                 <p>Modal body text goes here.</p>
+                <TagList tags={event.tags.map(id => this.state.tags[id])}/>
+                <div className="clearfix"/>
               </div>
               <div className="modal-footer">
                 {/*<button type="button" className="btn btn-primary">Save changes</button>*/}
@@ -210,6 +214,7 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
           This is the new snappier calendar. it's still coming together but has been released
           so that we can try it out with live data
         </div>
+        <ColorPicker/>
         <Row>
           {/*<Col sm={2}>*/}
             {/*{JSON.stringify(this.state.filter)}*/}
@@ -292,24 +297,24 @@ interface Filter {
 }
 
 
-interface TagListProps {
-  tags: TagMap;
-  visible: Set<string>;
-}
-
-const TagList: React.SFC<TagListProps> = (props) => {
-  const keys = Object.keys(props.tags).filter(key => props.visible.has(key));
-  if (keys.length == 0) { return <div/>; }
-  const tags = keys.map(key => props.tags[key]);
-  return (
-    <div className="list-group">
-      {tags.map(tag => (
-        <div className="list-group-item" key={tag.id} style={{ backgroundColor: tag.color }}>
-          {tag.name}
-        </div>
-      ))}
-    </div>
-  )
-}
+// interface TagListProps {
+//   tags: TagMap;
+//   visible: Set<string>;
+// }
+//
+// const TagList: React.SFC<TagListProps> = (props) => {
+//   const keys = Object.keys(props.tags).filter(key => props.visible.has(key));
+//   if (keys.length == 0) { return <div/>; }
+//   const tags = keys.map(key => props.tags[key]);
+//   return (
+//     <div className="list-group">
+//       {tags.map(tag => (
+//         <div className="list-group-item" key={tag.id} style={{ backgroundColor: tag.color }}>
+//           {tag.name}
+//         </div>
+//       ))}
+//     </div>
+//   )
+// }
 
 export default withRouter(Calendar);
