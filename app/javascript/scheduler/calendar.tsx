@@ -10,8 +10,8 @@ import { Option } from 'react-select';
 import 'react-select/dist/react-select.css';
 import './styles.css'
 import { withRouter, RouteComponentProps } from 'react-router';
-import ColorPicker from './color-picker';
-import TagList from './tag-list';
+import { Modal, Static, TagList } from './components';
+import { getTextColor } from './utils';
 
 const Params = {
   parse: (search: string) => {
@@ -151,33 +151,27 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     })
   }
 
+  private handleColorChange = (id: string, color: string) => {
+    const { tags } = this.state;
+    const tag = { ...tags[id], color };
+    const updated = { ...tags, [id]: tag };
+    this.setState({ tags: updated });
+    Store.updateTag(id, color)
+  }
+
   modal(event: Event) {
     if(!event) return (<div/>)
     return (
-      <React.Fragment>
-        <div className="modal fade in show" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">{event.summary}</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p>Modal body text goes here.</p>
-                <TagList tags={event.tags.map(id => this.state.tags[id])}/>
-                <div className="clearfix"/>
-              </div>
-              <div className="modal-footer">
-                {/*<button type="button" className="btn btn-primary">Save changes</button>*/}
-                <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="modal-backdrop fade in"/>
-      </React.Fragment>
+      <Modal title={event.summary} onClose={this.closeModal}>
+        <Static label="Starts At">{event.startsOn.toLocaleDateString()}</Static>
+        <Static label="Ends At">{event.endsOn.toLocaleDateString()}</Static>
+        <Static label="Tags">
+          <TagList
+            tags={event.tags.map(id => this.state.tags[id])}
+            onColorChange={this.handleColorChange}
+          />
+        </Static>
+      </Modal>
     )
   }
 
@@ -189,12 +183,12 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
 
     type stringOrDate = string | Date;
     const eventPropGetter = (event: Object, start: stringOrDate, end: stringOrDate, isSelected: boolean) => {
-      const tags = event['tags'] || [];
-      const first = tags[0] || {};
-      const color = first.color;
+      const first = (event['tags'] || [])[0];
+      const background = first ? tags[first].color : '#DEDEDE';
       return {
         style: {
-          backgroundColor: color,
+          backgroundColor: background,
+          color: getTextColor(background),
           borderRadius: 0
         }
       };
@@ -214,18 +208,17 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
           This is the new snappier calendar. it's still coming together but has been released
           so that we can try it out with live data
         </div>
-        <ColorPicker/>
         <Row>
           {/*<Col sm={2}>*/}
             {/*{JSON.stringify(this.state.filter)}*/}
             {/*<TagList tags={tags} visible={eventTags}/>*/}
           {/*</Col>*/}
           <Col sm={12}>
-            <div style={{marginBottom: 10}}>
-              <DaySelector />
-              {" "}
-              <ViewSelector />
-            </div>
+            {/*<div style={{marginBottom: 10}}>*/}
+              {/*<DaySelector />*/}
+              {/*{" "}*/}
+              {/*<ViewSelector />*/}
+            {/*</div>*/}
             <Select
               multi
               onChange={this.handleSelectChange}
@@ -263,6 +256,12 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
 
 interface DaySelectorProps {
 
+}
+
+const EventView: React.SFC<{event: Event}> = ({ event }) => {
+  return (
+    <div>Boom!</div>
+  );
 }
 
 const DaySelector: React.SFC<DaySelectorProps> = (props) => {

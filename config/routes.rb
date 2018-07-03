@@ -54,7 +54,7 @@
       end
     end
     resources :locations, :only => [ :index ]
-    resources :tags, :only => [ :index ]
+    resources :tags, :only => [ :index, :update ]
   end
 
   get 'game_result/edit'

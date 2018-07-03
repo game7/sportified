@@ -3,12 +3,12 @@ import './color-picker.scss';
 
 
 interface Props {
-
+  expanded: boolean,
+  onSelection?: (color: string) => void
 }
 
 interface State {
-  expanded: boolean,
-  selection?: string
+
 }
 
 const rows = [
@@ -36,33 +36,16 @@ const rows = [
 
 export class ColorPicker extends React.Component<Props,State> {
 
-  readonly state: State = {
-    expanded: false
-  }
-
-  toggleExpanded = () => {
-    const { expanded } = this.state;
-    this.setState({ expanded: !expanded })
-  }
 
   handleSelection = (color: string) => {
-    this.setState({
-      expanded: false,
-      selection: color
-    })
+    const { onSelection } = this.props;
+    if(onSelection) onSelection(color);
   }
 
   render() {
-    const { expanded, selection = '' } = this.state;
+    const { expanded } = this.props;
     return (
       <div className={`dropdown ${expanded ? 'open' : ''}`}>
-        <button
-          className="btn btn-default"
-          onClick={this.toggleExpanded}
-          style={{ backgroundColor: selection }}
-        >
-          Color
-        </button>
         <div className="dropdown-menu">
           {rows.map(colors => (
             <ColorChooser>
@@ -77,13 +60,13 @@ export class ColorPicker extends React.Component<Props,State> {
   }
 }
 
-const ColorChooser: React.SFC<{}> = ({ children }) => (
+export const ColorChooser: React.SFC<{}> = ({ children }) => (
   <ul className="color-chooser">
     {children}
   </ul>
 )
 
-const ColorChooserColor: React.SFC<{ color: string, onClick?: (color: string) => void }> = ({ color, onClick }) => {
+export const ColorChooserColor: React.SFC<{ color: string, onClick?: (color: string) => void }> = ({ color, onClick }) => {
   const handleClick = () => { if(onClick) onClick(color) }
   return (
     <li>

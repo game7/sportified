@@ -53,6 +53,23 @@ export class Store {
 
   }
 
+  static updateTag(id: string, color: string): Promise<Tag> {
+
+    const payload = { tag: { color } };
+
+    return fetch(`/api/tags/` + id, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      credentials: 'same-origin',
+      headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json'
+      }
+    }).then<Tag>(response => response.json())
+
+  }
+
+
 }
 
 export default Store;

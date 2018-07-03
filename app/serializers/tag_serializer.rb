@@ -8,7 +8,7 @@ class TagSerializer < ActiveModel::Serializer
   end
 
   def color
-    '#' + Digest::MD5.hexdigest(object.name)[0..5]
+    object.color || '#' + Digest::MD5.hexdigest(object.name)[0..5]
   end
 
 end
