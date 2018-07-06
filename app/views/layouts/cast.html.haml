@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+      != " :: #{tenant.name}" if tenant
+    - theme = tenant&.theme
+    -#- if theme and !theme.empty?
+    -#  = stylesheet_link_tag "themes/#{theme}"
+    -#  = favicon_link_tag "themes/#{theme}/icon.ico"
+    -#- else
+    = stylesheet_link_tag 'themes/application'
+    - if tenant&.google_fonts
+      - tenant.google_fonts.split(/\r?\n/).each do |font|
+        = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto"
+    = javascript_include_tag :application
+    = csrf_meta_tag
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
+    = yield(:head)
+  %body{ style: 'font-family: Roboto;'}
+    = yield
+    = yield :javascript
+    :javascript
+      // alert('hello!');
+

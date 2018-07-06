@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get 'casts' => 'casts#index', :as => :casts
+  get 'casts/:slug' => 'casts#show', :as => :cast
 
   resources :tenants, :only => :index do
     put :select, :on => :member

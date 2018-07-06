@@ -68,6 +68,9 @@ class Event < ActiveRecord::Base
   belongs_to :page, required: false
   belongs_to :location
 
+  belongs_to :home_team_locker_room, :class_name => 'LockerRoom'
+  belongs_to :away_team_locker_room, :class_name => 'LockerRoom'
+
   validates_presence_of :starts_on
   # validate :starts_on_cannot_be_in_the_past
 

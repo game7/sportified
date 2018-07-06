@@ -16,6 +16,7 @@ class Admin::Events::AssignForm
     attribute :away_team_locker_room_id, Integer
 
     def initialize(event, locker_rooms)
+      puts event.attributes
       @event = event
       @locker_rooms = locker_rooms
       self.home_team_name = event.home_team_name
@@ -60,7 +61,10 @@ class Admin::Events::AssignForm
   def initialize(date)
     @date = date
     locker_rooms = LockerRoom.order(:name).group_by(&:location_id)
-    @events = Event.after(date.beginning_of_day).before(date.end_of_day).collect{|e| EventForm.new(e, locker_rooms[e.location_id])}
+    @events = Event.after(date.beginning_of_day)
+                   .before(date.end_of_day)
+                   .order(:starts_on)
+                   .collect{|e| EventForm.new(e, locker_rooms[e.location_id])}
   end
 
   def submit(params)

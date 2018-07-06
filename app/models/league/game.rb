@@ -67,8 +67,6 @@ class League::Game < League::Event
   belongs_to :statsheet, polymorphic: true
 
   belongs_to :playing_surface
-  belongs_to :home_team_locker_room
-  belongs_to :away_team_locker_room
 
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
