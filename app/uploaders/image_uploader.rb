@@ -2,7 +2,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::RMagick
 
   def store_dir
-    tenant = Tenant.current || model.tenant
+    tenant = model.tenant || Tenant.current
     if model.respond_to?('page')
       klass = "pages"
       id = model.page.id
