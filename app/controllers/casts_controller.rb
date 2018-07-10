@@ -6,12 +6,12 @@ class CastsController < ApplicationController
   end
 
   def show
-    time = Time.now.at_beginning_of_day + 1.days
-    original_tenant = Tenant.current
     @location = Location.unscoped.find(params[:slug])
+    original_tenant = Tenant.current
     Tenant.current = @location.tenant
+    time = Time.zone.now
     @events = Event.where(location: @location)
-                   .after(time)
+                   .ends_after(time)
                    .before(time.at_end_of_day)
                    .order(:starts_on)
     @posts = Post.tagged_with('cast', :any => true).where("image IS NOT NULL").shuffle

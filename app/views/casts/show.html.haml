@@ -21,6 +21,7 @@
             - if event.away_team_name.present?
               %td= event.home_team_name
             %td{ style: 'text-align: center;' }= event.home_team_locker_room.try(:name)
+    #time
   .right{ style: 'background-color: maroon; height: 100%; width: 50%; float: right; display: flex; align-items: center; justify-content: center;' }
     .carousel.slide{ :id => "carousel_cast" }
       .carousel-inner
@@ -39,6 +40,11 @@
     setTimeout(function() {
       window.location.reload(true);
     }, (5 * 60 * 1000))
+    var $time = $('#time');
+    $time.text(new Date().toString());
+    setInterval(function() {
+      $time.text(new Date().toString());
+    }, 1000)
   })();
 
   $(function(){
