@@ -40,7 +40,7 @@
 
 class GameSerializer < ActiveModel::Serializer
   attributes :id, :starts_on, :ends_on, :summary, :result, :completion
-  has_one :home_team
-  has_one :away_team
-  has_one :statsheet
+  # has_one :home_team
+  # has_one :away_team
+  # has_one :statsheet
 end

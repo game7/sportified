@@ -47,10 +47,10 @@ export class ColorPicker extends React.Component<Props,State> {
     return (
       <div className={`dropdown ${expanded ? 'open' : ''}`}>
         <div className="dropdown-menu">
-          {rows.map(colors => (
-            <ColorChooser>
+          {rows.map((colors, i) => (
+            <ColorChooser key={i}>
               {colors.map(color => (
-                  <ColorChooserColor color={color} onClick={this.handleSelection} />
+                  <ColorChooserColor key={color} color={color} onClick={this.handleSelection} />
               ))}
             </ColorChooser>
           ))}

@@ -11,30 +11,7 @@ class Admin::EventsController < Admin::AdminController
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     Date.beginning_of_week = :sunday
 
-    start_at = @date
-    end_at = @date
-
-    case @view
-      when 'day'
-        @title = @date.strftime('%A %B %-e, %Y')
-      when 'fourday'
-        start_at = @date.days_ago(1)
-        end_at = @date.days_since(3)
-        @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
-      when 'week'
-        start_at = @date.at_beginning_of_week
-        end_at = @date.at_end_of_week
-        @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
-      when 'month'
-        start_at = @date.at_beginning_of_month
-        end_at = @date.at_end_of_month
-        @title = @date.strftime('%B %Y')
-    end
-
-    @events = Event.includes(:location, :program, :taggings => :tag)
-                   .after(start_at.beginning_of_day)
-                   .before(end_at.end_of_day)
-                   .order(:starts_on)
+    @events = get_events(@date, @view)
 
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
@@ -51,7 +28,13 @@ class Admin::EventsController < Admin::AdminController
   end
 
   def proto
-    index
+    view = 'month'
+    date = params[:date] ? Date.parse(params[:date]) : Date.current
+    Date.beginning_of_week = :sunday
+
+    # @events = render json: get_events(date, view)
+    @events = ActiveModelSerializers::SerializableResource.new get_events(date, view)
+    @tags = ActiveModelSerializers::SerializableResource.new ActsAsTaggableOn::Tag.order(:name)
   end
 
   def destroy
@@ -65,6 +48,35 @@ class Admin::EventsController < Admin::AdminController
   end
 
   private
+
+    def get_events(date, view)
+
+      start_at = date
+      end_at = date
+
+      case view
+        when 'day'
+          @title = date.strftime('%A %B %-e, %Y')
+        when 'fourday'
+          start_at = date.days_ago(1)
+          end_at = date.days_since(3)
+          @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
+        when 'week'
+          start_at = date.at_beginning_of_week
+          end_at = date.at_end_of_week
+          @title = "#{start_at.strftime('%B %-e')}-#{end_at.strftime('%-e %Y')}"
+        when 'month'
+          start_at = date.at_beginning_of_month
+          end_at = date.at_end_of_month
+          @title = date.strftime('%B %Y')
+      end
+
+      Event.includes(:location, :program, :taggings => :tag)
+            .after(start_at.beginning_of_day)
+            .before(end_at.end_of_day)
+            .order(:starts_on)
+
+    end
 
     def event_params
       params.require(:event).permit(:program_id, :starts_on, :duration, :page_id,

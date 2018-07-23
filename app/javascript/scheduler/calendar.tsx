@@ -1,6 +1,7 @@
 import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
+import * as $ from 'jquery';
 import * as _ from 'lodash';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Store, Event, Tag } from './store';
@@ -42,22 +43,38 @@ interface State {
   selectedEvent: Event;
 }
 
-class Calendar extends React.Component<RouteComponentProps<{}>, State> {
+function initialize() {
 
-  readonly state: State = {
-    events: [],
-    tags: {},
+  // prepare tags
+  const tags = $('#scheduler').data('tags');
+  const tagMap = tags.reduce((result, tag) => {
+    result[tag.id] = tag;
+    return result;
+  }, {});
+
+  // prepare events
+  const eventData = $('#scheduler').data('events') as any[];
+  const events = eventData.map(event => ({
+    ...event,
+    startsOn: new Date(event.startsOn),
+    endsOn: new Date(event.endsOn)
+  } as Event));
+  const eventTags = events.reduce((result, event) => (result.concat(event.tags)), [])
+
+  return {
+    events: events,
+    tags: tagMap,
     filter: {
       tags: ''
     },
-    eventTags: new Set<string>([]),
+    eventTags: new Set<string>(eventTags),
     selectedEvent: null
   };
+}
 
-  componentDidMount() {
-    this.fetchEvents(new Date());
-    this.fetchTags();
-  }
+class Calendar extends React.Component<RouteComponentProps<{}>, State> {
+
+  readonly state: State = initialize();
 
   private push(params: any) {
     const current = Params.parse(this.props.location.search);
@@ -74,12 +91,12 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     this.findStartAndEndDate(date, view);
   }
 
-  onView(view: string) {
+  private onView = (view: string) => {
     console.log('onView', view)
     this.push({ view });
   }
 
-  onRangeChange(range: any) {
+  private onRangeChange = (range: any) => {
     console.log('onRangeChange', range)
   }
 
@@ -97,15 +114,6 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     this.setState({ selectedEvent: null })
   }
 
-  fetchTags() {
-    Store.getTags().then(tags => {
-      const map = tags.reduce((result, tag) => {
-        result[tag.id] = tag;
-        return result;
-      }, {});
-      this.setState({ tags: map })
-    })
-  }
 
   findStartAndEndDate(date: Date, view: string) {
     let start, end;
@@ -180,11 +188,11 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     const params = Params.parse(this.props.location.search);
     const view = params['view'] as string || 'month'
     const date = params['date'] ? new Date(Date.parse(params['date'])) : new Date();
-
     type stringOrDate = string | Date;
     const eventPropGetter = (event: Object, start: stringOrDate, end: stringOrDate, isSelected: boolean) => {
       const first = (event['tags'] || [])[0];
-      const background = first ? tags[first].color : '#DEDEDE';
+      const tag = tags[first] || {};
+      const background = tag['color'] || '#DEDEDE';
       return {
         style: {
           backgroundColor: background,
@@ -204,10 +212,6 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     return (
       <div>
         {this.modal(this.state.selectedEvent)}
-        <div className="alert alert-info" role="alert">
-          This is the new snappier calendar. it's still coming together but has been released
-          so that we can try it out with live data
-        </div>
         <Row>
           {/*<Col sm={2}>*/}
             {/*{JSON.stringify(this.state.filter)}*/}
@@ -239,8 +243,8 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
                 popup
                 eventPropGetter={eventPropGetter}
                 onNavigate={this.onNavigate}
-                onView={this.onView.bind(this)}
-                defaultDate={new Date()}
+                onView={this.onView}
+                defaultDate={date}
                 selectable
                 onSelectEvent={this.handleSelectEvent}
                 onRangeChange={this.onRangeChange}
