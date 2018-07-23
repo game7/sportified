@@ -102,6 +102,7 @@ group :development do
   gem "spring"
   gem 'byebug'
   gem 'foreman'
+  gem 'thin'
 end
 
 gem 'jquery-rails'

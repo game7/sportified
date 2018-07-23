@@ -17,6 +17,7 @@ Rails.application.config.assets.precompile += [
   'themes/styfl.css',
   'themes/barnburner.css',
   'themes/sportified.css',
+  'cast.css',
   'pages.js',
   "lang/en.js",
   "fullcalendar.css",

@@ -1,28 +1,28 @@
-.view{ style: 'height: 100vh;'}
-  .left{ style: 'background-color: #f5f5f5; height: 100%; width: 50%; float: left; padding: 40px; padding-top: 0px; text-overflow: ' }
-    %h1.page-header Upcoming Events
-    %table.table.table-bordered
+.main
+  .left
+    %table
       %thead
         %tr
-          %th Time
-          %th Event
-          %th{ style: 'text-align: center;' } Room
+          %th{ colspan: 3 } Today's Schedule
+        %tr
+          %th.time Time
+          %th.summary Event
+          %th.room{ style: 'text-align: center;' } Room
       %tbody
         - @events.each_with_index do |event, index|
-          - font_size = index < 1 ? '48px' : '24px'
-          %tr{ style: "font-size: #{font_size};"}
-            %td{ rowspan: 2 }= event.starts_on.strftime('%l:%M %p')
+          - row_class = index <= 1 ? 'featured' : ''
+          %tr{ class: row_class }
+            %td.time{ rowspan: 2 }= event.starts_on.strftime('%l:%M%P').gsub('m', '')
             - if event.away_team_name.present?
               %td= event.away_team_name
             - else
-              %td{ rowspan: 2 }= event.summary
-            %td{ style: 'text-align: center;' }= event.away_team_locker_room.try(:name)
-          %tr{ style: "font-size: #{font_size};"}
+              %td.summary{ rowspan: 2 }= event.summary
+            %td.room= event.away_team_locker_room.try(:name)
+          %tr{ class: row_class }
             - if event.away_team_name.present?
-              %td= event.home_team_name
-            %td{ style: 'text-align: center;' }= event.home_team_locker_room.try(:name)
-    #time
-  .right{ style: 'background-color: maroon; height: 100%; width: 50%; float: right; display: flex; align-items: center; justify-content: center;' }
+              %td.summary= event.home_team_name
+            %td.room= event.home_team_locker_room.try(:name)
+  .right
     .carousel.slide{ :id => "carousel_cast" }
       .carousel-inner
         - @posts.each_with_index do |post, index|
@@ -32,26 +32,36 @@
             - unless index == 0
               %img{ :"data-src" => post.image.url,
                     :alt => image_alt(post.image.url) }
+.footer
+  .left
+    #venue
+      Oceanside Ice Arena
+  .right
+    #current-time.pull-right
+  :javascript
 
-:javascript
+    (function() {
+      // reload every 5 minutes
+      setTimeout(function() {
+        window.location.reload(true);
+      }, (5 * 60 * 1000))
 
-  (function() {
-    // reload every 5 minutes
-    setTimeout(function() {
-      window.location.reload(true);
-    }, (5 * 60 * 1000))
-    var $time = $('#time');
-    $time.text(new Date().toString());
-    setInterval(function() {
-      $time.text(new Date().toString());
-    }, 1000)
-  })();
+      function getDateTime() {
+        var date = new Date();
+        return date.toDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
+      }
+      var $time = $('#current-time');
+      $time.text(getDateTime());
+      setInterval(function() {
+        $time.text(getDateTime());
+      }, 1000)
+    })();
 
-  $(function(){
-    $("#carousel_cast img[data-src]").each(function(index){
-      $(this).attr("src", $(this).attr("data-src"));
+    $(function(){
+      $("#carousel_cast img[data-src]").each(function(index){
+        $(this).attr("src", $(this).attr("data-src"));
+      });
     });
-  });
 
 
 

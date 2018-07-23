@@ -13,14 +13,20 @@
     - if tenant&.google_fonts
       - tenant.google_fonts.split(/\r?\n/).each do |font|
         = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"
+    = stylesheet_link_tag 'cast'
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto"
     = javascript_include_tag :application
+    = javascript_include_tag '//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js'
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
-  %body{ style: 'font-family: Roboto;'}
+  %body
     = yield
     = yield :javascript
     :javascript
-      // alert('hello!');
+      window.onload = function() {
+        console.log('boom!')
+        window.cast.__platform__ = {};
+        cast.framework.CastReceiverContext.getInstance().start();
+      }
 
