@@ -58,7 +58,7 @@
               %tr
                 %td= "#{time_ago_in_words(audit.created_at)} ago"
                 %td= audit.action
-                %td= audit.user.full_name
+                %td= audit&.user&.full_name
                 -#%td
                 -#  - audit.audited_changes.each do |change|
                 -#    .change= change
