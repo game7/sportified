@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Tag } from '../store';
 import { ColorPicker } from './color-picker';
 import { getTextColor } from '../utils';
+import { SwatchesPicker, ColorResult } from 'react-color';
 
 interface TagListProps {
   tags: Tag[],
@@ -64,8 +65,8 @@ const Tag: React.SFC<TagProps> = ({ tag, expanded, onClick, onColorSelection }) 
     if(onClick) onClick(tag.id)
   }
 
-  const handleColorSelection = (color: string) => {
-    if(onColorSelection) onColorSelection(tag.id, color)
+  const handleColorSelection = (color: ColorResult) => {
+    if(onColorSelection) onColorSelection(tag.id, color.hex)
   }
 
   return (
@@ -123,10 +124,7 @@ const Tag: React.SFC<TagProps> = ({ tag, expanded, onClick, onColorSelection }) 
           // boxShadow: `-1px -1px 2px #004977`
         }}/>
       </div>
-      <ColorPicker
-        expanded={expanded}
-        onSelection={handleColorSelection}
-      />
+      {expanded ? <SwatchesPicker color={tag.color} onChange={handleColorSelection}/> : null}
     </li>
   );
 }
