@@ -34,7 +34,7 @@
 class Hockey::Penalty < ActiveRecord::Base
   include Sportified::TenantScoped
 
-  SEVERITIES = %w[minor major misconduct game_misconduct]
+  SEVERITIES = %w[minor major misconduct game_misconduct match]
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing
                   fighting holding_the_stick hooking interference kneeing roughing slashing
                   spearing tripping unsportsmanlike_conduct misconduct game_misconduct]
