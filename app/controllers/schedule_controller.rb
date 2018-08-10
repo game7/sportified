@@ -1,7 +1,10 @@
 class ScheduleController < BaseLeagueController
   before_action :get_team_options, :unless => :all_divisions?
+  layout :resolve_layout
 
   def index
+
+    response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL' if embedded?
 
     if params[:season_slug]
       @events = @division.events.for_season(@season).asc(:starts_on)
@@ -25,6 +28,14 @@ class ScheduleController < BaseLeagueController
   end
 
   private
+
+  def embedded?
+    params[:embed].present?
+  end
+
+  def resolve_layout
+    embedded? ? 'embedded' : 'application'
+  end
 
   def all_divisions?
     !@division
