@@ -2,10 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+html {
+  background-color: white;
+}
+
 body {
   font-family: Roboto;
-  height: 100vh;
-  width: 100vw;
+  //height: 100vh;
+  //width: 100vw;
+  height: 540px;
+  width: 960px;
   background-image: asset-url("themes/oia/oia_web_bg.jpg");
   background-position: center top;
   background-repeat:no-repeat;
@@ -14,7 +20,7 @@ body {
 }
 
 .main {
-  height: 1000px;
+  height: 500px;
   width: 100%;
 
 
@@ -37,17 +43,18 @@ body {
       padding: 10px;
     }
     td {
-      font-size: 24px;
+      font-size: 18px;
+      font-weight: 700;
     }
     tr.featured td {
-      font-size: 48px
+      font-size: 24sp;
     }
     th, caption {
       background-color: maroon;
       color: gold;
       text-transform: uppercase;
       text-align: center;
-      font-size: 24px;
+      font-size: 12px;
     }
     th.time {
       width: 25%;
@@ -83,7 +90,7 @@ body {
 }
 
 .footer {
-  height: 80px;
+  height: 40px;
   width: 100%;
   background-color: maroon;
   .left {
@@ -99,15 +106,15 @@ body {
   }
   #venue {
     color: white;
-    font-size: 36px;
-    line-height: 80px;
+    font-size: 24px;
+    line-height: 40px;
     margin-left: 20px;
     text-transform: uppercase;
   }
   #current-time {
     color: white;
-    font-size: 36px;
-    line-height: 80px;
+    font-size: 24px;
+    line-height: 40px;
     margin-right: 20px;
   }
 }

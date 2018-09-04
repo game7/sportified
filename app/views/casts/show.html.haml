@@ -1,37 +1,39 @@
 .main
   .left
-    %table
+    %table{ style: 'margin-bottom: 0;'}
       %thead
         %tr
           %th{ colspan: 3 } Today's Schedule
         %tr
-          %th.time Time
+          %th.time{ style: 'width: 10%;'} Time
           %th.summary Event
-          %th.room{ style: 'text-align: center;' } Room
+          %th.room{ style: 'text-align: center; width: 10%;' } Room
       %tbody
         - @events.each_with_index do |event, index|
-          - row_class = index <= 1 ? 'featured' : ''
+          - row_class = index <= -1 ? 'featured' : ''
           %tr{ class: row_class }
             %td.time{ rowspan: 2 }= event.starts_on.strftime('%l:%M%P').gsub('m', '')
             - if event.away_team_name.present?
               %td= event.away_team_name
             - else
               %td.summary{ rowspan: 2 }= event.summary
-            %td.room= event.away_team_locker_room.try(:name)
+            %td.room= event.away_team_locker_room.try(:name) || '-'
           %tr{ class: row_class }
             - if event.away_team_name.present?
               %td.summary= event.home_team_name
-            %td.room= event.home_team_locker_room.try(:name)
-  .right
+            %td.room= event.home_team_locker_room.try(:name) || '-'
+  .right{ style: 'padding: 40px;'}
     .carousel.slide{ :id => "carousel_cast" }
       .carousel-inner
         - @posts.each_with_index do |post, index|
           %div{ :class => "item#{' active' if index == 0}" }
             - if index == 0
-              = image_tag post.image.url
+              = image_tag post.image.url, :style => 'width: 100%;'
             - unless index == 0
               %img{ :"data-src" => post.image.url,
-                    :alt => image_alt(post.image.url) }
+                    :alt => image_alt(post.image.url),
+                    :style => 'width: 100%;' }
+  .clearfix
 .footer
   .left
     #venue
