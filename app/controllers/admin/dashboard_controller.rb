@@ -1,8 +1,7 @@
 class Admin::DashboardController < Admin::AdminController
 
   def index
-    date = Date.today
-    date = Date.parse(params[:date]) if params[:date]
+    date = params[:date] ? Date.parse(params[:date]) : Date.today
     @assign_form = Admin::Events::AssignForm.new(date)
   end
 

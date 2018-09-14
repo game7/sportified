@@ -11,6 +11,7 @@
     = render partial: 'tile', locals: { title: 'Users', url: admin_users_path, icon_name: 'user' }
     = render partial: 'tile', locals: { title: 'Locations', url: admin_locations_path, icon_name: 'map-marker' }
     = render partial: 'tile', locals: { title: 'Clubs', url: admin_clubs_path, icon_name: 'users' }
+    = render partial: 'tile', locals: { title: 'Chromecasts', url: admin_chromecasts_path, icon_name: 'chrome', icon_style: :fab }
     = render partial: 'tile', locals: { title: 'Upload', url: admin_uploads_path, icon_name: 'upload' }
 
 = render partial: 'admin/events/assign_form', locals: { form: @assign_form }

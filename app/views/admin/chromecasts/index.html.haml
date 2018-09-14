@@ -1,0 +1,21 @@
+- title 'Chromecasts'
+- page_actions do
+  = link_to 'New Chromecast', new_admin_chromecast_path, class: 'btn btn-primary'
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Location
+      %th Actions
+  %tbody
+    - @chromecasts.each do |chromecast|
+      %tr[chromecast]
+        %td= chromecast.name
+        %td= chromecast.location.name
+        %td
+          = link_to 'Edit', [:edit, :admin, chromecast], class: 'btn btn-default'
+          != ' '
+          = link_to 'Delete', [:admin, chromecast], class: 'btn btn-default',
+                              method: :delete,
+                              remote: true

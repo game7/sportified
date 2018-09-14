@@ -105,6 +105,7 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
   }
 
   private handleSelectChange = (value) => {
+    console.log(value)
     const { filter } = this.state;
     const updated = {...filter, tags: value};
     this.setState({ filter: updated });
@@ -167,15 +168,25 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     Store.updateTag(id, color)
   }
 
-  modal(event: Event) {
+  modal(event: Event, options: Option<string>[]) {
     if(!event) return (<div/>)
+    const tags = event.tags.map(id => this.state.tags[id]);
     return (
       <Modal title={event.summary} onClose={this.closeModal}>
         <Static label="Starts At">{event.startsOn.toLocaleDateString()}</Static>
         <Static label="Ends At">{event.endsOn.toLocaleDateString()}</Static>
         <Static label="Tags">
+          <Select
+            multi
+            options={options}
+            placeholder="Filter by Tag(s)"
+            simpleValue
+            value={event.tags}
+          />
+        </Static>
+        <Static label="Tags">
           <TagList
-            tags={event.tags.map(id => this.state.tags[id])}
+            tags={tags}
             onColorChange={this.handleColorChange}
           />
         </Static>
@@ -211,7 +222,7 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
 
     return (
       <div>
-        {this.modal(this.state.selectedEvent)}
+        {this.modal(this.state.selectedEvent, options)}
         <Row>
           {/*<Col sm={2}>*/}
             {/*{JSON.stringify(this.state.filter)}*/}

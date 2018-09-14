@@ -1,5 +1,6 @@
+- icon_style ||= 'far'
 .col-sm-2.col-xs-6
   %a.tile{ :href => url }
     .icon{ style: 'margin-bottom: 5px;'}
-      = icon(icon_name, class: 'fa-3x')
+      = icon(icon_name, nil, { class: 'fa-3x' }, icon_style)
     .title= title

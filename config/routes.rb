@@ -1,5 +1,6 @@
 ::Sportified::Application.routes.draw do
 
+
   get 'casts' => 'casts#index', :as => :casts
   get 'casts/:slug' => 'casts#show', :as => :cast
 
@@ -127,6 +128,8 @@
   end
 
   namespace :admin do
+
+    resources :chromecasts, except: [:show]
 
     resources :programs, :only => [:index, :destroy]
     namespace :league do

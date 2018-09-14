@@ -1,0 +1,6 @@
+<% if @chromecast.errors.any? %>
+var form = '<%= j(render('form')) %>';
+$('#edit_chromecast_<%= @chromecast.id %>').replaceWith(form);
+<% else %>
+window.location = '<%= admin_chromecasts_path %>';
+<% end %>
