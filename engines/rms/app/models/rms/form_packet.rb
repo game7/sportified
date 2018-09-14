@@ -14,7 +14,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_b14511831d  (tenant_id => tenants.id)
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 
 module Rms

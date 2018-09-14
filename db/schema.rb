@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180703221650) do
+ActiveRecord::Schema.define(version: 20180914195534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(version: 20180703221650) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "file"
+  end
+
+  create_table "chromecasts", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "tenant_id"
+    t.integer  "location_id"
+    t.integer  "playing_surface_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["location_id"], name: "index_chromecasts_on_location_id", using: :btree
+    t.index ["playing_surface_id"], name: "index_chromecasts_on_playing_surface_id", using: :btree
+    t.index ["tenant_id"], name: "index_chromecasts_on_tenant_id", using: :btree
   end
 
   create_table "clubs", force: :cascade do |t|
@@ -703,6 +715,9 @@ ActiveRecord::Schema.define(version: 20180703221650) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "chromecasts", "facilities", column: "playing_surface_id"
+  add_foreign_key "chromecasts", "locations"
+  add_foreign_key "chromecasts", "tenants"
   add_foreign_key "credit_cards", "tenants"
   add_foreign_key "credit_cards", "users"
   add_foreign_key "events", "pages"

@@ -20,9 +20,9 @@
 #
 # Foreign Keys
 #
-#  fk_rails_3b7c9ecab7  (form_packet_id => rms_form_packets.id)
-#  fk_rails_465b879057  (item_id => rms_items.id)
-#  fk_rails_8455748692  (tenant_id => tenants.id)
+#  fk_rails_...  (form_packet_id => rms_form_packets.id)
+#  fk_rails_...  (item_id => rms_items.id)
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 
 module Rms

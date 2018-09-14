@@ -16,8 +16,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_1790a1d43c  (tenant_id => tenants.id)
-#  fk_rails_6f2a664330  (packet_id => rms_form_packets.id)
+#  fk_rails_...  (packet_id => rms_form_packets.id)
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 
 module Rms

@@ -24,8 +24,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_069bf994f3  (user_id => users.id)
-#  fk_rails_a4103226a4  (tenant_id => tenants.id)
+#  fk_rails_...  (tenant_id => tenants.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class CreditCard < ActiveRecord::Base

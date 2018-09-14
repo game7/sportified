@@ -22,7 +22,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_a1b344ef36  (program_id => programs.id)
+#  fk_rails_...  (program_id => programs.id)
 #
 
 class League::DivisionSerializer < ActiveModel::Serializer

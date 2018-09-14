@@ -55,8 +55,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_4fb4636be6  (page_id => pages.id)
-#  fk_rails_9a9b98078e  (program_id => programs.id)
+#  fk_rails_...  (page_id => pages.id)
+#  fk_rails_...  (program_id => programs.id)
 #
 
 class Event < ActiveRecord::Base

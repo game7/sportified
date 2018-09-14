@@ -17,7 +17,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_3e00a094b5  (tenant_id => tenants.id)
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 
 class ProgramSerializer < ActiveModel::Serializer

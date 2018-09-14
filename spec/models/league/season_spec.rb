@@ -18,8 +18,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_43f69705ce  (program_id => programs.id)
-#  fk_rails_9ae86e9659  (program_id => programs.id)
+#  fk_rails_...  (program_id => programs.id)
+#  fk_rails_...  (program_id => programs.id)
 #
 
 require 'rails_helper'

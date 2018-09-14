@@ -20,7 +20,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_4d0a4ebac5  (location_id => locations.id)
+#  fk_rails_...  (location_id => locations.id)
 #
 
 class PlayingSurface < Facility

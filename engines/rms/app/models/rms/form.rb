@@ -17,9 +17,9 @@
 #
 # Foreign Keys
 #
-#  fk_rails_2d7d45163d  (registration_id => rms_registrations.id)
-#  fk_rails_7767919c08  (template_id => rms_form_templates.id)
-#  fk_rails_e5d5d313a2  (tenant_id => tenants.id)
+#  fk_rails_...  (registration_id => rms_registrations.id)
+#  fk_rails_...  (template_id => rms_form_templates.id)
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 
 module Rms

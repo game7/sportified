@@ -9,10 +9,12 @@
 #  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
+#  deleted_at :datetime
 #
 # Indexes
 #
-#  index_locations_on_tenant_id  (tenant_id)
+#  index_locations_on_deleted_at  (deleted_at)
+#  index_locations_on_tenant_id   (tenant_id)
 #
 
 class LocationSerializer < ActiveModel::Serializer
