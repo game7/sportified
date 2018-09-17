@@ -21,3 +21,6 @@ yarn-debug.log*
 .yarn-integrity
 yarn-error.log
 .vscode
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

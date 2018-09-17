@@ -23,7 +23,8 @@ module Blocks
     end
 
     store_accessor :options, :post_count,
-                             :tags
+                             :tags,
+                             :title
 
     def tags=(array)
       super(array.join('||'))

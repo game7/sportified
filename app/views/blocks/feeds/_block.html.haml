@@ -1,9 +1,10 @@
-.feed
+.panel.panel-default
+  - if block.title.present?
+    .panel-heading= block.title
+  %ul.list-group
   - block.posts.each do |post|
-    .post
-      %h4.title= post.title
-      .created= "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
-      .summary= post.summary
-      - if post.body.present? or post.image_url.present?
-        .read_more
-          = link_to 'Read More', post
+    = link_to post, class: 'list-group-item' do
+      %h4.list-group-item-heading= post.title
+      .list-group-item-text
+        = "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
+

@@ -30,7 +30,7 @@ class Blocks::FeedsController < BlocksController
   private
 
   def blocks_feed_params
-    params.required(:blocks_feed).permit(:post_count, tags: [])
+    params.required(:blocks_feed).permit(:title, :post_count, tags: [])
   end
 
 end

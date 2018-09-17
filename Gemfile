@@ -47,6 +47,8 @@ gem 'simple_form', '~> 4.0.0'
 gem 'virtus', '~> 1.0.5'
 gem 'audited', '~> 4.6'
 
+gem 'twitter', '~> 6.2.0'
+
 gem 'cocoon'
 #gem 'delayed_job'
 

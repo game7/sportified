@@ -1,4 +1,5 @@
 = simple_form_for @block, :url => page_blocks_feed_path(@page, @block), :remote => true do |f|
+  = f.input :title
   = f.input :post_count
   .control-group
     %label.control-label Tags
