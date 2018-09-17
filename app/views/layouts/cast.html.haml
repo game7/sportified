@@ -16,33 +16,14 @@
     = stylesheet_link_tag 'cast'
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto"
     = javascript_include_tag :application
-    = javascript_include_tag '//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1'
-    -# = javascript_include_tag '//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js'
+    = javascript_include_tag '//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js'
+    = javascript_include_tag 'cast-away.js'
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
   %body
-    <google-cast-launcher></google-cast-launcher>
     = yield
     = yield :javascript
-    :javascript
-      /*
-      window.onload = function() {
-        console.log('boom!')
-        window.cast.__platform__ = {};
-        cast.framework.CastReceiverContext.getInstance().start();
-      }
-      */
-      // alert($(window).width() + ' x ' + $(window).height())
-      initializeCastApi = function() {
-        cast.framework.CastContext.getInstance().setOptions({
-          receiverApplicationId: '3C00FF56',
-          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-        });
-      };      
-      window['__onGCastApiAvailable'] = function(isAvailable) {
-        if (isAvailable) {
-          initializeCastApi();
-        }
-      };
+
+
 

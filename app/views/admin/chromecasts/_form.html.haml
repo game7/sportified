@@ -2,7 +2,179 @@
   .panel.panel-default
     .panel-body
       = f.input :name
+      %button#cast.btn.btn-primary Choose Chromecast
       = f.input :location_id, collection: Location.order('name ASC')
       = f.input :playing_surface_id
   = f.button :wrapped, :cancel => return_url
+%google-cast-launcher
+
+  - content_for :javascript do
+    = javascript 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1'
+    = javascript 'cast-away'
+    :javascript
+      (function() {
+        window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
+          if (loaded) {
+            // initialize();
+            initializeIt();
+          } else {
+            console.log(errorInfo);
+          }
+        }
+
+        function initialize() {
+          var context  = cast.framework.CastContext.getInstance();
+          context.setOptions({
+            receiverApplicationId: '3C00FF56',
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+          });
+          var player = new cast.framework.RemotePlayer();
+          var controller = new cast.framework.RemotePlayerController(player);
+          controller.addEventListener(
+            cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED,
+            function() { console.log('connected') }
+          );
+        }
+
+        var applicationId = '3C00FF56';
+
+        function initializeCastApi() {
+          var sessionRequest = new chrome.cast.SessionRequest(applicationId);
+          var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
+          chrome.cast.initialize(apiConfig, onInitSuccess, onError);
+        }
+        /**
+         * initialization success callback
+         */
+        function onInitSuccess() {
+          appendMessage('onInitSuccess');
+        }
+        /**
+         * initialization error callback
+         */
+        function onError(message) {
+          appendMessage('onError: ' + JSON.stringify(message));
+        }
+
+        /**
+         * session listener during initialization
+         */
+        function sessionListener(e) {
+          appendMessage('New session ID:' + e.sessionId);
+          session = e;
+          session.addUpdateListener(sessionUpdateListener);
+          session.addMessageListener(namespace, receiverMessage);
+        }
+        /**
+         * listener for session updates
+         */
+        function sessionUpdateListener(isAlive) {
+          var message = isAlive ? 'Session Updated' : 'Session Removed';
+          message += ': ' + session.sessionId;
+          appendMessage(message);
+          if (!isAlive) {
+            session = null;
+          }
+        }
+        /**
+         * utility function to log messages from the receiver
+         * @param {string} namespace The namespace of the message
+         * @param {string} message A message string
+         */
+        function receiverMessage(namespace, message) {
+          appendMessage('receiverMessage: ' + namespace + ', ' + message);
+        }
+        /**
+         * receiver listener during initialization
+         */
+        function receiverListener(e) {
+          if(e === 'available') {
+            appendMessage('receiver found');
+          }
+          else {
+            appendMessage('receiver list empty');
+          }
+        }
+        /**
+         * stop app/session
+         */
+        function stopApp() {
+          session.stop(onStopAppSuccess, onError);
+        }
+        /**
+         * send a message to the receiver using the custom namespace
+         * receiver CastMessageBus message handler will be invoked
+         * @param {string} message A message string
+         */
+        function sendMessage(message) {
+          if (session != null) {
+            session.sendMessage(namespace, message, onSuccess.bind(this, 'Message sent: ' + message),
+              onError);
+          }
+          else {
+            chrome.cast.requestSession(function(e) {
+                session = e;
+                session.sendMessage(namespace, message, onSuccess.bind(this, 'Message sent: ' +
+                  message), onError);
+              }, onError);
+          }
+        }
+        /**
+         * append message to debug message window
+         * @param {string} message A message string
+         */
+        function appendMessage(message) {
+          console.log(message);
+          // var dw = document.getElementById('debugmessage');
+          // dw.innerHTML += '\n' + JSON.stringify(message);
+        }
+        /**
+         * utility function to handle text typed in by user in the input field
+         */
+        function update() {
+          sendMessage(document.getElementById('input').value);
+        }
+        /**
+         * handler for the transcribed text from the speech input
+         * @param {string} words A transcibed speech string
+         */
+        function transcribe(words) {
+          sendMessage(words);
+        }
+
+        function initializeIt() {
+          var castAway = window.castAway = new CastAway({
+            applicationID: '3C00FF56',
+            namespace: "urn:x-cast:json"
+          });
+          castAway.on('receivers:available', function(a, b, c) {
+            console.log('receivers available');
+            return $('#cast').click(function(e) {
+              e.preventDefault();
+              return castAway.requestSession(function(err, session) {
+                if (err) {
+                  return console.log("Error getting session", err);
+                }
+                window.session = session;
+                session.send('hi')
+                return true;
+              })
+            })
+          })
+
+          // castAway.on('existingMediaFound', function(session) {
+          //   debugger;
+          //   window.session = session;
+          //   session
+          // });
+
+          castAway.initialize(function(err, data) {
+            if (err) {
+              return console.log("error initialized", err);
+            } else {
+              return console.log("initialized", data);
+            }
+          });
+        }
+      }).call(this);
 

@@ -30,6 +30,10 @@ class Admin::ChromecastsController < ApplicationController
     @chromecast.destroy
   end
 
+  def receive
+
+  end
+
   private
 
     def set_chromecast

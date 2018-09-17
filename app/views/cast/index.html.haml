@@ -1,0 +1,16 @@
+%h1 Cast#index
+%p Find me in app/views/cast/index.html.haml
+- content_for :javascript do
+  :javascript
+    window.onload = function() {
+      try {
+        var castAway = new CastAway();
+        var receiver = castAway.receive();
+        receiver.on('setChromecastId', function(id) {
+
+        })
+      } catch(e) {
+        console.log('Cannot load CastAway');
+      }
+    }
+
