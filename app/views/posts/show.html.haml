@@ -1,4 +1,5 @@
 %h1= @post.title
+= image_tag(@post.image_url, class: 'img-responsive', style: 'margin: 0 auto;') if @post.image_url.present?
 != RedCloth.new(@post.body).to_html if @post.body.presence
 .back
   %a{ :href => "javascript: history.back();" } Back

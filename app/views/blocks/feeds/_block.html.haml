@@ -1,9 +1,9 @@
 .feed
-  - block.posts.each_with_index do |post, index|
+  - block.posts.each do |post|
     .post
       %h4.title= post.title
       .created= "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
       .summary= post.summary
-      - unless post.body.blank?
+      - if post.body.present? or post.image_url.present?
         .read_more
-          = link_to "Read More", post
+          = link_to 'Read More', post

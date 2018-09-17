@@ -1,6 +1,8 @@
 ::Sportified::Application.routes.draw do
 
 
+  get 'cast/index'
+
   get 'casts' => 'casts#index', :as => :casts
   get 'casts/:slug' => 'casts#show', :as => :cast
 
@@ -127,6 +129,8 @@
     resources :teams, :only => [ :new, :create, :edit, :update, :delete]
   end
 
+  resources :cast, :only => :index
+
   namespace :admin do
 
     resources :chromecasts, except: [:show]
@@ -224,6 +228,7 @@
       resources :contacts, :only => [:edit, :update]
       resources :texts, :only => [:edit, :update]
       resources :images, :only => [:edit, :update]
+      resources :feeds, :only => [:edit, :update]
       resources :documents, :only => [:edit, :update]
       resources :markups, :only => [:edit, :update]
       resources :carousels, :only => [:edit, :update]

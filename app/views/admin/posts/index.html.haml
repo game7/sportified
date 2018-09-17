@@ -1,25 +1,24 @@
 - title 'Posts'
 .container
   .well
-    = link_to 'New Post', new_admin_post_path(), :class => 'btn btn-default'
+    = link_to 'New Post', new_admin_post_path(), class: 'btn btn-default'
   = paginate @posts
   != page_entries_info @posts
   %table.table.table-bordered.table-striped
     - @posts.each do |post|
       %tr
-        %td{ :width => "100"}
-          - if post.image && post.image.url.presence
-            = image_tag post.image.thumb.url
+        %td{width: '100'}
+          = image_tag post.image.thumb.url if post.image_url.present?
         %td
-          %h4
-            = post.title
+          %h4= post.title
           - post.tags.each do |tag|
-            %span.label.label-info= icon(:tag)+" "+tag
-        %td{ :width => "200" }
+            %span.label.label-info= iconify(:tag, tag)
+            &nbsp;
+        %td{width: '200'}
           .btn-group
-            = link_to 'Edit', edit_admin_post_path(post), :class => 'btn btn-default'
-            = link_to 'Delete', [:admin, post], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-default'
+            = link_to 'Edit', edit_admin_post_path(post), class: 'btn btn-default'
+            = link_to 'Delete', [:admin, post], confirm: 'Are you sure?', method: :delete, class: 'btn btn-default'
   = paginate @posts
   != page_entries_info @posts
   .well
-    = link_to 'New Post', new_admin_post_path(), :class => 'btn btn-default'
+    = link_to 'New Post', new_admin_post_path(), class: 'btn btn-default'
