@@ -1,5 +1,5 @@
 class BaseLeagueController < ApplicationController
-  skip_filter :set_area_navigation
+  skip_before_action :set_area_navigation
   before_action :find_program
   before_action :find_division
   before_action :find_season

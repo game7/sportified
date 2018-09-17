@@ -116,7 +116,7 @@ module Rms
     end
 
     before_validation :set_price_from_variant
-    before_save :generate_confiramtion_code, unless: "confirmation_code?"
+    before_save :generate_confiramtion_code, unless: :confirmation_code
 
     private
 

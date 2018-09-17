@@ -1,10 +1,12 @@
 source 'http://rubygems.org'
 ruby '2.3.3'
-gem 'rails', '~> 5.0.1'
+gem 'rails', '~> 5.2.1'
 
 gem 'rms', path: 'engines/rms'
 
 gem 'active_model_serializers', '~> 0.10.2'
+
+gem 'bootsnap', require: false
 
 gem 'pg'
 gem 'enumerize'
@@ -12,12 +14,12 @@ gem 'annotate'
 
 gem 'sass-rails', '~> 5.0.4'
 #gem 'coffee-rails', '~> 4.0.0.rc1'
-gem "sprockets"
-gem "sprockets-es6"
+gem 'sprockets'
+gem 'sprockets-es6'
 
 gem 'webpacker', '~> 3.3.1'
 
-gem 'paranoia', '~> 2.3.1'
+gem 'paranoia', '~> 2.3'
 
 
 gem 'uglifier', '>=1.3.0'
@@ -29,19 +31,19 @@ gem 'react-rails'
 
 gem 'tenancy'
 gem 'ancestry'
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', '~> 5.0'
 
 gem 'haml'
 gem 'kaminari'
 
-gem 'devise', '~>4.2.0'
+gem 'devise', '~>4.2'
 gem 'omniauth'
 # gem 'oa-oauth', :require => 'omniauth/oauth'
 
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
-gem 'simple_form', '~> 3.4.0'
+gem 'simple_form', '~> 4.0.0'
 gem 'virtus', '~> 1.0.5'
 gem 'audited', '~> 4.6'
 
@@ -55,19 +57,18 @@ gem 'remotipart', '~> 1.3.1'
 
 gem 'haml-rails'
 
-gem "simple_calendar", "~> 2.0"
+gem 'simple_calendar', '~> 2.0'
 
-gem 'invoicing', '~> 1.0.1'
 gem 'stripe'
 
-gem "RedCloth"
+gem 'RedCloth'
 gem 'redcarpet', '~> 3.4.0'
 
 gem 'unicorn'
 
 gem 'ice_cube', '~> 0.16.2'
 
-gem "exception_logger", :github => "ryancheung/exception_logger"
+gem 'exception_logger', :github => 'ryancheung/exception_logger'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
@@ -75,7 +76,7 @@ end
 
 
 
-#gem 'pages', :path => "vendor/engines/pages"
+#gem 'pages', :path => 'vendor/engines/pages'
 
 # gem 'aws-s3', :require => 'aws/s3'
 
@@ -99,7 +100,7 @@ group :test do
 end
 
 group :development do
-  gem "spring"
+  gem 'spring'
   gem 'byebug'
   gem 'foreman'
   gem 'thin'
