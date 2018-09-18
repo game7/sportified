@@ -1,0 +1,7 @@
+= simple_form_for @block, :url => page_blocks_event_feed_path(@page, @block), :remote => true do |f|
+  = f.input :title
+  = f.input :event_count
+  .control-group
+    %label.control-label Tags
+    .controls
+      = f.collection_check_boxes(:tags, Event.tag_counts.collect{|a| [a[:name], "#{a[:name]} (#{a[:count].to_s})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'})

@@ -232,6 +232,7 @@
       resources :documents, :only => [:edit, :update]
       resources :markups, :only => [:edit, :update]
       resources :carousels, :only => [:edit, :update]
+      resources :event_feeds, :only => [:edit, :update]
     end
   end
 

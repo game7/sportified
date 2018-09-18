@@ -1,0 +1,21 @@
+.panel.panel-default
+  - if block.title.present?
+    .panel-heading= block.title
+  %table.table.table-bordered
+    %tbody
+      - block.events.each do |event|
+        %tr
+          %td
+            = event.starts_on.to_date.strftime("%a %-m/%-d/%y")
+          %td
+            .visible-xs
+              = event.starts_on.strftime("%l:%M%P").gsub("m","")
+              != ' - '
+              = event.ends_on.strftime("%l:%M%P").gsub("m","")
+            .hidden-xs
+              = event.starts_on.strftime("%l:%M %P")
+              != ' - '
+              = event.ends_on.strftime("%l:%M %P")
+          %td= event.summary
+
+

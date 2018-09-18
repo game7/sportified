@@ -66,6 +66,9 @@ en:
     feed:
       name: "Feed"
       description: "A feed of posts"
+    event_feed:
+      name: "Event Feed"
+      description: "A feed of upcoming events"
     image:
       name: "Image"
       description: "Upload an image that can be viewed by visitors"
