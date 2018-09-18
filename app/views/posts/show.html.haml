@@ -4,6 +4,7 @@
   = @post.summary
   - if @post.body.present?
     %br
-!= MarkdownService.html(@post.body) if @post.body.present?
+.markdown
+  != MarkdownService.html(@post.body) if @post.body.present?
 .back
   %a{ :href => "javascript: history.back();" } Back
