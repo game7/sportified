@@ -7,7 +7,6 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
   before_action :add_breadcrumbs, :except => [:destroy]
 
   def show
-    @team = ::League::Team.includes(:division, :season, :program, :players).find(params[:id])
     @games = ::League::Game.for_team(@team)
   end
 
@@ -54,7 +53,7 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
   end
 
   def find_team
-    @team = ::League::Team.includes(:division, :season, :program).find(params[:id])
+    @team = ::League::Team.includes(:division, :season, :program, :players).find(params[:id])
     add_breadcrumb @team.program.name, admin_league_program_path(@team.program)
     add_breadcrumb @team.season.name, admin_league_season_path(@team.season)
     add_breadcrumb @team.division.name
