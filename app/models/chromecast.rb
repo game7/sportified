@@ -26,8 +26,8 @@
 class Chromecast < ApplicationRecord
   include Sportified::TenantScoped
 
-  belongs_to :location
-  belongs_to :playing_surface
+  belongs_to :location, required: false
+  belongs_to :playing_surface, required: false
 
   validates :name, presence: true
 end

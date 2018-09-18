@@ -62,11 +62,11 @@
 class League::Game < League::Event
   extend Enumerize
 
-  belongs_to :home_team, class_name: '::League::Team'
-  belongs_to :away_team, class_name: '::League::Team'
-  belongs_to :statsheet, polymorphic: true
+  belongs_to :home_team, class_name: '::League::Team', required: false
+  belongs_to :away_team, class_name: '::League::Team', required: false
+  belongs_to :statsheet, polymorphic: true, required: false
 
-  belongs_to :playing_surface
+  belongs_to :playing_surface, required: false
 
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]

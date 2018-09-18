@@ -55,7 +55,7 @@ class Team < ActiveRecord::Base
   belongs_to :tenant
   belongs_to :division, class_name: '::League::Division'
   belongs_to :season, class_name: '::League::Division'
-  belongs_to :club
+  belongs_to :club, required: false
 
   validates_presence_of :name, :division_id, :season_id
 

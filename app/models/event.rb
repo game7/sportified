@@ -64,12 +64,12 @@ class Event < ActiveRecord::Base
   acts_as_ordered_taggable
   audited
 
-  belongs_to :program
+  belongs_to :program, required: false
   belongs_to :page, required: false
   belongs_to :location
 
-  belongs_to :home_team_locker_room, :class_name => 'LockerRoom'
-  belongs_to :away_team_locker_room, :class_name => 'LockerRoom'
+  belongs_to :home_team_locker_room, class_name: 'LockerRoom', required: false
+  belongs_to :away_team_locker_room, class_name: 'LockerRoom', required: false
 
   validates_presence_of :starts_on
   # validate :starts_on_cannot_be_in_the_past

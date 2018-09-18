@@ -40,7 +40,6 @@ class General::Events::UpdateForm
     assign_attributes(whitelist(params))
     return false unless valid?
     @event.update_attributes(self.attributes)
-    @event.save
   end
 
   def whitelist(params)

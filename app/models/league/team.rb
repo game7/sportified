@@ -63,7 +63,7 @@ class League::Team < ActiveRecord::Base
   belongs_to :division
   belongs_to :season
   has_one    :program, through: :division
-  belongs_to :club
+  belongs_to :club, required: false
 
   validates_presence_of :name, :division_id, :season_id
 
