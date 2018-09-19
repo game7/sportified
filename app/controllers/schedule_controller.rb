@@ -6,20 +6,28 @@ class ScheduleController < BaseLeagueController
 
     response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL' if embedded?
 
+    @date = params[:date] ? Date.parse(params[:date]) : Date.current
+    @days_in_future = 14
+    @days_in_past = 0
+    @start_date = @date - @days_in_past
+    @end_date = @date + @days_in_future + 1
+    @next_date = @date + @days_in_future + @days_in_past
+    @prev_date = @date - @days_in_future - @days_in_past
+
     if params[:season_slug]
       @events = @division.events.for_season(@season).asc(:starts_on)
     else
-      @date = params[:date] ? Date.parse(params[:date]) : Date.current
-      @days_in_future = 14
-      @days_in_past = 0
-      @start_date = @date - @days_in_past
-      @end_date = @date + @days_in_future + 1
-      @next_date = @date + @days_in_future + @days_in_past
-      @prev_date = @date - @days_in_future - @days_in_past
-      @events = all_divisions? ? Event : @division.events
-      @events = @events.includes(:location)
-      @events = @events.where('starts_on > ? AND ends_on < ?', @start_date, @end_date).order(starts_on: :asc)
+      if params[:tags]
+        match = (params[:match] == 'all') ? { match_all: true } : { any: true }
+        @events = Event.in_the_future.tagged_with(params[:tags], match).order(starts_on: :asc).page params[:page]
+      else
+        @events = all_divisions? ? Event : @division.events
+        @events = @events.includes(:location)
+        @events = @events.where('starts_on > ? AND ends_on < ?', @start_date, @end_date).order(starts_on: :asc)
+      end
     end
+
+    @tags = Event.in_the_future.tag_counts
 
     respond_to do |format|
       format.html # index.html.erb

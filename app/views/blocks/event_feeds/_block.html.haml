@@ -17,5 +17,7 @@
               != ' - '
               = event.ends_on.strftime("%l:%M %P")
           %td= event.summary
-
+      %tr
+        %td{ colspan: '3', style: 'text-align: center'}
+          = link_to 'Show more events like these...', [:schedule, { tags: block.tags }]
 

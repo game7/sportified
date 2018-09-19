@@ -33,7 +33,7 @@ module Blocks
     end
 
     def events
-      ::Event.tagged_with(tags, any: true).newest.limit(event_count)
+      ::Event.tagged_with(tags, any: true).in_the_future.limit(event_count)
     end
 
   end

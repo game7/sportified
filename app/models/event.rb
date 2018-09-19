@@ -103,7 +103,6 @@ class Event < ActiveRecord::Base
   scope :after, ->(after) { where('starts_on > ?', after) }
   scope :ends_after, ->(after) { where('ends_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
-  scope :newest, ->{ order(created_at: :desc) }
 
   def start_time
     self.starts_on
