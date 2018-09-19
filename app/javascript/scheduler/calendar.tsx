@@ -201,6 +201,7 @@ class Calendar extends React.Component<RouteComponentProps<{}>, State> {
     const date = params['date'] ? new Date(Date.parse(params['date'])) : new Date();
     type stringOrDate = string | Date;
     const eventPropGetter = (event: Object, start: stringOrDate, end: stringOrDate, isSelected: boolean) => {
+      if (view == 'agenda') return {}
       const first = (event['tags'] || [])[0];
       const tag = tags[first] || {};
       const background = tag['color'] || '#DEDEDE';
