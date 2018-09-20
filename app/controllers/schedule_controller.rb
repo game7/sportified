@@ -14,6 +14,8 @@ class ScheduleController < BaseLeagueController
     @next_date = @date + @days_in_future + @days_in_past
     @prev_date = @date - @days_in_future - @days_in_past
 
+    @show_tags = @division.blank?
+
     if params[:season_slug]
       @events = @division.events.for_season(@season).asc(:starts_on)
     else

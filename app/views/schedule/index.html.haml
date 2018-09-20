@@ -18,8 +18,11 @@
         %li= link_to 'New Game', new_admin_league_game_path(:season_id => @season, :division_id => @division)
 
 .row
-  .col-sm-3
-  .col-sm-9
+
+  - if @show_tags
+    .col-sm-3
+
+  %div{class: "col-sm-#{@show_tags ? '9' : '12'}" }
 
     - unless params[:tags]
       .row.options
@@ -32,43 +35,45 @@
       .paginator= paginate @events
 
 .row
-  .col-sm-3
 
-    .list-group.tags
-      .list-group-item
-        .form-group
-          %label Tags
-          .input-group
-          - @tags.sort_by(&:name).each do |tag|
-            - tags = Array.wrap(params[:tags]).clone
-            - btn_class = tags.include?(tag.name) ? 'btn-primary' : 'btn-default'
-            - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
-            = link_to tag.name, url_for(:tags => tags), class: "btn #{btn_class} btn-sm"
-            != ' '
-      .list-group-item
-        .form-group
-          %label{ for: 'match' } Match
-          .radio{ style: 'margin-top: 0;'}
-            - p = params.merge({ match: :any })
-            - puts p
-            = label_tag nil, class: 'checkbox-inline' do
-              %input{ type: :radio,
-                      name: :match,
-                      value: :any,
-                      checked: params[:match] != 'all',
-                      data: { url: url_for({ tags: params[:tags], match: nil}) } }
-              Match Any Tags
-          .radio
-            = label_tag nil, class: 'checkbox-inline' do
-              %input{ type: :radio,
-                      name: :match,
-                      value: :all,
-                      checked: params[:match] == 'all',
-                      data: { url: url_for({ tags: params[:tags], match: :all}) } }
-              Match All Tags
+  - if @show_tags
+    .col-sm-3
+
+      .list-group.tags
+        .list-group-item
+          .form-group
+            %label Tags
+            .input-group
+            - @tags.sort_by(&:name).each do |tag|
+              - tags = Array.wrap(params[:tags]).clone
+              - btn_class = tags.include?(tag.name) ? 'btn-primary' : 'btn-default'
+              - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
+              = link_to tag.name, url_for(:tags => tags), class: "btn #{btn_class} btn-sm"
+              != ' '
+        .list-group-item
+          .form-group
+            %label{ for: 'match' } Match
+            .radio{ style: 'margin-top: 0;'}
+              - p = params.merge({ match: :any })
+              - puts p
+              = label_tag nil, class: 'checkbox-inline' do
+                %input{ type: :radio,
+                        name: :match,
+                        value: :any,
+                        checked: params[:match] != 'all',
+                        data: { url: url_for({ tags: params[:tags], match: nil}) } }
+                Match Any Tags
+            .radio
+              = label_tag nil, class: 'checkbox-inline' do
+                %input{ type: :radio,
+                        name: :match,
+                        value: :all,
+                        checked: params[:match] == 'all',
+                        data: { url: url_for({ tags: params[:tags], match: :all}) } }
+                Match All Tags
 
 
-  .col-sm-9
+  %div{class: "col-sm-#{@show_tags ? '9' : '12'}" }
 
     %table.table.table-striped.table-bordered
       - events = @events.entries
@@ -141,6 +146,7 @@
           = render :partial => 'shared/select_date_range', :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
     - if params[:tags]
       .paginator= paginate @events
+
 :javascript
   $(function() {
     $('[data-url]').on('change', function(e) {
