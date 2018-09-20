@@ -29,7 +29,7 @@ module Blocks
     end
 
     def tags
-      super&.split('||')
+      super&.split('||').reject{|s| s&.strip.empty? }
     end
 
     def events
