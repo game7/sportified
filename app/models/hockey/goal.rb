@@ -48,9 +48,9 @@ class Hockey::Goal < ActiveRecord::Base
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   belongs_to :team, class_name: "::League::Team"
   belongs_to :scored_by, class_name: "Hockey::Skater::Result"
-  belongs_to :scored_on, class_name: "Hockey::Goaltender::Result"
-  belongs_to :assisted_by, class_name: "Hockey::Skater::Result"
-  belongs_to :also_assisted_by, class_name: "Hockey::Skater::Result"
+  belongs_to :scored_on, class_name: "Hockey::Goaltender::Result", required: false
+  belongs_to :assisted_by, class_name: "Hockey::Skater::Result", required: false
+  belongs_to :also_assisted_by, class_name: "Hockey::Skater::Result", required: false
 
   scope :sorted_by_time, ->{ order(period: :asc, minute: :desc, second: :desc) }
   scope :for_period, ->(period) { where(per: period) }
