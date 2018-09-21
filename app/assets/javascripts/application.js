@@ -6,6 +6,7 @@
 //= require jcrop/jquery.Jcrop.min
 //= require bootstrap-datetimepicker
 //= require cocoon
+//= require admin/chromecasts
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
   var $observer = $(observerId);
@@ -153,6 +154,8 @@ $(function(){
     });
 
 })
+
+
 
 //= require react
 //= require react_ujs

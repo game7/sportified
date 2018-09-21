@@ -26,5 +26,5 @@ Rails.application.config.assets.precompile += %w(
   calendar/application.js
   calendar/application.css
   components.js
-  cast-away.j
+  cast-away.js
 )

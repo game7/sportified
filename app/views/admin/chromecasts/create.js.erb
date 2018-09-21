@@ -1,6 +1,7 @@
 <% if @chromecast.errors.any? %>
   var form = '<%= j(render('form')) %>';
   $('#new_chromecast').replaceWith(form);
+  window.sportified.chromecast.initialize();
 <% else %>
   window.location = '<%= admin_chromecasts_path %>';
 <% end %>
