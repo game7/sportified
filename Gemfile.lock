@@ -1,17 +1,24 @@
 GIT
-  remote: git://github.com/ryancheung/exception_logger.git
-  revision: 47b0053cc709a02ea0645b269056586c8766fff0
-  specs:
-    exception_logger (0.2.0)
-      rails (>= 4.0.0)
-      will_paginate (~> 3.0)
-
-GIT
   remote: https://github.com/doabit/semantic-ui-sass.git
   revision: b16900532fd95aabd41fbffcfae3ea5bdb683180
   specs:
     semantic-ui-sass (2.3.3.0)
       sass (>= 3.2)
+
+GIT
+  remote: https://github.com/game7/acts-as-taggable-on.git
+  revision: 69322267029b54fe42be9a05e248df9de289a65b
+  specs:
+    acts-as-taggable-on (6.0.1)
+      activerecord (~> 5.0)
+
+GIT
+  remote: https://github.com/ryancheung/exception_logger.git
+  revision: 47b0053cc709a02ea0645b269056586c8766fff0
+  specs:
+    exception_logger (0.2.0)
+      rails (>= 4.0.0)
+      will_paginate (~> 3.0)
 
 PATH
   remote: engines/rms
@@ -73,8 +80,6 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (5.0.0)
-      activerecord (>= 4.2.8)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     ancestry (3.0.2)
@@ -428,7 +433,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   active_model_serializers (~> 0.10.2)
-  acts-as-taggable-on (~> 5.0)
+  acts-as-taggable-on!
   ancestry
   annotate
   audited (~> 4.6)

@@ -31,7 +31,7 @@ gem 'react-rails'
 
 gem 'tenancy'
 gem 'ancestry'
-gem 'acts-as-taggable-on', '~> 5.0'
+gem 'acts-as-taggable-on', git: 'https://github.com/game7/acts-as-taggable-on.git'
 
 gem 'haml'
 gem 'kaminari'
@@ -70,7 +70,7 @@ gem 'unicorn'
 
 gem 'ice_cube', '~> 0.16.2'
 
-gem 'exception_logger', :github => 'ryancheung/exception_logger'
+gem 'exception_logger', :git => 'https://github.com/ryancheung/exception_logger.git'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
