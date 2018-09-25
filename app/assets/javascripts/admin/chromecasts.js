@@ -3,6 +3,8 @@
 
 (function() {
 
+    var session = null;
+
     function initialize() {
 
         var castAway = window.castAway = new CastAway({
@@ -14,22 +16,20 @@
             console.log('receivers available');
             return $('#cast, #chromecast_name').on('click', function(e) {
                 e.preventDefault();
-                return castAway.requestSession(function(err, session) {
+                return castAway.requestSession(function(err, newSession) {
                     if (err) {
                         $('#chromecast_name').val('')
                         return console.log("Error getting session", err);
                     }
+                    session = newSession;
                     $('#chromecast_name').val(session.session.receiver.friendlyName)
-                    window.session = session;
                     return true;
                 })
             })
         })
 
         castAway.on('existingMediaFound', function(session) {
-            debugger;
-            window.session = session;
-            session
+            _session = session;
         });
 
         castAway.initialize(function(err, data) {
@@ -41,9 +41,17 @@
         });
     }
 
+    function setChromecastId(id) {
+        if (!session) return;
+        session.send('setChromecastId', id, function() {
+
+        });
+    }
+
     window.sportified = window.sportified || {};
     window.sportified.chromecast = {
-        initialize: initialize
+        initialize: initialize,
+        setChromecastId: setChromecastId
     }
 
 })();

@@ -1,0 +1,24 @@
+
+.row
+  .col-xs-4{ style: 'padding: 40px;'}
+    - @events.each do |event|
+      %table.table.table-bordered{ style: 'background-color: white;'}
+        %tr
+          - colspan = (event.show_teams?) ? '4' : '3'
+          %td{ colspan: colspan, style: 'text-align: center;'}= event.starts_on.strftime('%-I:%M %P')
+        %tr
+          %td= event.home_team_locker_room&.name
+          - if event.show_teams?
+            %td= event.home_team_custom_name
+            %td= event.away_team_custom_name
+          - else
+            %td= event.summary
+          %td= event.home_team_locker_room&.name
+
+  .col-xs-8
+
+
+:javascript
+  $(function() {
+
+  })

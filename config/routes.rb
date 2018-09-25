@@ -1,6 +1,8 @@
 ::Sportified::Application.routes.draw do
 
 
+  resources :chromecasts, only: :show
+
   get 'cast/index'
 
   get 'casts' => 'casts#index', :as => :casts

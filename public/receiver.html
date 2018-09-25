@@ -5,23 +5,54 @@
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
     <script type="text/javascript" src="/assets/cast-away.js"></script>
     <script type="text/javascript">
-      window.onload = function() {
-        try {
-          var castAway = new CastAway(),
-              receiver = castAway.receive();
-              receiver.on('setMessage', function(message) {
-                document.getElementById('message').innerText = message;
-              })
-            window.receiver = receiver;
-//          cast.framework.CastReceiverContext.getInstance().start();
-        } catch(e) {
-          console.log('unable to start cast:', e)
+      (function() {
+        function setChromecastId(id) {
+          document.getElementById('message').innerText = 'chromecast: ' + id;
+          overlay = document.getElementById('overlay');
+          overlay.style.display = 'none';
+          iframe = document.querySelector('iframe');
+          iframe.style.display = 'block';
+          iframe.src = '/chromecasts/' + id;
         }
-      };
+        window.onload = function() {
+          setChromecastId('4'); return;
+          try {
+            var castAway = new CastAway(),
+              receiver = castAway.receive();
+            receiver.on('setChromecastId', setChromecastId)
+            window.receiver = receiver;
+          } catch(e) {
+            console.log('unable to start cast:', e)
+          }
+        };
+      })();
     </script>
+    <style>
+      html, body {
+        height: 100%;
+        background-color: white;
+      }
+      body {
+        margin: 0;
+      }
+      #overlay {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      iframe {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
   </head>
-  <body style="background-color: white;">
-    <h1>Hello Chromecast!</h1>
-    <div id="message"></div>
+  <body>
+    <div id="overlay">
+      <h3 id="message">Loading</h3>
+    </div>
+    <iframe style="display: none;"></iframe>
   </body>
 </html>
