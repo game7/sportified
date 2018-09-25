@@ -144,7 +144,7 @@
 
     - unless params[:tags] || events.count < 5
       .row
-        .col-sm-8
+        .col-sm-12
           = render :partial => 'shared/select_date_range', :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
     - if params[:tags]
       .paginator= paginate @events
