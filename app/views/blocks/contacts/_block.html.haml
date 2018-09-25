@@ -1,12 +1,7 @@
-.well
-  %h5
-    %i.icon-user
-    = [block.first, " ", block.last].join
-  - if block.title.presence
-    %h6= block.title
-  - if block.phone.presence
-    .phone
-      =block.phone
-  - if block.email.presence
-    .email
-      %a{ :href => "mailto:#{block.email}"}= block.email
+%h3
+  %span.first= block.first
+  != ' '
+  %span.last= block.last
+%p.title= block.title if block.title.presence
+%p.phone= block.phone if block.phone.presence
+%p.email= link_to block.email, "mailto:#{block.email}" if block.email.presence

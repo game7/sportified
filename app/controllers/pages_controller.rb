@@ -114,13 +114,17 @@ class PagesController < ApplicationController
     end
 
     def find_page_by_path
-      page = Page.find_by_path(params[:path])
+      includes = [
+        :sections,
+        :blocks
+      ]
+      page = Page.includes(includes).find_by_path(params[:path])
       page ||= Page.new(:title => 'Welcome') unless params[:path]
       page
     end
 
     def set_breadcrumbs
-      (@page.ancestors + [@page]).each do |parent|
+      @page.ancestors.each do |parent|
         add_breadcrumb parent.title_in_menu.presence || parent.title, get_page_url(parent)
       end unless @page.root?
     end

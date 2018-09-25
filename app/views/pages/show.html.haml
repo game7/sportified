@@ -1,5 +1,6 @@
 - title @page.title
-= render :partial => 'sections/section', :collection => @page.sections.order(:position)
+
+= render @page.sections
 
 - if current_user_is_admin?
   - content_for :actions do

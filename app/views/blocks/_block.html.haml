@@ -1,11 +1,11 @@
 - editable ||= editable
-.block{ :id => "block_"+block.id.to_s, :class => "#{'editable' if editable}" }
+.block{ :id => "block_#{block.id}", :class => "#{block.type.parameterize.underscore} #{'editable' if editable}" }
   - if editable
     .chrome
       .title= block.friendly_name
       .buttons
         .btn-group
-          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" }
+          %button.btn.btn-default.btn-xs.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" }
             = icon('cog')
             != ' '
             %span.caret

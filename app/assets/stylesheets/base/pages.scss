@@ -41,9 +41,9 @@
     display: block;
   }
   .column-inner {
-    border: 1px solid $gray-light;
+    border: 1px dashed $gray-light;
     border-top: 0;
-    padding: 4px;
+    padding: 5px;
   }
   .add-block {
     display: block;

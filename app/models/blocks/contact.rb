@@ -22,12 +22,9 @@ module Blocks
       %w{ edit }
     end
 
-    store_accessor :options, :first,
-                             :last,
-                             :title,
-                             :phone,
-                             :email,
-                             :show_email
+    keys = %i(first last title phone email show_email)
+
+    store_accessor :options, keys
 
   end
 end

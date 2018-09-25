@@ -1,6 +1,7 @@
 .row-fluid
-  = vertical_form_for @block, :url => page_blocks_text_path(@page, @block), :remote => true do |f|  
+  = vertical_form_for @block, :url => page_blocks_text_path(@page, @block), :remote => true do |f|
     = f.input :title
     = f.input :caption
+    = f.input :use_markdown, as: :boolean, wrapper: :vertical_boolean
     = f.input :body, :as => :text, :input_html => { :class => 'form-control', :style => 'height: 200px;' }
-  
+

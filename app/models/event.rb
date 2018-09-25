@@ -116,4 +116,8 @@ class Event < ActiveRecord::Base
     raise "color_key must be implemented by subclass #{self.class.name}"
   end
 
+  def show_teams?
+    home_team_custom_name.present? && away_team_custom_name.present?
+  end
+
 end

@@ -34,13 +34,20 @@ module ApplicationHelper
     Tenant.current
   end
 
-
   def vertical_form_for(record, options={}, &block)
     options[:html] ||= {}
     options[:html][:class] = "form-vertical #{options[:html][:class]}".rstrip
 
     form = simple_form_for(record, options, &block)
     form.gsub("form-horizontal ", "").html_safe
+  end
+
+  def conditional_tag(name, condition, options=nil, &block)
+    if condition
+      content_tag name, capture(&block), options
+    else
+      capture(&block)
+    end
   end
 
 end

@@ -22,9 +22,15 @@ module Blocks
       %w{ edit }
     end
 
-    store_accessor :options, :title,
-                             :caption,
-                             :body
+    keys = %i(title caption body use_markdown)
+
+    store_accessor :options, keys
+
+    alias_attribute(:use_markdown?, :use_markdown)
+
+    def wrap_in_well?
+      !use_markdown?
+    end
 
   end
 end

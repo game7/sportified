@@ -1,8 +1,11 @@
-.well
+= conditional_tag(:div, block.wrap_in_well?, { class: 'well' }) do
   - if block.title.presence
-    .page-header
-      %h1
-        = block.title
-        - if block.caption.presence
-          %small= block.caption
-  != RedCloth.new(block.body).to_html if block.body.presence
+    %h3
+      = block.title
+      - if block.caption.presence
+        %small= block.caption
+  - if block.body.presence
+    - if block.use_markdown?
+      != MarkdownService.html(block.body)
+    - else
+      != RedCloth.new(block.body).to_html if block.body.presence

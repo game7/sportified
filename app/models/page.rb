@@ -34,8 +34,8 @@ class Page < ActiveRecord::Base
 
   before_save :set_slug, :set_path
 
-  has_many :sections, :dependent => :destroy
-  has_many :blocks, :class_name => "Block", :dependent => :destroy
+  has_many :sections, -> { order(position: :asc) }, dependent: :destroy
+  has_many :blocks, class_name: "Block", dependent: :destroy
 
   validates_presence_of :title
 
