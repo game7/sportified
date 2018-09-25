@@ -97,15 +97,17 @@
                     = 'All Day'
                   - unless event.all_day?
                     = event.starts_on.strftime('%l:%M%P').gsub('m','')
-                    != ' - '
-                    = event.ends_on.strftime('%l:%M%P').gsub('m','')
+                    - unless event.class.name == 'League::Game'
+                      != ' - '
+                      = event.ends_on.strftime('%l:%M%P').gsub('m','')
                 .hidden-xs
                   - if event.all_day?
                     = 'All Day'
                   - unless event.all_day?
                     = event.starts_on.strftime('%l:%M %P')
-                    != ' - '
-                    = event.ends_on.strftime('%l:%M %P')
+                    - unless event.class.name == 'League::Game'
+                      != ' - '
+                      = event.ends_on.strftime('%l:%M %P')
               %td
                 = event.summary
                 - if current_user_is_admin?
