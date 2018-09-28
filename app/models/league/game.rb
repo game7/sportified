@@ -177,6 +177,10 @@ class League::Game < League::Event
     !self.has_statsheet? && self.starts_on < DateTime.now
   end
 
+  def show_teams?
+    true
+  end
+
   scope :without_result, ->{ where(result: nil) }
 
   class << self
