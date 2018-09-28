@@ -4,12 +4,13 @@
 *= require jcrop/jquery.Jcrop.min
 */
 
-$brand-primary: #990033;
+//$brand-primary: #8C1D40;
+$brand-primary: #8C1D40;
 
-$navbar-default-bg:                #990033;
+$navbar-default-bg:                #8C1D40;
 $navbar-default-link-color:        #ffffff;
-$navbar-default-link-active-color: #ffb310;
-$navbar-default-link-hover-color:  #ffb310;
+$navbar-default-link-active-color: #FFC627;
+$navbar-default-link-hover-color:  #FFC627;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -24,7 +25,7 @@ body {
 }
 
 .navbar-default {
-  border-bottom-color: #990033;
+  border-bottom-color: #8C1D40;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
 #site_logo {
   div {
     background-image: asset-url("themes/oia/brand_maroon.jpg");
+    background-image: asset-url("themes/oia/oia_white.svg");
     background-size: 244px 20px;
     width: 244px;
     height: 20px;
