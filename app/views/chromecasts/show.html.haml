@@ -179,8 +179,9 @@
     .pull-left
       = image_tag('themes/oia/oia_white.svg', class: 'logo')
     .datetime.pull-right
-      %span#date= Time.zone.now.strftime('%A, %b %e')
-      &nbsp;
+      %span#date
+        = "#{Time.zone.now.strftime('%A, %b')} #{Time.zone.now.strftime('%e').to_i.ordinalize}"
+      != ' - '
       %span#time= Time.zone.now.strftime('%l:%M %P')
 
 :javascript
