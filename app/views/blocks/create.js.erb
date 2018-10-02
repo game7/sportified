@@ -1,11 +1,12 @@
 <% if @block.errors.any? %>
   $("#flash_notice").slideUp()
-  $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
+  $("#errors-<%= @block.id %>").html("<%= j(error_messages_for(@block)) %>");
   $("#errors-<%= @block.id %>").slideDown();
 <% else %>
-  $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
+  $("#flash_success").html("<%= j( flash.discard(:success) )%>");
   $("#flash_success").slideDown();
-  var block = "<%= escape_javascript( render(:partial => 'blocks/block', :locals => { :block => @block, :editable => true } ) )%>";
+  var block = "<%= j( render(:partial => 'blocks/block', :locals => { :block => @block, :editable => true } ) )%>";
   $("#section_<%= @block.section_id %>").find(".column").eq(<%= @block.column %>).find('.blocks').append(block);
   $("#block-catalog").modal('hide');
+  $("#block_<%= @block.id %>_edit").trigger('click');
 <% end %>

@@ -1,4 +1,4 @@
 - if block.file.present?
-  .well
-    %i.icon-file
-    = link_to block.title, block.file.url, :target => "_blank"
+  %h4{ style: 'display: flex; align-items: center;'}
+    = icon(block.icon, nil, { class: 'fa-2x', style: 'margin-right: 10px;', title: "#{block&.extension&.upcase} file" })
+    = link_to block.title, block.file.url, :target => '_blank'
