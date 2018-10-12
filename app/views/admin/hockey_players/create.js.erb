@@ -5,6 +5,5 @@
   $('#dialog-modal').dialog("close");
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_notice").show(300);
-  debugger;
   $("#players-<%=@player.team_id%> table").replaceWith("<%= escape_javascript( render(:partial => "admin/hockey_players/table", :locals => { :players => @statsheet.skaters.for_team(@player.team_id).order(:last_name) } ) )%>");
 <% end %>
