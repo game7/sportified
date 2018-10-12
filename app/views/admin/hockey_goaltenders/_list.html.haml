@@ -10,7 +10,7 @@
         %th Shots
         %th Goals
         %th
-    %tbody      
+    %tbody
       - goaltenders.each_with_index do |g, i|
         %tr
           %td= g.team.short_name
@@ -20,4 +20,5 @@
           %td= g.goals_against
           %td
             = link_to 'Edit', edit_admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :title => 'Edit this goaltender', :class => 'btn btn-xs btn-primary'
+            != ' '
             = link_to 'Delete', admin_hockey_statsheet_goaltender_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goaltender', :class => 'btn btn-xs btn-primary'

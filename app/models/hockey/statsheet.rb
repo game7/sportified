@@ -187,32 +187,16 @@ class Hockey::Statsheet < ActiveRecord::Base
 
   def autoload_goaltenders
 
-    goaltenders.build(team_id:        self.game.home_team_id,
-                      minutes_played: self.min_total,
-                      shots_against:  self.away_shots_total,
-                      goals_against:  self.goals.away.count)
+    goaltenders.build(team_id:        game.home_team_id,
+                      minutes_played: min_total,
+                      shots_against:  away_shots_total,
+                      goals_against:  goals.away.count)
 
-    goaltenders.build(team_id:        self.game.away_team_id,
-                      minutes_played: self.min_total,
-                      shots_against:  self.home_shots_total,
-                      goals_against:  self.goals.home.count)
+    goaltenders.build(team_id:        game.away_team_id,
+                      minutes_played: min_total,
+                      shots_against:  home_shots_total,
+                      goals_against:  goals.home.count)
 
-  end
-
-  def apply_mongo_goaltenders!(mongo_goaltenders)
-
-  end
-
-  def apply_mongo_players!(mongo_players)
-
-  end
-
-  def apply_mongo_game_id!(mongo_game)
-    self.game = Game.unscoped.where(:mongo_id => mongo_game.to_s).first
-  end
-
-  def apply_mongo!(mongo)
-    self.tenant = self.game.tenant if self.game
   end
 
 end

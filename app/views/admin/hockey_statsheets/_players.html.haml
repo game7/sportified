@@ -1,6 +1,7 @@
 .well
-  = link_to "Add Player", new_admin_hockey_statsheet_player_path(@statsheet), :remote => true, :title => 'Add player', :class => 'btn btn-sm btn-primary'
-  = link_to 'Get Missing Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => "This will add from each team's league roster all players who are currently not on the statsheet roster.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary'    
+  = link_to 'Add Player', new_admin_hockey_statsheet_player_path(@statsheet), :remote => true, :title => 'Add player', :class => 'btn btn-sm btn-primary'
+  != ' '
+  = link_to 'Get Missing Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will add from each team\'s league roster all players who are currently not on the statsheet roster.  Are you sure?', :method => :post, :class => 'btn btn-sm btn-primary'
 .row
   .col-sm-6{ :id => "players-#{@statsheet.game.away_team_id}" }
     %h3 #{@statsheet.away_team.name}
@@ -9,7 +10,8 @@
     %h3 #{@statsheet.home_team.name}
     = render :partial => 'admin/hockey_players/table', :locals => {:team_id => @statsheet.game.home_team_id, :players => @statsheet.skaters.home.order(:last_name)}
 .well
-  = link_to "Add Player", new_admin_hockey_statsheet_player_path(@statsheet), :remote => true, :title => 'Add player', :class => 'btn btn-primary btn-sm'
-  = link_to 'Get Missing Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => "This will add from each team's league roster all players who are currently not on the statsheet roster.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary'    
-    
+  = link_to 'Add Player', new_admin_hockey_statsheet_player_path(@statsheet), :remote => true, :title => 'Add player', :class => 'btn btn-primary btn-sm'
+  != ' '
+  = link_to 'Get Missing Players', load_admin_hockey_statsheet_players_path(@statsheet), :remote => true, :confirm => 'This will add from each team\'s league roster all players who are currently not on the statsheet roster.  Are you sure?', :method => :post, :class => 'btn btn-sm btn-primary'
+
 

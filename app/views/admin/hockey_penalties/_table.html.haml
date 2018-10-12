@@ -1,6 +1,6 @@
 %table.table.table-striped.table-bordered
   %thead
-    %tr 
+    %tr
       %th
       %th PER
       %th TIME
@@ -25,8 +25,9 @@
           %td= "#{p.infraction} (#{p.severity})"
           %td= p.start_time
           %td= p.end_time
-          %td 
+          %td
             = link_to 'Edit', edit_admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :title => 'Edit this penalty', :class => 'btn btn-primary btn-xs'
+            != ' '
             = link_to 'Delete', admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
     - else
       %tr

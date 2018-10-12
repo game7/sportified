@@ -115,6 +115,10 @@ class League::Game < League::Event
     team_scored(team) - team_allowed(team)
   end
 
+  def team_score(team)
+    "#{team_scored(team)}-#{team_allowed(team)}"
+  end
+
   def team_decision(team)
     margin = team_margin(team)
     return 'T' if margin == 0
@@ -186,7 +190,11 @@ class League::Game < League::Event
   class << self
     def for_team(t)
       id = t.class ==  League::Team ? t.id : t
-      where("home_team_id = ? OR away_team_id = ?", id, id)
+      where('home_team_id = ? OR away_team_id = ?', id, id)
+    end
+
+    def for_teams(team1, team2)
+      for_team(team1).for_team(team2)
     end
   end
 
