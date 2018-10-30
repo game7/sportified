@@ -19,7 +19,6 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
 
   def create
     @player = @statsheet.skaters.build(hockey_player_params)
-    byebug
     if @player.save
       @statsheet.reload
       flash[:notice] = "Player Added"
