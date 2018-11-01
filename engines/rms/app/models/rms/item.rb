@@ -28,7 +28,7 @@ module Rms
   class Item < ActiveRecord::Base
     include Sportified::TenantScoped
 
-    belongs_to :parent, polymorphic: true
+    belongs_to :parent, polymorphic: true, required: false
 
     has_many :variants, dependent: :destroy
 
@@ -36,7 +36,7 @@ module Rms
 
     has_many :registrations, through: :variants
 
-    belongs_to :form_packet
+    belongs_to :form_packet, required: false
 
     validates :title,
               presence: true,

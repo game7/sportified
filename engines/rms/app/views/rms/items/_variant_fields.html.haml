@@ -7,7 +7,7 @@
       = f.input :description
   .row
     .col-xs-12
-      = f.input :form_packet_id, :as => :select, :collection => @form_packets      
+      = f.association :form_packet, :collection => @form_packets
   .row
     .col-sm-2
       = f.input :price, { placeholder: 'Free' }
