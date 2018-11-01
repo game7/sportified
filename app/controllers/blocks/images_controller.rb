@@ -25,7 +25,7 @@ class Blocks::ImagesController < BlocksController
 
   def update
     if @block.update_attributes(blocks_image_params)
-      flash[:success] = "Image updated"
+      flash[:success] = 'Image updated'
     end
   end
 
