@@ -3,7 +3,7 @@
     .panel-heading= block.title
   %ul.list-group
   - block.posts.each do |post|
-    = link_to post, class: 'list-group-item' do
+    = link_to post.link_url.presence || post, class: 'list-group-item' do
       %h4.list-group-item-heading= post.title
       .list-group-item-text
         = "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
