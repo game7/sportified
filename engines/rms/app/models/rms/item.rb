@@ -36,8 +36,6 @@ module Rms
 
     has_many :registrations, through: :variants
 
-    belongs_to :form_packet, required: false
-
     validates :title,
               presence: true,
               length: { maximum: 30 }

@@ -30,7 +30,7 @@ module Rms
     include Sportified::TenantScoped
 
     belongs_to :item
-    belongs_to :form_packet, class_name: 'Rms::FormPacket'
+    belongs_to :form_packet, class_name: 'Rms::FormPacket', required: false
 
     has_many :registrations, dependent: :destroy
 
