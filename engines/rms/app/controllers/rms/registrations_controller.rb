@@ -36,7 +36,10 @@ module Rms
       else
         registration.assign_attributes registration_params
       end
-
+      puts '-----> fuck you'
+      puts registration.variant.to_json
+      registration.valid?
+      puts registration.errors.messages
       if registration.save
         redirect_to checkout_registration_path registration
       else

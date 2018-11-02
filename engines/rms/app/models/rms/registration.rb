@@ -44,7 +44,7 @@ module Rms
     accepts_nested_attributes_for :forms
 
     belongs_to :user
-    belongs_to :credit_card
+    belongs_to :credit_card, required: false
 
     validates :variant,
               presence: true
