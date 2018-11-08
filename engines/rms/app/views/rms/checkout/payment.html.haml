@@ -1,4 +1,16 @@
 - title 'Payment'
+:scss
+  #number {
+    max-width: 400px;
+  }
+  #exp_year,
+  #exp_month {
+    width: 50px;
+    display: inline-block;
+  }
+  #cvc {
+    width: 80px;
+  }
 = simple_form_for registration, url: checkout_charge_registration_path(registration) do |f|
   .row
     .col-sm-6
@@ -19,6 +31,7 @@
           %label{ for: "exp_month" } Expiration (MM/YY)
           .form-inline
             %input#exp_month.form-control{type: 'text', size: '2', data: { stripe: 'exp_month' }}
+            = "/"
             %input#exp_year.form-control{type: 'text', size: '2', data: { stripe: 'exp_year' } }
     .row
       .col-sm-2.col-xs-4
