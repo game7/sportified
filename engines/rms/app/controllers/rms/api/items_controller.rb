@@ -10,7 +10,7 @@ module Rms
 
       def show
         item = Item.includes(registrations: :forms ).find(params[:id]);
-        render json: Api::Items::ShowSerializer.new(item), adapter: :json, key_transform: :camel_lower
+        render json: Items::ShowSerializer.new(item), adapter: :json, key_transform: :camel_lower
       end
 
       def extract
