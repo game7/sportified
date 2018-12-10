@@ -21,6 +21,7 @@
       = f.input :summary
       = f.input :description, as: :text, rows: 4
       = f.input :tag_list, input_html: { value: f.object.tag_list.to_s }
+      = f.input :private, as: :boolean, wrapper: :vertical_boolean
 
   - if @form.respond_to?(:repeat)
     .panel.panel-default

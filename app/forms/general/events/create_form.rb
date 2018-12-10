@@ -10,6 +10,7 @@ class General::Events::CreateForm
   attribute :summary, String
   attribute :description, String
   attribute :tag_list, String
+  attribute :private, Boolean
 
   attribute :repeat, Boolean
   attribute :repeat_on_sunday, Boolean
@@ -67,7 +68,7 @@ class General::Events::CreateForm
     assign_attributes(whitelist(params))
     return false unless valid?
     Event.transaction do
-      @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list))
+      @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list, :private))
       @event.save
       if(repeating?)
         schedule = IceCube::Schedule.new(now = @event.starts_on + 1.days) do |schedule|

@@ -37,6 +37,7 @@
 #  away_team_locker_room_id  :integer
 #  program_id                :integer
 #  page_id                   :integer
+#  private                   :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -103,6 +104,7 @@ class Event < ActiveRecord::Base
   scope :after, ->(after) { where('starts_on > ?', after) }
   scope :ends_after, ->(after) { where('ends_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
+  scope :public_only, ->{ where(private: false) }
 
   def start_time
     self.starts_on

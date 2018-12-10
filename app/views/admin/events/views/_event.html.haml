@@ -7,7 +7,9 @@
 .dropdown
   .event{ :type => :button, :data => { :toggle => :dropdown }, :style => style }
     .time= event.starts_on.strftime('%l:%M%P').gsub('m', '')
-    .summary= event.summary
+    .summary
+      = icon(:lock, event.summary) if event.private?
+      = event.summary unless event.private?
   %ul.dropdown-menu
     %li.dropdown-header Event
     %li= link_to 'Edit', edit_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event])

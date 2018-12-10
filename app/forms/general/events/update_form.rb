@@ -11,6 +11,7 @@ class General::Events::UpdateForm
   attribute :summary, String
   attribute :description, String
   attribute :tag_list, String
+  attribute :private, Boolean
 
   def initialize(event)
     @event = event
@@ -46,7 +47,7 @@ class General::Events::UpdateForm
     Chronic.time_class = Time.zone
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
     params.require(:general_event)
-          .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description, :tag_list)
+          .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description, :tag_list, :private)
   end
 
   def location_options

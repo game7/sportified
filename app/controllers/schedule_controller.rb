@@ -29,7 +29,9 @@ class ScheduleController < BaseLeagueController
       end
     end
 
-    @tags = Event.in_the_future.tag_counts
+    @events = @events.public_only unless current_user_is_admin?
+
+    @tags = Event.public_only.in_the_future.tag_counts
 
     respond_to do |format|
       format.html # index.html.erb

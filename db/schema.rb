@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_212820) do
+ActiveRecord::Schema.define(version: 2018_12_10_213428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 2018_09_17_212820) do
     t.integer "away_team_locker_room_id"
     t.integer "program_id"
     t.integer "page_id"
+    t.boolean "private", default: false, null: false
     t.index ["away_team_id"], name: "index_events_on_away_team_id"
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id"
     t.index ["division_id"], name: "index_events_on_division_id"

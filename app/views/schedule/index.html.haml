@@ -109,7 +109,8 @@
                       != ' - '
                       = event.ends_on.strftime('%l:%M %P')
               %td
-                = event.summary
+                = icon(:lock, event.summary) if event.private?
+                = event.summary unless event.private?
                 - if current_user_is_admin?
                   .pull-right
                     = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), :class => 'btn btn-primary btn-xs'

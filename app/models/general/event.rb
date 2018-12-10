@@ -37,6 +37,7 @@
 #  away_team_locker_room_id  :integer
 #  program_id                :integer
 #  page_id                   :integer
+#  private                   :boolean          default(FALSE), not null
 #
 # Indexes
 #
