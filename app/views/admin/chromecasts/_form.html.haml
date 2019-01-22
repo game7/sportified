@@ -17,7 +17,6 @@
 
         window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
           if (loaded) {
-          debugger;
             window.sportified.chromecast.initialize();
           } else {
             console.log(errorInfo);

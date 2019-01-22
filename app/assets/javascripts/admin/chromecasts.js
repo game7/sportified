@@ -12,6 +12,23 @@
             namespace: "urn:x-cast:json"
         });
 
+        // cast.framework.CastContext.getInstance().setOptions({
+        //     receiverApplicationId: '556F3FBE',
+        //     autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        // })
+        //
+        // debugger;
+        //
+        // var context = cast.framework.CastContext.getInstance();
+        // context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, function(event) {
+        //     if(event.castState == cast.framework.CastState.NOT_CONNECTED) {
+        //         debugger;
+        //         context.requestSession(function(errr, session) {
+        //             debugger;
+        //         })
+        //     }
+        // })
+
         castAway.on('receivers:available', function(a, b, c) {
             console.log('receivers available');
             return $('#cast, #chromecast_name').on('click', function(e) {
@@ -19,6 +36,7 @@
                 return castAway.requestSession(function(err, newSession) {
                     if (err) {
                         $('#chromecast_name').val('')
+                        $('#debug').text(JSON.stringify(err, null, 2))
                         return console.log("Error getting session", err);
                     }
                     session = newSession;

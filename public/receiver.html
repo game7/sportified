@@ -4,29 +4,6 @@
     <!--<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>-->
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
     <script type="text/javascript" src="/javascripts/cast-away.js"></script>
-    <script type="text/javascript">
-      (function() {
-        function setChromecastId(id) {
-          document.getElementById('message').innerText = 'chromecast: ' + id;
-          overlay = document.getElementById('overlay');
-          overlay.style.display = 'none';
-          iframe = document.querySelector('iframe');
-          iframe.style.display = 'block';
-          iframe.src = '/chromecasts/' + id;
-        }
-        window.onload = function() {
-//          setChromecastId('4'); return;
-          try {
-            var castAway = new CastAway(),
-              receiver = castAway.receive();
-            receiver.on('setChromecastId', setChromecastId)
-            window.receiver = receiver;
-          } catch(e) {
-            console.log('unable to start cast:', e)
-          }
-        };
-      })();
-    </script>
     <style>
       html, body {
         height: 100%;
@@ -56,4 +33,24 @@
     </div>
     <iframe style="display: none;"></iframe>
   </body>
+  <script type="text/javascript">
+    (function() {
+      function setChromecastId(id) {
+        document.getElementById('message').innerText = 'chromecast: ' + id;
+        overlay = document.getElementById('overlay');
+        overlay.style.display = 'none';
+        iframe = document.querySelector('iframe');
+        iframe.style.display = 'block';
+        iframe.src = '/chromecasts/' + id;
+      }
+      try {
+        var castAway = new CastAway();
+        var receiver = castAway.receive({ maxInactivity: Number.MAX_SAFE_INTEGER });
+        receiver.on('setChromecastId', setChromecastId);
+        window.receiver = receiver;
+      } catch(e) {
+        console.log('unable to start cast:', e)
+      }
+    })();
+  </script>
 </html>
