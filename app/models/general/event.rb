@@ -68,4 +68,8 @@ class General::Event < ::Event
     taggings.reduce([]){|result, tagging| result.push(tagging.tag.name)}.join('-')
   end
 
+  def show_teams?
+    home_team_name.present? || away_team_name.present?
+  end
+
 end
