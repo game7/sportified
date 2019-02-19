@@ -13,7 +13,7 @@
   td, th {
     border: 1px solid black;
     padding: 2px 4px;
-    line-height: 1;
+    line-height: 12px;
   }
   th {
     text-align: center;
@@ -23,10 +23,20 @@
     color: #FFFFFF !important;
     -webkit-print-color-adjust: exact;
   }
+  table.big, tr.big {
+    td {
+      line-height: 18px;
+    }
+  }
+  tr.huge {
+    th, td {
+      line-height: 28px;
+    }
+  }
   .overview {
-    height: 306px;
     padding-left: 3px;
     padding-right: 3px;
+    margin-bottom: 4px;
   }
   .overview th {
     text-align: left;
@@ -118,28 +128,35 @@
         %tr.title
           %th(colspan="2" style="text-align: center;") GAME OVERVIEW
         %tr
-          %th Date
+          %th Date / Time
           %td= @statsheet.game.starts_on.strftime('%^a %-m/%-e/%y %l:%M %p')
-        %tr
-          %th Time
-          %td= @statsheet.game.starts_on.strftime('%l:%M %p')
         %tr
           %th League
           %td= @statsheet.game.program.name
         %tr
-          %th Season
-          %td= @statsheet.game.season.name
-        %tr
           %th Division
-          %td= @statsheet.game.division.name
+          %td
+            = @statsheet.game.division.name
+            != ' - '
+            = @statsheet.game.season.name
         %tr
           %th Location
           %td= @statsheet.game.location.name
+          - if @statsheet.game.playing_surface
+            != ' - '
+            = @statsheet.game.playing_surface.name
+        %tr.huge
+          %th{ style: 'width: 30%' } Referee
+          %td
+        %tr.huge
+          %th Referee
+          %td
+        %tr.huge
+          %th Scorekeeper
+          %td
         %tr
-          %th Surface
-          %th= @statsheet.game.playing_surface.name if @statsheet.game.playing_surface
-        %tr
-          %th(colspan=2 style="height: 165px; vertical-align: top;") Notes
+          %th{ colspan: 2, style: 'height: 105px; vertical-align: top;' }
+            Notes
 
     .by-period
       .scoring-by-period
@@ -156,7 +173,7 @@
   .penalties
     = render partial: 'admin/hockey_statsheets/print/penalties_table'
   .clear
-.bottom
+.bottom{ style: 'display: none;'}
   .home-saves
     = render partial: 'admin/hockey_statsheets/print/goalie_table', locals: { header: 'HOME GOALIE SAVES' }
   .home-minutes
