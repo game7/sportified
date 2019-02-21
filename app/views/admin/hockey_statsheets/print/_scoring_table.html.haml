@@ -1,17 +1,19 @@
 %table
   %thead
     %tr.title
-      %th(colspan="5") SCORING BY PERIOD
+      %th(colspan="6") SCORING BY PERIOD
     %tr
-      %th(width="20%") TEAM
-      %th(width="20%") 1
-      %th(width="20%") 2
-      %th(width="20%") 3
-      %th(width="20%") OT
+      %th(width="10%")
+      %th(width="18%") 1
+      %th(width="18%") 2
+      %th(width="18%") 3
+      %th(width="18%") OT
+      %th(width="18%" style="font-size: 9px;") Total
   %tbody
-    - ['HOME','AWAY'].each do |team|
+    - ['AWAY','HOME'].each do |team|
       %tr.big
-        %td{ style: 'vertical-align: middle;' }= team
+        %td{ style: 'vertical-align: middle; font-size: 9px;' }= team
+        %td
         %td
         %td
         %td
