@@ -163,10 +163,10 @@
           .teams.clearfix
             .away_team.clearfix
               -#.team= event.away_team_custom_name.presence || event.away_team&.name
-              .team= event.away_team_custom_name.presence || event.away_team&.name
+              .team= event.away_team_custom_name.presence || event.away_team_name.presence || event&.away_team&.name
               .locker_room.away= event.away_team_locker_room&.name
             .home_team.clearfix
-              .team= event.home_team_custom_name.presence || event.home_team&.name
+              .team= event.home_team_custom_name.presence || event.home_team_name.presence || event&.home_team&.name
               .locker_room.home= event.home_team_locker_room&.name
         - else
           .time= event.starts_on.strftime('%-I:%M %P')
@@ -189,11 +189,19 @@
     function pad(num) {
       return (num < 10 ? '0' : '') + num;
     }
-    function formatTime(date) {
+    function getHour(date) {
       var hours = date.getHours();
-      var meridiem = hours < 12 ? 'am' : 'pm';
-      hours = hours == 0 ? 12 : hours % 12;
-      return hours + ':' + pad(date.getMinutes()) + ' ' + meridiem
+      if (hours == 0) return 12;
+      if (hours <= 12) return hours;
+      return hours % 12;
+    }
+    function getMeridiem(date) {
+      return date.getHours() < 12 ? 'am' : 'pm';
+    }
+    function formatTime(date) {
+      var hour = getHour(date);
+      var meridiem = getMeridiem(date);
+      return hour + ':' + pad(date.getMinutes()) + ' ' + meridiem;
     }
     function setTime() {
       // console.log('gettin time')
