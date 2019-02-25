@@ -38,16 +38,18 @@
           - if team.last_result == 'W' and team.current_run > 2
             .badge{ :style  => "background-color: red; color: white;" }
               = team.streak
+              != ' '
               - if team.current_run >= 5
-                %i.glyphicon.glyphicon-fire{ :style => "color: yellow;"}
+                = icon(:'fire-alt')
               - if team.current_run < 5
-                %i.fa.fa-arrow-up
+                = icon(:'arrow-up')
           - if team.last_result == 'L' and team.current_run > 2
             .badge{ :style  => "background-color: #089de3; color: white;" }
               = team.streak
+              != ' '
               - if team.current_run >= 5
-                %i.fa.fa-beer
+                = icon(:beer)
               - if team.current_run < 5
-                %i.fa.fa-arrow-down
+                = icon(:'arrow-up')
           - if team.current_run <= 2
             = team.streak
