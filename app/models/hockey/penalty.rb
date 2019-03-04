@@ -36,8 +36,9 @@ class Hockey::Penalty < ActiveRecord::Base
 
   SEVERITIES = %w[minor major misconduct game_misconduct match]
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing
-                  fighting holding_the_stick hooking interference kneeing roughing slashing
-                  spearing tripping unsportsmanlike_conduct misconduct game_misconduct]
+                  fighting holding hooking interference kneeing roughing slashing
+                  spearing tripping unsportsmanlike_conduct misconduct game_misconduct
+                  too_many_men high_stick bench_minor]
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   belongs_to :team, class_name: '::League::Team'
