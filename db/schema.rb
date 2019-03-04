@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_213428) do
+ActiveRecord::Schema.define(version: 2019_03_04_230454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2018_12_10_213428) do
     t.integer "playing_surface_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "refreshed_at"
     t.index ["location_id"], name: "index_chromecasts_on_location_id"
     t.index ["playing_surface_id"], name: "index_chromecasts_on_playing_surface_id"
     t.index ["tenant_id"], name: "index_chromecasts_on_tenant_id"

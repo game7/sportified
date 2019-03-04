@@ -7,12 +7,14 @@
     %tr
       %th Name
       %th Location
+      %th Refreshed
       %th Actions
   %tbody
     - @chromecasts.each do |chromecast|
       %tr[chromecast]
         %td= chromecast.name
         %td= chromecast.location.name
+        %td= "#{time_ago_in_words(chromecast.refreshed_at)} ago" if chromecast.refreshed_at.present?
         %td
           = link_to 'Edit', [:edit, :admin, chromecast], class: 'btn btn-default'
           != ' '
