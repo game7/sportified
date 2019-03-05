@@ -30,6 +30,9 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
       unless @game.has_statsheet?
         @statsheet = Hockey::Statsheet.new
         @statsheet.game = @game
+        @statsheet.min_1 = @game.division.period_length
+        @statsheet.min_2 = @game.division.period_length
+        @statsheet.min_3 = @game.division.period_length
         @statsheet.save
         @statsheet.load_players
       else

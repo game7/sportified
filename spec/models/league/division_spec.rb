@@ -15,6 +15,7 @@
 #  updated_at          :datetime
 #  standings_schema_id :string
 #  program_id          :integer
+#  period_length       :integer          default(15)
 #
 # Indexes
 #

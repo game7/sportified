@@ -4,5 +4,6 @@
   = f.input :show_players?, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :show_statistics?, :as => :boolean, :wrapper => :vertical_boolean
   = f.input :standings_schema_id, :as => :select, :collection => ::League::Division.standings_schema_options, :label => 'Standings'
+  = f.input :period_length
   = f.association :seasons, :as => :check_boxes, :wrapper => :vertical_radio_and_checkboxes, :collection => ::League::Season.all.order(:starts_on => :desc)
   = f.button :wrapped, :cancel => return_url

@@ -15,6 +15,7 @@
 #  updated_at          :datetime
 #  standings_schema_id :string
 #  program_id          :integer
+#  period_length       :integer          default(15)
 #
 # Indexes
 #
@@ -29,6 +30,7 @@ class League::Division < ActiveRecord::Base
   include Sportified::TenantScoped
 
   validates :name, presence: true
+  validates :period_length, numericality: true
 
   belongs_to :program
   has_and_belongs_to_many :seasons

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_04_230454) do
+ActiveRecord::Schema.define(version: 2019_03_05_194955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -316,6 +316,7 @@ ActiveRecord::Schema.define(version: 2019_03_04_230454) do
     t.datetime "updated_at"
     t.string "standings_schema_id"
     t.integer "program_id"
+    t.integer "period_length", default: 15
     t.index ["program_id"], name: "index_league_divisions_on_program_id"
   end
 
