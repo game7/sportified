@@ -11,7 +11,8 @@ module Rms
       protocol = request.host == 'localhost' ? 'http://' : 'https://'
       host = request.host
       host = "#{host}:#{request.port}" if host == 'localhost'
-      "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{ENV['STRIPE_CLIENT_ID']}&scope=read_write&redirect_uri=#{protocol}#{host}"
+      client_id = Tenant.current.stripe_client_id.presence || ENV['STRIPE_CLIENT_ID']
+      "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{client_id}&scope=read_write&redirect_uri=#{protocol}#{host}"
     end
 
     def check_stripe_configuration

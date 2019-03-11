@@ -23,6 +23,7 @@
 #  google_fonts          :string
 #  time_zone             :string           default("UTC")
 #  address               :text
+#  stripe_client_id      :string
 #
 
 require 'rails_helper'

@@ -151,23 +151,28 @@ class PagesController < ApplicationController
     end
 
     def verify_stripe_connect
-      payload = {
-        client_secret: ENV['STRIPE_SECRET_KEY'],
-        code: params[:code],
-        grant_type: 'authorization_code'
+      require 'httparty'
+      path = 'https://connect.stripe.com/oauth/token'
+      options = {
+        body: {
+          client_secret: ENV['STRIPE_SECRET_KEY'],
+          code: params[:code],
+          grant_type: 'authorization_code'
+        }
       }
       begin
-        response = RestClient.post 'https://connect.stripe.com/oauth/token', payload
+        puts options
+        response = HTTParty.post path, options
+        puts response
       rescue => e
-        raise e.response
+        raise e
       end
-      parsed = ActiveSupport::JSON.decode(response)
       Tenant.current.update_attributes(
-        stripe_account_id: parsed["stripe_user_id"],
-        stripe_access_token: parsed["access_token"],
-        stripe_public_api_key: parsed["stripe_publishable_key"]
+        stripe_account_id: response['stripe_user_id'],
+        stripe_access_token: response['access_token'],
+        stripe_public_api_key: response['stripe_publishable_key']
       )
-      flash[:success] = "Sweet!  Your Stripe account is now connected."
+      flash[:success] = 'Sweet!  Your Stripe account is now connected.'
       redirect_to '/registrar/items'
     end
 

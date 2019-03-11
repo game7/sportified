@@ -1,7 +1,7 @@
 = simple_form_for [:host, @tenant] do |f|
   = f.input :name
   = f.input :host
-  = f.input :slug, :hint => "WARNING: Changing slug will break file upload paths"
+  = f.input :slug, :hint => 'WARNING: Changing slug will break file upload paths'
   = f.input :analytics_id
   = f.input :theme
   = f.input :time_zone
@@ -11,6 +11,8 @@
   = f.input :instagram_id
   = f.input :foursquare_id
   = f.input :google_plus_id
+  = f.input :stripe_client_id
+  = f.input :stripe_access_token
   = f.input :stripe_account_id
   = f.input :stripe_public_api_key
   = f.input :google_fonts, as: :text

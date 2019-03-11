@@ -19,8 +19,8 @@ class Host::TenantsController < Host::HostController
     if @tenant.update_attributes(tenant_params)
       return_to_last_point :success => 'Tenant has been updated.'
     else
-      flash[:error] = "Tenant could not be updated"
-      render :action => "edit"
+      flash[:error] = 'Tenant could not be updated'
+      render :action => :edit
     end
   end
 
@@ -29,14 +29,14 @@ class Host::TenantsController < Host::HostController
     if @tenant.save
       return_to_last_point(:notice => 'New Tenant has been created.')
     else
-      flash[:error] = "Tenant could not be created"
-      render :action => "new"
+      flash[:error] = 'Tenant could not be created'
+      render :action => :new
     end
   end
 
   def destroy
     @tenant.destroy
-    flash[:notice] = "Tenant has been deleted"
+    flash[:notice] = 'Tenant has been deleted'
   end
 
   private
@@ -44,7 +44,8 @@ class Host::TenantsController < Host::HostController
   def tenant_params
     params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
       :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id,
-      :stripe_account_id, :stripe_public_api_key, :google_fonts, :time_zone, :address)
+      :stripe_account_id, :stripe_public_api_key, :google_fonts, :time_zone, :address,
+      :stripe_client_id)
   end
 
   def find_tenant
@@ -53,7 +54,7 @@ class Host::TenantsController < Host::HostController
 
   def set_breadcrumbs
     super
-    add_breadcrumb( "Tenants", host_tenants_path )
+    add_breadcrumb 'Tenants', host_tenants_path
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_194955) do
+ActiveRecord::Schema.define(version: 2019_03_11_194301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -628,6 +628,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_194955) do
     t.string "google_fonts"
     t.string "time_zone", default: "UTC"
     t.text "address"
+    t.string "stripe_client_id"
   end
 
   create_table "tenants_users", id: false, force: :cascade do |t|
