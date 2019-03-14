@@ -23,7 +23,7 @@ class CreditCardsController < ApplicationController
     credit_card = CreditCard.new(credit_card_params)
     credit_card.user = current_user
 
-    Stripe::api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe::api_key = Tenant.current.stripe_secret_key.presence || ENV['STRIPE_SECRET_KEY']
 
     begin
       if current_user.stripe_customer_id

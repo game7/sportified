@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_194301) do
+ActiveRecord::Schema.define(version: 2019_03_14_202905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -629,6 +629,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_194301) do
     t.string "time_zone", default: "UTC"
     t.text "address"
     t.string "stripe_client_id"
+    t.string "stripe_private_key"
+    t.string "stripe_public_key"
   end
 
   create_table "tenants_users", id: false, force: :cascade do |t|

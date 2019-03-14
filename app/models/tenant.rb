@@ -24,6 +24,8 @@
 #  time_zone             :string           default("UTC")
 #  address               :text
 #  stripe_client_id      :string
+#  stripe_private_key    :string
+#  stripe_public_key     :string
 #
 
 class Tenant < ActiveRecord::Base

@@ -42,10 +42,28 @@ class Host::TenantsController < Host::HostController
   private
 
   def tenant_params
-    params.require(:tenant).permit(:name, :slug, :host, :description, :analytics_id, :theme,
-      :twitter_id, :facebook_id, :instagram_id, :foursquare_id, :google_plus_id,
-      :stripe_account_id, :stripe_public_api_key, :google_fonts, :time_zone, :address,
-      :stripe_client_id)
+    params.require(:tenant).permit(
+      :name,
+      :slug,
+      :host,
+      :description,
+      :analytics_id,
+      :theme,
+      :twitter_id,
+      :facebook_id,
+      :instagram_id,
+      :foursquare_id,
+      :google_plus_id,
+      :stripe_account_id,
+      :stripe_access_token,
+      :stripe_public_api_key,
+      :google_fonts,
+      :time_zone,
+      :address,
+      :stripe_client_id,
+      :stripe_private_key,
+      :stripe_public_key
+    )
   end
 
   def find_tenant

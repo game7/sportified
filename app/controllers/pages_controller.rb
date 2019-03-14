@@ -155,7 +155,7 @@ class PagesController < ApplicationController
       path = 'https://connect.stripe.com/oauth/token'
       options = {
         body: {
-          client_secret: Tenant.current.stripe_client_id.presence || ENV['STRIPE_SECRET_KEY'],
+          client_secret: Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY'],
           code: params[:code],
           grant_type: 'authorization_code'
         }

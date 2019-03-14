@@ -47,7 +47,7 @@ module Rms
 
       if registration.update(payment_params)
 
-        Stripe.api_key = Rms.configuration.stripe_private_key
+        Stripe.api_key = Tenant.current.stripe_private_key.presence || Rms.configuration.stripe_private_key
 
         token = Stripe::Token.create(
           {
@@ -118,7 +118,7 @@ module Rms
       end
 
       def stripe_public_api_key
-        Rms.configuration.stripe_public_key
+        Tenant.current.stripe_public_key.presence || Rms.configuration.stripe_public_key
       end
 
       def get_form
