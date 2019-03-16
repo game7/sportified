@@ -9,12 +9,9 @@
   = f.button :wrapped, :cancel => return_url
 
   - content_for :javascript do
-    = javascript 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1'
-    = javascript 'cast-away'
 
     :javascript
       (function() {
-
         window['__onGCastApiAvailable'] = function(loaded, errorInfo) {
           if (loaded) {
             window.sportified.chromecast.initialize();
@@ -24,4 +21,7 @@
         }
 
       }).call(this);
+
+    = javascript_include_tag '//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1'
+    = javascript_include_tag 'cast-away'      
 
