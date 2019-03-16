@@ -36,7 +36,7 @@ module Rms
 
     def validate(record)
       puts "#{self.name}: #{record.data[self.name]}"
-      record.errors.add(self.name, "Must accept #{self.name}") unless record.data[self.name] == "true"
+      record.errors.add(self.name, "Must accept #{self.name.humanize.titleize}") unless record.data[self.name] == "true"
     end
 
   end

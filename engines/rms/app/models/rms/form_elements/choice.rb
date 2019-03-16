@@ -50,5 +50,15 @@ module Rms
       super ['true', true, 1, '1'].include?(value)
     end
 
+    def validate(record)
+      super
+      # multi-select returns 1 result even when nothing has been selected
+      record.errors.add(name, "Select at least one option") if allow_multiple && required? && record.try(:data).try(:[], name).length <= 1
+    end
+
+    def permitted_params
+      allow_multiple ? [ self.name => []] : [ self.name ]
+    end
+
   end
 end
