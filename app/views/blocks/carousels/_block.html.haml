@@ -10,7 +10,7 @@
             = image_tag post.image.url
         - unless index == 0
           %img{ :"data-src" => post.image.url,
-                :alt => image_alt(post.image.url),
+                :alt => post.image.url,
                 :"data-link" => "#{post.link_url}" }
         -# - unless post.title.blank?
         -#   .carousel-caption
