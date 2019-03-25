@@ -48,7 +48,8 @@
               - tags = Array.wrap(params[:tags]).clone
               - btn_class = tags.include?(tag.name) ? 'btn-primary' : 'btn-default'
               - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
-              = link_to tag.name, url_for(:tags => tags), class: "btn #{btn_class} btn-sm"
+              = link_to tag.name, params.permit!.merge(:tags => tags), class: "btn #{btn_class} btn-sm"
+              -# = link_to tag.name, url_for(:tags => tags), class: "btn #{btn_class} btn-sm"
               != ' '
         .list-group-item
           .form-group
@@ -61,7 +62,7 @@
                         name: :match,
                         value: :any,
                         checked: params[:match] != 'all',
-                        data: { url: url_for({ tags: params[:tags], match: nil}) } }
+                        data: { url: url_for(params.permit!.merge(match: nil)) } }
                 Match Any Tags
             .radio
               = label_tag nil, class: 'checkbox-inline' do
@@ -69,7 +70,7 @@
                         name: :match,
                         value: :all,
                         checked: params[:match] == 'all',
-                        data: { url: url_for({ tags: params[:tags], match: :all}) } }
+                        data: { url: url_for(params.permit!.merge(match: :all)) } }
                 Match All Tags
 
 
