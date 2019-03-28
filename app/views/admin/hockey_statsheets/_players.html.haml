@@ -5,10 +5,10 @@
 .row
   .col-sm-6{ :id => "players-#{@statsheet.game.away_team_id}" }
     %h3 #{@statsheet.away_team.name}
-    = render :partial => 'admin/hockey_players/table', :locals => {:team_id => @statsheet.game.away_team_id, :players => @statsheet.skaters.away.order(:last_name)}
+    = render :partial => 'admin/hockey_players/table', :locals => {:team_id => @statsheet.game.away_team_id, :players => @statsheet.skaters.away.order(:last_name, :first_name)}
   .col-sm-6{ :id => "players-#{@statsheet.game.home_team_id}" }
     %h3 #{@statsheet.home_team.name}
-    = render :partial => 'admin/hockey_players/table', :locals => {:team_id => @statsheet.game.home_team_id, :players => @statsheet.skaters.home.order(:last_name)}
+    = render :partial => 'admin/hockey_players/table', :locals => {:team_id => @statsheet.game.home_team_id, :players => @statsheet.skaters.home.order(:last_name, :first_name)}
 .well
   = link_to 'Add Player', new_admin_hockey_statsheet_player_path(@statsheet), :remote => true, :title => 'Add player', :class => 'btn btn-primary btn-sm'
   != ' '
