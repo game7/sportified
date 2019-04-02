@@ -1,5 +1,6 @@
 class Admin::ChromecastsController < ApplicationController
   before_action :set_chromecast, only: [:edit, :update, :destroy]
+  before_action :mark_return_point, only: [:new, :edit]
 
   layout 'admin'
 
