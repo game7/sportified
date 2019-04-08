@@ -14,7 +14,7 @@
 
   get 'pack' => 'client#index'
 
-  mount Rms::Engine => '/registrar', as: 'rms'
+  draw :rms
   mount ExceptionLogger::Engine => "/exception_logger"
 
   # namespace :registrar do

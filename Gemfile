@@ -2,8 +2,6 @@ source 'http://rubygems.org'
 ruby '2.3.3'
 gem 'rails', '~> 5.2.3'
 
-gem 'rms', path: 'engines/rms'
-
 gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'bootsnap', require: false
