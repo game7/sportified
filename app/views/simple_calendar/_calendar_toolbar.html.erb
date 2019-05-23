@@ -17,6 +17,7 @@
         <%= link_to "Week", url_for(:view => 'week', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'week'}" %>
         <%= link_to "Month", url_for(:view => 'month', :date => params[:date]), :class => "btn btn-default #{'active' if params[:view] == 'month'}" %>
       </div>
+      <%= link_to icon(:download), url_for(params.permit(:date, :view).merge(:format => :csv)), class: 'btn btn-default' %>
       <div class="btn-group">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
           New Event <span class="caret"></span>

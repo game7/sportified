@@ -1,4 +1,6 @@
 require "chronic"
+require 'csv'
+
 class Admin::EventsController < Admin::AdminController
 
   before_action :mark_return_point, only: [:destroy]
@@ -23,6 +25,9 @@ class Admin::EventsController < Admin::AdminController
     respond_to do |format|
       format.html
       format.json { render json: @events }
+      format.csv do
+        send_data to_csv(@events), filename: "events-#{@date}-#{@view}.csv"
+      end
     end
 
   end
@@ -48,6 +53,23 @@ class Admin::EventsController < Admin::AdminController
   end
 
   private
+
+    def to_csv(events)
+      data = events.map do |e|
+        {
+          date: e.starts_on.strftime('%a %-m/%-d/%Y'),
+          'start time': e.starts_on.strftime('%l:%M %P'),
+          duration: e.duration,
+          summary: e.summary,
+          'division': e.try(:division).try(:name)
+
+        }
+      end
+      ::CSV.generate do |csv|
+        csv << data[0].keys
+        data.each{|row| csv << row.values }
+      end
+    end
 
     def get_events(date, view)
 
