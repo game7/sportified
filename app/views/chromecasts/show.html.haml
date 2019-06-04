@@ -15,6 +15,8 @@
   .main {
     height: 600px;
     padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     overflow: hidden;
   }
 
@@ -29,7 +31,7 @@
     .locker_room {
       background-color: maroon;
       background-color: #800000;
-      badkground-color: #8C1D40;
+      //background-color: #8C1D40;
       //background-color: #990033;
       color: white;
       opacity: 1;
@@ -50,9 +52,10 @@
     }
 
     .time {
-      text-align: right;
+      text-align: left;
+      padding-left: 10px !important;
       padding-right: 10px !important;
-      width: 180px;
+      width: 380px;
       margin-right: 5px;
       &.teams {
         height: 125px;
@@ -62,7 +65,7 @@
     .summary {
       padding-left: 10px !important;
       margin-right: 5px;
-      width: 945px;
+      width: 725px;
     }
 
     .team {
@@ -70,7 +73,7 @@
       padding-left: 10px !important;
       margin-right: 5px;
       height: 60px;
-      width: 1010px;
+      width: 790px;
     }
 
     .locker_room {
@@ -159,7 +162,10 @@
       .event.clearfix{ class: odd_or_even }
         - if (event.try(:show_teams?))
           - pp event
-          .time.teams= event.starts_on.strftime('%-I:%M %P')
+          .time.teams
+            = event.starts_on.strftime('%-I:%M %P')
+            != ' - '
+            = event.ends_on.strftime('%-I:%M %P')
           .teams.clearfix
             .away_team.clearfix
               -#.team= event.away_team_custom_name.presence || event.away_team&.name
@@ -169,7 +175,10 @@
               .team= event.home_team_custom_name.presence || event.home_team_name.presence || event&.home_team&.name
               .locker_room.home= event.home_team_locker_room&.name
         - else
-          .time= event.starts_on.strftime('%-I:%M %P')
+          .time
+            = event.starts_on.strftime('%-I:%M %P')
+            != ' - '
+            = event.ends_on.strftime('%-I:%M %P')
           .subject.clearfix
             .summary= event.summary
             .locker_room.away= event.away_team_locker_room&.name
@@ -180,9 +189,9 @@
       = image_tag('themes/oia/oia_white.svg', class: 'logo')
     .datetime.pull-right
       %span#date
-        = "#{Time.zone.now.strftime('%A, %b')} #{Time.zone.now.strftime('%e').to_i.ordinalize}"
+        = "#{@time.strftime('%A, %b')} #{@time.strftime('%e').to_i.ordinalize}"
       != ' - '
-      %span#time= Time.zone.now.strftime('%l:%M %P')
+      %span#time= @time.strftime('%l:%M %P')
 
 :javascript
   $(function() {
