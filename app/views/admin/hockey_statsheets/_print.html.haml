@@ -30,9 +30,15 @@
   }
   tr.huge {
     th, td {
-      line-height: 28px;
+      height: 31px;
     }
   }
+  .note {
+    font-size: 60%;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+  }  
   .overview {
     padding-left: 3px;
     padding-right: 3px;
@@ -113,6 +119,26 @@
     text-overflow: clip;
   }
 
+  .notes-on-back {
+    position: absolute;
+    bottom: 2px;
+
+    .checkbox {
+      width:10px;
+      height:10px;
+      border: 1px solid #000;
+      display: inline-block;
+      margin: 0;
+      margin-right: 5px;
+    }
+    .text {
+      display: inline-block;
+      font-weight: normal;
+      font-style: italic;
+    }
+  }
+
+
 .header
   .away
     %h3= @statsheet.game.away_team_name
@@ -146,18 +172,26 @@
             != ' - '
             = @statsheet.game.playing_surface.name
         %tr.huge
-          %th{ style: 'width: 30%' } Referee
+          %th{ style: 'width: 30%' }
+            %div Referee
+            %div.note (Please Print)
           %td
         %tr.huge
-          %th Referee
+          %th 
+            %div Referee
+            %div.note (Please Print)
           %td
         %tr.huge
-          %th Scorekeeper
+          %th 
+            %div Scorekeeper
+            %div.note (Please Print)
           %td
         %tr
-          %th{ colspan: 2, style: 'height: 105px; vertical-align: top;' }
+          %th{ colspan: 2, style: 'height: 105px; vertical-align: top; position: relative;' }
             Notes
-
+            .notes-on-back
+              .checkbox 
+              .text Additional notes on back
     .by-period
       .scoring-by-period
         = render partial: 'admin/hockey_statsheets/print/scoring_table'
