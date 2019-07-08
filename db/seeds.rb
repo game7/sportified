@@ -8,31 +8,34 @@
 today = Date.today
 
 puts 'TENANT'
-Tenant.current = Tenant.create!(:name => 'Sportified Test', :host => 'localhost', :theme => 'oia', :link_url => '')
+Tenant.current = Tenant.create!(:name => 'Sportified Test', :host => 'localhost', :slug => 'localhost', :theme => 'oia')
 
 puts 'PAGE'
 Page.create!(:title => "Welcome", :show_in_menu => false)
 
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'Test User', :email => 'test@test.com', :password => 'please', :password_confirmation => 'please'
-puts 'New user created: ' << user.name
-admin = User.create! :name => 'Admin User', :email => 'admin@admin.com', :password => 'please', :password_confirmation => 'please'
+user = User.create! :first_name => 'Test', :last_name => 'User', :email => 'test@test.com', :password => 'please', :password_confirmation => 'please'
+puts "New user created: #{user.first_name} #{user.last_name}"
+admin = User.create! :first_name => 'Admin', :last_name => 'User', :email => 'admin@admin.com', :password => 'please', :password_confirmation => 'please'
 admin.roles << UserRole.super_admin
 admin.save
-puts 'New user created: ' << admin.name
+puts "New user created: #{admin.first_name} #{admin.last_name}"
 
 puts ''
 puts 'SETTING UP DEMO LEAGUE'
 puts ''
 
+puts '0 - Create Program'
+program = League::Program.create! name: 'Demo Program'
+
 puts '1 - Create Divisions'
-%w{A B C}.each{|d| Division.create!(:name => d)}
+%w{A B C}.each{|d| League::Division.create!(:name => d, :program => program)}
 
 puts ''
 puts '2 - Create Seasons'
 (today.prev_year.year..today.next_year.year).each do |s|
-  season = Season.new( :name => s.to_s, :starts_on => '1/1/' + s.to_s)
-  Division.all.each do |division|
+  season = League::Season.new( :name => s.to_s, :starts_on => '1/1/' + s.to_s, :program => program )
+  League::Division.all.each do |division|
     season.division_ids << division.id
     division.season_ids << season.id
     division.save
@@ -45,9 +48,9 @@ last_names = %w{Lemieux Doan Tonelli Stefan Fedorov Robitaille Crosby Stock Roy 
 
 puts ''
 puts '3 - Create Teams'
-division = Division.with_slug('a').first
+division = League::Division.with_slug('a').first
 %w{Kings Ducks Sharks Stars Coyotes Avalanche}.each do |t|
-  Season.all.each do |s|
+  League::Season.all.each do |s|
     team = division.teams.build :name => t, :season => s
     team.save
     (1..10).each do
@@ -56,7 +59,7 @@ division = Division.with_slug('a').first
   end
 end
 
-season = Season.all.entries[1]
+season = League::Season.all.entries[1]
 puts 'GENERATING GAMES FOR ' + division.name + ' ' + season.name
 game_date = today.advance(:weeks => -10)
 game_times = ['7:30 pm', '9:00 pm', '10:30 pm']
@@ -80,19 +83,21 @@ rounds.times do |round|
     end
     puts ' ' << @left_team.name << ' vs ' << @right_team.name
     puts ' - build game...'
-    g = Game.new
+    g = League::Game.new
     g.division = division
     g.season = season
     g.starts_on = DateTime.parse(game_date.to_s + " " + game_times[game])
     g.home_team = @left_team
     g.away_team = @right_team
-    puts ' - save... '
-    g.save
     # lets post result if game in past
     if (game_date < DateTime.now)
-      g.build_result(:home_score => rand(8), :away_score => rand(8), :completed_in => 'regulation')
-      g.save
+      g.home_team_score = rand(8)
+      g.away_team_score = rand(8)
+      g.completion = 'regulation'
     end
+    puts ' - save... '
+    g.save
+
   end
   #shift teams
   @a = teams.shift

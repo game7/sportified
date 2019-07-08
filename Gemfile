@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.3.3'
+ruby '2.4.6'
 gem 'rails', '~> 5.2.3'
 
 gem 'rms', path: 'engines/rms'
@@ -54,7 +54,7 @@ gem 'cocoon'
 
 gem 'carrierwave'
 gem 'fog-aws', group: [:staging, :production]
-gem 'rmagick', '~> 2.13.4'
+gem 'rmagick', '>= 2.13.4'
 gem 'remotipart', '~> 1.3.1'
 
 gem 'haml-rails'
