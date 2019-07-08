@@ -19,7 +19,7 @@
 class UserRole < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :tenant
+  belongs_to :tenant, required: false
 
   # scope :find_by_name, ->(name) { where(:name => name.to_s) }
 
