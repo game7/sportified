@@ -17,7 +17,6 @@
   %body{ :style => "background-image: none;" }
     .container
       = yield
-    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
 
 

@@ -12,7 +12,6 @@
     #wrapper.container
       #ipad
         = yield
-    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
 
 

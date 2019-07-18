@@ -81,7 +81,6 @@
           #page-header
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript
 

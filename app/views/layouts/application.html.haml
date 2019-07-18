@@ -52,7 +52,6 @@
     #footer.container
       = render 'layouts/footer'
       -# = render 'layouts/social'
-    = render 'layouts/google_analytics' if Tenant.current.analytics_id.present?
     = yield :javascript
     :javascript
 
