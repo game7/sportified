@@ -26,4 +26,6 @@ class Ahoy::Event < ApplicationRecord
 
   belongs_to :visit, -> { unscope(where: :tenant_id) }
   belongs_to :user, optional: true
+
+  scope :orphan, -> { where('visit_id NOT IN (SELECT id from ahoy_visits)')}
 end
