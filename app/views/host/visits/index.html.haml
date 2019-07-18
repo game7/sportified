@@ -11,6 +11,8 @@
 
 .row
   .col-sm-12
+    = paginate @visits
+    != page_entries_info @visits
     %table.table.table-striped.table-bordered
       %thead
         %tr
@@ -29,6 +31,6 @@
             %td= visit.device_type           
             %td= visit.os       
             %td= visit.browser
-
+    != page_entries_info @visits
 
 

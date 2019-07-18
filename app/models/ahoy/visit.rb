@@ -40,6 +40,7 @@
 class Ahoy::Visit < ApplicationRecord
   include Sportified::TenantScoped
   self.table_name = 'ahoy_visits'
+  paginates_per 50
 
   has_many :events, -> { unscope(where: :tenant_id).order(time: :asc) }, class_name: 'Ahoy::Event'
   belongs_to :user, optional: true
