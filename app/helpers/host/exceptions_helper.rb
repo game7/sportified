@@ -1,0 +1,2 @@
+module Host::ExceptionsHelper
+end

@@ -1,0 +1,7 @@
+- title "Event ##{@event.id}"
+- breadcrumb 'Visits', host_visits_path
+- breadcrumb @event.visit_id, url_for([:host, @event.visit])
+- breadcrumb 'Events'
+- breadcrumb @event.id
+
+= render @event.name.parameterize

@@ -1,0 +1,55 @@
+- title 'Exceptions'
+- breadcrumb 'Exceptions'
+
+.row
+  .col-sm-12
+    = line_chart @by_day
+.row
+  .col-sm-8
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th Date/Time
+          %th Exception
+      %tbody
+        - @exceptions.each do |exc|
+          %tr
+            %td{ style: 'width: 25%;' }= link_to exc.time, [:host, exc]
+            %td
+              = exc.properties['exception']
+              %br
+              %small= exc.properties['message']
+
+  .col-sm-4
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th{ style: 'width: 80%;' } Exception  
+          %th Count
+      %tbody          
+        - @by_exception.each do |group|
+          %tr
+            %td= group[0]
+            %td= group[1]
+
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th{ style: 'width: 80%;' } Controller  
+          %th Count
+      %tbody          
+        - @by_controller.each do |group|
+          %tr
+            %td= group[0]
+            %td= group[1]          
+
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th{ style: 'width: 80%;' } Host  
+          %th Count
+      %tbody          
+        - @by_host.each do |group|
+          %tr
+            %td= group[0]
+            %td= group[1]                   

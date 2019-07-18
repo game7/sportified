@@ -1,0 +1,25 @@
+
+%table.table.table-bordered.table-striped
+  %tbody
+    %tr
+      %th Name
+      %td= @event.name
+    %tr
+      %th Exception
+      %td= @event.properties['exception']
+    %tr
+      %th Message
+      %td= @event.properties['message']          
+    - @event.properties.except('backtrace', 'exception', 'message').each do |key, value|
+      %tr
+        %th= key.titleize
+        %td= key == 'path' ? link_to(value, value) : value
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Backtrace
+  %tbody
+    - @event.properties['backtrace'].each do |msg|
+      %tr{ class: msg.include?('/app/') ? 'bg-danger' : '' }
+        %td= msg       

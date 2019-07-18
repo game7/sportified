@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include ExceptionLogger::ExceptionLoggable
   rescue_from StandardError, :with => :log_exception_handler unless Rails.env.development?
+  rescue_from StandardError, :with => :track_exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :store_current_location, unless: :devise_controller?
 
@@ -9,12 +10,13 @@ class ApplicationController < ActionController::Base
 
   helper :layout
 
+  prepend_before_action :find_current_tenant
   around_action :with_time_zone
-  before_action :find_current_tenant
   before_action :add_stylesheets
   before_action :load_objects
   before_action :set_breadcrumbs
   before_action :set_area_navigation
+  after_action :track_action
 
   def initialize
     super
@@ -23,6 +25,38 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  @@RAILS_ROOT_REGEX = /^#{Regexp.escape(Rails.root.to_s)}/
+
+  def filter_backtrace(backtrace)
+    backtrace.collect{|line| Pathname.new(line.gsub(@@RAILS_ROOT_REGEX, "[RAILS_ROOT]")).cleanpath.to_s}
+  end
+
+  def track_exception(exception)
+    ahoy.track 'exception', {
+      host: request.host,
+      path: request.fullpath,
+      url: request.url,
+      format: request.format.to_s,
+      params: request.filtered_parameters,
+      exception: exception.class.name,
+      message: exception.message.inspect,      
+      # env: request.filtered_env,
+      backtrace: filter_backtrace(exception.backtrace)
+    }
+    track_action
+    raise exception
+  end
+
+  def track_action
+    ahoy.track 'controller:action', {
+      host: request.host,
+      path: request.fullpath,
+      url: request.url,
+      format: request.format.to_s,
+      params: request.filtered_parameters
+    }
+  end
 
   def json_request?
     puts "format: #{request.format}"
@@ -79,6 +113,8 @@ class ApplicationController < ActionController::Base
     @breadcrumbs ||= []
     @breadcrumbs << { :title => title, :url => url }
   end
+  alias_method :breadcrumb, :add_breadcrumb
+  helper_method :breadcrumb
 
   def add_area_menu_item(title, url = nil)
     @area_menu_items ||= []

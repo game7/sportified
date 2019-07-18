@@ -40,8 +40,8 @@ development:
     https: false
     host: localhost
     port: 3035
-    public: localhost:3035
-    hmr: false
+    public: 0.0.0.0:3035
+    hmr: true
     # Inline should be set to true if using HMR
     inline: true
     overlay: true
@@ -53,7 +53,8 @@ development:
       'Access-Control-Allow-Origin': '*'
     watch_options:
       ignored: /node_modules/
-
+      aggregateTimeout: 300
+      poll: 1000
 
 test:
   <<: *default

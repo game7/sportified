@@ -1,5 +1,7 @@
 class TenantsController < ApplicationController
   layout 'layouts/tenantless'
+  skip_before_action :track_ahoy_visit
+  skip_after_action :track_action
 
   def index
     @tenants = Tenant.all

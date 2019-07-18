@@ -1,0 +1,34 @@
+- title 'Visits'
+- breadcrumb 'Visits'
+
+.row{ style: 'margin-bottom: 20px;' }
+  .col-sm-4
+    = pie_chart @by_device
+  .col-sm-4
+    = pie_chart @by_os
+  .col-sm-4
+    = pie_chart @by_browser      
+
+.row
+  .col-sm-12
+    %table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %td ID
+          %td IP
+          %td User
+          %td Device
+          %td OS
+          %td Browser
+      %tbody
+        - @visits.each do |visit|
+          %tr
+            %td= link_to visit.id, [:host, visit]
+            %td= visit.ip
+            %td= visit.user&.full_name
+            %td= visit.device_type           
+            %td= visit.os       
+            %td= visit.browser
+
+
+

@@ -7,6 +7,8 @@
 //= require bootstrap-datetimepicker
 //= require cocoon
 //= require admin/chromecasts
+//= require chartkick
+//= require Chart.bundle
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
   var $observer = $(observerId);

@@ -2,7 +2,7 @@ module ApplicationHelper
 
 
   # def icon(name, label = nil)
-  #   content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}") + ' ' + label
+  #   content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}")  ' '  label
   # end
 
   def icon(name, text = nil, html_options = {}, style = :far)
@@ -42,5 +42,30 @@ module ApplicationHelper
     form = simple_form_for(record, options, &block)
     form.gsub("form-horizontal ", "").html_safe
   end
+
+  def javascript_pack_tag(*names, **options)
+    tag = super(*names, **options)
+    if tag && Webpacker.dev_server.running?
+      puts '--------------------------------------'
+      puts tag
+      puts '--------------------------------------'
+      #tag = tag.gsub('/packs/', "http://localhost:3035/packs/")
+      puts '--------------------------------------'
+      puts tag
+      puts '--------------------------------------'      
+    end
+    tag.html_safe
+  end
+
+  # override webpacker tag helpers to point directly to
+  # webpack dev server.  This overcomes issues between docker
+  # and webpacker's proxy
+  def stylesheet_pack_tag(*names, **options)
+    tag = super(*names, **options)
+    if tag && Webpacker.dev_server.running?
+      tag = tag.gsub('/packs/', 'http://localhost:3035/packs/')
+    end
+    tag
+  end  
 
 end

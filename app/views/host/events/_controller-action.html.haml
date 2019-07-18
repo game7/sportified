@@ -1,0 +1,10 @@
+
+%table.table.table-bordered.table-striped
+  %tbody
+    %tr
+      %th Name
+      %td= @event.name
+    - @event.properties.each do |key, value|
+      %tr
+        %th= key.titleize
+        %td= key == 'path' ? link_to(value, value) : value

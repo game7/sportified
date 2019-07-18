@@ -9,7 +9,7 @@ import { Row, Col } from './layout';
 import Select from 'react-select';
 import { Option } from 'react-select';
 import 'react-select/dist/react-select.css';
-import './styles.css'
+import './styles.scss'
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Modal, Static, TagList } from './components';
 import { getTextColor } from './utils';

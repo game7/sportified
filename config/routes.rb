@@ -1,5 +1,10 @@
 ::Sportified::Application.routes.draw do
 
+  namespace :host do
+    resources :visits, only: [ :index, :show ]
+    resources :events, only: [ :show ]
+    resources :exceptions, only: :index
+  end
 
   resources :chromecasts, only: :show
 

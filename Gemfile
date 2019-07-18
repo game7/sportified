@@ -33,6 +33,13 @@ gem 'tenancy'
 gem 'ancestry'
 gem 'acts-as-taggable-on', git: 'https://github.com/game7/acts-as-taggable-on.git'
 
+# visit & event tracking
+gem 'ahoy_matey'
+gem 'maxminddb'
+gem 'geolite2_city'
+gem 'chartkick'
+gem 'groupdate'
+
 gem 'haml'
 gem 'kaminari'
 

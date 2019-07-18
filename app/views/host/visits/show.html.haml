@@ -1,0 +1,61 @@
+- title "Visit ##{@visit.id}"
+- breadcrumb 'Visits', host_visits_path
+- breadcrumb @visit.id
+
+%table.table.table-bordered.table-striped
+  %tbody
+    %tr
+      %th Started
+      %td= @visit.started_at    
+    %tr
+      %th User
+      %td= @visit.user&.full_name  
+    %tr
+      %th Geo
+      %td= "#{@visit.latitude}, #{@visit.longitude}"
+    %tr
+      %th Location
+      %td
+        = @visit.country  
+        - if @visit.region.present?
+          != " > "
+          = @visit.region
+          - if @visit.city.present?
+            != " > "
+            = @visit.city          
+    %tr
+      %th Device / OS / Browser
+      %td
+        = @visit.device_type
+        != " > "
+        = @visit.os
+        != " > "
+        = @visit.browser     
+    %tr
+      %th User Agent
+      %td= @visit.user_agent           
+    %tr
+      %th Referrer
+      %td= @visit.referrer  
+    %tr
+      %th Landing Page
+      %td= @visit.landing_page   
+
+%h2 Events
+
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th Time
+      %th Name
+      %th Description
+  %tbody
+    - @visit.events.unscoped.each do |event|
+      %tr
+        %td= link_to l(event.time, format: :short), [:host, event]
+        %td= event.name
+        %td
+          - if event.name == 'controller:action'
+            = event.properties['path']
+          - if event.name == 'exception'
+            = event.properties['exception']        
