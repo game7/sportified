@@ -24,6 +24,6 @@ class Ahoy::Event < ApplicationRecord
   include Sportified::TenantScoped
   self.table_name = "ahoy_events"
 
-  belongs_to :visit
+  belongs_to :visit, -> { unscope(where: :tenant_id) }
   belongs_to :user, optional: true
 end

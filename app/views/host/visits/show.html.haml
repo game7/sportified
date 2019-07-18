@@ -50,7 +50,7 @@
       %th Name
       %th Description
   %tbody
-    - @visit.events.unscoped.where(visit: @visit).each do |event|
+    - @visit.events.where(visit: @visit).each do |event|
       %tr
         %td= link_to l(event.time, format: :short), [:host, event]
         %td= event.name
