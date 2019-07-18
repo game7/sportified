@@ -3,7 +3,6 @@ module Sportified
     extend ActiveSupport::Concern
     
     included do
-      include Tenancy::Resource
       include Tenancy::ResourceScope
 
       scope_to :tenant
