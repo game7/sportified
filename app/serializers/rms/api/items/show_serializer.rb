@@ -1,12 +1,14 @@
 module Rms
   module Api
-    class Items::ShowSerializer < ItemSerializer
+    module Items
+      class ShowSerializer < ItemSerializer
 
-      attributes :description
+        attributes :description
 
-      has_many :variants
-      has_many :registrations
-
+        has_many :variants
+        has_many :registrations
+      
+      end
     end
   end
 end

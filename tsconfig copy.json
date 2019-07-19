@@ -13,8 +13,8 @@
   },
   "exclude": [
     "**/*.spec.ts",
-    "node_modules",
     "tmp",
+    "node_modules",
     "vendor",
     "public"
   ],

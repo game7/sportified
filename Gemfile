@@ -15,7 +15,7 @@ gem 'sass-rails', '~> 5.0.4'
 gem 'sprockets'
 gem 'sprockets-es6'
 
-gem 'webpacker', '~> 3.3.1'
+gem 'webpacker', '~> 4'
 
 gem 'paranoia', '~> 2.3'
 

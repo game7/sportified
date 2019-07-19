@@ -2,6 +2,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class Api::RegistrationsController < ApplicationController
+    before_action :verify_admin
 
     def show
       render json: Registration.find(params[:id])

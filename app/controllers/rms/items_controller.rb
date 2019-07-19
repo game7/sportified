@@ -34,7 +34,7 @@ module Rms
     before_action :get_form_packets, only: [:edit, :update, :new, :create]
 
     def index
-      @items = Item.all
+      @items = ::Rms::Item.all
       @items = @items.active unless current_user_is_admin?
       @stripe_url = stripe_url
     end

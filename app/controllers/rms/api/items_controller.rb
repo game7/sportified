@@ -3,18 +3,19 @@ require_dependency "rms/application_controller"
 module Rms
   module Api
     class ItemsController < ApplicationController
+      before_action :verify_admin
 
       def index
-        render json: Item.all, adapter: :json
+        render json: ::Rms::Item.all, adapter: :json
       end
 
       def show
-        item = Item.includes(registrations: :forms ).find(params[:id]);
+        item = ::Rms::Item.includes(registrations: :forms ).find(params[:id]);
         render json: Rms::Api::Items::ShowSerializer.new(item), adapter: :json, key_transform: :camel_lower
       end
 
       def extract
-        item = Item.includes(registrations: [:forms, :variant, :user]).find(params[:id]);
+        item = ::Rms::Item.includes(registrations: [:forms, :variant, :user]).find(params[:id]);
         flattened = item.registrations.collect do |r|
           data = r.forms.collect{|form| form.data || {}}.reduce({}){|sum, data| sum.merge(data) }
           {

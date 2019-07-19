@@ -425,7 +425,7 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.8)
       rack (>= 2.0.6)
-    webpacker (3.3.1)
+    webpacker (4.0.7)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
@@ -504,7 +504,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   virtus (~> 1.0.5)
-  webpacker (~> 3.3.1)
+  webpacker (~> 4)
   webrat
 
 RUBY VERSION

@@ -26,6 +26,7 @@ require_dependency "rms/application_controller"
 
 module Rms
   class FormsController < ApplicationController
+    before_action :verify_admin
     before_action :set_form, only: [:show, :edit, :update, :destroy]
 
     # GET /forms
