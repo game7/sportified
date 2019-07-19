@@ -41,30 +41,5 @@ module Sportified
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.after_initialize do
-      ExceptionLogger::LoggedExceptionsController.class_eval do
-        before_action :verify_admin
-
-        def current_user_is_host?
-          current_user and current_user.host?
-        end
-        helper_method :current_user_is_host?
-
-        def current_user_is_admin?
-          current_user_is_host? || has_admin_role?(current_user, Tenant.current.id)
-        end
-        helper_method :current_user_is_admin?
-
-        def verify_admin
-          redirect_to main_app.new_user_session_path unless current_user_is_admin?
-        end
-
-        def has_admin_role?(user, tenant_id)
-          user and user.admin?(tenant_id)
-        end
-
-      end
-    end
-
   end
 end

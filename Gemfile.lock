@@ -12,14 +12,6 @@ GIT
     acts-as-taggable-on (6.0.1)
       activerecord (~> 5.0)
 
-GIT
-  remote: https://github.com/ryancheung/exception_logger.git
-  revision: 47b0053cc709a02ea0645b269056586c8766fff0
-  specs:
-    exception_logger (0.2.0)
-      rails (>= 4.0.0)
-      will_paginate (~> 3.0)
-
 PATH
   remote: engines/rms
   specs:
@@ -456,7 +448,6 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    will_paginate (3.1.7)
 
 PLATFORMS
   ruby
@@ -483,7 +474,6 @@ DEPENDENCIES
   database_cleaner
   devise (~> 4.2)
   enumerize
-  exception_logger!
   factory_girl_rails
   faker
   fog-aws

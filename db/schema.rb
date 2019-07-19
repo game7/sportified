@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_11_162627) do
+ActiveRecord::Schema.define(version: 2019_07_19_174018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -446,17 +446,6 @@ ActiveRecord::Schema.define(version: 2019_07_11_162627) do
     t.index ["tenant_id"], name: "index_locations_on_tenant_id"
   end
 
-  create_table "logged_exceptions", id: :serial, force: :cascade do |t|
-    t.string "exception_class"
-    t.string "controller_name"
-    t.string "action_name"
-    t.text "message"
-    t.text "backtrace"
-    t.text "environment"
-    t.text "request"
-    t.datetime "created_at"
-  end
-
   create_table "pages", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.string "title"
@@ -732,6 +721,7 @@ ActiveRecord::Schema.define(version: 2019_07_11_162627) do
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "rms_form_elements", "rms_form_templates", column: "template_id"
