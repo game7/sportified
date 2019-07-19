@@ -1,2 +1,2 @@
 
-import '../../../../engines/rms/app/javascript/admin';
+import '../../rms/admin';

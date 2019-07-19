@@ -7,8 +7,7 @@ if Rails.env.development?
     # same name.
 
     models = [
-      'app/models',
-      './engines/rms/app/models'
+      'app/models'
     ]
 
     Annotate.set_defaults(

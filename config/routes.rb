@@ -19,7 +19,7 @@
 
   get 'pack' => 'client#index'
 
-  mount Rms::Engine => '/registrar', as: 'rms'
+  draw :rms
 
   # namespace :registrar do
   #   resources :registrables
