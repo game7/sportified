@@ -186,7 +186,6 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
-    hashie (3.6.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -263,9 +262,6 @@ GEM
     nio4r (2.4.0)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
-      rack (>= 1.6.2, < 3)
     orm_adapter (0.5.0)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
@@ -481,7 +477,6 @@ DEPENDENCIES
   kaminari
   launchy
   maxminddb
-  omniauth
   paranoia (~> 2.3)
   pg
   rails (~> 5.2.3)

@@ -42,8 +42,6 @@ gem 'haml'
 gem 'kaminari'
 
 gem 'devise', '~>4.2'
-gem 'omniauth'
-# gem 'oa-oauth', :require => 'omniauth/oauth'
 
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'

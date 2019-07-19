@@ -35,8 +35,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-          :recoverable, :rememberable, :trackable, :validatable,
-          :omniauthable
+          :recoverable, :rememberable, :trackable, :validatable
 
   has_and_belongs_to_many :tenants
   has_many :roles, foreign_key: :user_id, class_name: 'UserRole'
@@ -80,13 +79,6 @@ class User < ActiveRecord::Base
       where("authentications.provider" => provider, "authentications.uid" => uid).first
     end
   end
-
-  def apply_omniauth(omniauth)
-    self.name = omniauth['user_info']['name'] if name.blank?
-    self.email = omniauth['user_info']['email'] if email.blank?
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-  end
-
 
   protected
 
