@@ -17,7 +17,6 @@
 #  ancestry            :string
 #  ancestry_depth      :integer
 #  position            :integer
-#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #  content             :text

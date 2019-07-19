@@ -11,7 +11,6 @@
 #  birthdate     :date
 #  email         :string
 #  slug          :string
-#  mongo_id      :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #  substitute    :boolean
@@ -20,7 +19,6 @@
 # Indexes
 #
 #  index_players_on_email      (email)
-#  index_players_on_mongo_id   (mongo_id)
 #  index_players_on_team_id    (team_id)
 #  index_players_on_tenant_id  (tenant_id)
 #
@@ -65,14 +63,6 @@ class Player < ActiveRecord::Base
       season_id = ( season.class == Season ? season.id : season )
       where(:season_id => season_id)
     end
-  end
-
-  def apply_mongo_team_id! team_id
-    self.team = Team.unscoped.where(mongo_id: team_id.to_s).first
-  end
-
-  def apply_mongo_tenant_id! tenant_id
-    self.tenant = self.team.tenant if self.team
   end
 
   private

@@ -9,7 +9,6 @@
 #  column     :integer
 #  position   :integer
 #  options    :hstore
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #  file       :string

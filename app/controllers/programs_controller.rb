@@ -11,6 +11,14 @@
 #  updated_at  :datetime         not null
 #  slug        :string
 #
+# Indexes
+#
+#  index_programs_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tenant_id => tenants.id)
+#
 
 class ProgramsController < ApplicationController
 

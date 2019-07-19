@@ -23,7 +23,6 @@
 #  playmakers                :integer          default(0)
 #  gordie_howes              :integer          default(0)
 #  ejections                 :integer          default(0)
-#  mongo_id                  :string
 #  created_at                :datetime
 #  updated_at                :datetime
 #  first_name                :string
@@ -31,7 +30,6 @@
 #
 # Indexes
 #
-#  index_hockey_skaters_on_mongo_id      (mongo_id)
 #  index_hockey_skaters_on_player_id     (player_id)
 #  index_hockey_skaters_on_statsheet_id  (statsheet_id)
 #  index_hockey_skaters_on_team_id       (team_id)

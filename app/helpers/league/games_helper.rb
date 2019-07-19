@@ -58,8 +58,12 @@
 #  fk_rails_...  (program_id => programs.id)
 #
 
-require 'rails_helper'
+module League::GamesHelper
+  
+  def show_player_name(statsheet, side, num)
+    players = statsheet.players.with_num(num)
+    plr =  side == 'away' ? players.away.first : players.home.first
+    plr ? plr.name : ''
+  end
 
-RSpec.describe League::Game, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
 end

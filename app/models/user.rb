@@ -13,7 +13,6 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
-#  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
 #  confirmation_token     :string

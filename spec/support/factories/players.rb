@@ -10,6 +10,5 @@ FactoryGirl.define do
     birthdate "2015-02-10"
     email "MyString"
     slug "MyString"
-    mongo_id "MyString"
   end
 end

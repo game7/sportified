@@ -1,18 +1,27 @@
 # == Schema Information
 #
-# Table name: seasons
+# Table name: league_seasons
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  slug       :string(255)
+#  name       :string
+#  slug       :string
 #  starts_on  :date
 #  tenant_id  :integer
-#  mongo_id   :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  program_id :integer
+#
+# Indexes
+#
+#  index_league_seasons_on_program_id  (program_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (program_id => programs.id)
+#  fk_rails_...  (program_id => programs.id)
 #
 
-class SeasonsController < BaseLeagueController
+class League::SeasonsController < BaseLeagueController
 
   before_action :mark_return_point, :only => [:new, :edit, :destroy]    
   before_action :load_for_season, :only => [:show, :edit]

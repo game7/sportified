@@ -6,7 +6,6 @@
 #  tenant_id  :integer
 #  name       :string
 #  short_name :string
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #  deleted_at :datetime

@@ -14,7 +14,6 @@
 #  all_day                   :boolean
 #  summary                   :string
 #  description               :text
-#  mongo_id                  :string
 #  created_at                :datetime
 #  updated_at                :datetime
 #  home_team_id              :integer
@@ -47,7 +46,6 @@
 #  index_events_on_home_team_id              (home_team_id)
 #  index_events_on_home_team_locker_room_id  (home_team_locker_room_id)
 #  index_events_on_location_id               (location_id)
-#  index_events_on_mongo_id                  (mongo_id)
 #  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)

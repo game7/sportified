@@ -23,7 +23,6 @@
 #  crop_y              :integer          default(0)
 #  crop_h              :integer          default(0)
 #  crop_w              :integer          default(0)
-#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #  games_played        :integer

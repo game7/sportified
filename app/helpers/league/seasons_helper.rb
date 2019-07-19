@@ -21,7 +21,5 @@
 #  fk_rails_...  (program_id => programs.id)
 #
 
-class League::SeasonSerializer < ActiveModel::Serializer
-  type :season
-  attributes :id, :program_id, :name, :slug, :starts_on, :created_at, :updated_at
+module League::SeasonsHelper
 end

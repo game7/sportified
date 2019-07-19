@@ -9,7 +9,6 @@
 #  body       :text
 #  link_url   :string
 #  image      :string
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

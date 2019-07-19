@@ -10,7 +10,6 @@
 #  show_statistics     :boolean
 #  standings_array     :text             default([]), is an Array
 #  tenant_id           :integer
-#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #  standings_schema_id :string

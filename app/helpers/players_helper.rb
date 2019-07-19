@@ -11,11 +11,16 @@
 #  birthdate     :date
 #  email         :string
 #  slug          :string
-#  mongo_id      :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #  substitute    :boolean
 #  position      :string
+#
+# Indexes
+#
+#  index_players_on_email      (email)
+#  index_players_on_team_id    (team_id)
+#  index_players_on_tenant_id  (tenant_id)
 #
 
 module PlayersHelper

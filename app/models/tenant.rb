@@ -14,7 +14,6 @@
 #  instagram_id          :string
 #  foursquare_id         :string
 #  google_plus_id        :string
-#  mongo_id              :string
 #  created_at            :datetime
 #  updated_at            :datetime
 #  stripe_account_id     :string

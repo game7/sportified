@@ -9,7 +9,6 @@
 #  body       :text
 #  link_url   :string
 #  image      :string
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -29,12 +28,5 @@ class Post < ActiveRecord::Base
   
   scope :newest_first, ->{ order(created_at: :desc) }
   scope :newest, ->{ order(created_at: :desc) }
-  
-  def apply_mongo!(mongo)
-    self.tag_list = mongo[:tags_array].join(',')
-    if mongo['image'] && !self.image.url
-      puts self.remote_image_url = "https://sportified.s3.amazonaws.com/uploads/#{self.tenant.slug}/posts/#{self.mongo_id}/images/" + mongo['image']
-    end
-  end
     
 end

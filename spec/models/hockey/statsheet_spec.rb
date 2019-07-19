@@ -22,13 +22,11 @@
 #  home_shots_2  :integer
 #  home_shots_3  :integer
 #  home_shots_ot :integer
-#  mongo_id      :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #
 # Indexes
 #
-#  index_hockey_statsheets_on_mongo_id   (mongo_id)
 #  index_hockey_statsheets_on_tenant_id  (tenant_id)
 #
 

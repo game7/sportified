@@ -9,9 +9,12 @@
 #  body       :text
 #  link_url   :string
 #  image      :string
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
+#
+# Indexes
+#
+#  index_posts_on_tenant_id  (tenant_id)
 #
 
 module PostsHelper

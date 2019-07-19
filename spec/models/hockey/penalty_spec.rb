@@ -19,14 +19,12 @@
 #  end_period          :string
 #  end_minute          :integer
 #  end_second          :integer
-#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
 #  committed_by_number :string
 #
 # Indexes
 #
-#  index_hockey_penalties_on_mongo_id      (mongo_id)
 #  index_hockey_penalties_on_statsheet_id  (statsheet_id)
 #  index_hockey_penalties_on_tenant_id     (tenant_id)
 #

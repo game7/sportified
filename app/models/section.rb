@@ -6,7 +6,6 @@
 #  page_id    :integer
 #  pattern    :string
 #  position   :integer
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
 #

@@ -17,9 +17,14 @@
 #  ancestry            :string
 #  ancestry_depth      :integer
 #  position            :integer
-#  mongo_id            :string
 #  created_at          :datetime
 #  updated_at          :datetime
+#  content             :text
+#
+# Indexes
+#
+#  index_pages_on_ancestry   (ancestry)
+#  index_pages_on_tenant_id  (tenant_id)
 #
 
 class PagesController < ApplicationController

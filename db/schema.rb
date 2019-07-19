@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_174018) do
+ActiveRecord::Schema.define(version: 2019_07_19_191202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "column"
     t.integer "position"
     t.hstore "options"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "file"
@@ -114,7 +113,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.string "name"
     t.string "short_name"
     t.integer "tenant_id"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["tenant_id"], name: "index_clubs_on_tenant_id"
@@ -150,7 +148,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.boolean "all_day"
     t.string "summary"
     t.text "description"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "home_team_id"
@@ -180,7 +177,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.index ["home_team_id"], name: "index_events_on_home_team_id"
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id"
     t.index ["location_id"], name: "index_events_on_location_id"
-    t.index ["mongo_id"], name: "index_events_on_mongo_id"
     t.index ["page_id"], name: "index_events_on_page_id"
     t.index ["playing_surface_id"], name: "index_events_on_playing_surface_id"
     t.index ["program_id"], name: "index_events_on_program_id"
@@ -214,13 +210,11 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "assisted_by_id"
     t.integer "also_assisted_by_id"
     t.string "strength"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "scored_by_number"
     t.string "assisted_by_number"
     t.string "also_assisted_by_number"
-    t.index ["mongo_id"], name: "index_hockey_goals_on_mongo_id"
     t.index ["statsheet_id"], name: "index_hockey_goals_on_statsheet_id"
     t.index ["tenant_id"], name: "index_hockey_goals_on_tenant_id"
   end
@@ -250,13 +244,11 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "shootout_losses", default: 0
     t.integer "total_wins", default: 0
     t.integer "total_losses", default: 0
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "jersey_number"
     t.string "first_name"
     t.string "last_name"
-    t.index ["mongo_id"], name: "index_hockey_goaltenders_on_mongo_id"
     t.index ["player_id"], name: "index_hockey_goaltenders_on_player_id"
     t.index ["statsheet_id"], name: "index_hockey_goaltenders_on_statsheet_id"
     t.index ["team_id"], name: "index_hockey_goaltenders_on_team_id"
@@ -280,11 +272,9 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.string "end_period"
     t.integer "end_minute"
     t.integer "end_second"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "committed_by_number"
-    t.index ["mongo_id"], name: "index_hockey_penalties_on_mongo_id"
     t.index ["statsheet_id"], name: "index_hockey_penalties_on_statsheet_id"
     t.index ["tenant_id"], name: "index_hockey_penalties_on_tenant_id"
   end
@@ -310,12 +300,10 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "playmakers", default: 0
     t.integer "gordie_howes", default: 0
     t.integer "ejections", default: 0
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "first_name"
     t.string "last_name"
-    t.index ["mongo_id"], name: "index_hockey_skaters_on_mongo_id"
     t.index ["player_id"], name: "index_hockey_skaters_on_player_id"
     t.index ["statsheet_id"], name: "index_hockey_skaters_on_statsheet_id"
     t.index ["team_id"], name: "index_hockey_skaters_on_team_id"
@@ -342,10 +330,8 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "home_shots_2"
     t.integer "home_shots_3"
     t.integer "home_shots_ot"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["mongo_id"], name: "index_hockey_statsheets_on_mongo_id"
     t.index ["tenant_id"], name: "index_hockey_statsheets_on_tenant_id"
   end
 
@@ -357,7 +343,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.boolean "show_statistics"
     t.text "standings_array", default: [], array: true
     t.integer "tenant_id"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "standings_schema_id"
@@ -378,7 +363,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.string "slug"
     t.date "starts_on"
     t.integer "tenant_id"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "program_id"
@@ -406,7 +390,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "crop_y", default: 0
     t.integer "crop_h", default: 0
     t.integer "crop_w", default: 0
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "games_played"
@@ -438,7 +421,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "tenant_id"
     t.string "name"
     t.string "short_name"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -461,7 +443,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.string "ancestry"
     t.integer "ancestry_depth"
     t.integer "position"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text "content"
@@ -478,13 +459,11 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.date "birthdate"
     t.string "email"
     t.string "slug"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "substitute"
     t.string "position"
     t.index ["email"], name: "index_players_on_email"
-    t.index ["mongo_id"], name: "index_players_on_mongo_id"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["tenant_id"], name: "index_players_on_tenant_id"
   end
@@ -496,7 +475,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.text "body"
     t.string "link_url"
     t.string "image"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["tenant_id"], name: "index_posts_on_tenant_id"
@@ -610,7 +588,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "page_id"
     t.string "pattern"
     t.integer "position"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["page_id"], name: "index_sections_on_page_id"
@@ -654,7 +631,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.string "instagram_id"
     t.string "foursquare_id"
     t.string "google_plus_id"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "stripe_account_id"
@@ -682,7 +658,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.integer "tenant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "mongo_id"
     t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
@@ -697,7 +672,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_174018) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "mongo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "confirmation_token"

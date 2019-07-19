@@ -6,9 +6,12 @@
 #  page_id    :integer
 #  pattern    :string
 #  position   :integer
-#  mongo_id   :string
 #  created_at :datetime
 #  updated_at :datetime
+#
+# Indexes
+#
+#  index_sections_on_page_id  (page_id)
 #
 
 class SectionsController < Admin::AdminController

@@ -13,7 +13,6 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
-#  mongo_id               :string
 #  created_at             :datetime
 #  updated_at             :datetime
 #  confirmation_token     :string
@@ -21,6 +20,14 @@
 #  confirmation_sent_at   :datetime
 #  first_name             :string
 #  last_name              :string
+#  stripe_customer_id     :string
+#  unconfirmed_email      :string
+#
+# Indexes
+#
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
 require 'icalendar'

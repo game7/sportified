@@ -27,7 +27,6 @@
 #  shootout_losses          :integer          default(0)
 #  total_wins               :integer          default(0)
 #  total_losses             :integer          default(0)
-#  mongo_id                 :string
 #  created_at               :datetime
 #  updated_at               :datetime
 #  jersey_number            :string
@@ -36,7 +35,6 @@
 #
 # Indexes
 #
-#  index_hockey_goaltenders_on_mongo_id      (mongo_id)
 #  index_hockey_goaltenders_on_player_id     (player_id)
 #  index_hockey_goaltenders_on_statsheet_id  (statsheet_id)
 #  index_hockey_goaltenders_on_team_id       (team_id)
