@@ -1,6 +1,5 @@
 module ApplicationHelper
 
-
   # def icon(name, label = nil)
   #   content_tag(:i, nil, :class => "fa fa-#{name.to_s.dasherize}")  ' '  label
   # end
@@ -64,6 +63,28 @@ module ApplicationHelper
     tag = super(*names, **options)
     if tag && Webpacker.dev_server.running?
       tag = tag.gsub('/packs/', 'http://localhost:3035/packs/')
+    end
+    tag
+  end  
+
+    # override webpacker tag helpers to point directly to
+  # webpack dev server.  This overcomes issues between docker
+  # and webpacker's proxy
+  def javascript_pack_tag(*names, **options)
+    tag = super(*names, **options)
+    if tag && Webpacker.dev_server.running?
+      tag = tag.gsub('/packs/', "http://#{request.env['SERVER_NAME']}:3035/packs/")
+    end
+    tag.html_safe
+  end
+
+  # override webpacker tag helpers to point directly to
+  # webpack dev server.  This overcomes issues between docker
+  # and webpacker's proxy
+  def stylesheet_pack_tag(*names, **options)
+    tag = super(*names, **options)
+    if tag && Webpacker.dev_server.running?
+      tag = tag.gsub('/packs/', "http://#{request.env['SERVER_NAME']}:3035/packs/")
     end
     tag
   end  

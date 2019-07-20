@@ -8,8 +8,8 @@ import {
 import { Container } from 'semantic-ui-react';
 
 import Menu from './menu';
-import Items from './containers/items';
-import Registrations from './containers/registrations';
+import Items from './pages/items';
+import Registrations from './pages/registrations';
 
 const Home: React.SFC<{}> = () => (
   <div>
