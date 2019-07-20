@@ -14,8 +14,8 @@
     #admin-wrapper
       #sidebar{ class: cookies['sidebar-active'] == 'true' ? 'active' : ''}
         .sidebar-header
-          %h3 Control Panel
-          %strong CP
+          = image_tag('logo_white.svg', id: 'logo', size: '60x60', alt: 'sportified')
+          .title SPORTIFIED
         %ul.list-unstyled.components
           -#%li
           -#  %a.collapsed{ href: '#home-submenu', data: { toggle: :collapse }, aria: { expanded: :false } }

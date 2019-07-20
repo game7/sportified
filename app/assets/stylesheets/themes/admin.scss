@@ -107,11 +107,14 @@ body {
   }
 
   .sidebar-header {
-    padding: 20px;
+    padding: 10px;
     background: #000000;
-    strong {
-      font-size: 1.8em;
-      display: none;
+    .title {
+      line-height: 40px;
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 24px;
+      vertical-align: middle;
     }
   }
 
@@ -153,11 +156,8 @@ body {
     text-align: center;
 
     .sidebar-header {
-      h3 {
+      .title {
         display: none;
-      }
-      strong {
-        display: block;
       }
     }
 
@@ -191,14 +191,6 @@ body {
     max-width: 80px;
     text-align: center;
     margin-left: -80px !important;
-    .sidebar-header {
-      h3 {
-        display: none;
-      }
-      strong {
-        display: block;
-      }
-    }
     &.active {
       margin-left: 0 !important;
     }
