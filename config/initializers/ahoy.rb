@@ -10,4 +10,4 @@ end
 # set to true for JavaScript tracking
 Ahoy.api = false
 
-Ahoy.track_bots = true
+Ahoy.track_bots = false
