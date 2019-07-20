@@ -9,5 +9,5 @@
         = f.input :last_name
     .row
       .col-sm-4
-        = f.input :birthdate, include_blank: true, start_year: Date.today.year - 110, end_year: Date.today.year
+        = f.input :birthdate, html5: true
   = f.button :wrapped, :cancel => return_url
