@@ -10,12 +10,12 @@ interface Props extends RouteComponentProps<{}> {
 
 export const ItemRegistrations: FC<Props> = (props) => {
 
-
+  const { item = ({} as Item) } = props;
+  const { registrations = ([] as Registration[])} = item;
+  const sorted = Sort(registrations).desc(r => r.id);
   const [ exporting, setExporting ] = useState(false);
 
-
   const handleExportClick = () => {
-    const { item = ({} as Item) } = this.props;
     setExporting(true);
     fetch(`/registrar/api/items/${item.id}/extract`)
       .then(response => response.json())
@@ -27,9 +27,7 @@ export const ItemRegistrations: FC<Props> = (props) => {
       });
   }
 
-  const { item = ({} as Item) } = props;
-  const { registrations = ([] as Registration[])} = item;
-  const sorted = Sort(registrations).desc(r => r.id);
+
   return (
     <div>
       <Button onClick={handleExportClick} loading={exporting}>
