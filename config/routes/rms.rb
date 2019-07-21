@@ -43,7 +43,7 @@ scope '/registrar', module: 'rms' do
     get 'register', on: :member
   end
 
-  resources :registrations, :only => [:show]
+  resources :registrations, :only => [:show], as: :regsitrar_registration
 
   root 'items#index'
 
