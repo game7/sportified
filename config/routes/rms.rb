@@ -44,9 +44,7 @@ scope '/registrar', module: 'rms' do
   end
 
   resources :registrations, :only => [:show], as: :regsitrar_registration
+  
+  root 'items#index', as: :registrar_root_path
 
-end
-
-namespace :registrar do
-  root 'items#index'
 end
