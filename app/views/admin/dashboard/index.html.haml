@@ -1,36 +1,22 @@
 - title Dashboard
+.container
+  .row
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading Unique Visitors
+        .panel-body
+          = column_chart @visits_by_day
 
-.row
-  .col-sm-4
-    .panel.panel-default
-      .panel-heading Unique Visitors
-      .panel-body
-        = column_chart @visits_by_day
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading Top Pages
+        .panel-body
+          = bar_chart @top_pages      
 
-  .col-sm-4
-    .panel.panel-default
-      .panel-heading Top Pages
-      .panel-body
-        = bar_chart @top_pages      
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading By Device
+        .panel-body
+          = pie_chart @by_device              
 
-  .col-sm-4
-    .panel.panel-default
-      .panel-heading By Device
-      .panel-body
-        = pie_chart @by_device              
-
--# .tiled
--#   .row
--#     = render partial: 'tile', locals: { title: 'Calendar', url: admin_events_path, icon_name: 'calendar-alt' }
--#     = render partial: 'tile', locals: { title: 'New Calendar', url: proto_admin_events_path, icon_name: 'calendar-alt' }
--#     = render partial: 'tile', locals: { title: 'Games', url: admin_league_games_path, icon_name: 'calendar-check' }
--#     = render partial: 'tile', locals: { title: 'Programs', url: admin_programs_path, icon_name: 'cubes' }
--#     = render partial: 'tile', locals: { title: 'Pages', url: pages_path, icon_name: 'file-alt' }
--#     = render partial: 'tile', locals: { title: 'Posts', url: admin_posts_path, icon_name: 'sticky-note' }
--#     = render partial: 'tile', locals: { title: 'Users', url: admin_users_path, icon_name: 'user' }
--#     = render partial: 'tile', locals: { title: 'Locations', url: admin_locations_path, icon_name: 'map-marker' }
--#     = render partial: 'tile', locals: { title: 'Clubs', url: admin_clubs_path, icon_name: 'users' }
--#     = render partial: 'tile', locals: { title: 'Chromecasts', url: admin_chromecasts_path, icon_name: 'chrome', icon_style: :fab }
--#     = render partial: 'tile', locals: { title: 'Upload', url: admin_uploads_path, icon_name: 'upload' }
-
-= render partial: 'admin/events/assign_form', locals: { form: @assign_form }
+  = render partial: 'admin/dashboard/locker_rooms', locals: { date: @date }

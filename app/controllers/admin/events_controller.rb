@@ -5,7 +5,7 @@ class Admin::EventsController < Admin::AdminController
 
   before_action :mark_return_point, only: [:destroy]
   before_action :add_events_breadcrumb
-  before_action :load_event, only: [:destroy]
+  before_action :load_event, only: [:update, :destroy]
   before_action :load_options, only: [:new, :create]
 
   def index
@@ -47,9 +47,8 @@ class Admin::EventsController < Admin::AdminController
     return_to_last_point :success => 'Event has been deleted.'
   end
 
-  def assign
-    @form = Admin::Events::AssignForm.new(Date.parse(params['event']['date']))
-    @form.submit(params)
+  def update
+    @event.update_attributes params.require(:event).permit(:home_team_locker_room_id, :away_team_locker_room_id) 
   end
 
   private

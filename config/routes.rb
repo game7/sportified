@@ -149,7 +149,7 @@
         end
         resources :seasons
       end
-      resources :events, :only => [:new, :create, :edit, :update]
+      resources :events, :only => [:new, :create, :edit, :update] 
       resources :games, :only => [:index, :new, :create, :edit, :update]
     end
 
@@ -175,10 +175,14 @@
       resources :locker_rooms
     end
 
-    resources :events, only: [:index, :destroy] do
-      patch :assign, on: :collection
+    resources :events, only: [:index, :update, :destroy] do
       get :proto, on: :collection
     end
+    namespace :events do
+      resources :locker_rooms, only: [] do
+        post :assign, on: :collection
+      end
+    end   
 
     namespace :general do
       resources :events, only: [:new, :create, :edit, :update]

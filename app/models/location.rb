@@ -28,6 +28,8 @@ class Location < ActiveRecord::Base
       where(type: 'LockerRoom')
     end
   end
+  has_many :playing_surfaces
+  has_many :locker_rooms, through: :playing_surfaces
 
   validates_presence_of :name
 
