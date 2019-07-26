@@ -45,6 +45,7 @@
                   %input{name: 'event[home_team_name]', type: :text, class: 'form-control input-sm', value: event.home_team_name, style: 'display: inline-block; width: 150px;' } 
                   != ' '
                   .btn-group.btn-group-sm{ data: { toggle: :buttons }}
+                    %input{ type: :hidden, name: "event[home_team_locker_room_id]" }
                     - event.location.locker_rooms&.each do |locker_room|
                       - checked = (locker_room.id == event.home_team_locker_room_id)
                       %label.btn.btn-default{ class: checked ? 'active' : '' }
@@ -84,3 +85,23 @@
       $(this).closest('form').trigger('submit.rails');
     })
   })
+  $(function() {
+    var selectors = [    
+      "input[name='event[home_team_locker_room_id]']",
+      "input[name='event[away_team_locker_room_id]']"
+    ]
+    $(selectors.join(', ')).each(function() {
+      var radio = this;
+      var $radio = $(this);
+      $radio.closest('label').click(function(e) {
+        $label = $(this);
+        if($label.hasClass('active')) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          $radio.prop('checked', false);
+          $label.removeClass('active');
+          $label.closest('form').trigger('submit.rails');
+        }
+      })
+    })
+  })  
