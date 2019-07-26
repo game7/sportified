@@ -2,7 +2,7 @@
 .panel.panel-default#locker-rooms
   .panel-heading
     .pull-left
-      %h4= "Locker Rooms for #{date.today? ? 'Today' : date.strftime('%A %b %-d')}"
+      %h4= "Events for #{date.today? ? 'Today' : date.strftime('%A %b %-d')}"
     .pull-right
       = link_to 'Auto Assign', assign_admin_events_locker_rooms_path(date: date), method: :post, remote: true, class: 'btn btn-primary'
       != ' '
@@ -18,7 +18,7 @@
         %th Summary
         %th Away Team
         %th Home Team
-        -# %td Actions
+        %th
     %tbody
       - events.each do |event|     
         %tr
@@ -29,30 +29,54 @@
               %em No Location assigned for this game
           - if event.location.locker_rooms
             %td
-              = form_for admin_event_path(event), remote: true do |f|     
+              = form_for event, url: admin_event_path(event), remote: true do |f|     
                 .form-group{ style: 'margin-bottom: 0;'}
-                  .btn-group{ data: { toggle: :buttons }}
+                  %input{name: 'event[away_team_name]', type: :text, class: 'form-control input-sm', value: event.away_team_name, style: 'display: inline-block; width: 150px;' } 
+                  != ' '
+                  .btn-group.btn-group-sm{ data: { toggle: :buttons }}
                     - event.location.locker_rooms&.each do |locker_room|
                       - checked = (locker_room.id == event.away_team_locker_room_id)
                       %label.btn.btn-default{ class: checked ? 'active' : '' }
                         %input{ type: :radio, name: "event[away_team_locker_room_id]", value: locker_room.id, checked: checked}
                         = locker_room.name               
             %td
-              = form_for event, url: admin_event_path(event), remote: true do |f|    
+              = form_for event, url: admin_event_path(event), remote: true do |f|   
                 .form-group{ style: 'margin-bottom: 0;'}
-                  .btn-group{ data: { toggle: :buttons }}
+                  %input{name: 'event[home_team_name]', type: :text, class: 'form-control input-sm', value: event.home_team_name, style: 'display: inline-block; width: 150px;' } 
+                  != ' '
+                  .btn-group.btn-group-sm{ data: { toggle: :buttons }}
                     - event.location.locker_rooms&.each do |locker_room|
                       - checked = (locker_room.id == event.home_team_locker_room_id)
                       %label.btn.btn-default{ class: checked ? 'active' : '' }
                         %input{ type: :radio, name: "event[home_team_locker_room_id]", value: locker_room.id, checked: checked}
                         = locker_room.name            
-          -# %td
+          %td{ style: 'width: 20px;'}
+            .btn-group.dropup
+              %button.btn.btn-primary.btn-sm.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}
+                = icon(:cog)
+              %ul.dropdown-menu.dropdown-menu-right
+                %li.dropdown-header Event
+                %li
+                  = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event])
+                %li
+                  = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id)
+                %li
+                  = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+                - if event.class.to_s == 'League::Game'
+                  %li.divider{role: "separator"}
+                  %li.dropdown-header Game
+                  %li
+                    = link_to 'Result', edit_admin_game_result_path(event)
+                    = link_to 'Statsheet', edit_admin_game_statsheet_path(event)     
+                    = link_to 'Print Scoresheet', print_admin_game_statsheet_path(event), target: "_blank"     
   .panel-footer
     %em Locker Room assignments are are saved automatically
 
 :javascript
   $(function() {
     var selectors = [
+      "input[name='event[home_team_name]']",
+      "input[name='event[away_team_name]']",      
       "input[name='event[home_team_locker_room_id]']",
       "input[name='event[away_team_locker_room_id]']"
     ]

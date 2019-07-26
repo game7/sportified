@@ -48,7 +48,7 @@ class Admin::EventsController < Admin::AdminController
   end
 
   def update
-    @event.update_attributes params.require(:event).permit(:home_team_locker_room_id, :away_team_locker_room_id) 
+    @event.update_attributes params.require(:event).permit(:home_team_name, :away_team_name, :home_team_locker_room_id, :away_team_locker_room_id) 
   end
 
   private
