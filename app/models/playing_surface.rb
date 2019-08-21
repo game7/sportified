@@ -7,15 +7,12 @@
 #  name        :string
 #  tenant_id   :integer
 #  location_id :integer
-#  parent_id   :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  preference  :string
 #
 # Indexes
 #
 #  index_facilities_on_location_id  (location_id)
-#  index_facilities_on_parent_id    (parent_id)
 #  index_facilities_on_tenant_id    (tenant_id)
 #
 # Foreign Keys
@@ -24,7 +21,5 @@
 #
 
 class PlayingSurface < Facility
-
-  has_many :locker_rooms, foreign_key: "parent_id"
 
 end

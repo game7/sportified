@@ -29,7 +29,7 @@ class Location < ActiveRecord::Base
     end
   end
   has_many :playing_surfaces
-  has_many :locker_rooms, through: :playing_surfaces
+  has_many :locker_rooms
 
   validates_presence_of :name
 

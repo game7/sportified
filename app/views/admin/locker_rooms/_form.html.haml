@@ -2,6 +2,4 @@
   .panel.panel-default
     .panel-body
       = f.input :name
-      = f.input :playing_surface_id, :collection => @playing_surfaces
-      = f.input :preference, :collection => @preferences
       = f.button :wrapped, :cancel => return_url

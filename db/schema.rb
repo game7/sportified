@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_191202) do
+ActiveRecord::Schema.define(version: 2019_08_21_200320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -189,12 +189,9 @@ ActiveRecord::Schema.define(version: 2019_07_19_191202) do
     t.string "name"
     t.integer "tenant_id"
     t.integer "location_id"
-    t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "preference"
     t.index ["location_id"], name: "index_facilities_on_location_id"
-    t.index ["parent_id"], name: "index_facilities_on_parent_id"
     t.index ["tenant_id"], name: "index_facilities_on_tenant_id"
   end
 
