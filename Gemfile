@@ -75,11 +75,6 @@ gem 'ice_cube', '~> 0.16.2'
 
 gem 'httparty', '~> 0.16.4'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-moment'
-end
-
-
 
 #gem 'pages', :path => 'vendor/engines/pages'
 
