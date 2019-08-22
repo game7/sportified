@@ -37,7 +37,6 @@ class Admin::EventsController < Admin::AdminController
     date = params[:date] ? Date.parse(params[:date]) : Date.current
     Date.beginning_of_week = :sunday
 
-    # @events = render json: get_events(date, view)
     @events = ActiveModelSerializers::SerializableResource.new get_events(date, view)
     @tags = ActiveModelSerializers::SerializableResource.new ActsAsTaggableOn::Tag.order(:name)
   end
@@ -48,7 +47,7 @@ class Admin::EventsController < Admin::AdminController
   end
 
   def update
-    @event.update_attributes params.require(:event).permit(:home_team_name, :away_team_name, :home_team_locker_room_id, :away_team_locker_room_id) 
+    @event.update_attributes params.require(:event).permit(:home_team_name, :away_team_name, :home_team_locker_room_id, :away_team_locker_room_id)
   end
 
   private
