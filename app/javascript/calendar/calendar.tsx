@@ -10,6 +10,7 @@ import { Store, Event, Tag } from './store';
 // import { Option } from 'react-select';
 import 'react-select/dist/react-select.css';
 import './styles.scss'
+import './calendar.css'
 import { withRouter, RouteComponentProps } from 'react-router';
 import { string } from 'prop-types';
 // import { Modal, Static, TagList } from './components';
@@ -23,23 +24,6 @@ function dateToString(date: Date) {
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
 }
 
-const EventWrapper: FC<EventWrapperProps<Event>> = (props) => (
-  <div data-foo="bar">
-    {props.children}
-  </div>
-)
-
-const EventComponent: FC<{event: Event}> = ({event}) => (
-  <div>{event.summary}</div>
-)
-
-const MonthEvent: FC<{event: Event}> = ({ event }) => {
-    return (
-      <div style={{ fontSize: 12 }}>
-        {localizer.format(event.startsOn, 'h:mm', 'en-us')} {event.summary}
-      </div>
-    )
-  }
 
 const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
   const params = new URLSearchParams(location.search)
@@ -86,19 +70,70 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
     })
   }
 
-  const getEventProps: EventPropGetter<Event> = (event, start, end, isSelected) => {
-    const base = {
-      borderRadius: 0
+  const MonthEvent: FC<{event: Event}> = ({ event }) => {
+    const tag = tags[event.tags[0]];
+    const tagColor = (tag && tag.color) || '#999999';
+    const style = {
+      fontSize: 12,
+      padding: '0 2px',
+      color: '#000000',
+      backgroundColor: `${tagColor}40`,
+      // border: `1px solid ${tagColor}`,
+      borderLeft: `8px solid ${tagColor}`,
+      height: '100%'
     }
-    const tag = event.tags[0];
-    if(!tag) return { style: base };
-    return {
-      style: {
-        ...base,
-        backgroundColor: tags[tag].color,
-        borderRadius: 0
-      }
+    return (
+      <div style={style}>
+        {localizer.format(event.startsOn, 'h:mm', 'en-us')} {event.summary}
+      </div>
+    )
+  }
+
+  const WeekEvent: FC<{event: Event}> = ({ event }) => {
+    const tag = tags[event.tags[0]];
+    const tagColor = (tag && tag.color) || '#999999';
+    const style = {
+      fontSize: 12,
+      padding: '2px',
+      color: '#000000',
+      backgroundColor: `${tagColor}40`,
+      // border: `1px solid ${tagColor}`,
+      borderLeft: `8px solid ${tagColor}`,
+      height: '100%'
     }
+    return (
+      <div style={style}>
+        {event.summary}
+      </div>
+    )
+  }
+
+  const AgendaEvent: FC<{event: Event}> = ({ event }) => {
+    const tag = tags[event.tags[0]];
+    const tagColor = (tag && tag.color) || '#999999';
+    const style = {
+      padding: '5px 10px',
+      color: '#000000',
+      // backgroundColor: `${tagColor}40`,
+      borderLeft: `0px solid ${tagColor}`,
+      height: '100%',
+      verticalAlign: 'middle'
+    };
+    const dot = {
+      height: 14,
+      width: 14,
+      backgroundColor: tagColor,
+      borderRadius: '50%',
+      display: 'inline-block',
+      marginRight: 8,
+      marginBottom: -1
+    }
+    return (
+      <div style={style}>
+        <span style={dot}/>
+        {event.summary}
+      </div>
+    )
   }
 
   return (
@@ -117,13 +152,19 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
         onDrillDown={handleDrillDown}
         // onShowMore={handleShowMore}
         popup={true}
-        eventPropGetter={getEventProps}
         min={new Date(1970, 1, 1, 6)}
         components={{
-          event: EventComponent,
-          eventWrapper: EventWrapper,
           month: {
             event: MonthEvent
+          },
+          week: {
+            event: WeekEvent
+          },
+          day: {
+            event: WeekEvent
+          },
+          agenda: {
+            event: AgendaEvent
           }
         }}
       />
