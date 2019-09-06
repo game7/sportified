@@ -21,3 +21,7 @@
 table.rbc-agenda-table tbody > tr > td.rbc-agenda-event-cell {
   padding: 0;
 }
+
+.ui.table tbody tr td.selectable {
+  padding: .78571429em .78571429em !important;
+}

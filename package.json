@@ -40,9 +40,10 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^4.1.1",
     "react-select": "^1.2.1",
+    "react_ujs": "^2.6.0",
     "recharts": "^1.0.0-alpha.1",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.87.3",
+    "semantic-ui-react": "^0.88.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "yarn": "^0.24.5"

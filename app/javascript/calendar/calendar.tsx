@@ -15,6 +15,9 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { string } from 'prop-types';
 // import { Modal, Static, TagList } from './components';
 // import { getTextColor } from './utils';
+import 'semantic-ui-css/semantic.min.css'
+import { Modal, Form, Popup, Label, Button, Table } from 'semantic-ui-react';
+import DateTimeInput from './date-time-input';
 
 const localizer = momentLocalizer(moment)
 
@@ -32,6 +35,7 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
   const month = `${date.getFullYear()}-${date.getMonth() + 1}`
   const [events, setEvents] = useState<Event[]>([])
   const [tags, setTags] = useState<Record<string, Tag>>({})
+  const [selection, setSelection] = useState<Event>()
 
   useEffect(function getEvents() {
     Store.getEvents(date).then(setEvents);
@@ -70,6 +74,30 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
     })
   }
 
+  const EventPopup: FC<{event: Event}> = ({ event }) => {
+    return (
+      <>
+        <div>
+          <strong>Start: </strong>{localizer.format(event.startsOn, 'h:mm', 'en-us')}
+        </div>
+        <div>
+          <strong>End: </strong>{localizer.format(event.endsOn, 'h:mm', 'en-us')}
+        </div>
+        <div>
+          <strong>Tags: </strong>
+          <Label.Group>
+            {event.tags.map(tag => (
+              <Label key={tag} style={{ backgroundColor: tags[tag].color }}>{tags[tag].name}</Label>
+            ))}
+          </Label.Group>
+        </div>
+        <div>
+          <Button>Edit</Button>
+        </div>
+      </>
+    )
+  }
+
   const MonthEvent: FC<{event: Event}> = ({ event }) => {
     const tag = tags[event.tags[0]];
     const tagColor = (tag && tag.color) || '#999999';
@@ -82,10 +110,33 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
       borderLeft: `8px solid ${tagColor}`,
       height: '100%'
     }
-    return (
+    const Event = (
       <div style={style}>
         {localizer.format(event.startsOn, 'h:mm', 'en-us')} {event.summary}
       </div>
+    )
+
+    return (
+      <Modal trigger={Event} >
+        <Modal.Header>{event.summary}</Modal.Header>
+        <Modal.Content>
+          <Form>
+            <Form.Field>
+              <label>Summary</label>
+              <input value={event.summary} style={{ width: 400 }}/>
+            </Form.Field>
+            <DateTimeInput label="Date / Time" />
+            <Form.Field>
+              <label>Duration</label>
+              <input value={event.duration} style={{ width: 50 }}/>
+            </Form.Field>
+            <Form.Field>
+              <label>Tags</label>
+              <input value={event.tags.map(t => tags[t].name).join(', ')} style={{ width: 400 }}/>
+            </Form.Field>
+          </Form>
+        </Modal.Content>
+      </Modal>
     )
   }
 
@@ -151,6 +202,9 @@ const Page: FC<RouteComponentProps<Props>> = ({ history, location }) => {
         onView={handleView}
         onDrillDown={handleDrillDown}
         // onShowMore={handleShowMore}
+        selectable={false}
+        onSelectEvent={(event) => { setSelection(event) }}
+        onSelecting={(range) => { console.log('selecting', range); return true; }}
         popup={true}
         min={new Date(1970, 1, 1, 6)}
         components={{
