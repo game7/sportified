@@ -41,7 +41,7 @@ gem 'groupdate'
 gem 'haml'
 gem 'kaminari'
 
-gem 'devise', '~>4.2'
+gem 'devise', '~>4.7'
 
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
