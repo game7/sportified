@@ -51,6 +51,35 @@
         .col-sm-6
           = f.input :text_after
 
+  - if @game.persisted?
+    .panel.panel-default
+      .panel-body
+        %table.table
+          %thead
+            %tr
+              %th Time
+              %th Action
+              %th User
+          %tbody
+            - @game.audits.each do |audit|
+              %tr
+                %td= "#{time_ago_in_words(audit.created_at)} ago"
+                %td= audit.action
+                %td= audit&.user&.full_name
+                %td
+                  - if audit.action == 'update'
+                    %table.table
+                      %thead
+                        %tr
+                          %th Attribute
+                          %th From -> To
+                      %tbody
+                        - audit.audited_changes.each do |attr, change|
+                          %tr
+                            %td= attr.humanize
+                            %td= change[0]
+                            %td= change[1]
+
   = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do
