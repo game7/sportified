@@ -17,9 +17,10 @@
 class Section < ActiveRecord::Base
 
     belongs_to :page
-    
+    has_many :blocks
+
     PATTERNS = [
-      "100", 
+      "100",
       "50|50",
       "33|66",
       "66|33",
@@ -34,14 +35,14 @@ class Section < ActiveRecord::Base
 
     def self.patterns
       @patterns ||= PATTERNS
-    end    
-    
+    end
+
     def columns
       @columns ||= pattern.split("|")
     end
-    
+
     after_destroy do |section|
       section.page.blocks.where(section_id: section.id).destroy_all
     end
-    
+
 end

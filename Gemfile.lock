@@ -45,6 +45,8 @@ GEM
       activemodel (>= 4.1, < 6.1)
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
+    active_storage_base64 (0.1.4)
+      rails (~> 5.2)
     activejob (5.2.3)
       activesupport (= 5.2.3)
       globalid (>= 0.3.6)
@@ -441,6 +443,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   active_model_serializers (~> 0.10.2)
+  active_storage_base64
   acts-as-taggable-on!
   ahoy_matey
   ancestry

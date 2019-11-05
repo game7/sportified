@@ -37,8 +37,8 @@ class Admin::EventsController < Admin::AdminController
     date = params[:date] ? Date.parse(params[:date]) : Date.current
     Date.beginning_of_week = :sunday
 
-    @events = ActiveModelSerializers::SerializableResource.new get_events(date, view)
-    @tags = ActiveModelSerializers::SerializableResource.new ActsAsTaggableOn::Tag.order(:name)
+    @events = ActiveModelSerializers::SerializableResource.new get_events(date, view), adapter: :attributes
+    @tags = ActiveModelSerializers::SerializableResource.new ActsAsTaggableOn::Tag.order(:name), adapter: :attributes
   end
 
   def destroy

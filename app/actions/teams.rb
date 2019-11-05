@@ -1,0 +1,3 @@
+module Teams
+
+end

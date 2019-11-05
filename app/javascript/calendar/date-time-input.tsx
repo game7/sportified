@@ -25,7 +25,7 @@ export const DateTimeInput: FC<Props> = (props) => {
     onChange = () => {}
   } = props;
   const [value, setValue] = useState(props.value);
-  const Input = <input value={moment(value).format(format)} onChange={(event) => { onChange(event.target.value) }} style={{ width: 100 }} />
+  const Input = <input value={moment(value).format(format)} onChange={(event) => { onChange(event.target.value) }} style={{ width: 150 }} />
   console.log()
   return (
     <Form.Field>

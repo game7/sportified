@@ -24,4 +24,5 @@ class League::Program < Program
   has_many :seasons
   has_many :divisions
   has_many :events
+  has_many :teams, through: :seasons
 end

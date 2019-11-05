@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : 'Untitled'
+      != " :: #{tenant.name}" if tenant
+    = csrf_meta_tag
+    = javascript_include_tag 'console'
+    = javascript_pack_tag 'application'
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
+    = yield(:head)
+  %body
+    = yield

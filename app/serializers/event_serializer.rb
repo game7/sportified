@@ -66,7 +66,4 @@ class EventSerializer < ActiveModel::Serializer
   def tags
     object.taggings.collect{|tagging| tagging.tag_id.to_s }
   end
-  def id
-    object.id.to_s
-  end
 end

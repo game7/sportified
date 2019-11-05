@@ -55,5 +55,11 @@
 
 class League::TeamSerializer < ActiveModel::Serializer
   type :team
-  attributes :id, :division_id, :season_id, :name, :short_name
+  attributes :id, :division_id, :season_id, :name, :short_name, :show_in_standings, :avatar_url, :primary_color, :secondary_color, :accent_color
+  has_many :players
+  def avatar_url
+    if object.avatar.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(object.avatar, only_path: true)
+    end
+  end
 end

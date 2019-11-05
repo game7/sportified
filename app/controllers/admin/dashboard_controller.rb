@@ -15,8 +15,8 @@ class Admin::DashboardController < Admin::AdminController
                             .count
     @by_device = Ahoy::Visit.where('started_at >= ?', 1.week.ago)
                             .group(:device_type)
-                            .count                            
-                            
+                            .count
+
   end
 
 end

@@ -1,5 +1,8 @@
 ::Sportified::Application.routes.draw do
 
+  post 'actions' => 'actions#create'
+  post 'actions/*type' => 'actions#create'
+
   namespace :host do
     resources :visits, only: [ :index, :show ]
     resources :events, only: [ :show ]
@@ -102,7 +105,7 @@
 
   namespace :admin do
     root :to => "dashboard#index"
-
+    get 'console(/*path)', to: 'console#index'
     get 'uploads(/*path)', to: 'uploads#index', :as => :uploads
 
     resources :users do
@@ -149,7 +152,7 @@
         end
         resources :seasons
       end
-      resources :events, :only => [:new, :create, :edit, :update] 
+      resources :events, :only => [:new, :create, :edit, :update]
       resources :games, :only => [:index, :new, :create, :edit, :update]
     end
 
@@ -182,7 +185,7 @@
       resources :locker_rooms, only: [] do
         post :assign, on: :collection
       end
-    end   
+    end
 
     namespace :general do
       resources :events, only: [:new, :create, :edit, :update]

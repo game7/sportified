@@ -1,0 +1,3 @@
+module Leagues
+
+end

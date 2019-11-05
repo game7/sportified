@@ -1,5 +1,6 @@
 # ActiveModel::Serializer.config.adapter = ActiveModel::Serializer::Adapter::JsonApi
-ActiveModel::Serializer.config.adapter = :attributes
+#ActiveModel::Serializer.config.adapter = :attributes
+ActiveModel::Serializer.config.adapter = :json
 # ActiveModelSerializers.config.adapter = :json_api
 ActiveModel::Serializer.config.key_transform = :camel_lower
 

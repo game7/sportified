@@ -53,7 +53,7 @@
 #  index_league_teams_on_tenant_id    (tenant_id)
 #
 
-class League::Team < ActiveRecord::Base
+class League::Team < ApplicationRecord
   include ::Sportified::TenantScoped
   include ::Concerns::Brandable
   include ::Concerns::Recordable
@@ -67,6 +67,8 @@ class League::Team < ActiveRecord::Base
   validates_presence_of :name, :division_id, :season_id
 
   has_many :players
+
+  has_one_base64_attached :avatar
 
   def games
     ::League::Game.where("home_team_id = ? OR away_team_id = ?", id, id)

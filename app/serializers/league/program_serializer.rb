@@ -23,4 +23,6 @@
 class League::ProgramSerializer < ActiveModel::Serializer
   type :league
   attributes :id, :name, :description, :created_at, :updated_at
+  has_many :seasons
+  has_many :divisions
 end

@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
-ruby '2.6.3'
+ruby '2.6.5'
 gem 'rails', '~> 5.2.3'
 
 gem 'active_model_serializers', '~> 0.10.2'
+gem 'active_storage_base64'
 
 gem 'bootsnap', require: false
 

@@ -22,7 +22,8 @@ Rails.application.config.assets.precompile += %w(
   cast.css
   pages.js
   lang/en.js
-  fullcalendar.css
+  fullcalendar.
+  console.js
   calendar/application.js
   calendar/application.css
   components.js

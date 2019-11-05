@@ -18,7 +18,7 @@ class Api::EventsController < Api::BaseController
     events = Event.all.after(from).before(to).order(:starts_on).includes(:program, :location, taggings: :tag)
     # render json: events
     # render json: EventsResponse.new(events), include: ['events', 'events.tags']
-    render json: events, include: [:location, :program, :tags]
+    render json: events, include: [:location, :program, :tags], adapter: :attributes
   end
 
 end

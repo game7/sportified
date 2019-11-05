@@ -7,3 +7,7 @@ export function getTextColor(backgroundHexColor: string) {
   const a = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return (a < 0.5) ? '#000000' : '#ffffff';
 }
+
+export function times(count: number, seed = 'x') {
+  return seed.repeat(count).split('')
+}

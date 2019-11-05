@@ -27,5 +27,8 @@
 
 class League::DivisionSerializer < ActiveModel::Serializer
   type :division
-  attributes :id, :program_id, :name, :slug, :show_standings, :show_players, :show_statistics, :created_at, :updated_at
+  attributes :id, :program_id, :name, :slug, :show_standings, :show_players, :show_statistics, :created_at, :updated_at, :season_ids
+  def season_ids
+    object.seasons.map(&:id)
+  end
 end

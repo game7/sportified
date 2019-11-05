@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Table, Header, Icon } from 'semantic-ui-react'
+import { times } from '../utils'
 import * as moment from 'moment'
 
 interface MonthPickerProps {
@@ -18,15 +19,6 @@ export const MonthPicker: FC<MonthPickerProps> = (props) => {
   const rows = [1, 2, 3];
   const columns = [1, 2, 3, 4];
   const baseMonth = moment(date).startOf('year');
-
-  function renderMonth(row, col) {
-     const delta = (row - 1) * 4 + (col - 1);
-    return (
-      <Table.Cell key={col} selectable style={{ cursor: 'pointer' }} onClick={() => { onSelect(moment(date).add(delta, 'month').toDate()) }}>
-        {moment(baseMonth).add(delta, 'month').format('MMMM')}
-      </Table.Cell>
-    )
-  }
 
   function previousYear() {
     setDate(moment(date).add(-1, 'year').toDate())
@@ -55,9 +47,18 @@ export const MonthPicker: FC<MonthPickerProps> = (props) => {
       </Table>
       <Table columns={4} textAlign="center" celled style={{ marginTop: 0 }}>
         <Table.Body>
-          {rows.map(row => (
+          {times(3).map((_, row) => (
             <Table.Row key={row}>
-              {columns.map(col => renderMonth(row, col))}
+              {times(4).map((_, col) => (
+                <Table.Cell
+                  key={col}
+                  selectable
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => { onSelect(moment(date).month((row * 4) + col).toDate()) }}
+                >
+                  {moment(date).month((row * 4) + col).format('MMMM')}
+                </Table.Cell>
+              ))}
             </Table.Row>
           ))}
         </Table.Body>
