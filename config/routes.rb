@@ -130,7 +130,7 @@
 
 
   resources :seasons, :only => [], :shallow => true do
-    resources :teams, :only => [ :new, :create, :edit, :update, :delete]
+    resources :teams, :only => [ :new, :create, :edit, :update, :delete], :module => :league
   end
 
   resources :cast, :only => :index
