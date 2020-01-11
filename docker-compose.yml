@@ -1,0 +1,45 @@
+version: '3'
+volumes:
+  box:
+  app:
+  db:
+services:
+  box:
+    image: busybox
+    volumes:
+      - /box
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgres/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+  web:
+    build:
+      context: .
+    command: ./scripts/start
+    volumes:
+      - app:/app
+      - box:/box
+    environment:
+      BUNDLE_PATH: /box
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+  webpacker:
+    build:
+      context: .
+    command: bundle exec ./bin/webpack-dev-server
+    volumes:
+      - box:/box          
+    ports:
+      - 3035:3035
+    environment:
+      BUNDLE_PATH: /box  
+      NODE_ENV: development
+      WEBPACK_DEV_SERVER_HOST: 0.0.0.0
+    depends_on:
+      - postgres
