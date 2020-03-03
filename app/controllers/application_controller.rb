@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :store_current_location, unless: :devise_controller?
 
-  protect_from_forgery
+  protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :json_request?
 
   helper :layout
@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :load_objects
   before_action :set_breadcrumbs
   before_action :set_area_navigation
+  skip_before_action :track_ahoy_visit
   after_action :track_action
 
   def initialize

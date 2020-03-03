@@ -1,7 +1,6 @@
 - title 'Confirmation'
-.row
-  .col-sm-6
-    %br
+.ui.equal.width.grid
+  .column
     %p
       %strong= "Congratulations #{user.first_name}!  "
     %p
@@ -17,12 +16,12 @@
       %strong= Tenant.current.name
       and
       %strong sportified.net
-    %br
-.row
-  .col-sm-6
-    .well{ style: 'text-align: center;' }
-      CONFIRMATION CODE
-      %h2= registration.confirmation_code
+  .column
+    .ui.placeholder.segment
+      .ui.icon.header
+        = semantic_icon :thumbs, :up
+        CONFIRMATION CODE
+        %h2= registration.confirmation_code
 
 
 %hr

@@ -1,19 +1,1 @@
 
-
-#new_user {
-	@extend .well;
-	max-width: 400px;
-	margin: 50px auto;
-	input[type="submit"] {
-		@extend .btn-block;
-	}
-}
-
-#user_email,
-#user_name,
-#user_password,
-#user_password_confirmation,
-#user_current_password
-{
-
-}

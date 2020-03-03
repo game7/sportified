@@ -1,4 +1,95 @@
-= month_calendar start_date: @date,events: @events do |date, events|
-  .date= date.day
-  .events
-    = render :partial => 'admin/events/views/event', :collection => events
+
+- first_day = @date.beginning_of_month.beginning_of_week
+- last_day = @date.end_of_month.end_of_week
+- events_by_date = @events.group_by{ |event| event.starts_on.to_date }
+
+.ui.grid.three.columns
+  .column
+    .ui.buttons.basic
+      = link_to semantic_icon(:chevron, :left), params.permit!.merge({:date => @date - 1.month}), class: [:ui, :icon, :button]
+      = link_to 'Today', params.permit!.merge({:date => Date.today}), class: [:ui, :button]
+      = link_to semantic_icon(:chevron, :right), params.permit!.merge({:date => @date + 1.month}), class: [:ui, :icon, :button]
+  .column{ style: 'text-align: center; vertical-align: middle;' }
+    %h3= "#{@date.strftime('%B')} #{@date.strftime('%Y')}"
+  .column{ style: 'text-align: right;' }
+    .ui.dropdown.primary.button
+      = semantic_icon(:plus)
+      Add
+      .left.menu
+        .header GENERAL
+        = link_to 'Event', new_admin_general_event_path, class: :item
+        .divider
+        .header LEAGUE
+        = link_to 'Game', new_admin_league_game_path, class: :item
+        = link_to 'Event', new_admin_league_event_path, class: :item
+
+
+%table.ui.celled.table.calendar
+  %thead
+    %tr
+      %th S
+      %th M
+      %th T
+      %th W
+      %th T
+      %th F
+      %th S
+  %tbody
+    - (first_day..last_day).to_a.in_groups_of(7).each do |group|
+      %tr
+        - group.each do |day|
+          - disabled = @date.strftime('%m') != day.strftime('%m')
+          - today = day.to_date == Date.today
+          %td.day{ class: [disabled && :disabled, today && :positive] }
+            .number= day.strftime('%e')
+            - (events_by_date[day.to_date] || []).each do |event|
+              .ui.mini.fluid.button.dropdown.event
+                .time= event.starts_on.strftime('%-l:%M %P')
+                .summary= event.summary
+                .clear
+                .menu
+                  .header EVENT
+                  = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: [:item]
+                  = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], clone: event.id), class: [:item]
+                  = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', class: [:item]
+                  - if event.class.to_s == 'League::Game'
+                    .divider
+                    .header GAME
+                    = link_to 'Result', edit_admin_game_result_path(event.id), class: [:item]
+                    = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: [:item]              
+
+-# = month_calendar start_date: @date,events: @events do |date, events|
+-#   .date= date.day
+-#   .events
+-#     = render :partial => 'admin/events/views/event', :collection => events
+
+:css
+
+  table.calendar td.day {
+    height: 200px;
+    width: 14.285%;
+    vertical-align: top;
+  }
+
+  table.calendar td.day .number {
+    font-weight: bold;
+  }
+
+  table.calendar td.day .event {
+    margin-bottom: 2px;
+    padding: .78em !important;
+  }  
+
+  table.calendar td.day .event .time,
+  table.calendar td.day .event .summary {
+    float: left;
+    text-align: left;
+  } 
+
+  table.calendar td.day .event .time {
+    width: 50px;
+  } 
+
+  table.calendar td.day .event .clear {
+    clear: both;
+  }        

@@ -6,5 +6,6 @@
   $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
   $("#flash_success").slideDown();
   $("#sections").append("<%= escape_javascript( render(:partial => "sections/section", :locals => { :section => @section, :editable => true } ) )%>");
+  $("#section_<%= @section.id %> .ui.dropdown").dropdown();
   $("#section-catalog").modal('hide');
 <% end %>

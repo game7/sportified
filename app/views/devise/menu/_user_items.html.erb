@@ -1,24 +1,11 @@
 <% if user_signed_in? %>
-  <li>
-    <%= link_to('User Account', main_app.edit_user_registration_path) %>
-  </li>
-  <li>
-    <%= link_to('Schedule', main_app.user_schedule_path) %>
-  </li>
-  <li>
-    <%= link_to('Teams', main_app.user_teams_path) %>
-  </li>
-  <li>
-    <% # link_to('Registrations', rms.registrations_path) %>
-  </li>
+  <%= link_to('User Account', main_app.edit_user_registration_path, class: 'item') %>
+  <%= link_to('Schedule', main_app.user_schedule_path, class: 'item') %>
+  <%= link_to('Teams', main_app.user_teams_path, class: 'item') %>
 <% elsif 1 == 0 %>
-  <li>
-    <%= link_to('Create User Account', main_app.new_user_registration_path) %>
-  </li>
+  <%= link_to('Create User Account', main_app.new_user_registration_path, class: 'item') %>
 <% end %>
 <% if current_user_is_admin? %>
-  <li role="separator" class="divider"></li>
-  <li>
-    <%= link_to('Administration', main_app.admin_root_path) %>
-  </li>
+  <div class="divider"></div>
+  <%= link_to('Administration', main_app.admin_root_path, class: 'item') %>
 <% end %>

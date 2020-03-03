@@ -1,13 +1,13 @@
 %h4 Roles
-%table.table.table-bordered.table-striped
+%table.ui.celled.striped.table
   %thead
     %tr
-      %th{:scope => 'col'} Title
-      %th{:scope => 'col'} Subject
-      %th{:scope => 'col'} Action
+      %th Tenant    
+      %th Title
+      %th Action
   %tbody
     - user.roles.for_tenant(Tenant.current).each do |role|
       %tr
+        %td= role.tenant.name      
         %td= role.title
-        %td= role.subject_id
-        %td= link_to 'Delete', [:admin, @user, role], :confirm => 'Are you sure?', :remote => true, :method => :delete, :class => 'btn btn-small'
+        %td= link_to 'Delete', [:admin, @user, role], confirm: 'Are you sure?', remote: true, method: :delete, class: [:ui, :mini, :primary, :button]

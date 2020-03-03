@@ -54,6 +54,34 @@
 #
 
 class League::TeamSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
   type :team
-  attributes :id, :division_id, :season_id, :name, :short_name
+  attributes :id,
+    :name,
+    :short_name,
+    :slug,
+    :show_in_standings,
+    :pool,
+    :seed,
+    :tenant_id,
+    :division_id,
+    :season_id,
+    :club_id,
+    :logo,
+    :primary_color,
+    :secondary_color,
+    :accent_color,
+    :main_colors,
+    :custom_colors,
+    :crop_x,
+    :crop_y,
+    :crop_h,
+    :crop_w,
+    :created_at,
+    :updated_at,
+    :url
+
+    def url
+      object.id ? admin_league_team_path(object) : ''
+    end
 end

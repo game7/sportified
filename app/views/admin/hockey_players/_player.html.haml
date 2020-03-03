@@ -1,11 +1,11 @@
-%tr{ :id => "player_#{player.id}" }
-  %td
-    = form_for( player, :url => admin_hockey_statsheet_player_path(@statsheet.id, player), :html => { :class => "form-inline", :style => "margin: 0;" }, :remote => true ) do |f|
-      = f.check_box :games_played, { :class => "played" }
-  %td= player.jersey_number
+%tr{ id: "player_#{player.id}" }
+  %td.collapsing
+    = form_for( player, :url => admin_hockey_statsheet_player_path(@statsheet.id, player), :html => { :class => "form-inline", :style => "margin: 0;" }, remote: true ) do |f|
+      = f.check_box :games_played, { class: "played" }
+  %td.collapsing= player.jersey_number
   %td
     = "#{player.last_name}, #{player.first_name}"
     = "*" if player.player and player.player.substitute?
-  %td
-    = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), :remote => true, :title => 'Edit this player', :class => 'btn btn-xs btn-primary'
-    = link_to 'Delete', admin_hockey_statsheet_player_path(@statsheet, player), :confirm => 'Are you sure?', :method => :delete, :remote => true, :title => 'Delete this player', :class => 'btn btn-xs btn-primary'
+  %td.collapsing
+    = link_to 'Edit', edit_admin_hockey_statsheet_player_path(@statsheet, player), remote: true, class: [:ui, :primary, :mini, :button]
+    = link_to 'Delete', admin_hockey_statsheet_player_path(@statsheet, player), remote: true, confirm: 'Are you sure?', method: :delete, class: [:ui, :primary, :mini, :button]

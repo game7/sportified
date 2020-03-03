@@ -16,24 +16,34 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
     penalty_service = Hockey::PenaltyService.new(@statsheet)
     @penalty = penalty_service.create_penalty!(hockey_penalty_params)
     if @penalty.persisted?
-      @statsheet.reload
-      flash[:notice] = "Penalty Added"
+      respond_to do |format|
+        format.html do
+          @statsheet.reload
+          flash[:notice] = "Penalty Added"
+        end
+        format.json  { render json: @penalty }
+      end
     else
-      list_players
-    end
+      respond_to do |format|
+        format.html do
+          list_players
+        end 
+        format.json  { render json: @penalty.errors, status: 422 }
+      end  
+    end    
   end
 
   def update
-    @penalty.update_attributes(hockey_penalty_params)
-    if @penalty.save
+    if @penalty.update_attributes(hockey_penalty_params)
       flash[:notice] = "Penalty Updated"
+      respond_to do |format|
+        format.html { flash[:notice] = "Penalty Updated" }
+        format.json { render json: @penalty }
+      end        
     else
-      list_players
+      format.html { list_players }
+      format.json { render json: @penalty.errors, status: 422 }      
     end
-  end
-
-  def destroy
-    flash[:notice] = "Penalty has been deleted" if @penalty.delete
   end
 
   def destroy
@@ -41,9 +51,11 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
     @penalty = penalty_service.destroy_penalty!(params[:id])
     if @penalty.destroyed?
       @statsheet.save
-      flash[:notice] = "Penalty has been deleted"
+      respond_to do |format|
+        format.html { flash[:notice] = "Penalty has been deleted" }
+        format.json { head :no_content }
+      end      
     end
-
   end
 
   private

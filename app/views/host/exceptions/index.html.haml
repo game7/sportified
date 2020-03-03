@@ -1,12 +1,12 @@
 - title 'Exceptions'
 - breadcrumb 'Exceptions'
 
-.row
-  .col-sm-12
-    = line_chart @by_day
-.row
-  .col-sm-8
-    %table.table.table-striped.table-bordered
+.ui.segment
+  = line_chart @by_day
+
+.ui.grid
+  .twelve.wide.column
+    %table.ui.celled.table
       %thead
         %tr
           %th Date/Time
@@ -20,8 +20,8 @@
               %br
               %small= exc.properties['message']
 
-  .col-sm-4
-    %table.table.table-striped.table-bordered
+  .four.wide.column
+    %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Exception  
@@ -32,7 +32,7 @@
             %td= group[0]
             %td= group[1]
 
-    %table.table.table-striped.table-bordered
+    %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Controller  
@@ -43,7 +43,7 @@
             %td= group[0]
             %td= group[1]          
 
-    %table.table.table-striped.table-bordered
+    %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Host  

@@ -1,49 +1,27 @@
-= simple_form_for( @goal, :url => admin_hockey_statsheet_goals_path(@statsheet.id), :remote => true ) do |f|
-  = f.input :time, :label => 'Time' do
-    .form-inline
-      = f.input :period, :collection => Hockey::Goal.periods, :label => false
-      = f.input :minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
-      = f.input :second, :maxlength => 2, :pattern => "[0-9]*", :label => false
-  = f.input :team_id, :collection => @statsheet.teams, :label => 'Team'
-  = f.input :scored_by_id do
-    = f.select :scored_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
-  = f.input :assisted_by_id do
-    = f.select :assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
-  = f.input :also_assisted_by_id do
-    = f.select :also_assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
-  = f.input :strength, :collection => Hockey::Goal.strengths
-  :javascript
-    function filter_players(changed) {
-      var teamId = $('select#hockey_goal_team_id').val();
-      $('#hockey_goal_scored_by_id option').hide().each(function(index, item){
-        if(index > 0  && $(item).parent('span').length == 0) {
-          $(item).wrap('<span style="display: none;" />');
-        }
-      });
-      $('#hockey_goal_assisted_by_id option').hide().each(function(index, item){
-        if(index > 0 && $(item).parent('span').length == 0) {
-          $(item).wrap('<span style="display: none;" />');
-        }
-      });
-      $('#hockey_goal_also_assisted_by_id option').hide().each(function(index, item){
-        if(index > 0 && $(item).parent('span').length == 0) {
-          $(item).wrap('<span style="display: none;" />');
-        }
-      });
-      if (changed) {
-        $('#hockey_goal_scored_by_id').val('');
-        $('#hockey_goal_assisted_by_id').val('');
-        $('#hockey_goal_also_assisted_by_id').val('');
-      }
-      if (teamId != '') {
-        $('#hockey_goal_scored_by_id option[data-team-id=' + teamId + ']').show().unwrap();
-        $('#hockey_goal_assisted_by_id option[data-team-id=' + teamId + ']').show().unwrap();
-        $('#hockey_goal_also_assisted_by_id option[data-team-id=' + teamId + ']').show().unwrap();
-      }
+.ui.small.modal.new_hockey_goal
+  .header New Goal
+  .content
+    = simple_form_for( @goal, :url => admin_hockey_statsheet_goals_path(@statsheet.id), :remote => true ) do |f|
+      = f.input :time, :label => 'Time' do
+        .fields
+          = f.input :period, :collection => Hockey::Goal.periods, :label => false
+          = f.input :minute, :maxlength => 2, :pattern => "[0-9]*", :label => false
+          = f.input :second, :maxlength => 2, :pattern => "[0-9]*", :label => false
+      = f.input :team, :collection => @statsheet.teams, :label => 'Team'
+      = f.input :scored_by, collection: []
+      = f.input :assisted_by, collection: []
+      = f.input :also_assisted_by, collection: []
+      = f.input :scored_by_id do
+        = f.select :scored_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+      = f.input :assisted_by_id do
+        = f.select :assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+      = f.input :also_assisted_by_id do
+        = f.select :also_assisted_by_id, @players.map { |p| [ "#{p.jersey_number} - #{p.last_name}, #{p.first_name}", p.id, { :'data-team-id' => p.team_id }] }, { :include_blank => true }, { :class => 'form-control' }
+      = f.input :strength, :collection => Hockey::Goal.strengths
+  .actions
+    %button.ui.primary.button{ type: :submit } Create Goal
+
+  :css
+    .edit_hockey_statsheet table input {
+      text-align: center !important;
     }
-    $(document).ready(function(){
-      filter_players();
-      $("select#hockey_goal_team_id").change(function(){
-          filter_players(true);
-      });
-    });

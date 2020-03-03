@@ -1,15 +1,11 @@
-$('#dialog-modal').html("<%= escape_javascript( render(:partial => @partial ) )%>");
-$('#dialog-modal').dialog({
-  title: '<%= @title %>',
-  height: 400,
-  width: 500,
-  modal: true,
-  buttons: {
-    Save: function() {
-      $(this).children("form").submit();
-    },
-    Cancel: function() {
-      $(this).dialog("close");
-    }
+$('body').append("<%= escape_javascript( render(:partial => @partial ) )%>");
+var $modal = $('.modal.edit_hockey_statsheet');
+$modal.find(':submit').click(function() {
+  console.log('hi')
+  $modal.find('form').submit();
+})
+$modal.modal({
+  onHidden: function() {
+    $(this).remove();
   }
-});
+}).modal('show');

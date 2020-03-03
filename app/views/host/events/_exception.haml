@@ -1,25 +1,25 @@
 
-%table.table.table-bordered.table-striped
+%table.ui.definition.table
   %tbody
     %tr
-      %th Name
+      %td Name
       %td= @event.name
     %tr
-      %th Exception
+      %td Exception
       %td= @event.properties['exception']
     %tr
-      %th Message
+      %td Message
       %td= @event.properties['message']          
     - @event.properties.except('backtrace', 'exception', 'message').each do |key, value|
       %tr
-        %th= key.titleize
+        %td= key.titleize
         %td= key == 'path' ? link_to(value, value) : value
 
-%table.table.table-bordered
+%table.ui.celled.table
   %thead
     %tr
       %th Backtrace
   %tbody
     - @event.properties['backtrace'].each do |msg|
-      %tr{ class: msg.include?('/app/') ? 'bg-danger' : '' }
+      %tr{ class: msg.include?('/app/') ? 'error' : '' }
         %td= msg       

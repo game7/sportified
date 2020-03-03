@@ -1,10 +1,23 @@
 - title "Sign in"
 - resource.email = params[:email] if params[:email]
-= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  = f.input :email
-  = f.input :password
-  - if  devise_mapping.rememberable?
-    = f.input :remember_me, :as => :boolean, :wrapper => :vertical_boolean
-  .form-actions
-    = f.submit "Sign in", :class => 'btn btn-primary'
-    = render :partial => "devise/shared/links"
+.ui.two.column.centered.login.grid
+  .column
+    .ui.segment.very.padded
+      = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+        = f.input :email
+        = f.input :password
+        - if  devise_mapping.rememberable?
+          = f.input :remember_me, :as => :boolean
+        = f.submit "Sign in", :class => [:ui, :primary, :fluid, :button]
+        .ui.divider
+        .links
+          = render :partial => "devise/shared/links"
+
+:css
+  .login.grid {
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+  .login.grid .links a {
+    margin-top: 5px;
+  }

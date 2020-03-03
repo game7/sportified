@@ -1,5 +1,8 @@
 - title 'Tenants'
-%table.table.table-striped.table-bordered
+- page_actions do
+  = link_to 'Add New Tenant', new_host_tenant_path, class: [:ui, :primary, :button]
+
+%table.ui.celled.table
   %thead
     %tr
       %th Name
@@ -13,7 +16,7 @@
         %td #{tenant.slug}        
         %td #{tenant.host}
         %td 
-          = link_to 'Edit', edit_host_tenant_path(tenant), :class => 'btn btn-xs btn-default'
-          = link_to 'Delete', [:host, tenant], :method => :delete, :remote => true, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-xs btn-danger'
-= link_to 'Add New Tenant', new_host_tenant_path, :class => "btn btn-default"
+          = link_to 'Edit', edit_host_tenant_path(tenant), class: [:ui, :tiny, :primary, :button]
+          = link_to 'Delete', [:host, tenant], method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: [:ui, :tiny, :primary, :button]
+
 

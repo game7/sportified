@@ -1,116 +1,201 @@
-
-
 = simple_form_for [:admin, :league, @game] do |f|
-  .panel.panel-default
-    .panel-heading Logistics
-    .panel-body
-      - if %w{new create edit update}.include? params[:action]
-        .row
-          .col-sm-6
-            = f.input :program_id, :as => :select, :collection => @options[:programs]
-        .row
-          .col-sm-6
-            = f.input :season_id, :as => :select, :collection => @season_options
-        .row
-          .col-sm-6
-            = f.input :division_id, :as => :select, :collection => @division_options
-      .row
-        .col-sm-4
-          = f.input :starts_on, :as => :string, :input_html => { :value => @game.starts_on ? I18n.l(@game.starts_on) : "" }
-        .col-sm-2
-          = f.input :duration
-      .row
-        .col-sm-4
-          = f.input :location_id, :as => :select, :collection => @options[:locations]
-        .col-sm-4
-          = f.input :playing_surface_id, :as => :select, :collection => []
-  .row
-    .col-sm-6
-      .panel.panel-default
-        .panel-heading Away Team
-        .panel-body
-          = f.input :away_team_id, :as => :select, :collection => []
-          = f.input :away_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
-          = f.input :away_team_name
-          = f.input :away_team_locker_room_id, :as => :select, :collection => []
-    .col-sm-6
-      .panel.panel-default
-        .panel-heading Home Team
-        .panel-body
-          = f.input :home_team_id, :as => :select, :collection => []
-          = f.input :home_team_custom_name, :as => :boolean, :wrapper => :vertical_boolean
-          = f.input :home_team_name
-          = f.input :home_team_locker_room_id, :as => :select, :collection => []
-
-  .panel.panel-default
-    .panel-heading Display
-    .panel-body
-      .row
-        .col-sm-6
-          = f.input :text_before
-        .col-sm-6
-          = f.input :text_after
-
-  - if @game.persisted?
-    .panel.panel-default
-      .panel-body
-        %table.table
-          %thead
-            %tr
-              %th Time
-              %th Action
-              %th User
-          %tbody
-            - @game.audits.each do |audit|
-              %tr
-                %td= "#{time_ago_in_words(audit.created_at)} ago"
-                %td= audit.action
-                %td= audit&.user&.full_name
-                %td
-                  - if audit.action == 'update'
-                    %table.table
-                      %thead
-                        %tr
-                          %th Attribute
-                          %th From -> To
-                      %tbody
-                        - audit.audited_changes.each do |attr, change|
-                          %tr
-                            %td= attr.humanize
-                            %td= change[0]
-                            %td= change[1]
+  - if %w{new create edit update}.include? params[:action]
+    %h4.ui.dividing.header Logistics   
+    .fields
+      = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
+      = f.input :season_id, as: :select, collection: @options[:seasons][@game.program_id], wrapper_html: { class: [:four, :wide] }
+      = f.input :division_id, as: :select, collection: @options[:divisions][@game.program_id], wrapper_html: { class: [:four, :wide] }
+    .fields
+      = f.input :starts_on, as: :datetime, html5: true, wrapper_html: { class: [:four, :wide] }
+      = f.input :duration, wrapper_html: { class: [:two, :wide] }
+    .fields      
+      = f.input :location_id, as: :select, collection: @options[:locations], wrapper_html: { class: [:four, :wide] }
+      = f.input :playing_surface_id, as: :select, collection: @options[:playing_surfaces][@game.location_id], wrapper_html: { class: [:four, :wide] }
+  %br
+  %br
+  .ui.grid.two.columns
+    .column
+      %h4.ui.dividing.header Away Team
+      = f.input :away_team_id, as: :select, collection: @options[:teams]
+      = f.input :away_team_custom_name, as: :boolean
+      = f.input :away_team_name
+      = f.input :away_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
+    .column
+      %h4.ui.dividing.header Home Team
+      = f.input :home_team_id, as: :select, collection: @options[:teams]
+      = f.input :home_team_custom_name, as: :boolean
+      = f.input :home_team_name
+      = f.input :home_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
+  %br
+  %br
+  %h4.ui.dividing.header Display
+  .two.fields
+    = f.input :text_before
+    = f.input :text_after
 
   = f.button :wrapped, :cancel => return_url
+
+- if @game.persisted?
+  .ui.segment
+    %table.ui.celled.striped.table
+      %thead
+        %tr
+          %th Time
+          %th Action
+          %th User
+          %th Changes
+      %tbody
+        - @game.audits.each do |audit|
+          %tr
+            %td= "#{time_ago_in_words(audit.created_at)} ago"
+            %td= audit.action
+            %td= audit&.user&.full_name
+            %td
+              - if audit.action == 'update'
+                %table.ui.celled.table
+                  %thead
+                    %tr
+                      %th{ style: 'width: 40%;' } Attribute
+                      %th{ style: 'width: 30%;' } From
+                      %th{ style: 'width: 30%;' } To
+                  %tbody
+                    - audit.audited_changes.each do |attr, change|
+                      %tr
+                        %td= attr.humanize
+                        %td= change[0]
+                        %td= change[1]  
 
 - content_for :javascript do
   :javascript
 
     $(function() {
-      var seasons = #{raw @options[:seasons].to_json};
-      var divisions = #{raw @options[:divisions].to_json};
-      var playing_surfaces = #{raw @options[:playing_surfaces].to_json};
-      var locker_rooms = #{raw @options[:locker_rooms].to_json};
-      var teams_path = '#{admin_teams_path}?season_id=::game_season_id::&division_id=::game_division_id::';
-      $(function() {
-        bindSelect('#game_division_id', '#game_program_id', divisions, 'id', 'name', '#{@game.division_id}');
-        bindSelect('#game_season_id', '#game_program_id', seasons, 'id', 'name', '#{@game.season_id}');
-        bindSelect('#game_home_team_id, #game_away_team_id', '#game_season_id, #game_division_id', teams_path, 'id', 'name', ['#{@game.away_team_id}', '#{@game.home_team_id}']);
-        bindSelect('#game_playing_surface_id', '#game_location_id', playing_surfaces, 'id', 'name', '#{@game.playing_surface_id}');
-        bindSelect('#game_home_team_locker_room_id, #game_away_team_locker_room_id', '#game_location_id', locker_rooms, 'id', 'name', ['#{@game.home_team_locker_room_id}', '#{@game.away_team_locker_room_id}']);
-      });
+      var seasons = JSON.parse('#{raw @options[:seasons].to_json}');
+      var divisions = JSON.parse('#{raw @options[:divisions].to_json}');
+      var playing_surfaces = JSON.parse('#{raw @options[:playing_surfaces].to_json}');
+      var locker_rooms = JSON.parse('#{raw @options[:locker_rooms].to_json}');
+      var teams_path = '#{admin_teams_path}?season_id={{season}}&division_id={{division}}';
+
+      function bindTeams() {
+        var $homeTeams = $('#game_home_team_id').closest('.dropdown')
+        var $awayTeams = $('#game_away_team_id').closest('.dropdown')
+        var seasonId = $('#game_season_id').closest('.dropdown').dropdown('get value');
+        var divisionId = $('#game_division_id').closest('.dropdown').dropdown('get value');
+        if(seasonId == "" || divisionId == "") {
+          $homeTeams.dropdown({ values: [] })
+          $awayTeams.dropdown({ values: [] })
+          return;
+        }
+        var url = teams_path.replace('{{season}}', seasonId).replace('{{division}}', divisionId);
+        $.getJSON(url, function(data) {
+          $homeTeams.dropdown({ 
+            fields: {
+              name: 'name',
+              value: 'id'
+            },
+            values: data
+          })
+          $awayTeams.dropdown({ 
+            fields: {
+              name: 'name',
+              value: 'id'
+            },
+            values: data
+          })
+        })
+      }     
+
+      function bindPlayingSurfaces() {
+        var $playingSurfaces = $('#game_playing_surface_id').closest('.dropdown')
+        var locationId =  $('#game_location_id').closest('.dropdown').dropdown('get value');
+        $playingSurfaces.dropdown({ values: playing_surfaces[locationId] || [] });
+      } 
+
+      function bindLockerRooms() {
+        var $awayTeamLockerRooms = $('#game_away_team_locker_room_id').closest('.dropdown')
+        var $homeTeamLockerRooms = $('#game_home_team_locker_room_id').closest('.dropdown')
+        var locationId =  $('#game_location_id').closest('.dropdown').dropdown('get value');
+        $awayTeamLockerRooms.dropdown({ 
+          fields: {
+            name: 'name',
+            value: 'id'
+          }, 
+          values: locker_rooms[locationId] || [] 
+        });
+        $homeTeamLockerRooms.dropdown({ 
+          fields: {
+            name: 'name',
+            value: 'id'
+          }, 
+          values: locker_rooms[locationId] || [] 
+        });
+      }       
+
+      function bindSeasons() {
+        var programId = $('#game_program_id').closest('.dropdown').dropdown('get value');
+        $('#game_season_id').closest('.dropdown').dropdown({
+          fields: {
+            name: 'name',
+            value: 'id'
+          },
+          values: (seasons[programId] || [])
+        })
+      }
+
+      function bindDivisions() {
+        var programId = $('#game_program_id').closest('.dropdown').dropdown('get value');        
+        $('#game_division_id').closest('.dropdown').dropdown({
+          fields: {
+            name: 'name',
+            value: 'id'
+          },
+          values: (divisions[programId] || [])
+        })
+      }
+
+      function onProgramChange() {
+        bindSeasons();
+        bindDivisions();
+      }     
+
+      function onSeasonChange() {
+        bindTeams();
+      } 
+
+      function onDivisionChange() {
+        bindTeams();
+      }
+
+      function onLocationChange() {
+        bindPlayingSurfaces();
+        bindLockerRooms();
+      }
+
+
+      (function initialize() {
+        $('#game_program_id').closest('.dropdown').dropdown({
+          onChange: onProgramChange
+        })
+        $('#game_season_id').closest('.dropdown').dropdown({
+          onChange: onSeasonChange
+        })
+        $('#game_division_id').closest('.dropdown').dropdown({
+          onChange: onDivisionChange
+        })
+        $('#game_location_id').closest('.dropdown').dropdown({
+          onChange: onLocationChange
+        })
+      })()
+
     });
+    
     $(function(){
-      if( !$('#game_away_team_custom_name').attr('checked') ) { $('#game_away_team_name').closest('.form-group').hide() }
-      if( !$('#game_home_team_custom_name').attr('checked') ) { $('#game_home_team_name').closest('.form-group').hide() }
+      if( !$('#game_away_team_custom_name').attr('checked') ) { $('#game_away_team_name').closest('.field').hide() }
+      if( !$('#game_home_team_custom_name').attr('checked') ) { $('#game_home_team_name').closest('.field').hide() }
       $('#game_away_team_custom_name').change(function(){
-        $('#game_away_team_name').closest('.form-group').slideToggle('slow');
+        $('#game_away_team_name').closest('.field').slideToggle();
       });
       $('#game_home_team_custom_name').change(function(){
-        $('#game_home_team_name').closest('.form-group').slideToggle('slow');
-      });
-      $('input#game_starts_on').datetimepicker({
-        format: 'm/dd/yyyy H:ii P',
-        showMeridian: true,
-        startDate: new Date()
+        $('#game_home_team_name').closest('.field').slideToggle();
       });
     });
+

@@ -1,22 +1,19 @@
 .panel.panel-default
   - if block.title.present?
-    .panel-heading= block.title
-  %table.table.table-bordered
+    %h3.ui.dividing.header= block.title
+  %table.ui.celled.table
+    %thead
+      %tr
+        %th Date
+        %th Time
+        %th Event
     %tbody
       - block.events.each do |event|
         %tr
-          %td
-            = event.starts_on.to_date.strftime("%a %-m/%-d/%y")
-          %td
-            .visible-xs
-              = event.starts_on.strftime("%l:%M%P").gsub("m","")
-              != ' - '
-              = event.ends_on.strftime("%l:%M%P").gsub("m","")
-            .hidden-xs
-              = event.starts_on.strftime("%l:%M %P")
-              != ' - '
-              = event.ends_on.strftime("%l:%M %P")
+          %td.collapsing= event.starts_on.to_date.strftime("%a %-m/%-d/%y")
+          %td.collapsing= "#{event.starts_on.strftime("%l:%M %P")} - #{event.ends_on.strftime("%l:%M %P")}"
           %td= event.summary
+    %tfooter
       %tr
         %td{ colspan: '3', style: 'text-align: center'}
           = link_to 'Show more events like these...', [:schedule, { tags: block.tags }]

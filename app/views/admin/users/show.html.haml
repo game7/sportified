@@ -1,21 +1,23 @@
 - title "#{@user.first_name} #{@user.last_name}"
-%table.table.table-bordered.table-striped
+
+%table.ui.definition.table
   %tbody
     %tr
-      %th{:scope => 'row'} Id
-      %td #{@user.id}
+      %td.collapsing Id
+      %td= @user.id
     %tr
-      %th{:scope => 'row'} Name
-      %td #{@user.first_name} #{@user.last_name}
+      %td.collapsing Name
+      %td= "#{@user.first_name} #{@user.last_name}"
     %tr
-      %th{:scope => 'row'} Email
-      %td #{@user.email}
+      %td.collapsing Email
+      %td= @user.email
     %tr
-      %th{:scope => 'row'} Sign In Cont
-      %td #{@user.sign_in_count}
+      %td.collapsing Sign In Cont
+      %td= @user.sign_in_count
     %tr
-      %th{:scope => 'row'} Last Sign In
-      %td #{@user.last_sign_in_at}
+      %td.collapsing Last Sign In
+      %td= @user.last_sign_in_at
 #user_roles
-  = render :partial => 'admin/user_roles/grid', :locals => { :user => @user }
-= link_to icon('plus')+" Add Site Admin Role", admin_user_user_roles_path(@user), :remote => true, :method => :post, :class => 'btn'
+  = render partial: 'admin/user_roles/grid', locals: { user: @user }
+%br
+= link_to semantic_icon(:plus) + ' Add Site Admin Role', admin_user_user_roles_path(@user), remote: true, method: :post, class: [:ui, :primary, :button]

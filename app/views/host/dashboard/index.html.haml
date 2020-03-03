@@ -1,10 +1,9 @@
-- title Dashboard
+- title Host
 
-%h3 Host
-%ul
-  %li #{link_to 'Tenants', host_tenants_path}
-  %li #{link_to 'Users', host_users_path}
-  %li #{link_to 'Visits', host_visits_path}
-  %li #{link_to 'Exceptions', host_exceptions_path}
-  %li #{link_to 'Status', host_status_path}
+.ui.vertical.menu
+  = link_to 'Tenants', host_tenants_path, class: [:item]
+  = link_to 'Users', host_users_path, class: [:item]
+  = link_to 'Visits', host_visits_path, class: [:item]
+  = link_to 'Exceptions', host_exceptions_path, class: [:item]
+  = link_to 'Status', host_status_path, class: [:item]
 

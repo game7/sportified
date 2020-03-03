@@ -1,10 +1,10 @@
 - title 'Posts'
-.container
-  .well
-    = link_to 'New Post', new_admin_post_path(), class: 'btn btn-default'
+- page_actions do
+  = link_to 'New Post', new_admin_post_path(), class: [:ui, :primary, :button]
+.ui.container
   = paginate @posts
-  != page_entries_info @posts
-  %table.table.table-bordered.table-striped
+  %span{ style: 'margin-left: 10px' }!= page_entries_info @posts
+  %table.ui.celled.striped.table
     - @posts.each do |post|
       %tr
         %td{width: '100'}
@@ -12,13 +12,10 @@
         %td
           %h4= post.title
           - post.tags.each do |tag|
-            %span.label.label-info= iconify(:tag, tag)
-            &nbsp;
-        %td{width: '200'}
-          .btn-group
-            = link_to 'Edit', edit_admin_post_path(post), class: 'btn btn-default'
-            = link_to 'Delete', [:admin, post], confirm: 'Are you sure?', method: :delete, class: 'btn btn-default'
+            .ui.label.mini= tag
+        %td.collapsing
+          = link_to 'Edit', edit_admin_post_path(post), class: [:ui, :mini, :primary, :button]
+          = link_to 'Delete', [:admin, post], confirm: 'Are you sure?', method: :delete, class: [:ui, :mini, :primary, :button]
   = paginate @posts
-  != page_entries_info @posts
-  .well
-    = link_to 'New Post', new_admin_post_path(), class: 'btn btn-default'
+  %span{ style: 'margin-left: 10px' }!= page_entries_info @posts
+

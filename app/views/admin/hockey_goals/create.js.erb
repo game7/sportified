@@ -1,7 +1,6 @@
 
 <% if @goal.errors.any? %>
-  $("#flash_notice").hide(300);
-  $('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_goals/form" ) )%>");
+  <%= render(:partial => "admin/hockey_goals/new" ) )%>");
 <% else %>
   $('#dialog-modal').dialog("close");
   $("#flash_notice").html("<%= escape_javascript( flash.discard(:notice) )%>");

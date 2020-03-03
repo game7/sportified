@@ -8,7 +8,7 @@
   margin-bottom: 10px;
   .chrome {
     padding: 2px;
-    @include gradient-vertical(#DEDEDE,#CCC);
+    // @include gradient-vertical(#DEDEDE,#CCC);
     display: none;
     .title {
       float: left;
@@ -21,12 +21,7 @@
       clear: both;
     }
   }
-  .content {
 
-  }
-  .add-block {
-    display: none;
-  }
 }
 
 .add-section {
@@ -44,10 +39,6 @@
     border: 1px solid $gray-light;
     border-top: 0;
     padding: 4px;
-  }
-  .add-block {
-    display: block;
-    width: 100%;
   }
 }
 
@@ -135,14 +126,3 @@
   }
 }
 
-// FORM
-// -----------------------------------
-
-#page_title,
-#page_parent_id,
-#page_title_in_menu,
-#page_link_url,
-#page_meta_keywords,
-#page_meta_description {
-  max-width: 400px;
-}

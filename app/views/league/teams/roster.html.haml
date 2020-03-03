@@ -6,7 +6,7 @@
   .col-sm-4
     #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })}
 
-%table.table.table-striped.table-bordered
+%table.ui.celled.striped.table
   %thead
     %tr
       %th NUM

@@ -1,52 +1,57 @@
-%h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
-.well
-  = link_to 'Post Statistics', post_admin_hockey_statsheet_path(@statsheet), :confirm => "This post the statistcs from this game to player's record.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary' unless @statsheet.posted?
-  != ' '
-  = link_to 'Unpost Statistics', unpost_admin_hockey_statsheet_path(@statsheet), :confirm => "This post the statistcs from this game to each player's record.  Are you sure?", :method => :post, :class => 'btn btn-sm btn-primary' if @statsheet.posted?
-  != ' '
-  = link_to "Done", return_url, :class => "btn btn-sm btn-primary"
-.tabbable
-  %ul.nav.nav-tabs
-    %li.active= link_to 'Summary', '#summary', "data-toggle" => 'tab'
-    %li= link_to 'Players', '#players', "data-toggle" => 'tab'
-    %li= link_to 'Goals', '#goals', "data-toggle" => 'tab'
-    %li= link_to 'Penalties', '#penalties', "data-toggle" => 'tab'
-    %li= link_to 'Goaltending', '#goaltending', "data-toggle" => 'tab'
-.tab-content
-  #summary.tab-pane.active
-    = render 'admin/hockey_statsheets/periods_sum'
-    = render 'admin/hockey_statsheets/goals_sum'
-    = render 'admin/hockey_statsheets/shots_sum'
-  #players.tab-pane
-    = render 'admin/hockey_statsheets/players'
-  #goals.tab-pane
-    = render 'admin/hockey_statsheets/goals'
-  #penalties.tab-pane
-    = render 'admin/hockey_statsheets/penalties'
-  #goaltending.tab-pane
-    = render 'admin/hockey_statsheets/goaltenders'
 
-#dialog-modal
+= react_component('statsheet/index', { settings: @statsheet.attributes, game: @game.attributes, penalties: @statsheet.penalties.map(&:attributes), goals: @statsheet.goals.map(&:attributes), teams: @teams.map(&:attributes), skaters: @skaters.map(&:attributes), players: @players.map(&:attributes), goaltenders: @statsheet.goaltenders.map(&:attributes) }, { camelize_props: true })
+-# %h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
+-# .ui.segment
+-#   %div{ style: 'float: right;' }
+-#     = link_to 'Post Statistics', post_admin_hockey_statsheet_path(@statsheet), confirm: "This post the statistcs from this game to player's record.  Are you sure?", method: :post, class: [:ui, :primary, :button] unless @statsheet.posted?
+-#     = link_to 'Unpost Statistics', unpost_admin_hockey_statsheet_path(@statsheet), confirm: "This post the statistcs from this game to each player's record.  Are you sure?", method: :post, class: [:ui, :primary, :button] if @statsheet.posted?
+-#     = link_to "Done", return_url, class: [:ui, :primary, :button]
+-#   %div{ style: 'clear: both;' }    
+-# .ui.top.attached.tabular.menu
+-#   %a.item.active{ data: { tab: :summary }} Summary
+-#   %a.item{ data: { tab: :players }} Players
+-#   %a.item{ data: { tab: :goals }} Goals
+-#   %a.item{ data: { tab: :penalties }} Penalties
+-#   %a.item{ data: { tab: :goaltending }} Goaltending
 
-- content_for :javascript do
-  :javascript
-    $(document).ready(function(){
-     $(".played").click(function(){
-       var chk = $(this);
-       var form = chk.closest('form');
-       form.submit();
-     });
+-# .ui.bottom.attached.active.tab.segment{ data: { tab: :summary }}
+-#   = render 'admin/hockey_statsheets/periods_sum'
+-#   = render 'admin/hockey_statsheets/goals_sum'
+-#   = render 'admin/hockey_statsheets/shots_sum'
+-# .ui.bottom.attached.tab.segment{ data: { tab: :players }}
+-#   = render 'admin/hockey_statsheets/players'
+-# .ui.bottom.attached.tab.segment{ data: { tab: :goals }}
+-#   = render 'admin/hockey_statsheets/goals'
+-# .ui.bottom.attached.tab.segment{ data: { tab: :penalties }}
+-#   = render 'admin/hockey_statsheets/penalties'
+-# .ui.bottom.attached.tab.segment{ data: { tab: :goaltending }}
+-#   = render 'admin/hockey_statsheets/goaltenders'
 
-     var hash = window.location.hash;
-     var prefix = "tab-";
 
-     if (hash) {
-       $(".nav-tabs a[href='" + hash.replace(prefix, "") + "']").tab('show');
-     }
+-# #dialog-modal
 
-     $('.nav-tabs a').on('show.bs.tab', function(e) {
-       console.log('hash: ' + e.target.hash);
-       window.location.hash = e.target.hash.replace('#', prefix);
-     })
-    });
+-# - content_for :javascript do
+-#   :javascript
+-#     $(document).ready(function(){
+
+-#       $('.tabular.menu .item').tab();
+
+-#      $(".played").click(function(){
+-#        var chk = $(this);
+-#        var form = chk.closest('form');
+-#        form.submit();
+-#      });
+
+-#      var hash = window.location.hash;
+-#      var prefix = "tab-";
+
+-#      if (hash) {
+-#        $(".nav-tabs a[href='" + hash.replace(prefix, "") + "']").tab('show');
+-#      }
+
+-#      $('.nav-tabs a').on('show.bs.tab', function(e) {
+-#        console.log('hash: ' + e.target.hash);
+-#        window.location.hash = e.target.hash.replace('#', prefix);
+-#      })
+-#     });
 

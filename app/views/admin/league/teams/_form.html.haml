@@ -1,83 +1,85 @@
-%ul.nav.nav-tabs
-  %li.active
-    = link_to "Basic Info", '#basic', { :"data-toggle" => "tab" }
-  %li
-    = link_to "Branding", '#branding', { :"data-toggle" => "tab" }
-= simple_form_for [:admin, :league, @division, @team] do |f|
-  .tab-content
-    .tab-pane.active{ :id => "basic" }
-      .row
-        .col-sm-4= f.input :season_id, :as => :select, :collection => @options[:seasons]
-        .col-sm-4= f.input :division_id, :as => :select, :collection => @options[:divisions]
-      .row
-        .col-sm-4= f.input :name
-        .col-sm-2= f.input :short_name
-      .row
-        .col-sm-4= f.input :club_id, :as => :select, :collection => @options[:clubs]
-      .row
-        .col-sm-1= f.input :pool
-        .col-sm-1= f.input :seed
-      = f.input :show_in_standings, :as => :boolean, :wrapper => :vertical_boolean
-    .tab-pane{ :id => "branding" }
-      = f.input :crop_x, :as => :hidden
-      = f.input :crop_y, :as => :hidden
-      = f.input :crop_h, :as => :hidden
-      = f.input :crop_w, :as => :hidden
-      .row
-        .col-sm-4= f.input :logo, :as => :file
-      .row
-        .col-sm-4= f.input :remote_logo_url
-      = f.input :logo_cache, :as => :hidden
-      - if @team.logo?
-        .jcrop
-          %img{ :src => @team.logo.url, :id => "jcrop_target"}
-          #preview{ :style => "width: 100px; height: 100px; overflow: hidden; margin-top: 10px;"}
-            = image_tag @team.logo.url
-        - #@team.logo.primary_colors[:colors].each do |color|
-        - #.color{:style => "background-color: #{color}; height: 20px; width: 20px; margin-top: 5px;"}
-  %br
-  = f.button :wrapped, :cancel => return_url
+= react_component('team_editor', { team: ActiveModelSerializers::SerializableResource.new(@team), options: @options },)
 
-:css
-  .jcrop img {max-width: none}
+-# = simple_form_for [:admin, :league, @division, @team] do |f|
+-#   .ui.top.attached.tabular.menu
+-#     %a.active.item{ data: { tab: :basic } } Basic Info
+-#     %a.item{ data: { tab: :branding } } Branding
+-#   .ui.bottom.attached.active.tab.segment{ data: { tab: :basic } }
+-#     .row
+-#       .col-sm-4= f.input :season_id, :as => :select, :collection => @options[:seasons]
+-#       .col-sm-4= f.input :division_id, :as => :select, :collection => @options[:divisions]
+-#     .row
+-#       .col-sm-4= f.input :name
+-#       .col-sm-2= f.input :short_name
+-#     .row
+-#       .col-sm-4= f.input :club_id, :as => :select, :collection => @options[:clubs]
+-#     .row
+-#       .col-sm-1= f.input :pool
+-#       .col-sm-1= f.input :seed
+-#     = f.input :show_in_standings, :as => :boolean
+-#   .ui.bottom.attached.active.tab.segment{ data: { tab: :branding } }
+-#     = f.input :crop_x, :as => :hidden
+-#     = f.input :crop_y, :as => :hidden
+-#     = f.input :crop_h, :as => :hidden
+-#     = f.input :crop_w, :as => :hidden
+-#     .row
+-#       .col-sm-4= f.input :logo, :as => :file
+-#     .row
+-#       .col-sm-4= f.input :remote_logo_url
+-#     = f.input :logo_cache, :as => :hidden
+-#     - if @team.logo?
+-#       .jcrop
+-#         %img{ :src => @team.logo.url, :id => "jcrop_target"}
+-#         #preview{ :style => "width: 100px; height: 100px; overflow: hidden; margin-top: 10px;"}
+-#           = image_tag @team.logo.url
+-#       - #@team.logo.primary_colors[:colors].each do |color|
+-#       - #.color{:style => "background-color: #{color}; height: 20px; width: 20px; margin-top: 5px;"}
+-#   %br
+-#   = f.button :wrapped, :cancel => return_url
 
-- content_for :javascript do
-  :javascript
+-# :css
+-#   .jcrop img {max-width: none}
 
-    $(function() {
-      $('#jcrop_target').Jcrop({
-          aspectRatio: 1,
-          onChange: update_crop,
-          onSelect: update_crop
-        }, function() {
-          // Use the API to get the real image size
-          var bounds = this.getBounds();
-          boundx = bounds[0];
-          boundy = bounds[1];
-          // Store the API in the jcrop_api variable
-          jcrop_api = this;
-          var x = #{@team.crop_x};
-          var y = #{@team.crop_y};
-          var w = #{@team.crop_w};
-          var h = #{@team.crop_h};
-          jcrop_api.setSelect([x,y,x+w,y+h]);
-      });
-    });
+-# - content_for :javascript do
+-#   :javascript
 
-    function update_crop(coords) {
-      var rx = 100 / coords.w;
-      var ry = 100 / coords.h;
-      var lw = $('#jcrop_target').width();
-      var lh = $('#jcrop_target').height();
-      $('#preview img').css({
-        width: Math.round(rx * lw) + 'px',
-        height: Math.round(ry * lh) + 'px',
-        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-        marginTop: '-' + Math.round(ry * coords.y) + 'px'
-      });
-      $('#team_crop_h').val(coords.h);
-      $('#team_crop_w').val(coords.w);
-      $('#team_crop_y').val(coords.y);
-      $('#team_crop_x').val(coords.x);
-      return false;
-    }
+-#     $(function() {
+
+-#       %('.menu .item').tab();
+
+-#       $('#jcrop_target').Jcrop({
+-#           aspectRatio: 1,
+-#           onChange: update_crop,
+-#           onSelect: update_crop
+-#         }, function() {
+-#           // Use the API to get the real image size
+-#           var bounds = this.getBounds();
+-#           boundx = bounds[0];
+-#           boundy = bounds[1];
+-#           // Store the API in the jcrop_api variable
+-#           jcrop_api = this;
+-#           var x = #{@team.crop_x};
+-#           var y = #{@team.crop_y};
+-#           var w = #{@team.crop_w};
+-#           var h = #{@team.crop_h};
+-#           jcrop_api.setSelect([x,y,x+w,y+h]);
+-#       });
+-#     });
+
+-#     function update_crop(coords) {
+-#       var rx = 100 / coords.w;
+-#       var ry = 100 / coords.h;
+-#       var lw = $('#jcrop_target').width();
+-#       var lh = $('#jcrop_target').height();
+-#       $('#preview img').css({
+-#         width: Math.round(rx * lw) + 'px',
+-#         height: Math.round(ry * lh) + 'px',
+-#         marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+-#         marginTop: '-' + Math.round(ry * coords.y) + 'px'
+-#       });
+-#       $('#team_crop_h').val(coords.h);
+-#       $('#team_crop_w').val(coords.w);
+-#       $('#team_crop_y').val(coords.y);
+-#       $('#team_crop_x').val(coords.x);
+-#       return false;
+-#     }

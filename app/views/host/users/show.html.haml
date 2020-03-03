@@ -1,31 +1,33 @@
 - title "#{@user.first_name} #{@user.last_name}"
-%table.table.table-bordered
+%table.ui.definition.table
   %tbody
     %tr
-      %th{:scope => 'row'} Id
+      %td.four.wide Id
       %td #{@user.id}
     %tr
-      %th{:scope => 'row'} Name
-      %td #{@user.first_name} #{@user.last_name}
+      %td Name
+      %td= "#{@user.first_name} #{@user.last_name}"
     %tr
-      %th{:scope => 'row'} Email
-      %td #{@user.email}
+      %td Email
+      %td @user.email
     %tr
-      %th{:scope => 'row'} Sign In Count
+      %td Sign In Count
       %td #{@user.sign_in_count}
     %tr
-      %th{:scope => 'row'} Last Sign In
-      %td #{@user.last_sign_in_at}
-%h3 Roles
-%table.table.table-striped.table-bordered
+      %td Last Sign In
+      %td @user.last_sign_in_at
+
+%h3.dividing.header Roles
+
+%table.ui.celled.table
   %thead
     %tr
-      %th{:scope => 'col'} Title
-      %th{:scope => 'col'} Tenant
-      %th{:scope => 'col'} Action
+      %th Title
+      %th Tenant
+      %th Action
   %tbody
     - @user.roles.each do |role|
       %tr
-        %td #{role.title}
-        %td #{role.tenant_id}
+        %td= role.title
+        %td= role.tenant_id
         %td Delete

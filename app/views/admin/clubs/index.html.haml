@@ -1,6 +1,9 @@
 - title "Clubs"
-.container
-  %table.table.table-striped.table-bordered
+- page_actions do
+  = link_to 'New Club', new_admin_club_path, class: [:ui, :primary, :button]
+
+.ui.container
+  %table.ui.celled.striped.table
     %thead
       %tr
         %th Name
@@ -9,8 +12,7 @@
       - @clubs.each do |club|
         %tr
           %td #{club.name}
-          %td
-            .btn-group
-              = link_to 'Edit', edit_admin_club_path(club), :class => 'btn btn-xs btn-default'
-              = link_to 'Delete', [:admin, club], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'
-  = link_to 'New Club', new_admin_club_path, :class => 'btn btn-primary'
+          %td.collapsing
+            = link_to 'Edit', edit_admin_club_path(club), class: [:ui, :mini, :primary, :button]
+            = link_to 'Delete', [:admin, club], confirm: 'Are you sure?', method: :delete, class: [:ui, :mini, :primary, :button]
+

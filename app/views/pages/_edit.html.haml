@@ -1,10 +1,15 @@
-= simple_form_for @page, :remote => true do |f|
-  = f.input :title
-  = f.input :parent_id, :collection => @parent_options
-  = f.input :show_in_menu, :as => :boolean, :wrapper => :vertical_boolean
-  = f.input :title_in_menu
-  = f.input :skip_to_first_child, :as => :boolean, :wrapper => :vertical_boolean
-  = f.input :link_url
-  =# f.input :meta_keywords
-  =# f.input :meta_description
+.ui.modal.edit_page
+  .header Page Settings
+  .content
+    = simple_form_for @page, :remote => true do |f|
+      = f.input :title
+      = f.input :parent_id, :collection => @parent_options
+      = f.input :show_in_menu, :as => :boolean
+      = f.input :title_in_menu
+      = f.input :skip_to_first_child, :as => :boolean
+      = f.input :link_url
+    =# f.input :meta_keywords
+    =# f.input :meta_description
+  .actions
+    %button.ui.primary.button{ type: :submit } Update Page
 

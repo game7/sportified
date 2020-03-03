@@ -6,7 +6,8 @@
       != " :: #{tenant.name}" if tenant
     - theme = tenant&.theme
     - if theme and !theme.empty?
-      = stylesheet_link_tag "themes/#{theme}"
+      -# = stylesheet_link_tag "themes/#{theme}"
+      = stylesheet_link_tag 'themes/oia'
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
       = stylesheet_link_tag :application
@@ -17,42 +18,44 @@
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
+    :css
+      :root {
+        --primary-color: #8C1D40;
+      }
+      .ui.inverted.menu {
+        background: var(--primary-color);
+      }
+      .ui.primary.button {
+        background-color: var(--primary-color);
+      }
   %body
-    .navbar.navbar-default.navbar-fixed-top{ :role => 'navigation'}
-      .container
-        .navbar-header
-          %button.navbar-toggle{ type: :button, data: { toggle: :collapse, target: '.navbar-collapse' } }
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          #site_logo
-            = link_to "/", class: 'navbar-brand' do
-              %div
-            =# link_to image_tag("/assets/themes/#{Tenant.current.theme}/brand.jpg", :style => ""), root_url, :class => "brand"
-          #site_name
-            = link_to tenant.name, main_app.root_url, :class => 'brand'
-        = render 'layouts/site_navigation'
-    #wrapper.container
-      %header
-        = render 'layouts/area_navigation' if @area_menu_items
-        = render 'layouts/breadcrumbs' if @breadcrumbs
-        #banner
-          #{yield :banner}
-        - if content_for?(:title)
-          .page-title.clearfix
-            %h1.pull-left
-              %span#page-title= yield(:title)
-              = content_tag :small, yield(:title_small) if content_for?(:title_small)
-            .actions.pull-right
-              = yield(:actions)
-      #main
-        #page-header
-          = render :partial => 'layouts/flash', :locals => { :flash => flash }
-        = yield
-    #footer.container
-      = render 'layouts/footer'
-      -# = render 'layouts/social'
+    = render 'layouts/sidebar'
+    .pusher
+      = render 'layouts/header'
+      #wrapper.ui.container
+        %header
+          = render 'layouts/area_navigation' if @area_menu_items
+          = render 'layouts/breadcrumbs' if @breadcrumbs
+          #banner
+            #{yield :banner}
+          - if content_for?(:title)
+            .page-title.clearfix
+              %h1{ style: 'float: left;' }
+                %span#page-title= yield(:title)
+                = content_tag :small, yield(:title_small) if content_for?(:title_small)
+              .actions{ style: 'float: right;' }
+                = yield(:actions)
+              %div{ style: 'clear: both;' }
+        #main
+          #page-header
+            = render :partial => 'layouts/flash', :locals => { :flash => flash }
+          = yield
+      #footer.ui.container
+        = render 'layouts/footer'
+        -# = render 'layouts/social'
+    #modal
     = yield :javascript
+
     :javascript
 
       var $dropdown = $('.dropdown-toggle');

@@ -42,7 +42,5 @@
 #
 
 class Hockey::Goaltender::ResultSerializer < ::Hockey::GoaltenderSerializer
-  type 'hockey/goaltender/results'
-  belongs_to :statsheet
-  belongs_to :team
+
 end

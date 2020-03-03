@@ -1,10 +1,6 @@
 <% if user_signed_in? %>
-  <li role="separator" class="divider"></li>
-  <li>
-    <%= link_to('Logout', main_app.destroy_user_session_path, :method => :delete) %>
-  </li>
+  <div class="divider"></div>
+  <%= link_to('Logout', main_app.destroy_user_session_path, method: :delete, class: 'item') %>
 <% else %>
-  <li>
-    <%= link_to('Login', main_app.new_user_session_path) %>
-  </li>
+  <%= link_to('Login', main_app.new_user_session_path, class: 'item') %>
 <% end %>

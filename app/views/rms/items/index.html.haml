@@ -1,16 +1,22 @@
 - title 'Items'
 - page_actions do
-  = link_to 'Connect with Stripe', @stripe_url, :class => 'btn btn-primary' if current_user_is_admin?
-  = link_to 'New Item', new_item_path, :class => 'btn btn-primary' if current_user_is_admin?
-.list-group
+  = link_to 'Connect with Stripe', @stripe_url, class: [:ui, :primary, :button] if current_user_is_admin?
+  = link_to 'New Item', new_item_path, class: [:ui, :primary, :button] if current_user_is_admin?
+.ui.divided.items
   - @items.each do |item|
-    .list-group-item
-      %h4.list-group-item-heading
-        = link_to item.title, item
-        - if current_user_is_admin?
-          - if item.active?
-            .label.label-success.pull-right Active
-          - else
-            .label.label-default.pull-right Inactive
-      %p= item.description
-      %p.list-group-item-text= link_to 'More Info', item
+    .item
+      .image
+        %img{ src: '/image.png' }
+      .content
+        = link_to item.title, item, class: [:header]
+        .description
+          %p= item.description
+        .extra
+          = link_to item, class: [:ui, :right, :floated, :primary, :button] do
+            More Info
+            = semantic_icon :right, :chevron
+          - if current_user_is_admin?      
+            - if item.active?
+              .ui.green.label Active
+            - else
+              .ui.label Inactive

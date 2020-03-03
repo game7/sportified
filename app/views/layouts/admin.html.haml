@@ -12,101 +12,46 @@
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
   %body
-    #admin-wrapper
-      #sidebar{ class: cookies['sidebar-active'] == 'true' ? 'active' : ''}
-        .sidebar-header
-          = image_tag('logo_white.svg', id: 'logo', size: '60x60', alt: 'sportified')
-          .title SPORTIFIED
-        %ul.list-unstyled.components
-          -#%li
-          -#  %a.collapsed{ href: '#home-submenu', data: { toggle: :collapse }, aria: { expanded: :false } }
-          -#    = icon(:home, 'Home')
-          -#  %ul.collapse.list-unstyled#home-submenu
-          -#    %li= link_to 'home 1', admin_root_path
-          -#    %li= link_to 'home 2', admin_root_path
-          -#    %li= link_to 'home 3', admin_root_path
-          %li
-            = link_to admin_root_path do
-              = icon(:home, 'Home')
-          %li
-            = link_to admin_events_path do
-              = icon(:'calendar-alt', 'Calendar')
-          %li
-            = link_to proto_admin_events_path do
-              = icon(:'calendar-alt', 'New Calendar')
-          %li
-            = link_to admin_league_games_path do
-              = icon(:'calendar-check', 'Games')
-          %li
-            = link_to admin_programs_path do
-              = icon(:'cubes', 'Programs')
-          %li
-            = link_to pages_path do
-              = icon(:'file-alt', 'Pages')
-          %li
-            = link_to admin_posts_path do
-              = icon(:'sticky-note', 'Posts')
-          %li
-            = link_to admin_users_path do
-              = icon(:user, 'Users')
-          %li
-            = link_to admin_locations_path do
-              = icon(:'map-marker', 'Locations')
-          %li
-            = link_to admin_clubs_path do
-              = icon(:users, 'Clubs')
-          %li
-            = link_to admin_chromecasts_path do
-              = icon(:chrome, 'Chromecasts', {}, :fab)
-          %li
-            = link_to admin_uploads_path do
-              = icon(:upload, 'Upload')
+    .ui.top.fixed.huge.menu
+      .item sportified
 
-      #content
-        %header
-          #top-part{ style: 'height: 75px; '}
-            %button.btn.btn-default#sidebar-toggle= icon('bars')
-            %button.btn.btn-default.pull-right= link_to 'Go to Site', root_path
+      .right.menu
+        = link_to 'Go to Site', root_path, class: :item
+
+    .ui.fluid.grid{ style: 'margin-top: 80px; width: 100%;'}
+
+      .two.wide.column{ style: 'text-align: center;' }
+    
+        .ui.compact.vertical.labeled.icon.menu
+          = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
+          = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
+          = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
+          = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
+          = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
+          = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
+          = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
+          = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
+          = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
+          = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
+          = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
+
+      .fourteen.wide.column                                         
+        #wrapper{ @wrapper || {} }
           = render 'layouts/area_navigation' if @area_menu_items
           = render 'layouts/breadcrumbs' if @breadcrumbs
           #banner
             #{yield :banner}
           - if content_for?(:title)
             .page-title.clearfix
-              %h1.pull-left
+              %h1{ style: 'float: left;' }
                 %span#page-title= yield(:title)
-                = content_tag :small, yield(:title_small) if content_for?(:title_small)
-              .actions.pull-right
+              .actions{ style: 'float: right;' }
                 = yield(:actions)
-        #main
-          #page-header
-            = render :partial => 'layouts/flash', :locals => { :flash => flash }
-          = yield
-    = yield :javascript
-    :javascript
+              %div{ style: 'clear: both;' }
+          #main
+            #page-header
+              = render :partial => 'layouts/flash', :locals => { :flash => flash }
+            = yield
 
-      var $dropdown = $('.dropdown-toggle');
-      if ($dropdown.dropdown) { $dropdown.dropdown(); }
-
-      // fix sub nav on scroll
-      var $win = $(window)
-        , $nav = $('.subnav')
-        , navTop = $('.subnav').length && $('.subnav').offset().top - 40
-        , isFixed = 0
-
-      processScroll()
-
-      $win.on('scroll', processScroll)
-
-      function processScroll() {
-        var i, scrollTop = $win.scrollTop()
-        if (scrollTop >= navTop && !isFixed) {
-          isFixed = 1
-          $nav.addClass('subnav-fixed')
-        } else if (scrollTop <= navTop && isFixed) {
-          isFixed = 0
-          $nav.removeClass('subnav-fixed')
-        }
-      }
 
 

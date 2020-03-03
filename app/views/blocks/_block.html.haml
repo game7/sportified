@@ -1,36 +1,30 @@
 - editable ||= editable
-.block{ :id => "block_"+block.id.to_s, :class => "#{'editable' if editable}" }
+.block[block]
   - if editable
-    .chrome
-      .title= block.friendly_name
-      .buttons
-        .btn-group
-          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Block Tools" }
-            = icon('cog')
-            != ' '
-            %span.caret
-          %ul.dropdown-menu.pull-right{ role: "menu" }
-            %li.dropdown-header ACTIONS
-            - block.class.actions.each do |action|
-              %li
-                = link_to icon(action)+" "+action.humanize, { :controller => "blocks", :action => "edit", :page_id => @page.id, :id => block.id }, :remote => true
-            %li= link_to icon(:"trash")+' Delete', page_block_path(@page, block), :confirm => 'Are you sure?', :method => :delete, :remote => true
-            %li.divider
-            %li.dropdown-header MOVE
-            %li
-              %a.move_up{ :href => "#" }= icon(:"arrow-up")+' Up'
-            %li
-              %a.move_down{ :href => "#" }= icon(:"arrow-down")+' Down'
-            %li
-              %a.move_left{ :href => "#" }= icon(:"arrow-left")+' Left'
-            %li
-              %a.move_right{ :href => "#" }= icon(:"arrow-right")+' Right'
-            %li.divider
-            %li.dropdown-header SECTION
-            %li
-              %a.section_up{ :href => "#" }= icon(:"arrow-up")+' Up'
-            %li
-              %a.section_down{ :href => "#" }= icon(:"arrow-down")+' Down'
-      .clear
-  .content
-    = render :partial => block.class.to_s.pluralize.underscore+"/block", :object => block
+    .ui.segments
+      .ui.toolbar.segment
+        = block.friendly_name
+        .div{ style: 'float: right;' }
+          .ui.dropdown.icon
+            = semantic_icon(:ellipsis, :horizontal)
+            .left.menu
+              .header ACTIONS
+              - block.class.actions.each do |action|
+                = link_to semantic_icon(action) + ' ' + action.humanize, { controller: :blocks, action: :edit, page_id: @page.id, id: block.id }, remote: true, class: [:item]
+              = link_to semantic_icon(:trash) + ' Delete', page_block_path(@page, block), confirm: 'Are you sure?', method: :delete, remote: true, class: [:item]
+              .divider
+              .header MOVE
+              %a.item.move_up{ href: '#' }= semantic_icon(:arrow, :up) + ' Up'
+              %a.item.move_down{ href: '#' }= semantic_icon(:arrow, :down) + ' Down'
+              %a.item.move_left{ href: '#' }= semantic_icon(:arrow, :left) + ' Left'
+              %a.item.move_right{ href: '#' }= semantic_icon(:arrow, :right) + ' Right'
+              .divider
+              .header SECTION        
+              %a.item.section_up{ href: '#' }= semantic_icon(:arrow, :up) + ' Up'
+              %a.item.section_down{ href: '#' }= semantic_icon(:arrow, :down) + ' Down'        
+        .div{ style: 'clear: both;' }
+      .ui.content.segment[block]{ class: editable && :editable }
+        = render partial: "#{block.class.to_s.pluralize.underscore}/block", object: block
+
+  - unless editable
+    = render partial: "#{block.class.to_s.pluralize.underscore}/block", object: block

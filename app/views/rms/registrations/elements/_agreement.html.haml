@@ -1,3 +1,3 @@
 = builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
   = builder.input :agreement, as: :text, label: false, input_html: { readonly: true, value: element.terms, rows: 3 }
-  = builder.input element.name, as: :boolean, :wrapper => :vertical_boolean, :label => 'Agree?', :error => false, checked_value: "true", unchecked_value: "false"
+  = builder.input element.name, as: :boolean, :label => 'Agree?', :error => false, checked_value: "true", unchecked_value: "false"

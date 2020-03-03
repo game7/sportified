@@ -1,7 +1,7 @@
-.well
-  = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true, :class => 'btn btn-sm btn-primary'
+.ui.right.aligned.segment
+  = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), remote: true, class: [:ui, :primary, :mini, :button]
 #penalties
   = render :partial => 'admin/hockey_penalties/table', :locals => {:penalties => @statsheet.penalties}
-  = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true, :class => 'btn btn-sm btn-primary' if @statsheet.penalties.count > 10
-.well
-  = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), :remote => true, :class => 'btn btn-sm btn-primary'
+- if @statsheet.penalties.count > 10
+  .ui.right.aligned.segment
+    = link_to 'Add Penalty', new_admin_hockey_statsheet_penalty_path(@statsheet), remote: true, class: [:ui, :primary, :mini, :button]

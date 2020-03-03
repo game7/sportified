@@ -59,14 +59,58 @@
 #
 
 class EventSerializer < ActiveModel::Serializer
-  type :event
-  attributes :id, :starts_on, :ends_on, :duration, :description, :summary, :program_id, :location_id, :tags
-  has_one :program
-  has_one :location
-  def tags
-    object.taggings.collect{|tagging| tagging.tag_id.to_s }
-  end
-  def id
-    object.id.to_s
-  end
+  include Rails.application.routes.url_helpers
+
+  attributes :id,
+    :tenant_id,
+    :division_id,
+    :season_id,
+    :location_id,
+    :type,
+    :starts_on,
+    :ends_on,
+    :duration,
+    :all_day,
+    :summary,
+    :description,
+    :created_at,
+    :updated_at,
+    :home_team_id,
+    :away_team_id,
+    :statsheet_id,
+    :statsheet_type,
+    :home_team_score,
+    :away_team_score,
+    :home_team_name,
+    :away_team_name,
+    :home_team_custom_name,
+    :away_team_custom_name,
+    :text_before,
+    :text_after,
+    :result,
+    :completion,
+    :exclude_from_team_records,
+    :playing_surface_id,
+    :home_team_locker_room_id,
+    :away_team_locker_room_id,
+    :program_id,
+    :page_id,
+    :private,
+    :edit_url,
+    :clone_url,
+    :delete_url
+
+    def edit_url
+      edit_polymorphic_path([:admin, object.module_name, object])
+    end
+
+    def clone_url
+      new_polymorphic_path([:admin, object.module_name, object.class], :clone => object.id)
+    end
+
+    def delete_url
+      admin_event_path(object)
+    end
+
+
 end

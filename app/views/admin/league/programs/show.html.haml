@@ -1,25 +1,32 @@
--title @league.name
+- title @league.name
+- wrapper class: [:ui, :container]
 
-.row
-  .col-sm-8
+.ui.placeholder.segment
+  .ui.icon.header
+    .icon{ style: 'padding-top: 4px' } 🙄
+    No Seasons have been created for this league yet.
+  = link_to 'Add Season', new_admin_league_program_season_path(@league), class: [:ui, :primary, :button]
 
-    .panel.panel-default
-      .panel-heading= icon(:calendar) + " Events"
-      %ul.list-group
-        - @events.each do |event|
-          %li.list-group-item
-            = event.summary
+-# .row
+-#   .col-sm-8
 
-  .col-sm-4
+-#     .panel.panel-default
+-#       .panel-heading= icon(:calendar) + " Events"
+-#       %ul.list-group
+-#         - @events.each do |event|
+-#           %li.list-group-item
+-#             = event.summary
 
-    .panel.panel-default
-      .panel-heading Seasons
-      %ul.list-group
-        - @seasons.first(3).each do |season|
-          %li.list-group-item= link_to season.name, [:admin, :league, season]
-        %li.list-group-item= link_to 'All Seasons...', admin_league_program_seasons_path(@league)
-      .panel-heading Divisions
-      %ul.list-group
-        - @divisions.each do |division|
-          %li.list-group-item= link_to division.name, [:admin, :league, division]
+-#   .col-sm-4
+
+-#     .panel.panel-default
+-#       .panel-heading Seasons
+-#       %ul.list-group
+-#         - @seasons.first(3).each do |season|
+-#           %li.list-group-item= link_to season.name, [:admin, :league, season]
+-#         %li.list-group-item= link_to 'All Seasons...', admin_league_program_seasons_path(@league)
+-#       .panel-heading Divisions
+-#       %ul.list-group
+-#         - @divisions.each do |division|
+-#           %li.list-group-item= link_to division.name, [:admin, :league, division]
 

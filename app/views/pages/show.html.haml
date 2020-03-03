@@ -1,17 +1,16 @@
 - title @page.title
+- page_actions do
+  - if current_user_is_admin?
+    .ui.dropdown.icon.primary.button
+      = semantic_icon(:cog)
+      .left.menu
+        .header THIS PAGE
+        = link_to semantic_icon(:pencil) + ' Edit', edit_page_path(@page), class: :item
+        = link_to semantic_icon(:trash) + ' Delete', @page, confirm: 'Are you sure?', method: :delete, remote: true, class: :item
+        .header OTHER PAGES
+        = link_to semantic_icon(:th, :list) + ' List', pages_path, class: :item
+        = link_to semantic_icon(:plus) + ' New', new_page_path, class: :item
+
+
 = render :partial => 'sections/section', :collection => @page.sections.order(:position)
 
-- if current_user_is_admin?
-  - content_for :actions do
-    .btn-group
-      %button.btn.btn-primary.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Page Settings" }
-        = icon('cog')
-        != " "
-        %span.caret
-      %ul.dropdown-menu.pull-right{ role: "menu" }
-        %li.dropdown-header THIS PAGE
-        %li= link_to icon('pencil')+' Edit', edit_page_path(@page)
-        %li= link_to icon('trash')+' Delete', @page, :confirm => 'Are you sure?', :method => :delete, :remote => true
-        %li.dropdown-header OTHER PAGES
-        %li= link_to icon('th-list')+" List", pages_path
-        %li= link_to icon('plus')+" New", new_page_path

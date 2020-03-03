@@ -1,15 +1,15 @@
-class Admin::League::ProgramsController < ApplicationController
+class Admin::League::ProgramsController < Admin::AdminController
   before_action :mark_return_point, :only => [:new, :edit, :destroy]
   before_action :add_breadcrumbs
-  before_action :find_league, :only => [:edit, :update, :destroy]
+  before_action :find_league, :only => [:show, :edit, :update, :destroy]
 
   def show
     # @league = ::League::Program.find(params[:id])
     # @divisions = ::League::Division.order(:name)
     # @seasons = ::League::Season.order(starts_on: :desc)
 
-    season = ::League::Season.where('program_id = ?', params[:id]).most_recent
-    redirect_to [:admin, :league, season]
+    season = ::League::Season.where(program: @league).most_recent
+    redirect_to [:admin, :league, season] if season
 
     # @events = ::Event.where(program: @league).after(Date.current - 7.days).before(Date.current + 7.days).order(:starts_on)
   end

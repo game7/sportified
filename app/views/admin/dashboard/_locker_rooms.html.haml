@@ -1,17 +1,14 @@
 - events = Event.includes(location: :facilities).after(date.beginning_of_day).before(date.end_of_day).order(:starts_on)
-.panel.panel-default#locker-rooms
-  .panel-heading
-    .pull-left
-      %h4= "Events for #{date.today? ? 'Today' : date.strftime('%A %b %-d')}"
-    .pull-right
-      = link_to 'Auto Assign', assign_admin_events_locker_rooms_path(date: date), method: :post, remote: true, class: 'btn btn-primary'
-      != ' '
-      .btn-group
-        = link_to '<', admin_root_path({ date: date.yesterday }), class: 'btn btn-default'
-        = link_to 'Today', admin_root_path({}), class: 'btn btn-default'
-        = link_to '>', admin_root_path({ date: date.tomorrow }), class: 'btn btn-default'
-    .clear
-  %table.table.table-bordered
+.ui.segment
+  %h3.ui.header= "Events for #{date.today? ? 'Today' : date.strftime('%A %b %-d')}"
+  .pull-right
+    = link_to 'Auto Assign', assign_admin_events_locker_rooms_path(date: date), method: :post, remote: true, class: [:ui, :primary, :button]
+    .ui.buttons
+      = link_to '<', admin_root_path({ date: date.yesterday }), class: [:ui, :button]
+      = link_to 'Today', admin_root_path({}), class: [:ui, :button]
+      = link_to '>', admin_root_path({ date: date.tomorrow }), class: [:ui, :button]
+  .clear
+  %table.ui.celled.striped.table
     %thead
       %tr
         %th Time
@@ -22,7 +19,7 @@
     %tbody
       - events.each do |event|     
         %tr
-          %td= event.starts_on.strftime("%l:%M%P").gsub("m","")
+          %td= event.starts_on.strftime('%l:%M%P').gsub('m','')
           %td= event.summary
           - unless event.location.locker_rooms
             %td{ colspan: 2 } 
@@ -31,47 +28,48 @@
             %td
               = form_for event, url: admin_event_path(event), remote: true do |f|     
                 .form-group{ style: 'margin-bottom: 0;'}
-                  %input{name: 'event[away_team_name]', type: :text, class: 'form-control input-sm', value: event.away_team_name, style: 'display: inline-block; width: 150px;' } 
-                  != ' '
+                  .ui.input
+                    %input{ name: 'event[away_team_name]', type: :text, value: event.away_team_name } 
                   .btn-group.btn-group-sm{ data: { toggle: :buttons }}
                     - event.location.locker_rooms&.each do |locker_room|
                       - checked = (locker_room.id == event.away_team_locker_room_id)
                       %label.btn.btn-default{ class: checked ? 'active' : '' }
-                        %input{ type: :radio, name: "event[away_team_locker_room_id]", value: locker_room.id, checked: checked}
+                        %input{ type: :radio, name: 'event[away_team_locker_room_id]', value: locker_room.id, checked: checked}
                         = locker_room.name               
             %td
               = form_for event, url: admin_event_path(event), remote: true do |f|   
                 .form-group{ style: 'margin-bottom: 0;'}
-                  %input{name: 'event[home_team_name]', type: :text, class: 'form-control input-sm', value: event.home_team_name, style: 'display: inline-block; width: 150px;' } 
-                  != ' '
+                  .ui.input
+                    %input{ name: 'event[home_team_name]', type: :text, value: event.home_team_name } 
+                    .ui.buttons
+                      - event.location.locker_rooms&.each do |locker_room|
+                        - checked = (locker_room.id == event.home_team_locker_room_id)
+                        
+                        %label.btn.btn-default{ class: checked ? 'active' : '' }
+                          %input{ type: :radio, name: 'event[home_team_locker_room_id]', value: locker_room.id, checked: checked}
+                          = locker_room.name  
                   .btn-group.btn-group-sm{ data: { toggle: :buttons }}
-                    %input{ type: :hidden, name: "event[home_team_locker_room_id]" }
+                    %input.ui.input{ type: :hidden, name: 'event[home_team_locker_room_id]' }
                     - event.location.locker_rooms&.each do |locker_room|
                       - checked = (locker_room.id == event.home_team_locker_room_id)
                       %label.btn.btn-default{ class: checked ? 'active' : '' }
-                        %input{ type: :radio, name: "event[home_team_locker_room_id]", value: locker_room.id, checked: checked}
+                        %input{ type: :radio, name: 'event[home_team_locker_room_id]', value: locker_room.id, checked: checked}
                         = locker_room.name            
-          %td{ style: 'width: 20px;'}
-            .btn-group.dropup
-              %button.btn.btn-primary.btn-sm.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}
-                = icon(:cog)
-              %ul.dropdown-menu.dropdown-menu-right
-                %li.dropdown-header Event
-                %li
-                  = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event])
-                %li
-                  = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id)
-                %li
-                  = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+          %td.collapsing{ style: 'text-align: center;' }
+            .ui.icon.dropdown
+              = semantic_icon(:fitted, :ellipsis, :horizontal)
+              .left.menu
+                .header Event
+                = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: :item
+                = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), class: :item
+                = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', method: :delete, class: :item
                 - if event.class.to_s == 'League::Game'
-                  %li.divider{role: "separator"}
-                  %li.dropdown-header Game
-                  %li
-                    = link_to 'Result', edit_admin_game_result_path(event)
-                    = link_to 'Statsheet', edit_admin_game_statsheet_path(event)     
-                    = link_to 'Print Scoresheet', print_admin_game_statsheet_path(event), target: "_blank"     
-  .panel-footer
-    %em Locker Room assignments are are saved automatically
+                  .divider
+                  .header Game
+                  = link_to 'Result', edit_admin_game_result_path(event.id), class: :item
+                  = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: :item  
+                  = link_to 'Print Scoresheet', print_admin_game_statsheet_path(event), target: :_blank, class: :item        
+  %em Locker Room assignments are are saved automatically
 
 :javascript
   $(function() {

@@ -1,36 +1,44 @@
 - title 'Visits'
 - breadcrumb 'Visits'
 
-.row{ style: 'margin-bottom: 20px;' }
-  .col-sm-4
-    = pie_chart @by_device
-  .col-sm-4
-    = pie_chart @by_os
-  .col-sm-4
-    = pie_chart @by_browser      
+.ui.three.column.grid
+  .column
+    .ui.segment
+      %h4.ui.header Device
+      = pie_chart @by_device, legend: false
+  .column
+    .ui.segment
+      %h4.ui.header Operating System 
+      = pie_chart @by_os, legend: false
+  .column
+    .ui.segment
+      %h4.ui.header Browser
+      = pie_chart @by_browser, legend: false   
 
-.row
-  .col-sm-12
-    = paginate @visits
-    != page_entries_info @visits
-    %table.table.table-striped.table-bordered
-      %thead
-        %tr
-          %td ID
-          %td IP
-          %td User
-          %td Device
-          %td OS
-          %td Browser
-      %tbody
-        - @visits.each do |visit|
-          %tr
-            %td= link_to visit.id, [:host, visit]
-            %td= visit.ip
-            %td= visit.user&.full_name
-            %td= visit.device_type           
-            %td= visit.os       
-            %td= visit.browser
-    != page_entries_info @visits
+
+.ui.grid
+  .ten.wide.column= paginate @visits
+  .six.wide.right.aligned.column!= page_entries_info @visits
+%table.ui.celled.table
+  %thead
+    %tr
+      %th ID
+      %th IP
+      %th User
+      %th Device
+      %th OS
+      %th Browser
+  %tbody
+    - @visits.each do |visit|
+      %tr
+        %td= link_to visit.id, [:host, visit]
+        %td= visit.ip
+        %td= visit.user&.full_name
+        %td= visit.device_type           
+        %td= visit.os       
+        %td= visit.browser
+.ui.two.column.grid
+  .ten.wide.column= paginate @visits
+  .six.wide.right.aligned.column!= page_entries_info @visits
 
 

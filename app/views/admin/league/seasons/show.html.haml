@@ -1,95 +1,105 @@
 - title "#{@season.program.name} #{@season.name}"
 - content_for :actions do
-  %form.form-inline
-    = select("season", :id, @season_options, { :selected => request.path }, { :class => "redirect_to form-control" })
-    = link_to 'Settings', edit_admin_league_season_path(@season), :class => "btn btn-default"
-    = link_to 'New Season', new_admin_league_program_season_path(@season.program), :class => "btn btn-default"
-    = link_to 'New Division', new_admin_league_program_division_path(@season.program), :class => "btn btn-default"
+  = select "season", :id, @season_options, { selected: request.path}, { class: [:ui, :dropdown, :redirect_to] }
+  = link_to 'Settings', edit_admin_league_season_path(@season), class: [:ui, :primary, :button]
+  = link_to 'New Season', new_admin_league_program_season_path(@season.program), class: [:ui, :primary, :button]
+  = link_to 'New Division', new_admin_league_program_division_path(@season.program), class: [:ui, :primary, :button]
 
-.row
-  .col-sm-8
+.ui.grid
+  .eight.wide.column
 
     %h3 Upcoming Games
-    %table.table.table-bordered.table-striped
-      - @upcoming.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
-        %tr
-          %th{ :colspan => "2" }= day
-        - games.each do |game|
+    %table.ui.celled.striped.table
+      %tbody
+        - @upcoming.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
           %tr
-            %td{ :style => "width: 80px" }= game.starts_on.strftime("%l:%M %P")
-            %td
-              = game.summary
-              - event = game
-              .btn-group.pull-right
-                %button.btn.btn-default.btn-xs.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}
-                  Action
-                  %span.caret
-                %ul.dropdown-menu
-                  %li.dropdown-header Event
-                  %li
-                    = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event])
-                  %li
-                    = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id)
-                  %li
-                    = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
-                  - if event.class.to_s == 'League::Game'
-                    %li.divider{role: "separator"}
-                    %li.dropdown-header Game
-                    %li
-                      = link_to 'Result', edit_admin_game_result_path(event.id)
-                      = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
+            %td{ :colspan => "2" }= day
+          - games.each do |game|
+            %tr
+              %td{ :style => "width: 80px" }= game.starts_on.strftime("%l:%M %P")
+              %td
+                = game.summary
+                - event = game
+                .pull-right
+                  .ui.icon.dropdown
+                    = semantic_icon(:ellipsis, :horizontal)
+                    .left.menu
+                      .header Event
+                      = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: :item
+                      = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), class: :item
+                      = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', method: :delete, class: :item
+                      - if event.class.to_s == 'League::Game'
+                        .divider
+                        .header Game
+                        = link_to 'Result', edit_admin_game_result_path(event.id), class: :item
+                        = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: :item
+                .clear
 
+  .eight.wide.column
 
     %h3 Recent Games
-    %table.table.table-bordered.table-striped
-      - @recent.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
-        %tr
-          %th{ :colspan => "2" }= day
-        - games.each do |game|
+    %table.ui.celled.striped.table
+      %tbody
+        - @recent.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
           %tr
-            %td{ :style => "width: 80px" }= game.starts_on.strftime("%l:%M %P")
-            %td
-              = game.summary
-              - event = game
-              .btn-group.pull-right
-                %button.btn.btn-default.btn-xs.dropdown-toggle{ type: "button", data: { toggle: "dropdown"}}
-                  Action
-                  %span.caret
-                %ul.dropdown-menu
-                  %li.dropdown-header Event
-                  %li
-                    = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event])
-                  %li
-                    = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id)
-                  %li
-                    = link_to "Delete", admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
-                  - if event.class.to_s == 'League::Game'
-                    %li.divider{role: "separator"}
-                    %li.dropdown-header Game
-                    %li
-                      = link_to 'Result', edit_admin_game_result_path(event.id)
-                      = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id)
-
-  .col-sm-4
-
-    %h3 Teams
-    - @divisions.each do |division|
-      .panel.panel-default
-        .panel-heading
-          = division.name
-          .pull-right
-            = link_to icon(:cog) + ' Settings', edit_admin_league_division_path(division), :class => "btn btn-xs btn-default"
-            = link_to icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), :class => 'btn btn-xs btn-default'
-        .list-group
-          - @teams.each do |team|
-            - if team.division_id == division.id
-              = link_to admin_league_team_path(team), { :class => "list-group-item" } do
-                = image_tag(team.logo.micro.url, size: "25") if team.logo?
-                = team.name
+            %td{ :colspan => "2" }= day
+          - games.each do |game|
+            %tr
+              %td{ :style => "width: 80px" }= game.starts_on.strftime("%l:%M %P")
+              %td
+                = game.summary
+                - event = game
                 .pull-right
-                  %span{ :title => "Number of Players"}
-                    = team.players.size
-                    = " "
-                    = icon(:group)
+                  .ui.icon.dropdown
+                    = semantic_icon(:ellipsis, :horizontal)
+                    .left.menu
+                      .header Event
+                      = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: :item
+                      = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), class: :item
+                      = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', method: :delete, class: :item
+                      - if event.class.to_s == 'League::Game'
+                        .divider
+                        .header Game
+                        = link_to 'Result', edit_admin_game_result_path(event.id), class: :item
+                        = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: :item
+                .clear  
+
+.ui.divider
+
+%h3 Divisions
+
+.ui.grid
+  - @divisions.each do |division|
+    .four.wide.column
+      .ui.segments
+        .ui.segment
+          %h5
+            = division.name
+            %div{ style: 'float: right;'}
+              .ui.icon.dropdown
+                = semantic_icon(:ellipsis, :horizontal)
+                .left.menu
+                  = link_to semantic_icon(:cog) + ' Settings', edit_admin_league_division_path(division), class: :item
+                  = link_to semantic_icon(:plus) + ' New Team', new_admin_league_division_team_path(division, :season_id => @season.id), class: :item
+            %div{ style: 'clear: both;'}
+        - @teams.each do |team|
+          - if team.division_id == division.id
+            .ui.segment
+              = team.name
+              .pull-right
+                .ui.icon.dropdown
+                  = semantic_icon(:ellipsis, :horizontal)
+                  .left.menu
+                    = link_to 'Edit', edit_admin_league_team_path(team), class: :item
+                    = link_to 'Clone', admin_league_team_path(team), class: :item, method: :delete, confirm: 'Are you sure?'
+              .clear                  
+          -#   = link_to admin_league_team_path(team), { :class => "list-group-item" } do
+          -#     = image_tag(team.logo.micro.url, size: "25") if team.logo?
+          -#     = team.name
+          -#     .pull-right
+          -#       %span{ :title => "Number of Players"}
+          -#         = team.players.size
+          -#         = " "
+          -#         = icon(:group)
 
 

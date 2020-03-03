@@ -1,13 +1,6 @@
 = simple_form_for [variant, registration] do |f|
-  %fieldset
-    %legend Participant Info
-    .row
-      .col-sm-4
-        = f.input :first_name
-    .row
-      .col-sm-4
-        = f.input :last_name
-    .row
-      .col-sm-4
-        = f.input :birthdate, html5: true
+  %h4.ui.dividing.header Participant Info
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :birthdate, html5: true
   = f.button :wrapped, :cancel => return_url

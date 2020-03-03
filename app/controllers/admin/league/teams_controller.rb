@@ -31,10 +31,15 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
 
   def update
     if @team.update_attributes(team_params)
-      return_to_last_point :success => 'Team was successfully updated.'
+      respond_to do |format|
+        format.html { return_to_last_point success: 'Team was successfully updated.' }
+        format.json { render json: @team, status: :ok }
+      end    
     else
-      flash[:error] = "Team could not be updated."
-      render :action => "edit"
+      respond_to do |format|
+        format.html { render action: :edit, error: 'Team could not be updated.' }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
+      end      
     end
   end
 
@@ -70,9 +75,9 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
 
   def load_options
     @options = {
-      clubs: ::Club.order(:name),
-      divisions: @program.divisions.order(:name),
-      seasons: @program.seasons.order(:name)
+      clubs: ActiveModelSerializers::SerializableResource.new(::Club.order(:name)),
+      divisions: ActiveModelSerializers::SerializableResource.new(@program.divisions.order(:name)),
+      seasons: ActiveModelSerializers::SerializableResource.new(@program.seasons.order(:name))
     }
   end
 

@@ -1,7 +1,6 @@
-
-%h1= "#{player.first_name} #{player.last_name}"
+- title "#{player.first_name} #{player.last_name}"
 %h3 Player Statistics
-%table.table.table-striped.table-bordered
+%table.ui.celled.table
   %thead
     %tr
       %th DATE
@@ -34,7 +33,7 @@
             %td{ :colspan => 9 } Did Not Play
 
 %h3 Goaltending Statistics
-%table.table.table-striped.table-bordered
+%table.ui.celled.table
   %thead
     %tr
       %th DATE

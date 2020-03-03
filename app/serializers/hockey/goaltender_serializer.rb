@@ -42,6 +42,35 @@
 #
 
 class Hockey::GoaltenderSerializer < ActiveModel::Serializer
-  attributes :id, :jersey_number, :first_name, :last_name
-  belongs_to :player
+  attributes :id,
+    :type,
+    :tenant_id,
+    :team_id,
+    :player_id,
+    :statsheet_id,
+    :games_played,
+    :minutes_played,
+    :shots_against,
+    :goals_against,
+    :saves,
+    :save_percentage,
+    :goals_against_average,
+    :shutouts,
+    :shootout_attempts,
+    :shootout_goals,
+    :shootout_save_percentage,
+    :regulation_wins,
+    :regulation_losses,
+    :overtime_wins,
+    :overtime_losses,
+    :shootout_wins,
+    :shootout_losses,
+    :total_wins,
+    :total_losses,
+    :created_at,
+    :updated_at,
+    :jersey_number,
+    :first_name,
+    :last_name
+
 end

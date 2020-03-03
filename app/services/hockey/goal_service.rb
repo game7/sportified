@@ -7,8 +7,7 @@ class Hockey::GoalService
   def create_goal!(params)
     @statsheet.transaction do
       @goal = @statsheet.goals.build(params)
-      @goal.save!
-      update_player_results!(@goal, 1)
+      update_player_results!(@goal, 1) if @goal.save
     end
     @goal
   end
@@ -16,8 +15,7 @@ class Hockey::GoalService
   def destroy_goal!(id)
     @statsheet.transaction do
       @goal = @statsheet.goals.find(id)
-      update_player_results!(@goal, -1)
-      @goal.destroy
+      update_player_results!(@goal, -1) if @goal.destroy
     end
     @goal
   end

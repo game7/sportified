@@ -1,14 +1,15 @@
-%table.table.table-striped.table-bordered
+- title 'Users'
+%table.ui.celled.table
   %thead
     %tr
-      %th{:scope => 'col'} First
-      %th{:scope => 'col'} Last
-      %th{:scope => 'col'} Email
-      %th{:scope => 'col'} Actions
+      %th First
+      %th Last
+      %th Email
+      %th Actions
   %tbody
     - @users.each do |user|
       %tr
-        %td #{user.first_name}
-        %td #{user.last_name}
-        %td #{user.email}
-        %td #{link_to 'Show', [:host, user]}
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.email
+        %td= link_to 'Show', [:host, user], class: [:ui, :tiny, :primary, :button]

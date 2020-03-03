@@ -6,7 +6,10 @@ module LayoutHelper
 
   def title(page_title, opts={})
     content_for(:title) { h(page_title.to_s) }
-    content_for(:title_small) { opts[:small] } if opts[:small]
+  end
+
+  def wrapper(opts)
+    @wrapper = opts
   end
 
   def page_actions(&block)

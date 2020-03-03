@@ -8,9 +8,17 @@ class Admin::HockeyStatsheetsController < Admin::BaseLeagueController
   end
 
   def update
-    @statsheet.update_attributes(hockey_statsheet_params)
-    flash[:notice] = "Statsheet Updated"
-    render "admin/hockey_statsheets/update_#{params['form']}" if params['form']
+    if @statsheet.update_attributes(hockey_statsheet_params)
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Statsheet Updated"
+          render "admin/hockey_statsheets/update_#{params['form']}" if params['form']
+        end
+        format.json  { render json: @statsheet }
+      end
+    else
+      format.json  { render json: @statsheet.errors, status: 422 }
+    end
   end
   
   def post

@@ -1,8 +1,4 @@
-.well
+.ui.segment
   - if block.title.presence
-    .page-header
-      %h1
-        = block.title
-        - if block.caption.presence
-          %small= block.caption
+    %h3.ui.header= block.title
   != RedCloth.new(block.body).to_html if block.body.presence

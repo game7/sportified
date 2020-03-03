@@ -31,4 +31,3 @@ RUN gem install rails:5.2.3 rake:13.0.1 bundler:2.1.4
 ENV APP_HOME /app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
-COPY . $APP_HOME

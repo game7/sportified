@@ -1,25 +1,21 @@
 - title 'Players'
-.row.options
-  .col-sm-4
+
+.ui.grid
+  .four.wide.column
     = render :partial => 'shared/season_options', :object => season_options
+
 - last_initials = players.group_by{|player| player.last_name.first}
 
-%table.table.table-striped.table-bordered
-  %tbody
-    - last_initials.each do |last_initial, players|
+- last_initials.each do |last_initial, players|
+  %table.ui.celled.striped.table
+    %thead
       %tr
-        %th.primary{ :colspan => '2'}= last_initial
+        %th{ colspan: 2 }= last_initial
       %tr
-        %th PLAYER
-        %th TEAM
-        - players.each do |player|
-          %tr
-            %td= link_to player.last_first, league_player_path(@program.slug, @division.slug, @season.slug, player.team.slug, player.slug, player.id)
-            %td= link_to player.team.name, league_team_roster_path(@program.slug, @division.slug, @season.slug, player.team.slug)
-- content_for :javascript do
-  :javascript
-    $(function() {
-      var shiftWindow = function() { scrollBy(0, -120); console.log('boom') };
-      if (location.hash) shiftWindow();
-      window.addEventListener("hashchange", shiftWindow);
-    })
+        %th Player
+        %th Team
+    %tbody
+      - players.each do |player|
+        %tr
+          %td{ style: 'width: 50%;'}= link_to player.last_first, league_player_path(@program.slug, @division.slug, @season.slug, player.team.slug, player.slug, player.id)
+          %td{ style: 'width: 50%;'}= link_to player.team.name, league_team_roster_path(@program.slug, @division.slug, @season.slug, player.team.slug)

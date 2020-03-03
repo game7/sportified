@@ -58,7 +58,7 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(page_params)
-    @page.position = @page.parent.children.count
+    @page.position = @page.parent&.children&.count
     if @page.save
       return_to_last_point(success: 'Page was successfully created.')
     else

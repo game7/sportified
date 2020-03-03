@@ -1,8 +1,6 @@
 version: '3'
 volumes:
-  box:
-  app:
-  db:
+  postgres:
   rails_cache:
   bundle:
   node_modules:
@@ -17,20 +15,21 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./tmp/postgres:/var/lib/postgres/data
+      - postgres:/var/lib/postgres/data
     environment:
       POSTGRES_PASSWORD: postgres
   web: &web
     build:
       context: .
     command: ./scripts/start
+    stdin_open: true
+    tty: true    
     volumes:
       - .:/app
       - rails_cache:/app/tmp/cache
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
       - packs:/app/public/packs
-      - box:/box
     ports:
       - 3000:3000
     depends_on:

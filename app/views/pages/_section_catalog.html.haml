@@ -1,18 +1,13 @@
-.modal.fade{ :id => "section-catalog", :role => "dialog", :"tab-index" => "-1"}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{ :"data-dismiss" => 'modal', :"aria-hidden" => 'true' }!= "&times;"
-        %h3 Add Section
-      .modal-body
-        - Section.patterns.each do |pattern|
-          %div{ :style => "border-bottom: 1px solid #dedede;"}
-            %div.pull-left{ :style => ""}
-              = link_to icon('plus')+" Add", page_sections_path(@page.id, :pattern => pattern), :method => :post, :remote => true, :class => 'btn btn-primary', :style => "margin-top: 2px; margin-bottom: 2px;"
-            %div.pull-left{ :style => "margin-left: 10px"}
-              %table{ :"cell-spacing" => 4, :border => 4, :width => "400"}
-                %tr
-                  - pattern.split("|").each do |col|
-                    %td{ :width => "#{col}%", :align => "center" }= "#{col}"
-            .clear  
-      .modal-footer
+.ui.modal#section-catalog
+  = semantic_icon(:close)
+  .header Add Section
+  .content
+    - Section.patterns.each do |pattern|
+      .ui.segment
+        .ui.grid
+          .four.wide.column
+            = link_to semantic_icon(:plus) + ' Add', page_sections_path(@page.id, :pattern => pattern), method: :post, remote: true, class: [:ui, :small, :primary, :button]
+          .twelve.wide.column
+            .ui.grid.celled{ style: 'margin: 0;' }
+              - pattern.split("|").each do |col|
+                .column.wide{ class: Section.to_word(col), style: 'text-align: center; font-size: 10px;' }= col

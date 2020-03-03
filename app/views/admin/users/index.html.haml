@@ -1,16 +1,17 @@
-%table.table.table-bordered.table-striped
-  %thead
-    %tr
-      %th{:scope => 'col'} First
-      %th{:scope => 'col'} Last
-      %th{:scope => 'col'} Email
-      %th{:scope => 'col'} Actions
-  %tbody
-    - @users.each do |user|
+.ui.container
+  %table.ui.celled.striped.table
+    %thead
       %tr
-        %td= user.first_name
-        %td= user.last_name
-        %td= user.email
-        %td= link_to 'Show', [:admin, user], :class => 'btn btn-small'
+        %th First
+        %th Last
+        %th Email
+        %th Actions
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.first_name
+          %td= user.last_name
+          %td= user.email
+          %td= link_to 'Show', [:admin, user], class: [:ui, :small, :primary, :button]
 
 

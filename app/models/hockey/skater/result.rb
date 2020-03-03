@@ -44,6 +44,8 @@ class Hockey::Skater::Result < Hockey::Skater
 
   validates :statsheet, presence: true
   validates :team, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   default_scope { includes(:player) }
 

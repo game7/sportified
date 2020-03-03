@@ -30,9 +30,23 @@
 #
 
 class Hockey::PenaltySerializer < ActiveModel::Serializer
-  type 'hockey/penalties'
-  attributes :id, :period, :minute, :second, :infraction, :duration, :severity
-  attributes :start_period, :start_minute, :start_second, :end_period, :end_minute, :end_second
-  belongs_to :team
-  belongs_to :committed_by
+  attributes :id, 
+            :period, 
+            :minute, 
+            :second, 
+            :team_id,
+            :committed_by_id,
+            :infraction, 
+            :duration, 
+            :severity, 
+            :start_period, 
+            :start_minute, 
+            :start_second, 
+            :end_period, 
+            :end_minute, 
+            :end_second,
+            :created_at,
+            :updated_at
+  # belongs_to :team
+  # belongs_to :committed_by
 end

@@ -42,10 +42,6 @@
 // SHARED
 // --------------------------------
 
-.row.options div {
-  margin-bottom: 10px;
-}
-
 .pagination.date_range {
   width: 100%;
   margin: 0;
@@ -77,8 +73,8 @@
 
 .scoreboard .group-head {
   padding: 3px 5px;
-  border-bottom: 2px solid $gray-light;
-  background-color: $gray-lighter;
+  border-bottom: 2px solid #CCC;
+  background-color: #dedede;
   margin-bottom: 18px;
 }
 .scoreboard .group-foot {
@@ -89,8 +85,8 @@
   margin-bottom: 18px;
 }
 .scorecard .inner {
-  background-color: $gray-lighter;
-  border: 1px solid $gray-light;
+  background-color: #dedede;
+  border: 1px solid #CCC;
   padding: 2px;
 }
 
@@ -99,7 +95,7 @@
     padding: 2px 4px;
     font-weight: bold;
     font-size: 10pt;
-    border-bottom: solid 1px $gray-light;
+    border-bottom: solid 1px #CCC;
   }
   .matchup {
     table {
@@ -166,13 +162,13 @@
 .scorecard .game-links {
   margin-top: 2px;
   padding: 4px;
-  border-top: 1px solid $gray-light;
-  border-bottom: 1px solid $gray-light;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
   font-size: 8pt;
 }
 
 .scorecard .line-score {
-  border-bottom: 1px solid $gray-light;
+  border-bottom: 1px solid #CCC;
   table {
     margin-bottom: 0;
     td, th {
@@ -189,12 +185,6 @@
   }
 }
 
-table.team-schedule {
-  th {
-    background-color: $brand-primary !important;
-    color: $navbar-default-link-color !important;
-  }
-}
 
 // BOXSCORE
 // --------------------------------
@@ -207,7 +197,7 @@ table.team-schedule {
   padding: 5px;
 }
 .boxscore .summary {
-  @include make-xs-column(12);
+  // @include make-xs-column(12);
   .matchup {
     padding: 5px;
   }
@@ -231,12 +221,12 @@ table.team-schedule {
   }
 }
 .boxscore .linescore {
-  @include make-xs-column(4);
+  // @include make-xs-column(4);
 }
 .boxscore .teamstats {
   margin-bottom: 18px;
   .stat {
-    @include make-xs-column(4);
+    // @include make-xs-column(4);
   }
   table {
     margin-bottom: 0;
@@ -253,21 +243,21 @@ table.team-schedule {
     background-color: $gray-light;
   }
 }
-.boxscore .minute-by-minute {
-  @include make-xs-column(12)
-}
-.boxscore .game-activity {
-  @include make-xs-column(12)
-}
-.boxscore .player-summary {
-  @include make-xs-column(12)
-}
-.boxscore .goaltender-summary {
-  @include make-xs-column(12)
-}
-.boxscore .shots-on-goal {
-  @include make-xs-column(12)
-}
+// .boxscore .minute-by-minute {
+//   @include make-xs-column(12)
+// }
+// .boxscore .game-activity {
+//   @include make-xs-column(12)
+// }
+// .boxscore .player-summary {
+//   @include make-xs-column(12)
+// }
+// .boxscore .goaltender-summary {
+//   @include make-xs-column(12)
+// }
+// .boxscore .shots-on-goal {
+//   @include make-xs-column(12)
+// }
 
 
 // STATISTICS
@@ -275,7 +265,7 @@ table.team-schedule {
 
 table.leaders {
   td {
-    vertical-align: middle;
+    vertical-align: middle !important;
   }
   td.logo {
     padding: 0;
@@ -292,7 +282,7 @@ table.leaders {
   }
 }
 
-table.statistics {
+table.stats {
   td {
     vertical-align: middle;
   }
@@ -307,7 +297,7 @@ table.statistics {
   }
   th.stat,
   td.stat {
-    width: 50px;
+    width: 80px;
     text-align: center;
   }
   th.active,
@@ -335,7 +325,7 @@ table.statistics {
   th.stat,
   td.stat {
     width: 50px;
-    text-align: center;
+    text-align: center !important;
   }
 
   @media only screen and (min-width : 767px) {
@@ -361,7 +351,8 @@ table.team-statistics {
 }
 
 
-table.team-statistics.players {
+table.team-statistics.players,
+table.team-statistics.goalies {
   th.player,
   td.player {
     width: 25%;

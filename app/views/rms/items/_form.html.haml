@@ -1,26 +1,13 @@
 = simple_form_for @item do |f|
-  .panel.panel-default
-    .panel-heading
-      %h3.panel-title Basic Info
-    .panel-body
-      .row
-        .col-sm-6
-          = f.input :title
-      .row
-        .col-xs-12
-          = f.input :description
-      .row
-        .col-xs-12
-          = f.input :active, :wrapper => :vertical_boolean
-      -# .row
-      -#   .col-sm-2
-      -#     = f.input :quantity_allowed, { placeholder: 'No Limit' }
-  .panel.panel-default
-    .panel-heading
-      %h3.panel-title Variants
-    %ul#variants.list-group
-      = f.simple_fields_for :variants do |variant|
-        = render 'variant_fields', f: variant
-    .panel-footer
-      = link_to_add_association 'Add Variant', f, :variants
+  = f.input :title
+  = f.input :description, input_html: { rows: 3 }
+  = f.input :active
+  %h4.ui.dividing.header Variants
+  .ui.divided.items#variants
+    = f.simple_fields_for :variants do |variant|
+      = render 'variant_fields', f: variant
+    .links
+      .ui.divider
+      = link_to_add_association 'Add Variant', f, :variants, class: [:ui, :small, :button]
+  .ui.divider
   = f.button :wrapped, :cancel => return_url

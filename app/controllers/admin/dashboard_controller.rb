@@ -16,7 +16,8 @@ class Admin::DashboardController < Admin::AdminController
     @by_device = Ahoy::Visit.where('started_at >= ?', 1.week.ago)
                             .group(:device_type)
                             .count                            
-                            
+    @events = Event.includes(location: :facilities).after(@date.beginning_of_day).before(@date.end_of_day).order(:starts_on) 
+    @locker_rooms = LockerRoom.order(:location_id, :name)                       
   end
 
 end

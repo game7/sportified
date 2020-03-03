@@ -1,38 +1,36 @@
 
-%h3= registration.item.title
-.row
-  .col-sm-6
-    %table.table.table-striped.table-bordered
-      %tr
-        %th{ style: 'width: 30%;'} Customer Name
-        %td= "#{registration.user.first_name} #{registration.user.last_name}"
-      %tr
-        %th{ style: 'width: 30%;'} Customer Email
-        %td= registration.user.email   
-      %tr
-        %th{ style: 'width: 30%;'} Locator
-        %td= registration.confirmation_code
-      %tr
-        %th{ style: 'width: 30%;'} Price
-        %td= number_to_currency registration.price
-      %tr
-        %th{ style: 'width: 30%;'} Payment Id
-        %td= registration.payment_id
-      %tr
-        %th{ style: 'width: 30%;'} Participant Name
-        %td= "#{registration.first_name} #{registration.last_name}"
-      %tr
-        %th{ style: 'width: 30%;'} Participant Birthdate
-        %td= registration.birthdate.strftime('%-m/%-d/%Y')
-      %tr
-        %th{ style: 'width: 30%;'} Created At
-        %td= registration.created_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
-      %tr
-        %th{ style: 'width: 30%;'} Updated At
-        %td= registration.updated_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
+%h3.ui.dividing.header= registration.item.title
+%table.ui.definition.table
+  %tr
+    %td.four.wide Customer Name
+    %td= "#{registration.user.first_name} #{registration.user.last_name}"
+  %tr
+    %td Customer Email
+    %td= registration.user.email   
+  %tr
+    %td Locator
+    %td= registration.confirmation_code
+  %tr
+    %td Price
+    %td= number_to_currency registration.price
+  %tr
+    %td Payment Id
+    %td= registration.payment_id
+  %tr
+    %td Participant Name
+    %td= "#{registration.first_name} #{registration.last_name}"
+  %tr
+    %td Participant Birthdate
+    %td= registration.birthdate.strftime('%-m/%-d/%Y')
+  %tr
+    %td Created At
+    %td= registration.created_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
+  %tr
+    %td Updated At
+    %td= registration.updated_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
 
-    - registration.forms.each do |form|
-      = render partial: 'show_form', locals: { form: form }
+- registration.forms.each do |form|
+  = render partial: 'show_form', locals: { form: form }
 
 
 = link_to 'Your Registrations', registrations_path

@@ -2,13 +2,12 @@
 //= require jquery_ujs
 //= require jquery-ui.min
 //= require jquery.remotipart
-//= require bootstrap-sprockets
-//= require jcrop/jquery.Jcrop.min
-//= require bootstrap-datetimepicker
-//= require cocoon
+
 //= require admin/chromecasts
 //= require chartkick
 //= require Chart.bundle
+//= require semantic-ui
+//= require cocoon
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
   var $observer = $(observerId);
@@ -52,7 +51,8 @@ function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue
     return $.when();
   }
 
-  $observed.change(function() {
+  $observed.onChange(function() {
+    console.log('changed!')
     bind();
   });
 
@@ -117,6 +117,10 @@ $(document).ready(function() {
 
   var $tooltip = $('[rel=tooltip], [data-toggle="tooltip"]');
   if ($tooltip.tooltip) { $tooltip.tooltip(); }
+
+  $('.ui.dropdown').dropdown();
+  $('.ui.sidebar').sidebar('attach events', '.toc.item');
+  $('.ui.accordion').accordion();
 
 });
 

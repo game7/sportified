@@ -70,6 +70,8 @@ class League::Game < League::Event
   enumerize :result, in: [ :pending, :final ], default: :pending
   enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
 
+  validates_presence_of :program_id
+
   validates_numericality_of :away_team_score, :only_integer => true
   def away_team_is_winner?
     return away_team_score > home_team_score if result

@@ -66,6 +66,8 @@ class League::Event < Event
   belongs_to :season
   validates_presence_of :season_id
 
+  validates_presence_of :summary
+
   class << self
     def for_season(s)
       id = s.class ==  League::Season ? s.id : s

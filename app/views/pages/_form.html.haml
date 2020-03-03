@@ -1,19 +1,29 @@
 = simple_form_for @page do |f|
-  %fieldset
-    %legend Basic
-    = f.input :title
-    = f.input :draft, :as => :boolean, :wrapper => :vertical_boolean
-    %fieldset
-      %legend Positioning    
-      = f.input :parent_id, :collection => @parent_options
-      = f.input :show_in_menu, :as => :boolean, :wrapper => :vertical_boolean
-      = f.input :title_in_menu
-    %fieldset
-      %legend Navigation
-      = f.input :skip_to_first_child, :as => :boolean, :wrapper => :vertical_boolean
-      = f.input :link_url
-    %fieldset
-      %legend Search Engine Optimization
-      = f.input :meta_keywords
-      = f.input :meta_description
+  
+  %h4.ui.dividing.header Basic
+  = f.input :title
+  = f.input :draft, as: :boolean
+  
+  %h4.ui.dividing.header  Positioning    
+  = f.input :parent_id, :collection => @parent_options
+  = f.input :show_in_menu
+  = f.input :title_in_menu
+  
+  %h4.ui.dividing.header Navigation
+  = f.input :skip_to_first_child
+  = f.input :link_url
+  
+  %h4.ui.dividing.header Search Engine Optimization
+  = f.input :meta_keywords
+  = f.input :meta_description
   = f.button :wrapped, :cancel => return_url
+
+
+  :css
+
+    .page_title,
+    .page_parent_id,
+    .page_title_in_menu,
+    .page_link_url {
+      width: 400px;
+    }

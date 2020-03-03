@@ -2,19 +2,19 @@
 - breadcrumb 'Visits', host_visits_path
 - breadcrumb @visit.id
 
-%table.table.table-bordered.table-striped
+%table.ui.definition.table
   %tbody
     %tr
-      %th Started
+      %td.four.wide Started
       %td= @visit.started_at    
     %tr
-      %th User
+      %td User
       %td= @visit.user&.full_name  
     %tr
-      %th Geo
+      %td Geo
       %td= "#{@visit.latitude}, #{@visit.longitude}"
     %tr
-      %th Location
+      %td Location
       %td
         = @visit.country  
         - if @visit.region.present?
@@ -24,7 +24,7 @@
             != " > "
             = @visit.city          
     %tr
-      %th Device / OS / Browser
+      %td Device / OS / Browser
       %td
         = @visit.device_type
         != " > "
@@ -32,18 +32,18 @@
         != " > "
         = @visit.browser     
     %tr
-      %th User Agent
+      %td User Agent
       %td= @visit.user_agent           
     %tr
-      %th Referrer
+      %td Referrer
       %td= @visit.referrer  
     %tr
-      %th Landing Page
+      %td Landing Page
       %td= @visit.landing_page   
 
-%h2 Events
+%h2.ui.dividing.header Events
 
-%table.table.table-bordered.table-striped
+%table.ui.celled.table
   %thead
     %tr
       %th Time

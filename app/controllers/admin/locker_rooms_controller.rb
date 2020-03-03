@@ -1,17 +1,8 @@
 class Admin::LockerRoomsController < Admin::AdminController
 
   before_action :mark_return_point, only: [:new, :edit, :destroy]
-  before_action :set_locker_room, only: [:show, :edit, :update, :destroy]
-  before_action :set_location, only: [:new, :create, :edit, :update]
-
-  # GET /locker_rooms
-  def index
-    @locker_rooms = LockerRoom.all
-  end
-
-  # GET /locker_rooms/1
-  def show
-  end
+  before_action :set_locker_room, only: [:edit, :update, :destroy]
+  before_action :set_location, only: [:new, :create]
 
   # GET /locker_rooms/new
   def new
@@ -50,7 +41,7 @@ class Admin::LockerRoomsController < Admin::AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_locker_room
       @locker_room = LockerRoom.find(params[:id])
     end
@@ -59,7 +50,6 @@ class Admin::LockerRoomsController < Admin::AdminController
       @location = Location.find(params[:location_id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def locker_room_params
       params[:locker_room].permit(:name, :parent_id)
     end

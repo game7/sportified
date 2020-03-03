@@ -18,14 +18,13 @@ $navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !def
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
+$gray-light: #CCC;
+$gray-lighter: #dedede;
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+// @import "bootstrap-sprockets";
+// @import "bootstrap";
+@import "semantic-ui";
 @import "base/include";
-
-body {
-  padding-top: 50px;
-}
 
 h1,.h1 {
   font-size: 30px;
@@ -64,13 +63,6 @@ h4,.h4 {
 
 #site_name {
   display: none;
-}
-
-#wrapper {
-  background: rgb(255, 255, 255);
-  background: rgba(255, 255, 255, .90);
-  padding-top: 10px;
-  padding: 10px;
 }
 
 header {

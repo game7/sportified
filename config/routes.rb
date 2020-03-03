@@ -170,9 +170,9 @@
     end
 
     resources :clubs
-    resources :locations do
-      resources :playing_surfaces
-      resources :locker_rooms
+    resources :locations, shallow: true do
+      resources :playing_surfaces, except: [:index, :show]
+      resources :locker_rooms, except: [:index, :show]
     end
 
     resources :events, only: [:index, :update, :destroy] do

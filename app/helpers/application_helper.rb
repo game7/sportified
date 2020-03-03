@@ -24,6 +24,20 @@ module ApplicationHelper
     icon(name, label, { class: 'fa-fw' }, 'fab')
   end
 
+  def to_words(num) 
+    {
+      2 => 'two',
+      3 => 'three',
+      4 => 'four',
+      5 => 'five',
+      6 => 'six',
+      7 => 'seven',
+      8 => 'eight',
+      9 => 'nine',
+      10 => 'ten'
+    }[num]
+  end
+
   def theme
     site = Site.current
     site.present? && site.theme.present? ? site.theme : 'default'
@@ -88,5 +102,16 @@ module ApplicationHelper
     end
     tag
   end  
+
+  def admin_menu_item(url:, icon:, label:)
+    if url == admin_root_path
+      active = request.path == admin_root_path && :active
+    else
+      active = request.path.start_with?(url) && :active
+    end
+    link_to url, class: [:item, active]  do
+      semantic_icon(*icon) + label
+    end 
+  end
 
 end

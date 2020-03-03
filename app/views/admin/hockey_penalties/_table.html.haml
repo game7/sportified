@@ -1,4 +1,4 @@
-%table.table.table-striped.table-bordered
+%table.ui.celled.striped.table
   %thead
     %tr
       %th
@@ -25,11 +25,10 @@
           %td= "#{p.infraction} (#{p.severity})"
           %td= p.start_time
           %td= p.end_time
-          %td
-            = link_to 'Edit', edit_admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :title => 'Edit this penalty', :class => 'btn btn-primary btn-xs'
-            != ' '
-            = link_to 'Delete', admin_hockey_statsheet_penalty_path(@statsheet, p), :remote => true, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-primary btn-xs'
+          %td.collapsing
+            = link_to 'Edit', edit_admin_hockey_statsheet_penalty_path(@statsheet, p), remote: true, class: [:ui, :primary, :mini, :button]
+            = link_to 'Delete', admin_hockey_statsheet_penalty_path(@statsheet, p), remote: true, confirm: 'Are you sure?', method: :delete, class: [:ui, :primary, :mini, :button]
     - else
       %tr
-        %td{ :colspan => 10 } No penalties have been entered
+        %td{ colspan: 10 } No penalties have been entered
 

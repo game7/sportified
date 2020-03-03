@@ -1,21 +1,13 @@
 = simple_form_for [:admin, @post] do |f|
-  .panel.panel-default
-    .panel-body
-      = f.input :title, :input_html => { :class => "input-xxlarge" }
-      = f.input :summary, :as => :text, :input_html => { :class => "input-xxlarge", :rows => "3"  }
-      = f.input :body, :as => :text, :input_html => { :class => "input-xxlarge", :rows => "5" }
-  .panel.panel-default
-    .panel-body
-      = f.input :link_url, :input_html => { :class => "input-xxlarge" }
-  .panel.panel-default
-    .panel-body
-      = f.input :image, :as => :file
-      = f.input :remote_image_url
-      = f.input :image_cache, :as => :hidden
-      = image_tag(@post.image_url) if @post.image_url.present?
-  .panel.panel-default
-    .panel-body
-      = f.input :tag_list, :input_html => { :value => @post.tag_list.to_s, :class => "input-xxlarge" }
+  = f.input :title, :input_html => { :class => "input-xxlarge" }
+  = f.input :summary, :as => :text, :input_html => { :class => "input-xxlarge", :rows => "3"  }
+  = f.input :body, :as => :text, :input_html => { :class => "input-xxlarge", :rows => "5" }
+  = f.input :link_url, :input_html => { :class => "input-xxlarge" }
+  = f.input :image, :as => :file
+  = f.input :remote_image_url
+  = f.input :image_cache, :as => :hidden
+  = image_tag(@post.image_url) if @post.image_url.present?
+  = f.input :tag_list, :input_html => { :value => @post.tag_list.to_s, :class => "input-xxlarge" }
 
 
   = f.button :wrapped, :cancel => return_url

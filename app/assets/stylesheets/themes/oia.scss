@@ -12,13 +12,14 @@ $navbar-default-link-color:        #ffffff;
 $navbar-default-link-active-color: #FFC627;
 $navbar-default-link-hover-color:  #FFC627;
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "base/include";
+$gray-light: #CCC;
+$gray-lighter: #dedede;
 
-body {
-  padding-top: 50px;
-}
+
+// @import "bootstrap-sprockets";
+// @import "bootstrap";
+@import "semantic-ui";
+@import "base/include";
 
 .navbar .nav > li > a {
   font-weight: bold;
@@ -38,8 +39,8 @@ body {
 
 #site_logo {
   div {
-    background-image: asset-url("themes/oia/brand_maroon.jpg");
-    background-image: asset-url("themes/oia/oia_white.svg");
+    // background-image: asset-url("themes/oia/brand_maroon.jpg");
+    // background-image: asset-url("themes/oia/oia_white.svg");
     background-size: 244px 20px;
     width: 244px;
     height: 20px;
@@ -67,18 +68,6 @@ body {
   display: none;
 }
 
-#wrapper {
-  // background-image: asset-url("themes/oia/oia_gray_10x10.png");
-  background-color: #FFF;
-  padding-top: 10px;
-  padding: 10px;
-}
-
-header {
-  h1 {
-
-  }
-}
 
 table {
   background-color: #fff;

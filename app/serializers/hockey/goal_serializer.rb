@@ -28,9 +28,5 @@
 
 class Hockey::GoalSerializer < ActiveModel::Serializer
   type 'hockey/goals'
-  attributes :id, :period, :minute, :second
-  belongs_to :team
-  belongs_to :scored_by
-  belongs_to :assisted_by
-  belongs_to :also_assisted_by
+  attributes :id, :period, :minute, :second, :team_id, :scored_by_id, :assisted_by_id, :also_assisted_by_id, :strength
 end

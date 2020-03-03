@@ -6,9 +6,8 @@
   var processing = false;
 
   function errorAlert(text) {
-    $('.alert').remove()
-    $('<div/>').addClass('alert')
-               .addClass('alert-danger')
+    $('.ui.message').remove()
+    $('<div/>').addClass('ui warning message')
                .html(text)
                .appendTo('#page-header')
   }

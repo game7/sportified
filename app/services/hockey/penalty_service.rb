@@ -7,8 +7,7 @@ class Hockey::PenaltyService
   def create_penalty!(params)
     @statsheet.transaction do
       @penalty = @statsheet.penalties.build(params)
-      @penalty.save!
-      update_player_results!(@penalty, 1)
+      update_player_results!(@penalty, 1) if @penalty.save
     end
     @penalty
   end

@@ -1,29 +1,29 @@
 - editable ||= editable
-.section{ :id => "section_#{ section.id.to_s }", :class => "#{"editable" if editable}" }
+.section[section]
   - if editable
-    .chrome
-      .title= Section
-      .buttons
-        .btn-group
-          %button.btn.btn-default.btn-small.dropdown-toggle{ :"data-toggle" => "dropdown", rel: "tooltip", title: "Section Tools" }
-            = icon('cog')
-            != ' '
-            %span.caret
-          %ul.dropdown-menu.pull-right
-            %li.dropdown-header ACTIONS
-            %li= link_to icon(:"trash")+' Delete', page_section_path(@page, section), :confirm => 'Are you sure?', :method => :delete, :remote => true
-            %li.divider
-            %li.dropdown-header MOVE
-            %li
-              %a.move_section_up{ :href => "#" }= icon(:"arrow-up")+' Up'
-            %li
-              %a.move_section_down{ :href => "#" }= icon(:"arrow-down")+' Down'
-      .clear
-  .content.columns.row
-    - section.columns.each_with_index do |column, index|
-      .column{ :class => width_to_span(column), :"data-column" => index }
-        .column-inner
-          .blocks.row-fluid
-            = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
-          - if editable
-            %a.add-block.btn.btn-default{ :role => "button", :"data-toggle" => "modal", :"data-column" => index, :"data-section_id" => section.id.to_s, :"href" => "#block-catalog"}= icon('plus')+" Add Block Here"
+    %h5.ui.attached.top.header.secondary
+      Section
+      .div{ style: 'float: right;' }
+        .ui.dropdown.icon
+          = semantic_icon(:ellipsis, :horizontal)
+          .left.menu
+            .header ACTIONS
+            = link_to semantic_icon(:trash) + ' Delete', page_section_path(@page, section), confirm: 'Are you sure?', method: :delete, remote: true, class: :item
+            .divider
+            .header MOVE
+            %a.item.move_section_up{ :href => "#" }= semantic_icon(:arrow, :up) + ' Up'
+            %a.item.move_section_down{ :href => "#" }= semantic_icon(:arrow, :down) + ' Down'
+      .div{ style: 'clear: both;' }
+    .ui.attached.content.segment
+      .ui.internally.celled.columns.grid
+        - section.columns.each_with_index do |column, index|
+          .column.wide{ class: column, data: { column: index } }
+            .blocks
+              = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
+            %a.add-block.ui.default.fluid.button{ :role => "button", :"data-toggle" => "modal", :"data-column" => index, :"data-section_id" => section.id.to_s, :"href" => "#block-catalog"}= semantic_icon(:plus) + ' Add Block Here'
+  - unless editable
+    .ui.grid
+      - section.columns.each_with_index do |column, index|
+        .column.wide{ class: column, data: { column: index }, style: 'padding-bottom: 0;' }
+          = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
+

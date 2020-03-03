@@ -14,5 +14,9 @@ class Admin::Events::LockerRoomsController < ApplicationController
       locker_rooms[event.location_id][0].rotate!
       locker_rooms[event.location_id][1].rotate!
     end
+    respond_to do |format|
+      format.js
+      format.json { render json: events, status: 200 }
+    end
   end
 end

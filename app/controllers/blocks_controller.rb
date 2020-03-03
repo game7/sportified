@@ -44,7 +44,7 @@ class BlocksController < ApplicationController
   def position
     params[:block].each_with_index do |id, i|
       Block.update(id, :position => i, :section_id => params[:section_id], :column => params[:column])
-    end
+    end if params[:block]
     render :nothing => true
   end
 

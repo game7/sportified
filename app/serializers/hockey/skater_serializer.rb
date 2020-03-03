@@ -37,6 +37,31 @@
 #
 
 class Hockey::SkaterSerializer < ActiveModel::Serializer
-  attributes :id, :jersey_number, :first_name, :last_name
-  belongs_to :player
+  attributes :id,
+             :type,
+             :tenant_id,
+             :team_id,
+             :player_id,
+             :statsheet_id,
+             :jersey_number,
+             :games_played,
+             :goals,
+             :assists,
+             :points,
+             :penalties,
+             :penalty_minutes,
+             :minor_penalties,
+             :major_penalties,
+             :misconduct_penalties,
+             :game_misconduct_penalties,
+             :hat_tricks,
+             :playmakers,
+             :gordie_howes,
+             :ejections,
+             :created_at,
+             :updated_at,
+             :first_name,
+             :last_name,
+             :errors
+
 end

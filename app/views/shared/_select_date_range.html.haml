@@ -1,10 +1,7 @@
-%ul.pagination.date_range
-  %li.prev
-    = link_to "← Back", params.permit!.merge(:date => prev_date), :class => "visible-xs"
-    = link_to "← Prev #{range} Days", params.permit!.merge(:date => prev_date), :class => "visible-sm"
-    = link_to "← Previous #{range} Days", params.permit!.merge(:date => prev_date), :class => "hidden-xs hidden-sm"
-  %li.disabled
-    = link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#"
-  %li.next
-    = link_to "Next #{range} Days →", params.permit!.merge(:date => next_date), :class => "hidden-xs"
-    = link_to "Next →", params.permit!.merge(:date => next_date), :class => "visible-xs"
+.ui.pagination.menu
+  = link_to "← Back", params.permit!.merge(:date => prev_date), class: [:item]
+  = link_to "← Prev #{range} Days", params.permit!.merge(:date => prev_date), class: [:item]
+  -# = link_to "← Previous #{range} Days", params.permit!.merge(:date => prev_date), :class => "hidden-xs hidden-sm"
+  = link_to start_date.strftime('%b %e')+" - "+end_date.strftime("%b %e"), "#", class: [:disabled, :item]
+  = link_to "Next #{range} Days →", params.permit!.merge(:date => next_date), class: [:item]
+  = link_to "Next →", params.permit!.merge(:date => next_date), class: [:item]

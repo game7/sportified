@@ -1,10 +1,12 @@
 - title 'Tenants'
-%p
-  Because this is a non-production environment there are no custom domains to help determine the current
-  Tenant.  You can choose a tenant from the list below and your session cookie will be updated and the selected
-  Tenant will be loaded.  If you later need to switch to a different tenant you can do so by deleting your session
-  cookie or by returning to this tenant selector page.  This page will not be available in production environments.
-%table.table.table-bordered.table-striped
-  - @tenants.each do |tenant|
-    %tr
-      %td= link_to tenant.name, [:select, tenant], method: :put
+.ui.segment
+  %p
+    Because this is a non-production environment there are no custom domains to help determine the current
+    Tenant.  You can choose a tenant from the list below and your session cookie will be updated and the selected
+    Tenant will be loaded.  If you later need to switch to a different tenant you can do so by deleting your session
+    cookie or by returning to this tenant selector page.  This page will not be available in production environments.
+%table.ui.celled.striped.table
+  %tbody
+    - @tenants.each do |tenant|
+      %tr
+        %td= link_to tenant.name, [:select, tenant], method: :put

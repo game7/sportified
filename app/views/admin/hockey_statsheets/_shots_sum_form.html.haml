@@ -1,24 +1,41 @@
-= form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
-  = hidden_field_tag(:form, 'shots_sum')
-  %table.table.table-bordered
-    %tr
-      %th
-      %th 1
-      %th 2
-      %th 3
-      %th OT
-    %tr
-      %td= @statsheet.away_team.name
-      %td= f.text_field :away_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :away_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :away_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :away_shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-    %tr
-      %td= @statsheet.home_team.name
-      %td= f.text_field :home_shots_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :home_shots_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :home_shots_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :home_shots_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+.ui.small.modal.edit_hockey_statsheet
+  .header Shots By Period
+  .content
+    = form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
+      = hidden_field_tag(:form, 'shots_sum')
+      %table.ui.celled.table
+        %thead
+          %tr.center.aligned
+            %th
+            %th 1
+            %th 2
+            %th 3
+            %th OT
+        %tbody
+          %tr
+            %td= @statsheet.away_team.name
+            %td.collapsing
+              .ui.input= f.text_field :away_shots_1, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :away_shots_2, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :away_shots_3, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :away_shots_ot, maxlength: 2, pattern: "[0-9]*"
+          %tr
+            %td= @statsheet.home_team.name
+            %td.collapsing
+              .ui.input= f.text_field :home_shots_1, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :home_shots_2, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :home_shots_3, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :home_shots_ot, maxlength: 2, pattern: "[0-9]*"
+  .actions
+    %button.ui.primary.button{ type: :submit } Update Shots
 
-
-
+  :css
+    .edit_hockey_statsheet table input {
+      text-align: center !important;
+    }

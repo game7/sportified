@@ -1,4 +1,4 @@
-class Admin::League::EventsController < ApplicationController
+class Admin::League::EventsController < Admin::AdminController
   before_action :mark_return_point, :only => [:new, :edit]
   before_action :load_event, :only => [:edit, :update, :destroy]
   before_action :load_options, :only => [:new, :edit]
@@ -56,7 +56,7 @@ class Admin::League::EventsController < ApplicationController
     @options = {
       programs: ::League::Program.order(:name).select(:id, :name),
       divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by{|d| d.program_id},
-      seasons: ::League::Season.order(:name).select(:id, :name, :program_id).group_by{|s| s.program_id},
+      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by{|s| s.program_id},
       locations: Location.order(:name).select(:id, :name)
     }
   end

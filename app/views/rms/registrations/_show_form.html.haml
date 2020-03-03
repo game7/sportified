@@ -1,8 +1,11 @@
-%h3= form.template.name
-
-%table.table.table-bordered.table-striped
+%h3.ui.dividing.header= form.template.name
+%table.ui.definition.table
   - form.elements.each do |element|
     - element.permitted_params.each do |param|
+      - key = param.class.name == 'String' ? param : param.keys.first
       %tr
-        %th{ style: 'width: 30%;'}= param.titleize
-        %td= form.data[param] if form.data
+        %td.four.wide= key.titleize
+        %td
+          - if form.data
+            - value = form.data[key]
+            = value

@@ -17,14 +17,12 @@ $navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !def
 $navbar-default-link-disabled-color:       #ccc !default;
 $navbar-default-link-disabled-bg:          transparent !default;
 
+$gray-light: #CCC;
+$gray-lighter: #dedede;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "base/include";
-
-body {
-  padding-top: 50px;
-}
 
 h1,.h1 {
   font-size: 30px;

@@ -1,22 +1,21 @@
 - title Dashboard
-.container
-  .row
-    .col-sm-4
-      .panel.panel-default
-        .panel-heading Unique Visitors
-        .panel-body
-          = column_chart @visits_by_day
+- wrapper class: [:ui, :container]
 
-    .col-sm-4
-      .panel.panel-default
-        .panel-heading Top Pages
-        .panel-body
-          = bar_chart @top_pages      
+.ui.equal.width.grid
+  .column
+    .ui.segment
+      %h4.ui.header Unique Visitors
+      = column_chart @visits_by_day
 
-    .col-sm-4
-      .panel.panel-default
-        .panel-heading By Device
-        .panel-body
-          = pie_chart @by_device              
+  .column
+    .ui.segment
+      %h4.ui.header Top Pages
+      = bar_chart @top_pages      
 
-  = render partial: 'admin/dashboard/locker_rooms', locals: { date: @date }
+  .column
+    .ui.segment
+      %h4.ui.header By Device
+      = pie_chart @by_device              
+
+= react_component('locker_rooms', { date: @date, events: ActiveModelSerializers::SerializableResource.new(@events), locker_rooms: @locker_rooms.map(&:attributes) }, { camelize_props: true, class: [:ui, :segment] })
+-# = render partial: 'admin/dashboard/locker_rooms', locals: { date: @date }

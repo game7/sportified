@@ -1,16 +1,36 @@
-= form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
-  = hidden_field_tag(:form, 'periods_sum')
-  %table.table.table-bordered
-    %tr
-      %th
-      %th 1
-      %th 2
-      %th 3
-      %th OT
-    %tr
-      %td Duration
-      %td= f.text_field :min_1, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :min_2, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :min_3, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
-      %td= f.text_field :min_ot, :maxlength => 2, :pattern => "[0-9]*", :class => "span1"
+.ui.small.modal.edit_hockey_statsheet
+  .header Period Length
+  .content
+    = form_for( @statsheet, :url => admin_hockey_statsheet_path(@statsheet), :remote => true ) do |f|
+      = hidden_field_tag(:form, 'shots_sum')
+      %table.ui.celled.table
+        %thead
+          %tr.center.aligned
+            %th
+            %th 1
+            %th 2
+            %th 3
+            %th OT
+        %tbody
+          %tr
+            %td Duration
+            %td.collapsing
+              .ui.input= f.text_field :min_1, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :min_2, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :min_3, maxlength: 2, pattern: "[0-9]*"
+            %td.collapsing
+              .ui.input= f.text_field :min_ot, maxlength: 2, pattern: "[0-9]*"
+  .actions
+    %button.ui.primary.button{ type: :submit } Update Periods
+
+:css
+
+  .edit_hockey_statsheet table input {
+    text-align: center !important;
+  }
+
+
+
 

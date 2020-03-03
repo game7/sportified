@@ -1,59 +1,52 @@
 - title 'Pages'
 
 - content_for :actions do
-  = link_to icon('plus')+" New Page", new_page_path, :class => 'btn btn-default'
+  = link_to icon('plus')+" New Page", new_page_path, class: [:ui, :primary, :button]
 
+.ui.container
 
-%table.table.table-bordered.table-striped#pages_table
-  %thead
-    %tr
-      %th Title
-      %th{ style: 'text-align: center;' } Position
-      %th{ style: 'text-align: center;' } Actions
-  %tbody
-    - @pages.each_with_index do |page, i|
-      - positioned_first = page.position.to_i == 0
-      - positioned_last = page.parent_id != @pages[i+1]&.parent_id
-      %tr[page]
-        %td
-          - page.ancestry_depth.times do
-            %div{ style: 'width: 20px; display: inline-block;' }
-          = link_to page.title, page
-          .pull-right
-            - if page.draft
-              %em (draft)
-            - unless page.show_in_menu
-              %span{ data: { toggle: :tooltip }, title: 'Page is not visible in Menu' }
-                %span.label.label-default
-                  = icon('eye-slash')
-                  != ' '
+  %table.ui.celled.striped.table
+    %thead
+      %tr
+        %th Title
+        %th{ style: 'text-align: center;' } Position
+        %th{ style: 'text-align: center;' } Actions
+    %tbody
+      - @pages.each_with_index do |page, i|
+        - positioned_first = page.position.to_i == 0
+        - positioned_last = page.parent_id != @pages[i+1]&.parent_id
+        %tr[page]
+          %td
+            - page.ancestry_depth.times do
+              %div{ style: 'width: 20px; display: inline-block;' }
+            = link_to page.title, get_page_url(page)
+            %div{ style: 'float: right;' }
+              - if page.draft
+                %em (draft)
+              - unless page.show_in_menu
+                .ui.tiny.label
+                  = semantic_icon(:eye, :slash)
                   Hidden
-            - unless page.link_url.blank?
-              %span{ data: { toggle: :tooltip }, title: 'Menu links to custom location' }
-                %span.label.label-default
-                  = icon('share')
-                  != ' '
+              - unless page.link_url.blank?
+                .ui.tiny.label
+                  = semantic_icon(:share)
                   Link
-            - if page.skip_to_first_child
-              %span{ data: { toggle: :tooltip }, title: 'Menu links to first child page' }
-                %span.label.label-default
-                  = icon('arrow-down')
-                  != ' '
-                  First Child
-        %td{ style: 'text-align: center;' }
-          = link_to icon(:'arrow-up'), [:move_up, page], class: "btn btn-xs #{positioned_first ? 'btn-default' : 'btn-primary'}",
-                                                       disabled: positioned_first,
-                                                       method: :post,
-                                                       title: 'Move Up'
-          != ' '
-          = link_to icon(:'arrow-down'), [:move_up, page], class: "btn btn-xs #{positioned_last ? 'btn-default' : 'btn-primary'}",
-                                                         disabled: positioned_last,
-                                                         method: :post,
-                                                         title: 'Move Down'
-        %td{ style: 'text-align: center;' }
-          = link_to iconify(:pencil, 'Edit'), [:edit, page], class: 'btn btn-xs btn-primary'
-          != ' '
-          = link_to iconify(:trash, 'Delete'), page, :confirm => 'Are you sure?',
-            :method => :delete,
-            :remote => true,
-            :class => 'btn btn-xs btn-primary'
+              - if page.skip_to_first_child
+                .ui.tiny.label
+                  = semantic_icon(:arrow, :down)
+                  First Child            
+          %td.collapsing
+            = link_to semantic_icon(:arrow, :up), [:move_up, page], class: [:mini, :ui, :icon, :button, positioned_first ? :default : :primary],
+                                                        disabled: positioned_first,
+                                                        method: :post,
+                                                        title: 'Move Up'
+            = link_to semantic_icon(:arrow, :down), [:move_up, page], class: [:mini, :ui, :icon, :button, positioned_last ? :default : :primary],
+                                                          disabled: positioned_last,
+                                                          method: :post,
+                                                          title: 'Move Down'
+          %td.collapsing
+            = link_to semantic_icon(:pencil) + ' Edit', [:edit, page], class: [:mini, :ui, :button, :primary]
+            = link_to semantic_icon(:trash) + ' Delete', page, confirm: 'Are you sure?',
+              method: :delete,
+              remote: true,
+              class: [:mini, :ui, :button, :primary]

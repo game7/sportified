@@ -68,10 +68,11 @@ class Admin::League::GamesController < Admin::AdminController
     @options = {
       programs: ::League::Program.order(:name).select(:id, :name),
       divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by{|d| d.program_id},
-      seasons: ::League::Season.order(:name).select(:id, :name, :program_id).group_by{|s| s.program_id},
+      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by{|s| s.program_id},
       locations: Location.order(:name).select(:id, :name),
       playing_surfaces: PlayingSurface.order(:name).select(:id, :name, :location_id).group_by{|ps| ps.location_id},
-      locker_rooms: LockerRoom.order(:name).select(:id, :name, :location_id).group_by{|ps| ps.location_id}
+      locker_rooms: LockerRoom.order(:name).select(:id, :name, :location_id).group_by{|ps| ps.location_id},
+      teams: @game ? ::League::Team.for_division(@game.division).for_season(@game.season).order(:name) : []
     }
   end
 

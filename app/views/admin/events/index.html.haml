@@ -1,5 +1,6 @@
 - title 'Calendar'
 
+
 / = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => 7 }
 
 = render "admin/events/views/#{@view}"
@@ -20,6 +21,12 @@
 /         = render :partial => 'event', :collection => events
 
 #dialog-modal
+
+:css
+
+  table.calendar thead th {
+    text-align: center !important
+  }
 
 - content_for :javascript do
   :javascript

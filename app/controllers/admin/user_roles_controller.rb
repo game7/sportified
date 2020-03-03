@@ -2,12 +2,8 @@ class Admin::UserRolesController < Admin::AdminController
   
   before_action :load_user, :only => [:create, :destroy]
 
-  def load_user
-    @user = User.for_site(Site.current).find(params[:user_id])
-  end
-
   def create
-    @role = UserRole.site_admin(Site.current)
+    @role = UserRole.admin(Tenant.current)
     @user.roles << @role
     @user.save
     flash[:notice] = "Role has been added"
@@ -17,5 +13,11 @@ class Admin::UserRolesController < Admin::AdminController
     @user.roles.find(params[:id]).delete
     flash[:notice] = "Role has been removed"
   end
+
+  private
+  
+    def load_user
+      @user = User.for_tenant(Tenant.current).find(params[:user_id])
+    end
 
 end

@@ -90,7 +90,7 @@ $(function() {
     $('#section_id').val( $(this).attr('data-section_id') );
   });
   $(document).on('click', '#block-catalog button.add_block', function(){
-    $('#block_type').val( $(this).attr('data-block_type') );
+    $('#block_type').val( $(this).data('blockType') );
   });   
   
   $('#toggle-edit').click(function(){
@@ -157,7 +157,7 @@ function updateBlockPositions(column) {
   items += 'column=' + column.closest('[data-column]').attr('data-column') + '&';
   $.each(column.find(".block"), function(){
     var id = $(this).attr("id");
-    items += id.replace("_","[]=") + "&";
+    items += "block[]=" + id.split('_').slice(-1).pop() + "&";
   })
   $.ajax({
     type: 'post',

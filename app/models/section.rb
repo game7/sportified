@@ -25,7 +25,7 @@ class Section < ActiveRecord::Base
       "66|33",
       "25|75",
       "75|25",
-      "33|33|33",
+      # "33|33|33",
       "25|50|25",
       "50|25|25",
       "25|25|50",
@@ -33,15 +33,28 @@ class Section < ActiveRecord::Base
     ]
 
     def self.patterns
-      @patterns ||= PATTERNS
+      PATTERNS
     end    
     
     def columns
-      @columns ||= pattern.split("|")
+      Section.to_word(pattern)
     end
     
     after_destroy do |section|
       section.page.blocks.where(section_id: section.id).destroy_all
+    end
+
+    def self.to_word(pattern)
+      pattern.split("|").map do |column|
+        {
+          "100" => "sixteen",
+          "75" => "twelve",
+          "66" => "ten",
+          "50" => "eight",
+          "33" => "six",
+          "25" => "four"
+        }[column]
+      end
     end
     
 end

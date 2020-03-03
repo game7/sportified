@@ -12,36 +12,74 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   end
 
   def update
-    @goaltender.update_attributes(hockey_goaltender_params)
-    if @goaltender.save
-      flash[:notice] = "Goaltender Updated"
+    if @goaltender.update_attributes(hockey_goaltender_params)
+      respond_to do |format|
+        format.html do
+          @statsheet.reload
+          flash[:notice] = "Goaltender Updated"
+        end
+        format.json  { render json: @goaltender }
+      end
     else
-      list_players
-    end
+      respond_to do |format|
+        format.html do
+          list_players
+        end 
+        format.json  { render json: @goaltender.errors, status: 422 }
+      end  
+    end     
   end
 
   def create
     @goaltender = @statsheet.goaltenders.build(hockey_goaltender_params)
     if @goaltender.save
-      @statsheet.reload
-      flash[:notice] = "Goaltender Added"
+      respond_to do |format|
+        format.html do
+          @statsheet.reload
+          flash[:notice] = "Goaltender Added"
+        end
+        format.json  { render json: @goaltender }
+      end
     else
-      list_players
-    end
+      respond_to do |format|
+        format.html do
+          list_players
+        end 
+        format.json  { render json: @goaltender.errors, status: 422 }
+      end  
+    end  
   end
 
   def destroy
-    flash[:notice] = "Goaltender has been deleted" if @goaltender.delete
+    if @goaltender.delete
+      respond_to do |format|
+        format.html { flash[:notice] = "Goaltender has been deleted" }
+        format.json { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { flash[:error] = "Goaltender could not be" }
+        format.json { head :bad_request }
+      end
+    end
   end
 
   def autoload
-    @statsheet.goaltenders.all.each{|g|g.delete}
+    @statsheet.goaltenders.each(&:delete)
     @statsheet.autoload_goaltenders
     if @statsheet.save
-      @statsheet.reload
-      flash[:success] = "Goaltenders Loaded."
+      respond_to do |format|
+        format.html do
+          @statsheet.reload
+          flash[:notice] = "Goaltenders Loaded."
+        end
+        format.json  { render json: @statsheet.goaltenders.reload }
+      end      
     else
-      flash[:error] = "Goaltenders could not be loaded."
+      respond_to do |format|
+        format.html { flash[:error] = "Goaltenders could not be loaded." }
+        format.json { head :bad_request }
+      end
     end
   end
 

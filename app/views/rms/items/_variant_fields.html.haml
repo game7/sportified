@@ -1,15 +1,6 @@
-%li.list-group-item.nested-fields
-  .row
-    .col-sm-6
-      = f.input :title
-  .row
-    .col-xs-12
-      = f.input :description
-  .row
-    .col-xs-12
-      = f.association :form_packet, :collection => @form_packets
-  .row
-    .col-sm-2
-      = f.input :price, { placeholder: 'Free' }
-    -# .col-sm-2
-    -#   = f.input :quantity_allowed, { placeholder: 'No Limit' }
+.item.nested-fields
+  .content
+    = f.input :title
+    = f.input :description, input_html: { rows: 3 }
+    = f.association :form_packet, :collection => @form_packets
+    = f.input :price, { placeholder: 'Free' }

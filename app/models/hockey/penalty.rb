@@ -42,10 +42,16 @@ class Hockey::Penalty < ActiveRecord::Base
   belongs_to :team, class_name: '::League::Team'
   belongs_to :committed_by, class_name: 'Hockey::Skater::Result'
 
-  #validates :committed_by, presence: true
+  validates :period, presence: true
+  validates :minute, presence: true, numericality: { only_integer: true }
+  validates :second, presence: true, numericality: { only_integer: true }
   validates :infraction, presence: true
-  validates :duration, presence: true
+  validates :duration, presence: true, numericality: true
   validates :severity, presence: true
+  validates :start_minute, numericality: { only_integer: true }, allow_nil: true
+  validates :start_second, numericality: { only_integer: true }, allow_nil: true
+  validates :end_minute, numericality: { only_integer: true }, allow_nil: true
+  validates :end_second, numericality: { only_integer: true }, allow_nil: true
 
   class << self
     def severities

@@ -1,12 +1,13 @@
-.well
-  %h5
-    %i.icon-user
-    = [block.first, " ", block.last].join
-  - if block.title.presence
-    %h6= block.title
+.ui.fluid.card
+  .content
+    .header= [block.first, " ", block.last].join
+    - if block.title.presence
+      .meta= block.title
   - if block.phone.presence
-    .phone
-      =block.phone
+    .content
+      = semantic_icon(:phone)
+      = block.phone
   - if block.email.presence
-    .email
+    .content
+      =semantic_icon(:mail)
       %a{ :href => "mailto:#{block.email}"}= block.email

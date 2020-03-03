@@ -1,4 +1,4 @@
-%table.table.table-striped.table-bordered
+%table.ui.celled.striped.table
   %thead
     %tr
       %th 
@@ -23,8 +23,8 @@
           %td= format_player_name(g.assisted_by)
           %td= format_player_name(g.also_assisted_by)
           %td= g.strength
-          %td 
-            = link_to 'Delete', admin_hockey_statsheet_goal_path(@statsheet, g), :remote => true, :confirm => 'Are you sure?', :method => :delete, :title => 'Delete this goal', :class => 'btn btn-xs btn-primary'
+          %td.collapsing
+            = link_to 'Delete', admin_hockey_statsheet_goal_path(@statsheet, g), remote: true, confirm: 'Are you sure?', method: :delete, title: 'Delete this goal', class: [:ui, :primary, :mini, :button]
     - else
       %tr
         %td{ :colspan => 9 } No goals have been entered

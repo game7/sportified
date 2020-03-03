@@ -1,18 +1,24 @@
 - title "Programs"
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th Name
-      %th Type
-      %th Actions
-  %tbody
-    - @programs.each do |program|
-      %tr
-        %td= link_to program.name, [:admin, program.class.name.deconstantize.underscore.presence, program]
-        %td= program.type
-        %td
-          .btn-group
-            = link_to 'Show', [:admin, program.class.name.deconstantize.underscore.presence, program], :class => 'btn btn-xs btn-default'
-            -#= link_to 'Settings', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-default'
+- wrapper class: [:ui, :container]
+- page_actions do
+  = link_to 'New League', new_admin_league_program_path, class: [:ui, :primary, :button]
 
-= link_to 'New League', new_admin_league_program_path, :class => "btn btn-primary"
+.ui.container
+
+  %table.ui.celled.striped.table
+    %thead
+      %tr
+        %th Name
+        %th Type
+        %th Actions
+    %tbody
+      - @programs.each do |program|
+        %tr
+          %td= link_to program.name, [:admin, program.class.name.deconstantize.underscore.presence, program]
+          %td= program.type
+          %td
+            .btn-group
+              = link_to 'Show', [:admin, program.class.name.deconstantize.underscore.presence, program], class: [:ui, :primary, :mini, :button]
+              -#= link_to 'Settings', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-default'
+
+

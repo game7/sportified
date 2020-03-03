@@ -1,7 +1,7 @@
 - title 'Standings'
 
-.row.options
-  .col-sm-4
+.ui.grid
+  .four.wide.column
     = render :partial => 'shared/season_options', :object => @season_options
 
 = render "standings/templates/#{@division.standings_schema_id}"

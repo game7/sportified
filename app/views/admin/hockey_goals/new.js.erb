@@ -1,15 +1,43 @@
-$('#dialog-modal').html("<%= escape_javascript( render(:partial => "admin/hockey_goals/form" ) )%>");
-$('#dialog-modal').dialog({
-  title: 'Add Goal',
-  height: 500,
-  width: 500,
-  modal: true,
-  buttons: {
-    Save: function() {
-      $(this).children("form").submit();
-    },
-    Cancel: function() {
-      $(this).dialog("close");
-    }
+$('body').append("<%= escape_javascript( render(partial: 'admin/hockey_goals/form') )%>");
+var $modal = $('.modal.new_hockey_goal');
+
+$modal.find('.ui.dropdown').dropdown();
+$modal.find(':submit').click(function() {
+  $modal.find('form').submit();
+})
+$modal.modal({
+  onHidden: function() {
+    $(this).remove();
   }
-});
+}).modal('show');
+
+var players = <%= raw @players.to_json %>;
+var scored_by_id = "<%= @goal.scored_by_id %>";
+var assisted_by_id = "<%= @goal.assisted_by_id %>";
+var also_assisted_by_id = "<%= @goal.also_assisted_by_id %>";
+
+function bindTeams() {
+  var team_id = $('#hockey_goal_team').closest('.dropdown').dropdown('get value')
+  var options = players.filter(p => p.team_id == team_id).map(p => {
+    return {
+      name: `${p.jersey_number} - ${p.last_name}, ${p.first_name}`,
+      value: p.id
+    }
+  })
+  debugger;
+  [
+    '#hockey_goal_scored_by',
+    '#hockey_goal_assisted_by',
+    '#hockey_goal_also_assisted_by'
+  ].forEach(control => {
+    $(control).closest('.dropdown').dropdown({
+      values: options
+    })
+  })  
+}
+
+$('#hockey_goal_team').closest('.dropdown').dropdown({
+  onChange: bindTeams
+})
+
+

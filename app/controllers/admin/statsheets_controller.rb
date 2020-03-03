@@ -8,7 +8,10 @@ class Admin::StatsheetsController < Admin::BaseLeagueController
   before_action :add_stats_breadcrumb
 
   def edit
-
+    @game = @statsheet.game
+    @teams = ::League::Team.for_division(@game.division).for_season(@game.season).order(:name)
+    @skaters = @statsheet.skaters
+    @players = ::Player.where(team: @teams).order(:team_id, :last_name, :first_name)
   end
 
   def print

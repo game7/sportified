@@ -1,5 +1,12 @@
 - title 'Your Registrations'
 
-.row
-  .col-md-6
+%table.ui.celled.table
+  %thead
+    %tr
+      %th Item
+      %th Started
+      %th Completed
+      %th Status
+      %th
+  %tbody
     = render partial: "registration", collection: @registrations, locals: { admin: false }

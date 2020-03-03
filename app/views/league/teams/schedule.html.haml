@@ -3,48 +3,28 @@
 - content_for :banner do
   .row.banner
     = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
-.visible-xs
-  .row.options
-    .col-sm-4
-      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
-    .col-sm-4.col-sm-offset-4
-      %a.btn.btn-default.btn-block{ :href => url_for(params.permit.merge(:format => :ics))}
-        = icon(:calendar)
-        != ' '
-        iCal
-  .row
-    .col-xs-12
-      %table.team-schedule.table.table-striped.table-bordered
-        - @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
-          %tr
-            %th= month
-          - events.each do |event|
-            %tr
-              %td
-                .date= event.starts_on.strftime('%A %B %e @ %l:%M %p')
-                .summary= display_event_summary(event, @team)
-                .location= event.try(:location).try(:name)
-.hidden-xs
-  .row.options
-    .col-sm-4
-      = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })
-    .col-sm-2.col-sm-offset-6
-      %a.btn.btn-block.btn-default{ :href => url_for(params.permit.merge(:format => :ics))}
-        = icon(:calendar)
-        != ' '
-        iCal
-  .row
-    .col-xs-12
-      %table.team-schedule.table.table-striped.table-bordered
-        - @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
-          %tr
-            %th.span2= month
-            %th.span4 EVENT
-            %th.span3 TIME / RESULT
-            %th.span3 LOCATION
-          - events.each do |event|
-            %tr
-              %td.span2= event.starts_on.strftime('%a, %b %e')
-              %td.span4= display_event_summary(event, @team)
-              %td.span3= display_time_or_result(event, @team)
-              %td.span3= event.try(:location).try(:name)
+
+.ui.grid
+  .left.floated.four.wide.column
+    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "ui dropdown redirect_to" })
+
+  .right.floated.four.wide.column{ style: 'text-align: right;' }
+    %a.ui.basic.button{ :href => url_for(params.permit.merge(:format => :ics))}
+      = semantic_icon(:calendar)
+      iCal    
+
+- @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
+  %table.ui.celled.striped.table
+    %thead
+      %tr
+        %th.three.wide DATE
+        %th.seven.wide EVENT
+        %th.three.wide TIME / RESULT
+        %th.three.wide LOCATION
+    %tbody
+      - events.each do |event|
+        %tr
+          %td= event.starts_on.strftime('%a, %b %e')
+          %td= display_event_summary(event, @team)
+          %td= display_time_or_result(event, @team)
+          %td= event.try(:location).try(:name)

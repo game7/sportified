@@ -1,16 +1,17 @@
-- title  @division.name + ' Show Statistics'
+- title  @division.name + ' Statistics'
 
-.row.options
-  .col-sm-4
+
+.ui.grid
+  .left.floated.six.wide.column
     = render :partial => 'shared/season_options', :object => @season_options
-  .col-sm-8{ :style => "text-align: right;" }
-    .btn-group
-      = link_to "Scoring", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "scoring"), :class => "btn btn-default"
-      = link_to "Penalties", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "penalties"), :class => "btn btn-default"
-      = link_to "Goaltending", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "btn btn-default"
+  .right.floated.six.wide.column{ style: 'text-align: right;' }
+    .ui.buttons.basic
+      = link_to "Scoring", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "scoring"), :class => "ui button"
+      = link_to "Penalties", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "penalties"), :class => "ui button"
+      = link_to "Goaltending", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "ui button"  
 
 - format_with ||= ->(value) { value }
-%table.table.table-striped.table-bordered.statistics
+%table.ui.celled.striped.table.stats
   %thead
     %tr
       %th

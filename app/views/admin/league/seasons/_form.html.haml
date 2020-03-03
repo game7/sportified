@@ -1,5 +1,15 @@
 = simple_form_for [:admin, :league, @league, @season] do |f|
   = f.input :name
-  = f.input :starts_on
-  = f.association :divisions, :wrapper => :vertical_radio_and_checkboxes, :collection => League::Division.all.order(:name), :as => :check_boxes
-  = f.button :wrapped, :cancel => return_url
+  = f.input :starts_on, html5: true
+  = f.association :divisions, as: :semantic_check_boxes, collection: League::Division.all.order(:name)
+  = f.button :wrapped, cancel: return_url
+
+:css
+
+  .season_name {
+    max-width: 400px;
+  }
+
+  .season_starts_on {
+    max-width: 200px;
+  }

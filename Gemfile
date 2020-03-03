@@ -104,6 +104,7 @@ group :development do
   gem 'byebug'
   gem 'foreman'
   gem 'thin'
+  gem 'listen', '~> 3.0'
 end
 
 gem 'jquery-rails'

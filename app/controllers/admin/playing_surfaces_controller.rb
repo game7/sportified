@@ -1,17 +1,8 @@
 class Admin::PlayingSurfacesController < Admin::AdminController
 
   before_action :mark_return_point, only: [:new, :edit, :destroy]
-  before_action :set_playing_surface, only: [:show, :edit, :update, :destroy]
-  before_action :set_location, only: [:new, :create, :edit, :update]
-
-  # GET /playing_surfaces
-  def index
-    @playing_surfaces = PlayingSurface.all
-  end
-
-  # GET /playing_surfaces/1
-  def show
-  end
+  before_action :set_playing_surface, only: [:edit, :update, :destroy]
+  before_action :set_location, only: [:new, :create]
 
   # GET /playing_surfaces/new
   def new
@@ -50,7 +41,7 @@ class Admin::PlayingSurfacesController < Admin::AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_playing_surface
       @playing_surface = PlayingSurface.find(params[:id])
     end
@@ -59,7 +50,6 @@ class Admin::PlayingSurfacesController < Admin::AdminController
       @location = Location.find(params[:location_id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def playing_surface_params
       params[:playing_surface].permit(:name)
     end

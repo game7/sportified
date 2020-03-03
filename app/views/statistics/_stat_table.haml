@@ -1,11 +1,11 @@
-- format_with ||= ->(value) {  value }
-%table.table.table-striped.table-bordered.leaders
+- format_with ||= ->(value) { value }
+%table.leaders.ui.celled.table
   %thead
     %tr
       %th{ :colspan => "3"}= title
   %tfoot
     %tr
-      %td{ :colspan => "3"}
+      %th{ :colspan => "3"}
         %a{ :href => league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
   %tbody
     - 3.times do |i|

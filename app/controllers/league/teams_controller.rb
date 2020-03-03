@@ -104,6 +104,7 @@ class League::TeamsController < BaseLeagueController
 
   def statistics
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
+    @team_links = links_to_team_schedule(@division, @season)
     @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(points: :desc)
     @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(save_percentage: :desc)
   end

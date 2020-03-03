@@ -32,9 +32,30 @@
 
 class Hockey::StatsheetSerializer < ActiveModel::Serializer
   type 'hockey/statsheet'
-  attributes :id, :home_score, :away_score
-  has_many :skaters
-  has_many :goaltenders
-  has_many :goals
-  has_many :penalties
+  attributes :id,
+            :tenant_id ,
+            :posted,
+            :away_score,
+            :home_score,
+            :latest_period,
+            :latest_minute,
+            :latest_second,
+            :min_1 ,
+            :min_2 ,
+            :min_3 ,
+            :min_ot,
+            :away_shots_1,
+            :away_shots_2,
+            :away_shots_3,
+            :away_shots_ot,
+            :home_shots_1,
+            :home_shots_2,
+            :home_shots_3,
+            :home_shots_ot,
+            :created_at,
+            :updated_at
+  # has_many :skaters
+  # has_many :goaltenders
+  # has_many :goals
+  # has_many :penalties
 end

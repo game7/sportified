@@ -3,10 +3,15 @@
   .row.banner
     = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
 
-%table.team-statistics.players.table.table-striped.table-bordered
+.ui.grid
+  .left.floated.four.wide.column
+    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "ui dropdown redirect_to" })
+ 
+
+%h3 Players
+
+%table.team-statistics.players.ui.celled.striped.table
   %thead
-    %tr
-      %th.title{ :colspan => "11" } PLAYERS
     %tr
       %th.player NAME
       %th.stat GP
@@ -25,39 +30,39 @@
           %td.player
             = [skater.player.first_name, skater.player.last_name].join(" ")
             = "*" if skater.player.substitute?
-          %td.stat= skater.games_played
-          %td.stat= skater.goals
-          %td.stat= skater.assists
-          %td.stat= skater.points
-          %td.stat= skater.penalties
-          %td.stat= skater.penalty_minutes
-          %td.stat= skater.minor_penalties
-          %td.stat= skater.major_penalties
-          %td.stat= skater.misconduct_penalties
-          %td.stat= skater.game_misconduct_penalties
+          %td.stat.one.wide= skater.games_played
+          %td.stat.one.wide= skater.goals
+          %td.stat.one.wide= skater.assists
+          %td.stat.one.wide= skater.points
+          %td.stat.one.wide= skater.penalties
+          %td.stat.one.wide= skater.penalty_minutes
+          %td.stat.one.wide= skater.minor_penalties
+          %td.stat.one.wide= skater.major_penalties
+          %td.stat.one.wide= skater.misconduct_penalties
+          %td.stat.one.wide= skater.game_misconduct_penalties
 
-%table.team-statistics.table.table-striped.table-bordered
+%h3 Goaltenders
+
+%table.team-statistics.goalies.ui.celled.striped.table
   %thead
     %tr
-      %th.title{ :colspan => "11" } GOALTENDERS
-    %tr
       %th NAME
-      %th.span1 GP
-      %th.span1 TOI
-      %th.span1 SA
-      %th.span1 GA
-      %th.span1 SV
-      %th.span1 SV%
+      %th.stat GP
+      %th.stat TOI
+      %th.stat SA
+      %th.stat GA
+      %th.stat SV
+      %th.stat SV%
     %tbody
       - @goalies.each do |goalie|
         %tr
           %td
             = [goalie.player.first_name, goalie.player.last_name].join(" ")
             = "*" if goalie.player.substitute?
-          %td= goalie.games_played
-          %td= goalie.minutes_played
-          %td= goalie.shots_against
-          %td= goalie.goals_against
-          %td= goalie.saves
-          %td= number_with_precision goalie.save_percentage, :precision => 3
+          %td.stat= goalie.games_played
+          %td.stat= goalie.minutes_played
+          %td.stat= goalie.shots_against
+          %td.stat= goalie.goals_against
+          %td.stat= goalie.saves
+          %td.stat= number_with_precision goalie.save_percentage, :precision => 3
 

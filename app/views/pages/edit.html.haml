@@ -8,16 +8,104 @@
 
 #sections
   = render :partial => "sections/section", :collection => @page.sections.order(:position), :locals => { :editable => true }
-.row-fluid.add-section
-  %a.btn.btn-default.add-section{ :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section Here"   
+.ui.basic.segment
+  %a.ui.default.button.add-section{ :role => "button", :"data-toggle" => "modal", :"href" => "#section-catalog"}= icon('plus')+" Add Section Here"   
 
 = render :partial => "block_catalog"
 
 = render :partial => "section_catalog"
 
-#dialog-modal.modal.fade{ :tabindex => "-1", :role => "dialog", :"aria-labelledby" => "modalLabel", :"aria-hidden" => true }
- 
+:css
+  .section .ui.dropdown > .icon,
+  .block .ui.dropdown > .icon {
+    transition: all 0.1s ease;
+  }
+
+  .section .ui.dropdown.active > .icon,
+  .block .ui.dropdown.active > .icon {
+    transform: rotate(-90deg);
+  }
+
 :javascript
+  $(function() {
+    
+    $('.add-section').click(function() {
+      $('#section-catalog').modal('show')
+    })
+
+    $('.add-block').click(function() {
+      $('#block-catalog').modal('show')
+      $('#column').val( $(this).attr('data-column') );
+      $('#section_id').val( $(this).attr('data-section_id') );
+    })    
+
+    var $buttons = $('.mode.buttons button.button');
+    
+    function setMode(mode) {
+      $buttons.removeClass('active')
+      var $header = $('#sections .section > .header');
+      var $content = $('#sections .section > .content');
+      var $button = $('.add-section');
+      switch(mode) {
+        case 'edit':
+          $('.mode.buttons #edit').addClass('active')
+          $header.show()
+          $content.addClass('ui')
+          $content.show()
+          $button.show()
+          break;
+        case 'organize':
+          $('.mode.buttons #organize').addClass('active')
+          $header.show();
+          $content.show();
+          $button.hide();
+          break;
+        case 'preview':
+          $('.mode.buttons #preview').addClass('active')
+          $header.hide();
+          $content.removeClass('ui')
+          $content.show();
+          $button.hide();
+          break;
+      }
+      setBlockMode(mode)
+    } 
+
+    function setBlockMode(mode) {
+      var $wrapper = $('#sections .block .segments')
+      var $header = $('#sections .block > .segments > .toolbar')
+      var $content = $('#sections .block > .segments > .content')
+      var $button = $('#sections .add-block')
+      switch(mode) {
+        case 'edit':
+          $wrapper.addClass('ui')
+          $header.show()
+          $content.addClass('ui')
+          $content.show()
+          $button.show()
+          break;
+        case 'organize':
+          $wrapper.addClass('ui')
+          $header.show();
+          $content.hide();
+          $button.hide();
+          break;
+        case 'preview':
+          $wrapper.removeClass('ui')
+          $header.hide();
+          $content.removeClass('ui')
+          $content.show();
+          $button.hide();
+          break;
+      }      
+    }
+
+    $buttons.click(function(e, a, c) {
+      setMode($(e.currentTarget).attr('id'))
+    })
+
+    setMode('edit');
+  })
   var position_page_blocks_path = "#{position_page_blocks_path(@page)}";
   var position_page_sections_path = "#{position_page_sections_path(@page)}";
 
