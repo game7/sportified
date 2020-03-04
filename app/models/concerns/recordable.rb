@@ -51,6 +51,7 @@ module Concerns
        else
          result = 'T'
          self.ties += 1
+         self.points += 1
        end
 
        if self.last_result == result
