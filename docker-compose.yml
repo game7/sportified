@@ -17,7 +17,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./tmp/postgres:/var/lib/postgres/data
+      - db:/var/lib/postgres/data
     environment:
       POSTGRES_PASSWORD: postgres
   web: &web
@@ -35,6 +35,8 @@ services:
       - 3000:3000
     depends_on:
       - postgres
+    environment:
+      EDITOR: nano
   webpacker:
     <<: *web
     command: bundle exec ./bin/webpack-dev-server        
