@@ -21,8 +21,11 @@ test: &test
   username: postgres
   password: postgres
 
+preview:
+  url: <%= Rails.application.credentials.db[:preview] %>
+
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= Rails.application.credentials.db[:production] %>
 
 cucumber:
   <<: *test

@@ -99,8 +99,8 @@ Rails.application.configure do
   config.x.webpacker[:digesting] = true
 
   ActionMailer::Base.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
+    user_name: Rails.application.credentials.sendgrid[:username],
+    password: Rails.application.credentials.sendgrid[:password],
     domain: 'heroku.com',
     address: 'smtp.sendgrid.net',
     port: 587,
