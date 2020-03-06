@@ -169,10 +169,10 @@
           .teams.clearfix
             .away_team.clearfix
               -#.team= event.away_team_custom_name.presence || event.away_team&.name
-              .team= event.away_team_custom_name.presence || event.away_team_name.presence || event&.away_team&.name
+              .team= event.away_team_custom_name.presence || event.away_team_name.presence || event.try(:away_team).try(:name)
               .locker_room.away= event.away_team_locker_room&.name
             .home_team.clearfix
-              .team= event.home_team_custom_name.presence || event.home_team_name.presence || event&.home_team&.name
+              .team= event.home_team_custom_name.presence || event.home_team_name.presence || event.try(:home_team).try(:name)
               .locker_room.home= event.home_team_locker_room&.name
         - else
           .time

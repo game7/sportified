@@ -53,6 +53,10 @@ class Hockey::Goal < ActiveRecord::Base
   scope :sorted_by_time, ->{ order(period: :asc, minute: :desc, second: :desc) }
   scope :for_period, ->(period) { where(per: period) }
 
+  before_save :downcase_period
+  def downcase_period
+    self.period = self.period.downcase
+  end
 
   class << self
     def strengths

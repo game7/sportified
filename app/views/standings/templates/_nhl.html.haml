@@ -7,6 +7,8 @@
       %th.stat.hidden-xs W
       %th.stat.hidden-xs L
       %th.stat.hidden-xs SOL
+      - if @ties
+        %th.stat.hidden-xs T
       %th.stat.visible-xs RECORD
       %th.stat.points.visible-xs POINTS
       %th.stat.points.hidden-xs PTS
@@ -33,6 +35,8 @@
         %td.stat.hidden-xs= team.wins
         %td.stat.hidden-xs= team.losses
         %td.stat.hidden-xs= team.shootout_losses
+        - if @ties
+          %td.stat.hidden-xs= team.ties
         %td.stat.visible-xs= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
         %td.stat.points= team.points
         %td.stat.hidden-xs= team.scored

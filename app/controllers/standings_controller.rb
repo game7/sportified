@@ -3,6 +3,7 @@ class StandingsController < BaseLeagueController
 
   def index
     @teams = @division.teams.for_season(@season).where(show_in_standings: true)
+    @ties = @teams.where('ties > 0').exists?
   end
 
   private

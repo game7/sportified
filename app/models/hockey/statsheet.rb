@@ -93,8 +93,11 @@ class Hockey::Statsheet < ActiveRecord::Base
     def grouped_by_period
       periods = {}
       %w{1 2 3 ot all}.each{|i| periods[i] = []}
-      puts "goals: #{all.count}"
+      puts '---------------------------------------------------'
+      puts periods
+      puts '---------------------------------------------------'
       all.each do |goal|
+        puts goal.period
         periods[goal.period.to_s] << goal
         periods['all'] << goal
       end

@@ -8,11 +8,24 @@ if Rails.env.test?
   end
 end
 
-if Rails.env.development?
+# if Rails.env.development?
+#   CarrierWave.configure do |config|
+#     config.root = "#{Rails.root}/public"
+#     config.storage = :file
+#     config.enable_processing = true
+#   end
+# end
+
+if Rails.env.development? || Rails.env.preview?
   CarrierWave.configure do |config|
-    config.root = "#{Rails.root}/public"
-    config.storage = :file
-    config.enable_processing = true
+    config.fog_provider = 'fog/aws'
+    config.fog_credentials = {
+      :provider               => 'AWS',
+      :aws_access_key_id      => Rails.application.credentials.s3[:key],
+      :aws_secret_access_key  => Rails.application.credentials.s3[:secret]
+    }
+    config.fog_directory = Rails.application.credentials.s3[:development][:bucket]
+    config.storage = :fog    
   end
 end
 
@@ -21,10 +34,10 @@ if Rails.env.production?
     config.fog_provider = 'fog/aws'
     config.fog_credentials = {
       :provider               => 'AWS',
-      :aws_access_key_id      => ENV['S3_KEY'],
-      :aws_secret_access_key  => ENV['S3_SECRET']
+      :aws_access_key_id      => Rails.application.credentials.s3[:key],
+      :aws_secret_access_key  => Rails.application.credentials.s3[:secret]
     }
-    config.fog_directory = ENV['S3_BUCKET']
+    config.fog_directory = Rails.application.credentials.s3[:development][:bucket]
     config.storage = :fog    
   end
 end
