@@ -25,6 +25,8 @@ module Rms
     before_action :set_form_packet, only: [:show, :edit, :update, :destroy]
     before_action :mark_return_point, only: [:new, :edit, :destroy]
 
+    layout 'admin'
+
     # GET /form_packets
     def index
       @form_packets = FormPacket.all
@@ -53,7 +55,7 @@ module Rms
       if @form_packet.save
         redirect_to return_url, notice: 'Form packet was successfully created.'
       else
-        render :new
+        render :new, error: 'Form packet could not be created.'
       end
     end
 
@@ -62,7 +64,7 @@ module Rms
       if @form_packet.update(form_packet_params)
         redirect_to return_url, notice: 'Form packet was successfully updated.'
       else
-        render :edit
+        render :edit, error: 'Form packet could not be updated.'
       end
     end
 

@@ -1,29 +1,31 @@
 - title 'Form Packets'
 - page_actions do
-  = link_to 'New Form packet', new_form_packet_path, class: [:ui, :primary, :button]
+  = link_to 'New Form Packet', new_form_packet_path, class: [:ui, :primary, :button]
+- wrapper class: [:ui, :container]
 
-- @form_packets.each do |form_packet|
-  %table.ui.table.celled
-    %thead
-      %tr
-        %th
-          = form_packet.name
-          .pull-right
-            .ui.dropdown
-              = semantic_icon :vertical, :ellipsis
-              .menu.left  
-                = link_to 'Add Form', new_form_packet_form_template_path(form_packet), class: [:item]
-                = link_to 'Rename', edit_form_packet_path(form_packet), class: [:item]
-                = link_to 'Delete', form_packet, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:item]
-    %tbody
-      - form_packet.templates.each do |template|
+.ui.segment
+  - @form_packets.each do |form_packet|
+    %table.ui.table.celled
+      %thead
         %tr
-          %td
-            = template.name
+          %th
+            = form_packet.name
             .pull-right
               .ui.dropdown
                 = semantic_icon :vertical, :ellipsis
-                .menu.left          
-                  = link_to 'Edit', template, class: [:item]
-                  = link_to 'Rename', edit_form_template_path(template), class: [:item]
-                  = link_to 'Delete', template, :method => :delete, :data => { :confirm => 'Are you sure?' } , class: [:item]           
+                .menu.left  
+                  = link_to 'Add Form', new_form_packet_form_template_path(form_packet), class: [:item]
+                  = link_to 'Rename', edit_form_packet_path(form_packet), class: [:item]
+                  = link_to 'Delete', form_packet, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:item]
+      %tbody
+        - form_packet.templates.each do |template|
+          %tr
+            %td
+              = template.name
+              .pull-right
+                .ui.dropdown
+                  = semantic_icon :vertical, :ellipsis
+                  .menu.left          
+                    = link_to 'Edit', template, class: [:item]
+                    = link_to 'Rename', edit_form_template_path(template), class: [:item]
+                    = link_to 'Delete', template, :method => :delete, :data => { :confirm => 'Are you sure?' } , class: [:item]           

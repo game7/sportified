@@ -34,6 +34,8 @@ module Rms
     before_action :set_element, only: [:edit, :update, :destroy]
     before_action :mark_return_point, only: [:new, :edit, :destroy]
 
+    layout 'admin'
+
     def new
       @element = @template.elements.build(type: "Rms::FormElements::#{params[:type].classify}")
     end

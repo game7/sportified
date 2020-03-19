@@ -29,6 +29,8 @@ module Rms
     before_action :verify_admin
     before_action :set_form, only: [:show, :edit, :update, :destroy]
 
+    layout 'admin'
+
     # GET /forms
     def index
       @forms = Form.all

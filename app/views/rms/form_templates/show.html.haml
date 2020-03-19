@@ -1,5 +1,5 @@
-
 - title @form_template.name
+- wrapper class: [:ui, :container]
 - page_actions do
   .btn-group
     %button.ui.primary.dropdown.button
@@ -15,21 +15,22 @@
         = link_to semantic_icon(:plus) + 'Weight', new_form_template_form_element_path(@form_template, type: :weight), class: [:item]
         = link_to semantic_icon(:plus) + 'Agreement', new_form_template_form_element_path(@form_template, type: :agreement), class: [:item]
 
-= simple_form_for :form do |f|
-  - @form_template.elements.each do |element|
-    %table.ui.table.celled
-      %thead
-        %tr
-          %th
-            = element.partial.titleize
-            .pull-right
-              .ui.dropdown
-                = semantic_icon :vertical, :ellipsis
-                .menu.left
-                  = link_to 'Edit', edit_form_element_path(element), class: [:item]
-                  = link_to 'Delete', form_element_path(element), method: :delete, class:  [:item], data: { confirm: 'Are you sure?' }            
-      %tbody
-        %tr
-          %td
-            = render "rms/registrations/elements/#{element.partial}", element: element, builder: f
+.ui.segment
+  = simple_form_for :form do |f|
+    - @form_template.elements.each do |element|
+      %table.ui.table.celled
+        %thead
+          %tr
+            %th
+              = element.partial.titleize
+              .pull-right
+                .ui.dropdown
+                  = semantic_icon :vertical, :ellipsis
+                  .menu.left
+                    = link_to 'Edit', edit_form_element_path(element), class: [:item]
+                    = link_to 'Delete', form_element_path(element), method: :delete, class:  [:item], data: { confirm: 'Are you sure?' }            
+        %tbody
+          %tr
+            %td
+              = render "rms/registrations/elements/#{element.partial}", element: element, builder: f
 

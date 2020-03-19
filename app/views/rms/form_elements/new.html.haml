@@ -1,3 +1,4 @@
 - title "Edit #{@element.type.demodulize}"
+- wrapper class: [:ui, :container]
 
-= render partial: @element.type.demodulize.downcase
+.ui.segment= render partial: @element.type.demodulize.downcase

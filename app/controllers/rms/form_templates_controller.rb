@@ -29,6 +29,7 @@ module Rms
     before_action :set_form_packet, only: [:new, :create]
     before_action :mark_return_point, only: [:new, :edit, :destroy]
 
+    layout 'admin'
 
     # GET /form_templates
     def index
