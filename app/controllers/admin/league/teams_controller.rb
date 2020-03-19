@@ -53,7 +53,8 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
   def team_params
     params.required(:team).permit(
       :season_id, :division_id, :name, :short_name, :club_id, :division_id, :pool, :show_in_standings, :seed,
-      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache
+      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache, :primary_color, :secondary_color,
+      :accent_color
     )
   end
 
@@ -75,10 +76,10 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
 
   def load_options
     @options = {
-      clubs: ActiveModelSerializers::SerializableResource.new(::Club.order(:name)),
-      divisions: ActiveModelSerializers::SerializableResource.new(@program.divisions.order(:name)),
-      seasons: ActiveModelSerializers::SerializableResource.new(@program.seasons.order(:name))
-    }
+      clubs: ::Club.order(:name),
+      divisions: @program.divisions.order(:name),
+      seasons: @program.seasons.order(:name)
+    }    
   end
 
   def add_breadcrumbs

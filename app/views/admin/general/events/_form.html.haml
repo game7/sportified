@@ -1,36 +1,46 @@
 = simple_form_for [:admin, @form] do |f|
-  %h4.ui.dividing.header Logistics   
-  .fields
-    = f.input :starts_on, as: :datetime, html5: true, wrapper_html: { class: [:four, :wide] }
-    = f.input :duration, wrapper_html: { class: [:two, :wide] }
-  = f.input :all_day, as: :boolean
-  = f.input :location_id, as: :select, collection: @form.location_options, wrapper_html: { class: [:four, :wide] }
-  %h4.ui.dividing.header Description 
-  = f.input :summary
-  = f.input :description, as: :text, rows: 4
-  = f.input :tag_list, input_html: { value: f.object.tag_list.to_s }
-  = f.input :private, as: :boolean
+
+  .ui.segment
+    %h4.ui.header LOGISTICS   
+    .fields
+      = f.input :starts_on, as: :datetime, html5: true, wrapper_html: { class: [:four, :wide] }
+      = f.input :duration, wrapper_html: { class: [:two, :wide] }
+    = f.input :all_day, as: :boolean
+    = f.input :location_id, as: :select, collection: @form.location_options, wrapper_html: { class: [:four, :wide] }
+
+  .ui.segment
+    %h4.ui.header DESCRIPTION 
+    = f.input :summary
+    = f.input :description, as: :text, rows: 4
+    = f.input :tag_list, input_html: { value: f.object.tag_list.to_s }
+    = f.input :private, as: :boolean
 
   - if @form.respond_to?(:repeat)
-    %h4.ui.dividing.header Recurrence 
-    = f.input :repeat, as: :boolean
-    .ui.segment#repeat-options
-      = f.input :repeat_on_sunday, as: :boolean
-      = f.input :repeat_on_monday, as: :boolean
-      = f.input :repeat_on_tuesday, as: :boolean
-      = f.input :repeat_on_wednesday, as: :boolean
-      = f.input :repeat_on_thursday, as: :boolean
-      = f.input :repeat_on_friday, as: :boolean
-      = f.input :repeat_on_saturday, as: :boolean
-      = f.input :ends, as: :semantic_radio_buttons, label: 'Ending', collection: @form.class.ends_options
-      = f.input :ends_on, as: :date, html5: true, label: false
-      = f.input :ends_after_occurrences, label: false, wrapper: :ui_right_labled_input do
-        = f.input_field :ends_after_occurrences
-        .ui.label occurrences
-  = f.button :wrapped, :cancel => return_url
+    .ui.segment
+      %h4.ui.header RECURRENCE 
+      = f.input :repeat, as: :boolean
+      .ui.segment#repeat-options
+        = f.input :repeat_on_sunday, as: :boolean
+        = f.input :repeat_on_monday, as: :boolean
+        = f.input :repeat_on_tuesday, as: :boolean
+        = f.input :repeat_on_wednesday, as: :boolean
+        = f.input :repeat_on_thursday, as: :boolean
+        = f.input :repeat_on_friday, as: :boolean
+        = f.input :repeat_on_saturday, as: :boolean
+        = f.input :ends, as: :semantic_radio_buttons, label: 'Ending', collection: @form.class.ends_options
+        = f.input :ends_on, as: :date, html5: true, label: false
+        = f.input :ends_after_occurrences, label: false, wrapper: :ui_right_labled_input do
+          = f.input_field :ends_after_occurrences
+          .ui.label occurrences
+
+  .ui.segment
+    = f.button :wrapped, :cancel => return_url
 
 - if @form.persisted?
+  %br
+  %br
   .ui.segment
+    %h4.ui.header HISTORY
     %table.ui.celled.striped.table
       %thead
         %tr

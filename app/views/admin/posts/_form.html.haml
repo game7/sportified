@@ -9,5 +9,4 @@
   = image_tag(@post.image_url) if @post.image_url.present?
   = f.input :tag_list, :input_html => { :value => @post.tag_list.to_s, :class => "input-xxlarge" }
 
-
   = f.button :wrapped, :cancel => return_url

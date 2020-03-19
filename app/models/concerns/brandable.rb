@@ -6,7 +6,7 @@ module Concerns
     
     included do
       
-      mount_uploader :logo, TeamLogoUploader
+      mount_base64_uploader :logo, TeamLogoUploader
       
       before_save :get_color_palette, :if => :get_color_palette?
       before_save :resize_logo_images, :if => :crop_changed?

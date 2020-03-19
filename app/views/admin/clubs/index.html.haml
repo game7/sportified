@@ -1,8 +1,9 @@
 - title "Clubs"
 - page_actions do
   = link_to 'New Club', new_admin_club_path, class: [:ui, :primary, :button]
+- wrapper class: [:ui, :container]
 
-.ui.container
+.ui.segment
   %table.ui.celled.striped.table
     %thead
       %tr

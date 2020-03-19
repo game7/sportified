@@ -1,42 +1,48 @@
 = simple_form_for [:admin, :league, @game] do |f|
   - if %w{new create edit update}.include? params[:action]
-    %h4.ui.dividing.header Logistics   
-    .fields
-      = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
-      = f.input :season_id, as: :select, collection: @options[:seasons][@game.program_id], wrapper_html: { class: [:four, :wide] }
-      = f.input :division_id, as: :select, collection: @options[:divisions][@game.program_id], wrapper_html: { class: [:four, :wide] }
-    .fields
-      = f.input :starts_on, as: :datetime, html5: true, wrapper_html: { class: [:four, :wide] }
-      = f.input :duration, wrapper_html: { class: [:two, :wide] }
-    .fields      
-      = f.input :location_id, as: :select, collection: @options[:locations], wrapper_html: { class: [:four, :wide] }
-      = f.input :playing_surface_id, as: :select, collection: @options[:playing_surfaces][@game.location_id], wrapper_html: { class: [:four, :wide] }
-  %br
-  %br
+    .ui.segment
+      %h4.ui.header LOGISTICS   
+      .fields
+        = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
+        = f.input :season_id, as: :select, collection: @options[:seasons][@game.program_id], wrapper_html: { class: [:four, :wide] }
+        = f.input :division_id, as: :select, collection: @options[:divisions][@game.program_id], wrapper_html: { class: [:four, :wide] }
+      .fields
+        = f.input :starts_on, as: :datetime, html5: true, wrapper_html: { class: [:four, :wide] }
+        = f.input :duration, wrapper_html: { class: [:two, :wide] }
+      .fields      
+        = f.input :location_id, as: :select, collection: @options[:locations], wrapper_html: { class: [:four, :wide] }
+        = f.input :playing_surface_id, as: :select, collection: @options[:playing_surfaces][@game.location_id], wrapper_html: { class: [:four, :wide] }
+
   .ui.grid.two.columns
     .column
-      %h4.ui.dividing.header Away Team
-      = f.input :away_team_id, as: :select, collection: @options[:teams]
-      = f.input :away_team_custom_name, as: :boolean
-      = f.input :away_team_name
-      = f.input :away_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
+      .ui.segment
+        %h4.ui.header AWAY TEAM
+        = f.input :away_team_id, as: :select, collection: @options[:teams]
+        = f.input :away_team_custom_name, as: :boolean
+        = f.input :away_team_name
+        = f.input :away_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
     .column
-      %h4.ui.dividing.header Home Team
-      = f.input :home_team_id, as: :select, collection: @options[:teams]
-      = f.input :home_team_custom_name, as: :boolean
-      = f.input :home_team_name
-      = f.input :home_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
-  %br
-  %br
-  %h4.ui.dividing.header Display
-  .two.fields
-    = f.input :text_before
-    = f.input :text_after
+      .ui.segment
+        %h4.ui.header HOME TEAM
+        = f.input :home_team_id, as: :select, collection: @options[:teams]
+        = f.input :home_team_custom_name, as: :boolean
+        = f.input :home_team_name
+        = f.input :home_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
 
-  = f.button :wrapped, :cancel => return_url
+  .ui.segment
+    %h4.ui.header DISPLAY
+    .two.fields
+      = f.input :text_before
+      = f.input :text_after
+
+  .ui.segment
+    = f.button :wrapped, :cancel => return_url
 
 - if @game.persisted?
+  %br
+  %br
   .ui.segment
+    %h4.ui.header HISTORY
     %table.ui.celled.striped.table
       %thead
         %tr

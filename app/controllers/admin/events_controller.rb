@@ -9,7 +9,7 @@ class Admin::EventsController < Admin::AdminController
   before_action :load_options, only: [:new, :create]
 
   def index
-    @view = params[:view] || 'day'
+    @view = params[:view] || 'month'
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     Date.beginning_of_week = :sunday
 

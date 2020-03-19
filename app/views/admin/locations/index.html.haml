@@ -1,8 +1,9 @@
 - title "Locations"
 - page_actions do
   = link_to 'New Location', new_admin_location_path, class: [:ui, :primary, :button]
+- wrapper class: [:ui, :container]
 
-.ui.container
+.ui.segment
   - @locations.each do |location|
     .ui.segments
       .ui.segment

@@ -56,6 +56,7 @@ gem 'cocoon'
 #gem 'delayed_job'
 
 gem 'carrierwave'
+gem 'carrierwave-base64'
 gem 'fog-aws', group: [:staging, :production]
 gem 'rmagick', '>= 2.13.4'
 gem 'remotipart', '~> 1.3.1'

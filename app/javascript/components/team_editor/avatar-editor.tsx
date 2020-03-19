@@ -10,7 +10,7 @@ interface Props {
 export const AvatarEditor: FC<Props> = (props) => {
   const { onChange = function() {} } = props;
   const [open, setOpen] = useState(true)
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState<string>();
   const [croppedImageUrl, setCroppedImageUrl] = useState();
 
   const [crop, setCrop] = useState<Crop>({
@@ -22,9 +22,9 @@ export const AvatarEditor: FC<Props> = (props) => {
   function onSelectFile(e){
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () =>
-        setImageUrl(reader.result)
-      );
+      reader.addEventListener('load', () => {
+        setImageUrl(reader.result.toString())
+      });
       reader.readAsDataURL(e.target.files[0]);
     }
   };

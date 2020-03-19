@@ -37,7 +37,7 @@ if Rails.env.production?
       :aws_access_key_id      => Rails.application.credentials.s3[:key],
       :aws_secret_access_key  => Rails.application.credentials.s3[:secret]
     }
-    config.fog_directory = Rails.application.credentials.s3[:development][:bucket]
+    config.fog_directory = Rails.application.credentials.s3[:production][:bucket]
     config.storage = :fog    
   end
 end

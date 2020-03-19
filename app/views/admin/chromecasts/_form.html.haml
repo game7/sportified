@@ -1,7 +1,7 @@
 = simple_form_for [:admin, @chromecast], remote: true do |f|
   = f.input :name, readonly: true do
     = f.text_field :name, readonly: true, class: 'form-control'
-    %button#cast.ui.primary.button{ style: 'margin-top: 5px;'} Choose Chromecast
+    %button#cast.ui.button{ style: 'margin-top: 5px;'} Choose Chromecast
   = f.input :location_id, collection: Location.order('name ASC')
   = f.input :playing_surface_id
   = f.button :wrapped, :cancel => return_url

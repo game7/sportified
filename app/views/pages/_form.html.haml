@@ -1,26 +1,31 @@
 = simple_form_for @page do |f|
   
-  %h4.ui.dividing.header Basic
-  = f.input :title
-  = f.input :draft, as: :boolean
+  .ui.segment
+    %h4.ui.header BASIC
+    = f.input :title
+    = f.input :draft, as: :boolean
   
-  %h4.ui.dividing.header  Positioning    
-  = f.input :parent_id, :collection => @parent_options
-  = f.input :show_in_menu
-  = f.input :title_in_menu
+  .ui.segment
+    %h4.ui.header POSITIONING    
+    = f.input :parent_id, :collection => @parent_options
+    = f.input :show_in_menu
+    = f.input :title_in_menu
   
-  %h4.ui.dividing.header Navigation
-  = f.input :skip_to_first_child
-  = f.input :link_url
+  .ui.segment
+    %h4.ui.header NAVIGATION
+    = f.input :skip_to_first_child
+    = f.input :link_url
   
-  %h4.ui.dividing.header Search Engine Optimization
-  = f.input :meta_keywords
-  = f.input :meta_description
-  = f.button :wrapped, :cancel => return_url
+  .ui.segment
+    %h4.ui.header SEARCH ENGINE OPTIMIZATION
+    = f.input :meta_keywords
+    = f.input :meta_description
+
+  .ui.segment
+    = f.button :wrapped, :cancel => return_url
 
 
   :css
-
     .page_title,
     .page_parent_id,
     .page_title_in_menu,

@@ -1,0 +1,11 @@
+<%= 
+  react_component(:brand_editor, {
+      object: :team,
+      url: @team.logo.url,
+      primary_color: @team.primary_color,
+      secondary_color: @team.secondary_color,
+      accent_color: @team.accent_color,
+  }, {
+      camelize_props: true
+  })
+%>

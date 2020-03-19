@@ -46,7 +46,7 @@ const TeamEditor: FC<Props> = ({team, options}) => {
 
   const [avatar, setAvatar] = useState('/image.png')
   const [palette, setPalette] = useState<string[]>([])
-  const form = useForm(omit(team, 'logo'), handleSubmit);
+  const form = useForm<Team>(omit(team, 'logo'), handleSubmit);
   const imageRef = useRef(null);
 
   const seasonOptions = options.seasons.map(item => ({ value: item.id, text: item.name }))
@@ -87,12 +87,12 @@ const TeamEditor: FC<Props> = ({team, options}) => {
         <Grid>
           <Grid.Column width="10">
             <Form.Group widths="2">
-              <Form.Select {...form.input('seasonId')} label="Season" options={seasonOptions} required />
-              <Form.Select {...form.input('divisionId')} label="Division" options={divisionOptions} required />
+              <Form.Select {...form.select('seasonId')} label="Season" options={seasonOptions} required />
+              <Form.Select {...form.select('divisionId')} label="Division" options={divisionOptions} required />
             </Form.Group>
             <Form.Input {...form.input('name')} required width="8" />
             <Form.Input {...form.input('shortName')} width="4" />
-            <Form.Select {...form.input('clubId')} label="Club" options={clubOptions} width="4" />
+            <Form.Select {...form.select('clubId')} label="Club" options={clubOptions} width="4" />
             <Form.Group>
               <Form.Input {...form.input('pool')} width="2" />
               <Form.Input {...form.input('seed')} width="2" />

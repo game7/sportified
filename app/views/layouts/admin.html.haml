@@ -11,47 +11,108 @@
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
+    :css
+      .navslide {
+        margin-left: 190px;
+      }
+      .ui.left.sidebar,
+      .ui.right.sidebar {
+          margin-top: 41px !important;
+          width: 190px;
+      }
+      .ui.left.sidebar .icon {
+        float: left !important;
+        margin-right: 10px !important;
+      }   
+      .pusher#main {
+        padding-top: 41px;
+        padding-left: 190px;
+        min-height: 100%;
+        background-color: #f1f4f5;
+      }
+      .admin-page-title {
+        background: rgba(255,255,255,0.45);
+        padding: 30px;
+      }
+      .admin-page-title h1 {
+        margin-bottom: 0;
+      }
+      .admin-content {
+        padding: 30px;
+      }
   %body
-    .ui.top.fixed.huge.menu
-      .item sportified
-
+    .ui.top.fixed.menu
+      .item{ style: 'width: 188px;'} sportified
       .right.menu
-        = link_to 'Go to Site', root_path, class: :item
-
-    .ui.fluid.grid{ style: 'margin-top: 80px; width: 100%;'}
-
-      .two.wide.column{ style: 'text-align: center;' }
+        = link_to 'Go to Site', root_path, class: :item  
     
-        .ui.compact.vertical.labeled.icon.menu
-          = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
-          = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
-          = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
-          = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
-          = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
-          = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
-          = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
-          = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
-          = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
-          = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
-          = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
+    .ui.visible.left.vertical.overlay.sidebar.menu
+      -# .item.top hello   
+      = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
+      = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
+      = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
+      = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
+      = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
+      = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
+      = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
+      = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
+      = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
+      = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
+      = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
+      
+    .pusher#main
+      - if content_for?(:title)
+        .admin-page-title
+          %h1{ style: 'float: left;' }
+            %span#page-title= yield(:title)
+          .actions{ style: 'float: right;' }
+            = yield(:actions)
+          %div{ style: 'clear: both;' }
+      .admin-content
+        #wrapper{ @wrapper || {} }          
+          #page-header
+            = render :partial => 'layouts/flash', :locals => { :flash => flash }
+          = yield
 
-      .fourteen.wide.column                                         
-        #wrapper{ @wrapper || {} }
-          = render 'layouts/area_navigation' if @area_menu_items
-          = render 'layouts/breadcrumbs' if @breadcrumbs
-          #banner
-            #{yield :banner}
-          - if content_for?(:title)
-            .page-title.clearfix
-              %h1{ style: 'float: left;' }
-                %span#page-title= yield(:title)
-              .actions{ style: 'float: right;' }
-                = yield(:actions)
-              %div{ style: 'clear: both;' }
-          #main
-            #page-header
-              = render :partial => 'layouts/flash', :locals => { :flash => flash }
-            = yield
+    -# .ui.top.fixed.huge.menu
+    -#   .item sportified
+    -#   .right.menu
+    -#     = link_to 'Go to Site', root_path, class: :item
+
+    -# .ui.fluid.grid{ style: 'margin-top: 20px; width: 100%;'}
+
+    -#   .two.wide.column{ style: 'text-align: center;' }
+    
+    -#     .ui.compact.vertical.labeled.icon.fluid.menu
+    -#       = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
+    -#       = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
+    -#       = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
+    -#       = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
+    -#       = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
+    -#       = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
+    -#       = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
+    -#       = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
+    -#       = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
+    -#       = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
+    -#       = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
+
+    -#   .fourteen.wide.column                                         
+    -#     #wrapper{ @wrapper || {} }
+    -#       = render 'layouts/area_navigation' if @area_menu_items
+    -#       = render 'layouts/breadcrumbs' if @breadcrumbs
+    -#       #banner
+    -#         #{yield :banner}
+    -#       - if content_for?(:title)
+    -#         .page-title.clearfix
+    -#           %h1{ style: 'float: left;' }
+    -#             %span#page-title= yield(:title)
+    -#           .actions{ style: 'float: right;' }
+    -#             = yield(:actions)
+    -#           %div{ style: 'clear: both;' }
+    -#       #main
+    -#         #page-header
+    -#           = render :partial => 'layouts/flash', :locals => { :flash => flash }
+    -#         = yield
 
 
 

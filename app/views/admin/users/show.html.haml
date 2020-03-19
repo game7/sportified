@@ -1,23 +1,29 @@
 - title "#{@user.first_name} #{@user.last_name}"
+- wrapper class: [:ui, :container]
 
-%table.ui.definition.table
-  %tbody
-    %tr
-      %td.collapsing Id
-      %td= @user.id
-    %tr
-      %td.collapsing Name
-      %td= "#{@user.first_name} #{@user.last_name}"
-    %tr
-      %td.collapsing Email
-      %td= @user.email
-    %tr
-      %td.collapsing Sign In Cont
-      %td= @user.sign_in_count
-    %tr
-      %td.collapsing Last Sign In
-      %td= @user.last_sign_in_at
-#user_roles
-  = render partial: 'admin/user_roles/grid', locals: { user: @user }
+.ui.segment
+  %h4.ui.header BASIC INFO
+  %table.ui.definition.table
+    %tbody
+      %tr
+        %td.collapsing Id
+        %td= @user.id
+      %tr
+        %td.collapsing Name
+        %td= "#{@user.first_name} #{@user.last_name}"
+      %tr
+        %td.collapsing Email
+        %td= @user.email
+      %tr
+        %td.collapsing Sign In Cont
+        %td= @user.sign_in_count
+      %tr
+        %td.collapsing Last Sign In
+        %td= @user.last_sign_in_at
+
+.ui.segment
+  %h4.ui.header ROLES
+  #user_roles
+    = render partial: 'admin/user_roles/grid', locals: { user: @user }
 %br
 = link_to semantic_icon(:plus) + ' Add Site Admin Role', admin_user_user_roles_path(@user), remote: true, method: :post, class: [:ui, :primary, :button]

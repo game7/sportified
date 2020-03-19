@@ -2,38 +2,38 @@
 - wrapper class: [:ui, :container]
 
 .ui.container
-  .paginator= paginate @games
+  .ui.segment
 
-  %table.ui.celled.striped.table
-    %thead
-      %tr
-        %th Date
-        %th Time
-        %th Division
-        %th Summary
-        %th Actions
-    %tbody
-      - @games.each do |game|
+    %table.ui.celled.striped.table
+      %thead
         %tr
-          %td= game.starts_on.strftime('%a %-m/%-d/%Y')
-          %td= game.starts_on.strftime('%l:%M%P').gsub("m","")
-          %td= game.division.name
-          %td= game.summary
-          %td
-            .btn-toolbar
-              = link_to (game.result.try(:final?) ? semantic_icon(:check, :square, :outline) : semantic_icon(:square, :outline)) + 'Result',
-                        edit_admin_game_result_path(game),
-                        class: [:ui, :mini, :button, game.result.try(:final?) && :primary]
-              = link_to (game.statsheet.try(:posted?) ? semantic_icon(:check, :square, :outline) : semantic_icon(:square, :outline)) + 'Stats',
-                        edit_admin_game_statsheet_path(game),
-                        class: [:ui, :mini, :button, game.statsheet.try(:posted?) && :primary]
-              = link_to 'Print Scoresheet',
-                        print_admin_game_statsheet_path(game),
-                        class: [:ui, :primary, :mini, :button],
-                        target: :_blank
+          %th Date
+          %th Time
+          %th Division
+          %th Summary
+          %th Actions
+      %tbody
+        - @games.each do |game|
+          %tr
+            %td= game.starts_on.strftime('%a %-m/%-d/%Y')
+            %td= game.starts_on.strftime('%l:%M%P').gsub("m","")
+            %td= game.division.name
+            %td= game.summary
+            %td
+              .btn-toolbar
+                = link_to (game.result.try(:final?) ? semantic_icon(:check, :square, :outline) : semantic_icon(:square, :outline)) + 'Result',
+                          edit_admin_game_result_path(game),
+                          class: [:ui, :mini, :button, game.result.try(:final?) && :primary]
+                = link_to (game.statsheet.try(:posted?) ? semantic_icon(:check, :square, :outline) : semantic_icon(:square, :outline)) + 'Stats',
+                          edit_admin_game_statsheet_path(game),
+                          class: [:ui, :mini, :button, game.statsheet.try(:posted?) && :primary]
+                = link_to 'Print Scoresheet',
+                          print_admin_game_statsheet_path(game),
+                          class: [:ui, :primary, :mini, :button],
+                          target: :_blank
 
 
-  .paginator= paginate @games if @games.count > 20
+    .paginator= paginate @games
 
   #dialog-modal
 

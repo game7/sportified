@@ -39,9 +39,9 @@ export interface Team {
   pool: string;
   seed: number;
   tenantId: number;
-  divisionId: number;
-  seasonId: number;
-  clubId: number;
+  divisionId: number | string;
+  seasonId: number | string;
+  clubId: number | string;
   logo: {
     url: string;
     small: string;

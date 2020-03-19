@@ -3,15 +3,19 @@ import { useState } from 'react';
 import { startCase } from 'lodash';
 
 interface BindOptions {
-errorKey: string;
+  errorKey: string;
 }
 
-type SubmitHandler<T> = (model: Partial<T>, setErrors: (errors: any) => void) => void
+type Errors = {
+  [key: string]: string
+}
+
+type SubmitHandler<T> = (model: Partial<T>, setErrors: (errors: Errors) => void) => void
 
   
 export function useForm<T>(data: Partial<T>, handler?: SubmitHandler<T>) {
     const [model, setModel] = useState<Partial<T>>(data);
-    const [errors, setErrors] = useState()
+    const [errors, setErrors] = useState<Errors>()
 
     function humanize(str: string) { return startCase(str) }
     
@@ -60,9 +64,20 @@ export function useForm<T>(data: Partial<T>, handler?: SubmitHandler<T>) {
       }
     }
 
+    function select(prop: keyof T, options?: Partial<BindOptions>) {
+      const { errorKey = prop.toString() } = options || {}
+      return {
+        label: humanize(prop.toString()),
+        value: model[prop] ? model[prop].toString() : "",
+        onChange: changeHandler(prop, errorKey),
+        error: errors && errors[errorKey] && errors[errorKey][0]
+      }
+    }    
+
     return {
       input,
       checkbox,
+      select,
       form,
       submit,
       model,

@@ -1,20 +1,24 @@
 = simple_form_for [:admin, :league, @event] do |f|
-  %h3.ui.dividing.header Logistics   
-  .fields
-    = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
-    = f.input :season_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
-    = f.input :division_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
-  .fields
-    = f.input :starts_on, html5: true, wrapper_html: { class: [:four, :wide] }
-    = f.input :duration, wrapper_html: { class: [:two, :wide] }
-  = f.input :all_day, as: :boolean
-  = f.input :location_id, as: :select, collection: @options[:locations], wrapper_html: { class: [:four, :wide] }
 
-  %h3.ui.dividing.header Description  
-  = f.input :summary
-  = f.input :description, as: :text
+  .ui.segment
+    %h4.ui.header LOGISTICS   
+    .fields
+      = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
+      = f.input :season_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
+      = f.input :division_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
+    .fields
+      = f.input :starts_on, html5: true, wrapper_html: { class: [:four, :wide] }
+      = f.input :duration, wrapper_html: { class: [:two, :wide] }
+    = f.input :all_day, as: :boolean
+    = f.input :location_id, as: :select, collection: @options[:locations], wrapper_html: { class: [:four, :wide] }
 
-  = f.button :wrapped, :cancel => return_url
+  .ui.segment
+    %h4.ui.header DESCRIPTION  
+    = f.input :summary
+    = f.input :description, as: :text
+
+  .ui.segment
+    = f.button :wrapped, :cancel => return_url
 
 - content_for :javascript do
   :javascript

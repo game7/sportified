@@ -103,12 +103,17 @@ class TeamLogoUploader < CarrierWave::Uploader::Base
 
 
   def color_palette
-    cache_stored_file! if !cached?
+    # cache_stored_file! if !cached?
 
-    img = ::Magick::Image.read(current_path).first
-    quantized = img.quantize(8, Magick::RGBColorspace)
-    normal = sort_by_decreasing_frequency(quantized)
-    map = get_color_map(normal)
+    # img = ::Magick::Image.read(current_path).first
+    # quantized = img.quantize(8, Magick::RGBColorspace)
+    # normal = sort_by_decreasing_frequency(quantized)
+    # map = get_color_map(normal)
+    {
+      primary: '',
+      secondary: '',
+      accent: ''
+    }
   end
 
 

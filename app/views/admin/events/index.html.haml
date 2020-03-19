@@ -1,24 +1,6 @@
 - title 'Calendar'
 
-
-/ = render :partial => "shared/select_date_range", :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => 7 }
-
-= render "admin/events/views/#{@view}"
-/ %hr
-/ - @days.each do |day, events|
-/   .panel.panel-default
-/     .panel-heading
-/       %strong= day
-/     %table.table.table-striped.table-bordered
-/       %thead
-/         %tr
-/           %th.col-xs-1 Time
-/           %th.col-xs-1 Type
-/           %th.col-xs-7 Description
-/           %th.col-xs-2 Location
-/           %th.col-xs-1
-/       %tbody
-/         = render :partial => 'event', :collection => events
+.ui.segment= render "admin/events/views/#{@view}"
 
 #dialog-modal
 

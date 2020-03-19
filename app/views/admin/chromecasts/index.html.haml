@@ -1,8 +1,9 @@
 - title 'Chromecasts'
 - page_actions do
   = link_to 'New Chromecast', new_admin_chromecast_path, class: [:ui, :primary, :button]
+- wrapper class: [:ui, :container]
 
-.ui.container
+.ui.segment
   %table.ui.celled.striped.table
     %thead
       %tr
