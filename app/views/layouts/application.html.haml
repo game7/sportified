@@ -21,13 +21,54 @@
     :css
       :root {
         --primary-color: #8C1D40;
+        --primary-color: #000000;
       }
+      html {
+        font-size: 15px;
+      }
+      body.pushable .pusher {
+        background-image: url("/assets/themes/oia/oia_web_bg.jpg");
+        background-position: center top;
+        background-repeat:no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }      
       .ui.inverted.menu {
         background: var(--primary-color);
       }
       .ui.primary.button {
         background-color: var(--primary-color);
       }
+      a.header.item {
+        text-transform: uppercase !important;
+      }
+      a.header.item .title {
+        display: none !important;
+      }      
+      a.header.item .logo {
+        content: url("/assets/themes/oia/oia_asu_gold.svg");
+        width: 200px !important;
+        margin: auto !important;
+      }
+      #wrapper {
+        background: #ffffff;
+        padding: 20px;
+        margin-top: 60px;
+        margin-bottom: 9px;
+      }
+
+      /* mobile */
+      @media only screen and (max-width: 767px) {
+        #wrapper {
+          margin-top: 51px;
+          margin-bottom: 0;
+        }
+        .ui.container {
+          width: auto !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }     
+      } 
   %body
     = render 'layouts/sidebar'
     .pusher
@@ -50,7 +91,7 @@
           #page-header
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-      #footer.ui.container
+      #footer
         = render 'layouts/footer'
         -# = render 'layouts/social'
     #modal

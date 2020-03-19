@@ -1,15 +1,15 @@
-.ui.vertical.sidebar.inverted.menu.left.massive
-  .header.item{ style: 'text-align: center;' } MENU
-  - Page.in_menu.arrange(:order => :position).each do |root|
-    - page = root[0]
+.ui.vertical.sidebar.inverted.left.massive.menu
+  .header.item{ style: 'text-align: center;' } MAIN MENU
+  - Page.in_menu.arrange(:order => :position).each do |page, children|
     - url = get_page_url(page)
-    - parent = root[1].length > 0
+    - parent = children.length > 0
     - unless parent
       %a.item{ href: url }= page.title_in_menu.presence || page.title
     - if parent
       .item
         = page.title_in_menu.presence || page.title
         .menu
-          - root[1].each_with_index do |child, i|
-            - child_url = get_page_url(child[0])
-            %a.item{ href: child_url }= child[0].title_in_menu.presence || child[0].title           
+          - children.each do |child, grandchildren|
+            %a.item{ href: get_page_url(child) }= child.title_in_menu.presence || child.title
+            - grandchildren.each do |grandchild, greatgrandchildren|
+              %a.item{ href: get_page_url(grandchild) }= " - #{grandchild.title_in_menu.presence || grandchild.title}"

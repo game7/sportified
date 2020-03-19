@@ -119,7 +119,7 @@ $(document).ready(function() {
   if ($tooltip.tooltip) { $tooltip.tooltip(); }
 
   $('.ui.dropdown').dropdown();
-  // $('.ui.sidebar').sidebar('attach events', '.toc.item');
+  $('.ui.sidebar').sidebar('attach events', '.toc.item');
   $('.ui.accordion').accordion();
 
 });

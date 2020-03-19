@@ -11,7 +11,7 @@
         = link_to 'New Game', new_admin_league_game_path(:season_id => @season, :division_id => @division), class: :item  
 
 
-.ui.grid
+.ui.stackable.grid
 
   - if @show_tags
     .four.wide.column                      
@@ -28,7 +28,7 @@
     - if params[:tags]
       .paginator= paginate @events    
   
-.ui.grid
+.ui.stackable.grid
 
   - if @show_tags
     .four.wide.column
