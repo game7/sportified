@@ -39,9 +39,13 @@ module Blocks
       super.split('||')
     end
 
+    def shuffle
+      super == '1'
+    end
+
     def posts
-      posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").newest.limit(self.post_count)
-      !!self.shuffle ? posts.shuffle : posts
+      posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").limit(self.post_count)
+      posts = self.shuffle ? posts.random : posts.newest
     end
 
   end

@@ -118,7 +118,10 @@ $(document).ready(function() {
   var $tooltip = $('[rel=tooltip], [data-toggle="tooltip"]');
   if ($tooltip.tooltip) { $tooltip.tooltip(); }
 
-  $('.ui.dropdown').dropdown();
+  $('.ui.dropdown').not('select').dropdown({ 
+    action: 'nothing'
+  })
+  $('select.ui.dropdown').dropdown()  
   $('.ui.sidebar').sidebar('attach events', '.toc.item');
   $('.ui.accordion').accordion();
 

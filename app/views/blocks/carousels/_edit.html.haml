@@ -1,7 +1,11 @@
-= simple_form_for @block, :url => page_blocks_carousel_path(@page, @block), :remote => true do |f|
-  = f.input :post_count, :input_html => { :class => 'input-min' }
-  = f.input :shuffle, :as => :boolean, :wrapper => :vertical_boolean
-  .control-group
-    %label.control-label Tags
-    .controls
-      = f.collection_check_boxes(:tags, Post.tag_counts.collect{|a| [a[:name], "#{a[:name]} (#{a[:count].to_s})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'}) 
+.ui.small.modal.edit_block
+  .header Edit Markup
+  .content
+    = simple_form_for @block, url: page_blocks_carousel_path(@page, @block), remote: true do |f|
+      = f.input :post_count
+      = f.input :shuffle, as: :boolean
+      = f.input :tags, as: :tags, source: :post
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel
+

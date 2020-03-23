@@ -1,20 +1,19 @@
-.panel.panel-default
-  - if block.title.present?
-    %h3.ui.dividing.header= block.title
-  %table.ui.celled.table
-    %thead
+- if block.title.present?
+  %h3= block.title
+%table.ui.celled.table
+  %thead
+    %tr
+      %th Date
+      %th Time
+      %th Event
+  %tbody
+    - block.events.each do |event|
       %tr
-        %th Date
-        %th Time
-        %th Event
-    %tbody
-      - block.events.each do |event|
-        %tr
-          %td.collapsing= event.starts_on.to_date.strftime("%a %-m/%-d/%y")
-          %td.collapsing= "#{event.starts_on.strftime("%l:%M %P")} - #{event.ends_on.strftime("%l:%M %P")}"
-          %td= event.summary
-    %tfooter
-      %tr
-        %td{ colspan: '3', style: 'text-align: center'}
-          = link_to 'Show more events like these...', [:schedule, { tags: block.tags }]
+        %td.collapsing= event.starts_on.to_date.strftime("%a %-m/%-d/%y")
+        %td.collapsing= "#{event.starts_on.strftime("%l:%M %P")} - #{event.ends_on.strftime("%l:%M %P")}"
+        %td= event.summary
+  %tfooter
+    %tr
+      %td{ colspan: '3', style: 'text-align: center'}
+        = link_to 'Show more events like these...', [:schedule, { tags: block.tags }]
 

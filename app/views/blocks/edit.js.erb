@@ -1,7 +1,15 @@
-var $modal = $('#dialog-modal');
-<% @modal_title = "Edit #{@block.class.to_s.demodulize.humanize}" %>
-$modal.html("<%= escape_javascript( render(:partial => "blocks/#{@block.class.to_s.demodulize.pluralize.underscore}/edit", :layout => "layouts/modal" ) )%>");
-$modal.modal();
-$modal.find('.submit').click(function(){
+$('body').append("<%= escape_javascript( render(partial: "blocks/#{@block.class.to_s.demodulize.pluralize.underscore}/edit") )%>");
+var $modal = $('.modal.edit_block');
+$modal.find(':submit').click(function() {
   $modal.find('form').submit();
-});
+})
+$modal.find('button .cancel').click(function() {
+  $modal.modal('hide')
+})
+$modal.find('select.ui.dropdown').dropdown()
+$modal.modal({
+  closable: false,
+  onHidden: function() {
+    $(this).remove();
+  }
+}).modal('show');

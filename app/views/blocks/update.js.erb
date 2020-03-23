@@ -3,9 +3,8 @@
   $("#errors-<%= @block.id %>").html("<%= escape_javascript(error_messages_for(@block)) %>");
   $("#errors-<%= @block.id %>").slideDown();
 <% else %>
+  $("#<%= @block.class.name.underscore.gsub('/', '_') %>_<%= @block.id %> div.content").html("<%= escape_javascript( render(:partial => @block.class.to_s.pluralize.underscore+"/block", :locals => { :block => @block } ) )%>");
+  $('.modal.edit_block').modal('hide')
   $("#flash_success").html("<%= escape_javascript( flash.discard(:notice) )%>");
   $("#flash_success").slideDown();
-  $("#block_<%= @block.id %> div.content").html("<%= escape_javascript( render(:partial => @block.class.to_s.pluralize.underscore+"/block", :locals => { :block => @block } ) )%>");
-  $("#dialog-modal").modal('hide');  
-  $("#dialog-modal").html('');
 <% end %>

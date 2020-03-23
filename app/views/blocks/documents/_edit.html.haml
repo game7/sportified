@@ -1,6 +1,13 @@
-= simple_form_for @block, :url => page_blocks_document_path(@page, @block), :remote => true do |f|
-  = f.input :file, :as => :file
-  = f.input :file_cache, :as => :hidden
-  = f.input :title
+.ui.modal.edit_block
+  .header Edit Document
+  .content
+    = simple_form_for @block, url: page_blocks_document_path(@page, @block), remote: true do |f|  
+      = f.input :file, as: :file
+      = f.input :file_cache, as: :hidden
+      = f.input :title
+      = f.input :description, as: :text
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel      
 
   

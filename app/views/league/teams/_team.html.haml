@@ -1,5 +1,5 @@
 %div{ :id => "team-#{team.id}", :class => "team #{class_name if class_name}"}
-  .well{ :style => "background-color: #{team.primary_color || '#FFF'};" }
+  .well.ui.segment{ :style => "background-color: #{team.primary_color || '#FFF'};" }
     .logo
       = image_tag team.logo.small.url if team.logo?
     = render :partial => "actions", :locals => { :team => team } if current_user_is_admin?

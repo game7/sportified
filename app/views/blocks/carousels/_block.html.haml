@@ -1,23 +1,33 @@
-.carousel.slide{ :id => "carousel_#{block.id}" }
-  .carousel-inner
-    - block.posts.each_with_index do |post, index|
-      %div{ :class => "item#{' active' if index == 0}" }
-        - if index == 0
-          - if post.link_url.present?
-            = link_to post.link_url do
-              = image_tag post.image.url
-          - else
-            = image_tag post.image.url
-        - unless index == 0
-          %img{ :"data-src" => post.image.url,
-                :alt => post.image.url,
-                :"data-link" => "#{post.link_url}" }
-        -# - unless post.title.blank?
-        -#   .carousel-caption
-        -#     %h4= post.title
-        -#     %p= post.summary
-  %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
-  %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
+- posts = block.posts.entries
+
+- if posts.any?
+  .ui.compact.grid
+    .sixteen.wide.column
+      = image_tag posts[0].image.url, style: 'width: 100%;'
+    - posts.drop(1).each_with_index do |post, index|
+      .four.wide.column
+        = image_tag post.image.url, style: 'width: 100%;'
+
+-# .carousel.slide{ :id => "carousel_#{block.id}" }
+-#   .carousel-inner
+-#     - block.posts.each_with_index do |post, index|
+-#       %div{ :class => "item#{' active' if index == 0}" }
+-#         - if index == 0
+-#           - if post.link_url.present?
+-#             = link_to post.link_url do
+-#               = image_tag post.image.url
+-#           - else
+-#             = image_tag post.image.url
+-#         - unless index == 0
+-#           %img{ :"data-src" => post.image.url,
+-#                 :alt => post.image.url,
+-#                 :"data-link" => "#{post.link_url}" }
+-#         -# - unless post.title.blank?
+-#         -#   .carousel-caption
+-#         -#     %h4= post.title
+-#         -#     %p= post.summary
+-#   %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
+-#   %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
 
 - content_for :javascript do
   :javascript

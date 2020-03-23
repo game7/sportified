@@ -23,8 +23,8 @@
         --primary-color: #8C1D40;
         --primary-color: #000000;
       }
-      html {
-        font-size: 15px;
+      html, body {
+        font-size: 16px;
       }
       body.pushable .pusher {
         background-image: url("/assets/themes/oia/oia_web_bg.jpg");
@@ -57,6 +57,18 @@
         margin-bottom: 9px;
       }
 
+      .ui.grid.compact {
+        margin: -.25rem;
+      }
+
+      .ui.grid.compact > .column:not(.row), 
+      .ui.grid.compact > .row > .column {
+        padding: .25rem;
+      }  
+      .ui.grid.compact > .row {
+        padding: 0;
+      }
+
       /* mobile */
       @media only screen and (max-width: 767px) {
         #wrapper {
@@ -67,8 +79,44 @@
           width: auto !important;
           margin-left: 0 !important;
           margin-right: 0 !important;
-        }     
+        }    
+        .ui.stackable.grid {
+            width: auto;
+            margin-left: -1rem !important;
+            margin-right: -1rem !important;
+        }         
       } 
+
+      .blocks_event_feed h3,
+      .blocks_text h3 {
+        border-left: 4px solid #8C1D40;
+        border-left: 5px solid #FFC627;
+        padding-left: 20px;
+        line-height: 30px;
+        text-transform: uppercase;
+        background-color: #f1f4f5;
+        background-color: #000;
+        color: #FFF;
+      }
+
+      .blocks_text .content {
+        padding: 0 10px
+      }
+
+      .block {
+        margin-bottom: 20px;
+      }
+
+      .blocks_divider .ui.divider {
+        background: -webkit-repeating-linear-gradient(162deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);
+        background: repeating-linear-gradient(-72deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);#8C1D40
+        background: -webkit-repeating-linear-gradient(162deg, #8C1D40 0px, transparent 1px, transparent 3px, #8C1D40 4px);
+        background: repeating-linear-gradient(-72deg, #8C1D40 0px, transparent 1px, transparent 3px, #8C1D40 4px);
+        height: 3px;
+        margin: 10px 0;
+        border: none !important;
+      }
+
   %body
     = render 'layouts/sidebar'
     .pusher

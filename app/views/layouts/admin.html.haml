@@ -42,7 +42,8 @@
       }
   %body
     .ui.top.fixed.menu
-      .item{ style: 'width: 188px;'} sportified
+      .item.header{ style: 'width: 190px;'} 
+        %span{ style: 'width: 100%; text-align: center;' } SPORTIFED
       .right.menu
         = link_to 'Go to Site', root_path, class: :item  
     
@@ -59,7 +60,9 @@
       = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
       = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
       = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
-      = admin_menu_item url: form_packets_path, icon: :newspaper, label: 'Forms'
+      -# = admin_menu_item url: form_packets_path, icon: :newspaper, label: 'Forms'
+      -# = admin_menu_item url: registrations_path, icon: :signup, label: 'Registrations'
+
       
     .pusher#main
       - if content_for?(:title)

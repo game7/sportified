@@ -5,7 +5,7 @@
 <% else %>
   $("#flash_success").html("<%= escape_javascript( flash.discard(:success) )%>");
   $("#flash_success").slideDown();
-  $("#<%= @block.class.name.parameterize(separator: '_')%>_<%= @block.id %>").slideUp('slow', function() {
+  $("#<%= @block.class.name.underscore.gsub('/', '_') %>_<%= @block.id %>").slideUp('slow', function() {
     $(this).remove();
   });
 <% end %>

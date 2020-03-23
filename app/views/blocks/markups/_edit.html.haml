@@ -1,3 +1,8 @@
-= simple_form_for @block, :url => page_blocks_markup_path(@page, @block), :remote => true do |f|
-  = f.text_area :body, { :class => 'form-control', :style => 'height: 400px;'}
-
+.ui.small.modal.edit_block
+  .header Edit Markup
+  .content
+    = simple_form_for @block, :url => page_blocks_markup_path(@page, @block), :remote => true do |f|
+      = f.text_area :body, { :class => 'form-control', :style => 'height: 400px;'}
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel

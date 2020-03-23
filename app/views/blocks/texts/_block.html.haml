@@ -1,4 +1,3 @@
-.ui.segment
-  - if block.title.presence
-    %h3.ui.header= block.title
-  != RedCloth.new(block.body).to_html if block.body.presence
+- if block.title.presence
+  %h3= block.title
+.content!= RedCloth.new(block.body).to_html if block.body.presence

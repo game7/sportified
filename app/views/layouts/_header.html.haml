@@ -1,4 +1,3 @@
-
 .ui.tablet.computer.only.padded.grid
   .ui.fixed.large.inverted.menu{ style: 'border-radius: 0px;'}
     .ui.container
@@ -8,8 +7,12 @@
       - Page.in_menu.arrange(:order => :position).each do |root|
         - page = root[0]
         - url = get_page_url(page)
+        - puts '------------------------------------------'
+        - puts request.url
+        - puts url
+        - puts request.url.include?(url)
         - if root[1].length == 0
-          %a.item{ class: "computer only #{request.url.include?(url) ? 'active ' : nil }", href: url }= page.title_in_menu.presence || page.title
+          %a.item{ class: "#{request.url.include?(url) ? :active : nil }", href: url }= page.title_in_menu.presence || page.title
         - unless root[1].length == 0
           .ui.dropdown.item
             %span.text= page.title_in_menu.presence || page.title
@@ -24,7 +27,7 @@
                   - child[1].each do |grandchild|
                     %a.item{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
                 - else
-                  %a.item{ class: "#{request.url.include?(url) ? 'active ' : nil }", href: child_url }= child[0].title_in_menu.presence || child[0].title            
+                  %a.item{ href: child_url }= child[0].title_in_menu.presence || child[0].title            
       - if user_signed_in?
         .ui.dropdown.item.right
           = semantic_icon(:user)
@@ -50,4 +53,4 @@
             = render "devise/menu/login_items"
       - else
         = link_to('Login', main_app.new_user_session_path, class: 'ui right link item')        
-        
+  

@@ -3,11 +3,11 @@
     .header= [block.first, " ", block.last].join
     - if block.title.presence
       .meta= block.title
-  - if block.phone.presence
-    .content
-      = semantic_icon(:phone)
-      = block.phone
-  - if block.email.presence
-    .content
-      =semantic_icon(:mail)
-      %a{ :href => "mailto:#{block.email}"}= block.email
+    - if block.phone.presence
+      .phone{ style: 'margin-top: 5px;' }
+        = semantic_icon(:phone)
+        = block.phone
+    - if block.email.presence
+      .email
+        =semantic_icon(:mail)
+        %a{ :href => "mailto:#{block.email}"}= block.email

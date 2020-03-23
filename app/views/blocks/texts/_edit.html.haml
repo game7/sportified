@@ -1,6 +1,11 @@
-.row-fluid
-  = vertical_form_for @block, :url => page_blocks_text_path(@page, @block), :remote => true do |f|  
-    = f.input :title
-    = f.input :caption
-    = f.input :body, :as => :text, :input_html => { :class => 'form-control', :style => 'height: 200px;' }
+.ui.modal.edit_block
+  .header Edit Text
+  .content
+    = simple_form_for @block, url: page_blocks_text_path(@page, @block), remote: true do |f|  
+      = f.input :title
+      = f.input :caption
+      = f.input :body, as: :text
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel    
   

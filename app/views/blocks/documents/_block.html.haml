@@ -1,4 +1,11 @@
 - if block.file.present?
-  .well
-    %i.icon-file
-    = link_to block.title, block.file.url, :target => "_blank"
+  .ui.feed
+    .event
+      .label
+        = semantic_icon(:file, :pdf)
+      .content
+        .summary
+          = link_to block.title, block.file.url, :target => "_blank"
+        - if block.description.present?          
+          .extra.text
+            = block.description
