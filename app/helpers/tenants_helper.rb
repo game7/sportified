@@ -25,6 +25,7 @@
 #  stripe_client_id      :string
 #  stripe_private_key    :string
 #  stripe_public_key     :string
+#  style                 :text
 #
 
 module TenantsHelper

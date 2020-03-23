@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_03_183019) do
+ActiveRecord::Schema.define(version: 2020_03_23_212046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -639,6 +639,7 @@ ActiveRecord::Schema.define(version: 2020_03_03_183019) do
     t.string "stripe_client_id"
     t.string "stripe_private_key"
     t.string "stripe_public_key"
+    t.text "style"
   end
 
   create_table "tenants_users", id: false, force: :cascade do |t|

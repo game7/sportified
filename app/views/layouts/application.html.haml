@@ -19,6 +19,7 @@
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
     :css
+      #{tenant.style}
       :root {
         --primary-color: #8C1D40;
         --primary-color: #000000;

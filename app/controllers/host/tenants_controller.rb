@@ -49,6 +49,7 @@ class Host::TenantsController < Host::HostController
       :description,
       :analytics_id,
       :theme,
+      :style,
       :twitter_id,
       :facebook_id,
       :instagram_id,

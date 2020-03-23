@@ -7,10 +7,6 @@
       - Page.in_menu.arrange(:order => :position).each do |root|
         - page = root[0]
         - url = get_page_url(page)
-        - puts '------------------------------------------'
-        - puts request.url
-        - puts url
-        - puts request.url.include?(url)
         - if root[1].length == 0
           %a.item{ class: "#{request.url.include?(url) ? :active : nil }", href: url }= page.title_in_menu.presence || page.title
         - unless root[1].length == 0
