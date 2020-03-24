@@ -22,7 +22,6 @@ class StatisticsController < BaseLeagueController
 
     @token = params[:token] || Hockey::Skater::Record.default_token(params[:view])
     @players = (@view == 'goaltending') ? goalies(@token, 25) : skaters(@token, 25)
-
   end
 
   private
@@ -32,7 +31,8 @@ class StatisticsController < BaseLeagueController
   end
 
   def goalies(stat, limit)
-    Hockey::Goaltender::Record.joins(player: :team).includes(:player, :team).where('league_teams.division_id = ? AND league_teams.season_id = ?', @division.id, @season.id).where("hockey_goaltenders.#{stat} > 0").order(stat => :desc)
+    order = %w{ goals_against_average }.include?(stat) ? :asc : :desc
+    Hockey::Goaltender::Record.joins(player: :team).includes(:player, :team).where('league_teams.division_id = ? AND league_teams.season_id = ?', @division.id, @season.id).where("hockey_goaltenders.#{stat} > 0").order(stat => order)
   end
 
   def set_breadcrumbs

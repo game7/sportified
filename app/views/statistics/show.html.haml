@@ -1,27 +1,62 @@
 - title  @division.name + ' Statistics'
 
 
-.ui.grid
-  .left.floated.six.wide.column
-    = render :partial => 'shared/season_options', :object => @season_options
-  .right.floated.six.wide.column{ style: 'text-align: right;' }
+.ui.grid.computer.tablet.only.grid
+  .six.wide.column
+    = render partial: 'shared/season_options', object: @season_options
+  .ten.wide.column{ style: 'text-align: right;' }
     .ui.buttons.basic
-      = link_to "Scoring", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "scoring"), :class => "ui button"
-      = link_to "Penalties", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "penalties"), :class => "ui button"
-      = link_to "Goaltending", league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => "goaltending"), :class => "ui button"  
+      = link_to "Scoring", league_statistic_path(league_slug: @program.slug, division_slug: @division.slug, season_slug: @season.slug, view: :scoring), class: [ :ui, :button, @view == 'scoring' && :active ]
+      = link_to "Penalties", league_statistic_path(league_slug: @program.slug, division_slug: @division.slug, season_slug: @season.slug, view: :penalties), class: [ :ui, :button, @view == 'penalties' && :active ]
+      = link_to "Goaltending", league_statistic_path(league_slug: @program.slug, division_slug: @division.slug, season_slug: @season.slug, view: :goaltending), class: [ :ui, :button, @view == 'goaltending' && :active ]  
 
 - format_with ||= ->(value) { value }
-%table.ui.celled.striped.table.stats
-  %thead
-    %tr
-      %th
-      %th Player
-      - for token in Hockey::Skater::Record.tokens @view
-        %th{ :class => "stat #{token == @token ? 'active' : ''}"}= link_to Hockey::Skater::Record.column(token), league_statistic_path(:league_slug => @program.slug, :divisionslug => @division.slug, :season_slug => @season.slug, :view => @view, :token => token)
-  %tbody
-    - for record in @players
-      %tr
-        %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
-        %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
-        - for token in Hockey::Skater::Record.tokens @view
-          %td{ :class => "stat #{token == @token ? 'active' : ''}"}= token == "g_svp" ? number_with_precision(record[token], :precision => 3) : format_with.call(record[token])
+
+.ui.computer.tablet.only.grid#desktop
+  .column
+    %table.ui.celled.striped.table.stats
+      %thead
+        %tr
+          %th
+          %th Player
+          - for token in Hockey::Skater::Record.tokens @view
+            %th{ class: [ :stat, token == @token && :active ] }= link_to Hockey::Skater::Record.column(token), league_statistic_path(league_slug: @program.slug, division_slug: @division.slug, season_slug: @season.slug, view:  @view, token: token)
+      %tbody
+        - for record in @players
+          %tr
+            %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
+            %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
+            - for token in Hockey::Skater::Record.tokens @view
+              %td{ class: [ :stat, token == @token && :active ] }
+                - if %w{save_percentage goals_against_average}.include?(token)
+                  = number_with_precision(record[token], precision: 3)
+                - else
+                  = format_with.call(record[token])
+
+.ui.mobile.only.grid#mobile
+  .column
+    %table.ui.celled.striped.unstackable.table.stats
+      %thead
+        %tr
+          %th
+          %th Player
+          %th{ class: [ :stat ] }= Hockey::Skater::Record.column(@token)
+      %tbody
+        - for record in @players
+          %tr
+            %td.logo= image_tag record.player.team.logo.thumb.url if record.player.team.logo?
+            %td.player= "#{record.player.last_name}, #{record.player.first_name}" if record.player
+            %td{ class: [ :stat ] }
+              - if %w{save_percentage goals_against_average}.include?(@token)
+                = number_with_precision(record[@token], precision: 3)
+              - else
+                = format_with.call(record[@token])               
+
+:css
+  #desktop.grid,
+  #mobile.grid {
+    margin-top: 0;
+  }
+  .logo img {
+    margin-bottom: -5px;
+  }
