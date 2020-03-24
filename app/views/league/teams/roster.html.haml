@@ -1,19 +1,19 @@
 - title "Roster"
 - content_for :banner do
-  .row.banner
-    = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
-.row.options
-  .col-sm-4
-    #{select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "form-control redirect_to" })}
+  = render partial: 'team', locals: { team: @team }
 
-%table.ui.celled.striped.table
+.ui.grid
+  .left.floated.four.wide.column
+    = select("team", :id, @team_links, { selected: request.fullpath }, { class: [:ui, :dropdown, :redirect_to] })
+
+%table.ui.celled.striped.unstackable.table
   %thead
     %tr
       %th NUM
       %th NAME
   %tbody
     - @players.each do |player|
-      %tr{ :class => cycle("odd","even") }
+      %tr{ class: cycle(:odd, :even) }
         %td.span1 #{player.jersey_number}
         %td.span11
-          = link_to "#{player.full_name}#{"*" if player.substitute}", league_player_path(@program.slug, @division.slug, @season.slug, @team.slug, player.slug, player.id)
+          = link_to "#{player.full_name}#{'*' if player.substitute}", league_player_path(@program.slug, @division.slug, @season.slug, @team.slug, player.slug, player.id)

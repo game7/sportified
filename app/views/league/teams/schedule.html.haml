@@ -1,15 +1,14 @@
 - title "Schedule"
 - last_month = nil
 - content_for :banner do
-  .row.banner
-    = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
+  = render partial: 'team', locals: { team: @team }
 
 .ui.grid
   .left.floated.four.wide.column
-    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "ui dropdown redirect_to" })
+    = select("team", :id, @team_links, { selected: request.fullpath }, { class: [:ui, :dropdown, :redirect_to] })
 
   .right.floated.four.wide.column{ style: 'text-align: right;' }
-    %a.ui.basic.button{ :href => url_for(params.permit.merge(:format => :ics))}
+    %a.ui.basic.button{ href: url_for(params.permit.merge(format: :ics))}
       = semantic_icon(:calendar)
       iCal    
 

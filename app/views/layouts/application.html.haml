@@ -140,8 +140,8 @@
         %header
           = render 'layouts/area_navigation' if @area_menu_items
           = render 'layouts/breadcrumbs' if @breadcrumbs
-          #banner
-            #{yield :banner}
+          - if content_for?(:banner)
+            #banner{ style: 'margin-top: 15px;' }= yield(:banner)
           - if content_for?(:title)
             .page-title.clearfix
               %h1{ style: 'float: left;' }

@@ -1,17 +1,15 @@
 - title "Statistics"
 - content_for :banner do
-  .row.banner
-    = render :partial => "team", :locals => { :team => @team, :class_name => "col-xs-12" }
+  = render partial: 'team', locals: { team: @team }
 
 .ui.grid
   .left.floated.four.wide.column
-    = select("team", :id, @team_links, { :selected => request.fullpath }, { :class => "ui dropdown redirect_to" })
- 
-
-%h3 Players
+    = select("team", :id, @team_links, { selected: request.fullpath }, { class: [:ui, :dropdown, :redirect_to] })
 
 %table.team-statistics.players.ui.celled.striped.table
   %thead
+    %tr
+      %th{ colspan: 11} PLAYERS
     %tr
       %th.player NAME
       %th.stat GP
@@ -41,10 +39,10 @@
           %td.stat.one.wide= skater.misconduct_penalties
           %td.stat.one.wide= skater.game_misconduct_penalties
 
-%h3 Goaltenders
-
 %table.team-statistics.goalies.ui.celled.striped.table
   %thead
+    %tr
+      %th{ colspan: 7} GOALTENDERS  
     %tr
       %th NAME
       %th.stat GP

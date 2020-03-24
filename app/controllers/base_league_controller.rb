@@ -17,10 +17,10 @@ class BaseLeagueController < ApplicationController
     if @division
       #add_area_menu_item('Home', "#")
       add_area_menu_item 'Schedule'   , league_schedule_path(@program.slug   , @division.slug)
-      add_area_menu_item 'Scoreboard' , league_scoreboard_path(@program.slug , @division.slug)
+      # add_area_menu_item 'Scoreboard' , league_scoreboard_path(@program.slug , @division.slug)
       add_area_menu_item 'Standings'  , league_standings_path(@program.slug  , @division.slug) if @division.show_standings
       add_area_menu_item 'Statistics' , league_statistics_path(@program.slug , @division.slug) if @division.show_statistics
-      add_area_menu_item 'Teams'      , league_teams_path(@program.slug      , @division.slug)
+      # add_area_menu_item 'Teams'      , league_teams_path(@program.slug      , @division.slug)
       add_area_menu_item 'Players'    , league_players_path(@program.slug    , @division.slug) if @division.show_players
     end
   end

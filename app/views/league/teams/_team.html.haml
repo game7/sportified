@@ -1,8 +1,7 @@
-%div{ :id => "team-#{team.id}", :class => "team #{class_name if class_name}"}
-  .well.ui.segment{ :style => "background-color: #{team.primary_color || '#FFF'};" }
-    .logo
-      = image_tag team.logo.small.url if team.logo?
-    = render :partial => "actions", :locals => { :team => team } if current_user_is_admin?
+.ui.segment[team]{ :style => "background-color: #{team.primary_color || '#FFF'};" }
+  .div{ style: 'width: 100px; float: left;' }
+    = image_tag team.logo.small.url, style: 'width: 100px;' if team.logo?
+  .div{ style: 'float: left; margin-left: 20px'}
     %h3.name{ :style => "color: #{team.secondary_color}"}= team.name
     .links
       = link_to "Schedule", league_team_schedule_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
@@ -12,3 +11,4 @@
       - if @division.show_statistics
         %span{ :style=> "color: #{team.secondary_color}"}!= " | "
         = link_to "Statistics", league_team_statistics_path(team.program.slug, team.division.slug, team.season.slug, team.slug), { :style => "color: #{team.accent_color};" }
+  .div{ style: 'clear: both;' }
