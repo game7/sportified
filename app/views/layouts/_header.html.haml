@@ -1,52 +1,54 @@
-.ui.tablet.computer.only.padded.grid
-  .ui.fixed.large.inverted.menu{ style: 'border-radius: 0px;'}
-    .ui.container
-      %a{ href: root_url, class: [:header, :item] }
-        %span.title= Tenant.current.name
-        %img.logo
-      - Page.in_menu.arrange(:order => :position).each do |root|
-        - page = root[0]
-        - url = get_page_url(page)
-        - if root[1].length == 0
-          %a.item{ class: "#{request.url.include?(url) ? :active : nil }", href: url }= page.title_in_menu.presence || page.title
-        - unless root[1].length == 0
-          .ui.dropdown.item
-            %span.text= page.title_in_menu.presence || page.title
-            %i.dropdown.icon
+.ui.tablet.computer.only.grid
+  .column
+    .ui.fixed.large.inverted.menu{ style: 'border-radius: 0px;'}
+      .ui.container
+        %a{ href: root_url, class: [:header, :item] }
+          %span.title= Tenant.current.name
+          %img.logo
+        - Page.in_menu.arrange(:order => :position).each do |root|
+          - page = root[0]
+          - url = get_page_url(page)
+          - if root[1].length == 0
+            %a.item{ class: "#{request.url.include?(url) ? :active : nil }", href: url }= page.title_in_menu.presence || page.title
+          - unless root[1].length == 0
+            .ui.dropdown.item
+              %span.text= page.title_in_menu.presence || page.title
+              %i.dropdown.icon
+              .menu
+                - root[1].each_with_index do |child, i|
+                  - child_url = get_page_url(child[0])
+                  - if child[1].length > 0
+                    - unless i == 0
+                      .divider
+                    .header= child[0].title_in_menu.presence || child[0].title
+                    - child[1].each do |grandchild|
+                      %a.item{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
+                  - else
+                    %a.item{ href: child_url }= child[0].title_in_menu.presence || child[0].title            
+        - if user_signed_in?
+          .ui.dropdown.item.right
+            = semantic_icon(:user)
             .menu
-              - root[1].each_with_index do |child, i|
-                - child_url = get_page_url(child[0])
-                - if child[1].length > 0
-                  - unless i == 0
-                    .divider
-                  .header= child[0].title_in_menu.presence || child[0].title
-                  - child[1].each do |grandchild|
-                    %a.item{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
-                - else
-                  %a.item{ href: child_url }= child[0].title_in_menu.presence || child[0].title            
-      - if user_signed_in?
-        .ui.dropdown.item.right
-          = semantic_icon(:user)
-          .menu
-            = render "devise/menu/user_items"
-            = render "devise/menu/login_items"
-      - else
-        = link_to('Login', main_app.new_user_session_path, class: 'ui right link item')
+              = render "devise/menu/user_items"
+              = render "devise/menu/login_items"
+        - else
+          = link_to semantic_icon(:user), main_app.new_user_session_path, class: [:ui, :right, :link, :item]
 
-.ui.mobile.only.padded.grid
-  .ui.fixed.massive.inverted.icon.menu{ style: 'border-radius: 0px;'}
-    .ui.container{ style: 'dislay: flex;' }
-      %a.toc.item
-        = semantic_icon(:sidebar) 
-      %a{ href: root_url, class: [:header, :item], style: 'flex-grow: 2;' }
-        %span.title{ style: 'text-align: center; width: 100%;' }= Tenant.current.name
-        %img.logo
-      - if user_signed_in?
-        .ui.dropdown.item.right
-          = semantic_icon(:user)
-          .menu
-            = render "devise/menu/user_items"
-            = render "devise/menu/login_items"
-      - else
-        = link_to('Login', main_app.new_user_session_path, class: 'ui right link item')        
+.ui.mobile.only.grid
+  .column
+    .ui.fixed.large.inverted.icon.menu{ style: 'border-radius: 0px;'}
+      .ui.container{ style: 'dislay: flex;' }
+        %a.toc.item
+          = semantic_icon(:sidebar) 
+        %a{ href: root_url, class: [:header, :item], style: 'flex-grow: 2;' }
+          %span.title{ style: 'text-align: center; width: 100%;' }= Tenant.current.name
+          %img.logo
+        - if user_signed_in?
+          .ui.dropdown.item.right
+            = semantic_icon(:user)
+            .menu
+              = render "devise/menu/user_items"
+              = render "devise/menu/login_items"
+        - else
+          = link_to semantic_icon(:user), main_app.new_user_session_path, class: [:ui, :right, :link, :item]    
   
