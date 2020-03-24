@@ -1,55 +1,83 @@
-%table.standings.ui.celled.striped.table
-  %thead
-    %tr
-      %th.rank
-      %th.team TEAM
-      %th.stat.hidden-xs GP
-      %th.stat.hidden-xs W
-      %th.stat.hidden-xs L
-      %th.stat.visible-xs RECORD
-      %th.stat.points PCT
-      %th.stat.hidden-xs PF
-      %th.stat.hidden-xs PA
-      %th.stat.hidden-xs +/-
-      %th.stat.hidden-xs TREND
-  %tbody
-    - last_pool = nil
-    - @teams.order('seed, points DESC, wins, margin DESC').each_with_index do |team, i|
-      - unless team.pool.blank? or team.pool == last_pool
+.ui.computer.tablet.only.grid
+  .column
+    %table.standings.ui.celled.striped.table
+      %thead
         %tr
-          %th{:colspan => 10}= team.pool
-        - last_pool = team.pool
-      %tr
-        %td.rank= team.seed || i + 1
-        %td.team
-          %div{ :style => "display: flex; align-items: center;"}
-            .pull-left{ :style => "height: 25px; width: 25px; margin-right: 8px; vertical-align: middle"}
-              %img{ :src => team.logo.micro }
-            = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
-        %td.stat.hidden-xs= team.games_played
-        %td.stat.hidden-xs= team.wins
-        %td.stat.hidden-xs= team.losses
-        %td.stat.visible-xs= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
-        %td.stat.percent= number_with_precision(team.percent, precision: 3)
-        %td.stat.hidden-xs= team.scored
-        %td.stat.hidden-xs= team.allowed
-        %td.stat.hidden-xs= team.margin
-        %td.stat.hidden-xs
-          - if team.last_result == 'W' and team.current_run > 2
-            .badge{ :style  => "background-color: red; color: white;" }
+          %th.rank
+          %th.team TEAM
+          %th.stat GP
+          %th.stat W
+          %th.stat L
+          -# %th.stat.visible-xs RECORD
+          %th.stat.points PCT
+          %th.stat PF
+          %th.stat PA
+          %th.stat +/-
+          %th.stat STREAK
+          %th
+      %tbody
+        - last_pool = nil
+        - teams = @teams.order('seed, points DESC, wins, margin DESC').entries
+        - show_logo = teams.any? && teams[0].logo.present?
+        - teams.each_with_index do |team, i|
+          - unless team.pool.blank? or team.pool == last_pool
+            %tr
+              %th{:colspan => 10}= team.pool
+            - last_pool = team.pool
+          %tr
+            %td.rank= team.seed || i + 1
+            %td.team
+              - if show_logo
+                %div{ :style => "display: flex; align-items: center;"}
+                  .pull-left{ :style => "height: 25px; width: 25px; margin-right: 8px; vertical-align: middle"}
+                    %img{ :src => team.logo.micro }
+                  = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
+              - unless show_logo
+                = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
+            %td.stat= team.games_played
+            %td.stat= team.wins
+            %td.stat= team.losses
+            %td.stat.percent= number_with_precision(team.percent, precision: 3)
+            %td.stat= team.scored
+            %td.stat= team.allowed
+            %td.stat= team.margin
+            %td.stat
               = team.streak
-              != ' '
-              - if team.current_run >= 5
-                = icon(:'fire-alt')
-              - if team.current_run < 5
-                = icon(:'arrow-up')
-          - if team.last_result == 'L' and team.current_run > 2
-            .badge{ :style  => "background-color: #089de3; color: white;" }
-              = team.streak
-              != ' '
-              - if team.current_run >= 5
-                = icon(:beer)
-              - if team.current_run < 5
-                = icon(:'arrow-up')
-          - if team.current_run <= 2
-            = team.streak
+            %td.stat
+              - if team.last_result == 'W' and team.current_run > 2
+                - if team.current_run >= 5
+                  .ui.circular.red.label{ data: { tooltip: 'En Fuego!'}}
+                    = semantic_icon(:fire, :alt, class: :fitted)
+                - if team.current_run < 5
+                  .ui.circular.red.label{ data: { tooltip: 'Moving Up...'}}
+                    = semantic_icon(:arrow, :up, class: :fitted)
+              - if team.last_result == 'L' and team.current_run > 2
+                - if team.current_run >= 5
+                  .ui.circular.blue.label{ data: { tooltip: 'Need a cold one!'}}
+                    = semantic_icon(:beer, class: :fitted)
+                - if team.current_run < 5
+                  .ui.circular.blue.label{ data: { tooltip: 'Fading...'}}
+                    = semantic_icon(:arrow, :down, class: :fitted)
+
+.ui.mobile.only.grid
+  .column
+    %table.standings.ui.celled.striped.unstackable.table
+      %thead
+        %tr
+          %th.rank
+          %th.team TEAM
+          %th.stat RECORD
+          %th.stat.points PCT
+      %tbody
+        - last_pool = nil
+        - last_points = 0
+        - @teams.order('pool, seed, points DESC, wins, margin DESC').each_with_index do |team, i|
+          - unless team.pool.blank? or team.pool == last_pool
+            %tr
+              %th{:colspan => 10}= team.pool
+            - last_pool = team.pool
+          %tr
+            %td.rank= team.seed || i + 1
+            %td.team= link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
+            %td.stat= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
+            %td.stat.percent= number_with_precision(team.percent, precision: 3)

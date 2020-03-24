@@ -16,7 +16,7 @@
           %th.stat GF
           %th.stat GA
           %th.stat +/-
-          %th.stat TREND
+          %th.stat STREAK
           %th.stat
       %tbody
         - last_pool = nil
@@ -48,16 +48,18 @@
               = team.streak
             %td.stat
               - if team.last_result == 'W' and team.current_run > 2
-                .ui.circular.red.label
-                  - if team.current_run >= 5
+                - if team.current_run >= 5
+                  .ui.circular.red.label{ data: { tooltip: 'En Fuego!'}}
                     = semantic_icon(:fire, :alt, class: :fitted)
-                  - if team.current_run < 5
+                - if team.current_run < 5
+                  .ui.circular.red.label{ data: { tooltip: 'Moving Up...'}}
                     = semantic_icon(:arrow, :up, class: :fitted)
               - if team.last_result == 'L' and team.current_run > 2
-                .ui.circular.blue.label
-                  - if team.current_run >= 5
-                    = semantic_icon(:arrow, :down, class: :fitted)
-                  - if team.current_run < 5
+                - if team.current_run >= 5
+                  .ui.circular.blue.label{ data: { tooltip: 'Need a cold one!'}}
+                    = semantic_icon(:beer, class: :fitted)
+                - if team.current_run < 5
+                  .ui.circular.blue.label{ data: { tooltip: 'Fading...'}}
                     = semantic_icon(:arrow, :down, class: :fitted)
 
 .ui.mobile.only.grid
