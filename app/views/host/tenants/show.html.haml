@@ -1,0 +1,24 @@
+- title @tenant.name
+
+= simple_form_for [:host, @tenant] do |f|
+  = hidden_field_tag :return_to, request.url
+  = f.input :style
+  = f.button :wrapped, :cancel => return_url  
+%hr
+%table.ui.celled.table
+  %thead
+    %tr
+      %th 
+      %th Filename
+      %th Type
+  %tbody
+    - @tenant.assets.each do |asset|
+      %tr
+        %td.collapsing= link_to image_tag(asset, style: 'max-width: 100px; max-height: 100px;'), asset, target: :blank
+        %td= asset.blob.filename
+        %td= asset.blob.content_type
+
+= simple_form_for [:host, @tenant] do |f|
+  = f.input :name
+  = f.input :assets, as: :file, input_html: { multiple: true }
+  = f.button :wrapped, :cancel => return_url  

@@ -281,16 +281,10 @@ select {
 }
 
 #footer {
-  background-color: #000;
   .container {
     padding: 20px 20px;
   }
 }
-
-#footer:before {
-  @include jagged-border(transparent, #000, 20px, 40px);
-}
-
 
 .markdown {
   table {

@@ -1,7 +1,11 @@
-= simple_form_for @block, :url => page_blocks_feed_path(@page, @block), :remote => true do |f|
-  = f.input :title
-  = f.input :post_count
-  .control-group
-    %label.control-label Tags
-    .controls
-      = f.collection_check_boxes(:tags, Post.tag_counts.collect{|a| [a[:name], "#{a[:name]} (#{a[:count].to_s})"]}, :first, :last, { :item_wrapper_class => 'checkbox-inline'})
+.ui.tiny.modal.edit_block
+  .header Edit News Feed
+  .content
+    = simple_form_for @block, url: page_blocks_feed_path(@page, @block), remote: true do |f|
+      = f.input :title
+      = f.input :post_count
+      = f.input :divider, as: :boolean
+      = f.input :tags, as: :tags, source: :post
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel   

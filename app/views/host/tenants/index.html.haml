@@ -16,6 +16,7 @@
         %td #{tenant.slug}        
         %td #{tenant.host}
         %td 
+          = link_to 'Show', [:host, tenant], class: [:ui, :tiny, :primary, :button]
           = link_to 'Edit', edit_host_tenant_path(tenant), class: [:ui, :tiny, :primary, :button]
           = link_to 'Delete', [:host, tenant], method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: [:ui, :tiny, :primary, :button]
 

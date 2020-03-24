@@ -23,7 +23,8 @@ module Blocks
 
     store_accessor :options, :post_count,
                              :tags,
-                             :title
+                             :title,
+                             :divider
 
     def tags=(array)
       super(array.join('||'))
@@ -31,6 +32,10 @@ module Blocks
 
     def tags
       super&.split('||')
+    end
+
+    def divider
+      super == '1'
     end
 
     def posts

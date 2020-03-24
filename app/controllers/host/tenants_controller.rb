@@ -1,10 +1,14 @@
 class Host::TenantsController < Host::HostController
 
-  before_action :mark_return_point, :only => [:edit, :new, :destroy]
-  before_action :find_tenant, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, :only => [:show, :edit, :new, :destroy]
+  before_action :find_tenant, :only => [:show, :edit, :update, :destroy]
 
   def index
     @tenants = Tenant.all
+  end
+
+  def show
+
   end
 
   def edit
@@ -63,7 +67,8 @@ class Host::TenantsController < Host::HostController
       :address,
       :stripe_client_id,
       :stripe_private_key,
-      :stripe_public_key
+      :stripe_public_key,
+      assets: []
     )
   end
 

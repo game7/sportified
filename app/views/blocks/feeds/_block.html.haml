@@ -1,10 +1,10 @@
-.panel.panel-default
-  - if block.title.present?
-    .panel-heading= block.title
-  %ul.list-group
+- if block.title.present?
+  %h3= block.title
+.ui.items{ class: [ block.divider && :divided ]}
   - block.posts.each do |post|
-    = link_to post.link_url.presence || post, class: 'list-group-item' do
-      %h4.list-group-item-heading= post.title
-      .list-group-item-text
-        = "Posted #{post.created_at.strftime("%A, %B %e %Y")}"
-
+    .item
+      .image= image_tag post.image.presence&.url || '/assets/themes/styfl/football_field_grayscale.jpg' || '/image.png'
+      .content
+        = link_to post.title, post.link_url.presence || post, class: [ :header ]
+        .description= post.summary
+        .extra= "Posted #{post.created_at.strftime("%A, %B %e %Y")}"

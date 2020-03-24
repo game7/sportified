@@ -61,6 +61,10 @@ gem 'fog-aws', group: [:staging, :production]
 gem 'rmagick', '>= 2.13.4'
 gem 'remotipart', '~> 1.3.1'
 
+# active_storage deps
+gem "aws-sdk-s3", require: false
+gem 'image_processing', '~> 1.2'
+
 gem 'haml-rails'
 
 gem 'simple_calendar', '~> 2.0'
