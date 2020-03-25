@@ -115,9 +115,9 @@ class ApplicationController < ActionController::Base
   alias_method :breadcrumb, :add_breadcrumb
   helper_method :breadcrumb
 
-  def add_area_menu_item(title, url = nil)
+  def add_area_menu_item(title, url = nil, klass = nil)
     @area_menu_items ||= []
-    @area_menu_items << { :title => title, :url => url }
+    @area_menu_items << { title: title, url: url, class: klass }
   end
 
   def url_current?(url)

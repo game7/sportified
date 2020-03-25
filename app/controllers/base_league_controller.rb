@@ -16,6 +16,7 @@ class BaseLeagueController < ApplicationController
     super
     if @division
       #add_area_menu_item('Home', "#")
+      add_area_menu_item "#{@program.name} > #{@division.name}"   , nil, :header
       add_area_menu_item 'Schedule'   , league_schedule_path(@program.slug   , @division.slug)
       # add_area_menu_item 'Scoreboard' , league_scoreboard_path(@program.slug , @division.slug)
       add_area_menu_item 'Standings'  , league_standings_path(@program.slug  , @division.slug) if @division.show_standings

@@ -2,12 +2,13 @@
 
 = render :partial => 'shared/season_options', :object => @season_options
 
-= render "standings/templates/#{@division.standings_schema_id}"
+#standings
+  = render "standings/templates/#{@division.standings_schema_id}"
 
 :css
   .redirect_to.ui.dropdown {
     margin-bottom: 10px;
   }
-  .mobile.only.grid {
+  #standings .mobile.only.grid {
     margin-top: -1rem;
   }

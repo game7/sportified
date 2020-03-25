@@ -1,3 +1,6 @@
-.ui.fluid.item.stackable.menu{ class: to_words(@area_menu_items.count) }
+.ui.item.stackable.menu#area_navigation{ class: to_words(@area_menu_items.count) }
   - @area_menu_items.each do |item|
-    %a{ href: item[:url], class: 'item' }= item[:title]
+    - if item[:class] == :header
+      .item.header= item[:title]
+    - unless item[:class] == :header
+      = link_to item[:title], item[:url], class: [:item, item[:class], request.path == item[:url] && :active]

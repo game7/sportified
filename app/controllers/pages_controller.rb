@@ -131,16 +131,19 @@ class PagesController < ApplicationController
     end
 
     def set_area_navigation
-      set_child_page_navigation if [:show, :edit].include? params[:action].to_sym
+      set_child_page_navigation if %w{show edit}.include? params[:action]
     end
 
     def set_child_page_navigation
-      has_children = false
-      @page.children.in_menu.order(:position).each do |child|
-        has_children = true
-        add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
-      end unless @page.new_record?
-      unless @page.root? or has_children
+      children = @page.children.in_menu.order(:position).entries
+      if (children.any?)
+        add_area_menu_item @page.title_in_menu.presence || @page.title, nil, :header
+        children.each do |child|
+          add_area_menu_item child.title_in_menu.presence || child.title, get_page_url(child)
+        end
+      end
+      unless @page.root? or children.any?
+        add_area_menu_item @page.parent.title, nil, :header
         @page.siblings.in_menu.order(:position).each do |sibling|
           add_area_menu_item sibling.title_in_menu.presence || sibling.title, get_page_url(sibling)
         end

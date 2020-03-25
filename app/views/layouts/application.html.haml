@@ -139,7 +139,7 @@
       #wrapper.ui.container
         %header
           = render 'layouts/area_navigation' if @area_menu_items
-          = render 'layouts/breadcrumbs' if @breadcrumbs
+          -# = render 'layouts/breadcrumbs' if @breadcrumbs        
           - if content_for?(:banner)
             #banner{ style: 'margin-top: 15px;' }= yield(:banner)
           - if content_for?(:title)
@@ -161,27 +161,3 @@
     = yield :javascript
 
     :javascript
-
-      var $dropdown = $('.dropdown-toggle');
-      if ($dropdown.dropdown) { $dropdown.dropdown(); }
-
-      // fix sub nav on scroll
-      var $win = $(window)
-        , $nav = $('.subnav')
-        , navTop = $('.subnav').length && $('.subnav').offset().top - 40
-        , isFixed = 0
-
-      processScroll()
-
-      $win.on('scroll', processScroll)
-
-      function processScroll() {
-        var i, scrollTop = $win.scrollTop()
-        if (scrollTop >= navTop && !isFixed) {
-          isFixed = 1
-          $nav.addClass('subnav-fixed')
-        } else if (scrollTop <= navTop && isFixed) {
-          isFixed = 0
-          $nav.removeClass('subnav-fixed')
-        }
-      }
