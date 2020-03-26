@@ -1,0 +1,7 @@
+.ui.basic.fluid.buttons
+  = link_to({ date: date - 7.days }, class: [:ui, :button]) do
+    = semantic_icon(:left, :arrow)
+    Previous 7 Days
+  = link_to({ date: date + 7.days }, class: [:ui, :button]) do
+    Next 7 Days
+    = semantic_icon(:right, :arrow)

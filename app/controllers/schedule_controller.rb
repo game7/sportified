@@ -6,13 +6,11 @@ class ScheduleController < BaseLeagueController
 
     response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL' if embedded?
 
-    @date = params[:date] ? Date.parse(params[:date]) : Event.in_the_future.order(starts_on: :asc).pluck(:starts_on).first&.to_date || DateTime.current.beginning_of_day
-    @days_in_future = 14
-    @days_in_past = 0
-    @start_date = @date - @days_in_past
-    @end_date = @date + @days_in_future + 1
-    @next_date = @date + @days_in_future + @days_in_past
-    @prev_date = @date - @days_in_future - @days_in_past
+    unless params[:tags]
+      @date = params[:date] ? Date.parse(params[:date]) : Event.in_the_future.order(starts_on: :asc).pluck(:starts_on).first&.to_date || DateTime.current.beginning_of_day
+      @start_date = @date.beginning_of_day
+      @end_date = @date.end_of_day + 6.days
+    end
 
     @show_tags = @division.blank?
 

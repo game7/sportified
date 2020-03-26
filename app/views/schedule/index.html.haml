@@ -1,143 +1,71 @@
 - title 'Schedule'
-- last_date = nil
 
-- if current_user_is_admin?
-  - content_for :actions do
-    .ui.icon.top.left.dropdown.button
-      = semantic_icon(:plus)
-      Add
-      .menu
-        = link_to 'New Event', new_admin_league_event_path(:season_id => @season, :division_id => @division), class: :item
-        = link_to 'New Game', new_admin_league_game_path(:season_id => @season, :division_id => @division), class: :item  
+- events = @events.entries
 
+.ui.computer.tablet.only.grid
 
-.ui.stackable.grid
+  .four.wide.column
 
-  - if @show_tags
-    .four.wide.column                      
+    - date = DateTime.now
+    = render 'calendar', date: date
+    = render 'calendar', date: date + 1.month
+    = render 'tag_cloud', tags: @tags
 
-  .wide.column{ class: @show_tags ? :twelve : :sixteen }
+  .twelve.wide.column{ class: @show_tags ? :twelve : :sixteen }
 
-    - unless params[:tags]
-      .ui.grid
-        .wide.column{ class: @division ? :twelve : :sixteen }
-          = render :partial => 'shared/select_date_range', :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-        - if @division
-          .four.wide.column
-            = select('team', :id, @team_options, {}, { :class => 'redirect_to ui fluid dropdown select', :style => 'margin: 0px 0 0 0;' })
-    - if params[:tags]
-      .paginator= paginate @events    
-  
-.ui.stackable.grid
+    - last_date = nil
+    
+    = render 'no_events' if events.none?
 
-  - if @show_tags
-    .four.wide.column
-
-      .ui.segments
-        .ui.segment
-          .field
-            %label Tags
-          .ui.labels
-            - @tags.sort_by(&:name).each do |tag|
-              - tags = Array.wrap(params[:tags]).clone
-              - btn_class = tags.include?(tag.name) ? '' : 'basic'
-              - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
-              = link_to tag.name, params.permit!.merge(:tags => tags), class: "ui #{btn_class} label"  
-      -# .ui.segment
-      -#   .ui.form
-      -#     .grouped.fields
-      -#       %label{ for: :match } Match
-      -#       = params[:match]
-      -#       .field
-      -#         .ui.radio.checkbox
-      -#           %input{ type: :radio,
-      -#                   name: :match,
-      -#                   checked: params[:match] != 'all' ? :checked : false,
-      -#                   data: { url: url_for(params.permit!.merge(match: nil)) } }
-      -#           %label Match Any Tags     
-      -#       .field
-      -#         .ui.radio.checkbox
-      -#           %input{ type: :radio,
-      -#                   name: :match,
-      -#                   checked: params[:match] == 'all' ? :checked : false,
-      -#                   data: { url: url_for(params.permit!.merge(match: :all)) } }
-      -#           %label Match All Tags     
-
-  .wide.column{ class: @show_tags ? :twelve : :sixteen }
-
-    %table.ui.celled.table
-      - events = @events.entries
-      - if events.count == 0
-        %tr
-          %td No events scheduled
-      - else
-        - events.each do |event|
-          - unless params[:tags]
-            - if event.starts_on.to_date != last_date
-              - reset_cycle()
-              %tr.group-head
-                %td{ colspan: 3, style: 'background-color: #f9fafb; color: #000; font-weight: bold;' }
-                  = event.starts_on.to_date.strftime('%A, %B %e %Y')
-
-          - unless params[:tags]
+    - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+      %table.ui.celled.table
+        %thead
+          %tr
+            %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
+        %tbody
+          - day_events.each do |event|
             %tr
-              %td
+              %td.four.wide
                 - if event.all_day?
                   = 'All Day'
                 - unless event.all_day?
                   = event.starts_on.strftime('%l:%M %P')
                   - unless event.class.name == 'League::Game'
                     != ' - '
-                    = event.ends_on.strftime('%l:%M %P')
-              %td
-                = icon(:lock, event.summary) if event.private?
-                = event.summary unless event.private?
-                - if current_user_is_admin?
-                  .pull-right
-                    .ui.dropdown
-                      = semantic_icon :vertical, :ellipsis
-                      .menu.left
-                        = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: [:item]
-                        = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], clone: event.id), class: [:item]
-              %td
-                - if event.location
-                  .hidden-xs= event.location.name
+                    = event.ends_on.strftime('%l:%M %P')  
+              %td= event.summary
 
-          - if params[:tags]
+    = render 'stepper', date: @date if @date.present?    
+
+.ui.mobile.only.grid
+  .column
+    
+    - last_date = nil
+    
+    = render 'no_events' if events.none?
+
+    - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+      %table.ui.unstackable.celled.events.table
+        %thead
+          %tr
+            %th= date.strftime('%A, %B %e %Y')
+        %tbody
+          - day_events.each do |event|
             %tr
               %td
-                %strong.summary
-                  = event.summary
-                  - if current_user_is_admin?
-                    .pull-right
-                      = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), :class => 'btn btn-primary btn-xs'
-                      != ' '
-                      = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), :class => 'btn btn-primary btn-xs'
-                .logistics
-                  = event.starts_on.to_date.strftime('%A, %B %e %Y')
-                  %br
+                .summary= event.summary
+                .date
                   - if event.all_day?
                     = 'All Day'
                   - unless event.all_day?
                     = event.starts_on.strftime('%l:%M %P')
-                    != ' - '
-                    = event.ends_on.strftime('%l:%M %P')
+                    - unless event.class.name == 'League::Game'
+                      != ' - '
+                      = event.ends_on.strftime('%l:%M %P')  
 
-          - last_date = event.starts_on.to_date
+    = render 'stepper', date: @date if @date.present?  
 
-    - unless params[:tags] || events.count < 5
-      .row
-        .col-sm-12
-          = render :partial => 'shared/select_date_range', :locals => { :start_date => @start_date, :end_date => @end_date, :prev_date => @prev_date, :next_date => @next_date, :range => @days_in_future + @days_in_past }
-    - if params[:tags]
-      .paginator= paginate @events    
-
-
-
-:javascript
-  $(function() {
-    $('[data-url]').on('change', function(e) {
-      var $el = $(e.target);
-      window.location = $el.data('url');
-    })
-  });
+:css
+  .ui.table.events .summary {
+    font-weight: bold;
+  }
