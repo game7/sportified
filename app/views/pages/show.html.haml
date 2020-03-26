@@ -11,6 +11,5 @@
         = link_to semantic_icon(:th, :list) + ' List', pages_path, class: :item
         = link_to semantic_icon(:plus) + ' New', new_page_path, class: :item
 
-
-= render :partial => 'sections/section', :collection => @page.sections.order(:position)
+#page-sections= render partial: 'sections/section', collection: @page.sections.order(:position)
 

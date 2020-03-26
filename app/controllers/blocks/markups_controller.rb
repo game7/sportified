@@ -28,7 +28,7 @@ class Blocks::MarkupsController < BlocksController
   private
   
   def blocks_markup_params
-    params.required(:blocks_markup).permit(:body)
+    params.required(:blocks_markup).permit(:title, :body)
   end  
   
 end

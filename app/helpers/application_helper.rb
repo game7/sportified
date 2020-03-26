@@ -104,6 +104,10 @@ module ApplicationHelper
   end  
 
   def admin_menu_item(url:, icon:, label:)
+    puts '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    puts request.path
+    puts url
+    puts '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     if url == admin_root_path
       active = request.path == admin_root_path && :active
     else

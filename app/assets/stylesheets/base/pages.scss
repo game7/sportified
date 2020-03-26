@@ -2,10 +2,13 @@
 // BLOCKS
 // ---------------------------------
 
+.block {
+  margin-bottom: 15px;
+}
+
 .block,
 .section
 {
-  margin-bottom: 15px;
   .chrome {
     padding: 2px;
     // @include gradient-vertical(#DEDEDE,#CCC);
@@ -47,7 +50,7 @@
   .chrome {
     border: 1px solid $gray-light;
   }
-  margin-bottom: 5px;
+  // margin-bottom: 5px;
 }
 
 .section:first-child .move_section_up {

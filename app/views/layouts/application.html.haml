@@ -122,17 +122,38 @@
         margin-bottom: 20px;
       }
 
+      .block.blocks_divider {
+        margin-bottom: 0;
+      }
+
       .blocks_divider .ui.divider {
         background: -webkit-repeating-linear-gradient(162deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);
-        background: repeating-linear-gradient(-72deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);#8C1D40
-        background: -webkit-repeating-linear-gradient(162deg, #8C1D40 0px, transparent 1px, transparent 3px, #8C1D40 4px);
-        background: repeating-linear-gradient(-72deg, #8C1D40 0px, transparent 1px, transparent 3px, #8C1D40 4px);
-        height: 3px;
+        background: repeating-linear-gradient(-72deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);
+        background: -webkit-repeating-linear-gradient(162deg, #000 0px, transparent 1px, transparent 3px, #000 4px);
+        background: repeating-linear-gradient(-72deg, #000 0px, transparent 1px, transparent 3px, #000 4px);
+        height: 5px;
         margin: 10px 0;
         border: none !important;
       }
 
-  %body
+      #page-sections .section > .ui.grid {
+        margin-top: 0;
+        margin-bottom: 0;
+      }      
+
+      #page-sections .section > .ui.grid > .column {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+
+      #page-sections .section > .ui.grid > .column > .block {
+      }      
+
+      #page-sections .section > .ui.grid > .column > .block:last-child {
+        margin-bottom: 0;
+      }         
+
+  %body{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
     = render 'layouts/sidebar'
     .pusher
       = render 'layouts/header'

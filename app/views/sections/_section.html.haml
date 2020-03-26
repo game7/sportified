@@ -24,6 +24,6 @@
   - unless editable
     .ui.stackable.grid
       - section.columns.each_with_index do |column, index|
-        .column.wide{ class: column, data: { column: index }, style: 'padding-bottom: 0;' }
-          = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
+        .column.wide{ class: column, data: { column: index } }
+          = render partial: 'blocks/block', collection: @page.blocks.where(section_id: section.id).where(column: index).order(:position), locals: { editable: editable }
 

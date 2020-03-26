@@ -21,7 +21,7 @@ module Blocks
       %w{ edit }
     end
 
-    store_accessor :options, :body
+    store_accessor :options, :title, :body
 
   end
 end
