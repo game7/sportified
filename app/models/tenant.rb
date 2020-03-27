@@ -34,16 +34,16 @@ class Tenant < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many_attached :assets
 
-  before_save :check_and_set_slug
+  before_validation :check_and_set_slug
 
-  validates :name, :slug, presence: true
-
+  validates :name, presence: true
+  validates :slug, presence: true
   validates :stripe_public_api_key, length: { is: 32 }, allow_blank: true
 
-  scope :for_host, ->(host) { where("host = ?", host) }
+  scope :for_host, ->(host) { where('host = ?', host) }
 
   def url
-    "http://#{host ? host : slug+'.sportified.net'}"
+    "http://#{host || slug}.sportified.net"
   end
 
   def secure_url
@@ -60,19 +60,7 @@ class Tenant < ActiveRecord::Base
   end
 
   def check_and_set_slug
-    self.slug ||= self.host.parameterize
-  end
-
-  def apply_mongo_user_ids!(user)
-
-  end
-
-  def apply_mongo! mongo
-    self.twitter_id = mongo["twitter_id"]
-    self.facebook_id = mongo["facebook_id"]
-    self.instagram_id = mongo["instagram_id"]
-    self.foursquare_id = mongo["foursquare_id"]
-    self.google_plus_id = mongo["google_plus_id"]
+    self.slug ||= self.host&.parameterize
   end
 
 end

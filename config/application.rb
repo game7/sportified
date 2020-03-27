@@ -20,8 +20,8 @@ module Sportified
     config.generators do |g|
       g.template_engine :haml
       g.orm :active_record
-      g.test_framework :rspec, :fixture => true, :views => false
-      g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
+      # g.test_framework :rspec, :fixture => true, :views => false
+      # g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
 
     config.autoload_paths += %W(#{config.root}/lib)
