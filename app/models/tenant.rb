@@ -42,17 +42,21 @@ class Tenant < ActiveRecord::Base
 
   scope :for_host, ->(host) { where('host = ?', host) }
 
+  def slug_host
+    "#{slug}.sportified.net"
+  end
+
   def url
-    "http://#{host || slug}.sportified.net"
+    "http://#{host || slug_host}"
   end
 
   def secure_url
-    "https://#{slug}.sportified.net"
+    "https://" + slug_host
   end
 
   class << self
     def current
-      Thread.current[:current_tenant] = Thread.current[:current_tenant]
+      Thread.current[:current_tenant]
     end
     def current=(tenant)
       Thread.current[:current_tenant] = tenant

@@ -31,15 +31,16 @@ class Page < ActiveRecord::Base
   has_ancestry orphan_strategy: :rootify, cache_depth: true, touch: true
   include Sportified::TenantScoped
 
-  before_save :set_slug, :set_path
-
   has_many :sections, :dependent => :destroy
   has_many :blocks, :class_name => "Block", :dependent => :destroy
 
-  validates_presence_of :title
+  before_validation :set_slug
+  before_validation :set_path  
+
+  validates :title, presence: true
+  validates :slug, presence: true
 
   scope :with_path, ->(path) { where(:url_path => path) }
-
   scope :live, ->{ where( :draft => false ) }
   scope :in_menu, ->{ where( :show_in_menu => true ) }
 
@@ -74,11 +75,11 @@ class Page < ActiveRecord::Base
   private
 
     def set_slug
-      self.slug = (self.title_in_menu.presence || self.title).parameterize
+      self.slug = (title_in_menu.presence || title)&.parameterize
     end
 
     def set_path
-      self.url_path = self.ancestors.collect{|a| a.slug + '/' }.join + self.slug
+      self.url_path = slug && "#{ancestors.collect{|a| a.slug + '/' }.join}#{slug}"
     end
 
 end

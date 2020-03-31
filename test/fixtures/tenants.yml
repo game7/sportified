@@ -1,11 +1,39 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: tenants
+#
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  slug                  :string
+#  host                  :string
+#  description           :text
+#  analytics_id          :string
+#  theme                 :string
+#  twitter_id            :string
+#  facebook_id           :string
+#  instagram_id          :string
+#  foursquare_id         :string
+#  google_plus_id        :string
+#  created_at            :datetime
+#  updated_at            :datetime
+#  stripe_account_id     :string
+#  stripe_public_api_key :string
+#  stripe_access_token   :string
+#  google_fonts          :string
+#  time_zone             :string           default("UTC")
+#  address               :text
+#  stripe_client_id      :string
+#  stripe_private_key    :string
+#  stripe_public_key     :string
+#  style                 :text
+#
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  id: 1
+  name: Tenant One
+  host: tenant-one.com
+
+two:
+  id: 2
+  name: Tenant Two
+  host: tenant-two.com

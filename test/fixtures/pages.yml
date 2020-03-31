@@ -1,0 +1,57 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id                  :integer          not null, primary key
+#  tenant_id           :integer
+#  title               :string
+#  slug                :string
+#  url_path            :string
+#  meta_keywords       :text
+#  meta_description    :text
+#  link_url            :string
+#  show_in_menu        :boolean
+#  title_in_menu       :string
+#  skip_to_first_child :boolean
+#  draft               :boolean
+#  ancestry            :string
+#  ancestry_depth      :integer
+#  position            :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  content             :text
+#
+# Indexes
+#
+#  index_pages_on_ancestry   (ancestry)
+#  index_pages_on_tenant_id  (tenant_id)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+home:
+  id: 1
+  tenant_id: 1
+  title: 'Welcome'
+  ancestry:
+  ancestry_depth: 0
+  position: 0
+
+about:
+  id: 2
+  tenant_id: 1
+  title: 'About'
+  slug: about
+  url_path: about
+  ancestry:
+  ancestry_depth: 0
+  position: 1
+
+contact-us:
+  id: 3
+  tenant_id: 1
+  title: 'Contact Us'
+  slug: contact-us
+  url_path: about/contact-us
+  ancestry: '2'
+  position: 1

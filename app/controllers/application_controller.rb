@@ -125,6 +125,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_tenant
+    return if Tenant.current.present?
     if Rails.env.production?
       if request.subdomain == 'www'
         ::Tenant.current = ::Tenant.find_by!(host: request.domain.downcase)
