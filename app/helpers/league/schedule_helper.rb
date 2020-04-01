@@ -1,0 +1,2 @@
+module League::ScheduleHelper
+end

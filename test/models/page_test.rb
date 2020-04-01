@@ -31,7 +31,7 @@ require 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
   setup do
-    Tenant.current = tenants(:one)
+    Tenant.current = tenants(:hockey_league_site)
   end
 
   context :validations do

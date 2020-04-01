@@ -58,7 +58,6 @@ class ApplicationController < ActionController::Base
   end
 
   def json_request?
-    puts "format: #{request.format}"
     request.format.json?
   end
 

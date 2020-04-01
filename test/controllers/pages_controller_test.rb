@@ -13,7 +13,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   context :with_tenant do
 
     setup do
-      Tenant.current = tenants(:one)
+      Tenant.current = tenants(:hockey_league_site)
     end
 
     should "get the home page" do
@@ -26,10 +26,10 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    should "nget the home page for paths that do not exist" do
+    should "not the home page for paths that do not exist" do
       get '/pages/does-not-exist'
       assert_response :success
-      assert_select 'title', 'Welcome :: Tenant One'
+      assert_select 'title', "Welcome :: #{Tenant.current.name}"
     end
 
   end

@@ -10,7 +10,7 @@
       = stylesheet_link_tag 'themes/oia'
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
-      = stylesheet_link_tag :application
+    -#   = stylesheet_link_tag :application
     - if tenant&.google_fonts
       - tenant.google_fonts.split(/\r?\n/).each do |font|
         = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"

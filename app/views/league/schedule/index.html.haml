@@ -1,0 +1,48 @@
+- title 'Schedule'
+
+- if @events.any?
+  .ui.computer.tablet.only.grid
+    .column
+      - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+        %table.ui.celled.table
+          %thead
+            %tr
+              %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
+          %tbody  
+            - day_events.each do |event|
+              %tr
+                %td.four.wide= event.starts_on.strftime('%l:%M %P')
+                %td= event.summary
+
+- if @events.any?
+  .ui.mobile.only.grid#mobile-events-grid
+    .column
+      - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+        %table.ui.unstackable.table
+          %thead
+            %tr
+              %th= date.strftime('%A, %B %e %Y')
+          %tbody  
+            - day_events.each do |event|
+              %tr
+                %td
+                  .summary= event.summary                
+                  .time= event.starts_on.strftime('%l:%M %P')
+
+
+- if @events.none?
+  .ui.placeholder.segment
+    .ui.icon.header
+      .icon{ style: 'padding-top: 4px' } 🙄
+      There are no upcoming events for this division.
+
+:css
+  #mobile-events-grid {
+    margin-top: 0;
+  }
+  #mobile-events-grid .column {
+    padding-top: 0;
+  }
+  #mobile-events-grid .summary {
+    font-weight: bold;
+  }

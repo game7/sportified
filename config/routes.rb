@@ -114,7 +114,7 @@
 
   match "schedule" => "schedule#index", :as => :schedule, :via => :get
 
-  match "league/:league_slug/schedule/:division_slug" => "schedule#index"                                       , :as => :league_schedule        , :via => :get
+  match "league/:league_slug/schedule/:division_slug" => "league/schedule#index"                                , :as => :league_schedule        , :via => :get
   match "league/:league_slug/scoreboard/:division_slug" => "scoreboard#index"                                   , :as => :league_scoreboard      , :via => :get
   match "league/:league_slug/standings/:division_slug(/:season_slug)" => "standings#index"                      , :as => :league_standings       , :via => :get
   match "league/:league_slug/statistics/:division_slug(/:season_slug)" => "statistics#index"                    , :as => :league_statistics      , :via => :get
@@ -149,7 +149,7 @@
         end
         resources :seasons
       end
-      resources :events, :only => [:new, :create, :edit, :update] 
+      resources :events, :only => [:new, :create, :edit, :update]
       resources :games, :only => [:index, :new, :create, :edit, :update]
     end
 
@@ -182,7 +182,7 @@
       resources :locker_rooms, only: [] do
         post :assign, on: :collection
       end
-    end   
+    end
 
     namespace :general do
       resources :events, only: [:new, :create, :edit, :update]

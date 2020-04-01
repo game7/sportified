@@ -31,7 +31,7 @@
 
 home:
   id: 1
-  tenant_id: 1
+  tenant: hockey_league_site
   title: 'Welcome'
   ancestry:
   ancestry_depth: 0
@@ -39,7 +39,7 @@ home:
 
 about:
   id: 2
-  tenant_id: 1
+  tenant: hockey_league_site
   title: 'About'
   slug: about
   url_path: about
@@ -49,7 +49,7 @@ about:
 
 contact-us:
   id: 3
-  tenant_id: 1
+  tenant: hockey_league_site
   title: 'Contact Us'
   slug: contact-us
   url_path: about/contact-us

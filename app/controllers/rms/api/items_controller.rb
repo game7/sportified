@@ -6,7 +6,7 @@ module Rms
       before_action :verify_admin
 
       def index
-        render json: ::Rms::Item.all, adapter: :json
+        render json: Rms::Item.all, adapter: :json
       end
 
       def show
