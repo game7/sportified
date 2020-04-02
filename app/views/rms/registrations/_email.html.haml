@@ -1,5 +1,3 @@
 = simple_form_for [variant, registration] do |f|
-  .row
-    .col-sm-6
-      = f.input :email
-  = f.button :wrapped, :cancel => return_url
+  = f.input :email
+  = f.button :wrapped, cancel: return_url

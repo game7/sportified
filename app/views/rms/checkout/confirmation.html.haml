@@ -12,10 +12,11 @@
         = registration.credit_card.name
         and a confirmation code has been provided below.
     %p
-      Thank you for registering with
+      != 'Thank you for registering with '
       %strong= Tenant.current.name
-      and
+      != ' and '
       %strong sportified.net
+      = '.'
   .column
     .ui.placeholder.segment
       .ui.icon.header
