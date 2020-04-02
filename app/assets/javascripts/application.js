@@ -123,6 +123,10 @@ $(document).ready(function() {
   })
   $('select.ui.dropdown').dropdown()  
   $('.ui.sidebar').sidebar('attach events', '.toc.item');
+  $('.ui.sidebar .close').click(function(e) {
+    e.preventDefault();
+    $(this).closest('.ui.sidebar').sidebar('hide')
+  })
   $('.ui.accordion').accordion();
 
 });
