@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_222613) do
+ActiveRecord::Schema.define(version: 2020_04_10_202734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -564,6 +564,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_222613) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active"
+    t.text "summary"
     t.index ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id"
     t.index ["tenant_id"], name: "index_rms_items_on_tenant_id"
   end
@@ -583,6 +584,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_222613) do
     t.integer "form_packet_id"
     t.string "confirmation_code"
     t.date "birthdate"
+    t.text "session_id"
+    t.text "payment_intent_id"
+    t.string "uuid"
     t.index ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id"
     t.index ["tenant_id"], name: "index_rms_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_rms_registrations_on_user_id"
@@ -609,6 +613,19 @@ ActiveRecord::Schema.define(version: 2020_03_23_222613) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["page_id"], name: "index_sections_on_page_id"
+  end
+
+  create_table "stripe_connects", force: :cascade do |t|
+    t.bigint "tenant_id"
+    t.string "referrer"
+    t.string "token"
+    t.string "client"
+    t.string "redirect"
+    t.string "status"
+    t.string "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_stripe_connects_on_tenant_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -734,4 +751,5 @@ ActiveRecord::Schema.define(version: 2020_03_23_222613) do
   add_foreign_key "rms_variants", "rms_form_packets", column: "form_packet_id"
   add_foreign_key "rms_variants", "rms_items", column: "item_id"
   add_foreign_key "rms_variants", "tenants"
+  add_foreign_key "stripe_connects", "tenants"
 end

@@ -6,6 +6,8 @@
     resources :exceptions, only: :index
   end
 
+  resources :stripe_connects, only: :create
+
   resources :chromecasts, only: :show
 
   get 'cast/index'

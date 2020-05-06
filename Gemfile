@@ -76,9 +76,6 @@ gem 'unicorn'
 
 gem 'ice_cube', '~> 0.16.2'
 
-gem 'httparty', '~> 0.16.4'
-
-
 #gem 'pages', :path => 'vendor/engines/pages'
 
 # gem 'aws-s3', :require => 'aws/s3'

@@ -3,8 +3,6 @@
   = f.input :host
   = f.input :slug, :hint => 'WARNING: Changing slug will break file upload paths'
   = f.input :analytics_id
-  = f.input :theme
-  = f.input :style
   = f.input :time_zone
   = f.input :address, as: :text, input_html: { rows: 5 }
   = f.input :twitter_id
@@ -12,11 +10,16 @@
   = f.input :instagram_id
   = f.input :foursquare_id
   = f.input :google_plus_id
+  %h4.ui.dividing.header Stripe Platform Configuration
   = f.input :stripe_client_id
-  = f.input :stripe_access_token
-  = f.input :stripe_private_key
   = f.input :stripe_public_key
+  = f.input :stripe_private_key
+  %h4.ui.dividing.header Stripe Tenant Configuration  
+  = f.input :stripe_access_token
   = f.input :stripe_account_id
   = f.input :stripe_public_api_key
+  %h4.ui.dividing.header Styling
+  = f.input :theme
+  = f.input :style  
   = f.input :google_fonts, as: :text
   = f.button :wrapped, :cancel => return_url

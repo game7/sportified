@@ -2,7 +2,7 @@
 - page_actions do
   = link_to 'Edit', edit_item_path(@item), class: [:ui, :primary, :button] if current_user_is_admin?
 
-%p= @item.description
+!= MarkdownService.html @item.description
 
 %table.ui.table
   %thead

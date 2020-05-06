@@ -13,6 +13,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  active             :boolean
+#  summary            :text
 #
 # Indexes
 #
@@ -34,7 +35,7 @@ module Rms
     before_action :get_form_packets, only: [:edit, :update, :new, :create]
 
     def index
-      @items = Rms::Item.all
+      @items = Item.all
       @items = @items.active unless current_user_is_admin?
       @stripe_url = stripe_url
     end
@@ -82,7 +83,7 @@ module Rms
       end
 
       def item_params
-        params.required(:item).permit(:title, :description, :quantity_allowed, :active,
+        params.required(:item).permit(:title, :summary, :description, :quantity_allowed, :active,
           variants_attributes: [ :id, :title, :description, :form_packet_id, :quantity_allowed, :price, :_destroy ])
       end
 

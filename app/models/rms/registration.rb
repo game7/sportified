@@ -17,6 +17,9 @@
 #  form_packet_id    :integer
 #  confirmation_code :string
 #  birthdate         :date
+#  session_id        :text
+#  payment_intent_id :text
+#  uuid              :string
 #
 # Indexes
 #
@@ -32,7 +35,7 @@
 #  fk_rails_...  (user_id => users.id)
 #  fk_rails_...  (variant_id => rms_variants.id)
 #
-
+require_dependency 'rms'
 module Rms
   class Registration < ActiveRecord::Base
     include Sportified::TenantScoped
@@ -43,13 +46,11 @@ module Rms
     has_many :forms, dependent: :destroy
     accepts_nested_attributes_for :forms
 
-    belongs_to :user
+    belongs_to :user, required: false
+
     belongs_to :credit_card, required: false
 
     validates :variant,
-              presence: true
-
-    validates :user,
               presence: true
 
     validates :item,
@@ -65,15 +66,14 @@ module Rms
 
     validates :email,
               presence: true,
-              email: true,
-              length: { maximum: 100 }
+              email: true
 
     validates :birthdate,
               presence: true
 
-    validates :credit_card_id,
-              presence: true,
-              if: :payment_required?
+    # validates :credit_card_id,
+    #           presence: true,
+    #           if: :payment_required?
 
     # validates :price,
     #           presence: true
@@ -116,6 +116,7 @@ module Rms
     end
 
     before_validation :set_price_from_variant
+    before_create :generate_uuid, unless: :uuid
     before_save :generate_confiramtion_code, unless: :confirmation_code
 
     private
@@ -127,6 +128,10 @@ module Rms
       def generate_confiramtion_code
         charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z}
         self.confirmation_code = (0...6).map{ charset.to_a[rand(charset.size)] }.join
+      end
+
+      def generate_uuid
+        self.uuid = SecureRandom.uuid
       end
 
   end

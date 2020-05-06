@@ -27,10 +27,11 @@
         --primary-color: #000000;
       }
       */
+      /*
       html, body {
         font-size: 16px;
       }
-      /*
+      */
       body.pushable .pusher {
         background-image: url("/assets/themes/oia/oia_web_bg.jpg");
         background-position: center top;
@@ -151,7 +152,11 @@
 
       #page-sections .section > .ui.grid > .column > .block:last-child {
         -# margin-bottom: 0;
-      }         
+      }      
+
+      #page-header .ui.message:last-child {
+        margin-bottom: 1em;
+      }   
 
   %body{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
     = render 'layouts/sidebar'

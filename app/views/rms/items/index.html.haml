@@ -1,6 +1,6 @@
 - title 'Items'
 - page_actions do
-  = link_to 'Connect with Stripe', @stripe_url, class: [:ui, :primary, :button] if current_user_is_admin?
+  = link_to 'Connect with Stripe', stripe_connects_path, method: :post, class: [:ui, :primary, :button] if current_user_is_admin?
   = link_to 'New Item', new_item_path, class: [:ui, :primary, :button] if current_user_is_admin?
 .ui.divided.items
   - @items.each do |item|
@@ -10,7 +10,7 @@
       .content
         = link_to item.title, item, class: [:header]
         .description
-          %p= item.description
+          %p= item.summary
         .extra
           = link_to item, class: [:ui, :right, :floated, :primary, :button] do
             More Info

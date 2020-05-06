@@ -1,0 +1,41 @@
+# == Schema Information
+#
+# Table name: stripe_connects
+#
+#  id         :bigint(8)        not null, primary key
+#  tenant_id  :bigint(8)
+#  referrer   :string
+#  token      :string
+#  client     :string
+#  redirect   :string
+#  status     :string
+#  result     :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_stripe_connects_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tenant_id => tenants.id)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  referrer: MyString
+  token: MyString
+  client: MyString
+  redirect: MyString
+  status: MyString
+  result: MyString
+
+two:
+  referrer: MyString
+  token: MyString
+  client: MyString
+  redirect: MyString
+  status: MyString
+  result: MyString

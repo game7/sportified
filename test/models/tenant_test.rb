@@ -35,7 +35,6 @@ class TenantTest < ActiveSupport::TestCase
   context :validations do
     should validate_presence_of(:name)
     should validate_presence_of(:slug)
-    should validate_length_of(:stripe_public_api_key).is_equal_to(32)
   end
 
   context :associations do

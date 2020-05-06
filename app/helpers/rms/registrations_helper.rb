@@ -17,6 +17,9 @@
 #  form_packet_id    :integer
 #  confirmation_code :string
 #  birthdate         :date
+#  session_id        :text
+#  payment_intent_id :text
+#  uuid              :string
 #
 # Indexes
 #

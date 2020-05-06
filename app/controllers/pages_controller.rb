@@ -29,7 +29,8 @@
 
 class PagesController < ApplicationController
   before_action :verify_admin, :except => [:show]
-  before_action :verify_stripe_connect, :only => [:show], :if => :stripe_request?
+  before_action :stripe_connect_complete, :only => [:show], :if => :stripe_connect_complete?
+  before_action :stripe_connect_error, :only => [:show], :if => :stripe_connect_error?
   before_action :find_page, :only => [:edit, :update, :destroy]
   before_action :load_parent_options, :only => [:new, :edit]
   before_action :mark_return_point, :only => [:new, :edit]
@@ -154,34 +155,37 @@ class PagesController < ApplicationController
       @parent_options = Page.options
     end
 
-    def stripe_request?
-      params[:code] and params[:scope]
+    def stripe_connect_complete?
+      params[:state] && params[:code]
     end
 
-    def verify_stripe_connect
-      require 'httparty'
-      path = 'https://connect.stripe.com/oauth/token'
-      options = {
-        body: {
-          client_secret: Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY'],
-          code: params[:code],
-          grant_type: 'authorization_code'
-        }
-      }
-      begin
-        puts options
-        response = HTTParty.post path, options
-        puts response
-      rescue => e
-        raise e
-      end
-      Tenant.current.update_attributes(
-        stripe_account_id: response['stripe_user_id'],
-        stripe_access_token: response['access_token'],
-        stripe_public_api_key: response['stripe_publishable_key']
+    def stripe_connect_error?
+      params[:state] && params[:error]
+    end
+
+    def stripe_connect_error
+      connect = StripeConnect.pending.find_by_token(params[:state])
+      connect.update_attributes(status: params[:error])
+      redirect_to connect.referrer, flash: { error: params[:error_description] }
+    end
+
+    def stripe_connect_complete
+      connect = StripeConnect.pending.find_by_token(params[:state])
+      Stripe::api_key = connect.tenant.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+      token = Stripe::OAuth.token({
+        grant_type: 'authorization_code',
+        code: params[:code],
+      })
+      connect.tenant.update_attributes(
+        stripe_account_id: token.stripe_user_id,
+        stripe_access_token: token.access_token,
+        stripe_public_api_key: token.stripe_publishable_key
       )
-      flash[:success] = 'Sweet!  Your Stripe account is now connected.'
-      redirect_to '/registrar/items'
+      connect.update_attributes({
+        status: :completed,
+        result: token
+      })
+      redirect_to connect.referrer, flash: { success: 'Stripe has been connected!' }
     end
 
 end

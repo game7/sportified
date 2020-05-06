@@ -209,9 +209,6 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.2.0)
     http_parser.rb (0.6.0)
-    httparty (0.16.4)
-      mime-types (~> 3.0)
-      multi_xml (>= 0.5.2)
     i18n (1.7.1)
       concurrent-ruby (~> 1.0)
     icalendar (2.3.0)
@@ -265,7 +262,6 @@ GEM
     minitest (5.13.0)
     msgpack (1.3.1)
     multi_json (1.14.1)
-    multi_xml (0.6.0)
     multipart-post (2.1.1)
     naught (1.1.0)
     nio4r (2.5.2)
@@ -469,7 +465,6 @@ DEPENDENCIES
   groupdate
   haml
   haml-rails
-  httparty (~> 0.16.4)
   icalendar (~> 2.3.0)
   ice_cube (~> 0.16.2)
   image_processing (~> 1.2)

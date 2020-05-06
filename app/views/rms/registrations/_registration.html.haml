@@ -8,5 +8,5 @@
   %td
     - if registration.completed? 
       = link_to 'View Details', regsitrar_registration_path(registration), class: [:ui, :mini, :primary, :button]
-    - unless admin or registration.completed?
+    - unless admin || registration.completed?
       = link_to 'Checkout', checkout_registration_path(registration), class: [:ui, :mini, :primary, :button]

@@ -42,7 +42,7 @@ module Rms
     def validate_elements
       template.elements.each do |element|
         element.validate(self)
-      end unless new_record?
+      end
     end
 
     scope :incomplete, -> { where.not(completed: true) }
@@ -53,7 +53,7 @@ module Rms
         element.accessors.each do |accessor|
           singleton_class.class_eval { store_accessor :data, accessor }
         end
-      end unless new_record?
+      end
       self
     end
 

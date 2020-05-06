@@ -38,7 +38,6 @@ class Tenant < ActiveRecord::Base
 
   validates :name, presence: true
   validates :slug, presence: true
-  validates :stripe_public_api_key, length: { is: 32 }, allow_blank: true
 
   scope :for_host, ->(host) { where('host = ?', host) }
 

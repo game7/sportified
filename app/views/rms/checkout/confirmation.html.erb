@@ -1,0 +1,29 @@
+<% title 'Confirmation' %>
+<div class="ui equal width stackable grid">
+  <div class="column">
+    <p>
+      <strong>Congratulations <%= user.first_name %>!</strong>
+    <p>
+      You have completed registration for <strong><%= registration.item.title %></strong>.
+      <% unless registration.payment_id.blank? %>
+        We have successfully confirmed your payment of <%= number_to_currency registration.price %>
+        via Stripe.
+      <% end %>      
+    </p>
+    <p>
+      Thank you for registering with <strong><%= Tenant.current.name %></strong>
+      and <strong>sportified.net</strong>.
+    </p>
+  </div>
+  <div class="column">
+    <div class="ui placeholder segment">
+      <div class="ui icon header">
+        <%= semantic_icon :thumbs, :up %>
+        CONFIRMATION CODE
+        <h2><%= registration.confirmation_code %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui divider"></div>
+<%= link_to 'Your Registrations', registrations_path %> | <%= link_to 'Shop Again', items_path %>

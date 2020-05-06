@@ -2,6 +2,10 @@ class MarkdownController < ApplicationController
   respond_to :json
 
   def preview
+    puts '--------------------------------------------------------'
+    puts params
+    puts '--------------------------------------------------------'
+
     render json: {
       markdown: markdown_param,
       html: MarkdownService.html(markdown_param),

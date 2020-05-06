@@ -7,6 +7,7 @@ class CreateLeaguePrograms < ActiveRecord::Migration
     rename_column :divisions, :league_id, :program_id
     add_foreign_key :divisions, :programs
 
+    remove_foreign_key :seasons, column: :league_id
     rename_column :seasons, :league_id, :program_id
     add_foreign_key :seasons, :programs
 
@@ -21,6 +22,7 @@ class CreateLeaguePrograms < ActiveRecord::Migration
 
     remove_foreign_key :seasons, :programs
     rename_column :seasons, :program_id, :league_id
+    add_foreign_key :seasons, :programs, column: :league_id
 
   end
 end

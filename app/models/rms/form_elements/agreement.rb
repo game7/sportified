@@ -35,6 +35,8 @@ module Rms
     store_accessor :properties, :terms
 
     def validate(record)
+      puts record
+      puts record.attributes
       puts "#{self.name}: #{record.data[self.name]}"
       record.errors.add(self.name, "Must accept #{self.name.humanize.titleize}") unless record.data[self.name] == "true"
     end

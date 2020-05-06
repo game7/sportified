@@ -1,0 +1,10 @@
+var stripe = Stripe('<%= @stripe_public_api_key %>', {
+  stripeAccount: '<%= @stripe_account %>'
+});
+stripe.redirectToCheckout({
+  sessionId: '<%= @session.id %>'
+}).then(function (result) {
+  // If `redirectToCheckout` fails due to a browser or network
+  // error, display the localized error message to your customer
+  // using `result.error.message`.
+});

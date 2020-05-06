@@ -1,6 +1,7 @@
 class MarkdownService
 
   def self.html(markdown)
+    return '' if markdown.blank?
     options = {
       with_toc_data: true,
       hard_wrap: true

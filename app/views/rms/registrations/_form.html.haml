@@ -1,6 +1,71 @@
 = simple_form_for [variant, registration] do |f|
-  %h4.ui.dividing.header Participant Info
-  = f.input :first_name
-  = f.input :last_name
-  = f.input :birthdate, html5: true
-  = f.button :wrapped, :cancel => return_url
+
+  .ui.stackable.grid
+    .four.wide.column
+
+      .ui.sticky
+        .ui.fluid.card
+          .image
+            %img{ src: '/image.png' }
+          .content
+            .header= variant.item.title
+          .extra.content
+            .left.floated= variant.title
+            .right.floated= "$#{number_with_precision(variant.price, precision: 2)}"
+
+        .ui.vertical.fluid.menu
+          %a.item{ href: '#contact' }
+            = semantic_icon(:exclamation, :circle, class: [ :red ]) if registration.errors.key?(:email)
+            Contact
+          %a.item{ href: '#participant' }
+            = semantic_icon(:exclamation, :circle, class: [ :red ]) if (registration.errors.keys & %i{first_name last_name birthdate}).any?
+            Participant            
+          - registration.forms.each do |form|
+            %a.item{ href: "##{form.template.name.parameterize}" }
+              = semantic_icon(:exclamation, :circle, class: [ :red ]) unless form.errors.empty?
+              = form.template.name             
+          .item Payment
+    
+    .twelve.wide.column
+
+      %h4.ui.dividing.header Contact
+      %a.anchor{ name: :contact }      
+      .three.fields
+        = f.input :email
+      
+      %a.anchor{ name: :participant }
+      %h4.ui.dividing.header Participant
+      .four.fields
+        = f.input :first_name
+        = f.input :last_name
+      .four.fields
+        = f.input :birthdate, html5: true
+      
+      = f.simple_fields_for :forms do |form|  
+        %a.anchor{ name: form.object.template.name.parameterize }
+        %h4.ui.dividing.header= form.object.template.name
+        - form.object.add_element_accessors
+        - form.object.template.elements.each do |element|
+          = render "rms/registrations/elements/#{element.partial}", element: element, builder: form   
+      
+      %a.anchor{ name: :payment }
+      %h4.ui.dividing.header Payment 
+
+      .ui.basic.center.aligned.segment
+        = f.button :wrapped, :cancel => return_url
+
+:css
+  a.anchor {
+    display: block;
+    position: relative;
+    top: -20px;
+    visibility: hidden;    
+  }
+  .new_registration .ui.header:first-child {
+
+  }
+- content_for(:javascript) do
+  :javascript
+    $(function() {
+      $('.ui.sticky').sticky({ offset: 50 });
+    })

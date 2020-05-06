@@ -24,11 +24,13 @@ scope '/registrar', module: 'rms' do
     end
   end
 
-  resources :registrations, :only => [:index] do
+  resources :registrations, :only => [:index, :show] do
     collection do
-      get 'all'
+      get :all
     end
     member do
+      get :collect
+      get :confirm
       get 'checkout', to: 'checkout#redirect', as: :checkout
       get 'checkout/payment'
       patch 'checkout/payment', to: 'checkout#charge', as: :checkout_charge

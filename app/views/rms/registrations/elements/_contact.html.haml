@@ -1,7 +1,8 @@
 = builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
-  .four.fields
-    = builder.input "#{element.name}-first", { label: false, placeholder: 'First Name' }
-    = builder.input "#{element.name}-last", { label: false, placeholder: 'Last Name' }
-  .four.fields
-    = builder.input "#{element.name}-email", { label: false, placeholder: 'Email Address' }
-    = builder.input "#{element.name}-phone", { label: false, placeholder: 'Phone Number' }      
+  .ui.segment{ style: 'margin: 0;' }
+    .two.fields
+      = builder.input "#{element.name}-first", label: 'First Name', wrapper_html: { class: [:eight, :wide] }
+      = builder.input "#{element.name}-last", label: 'Last Name', wrapper_html: { class: [:eight, :wide] }
+    .two.fields
+      = builder.input "#{element.name}-email", label: 'Email'
+      = builder.input "#{element.name}-phone", label: 'Phone'     
