@@ -1,6 +1,0 @@
-<% if user_signed_in? %>
-  <div class="divider"></div>
-  <%= link_to('Logout', main_app.destroy_user_session_path, method: :delete, class: 'item') %>
-<% else %>
-  <%= link_to('Login', main_app.new_user_session_path, class: 'item') %>
-<% end %>

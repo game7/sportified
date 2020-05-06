@@ -31,10 +31,10 @@
 #
 
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
-          :recoverable, :rememberable, :trackable, :validatable
+
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+
+  passwordless_with :email # <-- here!
 
   has_and_belongs_to_many :tenants
   has_many :roles, foreign_key: :user_id, class_name: 'UserRole'
@@ -49,7 +49,6 @@ class User < ActiveRecord::Base
   has_many :registrations, :class_name => 'Rms::Registration'
 
   validates_presence_of :first_name, :last_name, :email
-  validates_uniqueness_of :email, :case_sensitive => false
 
   scope :with_email, ->(email) { where(:email => email) }
 

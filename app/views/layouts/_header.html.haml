@@ -3,7 +3,7 @@
     .column
       .ui.fixed.inverted.menu{ style: 'border-radius: 0px;'}
         .ui.container
-          %a{ href: root_url, class: [:header, :item] }
+          %a{ href: main_app.root_url, class: [:header, :item] }
             %span.title= Tenant.current.name
             %img.logo
           - Page.in_menu.arrange(:order => :position).each do |root|
@@ -26,16 +26,21 @@
                         %a.item{ :href => get_page_url(grandchild[0]) }= grandchild[0].title_in_menu.presence || grandchild[0].title
                     - else
                       %a.item{ href: child_url }= child[0].title_in_menu.presence || child[0].title   
-          .right.menu
-            -# = link_to semantic_icon(:cog), main_app.new_user_session_path, class: [:icon, :item]           
-            - if user_signed_in?
+          .right.menu         
+            - if current_user
               .ui.dropdown.icon.item
                 = semantic_icon(:user)
                 .menu
-                  = render "devise/menu/user_items"
-                  = render "devise/menu/login_items"
+                  -# = link_to 'User Account', main_app.edit_user_registration_path, class: [:item]
+                  = link_to 'Schedule', main_app.user_schedule_path, class: [:item]
+                  = link_to 'Teams', main_app.user_teams_path, class: [:item]
+                  - if current_user_is_admin?
+                    .divider
+                    = link_to 'Administration', main_app.admin_root_path, class: [:item]
+                  .divider
+                  = link_to 'Sign Out', users.sign_out_path, class: [:item]
             - else
-              = link_to semantic_icon(:user), main_app.new_user_session_path, class: [:icon, :item]
+              = link_to semantic_icon(:user), users.sign_in_path, class: [:icon, :item]
 
   .ui.mobile.only.grid
     .column
@@ -43,15 +48,21 @@
         .ui.container{ style: 'dislay: flex;' }
           %a.toc.icon.item
             = semantic_icon(:sidebar) 
-          %a{ href: root_url, class: [:header, :item], style: 'flex-grow: 2;' }
+          %a{ href: main_app.root_url, class: [:header, :item], style: 'flex-grow: 2;' }
             %span.title{ style: 'text-align: center; width: 100%;' }= Tenant.current.name
             %img.logo
-          - if user_signed_in?
+          - if current_user
             .ui.dropdown.item.right
               = semantic_icon(:user)
               .menu
-                = render "devise/menu/user_items"
-                = render "devise/menu/login_items"
+                -# = link_to 'User Account', main_app.edit_user_registration_path, class: [:item]
+                = link_to 'Schedule', main_app.user_schedule_path, class: [:item]
+                = link_to 'Teams', main_app.user_teams_path, class: [:item]
+                - if current_user_is_admin?
+                  .divider
+                  = link_to 'Administration', main_app.admin_root_path, class: [:item]
+                .divider
+                = link_to 'Sign Out', users.sign_out_path, class: [:item]
           - else
-            = link_to semantic_icon(:user), main_app.new_user_session_path, class: [:ui, :right, :link, :item]    
+            = link_to semantic_icon(:user), users.sign_in_path, class: [:ui, :right, :link, :item]    
   

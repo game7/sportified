@@ -1,0 +1,1 @@
+Passwordless.redirect_back_after_sign_in = true

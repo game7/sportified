@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Passwordless::ControllerHelpers
   rescue_from StandardError, :with => :track_exception unless Rails.env.development?
-  before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :store_current_location, unless: :devise_controller?
 
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
   skip_before_action :verify_authenticity_token, if: :json_request?
@@ -14,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_action :load_objects
   before_action :set_breadcrumbs
   before_action :set_area_navigation
+  before_action :set_mailer_host
   skip_before_action :track_ahoy_visit
   after_action :track_action
 
@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def set_mailer_host
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
 
   @@RAILS_ROOT_REGEX = /^#{Regexp.escape(Rails.root.to_s)}/
 
@@ -71,19 +75,6 @@ class ApplicationController < ActionController::Base
 
   def set_time_zone(&block)
     Time.use_zone(Tenant.current.time_zone, &block)
-  end
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit :sign_up, keys: [:first_name, :last_name]
-    devise_parameter_sanitizer.permit :account_update, keys: [:first_name, :last_name]
-  end
-
-  def store_current_location
-    store_location_for(:user, request.url)
-  end
-
-  def after_sign_out_path_for(resource)
-    request.referrer || root_path
   end
 
   def load_objects
@@ -165,9 +156,20 @@ class ApplicationController < ActionController::Base
     redirect_to(params[:return_to] || session[:return_to], response_status)
   end
 
+  helper_method :current_user
+
+  def current_user
+    @current_user ||= authenticate_by_session(User)
+  end
+
+  def require_user!
+    return if current_user
+    save_passwordless_redirect_location!(User)
+    redirect_to root_path, flash: { error: 'You are not worthy!' }
+  end  
 
   def current_user_is_host?
-    current_user and current_user.host?
+    current_user && current_user.host?
   end
   helper_method :current_user_is_host?
 
@@ -187,7 +189,7 @@ class ApplicationController < ActionController::Base
   end
 
   def has_admin_role?(user, tenant_id)
-    user and user.admin?(tenant_id)
+    user && user.admin?(tenant_id)
   end
 
   def verify_user

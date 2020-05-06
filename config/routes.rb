@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  passwordless_for :users
+
   namespace :host do
     resources :visits, only: [ :index, :show ]
     resources :events, only: [ :show ]
@@ -20,11 +22,6 @@
   end unless Rails.env.production?
 
   get 'pack' => 'client#index'
-
-  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
-  devise_scope :user do
-    get '/users/sign_out' => 'sessions#destroy'
-  end
 
   draw :rms
 

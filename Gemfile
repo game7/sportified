@@ -39,7 +39,7 @@ gem 'groupdate'
 gem 'haml'
 gem 'kaminari'
 
-gem 'devise', '~>4.2'
+gem 'passwordless'
 
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'

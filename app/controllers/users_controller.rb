@@ -34,7 +34,7 @@ require 'icalendar'
 
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!, except: [ :schedule ]
+  before_action :require_user!, except: [ :schedule ]
 
   def teams
     @teams = League::Team.joins(:players)

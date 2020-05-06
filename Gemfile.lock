@@ -146,12 +146,6 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     device_detector (1.0.3)
-    devise (4.7.1)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
-      responders
-      warden (~> 1.2.3)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     enumerize (2.3.1)
@@ -267,9 +261,11 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
-    orm_adapter (0.5.0)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
+    passwordless (0.9.0)
+      bcrypt (~> 3.1.11)
+      rails (>= 5.1.4)
     pg (1.2.2)
     public_suffix (4.0.3)
     rack (2.0.8)
@@ -325,9 +321,6 @@ GEM
     regexp_parser (1.7.0)
     remotipart (1.3.1)
     request_store (1.0.8)
-    responders (3.0.0)
-      actionpack (>= 5.0)
-      railties (>= 5.0)
     rmagick (4.0.0)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
@@ -415,8 +408,6 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    warden (1.2.8)
-      rack (>= 2.0.6)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -458,7 +449,6 @@ DEPENDENCIES
   chartkick
   chronic
   cocoon
-  devise (~> 4.2)
   enumerize
   fog-aws
   geolite2_city
@@ -473,6 +463,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   maxminddb
   paranoia (~> 2.3)
+  passwordless
   pg
   rails (~> 5.2.3)
   rails-controller-testing
