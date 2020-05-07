@@ -42,7 +42,7 @@ class StripeConnect < ApplicationRecord
         response_type: 'code',
         client_id: self.client,
         state: self.token,
-        redirect_uri: 'http://localhost:3000',
+        redirect_uri: Rails.application.credentials.dig(:stripe, :connect, Rails.env, :redirect),
         scope: 'read_write'
       }
       self.redirect = "https://connect.stripe.com/oauth/authorize?#{params.to_query}"
