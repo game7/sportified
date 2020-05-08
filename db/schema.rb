@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_211735) do
+ActiveRecord::Schema.define(version: 2020_05_08_174649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -479,7 +479,9 @@ ActiveRecord::Schema.define(version: 2020_05_06_211735) do
     t.string "token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tenant_id"
     t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
+    t.index ["tenant_id"], name: "index_passwordless_sessions_on_tenant_id"
   end
 
   create_table "players", id: :serial, force: :cascade do |t|
@@ -746,7 +748,6 @@ ActiveRecord::Schema.define(version: 2020_05_06_211735) do
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "programs", "tenants"
   add_foreign_key "rms_form_elements", "rms_form_templates", column: "template_id"

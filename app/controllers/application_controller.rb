@@ -123,12 +123,19 @@ class ApplicationController < ActionController::Base
         ::Tenant.current = ::Tenant.find_by!(slug: request.subdomain.downcase)
       end
     else
-      if session[:tenant_id]
-        ::Tenant.current = ::Tenant.find(session[:tenant_id])
-      else
-        redirect_to tenants_path unless controller_name == 'tenants'
-      end
+      return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]      
+      return set_tenant_from_session if session[:tenant_id]
+      redirect_to tenants_path unless controller_name == 'tenants'
     end
+  end
+
+  def set_tenant_from_session
+    ::Tenant.current = ::Tenant.find(session[:tenant_id])
+  end
+
+  def set_tenant_from_passwordless_session
+    session = Passwordless::Session.unscoped.find_by_token(params[:token])
+    ::Tenant.current = ::Tenant.find(session.tenant_id)
   end
 
   def add_stylesheets
