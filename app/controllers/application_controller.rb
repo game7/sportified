@@ -70,7 +70,9 @@ class ApplicationController < ActionController::Base
       secure_url = "https://#{Tenant.current.slug}.sportified.net#{request.fullpath}"
       redirect_to secure_url unless request.ssl?
     end
-    return true
+    if Rails.env.preview?
+      redirect_to protocol: 'https://'
+    end
   end
 
   def set_time_zone(&block)
@@ -115,7 +117,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_tenant
-    return if Tenant.current.present?
+    return if ::Tenant.current.present?
     if Rails.env.production?
       if request.subdomain == 'www'
         ::Tenant.current = ::Tenant.find_by!(host: request.domain.downcase)
@@ -134,7 +136,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_tenant_from_passwordless_session
-    session = Passwordless::Session.unscoped.find_by_token(params[:token])
+    session = ::Passwordless::Session.unscoped.find_by_token(params[:token])
     ::Tenant.current = ::Tenant.find(session.tenant_id)
   end
 
