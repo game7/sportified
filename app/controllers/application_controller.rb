@@ -117,25 +117,33 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_tenant
-    return if ::Tenant.current.present?
+    if ::Tenant.current.present?
+      Rails.logger.debug 'Tenant present'
+      return
+    end
     if Rails.env.production?
       if request.subdomain == 'www'
+        Rails.logger.debug 'Determining Tenant from custom domain'
         ::Tenant.current = ::Tenant.find_by!(host: request.domain.downcase)
       else
+        Rails.logger.debug 'Determining Tenant from subdomain'
         ::Tenant.current = ::Tenant.find_by!(slug: request.subdomain.downcase)
       end
     else
       return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]      
       return set_tenant_from_session if session[:tenant_id]
+      Rails.logger.debug 'Unable to determine Tenant -- Redirecting to Tenant Picker'
       redirect_to tenants_path unless controller_name == 'tenants'
     end
   end
 
   def set_tenant_from_session
+    Rails.logger.debug 'Restoring Tenant from session'
     ::Tenant.current = ::Tenant.find(session[:tenant_id])
   end
 
   def set_tenant_from_passwordless_session
+    Rails.logger.debug 'Setting Tenant from Passwordless session'
     session = ::Passwordless::Session.unscoped.find_by_token(params[:token])
     ::Tenant.current = ::Tenant.find(session.tenant_id)
   end
