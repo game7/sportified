@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
       secure_url = "https://#{Tenant.current.slug}.sportified.net#{request.fullpath}"
       redirect_to secure_url unless request.ssl?
     end
-    if Rails.env.preview?
+    if Rails.env.preview? && request.protocol != 'https://'
       redirect_to protocol: 'https://'
     end
   end
