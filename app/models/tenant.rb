@@ -53,14 +53,14 @@ class Tenant < ActiveRecord::Base
     "https://" + slug_host
   end
 
-  class << self
-    def current
-      Thread.current[:current_tenant]
-    end
-    def current=(tenant)
-      Thread.current[:current_tenant] = tenant
-    end
-  end
+  # class << self
+  #   def current
+  #     Thread.current[:current_tenant]
+  #   end
+  #   def current=(tenant)
+  #     Thread.current[:current_tenant] = tenant
+  #   end
+  # end
 
   def check_and_set_slug
     self.slug ||= self.host&.parameterize
