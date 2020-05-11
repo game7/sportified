@@ -13,7 +13,6 @@ production:
   secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %> 
   region: us-east-1
   bucket: <%= Rails.application.credentials.dig(:s3, :production, :bucket) %>   
-  public: true
 
 development:
   service: S3
@@ -21,7 +20,6 @@ development:
   secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %> 
   region: us-east-1
   bucket: <%= Rails.application.credentials.dig(:s3, :development, :bucket) %>  
-  public: true 
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

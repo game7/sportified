@@ -48,8 +48,6 @@ gem 'simple_form', '~> 4.0.0'
 gem 'virtus', '~> 1.0.5'
 gem 'audited', '~> 4.6'
 
-gem 'twitter', '~> 6.2.0'
-
 gem 'cocoon'
 #gem 'delayed_job'
 
@@ -123,6 +121,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'derailed_benchmarks'
 end
 
 group :test do
