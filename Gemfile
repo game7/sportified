@@ -70,9 +70,11 @@ gem 'stripe'
 gem 'RedCloth'
 gem 'redcarpet', '~> 3.4.0'
 
-gem 'unicorn'
-
 gem 'ice_cube', '~> 0.16.2'
+
+gem 'jquery-rails'
+
+gem 'rails_12factor', group: [:staging, :production]
 
 #gem 'pages', :path => 'vendor/engines/pages'
 
@@ -136,6 +138,7 @@ group :test do
   gem 'rails-controller-testing'
 end
 
-gem 'jquery-rails'
+group :production do
+  gem 'puma'
+end
 
-gem 'rails_12factor', group: [:staging, :production]
