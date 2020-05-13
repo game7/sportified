@@ -1,13 +1,14 @@
 - title 'Dashboard'
+- wrapper class: [:ui, :container]
+
 - period = params[:period]
-.btn-group{ role: 'group', 'aria-label': '...'}
-  %a.btn.btn-default{ class: "#{'active' if period == 'day' }", href: url_for(params.permit(:period).merge(:period => 'day')) } Today
-  %a.btn.btn-default{ class: "#{'active' if period == 'week' }", href: url_for(params.permit(:period).merge(:period => 'week')) } Week
-  %a.btn.btn-default{ class: "#{'active' if period == 'month' }", href: url_for(params.permit(:period).merge(:period => 'month')) } Month
-  %a.btn.btn-default{ class: "#{'active' unless period }", href: url_for() } Total
-%br
-%br
-%table.table.table-bordered.table-striped
+.ui.buttons
+  %a.ui.button{ class: "#{'active' if period == 'day' }", href: url_for(params.permit(:period).merge(:period => 'day')) } Today
+  %a.ui.button{ class: "#{'active' if period == 'week' }", href: url_for(params.permit(:period).merge(:period => 'week')) } Week
+  %a.ui.button{ class: "#{'active' if period == 'month' }", href: url_for(params.permit(:period).merge(:period => 'month')) } Month
+  %a.ui.button{ class: "#{'active' unless period }", href: url_for() } Total
+
+%table.ui.celled.table
   %tr
     %td{ style: 'width: 40%;'} Item
     %td{ style: 'width: 15%;'} Pending
@@ -16,7 +17,7 @@
     %td{ style: 'width: 15%;'} Revenue
   - items.each do |item|
     %tr
-      %td= item.title
+      %td= link_to item.title, item
       %td= item.registrations.created_on_or_after(from_date).pending.count
       %td= item.registrations.created_on_or_after(from_date).completed.count
       %td= item.registrations.created_on_or_after(from_date).count

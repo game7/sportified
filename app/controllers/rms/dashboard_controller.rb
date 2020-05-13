@@ -1,7 +1,7 @@
 require_dependency "rms/application_controller"
 
 module Rms
-  class DashboardController < ApplicationController
+  class DashboardController < Admin::AdminController
     before_action :verify_admin
 
     def index
