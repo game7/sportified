@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: rms_form_elements
+# Table name: form_elements
 #
 #  id          :integer          not null, primary key
 #  tenant_id   :integer
@@ -16,19 +16,19 @@
 #
 # Indexes
 #
-#  index_rms_form_elements_on_template_id_and_name  (template_id,name) UNIQUE
-#  index_rms_form_elements_on_tenant_id             (tenant_id)
+#  index_form_elements_on_template_id_and_name  (template_id,name) UNIQUE
+#  index_form_elements_on_tenant_id             (tenant_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (template_id => rms_form_templates.id)
+#  fk_rails_...  (template_id => form_templates.id)
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 
-module Rms
-  class FormElements::Text < FormElement
-    def self.model_name
-      FormElement.model_name
-    end
-  end
+require 'test_helper'
+
+class FormElementTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

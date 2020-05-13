@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_174649) do
+ActiveRecord::Schema.define(version: 2020_05_13_185216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -214,6 +214,50 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_facilities_on_location_id"
     t.index ["tenant_id"], name: "index_facilities_on_tenant_id"
+  end
+
+  create_table "form_elements", id: :serial, force: :cascade do |t|
+    t.integer "tenant_id"
+    t.integer "template_id"
+    t.string "type"
+    t.string "name", limit: 40
+    t.integer "position"
+    t.hstore "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "required"
+    t.string "hint"
+    t.index ["template_id", "name"], name: "index_form_elements_on_template_id_and_name", unique: true
+    t.index ["tenant_id"], name: "index_form_elements_on_tenant_id"
+  end
+
+  create_table "form_packets", id: :serial, force: :cascade do |t|
+    t.integer "tenant_id"
+    t.string "name", limit: 40
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_form_packets_on_tenant_id"
+  end
+
+  create_table "form_templates", id: :serial, force: :cascade do |t|
+    t.integer "tenant_id"
+    t.integer "packet_id"
+    t.string "name", limit: 40
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_form_templates_on_tenant_id"
+  end
+
+  create_table "forms", id: :serial, force: :cascade do |t|
+    t.integer "tenant_id"
+    t.integer "registration_id"
+    t.integer "template_id"
+    t.hstore "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "completed", default: false, null: false
+    t.index ["tenant_id"], name: "index_forms_on_tenant_id"
   end
 
   create_table "hockey_goals", id: :serial, force: :cascade do |t|
@@ -514,62 +558,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
     t.index ["tenant_id"], name: "index_posts_on_tenant_id"
   end
 
-  create_table "programs", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.string "type"
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.index ["tenant_id"], name: "index_programs_on_tenant_id"
-  end
-
-  create_table "rms_form_elements", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.integer "template_id"
-    t.string "type"
-    t.string "name", limit: 40
-    t.integer "position"
-    t.hstore "properties"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "required"
-    t.string "hint"
-    t.index ["template_id", "name"], name: "index_rms_form_elements_on_template_id_and_name", unique: true
-    t.index ["tenant_id"], name: "index_rms_form_elements_on_tenant_id"
-  end
-
-  create_table "rms_form_packets", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.string "name", limit: 40
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_rms_form_packets_on_tenant_id"
-  end
-
-  create_table "rms_form_templates", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.integer "packet_id"
-    t.string "name", limit: 40
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_rms_form_templates_on_tenant_id"
-  end
-
-  create_table "rms_forms", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.integer "registration_id"
-    t.integer "template_id"
-    t.hstore "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "completed", default: false, null: false
-    t.index ["tenant_id"], name: "index_rms_forms_on_tenant_id"
-  end
-
-  create_table "rms_items", id: :serial, force: :cascade do |t|
+  create_table "products", id: :serial, force: :cascade do |t|
     t.integer "parent_id"
     t.string "parent_type"
     t.string "title", limit: 40
@@ -581,11 +570,22 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
     t.datetime "updated_at", null: false
     t.boolean "active"
     t.text "summary"
-    t.index ["parent_type", "parent_id"], name: "index_rms_items_on_parent_type_and_parent_id"
-    t.index ["tenant_id"], name: "index_rms_items_on_tenant_id"
+    t.index ["parent_type", "parent_id"], name: "index_products_on_parent_type_and_parent_id"
+    t.index ["tenant_id"], name: "index_products_on_tenant_id"
   end
 
-  create_table "rms_registrations", id: :serial, force: :cascade do |t|
+  create_table "programs", id: :serial, force: :cascade do |t|
+    t.integer "tenant_id"
+    t.string "type"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["tenant_id"], name: "index_programs_on_tenant_id"
+  end
+
+  create_table "registrations", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.integer "user_id"
     t.integer "variant_id"
@@ -603,23 +603,9 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
     t.text "session_id"
     t.text "payment_intent_id"
     t.string "uuid"
-    t.index ["credit_card_id"], name: "index_rms_registrations_on_credit_card_id"
-    t.index ["tenant_id"], name: "index_rms_registrations_on_tenant_id"
-    t.index ["user_id"], name: "index_rms_registrations_on_user_id"
-  end
-
-  create_table "rms_variants", id: :serial, force: :cascade do |t|
-    t.integer "item_id"
-    t.integer "tenant_id"
-    t.string "title", limit: 40
-    t.text "description"
-    t.decimal "price", precision: 20, scale: 4
-    t.integer "quantity_allowed"
-    t.integer "quantity_available"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "form_packet_id"
-    t.index ["tenant_id"], name: "index_rms_variants_on_tenant_id"
+    t.index ["credit_card_id"], name: "index_registrations_on_credit_card_id"
+    t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
+    t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
   create_table "sections", id: :serial, force: :cascade do |t|
@@ -738,6 +724,20 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "variants", id: :serial, force: :cascade do |t|
+    t.integer "item_id"
+    t.integer "tenant_id"
+    t.string "title", limit: 40
+    t.text "description"
+    t.decimal "price", precision: 20, scale: 4
+    t.integer "quantity_allowed"
+    t.integer "quantity_available"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "form_packet_id"
+    t.index ["tenant_id"], name: "index_variants_on_tenant_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chromecasts", "facilities", column: "playing_surface_id"
   add_foreign_key "chromecasts", "locations"
@@ -747,25 +747,26 @@ ActiveRecord::Schema.define(version: 2020_05_08_174649) do
   add_foreign_key "events", "pages"
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
+  add_foreign_key "form_elements", "form_templates", column: "template_id"
+  add_foreign_key "form_elements", "tenants"
+  add_foreign_key "form_packets", "tenants"
+  add_foreign_key "form_templates", "form_packets", column: "packet_id"
+  add_foreign_key "form_templates", "tenants"
+  add_foreign_key "forms", "form_templates", column: "template_id"
+  add_foreign_key "forms", "registrations"
+  add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
+  add_foreign_key "league_seasons", "programs"
+  add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "rms_form_elements", "rms_form_templates", column: "template_id"
-  add_foreign_key "rms_form_elements", "tenants"
-  add_foreign_key "rms_form_packets", "tenants"
-  add_foreign_key "rms_form_templates", "rms_form_packets", column: "packet_id"
-  add_foreign_key "rms_form_templates", "tenants"
-  add_foreign_key "rms_forms", "rms_form_templates", column: "template_id"
-  add_foreign_key "rms_forms", "rms_registrations", column: "registration_id"
-  add_foreign_key "rms_forms", "tenants"
-  add_foreign_key "rms_items", "tenants"
-  add_foreign_key "rms_registrations", "credit_cards"
-  add_foreign_key "rms_registrations", "rms_form_packets", column: "form_packet_id"
-  add_foreign_key "rms_registrations", "rms_variants", column: "variant_id"
-  add_foreign_key "rms_registrations", "tenants"
-  add_foreign_key "rms_registrations", "users"
-  add_foreign_key "rms_variants", "rms_form_packets", column: "form_packet_id"
-  add_foreign_key "rms_variants", "rms_items", column: "item_id"
-  add_foreign_key "rms_variants", "tenants"
+  add_foreign_key "registrations", "credit_cards"
+  add_foreign_key "registrations", "form_packets"
+  add_foreign_key "registrations", "tenants"
+  add_foreign_key "registrations", "users"
+  add_foreign_key "registrations", "variants"
   add_foreign_key "stripe_connects", "tenants"
+  add_foreign_key "variants", "form_packets"
+  add_foreign_key "variants", "products", column: "item_id"
+  add_foreign_key "variants", "tenants"
 end

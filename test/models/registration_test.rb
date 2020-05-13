@@ -36,5 +36,10 @@
 #  fk_rails_...  (variant_id => variants.id)
 #
 
-module RegistrationsHelper
+require 'test_helper'
+
+class RegistrationTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
