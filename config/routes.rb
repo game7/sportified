@@ -24,6 +24,9 @@
       end
     end
   end
+
+  get 'registrar/admin(/*route)', to: redirect('/admin/registrar/dashboard/index')
+
   passwordless_for :users
 
   namespace :host do

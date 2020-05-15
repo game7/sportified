@@ -1,6 +1,7 @@
 - title @product.title
 - page_actions do
   = link_to 'Edit', edit_admin_registrar_product_path(@product), class: [:ui, :primary, :button]
+  = link_to 'Download', url_for(format: :csv), class: [:ui, :primary, :button]
 - wrapper class: [:ui, :container]
 - area_menu do
   = area_menu_item 'Overview', [:admin, :registrar, @product]

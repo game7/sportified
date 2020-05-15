@@ -6,6 +6,17 @@
   = area_menu_item 'Overview', [:admin, :registrar, @product]
   = area_menu_item 'Registrations', [:admin, :registrar, @product, :registrations]
 
+.ui.padded.segment
+  .ui.divided.two.column.stacked.grid
+    .center.aligned.column
+      .ui.statistic
+        .value= @registration_count
+        .label Registrations
+    .center.aligned.column
+      .ui.statistic
+        .value= number_to_currency(@registration_revenue, :unit => "$").presence || '$0'
+        .label Revenue
+
 %h4.ui.top.attached.header Latest Registrations
 %table.ui.celled.bottom.attached.table
   %thead

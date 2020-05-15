@@ -9,6 +9,8 @@ class Admin::Registrar::ProductsController < Admin::AdminController
   end
 
   def show
+    @registration_count = @product.registrations.count
+    @registration_revenue = @product.registrations.sum(:price)
   end
 
   def new

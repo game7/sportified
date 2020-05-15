@@ -1,8 +1,0 @@
-= builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
-  .ui.segment{ style: 'margin: 0;' }
-    .two.fields
-      = builder.input "#{element.name}-first", label: 'First Name', wrapper_html: { class: [:eight, :wide] }
-      = builder.input "#{element.name}-last", label: 'Last Name', wrapper_html: { class: [:eight, :wide] }
-    .two.fields
-      = builder.input "#{element.name}-email", label: 'Email'
-      = builder.input "#{element.name}-phone", label: 'Phone'     
