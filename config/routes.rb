@@ -13,9 +13,10 @@
   namespace :admin do
     namespace :registrar do
       get 'dashboard/index'
-      resources :products, module: :products do
+      resources :products
+      resources :products, module: :products, only: [] do
         resources :registrations, only: [:index]
-      end
+      end      
       resources :registrations, only: [:index, :show]
     end
     resources :form_packets, shallow: true do
