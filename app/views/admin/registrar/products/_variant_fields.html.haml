@@ -1,0 +1,6 @@
+.item.nested-fields
+  .content
+    = f.input :title
+    = f.input :description, input_html: { rows: 3 }
+    = f.association :form_packet, :collection => @form_packets, include_blank: true
+    = f.input :price, { placeholder: 'Free' }

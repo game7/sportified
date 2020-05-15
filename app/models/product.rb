@@ -38,7 +38,7 @@ class Product < ApplicationRecord
 
   validates :title,
             presence: true,
-            length: { maximum: 30 }
+            length: { maximum: 50 }
 
   validates :quantity_allowed, numericality: { only_integer: true }, :allow_nil => true
   validates :quantity_available, numericality: { only_integer: true }, :allow_nil => true

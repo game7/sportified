@@ -1,5 +1,29 @@
 ::Sportified::Application.routes.draw do
 
+  resources :products, only: [:index, :show]
+  resources :variants, only: [] do
+    resources :registrations, only: [:new, :create]
+  end
+  resources :registrations, only: [:index, :show] do
+    member do
+      get :collect
+      get :confirm
+    end
+  end
+  namespace :admin do
+    namespace :registrar do
+      get 'dashboard/index'
+      resources :products, module: :products do
+        resources :registrations, only: [:index]
+      end
+      resources :registrations, only: [:index, :show]
+    end
+    resources :form_packets, shallow: true do
+      resources :form_templates, shallow: true do
+        resources :form_elements, except: [:index, :show]
+      end
+    end
+  end
   passwordless_for :users
 
   namespace :host do
@@ -22,18 +46,6 @@
   end unless Rails.env.production?
 
   get 'pack' => 'client#index'
-
-  draw :rms
-
-  # namespace :registrar do
-  #   resources :registrables
-  #   resources :registration_types, :only => [], :shallow => true do
-  #     resources :registrations, :only => [:new, :create, :show] do
-  #       get 'payment', :on => :member
-  #     end
-  #   end
-  #   resources :registrations, :only => [:index]
-  # end
 
   match "markdown" => "markdown#preview", :as => :markdown, :via => :post
 

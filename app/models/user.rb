@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   has_many :roles, :class_name => "UserRole"
   has_many :authentications
 
-  has_many :registrations, :class_name => 'Rms::Registration'
+  has_many :registrations
 
   validates_presence_of :first_name, :last_name, :email
 

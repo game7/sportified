@@ -44,11 +44,11 @@
     .ui.top.fixed.menu
       .item.header{ style: 'width: 190px;'} 
         %span{ style: 'width: 100%; text-align: center;' } SPORTIFED
+
       .right.menu
         = link_to 'Go to Site', root_path, class: :item  
     
     .ui.visible.left.vertical.overlay.sidebar.menu
-      -# .item.top hello   
       = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
       = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
       = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
@@ -60,20 +60,33 @@
       = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
       = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
       = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
-      -# = admin_menu_item url: form_packets_path, icon: :newspaper, label: 'Forms'
-      = admin_menu_item url: dashboard_path, icon: :signup, label: 'Registration'
+      = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms'
+      = admin_menu_item url: admin_registrar_dashboard_index_path, icon: :signup, label: 'Registration'
 
       
     .pusher#main
-      - if content_for?(:title)
-        .admin-page-title
-          %h1{ style: 'float: left;' }
-            %span#page-title= yield(:title)
-          .actions{ style: 'float: right;' }
-            = yield(:actions)
-          %div{ style: 'clear: both;' }
       .admin-content
-        #wrapper{ @wrapper || {} }          
+        #wrapper{ @wrapper || {} } 
+          - if @breadcrumbs and @breadcrumbs.length > 0
+            .ui.top.attached.segment{ style: 'padding-top: 5px; padding-bottom: 5px;'}
+              .ui.small.breadcrumb
+                - @breadcrumbs.each_with_index do |crumb, index|
+                  - unless index == 0
+                    %span.divider= '/'
+                  - if crumb[:url] && crumb[:url] != request.path
+                    %a.section{ :href => "#{crumb[:url]}" } #{crumb[:title]}
+                  - else
+                    .section= crumb[:title]            
+          - if content_for?(:title)
+            .ui.attached.clearing.segment{ class: [ content_for?(:area_menu) ? nil : :bottom ]}
+              %h1{ style: 'float: left; margin-bottom: 0;' }
+                %span#page-title= yield(:title)
+              .actions{ style: 'float: right;' }
+                = yield(:actions)
+          - if content_for?(:area_menu)
+            .ui.bottom.attached.menu
+              = yield(:area_menu)
+
           #page-header
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield

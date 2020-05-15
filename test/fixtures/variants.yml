@@ -3,7 +3,7 @@
 # Table name: variants
 #
 #  id                 :integer          not null, primary key
-#  item_id            :integer
+#  product_id         :integer
 #  tenant_id          :integer
 #  title              :string(40)
 #  description        :text
@@ -21,7 +21,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (form_packet_id => form_packets.id)
-#  fk_rails_...  (item_id => products.id)
+#  fk_rails_...  (product_id => products.id)
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 

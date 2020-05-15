@@ -1,0 +1,6 @@
+= simple_form_for [:admin, @template, @element] do |f|
+  = f.input :type, :as => :hidden
+  = f.input :name
+  = f.input :position
+  = f.input :required           
+  = f.button :wrapped, :cancel => return_url

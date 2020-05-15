@@ -1,0 +1,8 @@
+= builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
+  .ui.segment{ style: 'margin: 0;' }
+    = builder.input "#{element.name}-street", label: 'Street', wrapper_html: { class: [:sixteen, :wide]}
+    = builder.input "#{element.name}-street2", label: false, wrapper_html: { class: [:sixteen, :wide]}
+    .fields
+      = builder.input "#{element.name}-city", label: 'City', wrapper_html: { class: [:eight, :wide]}
+      = builder.input "#{element.name}-state", label: 'State', wrapper_html: { class: [:four, :wide]}
+      = builder.input "#{element.name}-postal", label: 'Postal Code', wrapper_html: { class: [:four, :wide]}

@@ -1,0 +1,36 @@
+- title @form_template.name
+- wrapper class: [:ui, :container]
+- page_actions do
+  .btn-group
+    %button.ui.primary.dropdown.button
+      .text Add Form Element
+      = semantic_icon :dropdown, :icon
+      .menu
+        = link_to semantic_icon(:plus) + 'Text', new_admin_form_template_form_element_path(@form_template, type: :text), class: [:item]
+        = link_to semantic_icon(:plus) + 'Note', new_admin_form_template_form_element_path(@form_template, type: :note), class: [:item]
+        = link_to semantic_icon(:plus) + 'Choice', new_admin_form_template_form_element_path(@form_template, type: :choice), class: [:item]
+        = link_to semantic_icon(:plus) + 'Email', new_admin_form_template_form_element_path(@form_template, type: :email), class: [:item]
+        = link_to semantic_icon(:plus) + 'Contact', new_admin_form_template_form_element_path(@form_template, type: :contact), class: [:item]
+        = link_to semantic_icon(:plus) + 'Height', new_admin_form_template_form_element_path(@form_template, type: :height), class: [:item]
+        = link_to semantic_icon(:plus) + 'Weight', new_admin_form_template_form_element_path(@form_template, type: :weight), class: [:item]
+        = link_to semantic_icon(:plus) + 'Agreement', new_admin_form_template_form_element_path(@form_template, type: :agreement), class: [:item]
+
+.ui.segment
+  = simple_form_for :form do |f|
+    - @form_template.elements.each do |element|
+      %table.ui.table.celled
+        %thead
+          %tr
+            %th
+              = element.partial.titleize
+              .pull-right
+                .ui.dropdown
+                  = semantic_icon :vertical, :ellipsis
+                  .menu.left
+                    = link_to 'Edit', edit_admin_form_element_path(element), class: [:item]
+                    = link_to 'Delete', admin_form_element_path(element), method: :delete, class:  [:item], data: { confirm: 'Are you sure?' }            
+        %tbody
+          %tr
+            %td
+              = render "rms/registrations/elements/#{element.partial}", element: element, builder: f
+

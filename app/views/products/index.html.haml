@@ -1,0 +1,14 @@
+- title 'Products'
+.ui.divided.items
+  - @products.each do |product|
+    .item
+      .image
+        %img{ src: '/image.png' }
+      .content
+        = link_to product.title, product, class: [:header]
+        .description
+          %p= product.summary
+        .extra
+          = link_to product, class: [:ui, :right, :floated, :primary, :button] do
+            More Info
+            = semantic_icon :right, :chevron

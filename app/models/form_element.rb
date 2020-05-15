@@ -28,7 +28,7 @@
 class FormElement < ApplicationRecord
   include Sportified::TenantScoped
 
-  belongs_to :template, class_name: 'Template'
+  belongs_to :template, class_name: 'FormTemplate'
   validates :template, presence: true
 
   validates :name, presence: true

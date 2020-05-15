@@ -1,0 +1,11 @@
+%h3.ui.dividing.header= form.template.name
+%table.ui.definition.table
+  - form.elements.each do |element|
+    - element.permitted_params.each do |param|
+      - key = param.class.name == 'String' ? param : param.keys.first
+      %tr
+        %td.four.wide= key.titleize
+        %td
+          - if form.data
+            - value = form.data[key]
+            = value

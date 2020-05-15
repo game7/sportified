@@ -1,0 +1,38 @@
+
+%h3.ui.dividing.header= registration.product.title
+%table.ui.definition.table
+  %tr
+    %td.four.wide Customer Name
+    %td= "#{registration.first_name} #{registration.last_name}"
+  %tr
+    %td Customer Email
+    %td= registration.email   
+  %tr
+    %td Locator
+    %td= registration.confirmation_code
+  %tr
+    %td Price
+    %td= number_to_currency registration.price
+  %tr
+    %td Payment Id
+    %td= registration.payment_id
+  %tr
+    %td Participant Name
+    %td= "#{registration.first_name} #{registration.last_name}"
+  %tr
+    %td Participant Birthdate
+    %td= registration.birthdate.strftime('%-m/%-d/%Y')
+  %tr
+    %td Created At
+    %td= registration.created_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
+  %tr
+    %td Updated At
+    %td= registration.updated_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
+
+- registration.forms.each do |form|
+  = render partial: 'show_form', locals: { form: form }
+
+
+= link_to 'Your Registrations', registrations_path
+\|
+= link_to 'Shop Again', products_path

@@ -1,0 +1,46 @@
+- title @registration.full_name
+-# - page_actions do
+-#   = link_to 'Edit', edit_admin_registrar_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
+- wrapper class: [:ui, :container]
+
+%h4.ui.top.attached.header Registration Info
+%table.ui.bottom.attached.definition.table
+  %tbody
+    %tr
+      %td Created
+      %td= @registration.created_at  
+    %tr
+      %td{ style: 'width: 25%;' } Product
+      %td= @registration.product.title
+    %tr
+      %td{ style: 'width: 25%;' } Variant
+      %td= @registration.variant.title   
+    %tr
+      %td Price
+      %td= number_to_currency(@registration.price, :unit => "$").presence || 'Free'  
+    %tr
+      %td Payment
+      %td= link_to_if(@registration.payment_intent_id.present?, @registration.payment_intent_id, @registration.payment_url, { target: :blank })
+
+
+%h4.ui.top.attached.header Participant Info
+%table.ui.bottom.attached.definition.table
+  %tbody
+    %tr
+      %td{ style: 'width: 25%;' } Email
+      %td= @registration.email
+    %tr
+      %td Participant
+      %td= @registration.full_name 
+    %tr
+      %td Birthdate (Age)
+      %td= "#{@registration.birthdate} (#{age(@registration.birthdate)})" 
+
+- @registration.forms.each do |form|
+  %h4.ui.top.attached.header= form.template.name
+  %table.ui.bottom.attached.definition.table
+    %tbody
+      - form.template.elements.each do |element|
+        %tr
+          %td{ style: 'width: 25%;' }= element.name.humanize.titleize
+          %td= form.data[element.name]

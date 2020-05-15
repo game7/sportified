@@ -1,0 +1,25 @@
+= builder.input element.name, { label: element.name.humanize.titleize, required: element.required? } do
+  %pre.agreement= element.terms
+  -# = builder.input :agreement, as: :text, label: false, input_html: { readonly: true, value: element.terms, rows: 3 }
+  = builder.input element.name, as: :boolean, :label => 'Agree?', :error => false, checked_value: "true", unchecked_value: "false"
+
+:css
+  pre.agreement {
+    zwidth: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    padding: 5px;
+    height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #f9f9f9;
+    margin: 0;
+    margin-bottom: 10px;   
+    border-radius: 0.28571429rem; 
+  }
+  .field.error pre.agreement {
+    background: #FFF6F6;
+    border-color: #E0B4B4;
+    color: #9F3A38;    
+  }

@@ -17,6 +17,15 @@ module LayoutHelper
     content_for(:actions) { content }
   end
 
+  def area_menu(&block)
+    content = capture(&block)
+    content_for(:area_menu) { content }
+  end
+
+  def area_menu_item(title, url)
+    link_to title, url, class: [ :item, current_page?(url) && :active ]
+  end
+
   def breadcrumbs(crumbs)
     @breadcrumbs = crumbs
   end

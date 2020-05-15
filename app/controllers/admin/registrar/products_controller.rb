@@ -1,0 +1,69 @@
+class Admin::Registrar::ProductsController < Admin::AdminController
+  before_action :mark_return_point, :only => [:new, :edit]
+  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :get_form_packets, only: [:edit, :update, :new, :create]
+
+  def index
+    @products = Product.all
+    @products = @products.active unless current_user_is_admin?
+  end
+
+  def show
+  end
+
+  def new
+    @product = Product.new
+  end
+
+  def edit
+  end
+
+  def create
+    @product = Product.new(product_params)
+
+    if @product.save
+      redirect_to @product, notice: 'Product was successfully created.'
+    else
+      puts @product.errors.messages
+      flash[:error] = "Product could not be created"
+      render :new
+    end
+  end
+
+  def update
+    if @product.update(product_params)
+      redirect_to @product, notice: 'Product was successfully updated.'
+    else
+      flash[:error] = "Product could not be created"
+      render :edit
+    end
+  end
+
+  def destroy
+    @product.destroy
+    redirect_to products_url, notice: 'Product was successfully destroyed.'
+  end
+
+  protected
+
+    def set_breadcrumbs
+      super
+      add_breadcrumb 'Registration', admin_registrar_dashboard_index_path
+      add_breadcrumb 'Products', admin_registrar_products_path
+    end  
+
+  private
+
+    def set_product
+      @product = Product.includes(:variants).find(params[:id])
+    end
+
+    def product_params
+      params.required(:product).permit(:title, :summary, :description, :quantity_allowed, :active,
+        variants_attributes: [ :id, :title, :description, :form_packet_id, :quantity_allowed, :price, :_destroy ])
+    end
+
+    def get_form_packets
+      @form_packets = FormPacket.all
+    end
+end

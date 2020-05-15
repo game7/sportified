@@ -51,7 +51,7 @@ class Registration < ApplicationRecord
   validates :variant,
             presence: true
 
-  validates :item,
+  validates :product,
             presence: true
 
   validates :first_name,
@@ -98,12 +98,24 @@ class Registration < ApplicationRecord
     forms_completed? and (payment_required? ? paid? : true)
   end
 
+  def status
+    return 'Completed' if completed?
+  end
+
   def paid?
     !payment_id.blank?
   end
 
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def test?
+    true
+  end
+
+  def payment_url
+    "https://dashboard.stripe.com#{test? ? '/test' : ''}/payments/#{payment_intent_id}"
   end
 
   before_validation :set_price_from_variant

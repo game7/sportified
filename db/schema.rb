@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_185216) do
+ActiveRecord::Schema.define(version: 2020_05_13_223952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -725,7 +725,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_185216) do
   end
 
   create_table "variants", id: :serial, force: :cascade do |t|
-    t.integer "item_id"
+    t.integer "product_id"
     t.integer "tenant_id"
     t.string "title", limit: 40
     t.text "description"
@@ -767,6 +767,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_185216) do
   add_foreign_key "registrations", "variants"
   add_foreign_key "stripe_connects", "tenants"
   add_foreign_key "variants", "form_packets"
-  add_foreign_key "variants", "products", column: "item_id"
+  add_foreign_key "variants", "products"
   add_foreign_key "variants", "tenants"
 end
