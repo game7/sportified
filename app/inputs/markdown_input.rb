@@ -20,7 +20,7 @@ class MarkdownInput < SimpleForm::Inputs::Base
     attrs = {
       object: object_name, 
       attr: attribute_name,      
-      value: value,
+      value: value || '',
       preview: value.present? ? MarkdownService.html(value) : ''
     }
   end

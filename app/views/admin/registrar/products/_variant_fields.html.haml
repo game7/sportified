@@ -1,6 +1,11 @@
-.item.nested-fields
-  .content
-    = f.input :title
-    = f.input :description, input_html: { rows: 3 }
-    = f.association :form_packet, :collection => @form_packets, include_blank: true
-    = f.input :price, { placeholder: 'Free' }
+.ui.attached.padded.segment
+  = f.hidden_field :id
+  .fields
+    .seven.wide.field  
+      = f.input :title
+    .seven.wide.field
+      = f.association :form_packet, :collection => @form_packets, include_blank: true
+    .two.wide.field
+      = f.input :price, { placeholder: 'Free' }
+  = f.input :description, input_html: { rows: 3 }
+
