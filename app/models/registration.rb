@@ -39,7 +39,7 @@
 class Registration < ApplicationRecord
   include Sportified::TenantScoped
 
-  belongs_to :variant
+  belongs_to :variant, counter_cache: true
   has_one :product, through: :variant
   has_many :forms, dependent: :destroy
   accepts_nested_attributes_for :forms
@@ -68,6 +68,14 @@ class Registration < ApplicationRecord
 
   validates :birthdate,
             presence: true
+
+  validate :variant_must_have_quantity_available
+
+  def variant_must_have_quantity_available
+    if variant && variant.quantity_allowed.present? && variant.registrations.length > variant.quantity_allowed
+      errors.add(:base, "The option for '#{variant.title}' has reached maximum capacity and is no longer available")
+    end
+  end
 
   paginates_per 10
 

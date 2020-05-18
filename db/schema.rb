@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_223952) do
+ActiveRecord::Schema.define(version: 2020_05_18_204715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -735,6 +735,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_223952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "form_packet_id"
+    t.integer "registrations_count"
     t.index ["tenant_id"], name: "index_variants_on_tenant_id"
   end
 

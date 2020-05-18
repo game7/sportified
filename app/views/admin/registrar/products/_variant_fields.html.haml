@@ -1,10 +1,12 @@
 .ui.attached.padded.segment
   = f.hidden_field :id
   .fields
-    .seven.wide.field  
+    .six.wide.field  
       = f.input :title
-    .seven.wide.field
+    .six.wide.field
       = f.association :form_packet, :collection => @form_packets, include_blank: true
+    .two.wide.field
+      = f.input :quantity_allowed
     .two.wide.field
       = f.input :price, as: :currency, placeholder: 'Free'
   = f.input :description, input_html: { rows: 3 }

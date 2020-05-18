@@ -43,7 +43,10 @@ class RegistrationsController < ApplicationController
       redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
       redirect_to registration_path(registration.uuid) unless registration.payment_required?
     else
-      flash[:error] = "Registration could not be completed.  Please check the form for messages."
+      flash[:error] = "Registration could not be completed"
+      registration.errors[:base].each do |message|
+        flash[:error] = message
+      end
       render :new, locals: {
         registration: registration,
         variant: variant

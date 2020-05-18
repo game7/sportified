@@ -17,6 +17,19 @@
         .value= number_to_currency(@registration_revenue, :unit => "$").presence || '$0'
         .label Revenue
 
+%h4.ui.top.attached.header Variants        
+%table.ui.celled.bottom.attached.table
+  %thead
+    %th Name
+    %th Price
+    %th Registrations
+  %tbody
+    - @product.variants.each do |variant|
+      %tr
+        %td= variant.title
+        %td= number_to_currency(variant.price, :unit => "$").presence || 'Free'
+        %td= variant.quantity_allowed.present? ? "#{variant.registrations_count || 0} / #{variant.quantity_allowed}" : variant.registrations_count
+
 %h4.ui.top.attached.header Latest Registrations
 %table.ui.celled.bottom.attached.table
   %thead

@@ -24,7 +24,7 @@ class Admin::Registrar::ProductsController < Admin::AdminController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to [:admin, :registrar, @product], notice: 'Product was successfully created.'
     else
       puts @product.errors.messages
       flash[:error] = "Product could not be created"
@@ -34,7 +34,7 @@ class Admin::Registrar::ProductsController < Admin::AdminController
 
   def update
     if @product.update(product_params)
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to [:admin, :registrar, @product], notice: 'Product was successfully updated.'
     else
       flash[:error] = "Product could not be created"
       render :edit
