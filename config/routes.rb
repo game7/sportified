@@ -11,14 +11,13 @@
     end
   end
   namespace :admin do
-    namespace :registrar do
-      get 'dashboard/index'
-      resources :products
-      resources :products, module: :products, only: [] do
-        resources :registrations, only: [:index]
-      end      
-      resources :registrations, only: [:index, :show]
-    end
+    get 'dashboard/index'
+    get 'products/dashboard' => 'products/dashboard#index'
+    resources :products
+    resources :products, module: :products, only: [] do
+      resources :registrations, only: [:index]
+    end      
+    resources :registrations, only: [:index, :show]
     resources :form_packets, shallow: true do
       resources :form_templates, shallow: true do
         resources :form_elements, except: [:index, :show]
@@ -26,7 +25,7 @@
     end
   end
 
-  get 'registrar/admin(/*route)', to: redirect('/admin/registrar/dashboard/index')
+  get 'registrar/admin(/*route)', to: redirect('/admin/products/dashboard')
 
   passwordless_for :users
 
