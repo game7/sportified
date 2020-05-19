@@ -22,7 +22,7 @@ class ScheduleController < BaseLeagueController
         @events = Event.in_the_future.tagged_with(params[:tags], match).order(starts_on: :asc).page params[:page]
       else
         @events = all_divisions? ? Event : @division.events
-        @events = @events.includes(:location)
+        @events = @events.includes(:location, :product)
         @events = @events.where('starts_on > ? AND ends_on < ?', @start_date, @end_date).order(starts_on: :asc)
       end
     end

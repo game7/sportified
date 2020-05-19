@@ -1,6 +1,6 @@
 - title @product.title
 - page_actions do
-  = link_to 'Edit', admin_registrar_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
+  = link_to 'Edit', admin_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
 
 != MarkdownService.html @product.description
 

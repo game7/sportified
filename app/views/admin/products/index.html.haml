@@ -4,15 +4,24 @@
 - wrapper class: [:ui, :container]
 
 %table.ui.celled.table
-  %tr
-    %td{ style: 'width: 40%;'} Product
-    %td{ style: 'width: 15%;'} Pending
-    %td{ style: 'width: 15%;'} Completed
-    %td{ style: 'width: 15%;'} Total
-    %td{ style: 'width: 15%;'} Revenue
+  %thead
+    %tr
+      %th Product
+      %th Association
+      %th Active
+      %th Pending
+      %th Completed
+      %th Total
+      %th Revenue
+  %tbody
   - @products.each do |product|
     %tr
       %td= link_to product.title, [:admin, product]
+      %td
+        - if product.registrable_type == 'Event'
+          .title= link_to product.registrable.summary, [:admin, :general, product.registrable]
+          .starts_on= product.registrable.starts_on.strftime('%A, %B %e %Y %l:%M %P')
+      %td= product.active?
       %td= product.registrations.pending.count
       %td= product.registrations.completed.count
       %td= product.registrations.count

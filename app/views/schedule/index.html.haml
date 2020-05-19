@@ -18,7 +18,7 @@
     = render 'no_events' if events.none?
 
     - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-      %table.ui.celled.table
+      %table.ui.celled.striped.table
         %thead
           %tr
             %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
@@ -33,7 +33,12 @@
                   - unless event.class.name == 'League::Game'
                     != ' - '
                     = event.ends_on.strftime('%l:%M %P')  
-              %td= event.summary
+              %td
+                = event.summary
+                - if event.product.present? && event.product.active?
+                  = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
+                    %i.edit.outline.icon
+                    Register Online
 
     = render 'stepper', date: @date if @date.present?    
 
@@ -45,7 +50,7 @@
     = render 'no_events' if events.none?
 
     - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-      %table.ui.unstackable.celled.events.table
+      %table.ui.unstackable.celled.striped.events.table
         %thead
           %tr
             %th= date.strftime('%A, %B %e %Y')
@@ -62,6 +67,10 @@
                     - unless event.class.name == 'League::Game'
                       != ' - '
                       = event.ends_on.strftime('%l:%M %P')  
+                - if event.product.present? && event.product.active?
+                  = link_to event.product, class: [:ui, :tiny, :primary, :button] do
+                    %i.edit.outline.icon
+                    Register Online                      
 
     = render 'stepper', date: @date if @date.present?  
 
