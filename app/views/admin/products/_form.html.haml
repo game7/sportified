@@ -1,5 +1,18 @@
 = simple_form_for [:admin, @product] do |f|
 
+  = f.input :registrable_type, as: :hidden
+  = f.input :registrable_id, as: :hidden
+
+  - if @product.registrable.present?
+    %h4.ui.top.attached.header Associated With
+    %table.ui.bottom.attached.celled.table.edit_productegment 
+      %tbody
+        %tr
+          - if @product.registrable_type == 'Event'
+            %td.center.aligned= link_to "Event ##{@product.registrable_id}", admin_general_event_path(@product.registrable)
+            %td.center.aligned= @product.registrable.summary
+            %td.center.aligned= @product.registrable.starts_on
+
   %h4.ui.top.attached.header Product Info
   .ui.bottom.attached.segment
     = f.input :title
@@ -18,7 +31,7 @@
 
 :javascript
   $(function() {
-    $('.edit_product').on('cocoon:after-insert', function(e, insertedItem) {
+    $('.new_product, .edit_product').on('cocoon:after-insert', function(e, insertedItem) {
       $(insertedItem).find('select.ui.dropdown').dropdown({ clearable: true });
     })
   })

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_204715) do
+ActiveRecord::Schema.define(version: 2020_05_18_225406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -559,8 +559,8 @@ ActiveRecord::Schema.define(version: 2020_05_18_204715) do
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
-    t.integer "parent_id"
-    t.string "parent_type"
+    t.integer "registrable_id"
+    t.string "registrable_type"
     t.string "title", limit: 40
     t.text "description"
     t.integer "quantity_allowed"
@@ -570,7 +570,7 @@ ActiveRecord::Schema.define(version: 2020_05_18_204715) do
     t.datetime "updated_at", null: false
     t.boolean "active"
     t.text "summary"
-    t.index ["parent_type", "parent_id"], name: "index_products_on_parent_type_and_parent_id"
+    t.index ["registrable_type", "registrable_id"], name: "index_products_on_registrable_type_and_registrable_id"
     t.index ["tenant_id"], name: "index_products_on_tenant_id"
   end
 
@@ -757,7 +757,6 @@ ActiveRecord::Schema.define(version: 2020_05_18_204715) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

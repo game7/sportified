@@ -70,6 +70,8 @@ class Event < ActiveRecord::Base
   belongs_to :home_team_locker_room, class_name: 'LockerRoom', required: false
   belongs_to :away_team_locker_room, class_name: 'LockerRoom', required: false
 
+  has_one :product, as: :registrable
+
   validates_presence_of :starts_on
   # validate :starts_on_cannot_be_in_the_past
 
@@ -103,6 +105,7 @@ class Event < ActiveRecord::Base
   scope :ends_after, ->(after) { where('ends_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
   scope :public_only, ->{ where(private: false) }
+  scope :with_product, ->{ joins(:product).where('products.registrable_type = \'Event\' AND products.id IS NOT NULL') }
 
   def start_time
     self.starts_on

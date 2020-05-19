@@ -1,6 +1,10 @@
 class Admin::General::EventsController < Admin::AdminController
-  before_action :load_event, :only => [:edit, :update]
+  before_action :load_event, :only => [:show, :edit, :update]
   before_action :mark_return_point, only: [:new, :edit]
+
+  def show
+    @recent_events_with_products = General::Event.with_product.order(starts_on: :desc).includes(:product).limit(10)
+  end
 
   def new
     if params[:clone]

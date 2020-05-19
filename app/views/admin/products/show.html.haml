@@ -1,6 +1,7 @@
 - title @product.title
 - page_actions do
-  = link_to 'Edit', edit_admin_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
+  = link_to 'Edit', edit_admin_product_path(@product), class: [:ui, :primary, :button]
+  = link_to 'Clone', new_admin_product_path(clone: @product.id), class: [:ui, :primary, :button]
 - wrapper class: [:ui, :container]
 - area_menu do
   = area_menu_item 'Overview', [:admin, @product]
@@ -16,6 +17,15 @@
       .ui.statistic
         .value= number_to_currency(@registration_revenue, :unit => "$").presence || '$0'
         .label Revenue
+
+%h4.ui.top.attached.header Associated With
+%table.ui.celled.bottom.attached.table
+  %tbody
+    %tr
+      - if @product.registrable_type == 'Event'
+        %td.center.aligned= link_to "Event ##{@product.registrable_id}", admin_general_event_path(@product.registrable)
+        %td.center.aligned= @product.registrable.summary
+        %td.center.aligned= @product.registrable.starts_on        
 
 %h4.ui.top.attached.header Variants        
 %table.ui.celled.bottom.attached.table

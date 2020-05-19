@@ -1,0 +1,86 @@
+- title @event.summary
+- wrapper class: [:ui, :container]
+- page_actions do
+  = link_to 'Edit', edit_admin_general_event_path(@event), class: [:ui, :primary, :button]
+
+%h4.ui.top.attached.header Basic Info
+%table.ui.bottom.attached.definition.table
+  %tbody
+    %tr
+      %td{ style: 'width: 25%;' } Summary
+      %td= @event.summary
+    %tr
+      %td Date / Time
+      %td= @event.starts_on
+    %tr
+      %td Location
+      %td= @event.location.name
+    %tr
+      %td Tags
+      %td= @event.tag_list                  
+
+%h4.ui.top.attached.header Registration
+- if @event.product
+  .ui.bottom.attached.segment
+    There is a product setup for this event
+    %br/
+    %br/    
+    = link_to 'Show Product', [:admin, @event.product], class: [:ui, :button]
+- else
+  .ui.bottom.attached.segment
+    There is currently no product associated with this event.  
+    %br/
+    %br/
+    = link_to 'Create New Product', new_admin_product_path({ registrable_id: @event.id, registrable_type: 'Event' }), class: [:ui, :primary, :button]
+    - if @recent_events_with_products.any?
+      .ui.primary.dropdown.button
+        .text Clone Existing Product
+        %i.dropdown.icon
+        .menu
+          - @recent_events_with_products.each do |event|
+            = link_to new_admin_product_path({ registrable_id: @event.id, registrable_type: 'Event', clone: event.product.id }), class: [:item] do
+              %i.copy.outline.icon
+              = "#{event.summary} (#{event.starts_on.strftime("%a %-m/%-d/%y at %l:%M %P")})"
+
+%h4.ui.top.attached.header History
+%table.ui.bottom.attached.celled.history.table
+  %thead
+    %tr
+      %th Time
+      %th Action
+      %th User
+      %th Changes
+  %tbody
+    - @event.audits.each do |audit|
+      %tr
+        %td= "#{time_ago_in_words(audit.created_at)} ago"
+        %td= audit.action
+        %td= audit&.user&.full_name
+        %td
+          - if audit.action == 'update'
+            %table.ui.celled.table
+              %thead
+                %tr
+                  %th{ style: 'width: 40%;' } Attribute
+                  %th{ style: 'width: 30%;' } From
+                  %th{ style: 'width: 30%;' } To
+              %tbody
+                - audit.audited_changes.each do |attr, change|
+                  %tr
+                    %td= attr.humanize
+                    %td= change[0]
+                    %td= change[1]    
+
+:css
+
+  table.history td {
+    vertical-align: top;
+  }
+
+:javascript
+
+  $(function() {
+    $('.ui.dropdown').dropdown()
+  })
+
+

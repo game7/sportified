@@ -14,7 +14,11 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def new
-    @product = Product.new
+    @product = params[:clone] ? Product.find(params[:clone]).dup : Product.new
+    @product.assign_attributes( registrable_type: params[:registrable_type], registrable_id: params[:registrable_id] )
+    if(@product.registrable_type == 'Event' && @product.registrable.present?) 
+      @product.title = @product.registrable.summary
+    end
   end
 
   def edit
@@ -61,7 +65,7 @@ class Admin::ProductsController < Admin::AdminController
     end
 
     def product_params
-      params.required(:product).permit(:title, :summary, :description, :quantity_allowed, :active,
+      params.required(:product).permit(:title, :summary, :description, :quantity_allowed, :active, :registrable_id, :registrable_type,
         variants_attributes: [ :id, :title, :description, :form_packet_id, :quantity_allowed, :price, :_destroy ])
     end
 

@@ -199,7 +199,7 @@
     end
 
     namespace :general do
-      resources :events, only: [:new, :create, :edit, :update]
+      resources :events, only: [:show, :new, :create, :edit, :update]
     end
     resources :game_imports do
       post 'complete', :on => :member

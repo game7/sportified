@@ -28,7 +28,7 @@
 class Product < ApplicationRecord
   include Sportified::TenantScoped
 
-  belongs_to :parent, polymorphic: true, required: false
+  belongs_to :registrable, polymorphic: true, required: false
 
   has_many :variants, dependent: :destroy
 
@@ -47,6 +47,12 @@ class Product < ApplicationRecord
 
   def set_quantity_available_to_quantity_allowed
     self.quantity_available = self.quantity_allowed
+  end
+
+  def dup
+    clone = super
+    clone.variants << variants.collect(&:dup)
+    clone
   end
 
   scope :active, -> { where(active: true) }

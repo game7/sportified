@@ -49,6 +49,7 @@
                 .clear
                 .menu
                   .header EVENT
+                  = link_to 'Show', polymorphic_path([:admin, event.module_name, event]), class: [:item]
                   = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: [:item]
                   = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], clone: event.id), class: [:item]
                   = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', class: [:item]
