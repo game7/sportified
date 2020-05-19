@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
 
   has_many :registrations
 
-  validates_presence_of :first_name, :last_name, :email
+  validates_presence_of :email
 
   scope :with_email, ->(email) { where(:email => email) }
 
@@ -73,29 +73,34 @@ class User < ActiveRecord::Base
       id = t.class.to_s == "Tenant" ? t.id : t
       joins(:tenants).where(tenants: { id: id })
     end
+
     def find_by_auth_provider_and_uid(provider, uid)
       where("authentications.provider" => provider, "authentications.uid" => uid).first
+    end
+
+    def fetch_resource_for_passwordless(email)
+      find_or_create_by(email: email.downcase)
     end
   end
 
   protected
 
-  def set_id
-    self._id = self.name if self._id.blank?
-  end
-
-  def capture_tenant_at_sign_in
-     capture_tenant if self.sign_in_count_changed?
-  end
-
-  def capture_tenant
-    unless self.tenants.all.include?(Tenant.current)
-      self.tenants << Tenant.current
+    def set_id
+      self._id = self.name if self._id.blank?
     end
-  end
 
-  def password_required?
-    !persisted? || password.present? || password_confirmation.present?
-  end
+    def capture_tenant_at_sign_in
+      capture_tenant if self.sign_in_count_changed?
+    end
+
+    def capture_tenant
+      unless self.tenants.all.include?(Tenant.current)
+        self.tenants << Tenant.current
+      end
+    end
+
+    def password_required?
+      !persisted? || password.present? || password_confirmation.present?
+    end
 
 end
