@@ -2,22 +2,27 @@
 - page_actions do
   = link_to 'Edit', admin_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
 
-!= MarkdownService.html @product.description
+.ui.stackable.grid
+  .four.wide.column
+    = image_tag @product.image.attached? ? @product.image : '/image.png', class: [:ui, :image]
 
-%table.ui.table
-  %thead
-    %th OPTION
-    %th.center.aligned PRICE
-    %th
-  %tbody
-    - @product.variants.each do |variant|
-      %tr
-        %td
-          .title{style: 'font-weight: bold'}= variant.title
-          .description= variant.description
-        %td.center.aligned= variant.price ? number_to_currency(variant.price) : 'FREE'
-        - if @product.active
-          %td.collapsing= link_to 'Register', new_variant_registration_path(variant), class: [:ui, :mini, :primary, :button]
+  .twelve.wide.column    
+    != MarkdownService.html @product.description
+
+    %table.ui.table
+      %thead
+        %th OPTION
+        %th.center.aligned PRICE
+        %th
+      %tbody
+        - @product.variants.each do |variant|
+          %tr
+            %td
+              .title{style: 'font-weight: bold'}= variant.title
+              .description= variant.description
+            %td.center.aligned= variant.price ? number_to_currency(variant.price) : 'FREE'
+            - if @product.active
+              %td.collapsing= link_to 'Register', new_variant_registration_path(variant), class: [:ui, :mini, :primary, :button]
 
 %hr
 = link_to 'All Products', products_path

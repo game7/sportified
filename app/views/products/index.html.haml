@@ -3,7 +3,7 @@
   - @products.each do |product|
     .item
       .image
-        %img{ src: '/image.png' }
+        = image_tag product.image.attached? ? product.image : '/image.png', class: [:ui, :small, :image]
       .content
         = link_to product.title, product, class: [:header]
         .description

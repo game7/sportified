@@ -17,6 +17,8 @@
   .ui.bottom.attached.segment
     = f.input :title
     = f.input :summary, input_html: { rows: 2 }
+    = image_tag(@product.image, class: [:ui, :medium, :image]) if @product.image.attached?
+    = f.input :image
     = f.input :description, as: :markdown#, input_html: { rows: 3 }
     = f.input :active
 

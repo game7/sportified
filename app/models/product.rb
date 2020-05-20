@@ -36,6 +36,8 @@ class Product < ApplicationRecord
 
   has_many :registrations, through: :variants
 
+  has_one_attached :image
+
   validates :title,
             presence: true,
             length: { maximum: 50 }

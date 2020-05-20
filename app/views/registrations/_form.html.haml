@@ -6,7 +6,7 @@
       .ui.sticky
         .ui.fluid.card
           .image
-            %img{ src: '/image.png' }
+            = image_tag variant.product.image.attached? ? variant.product.image : '/image.png'
           .content
             .header= variant.product.title
           .extra.content
@@ -52,7 +52,7 @@
       %h4.ui.dividing.header Payment 
 
       .ui.basic.center.aligned.segment
-        = f.button :wrapped, :cancel => return_url
+        = f.button :wrapped, cancel: variant.product
 
 :css
   a.anchor {
