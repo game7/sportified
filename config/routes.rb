@@ -25,6 +25,9 @@
     end
   end
 
+  # redirect from legacy registrar routes
+  get 'registrar/items/:id', to: redirect('/products/%{id}')
+  get 'registrar/items', to: redirect('/products')
   get 'registrar/admin(/*route)', to: redirect('/admin/products/dashboard')
 
   passwordless_for :users
