@@ -1,6 +1,9 @@
 - title 'Products'
 - page_actions do
   = link_to 'New Product', new_admin_product_path, class: [:ui, :primary, :button]
+- area_menu do
+  = area_menu_item 'Dashboard', [:admin, :products, :dashboard]
+  = area_menu_item 'Products', [:admin, :products]  
 - wrapper class: [:ui, :container]
 
 %table.ui.celled.table
