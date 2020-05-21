@@ -28,7 +28,7 @@
     %td= registration.confirmation_code
   %tr
     %td Price
-    %td= number_to_currency registration.price
+    %td= registration.price.present? ? number_to_currency(registration.price) : 'Free 😎'
 
 
 = link_to 'Your Registrations', registrations_path, class: [:ui, :button]

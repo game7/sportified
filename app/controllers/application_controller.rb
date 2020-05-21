@@ -201,7 +201,7 @@ class ApplicationController < ActionController::Base
       if current_user
         render :file => "public/401.html", :status => :unauthorized, :layout => false
       else
-        redirect_to main_app.new_user_session_path
+        redirect_to users.sign_in_path
       end
     end
   end
@@ -211,7 +211,7 @@ class ApplicationController < ActionController::Base
   end
 
   def verify_user
-    redirect_to main_app.new_user_session_path unless current_user
+    redirect_to users.sign_in_path unless current_user
   end
 
   def with_time_zone

@@ -41,7 +41,10 @@ class RegistrationsController < ApplicationController
 
     if registration.save
       redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
-      redirect_to registration_path(registration.uuid) unless registration.payment_required?
+      unless registration.payment_required?
+        RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
+        redirect_to registration_path(registration.uuid) 
+      end
     else
       flash[:error] = "Registration could not be completed"
       registration.errors[:base].each do |message|
@@ -120,8 +123,8 @@ class RegistrationsController < ApplicationController
 
     if payment_intent.status == 'succeeded'
       registration.update(payment_id: registration.payment_intent_id)
-      # RegistrationMailer.confirmation_email(registration.tenant, registration).deliver_now
-      flash[:success] = "Payment has been processed.  You're Good!"
+      RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
+      flash[:success] = "Payment has been processed"
       redirect_to registration_path(registration.uuid)    
     end
   end  
