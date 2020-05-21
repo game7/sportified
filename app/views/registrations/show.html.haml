@@ -1,38 +1,34 @@
 
-%h3.ui.dividing.header= registration.product.title
-%table.ui.definition.table
+.ui.placeholder.segment
+  .ui.icon.header
+    = semantic_icon :thumbs, :up, :outline
+    It's all Good!
+  .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
+    You're registration is complete and you should receive a confirmation email shortly.
+
+%h3.ui.top.attached.header Purchase Summary
+%table.ui.bottom.attached.definition.table
+  %tr.top.aligned
+    %td.four.wide Customer
+    %td= registration.email  
+  %tr.top.aligned 
+    %td Product
+    %td
+      = registration.product.title
+      - if registration.product.registrable_type == 'Event'
+        .starts_on= registration.product.registrable.starts_on.strftime('%A %-m/%-d/%y at %l:%M %P')
+        .location= registration.product.registrable.location.name 
+  %tr.top.aligned
+    %td Participant
+    %td
+      %div= "#{registration.first_name} #{registration.last_name}"
+      %div= registration.birthdate.strftime('%-m/%-d/%Y')    
   %tr
-    %td.four.wide Customer Name
-    %td= "#{registration.first_name} #{registration.last_name}"
-  %tr
-    %td Customer Email
-    %td= registration.email   
-  %tr
-    %td Locator
+    %td Confirmation Code
     %td= registration.confirmation_code
   %tr
     %td Price
     %td= number_to_currency registration.price
-  %tr
-    %td Payment Id
-    %td= registration.payment_id
-  %tr
-    %td Participant Name
-    %td= "#{registration.first_name} #{registration.last_name}"
-  %tr
-    %td Participant Birthdate
-    %td= registration.birthdate.strftime('%-m/%-d/%Y')
-  %tr
-    %td Created At
-    %td= registration.created_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
-  %tr
-    %td Updated At
-    %td= registration.updated_at.strftime('%-m/%-d/%Y %I:%M:%S %p')
-
-- registration.forms.each do |form|
-  = render partial: 'show_form', locals: { form: form }
 
 
-= link_to 'Your Registrations', registrations_path
-\|
-= link_to 'Shop Again', products_path
+= link_to 'Your Registrations', registrations_path, class: [:ui, :button]
