@@ -144,8 +144,9 @@ class ApplicationController < ActionController::Base
 
   def set_tenant_from_passwordless_session
     Rails.logger.debug 'Setting Tenant from Passwordless session'
-    session = ::Passwordless::Session.unscoped.find_by_token(params[:token])
-    ::Tenant.current = ::Tenant.find(session.tenant_id)
+    session_model = ::Passwordless::Session.unscoped.find_by_token(params[:token])
+    session[:tenant_id] = session_model.tenant_id   
+    ::Tenant.current = ::Tenant.find(session_model.tenant_id)
   end
 
   def add_stylesheets
