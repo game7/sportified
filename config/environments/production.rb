@@ -98,12 +98,14 @@ Rails.application.configure do
   # Make javascript_pack_tag lookup digest hash to enable long-term caching
   config.x.webpacker[:digesting] = true
 
+  provider = :ses
+  
   ActionMailer::Base.smtp_settings = {
-    user_name: Rails.application.credentials.sendgrid[:username],
-    password: Rails.application.credentials.sendgrid[:password],
+    user_name: Rails.application.credentials.dig(provider, :username),
+    password: Rails.application.credentials.dig(provider, :password),
     domain: 'heroku.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
+    address: Rails.application.credentials.dig(provider, :address),
+    port: Rails.application.credentials.dig(provider, :port),
     authentication: :plain,
     enable_starttls_auto: true
   }
