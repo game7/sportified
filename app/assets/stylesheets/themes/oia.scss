@@ -1,74 +1,71 @@
 /*
 *= require_self
-*= require jquery-ui-1.8.11.custom
 *= require jcrop/jquery.Jcrop.min
 */
 
-//$brand-primary: #8C1D40;
-$brand-primary: #8C1D40;
-
-$navbar-default-bg:                #8C1D40;
-$navbar-default-link-color:        #ffffff;
-$navbar-default-link-active-color: #FFC627;
-$navbar-default-link-hover-color:  #FFC627;
-
-$gray-light: #CCC;
-$gray-lighter: #dedede;
-
-
-// @import "bootstrap-sprockets";
-// @import "bootstrap";
 @import "semantic-ui";
 @import "base/include";
 
-.navbar .nav > li > a {
-  font-weight: bold;
-}
+$primary-color: #000000;
+$primary-text-color: #ffffff;
 
-.navbar-default {
-  border-bottom-color: #8C1D40;
-}
-
-body {
-  background-image: asset-url("themes/oia/oia_web_bg.jpg");
+body, 
+body.pushable > .pusher {
+  background-image: asset-url("themes/oia/ice_surface_goal.jpg");
   background-position: center top;
   background-repeat:no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 
-#site_logo {
-  div {
-    // background-image: asset-url("themes/oia/brand_maroon.jpg");
-    // background-image: asset-url("themes/oia/oia_white.svg");
-    background-size: 244px 20px;
-    width: 244px;
-    height: 20px;
-  }
-}
-
-.areanav {
-  width: 100%;
-  height: 36px;
-  background-color: #EEE;
-  background-repeat: repeat-x;
-  background-image: linear-gradient(to top, whiteSmoke 0%,#EEE 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 );
-  border: 1px solid #E5E5E5;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  .nav {
-    margin-bottom: 0;
-  }
-}
-
-#site_name {
+#site_title {
   display: none;
 }
 
-
-table {
-  background-color: #fff;
+#site_logo {
+  content: asset-url("themes/oia/oia_asu_gold.svg");
+  width: 200px;
+  margin: auto;
 }
+
+body[data-path="pages/welcome"] header {
+  display: none;
+}
+
+#footer .ui.container {
+  background-color: #000;
+}
+
+.ui.primary.buttons .button,
+.ui.primary.button {
+  background-color: $primary-color;
+}
+
+.ui.primary.buttons .button:hover,
+.ui.primary.button:hover,
+.ui.primary.buttons .button:focus,
+.ui.primary.button:focus,
+.ui.primary.buttons .button:active,
+.ui.primary.button:active,
+.ui.primary.buttons .active.button,
+.ui.primary.buttons .active.button:active,
+.ui.primary.active.button,
+.ui.primary.button .active.button:active {
+  background-color: rgba($primary-color, 0.6);
+  color: $primary-text-color;
+}
+
+.blocks_feed h3,
+.blocks_markup h3,
+.blocks_event_feed h3,
+.blocks_text h3 {
+  border-left: 4px solid #8C1D40;
+  border-left: 5px solid #FFC627;
+  padding-left: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: #f1f4f5;
+  background-color: #000;
+  color: #FFF;
+}
+

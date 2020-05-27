@@ -1,7 +1,7 @@
 .ui.vertical.sidebar.inverted.left.massive.menu
   .header.item{ style: 'position: relative; text-align: center;' } 
     MAIN MENU
-    %a.close{ href: '', style: 'position: absolute; top: 18px; right: 40px; color: rgba(255, 255, 255, 0.5);'} X
+    %a.close{ href: '', style: 'position: absolute; right: 20px; color: rgba(255, 255, 255, 0.5);'} X
   - Page.in_menu.arrange(:order => :position).each do |page, children|
     - url = get_page_url(page)
     - parent = children.length > 0

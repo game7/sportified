@@ -6,8 +6,8 @@
       != " :: #{tenant.name}" if tenant
     - theme = tenant&.theme
     - if theme and !theme.empty?
-      -# = stylesheet_link_tag "themes/#{theme}"
-      = stylesheet_link_tag 'themes/oia'
+      = stylesheet_link_tag "themes/#{theme}"
+      -# = stylesheet_link_tag 'themes/oia'
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
     -#   = stylesheet_link_tag :application
@@ -63,21 +63,6 @@
         }         
       } 
 
-      /*
-      .blocks_feed h3,
-      .blocks_event_feed h3,
-      .blocks_text h3 {
-        border-left: 4px solid #8C1D40;
-        border-left: 5px solid #FFC627;
-        padding-left: 20px;
-        line-height: 30px;
-        text-transform: uppercase;
-        background-color: #f1f4f5;
-        background-color: #000;
-        color: #FFF;
-      }
-      */
-
       .blocks_text .content {
         padding: 0 10px
       }
@@ -121,7 +106,7 @@
         margin-bottom: 1em;
       }   
 
-  %body{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
+  %body.pushable{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
     = render 'layouts/sidebar'
     .pusher
       = render 'layouts/header'

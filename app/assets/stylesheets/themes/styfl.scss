@@ -1,47 +1,21 @@
 /*
 *= require_self
-*= require jquery-ui-1.8.11.custom
 *= require jcrop/jquery.Jcrop.min
 */
 
-$brand-primary: #24247a;
-
-$navbar-default-bg:                #24247a;
-
-// Navbar links
-$navbar-default-link-color:                #cecece !default;
-$navbar-default-link-hover-color:          #fff !default;
-$navbar-default-link-hover-bg:             lighten($navbar-default-bg, 6.5%) !default;
-$navbar-default-link-active-color:         #dedede !default;
-$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
-$navbar-default-link-disabled-color:       #ccc !default;
-$navbar-default-link-disabled-bg:          transparent !default;
-
-$gray-light: #CCC;
-$gray-lighter: #dedede;
-
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import "semantic-ui";
 @import "base/include";
 
-h1,.h1 {
-  font-size: 30px;
-}
-h2,.h2 {
-  font-size: 26px;
-}
-h3,.h3 {
-  font-size: 22px;
-}
-h4,.h4 {
-  font-size: 18px
+$primary-color: #24247a;
+$primary-text-color: #ffffff;
+
+#desktop.menu,
+#mobile.menu {
+  background-color: $primary-color;
 }
 
-.navbar .nav > li > a {
-  font-weight: 500;
-}
-
-body {
+body, 
+body.pushable > .pusher {
   background-image: asset-url("themes/styfl/football_field_grayscale.jpg");
   background-position: center top;
   background-repeat:no-repeat;
@@ -49,61 +23,50 @@ body {
   background-size: cover;
 }
 
-
+#site_title {
+  display: block;
+}
 
 #site_logo {
-  div {
-    background-size: 244px 20px;
-    width: 250px;
-    height: 20px;
-  }
-  div::after {
-    color: #fff;
-    content: "SAN TAN YOUTH FOOTBALL"
-  }
-}
-
-.areanav {
-  width: 100%;
-  height: 36px;
-  background-color: #EEE;
-  background-repeat: repeat-x;
-  background-image: linear-gradient(to top, whiteSmoke 0%,#EEE 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 );
-  border: 1px solid #E5E5E5;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  .nav {
-    margin-bottom: 0;
-  }
-}
-
-#site_name {
   display: none;
 }
 
-#wrapper {
-  background: rgb(255, 255, 255);
-  background: rgba(255, 255, 255, .975);
-  padding-top: 10px;
-  padding: 10px;
+body[data-path="pages/home"] header {
+  display: none;
 }
 
-header {
-  h1 {
-
-  }
+#footer .ui.container {
+  background-color: #000;
 }
 
-table {
-  background-color: #fff;
+.ui.primary.buttons .button,
+.ui.primary.button {
+  background-color: $primary-color;
 }
 
-#content {
-  padding: 20px;
-  min-height: 100vh;
-  transition: all 0.3s;
-  background: #fafafa ;
+.ui.primary.buttons .button:hover,
+.ui.primary.button:hover,
+.ui.primary.buttons .button:focus,
+.ui.primary.button:focus,
+.ui.primary.buttons .button:active,
+.ui.primary.button:active,
+.ui.primary.buttons .active.button,
+.ui.primary.buttons .active.button:active,
+.ui.primary.active.button,
+.ui.primary.button .active.button:active {
+  background-color: rgba($primary-color, 0.6);
+  color: $primary-text-color;
+}
+
+.blocks_feed h3,
+.blocks_markup h3,
+.blocks_event_feed h3,
+.blocks_text h3 {
+  border-left: 5px solid #ccc;
+  padding-left: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: #f1f4f5;
+  background-color: $primary-color;
+  color: #FFF;
 }

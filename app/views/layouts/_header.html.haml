@@ -1,11 +1,11 @@
 #header
   .ui.tablet.computer.only.grid
     .column
-      .ui.fixed.inverted.menu{ style: 'border-radius: 0px;'}
+      .ui.fixed.inverted.menu#desktop{ style: 'border-radius: 0px;'}
         .ui.container
           %a{ href: main_app.root_url, class: [:header, :item] }
-            %span.title= Tenant.current.name
-            %img.logo
+            %span#site_title= Tenant.current.name
+            %img#site_logo
           - Page.in_menu.arrange(:order => :position).each do |root|
             - page = root[0]
             - url = get_page_url(page)
@@ -44,13 +44,13 @@
 
   .ui.mobile.only.grid
     .column
-      .ui.fixed.large.inverted.icon.menu{ style: 'border-radius: 0px;'}
+      .ui.fixed.large.inverted.icon.menu#mobile{ style: 'border-radius: 0px;'}
         .ui.container{ style: 'dislay: flex;' }
           %a.toc.icon.item
             = semantic_icon(:sidebar) 
           %a{ href: main_app.root_url, class: [:header, :item], style: 'flex-grow: 2;' }
-            %span.title{ style: 'text-align: center; width: 100%;' }= Tenant.current.name
-            %img.logo
+            %span#site_title{ style: 'text-align: center; width: 100%;' }= Tenant.current.name
+            %img#site_logo
           - if current_user
             .ui.dropdown.item.right
               = semantic_icon(:user)

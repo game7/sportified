@@ -122,7 +122,7 @@ $(document).ready(function() {
     action: 'nothing'
   })
   $('select.ui.dropdown').dropdown()  
-  // $('.ui.sidebar').sidebar('attach events', '.toc.item');
+  $('.ui.sidebar').sidebar('attach events', '.toc.item');
   $('.ui.sidebar .close').click(function(e) {
     e.preventDefault();
     $(this).closest('.ui.sidebar').sidebar('hide')
