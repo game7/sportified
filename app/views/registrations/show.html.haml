@@ -1,12 +1,23 @@
 
-.ui.placeholder.segment
-  .ui.icon.header
-    = semantic_icon :thumbs, :up, :outline
-    It's all Good!
-  .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
-    You're registration is complete and you should receive a confirmation email shortly.
+- if registration.completed?
+  .ui.placeholder.segment
+    .ui.icon.header
+      = semantic_icon :thumbs, :up, :outline
+      It's all Good!
+    .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
+      You're registration is complete and you should receive a confirmation email shortly.
 
-%h3.ui.top.attached.header Purchase Summary
+- unless registration.completed?
+  .ui.placeholder.segment
+    .ui.icon.header
+      = semantic_icon :money, :bill, :alternate
+      Oops... Looks like we're not done yet
+    .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
+      You're registration is not complete until payment has been received.
+    = link_to 'Submit Payment', collect_registration_path(registration.uuid), class: [:ui, :primary, :button]
+
+
+%h3.ui.top.attached.header Registration Summary
 %table.ui.bottom.attached.definition.table
   %tr.top.aligned
     %td.four.wide Customer
@@ -23,12 +34,16 @@
     %td
       %div= "#{registration.first_name} #{registration.last_name}"
       %div= registration.birthdate.strftime('%-m/%-d/%Y')    
-  %tr
-    %td Confirmation Code
-    %td= registration.confirmation_code
+  - if registration.completed?
+    %tr
+      %td Confirmation Code
+      %td= registration.confirmation_code
   %tr
     %td Price
     %td= registration.price.present? ? number_to_currency(registration.price) : 'Free 😎'
+  %tr
+    %td Status
+    %td= registration.completed? ? 'Completed' : 'Payment Required'
 
 
 = link_to 'Your Registrations', registrations_path, class: [:ui, :button]

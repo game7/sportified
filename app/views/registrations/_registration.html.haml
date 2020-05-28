@@ -1,10 +1,10 @@
 
 %tr
-  %td= registration.product.title
+  %td= link_to registration.product.title, registration_path(registration.uuid)
   %td= registration.created_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P")
   %td
     = registration.updated_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P") if registration.completed?
-  %td= registration.completed? ? 'Completed' : 'Incomplete'
+  %td= link_to registration.completed? ? 'Completed' : 'Payment Required', registration_path(registration.uuid)
   %td
     -# - if registration.completed? 
     -#   = link_to 'View Details', registration_path(registration.uuid), class: [:ui, :mini, :primary, :button]
