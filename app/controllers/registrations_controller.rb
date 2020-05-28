@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
   before_action :verify_user, only: [:index]
+  before_action :redirect_https
 
   def show
     render locals: { registration: Registration.find_by_uuid!(params[:id]) }
