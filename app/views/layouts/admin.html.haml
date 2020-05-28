@@ -90,7 +90,7 @@
           #page-header
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
-
+    = yield :javascript
     -# .ui.top.fixed.huge.menu
     -#   .item sportified
     -#   .right.menu
