@@ -50,6 +50,10 @@ class Variant < ApplicationRecord
 
   before_create :set_quantity_available_to_quantity_allowed
 
+  def payment_required?
+    price || 0 > 0
+  end
+
   def set_quantity_available_to_quantity_allowed
     self.quantity_available = self.quantity_allowed
   end    

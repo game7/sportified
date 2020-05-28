@@ -23,18 +23,19 @@
           - registration.forms.each do |form|
             %a.item{ href: "##{form.template.name.parameterize}" }
               = semantic_icon(:exclamation, :circle, class: [ :red ]) unless form.errors.empty?
-              = form.template.name             
-          .item Payment
+              = form.template.name   
+          - if variant.payment_required?         
+            .item Payment
     
     .twelve.wide.column
 
-      %h4.ui.dividing.header Contact
-      %a.anchor{ name: :contact }      
+      %a.anchor{ name: :contact }    
+      %h3.ui.dividing.header Contact  
       .three.fields
         = f.input :email
       
       %a.anchor{ name: :participant }
-      %h4.ui.dividing.header Participant
+      %h3.ui.dividing.header Participant
       .four.fields
         = f.input :first_name
         = f.input :last_name
@@ -43,16 +44,30 @@
       
       = f.simple_fields_for :forms do |form|  
         %a.anchor{ name: form.object.template.name.parameterize }
-        %h4.ui.dividing.header= form.object.template.name
+        %h3.ui.dividing.header= form.object.template.name
         - form.object.add_element_accessors
         - form.object.template.elements.each do |element|
           = render "form_elements/#{element.partial}", element: element, builder: form   
       
-      %a.anchor{ name: :payment }
-      %h4.ui.dividing.header Payment 
+      - if variant.payment_required? 
+        %a.anchor{ name: :payment }
+        %h3.ui.dividing.header Payment 
+        .ui.icon.message
+          = semantic_icon :cc, :stripe, :icon
+          .content
+            .header We Collect Payments via Stripe Checkout
+            %p
+            :erb
+              Once you submit your registration you will be redirected to a secure checkout page 
+              hosted by <%= link_to 'stripe.com', 'https://stripe.com', target: :blank %>.  Stripe
+              will allow you to easily pay using your credit card or mobile wallet (Apple Pay, Google Pay)
+              and deliver you a purchase receipt via email.  Upon payment you will be redirected back here
+              and presented with a registration confirmation.
+            %p
+              %strong You registration is not confirmed until the payment step has been completed.
 
       .ui.basic.center.aligned.segment
-        = f.button :wrapped, cancel: variant.product
+        = f.button :submit, variant.payment_required? ? 'Checkout with Stripe' : 'Complete Registration', class: [:ui, :massive, :button]
 
 :css
   a.anchor {
