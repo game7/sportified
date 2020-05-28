@@ -119,7 +119,7 @@ class Registration < ApplicationRecord
   end
 
   def test?
-    true
+    false
   end
 
   def payment_url
