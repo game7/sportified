@@ -164,13 +164,13 @@ class PagesController < ApplicationController
     end
 
     def stripe_connect_error
-      connect = StripeConnect.pending.find_by_token(params[:state])
+      connect = StripeConnect.unscoped.pending.find_by_token(params[:state])
       connect.update_attributes(status: params[:error])
       redirect_to connect.referrer, flash: { error: params[:error_description] }
     end
 
     def stripe_connect_complete
-      connect = StripeConnect.pending.find_by_token(params[:state])
+      connect = StripeConnect.unscoped.pending.find_by_token(params[:state])
       Stripe::api_key = connect.tenant.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
       token = Stripe::OAuth.token({
         grant_type: 'authorization_code',
