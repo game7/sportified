@@ -3,7 +3,7 @@
 .ui.items{ class: [ block.divider && :divided ]}
   - block.posts.each do |post|
     .item
-      .image= image_tag post.image.presence&.url || '/assets/themes/styfl/football_field_grayscale.jpg' || '/image.png'
+      .image= image_tag post.image.presence&.url || '/image.png'
       .content
         = link_to post.title, post.link_url.presence || post, class: [ :header ]
         .description= post.summary
