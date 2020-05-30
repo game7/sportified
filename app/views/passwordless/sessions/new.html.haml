@@ -1,14 +1,40 @@
 
-.ui.middle.aligned.center.aligned.grid
-  .six.wide.column
-    %h3 Let's face it... PASSWORDS STINK
-    %p 
-      Fortunately we don't need passwords.  Just submit your email address below and we'll send you a magic link.  
-      Check your email, click the the magic link and you're in.  That's it!
-    = simple_form_for @session, url: send(Passwordless.mounted_as).sign_in_path, html: { novalidate: false } do |f|
-      - email_field_name = :"passwordless[#{@email_field}]"
-      .ui.segment
+- title 'Login'
+
+.login-wrapper
+  .login
+    .ui.top.attached.piled.segment
+      %h2.ui.header Login via Email
+      %p 
+        Passwords are annoying!
+      %p
+        Fortunately we don't need passwords.  Just submit your email address below and we'll send you a magic link.  
+      %p
+        Check your email, click the the magic link and you're in.  That's it!
+    .ui.bottom.attached.segment
+      = simple_form_for @session, url: send(Passwordless.mounted_as).sign_in_path, html: { novalidate: false } do |f|
+        - email_field_name = :"passwordless[#{@email_field}]"    
         .field
-          = email_field_tag email_field_name, params.fetch(email_field_name, nil), class: [:field], placeholder: 'Email Address', required: true
+          = email_field_tag email_field_name, params.fetch(email_field_name, nil), class: [:field], placeholder: 'your.email@somewhere.com', required: true
         .field
           = f.submit 'Send Magic Link', class: [:ui, :large, :fluid, :primary, :button]
+
+:css
+  header {
+    display: none;
+  }
+  #passwordless_email {
+    text-align: center;
+  }
+  .login-wrapper {
+    flex-grow: 1;
+    display: flex;
+  }
+  .login {
+    max-width: 480px;
+    margin: auto;
+  }
+  .login h2,
+  .login p {
+    text-align: center;
+  }

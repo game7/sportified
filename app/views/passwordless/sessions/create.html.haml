@@ -1,4 +1,30 @@
-.ui.middle.aligned.center.aligned.grid
-  .six.wide.column
-    %h3 Done!
-    %p We've sent a magic link to your email address.  Check your mail, click the link and you're in!
+- title 'Magic Link'
+
+.login-wrapper
+  .login
+    .ui.top.attached.piled.segment
+      %h2.ui.header Done!
+      %p 
+        We've sent a magic link to your email address. 
+      %p
+        Check your mail, click the link and you're in!
+
+:css
+  header {
+    display: none;
+  }
+  #passwordless_email {
+    text-align: center;
+  }
+  .login-wrapper {
+    flex-grow: 1;
+    display: flex;
+  }
+  .login {
+    width: 480px;
+    margin: auto;
+  }
+  .login h2,
+  .login p {
+    text-align: center;
+  }    
