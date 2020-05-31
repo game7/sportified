@@ -38,7 +38,7 @@ const LockerRooms: FC<Props> = (props) => {
   async function handleAutoAssignClick() {
     if(loading) { return }
     setLoading(true)
-    const url = `http://localhost:3000/admin/events/locker_rooms/assign?date=${date}`
+    const url = `/admin/events/locker_rooms/assign?date=${date}`
     const method = 'POST'
     const headers = {
       'Accept': 'application/json',
@@ -56,7 +56,7 @@ const LockerRooms: FC<Props> = (props) => {
 
   async function loadEvents(date: string) {
     setLoading(true)
-    const url = `http://localhost:3000/admin/events/?view=day&date=${date}` 
+    const url = `/admin/events/?view=day&date=${date}` 
     const method = 'GET'
     const headers = {
       'Accept': 'application/json',
