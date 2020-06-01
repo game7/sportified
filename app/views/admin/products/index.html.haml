@@ -19,7 +19,10 @@
   %tbody
   - @products.each do |product|
     %tr
-      %td= link_to product.title, [:admin, product]
+      %td
+        = link_to product.title, [:admin, product]
+        .pull-right
+          = semantic_icon :lock, class: [:small, :circular] if product.private?
       %td
         - if product.registrable_type == 'Event'
           .title= link_to product.registrable.summary, [:admin, :general, product.registrable]

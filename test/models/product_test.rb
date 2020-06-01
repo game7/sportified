@@ -3,8 +3,8 @@
 # Table name: products
 #
 #  id                 :integer          not null, primary key
-#  parent_id          :integer
-#  parent_type        :string
+#  registrable_id     :integer
+#  registrable_type   :string
 #  title              :string(40)
 #  description        :text
 #  quantity_allowed   :integer
@@ -14,11 +14,12 @@
 #  updated_at         :datetime         not null
 #  active             :boolean
 #  summary            :text
+#  private            :boolean
 #
 # Indexes
 #
-#  index_products_on_parent_type_and_parent_id  (parent_type,parent_id)
-#  index_products_on_tenant_id                  (tenant_id)
+#  index_products_on_registrable_type_and_registrable_id  (registrable_type,registrable_id)
+#  index_products_on_tenant_id                            (tenant_id)
 #
 # Foreign Keys
 #

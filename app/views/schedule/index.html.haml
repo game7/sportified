@@ -35,7 +35,7 @@
                     = event.ends_on.strftime('%l:%M %P')  
               %td
                 = event.summary
-                - if event.product.present? && event.product.active?
+                - if event.product.present? && event.product.active? && !event.product.private?
                   = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
                     %i.edit.outline.icon
                     Register Online
@@ -67,7 +67,7 @@
                     - unless event.class.name == 'League::Game'
                       != ' - '
                       = event.ends_on.strftime('%l:%M %P')  
-                - if event.product.present? && event.product.active?
+                - if event.product.present? && event.product.active? && !event.product.private?
                   = link_to event.product, class: [:ui, :tiny, :primary, :button] do
                     %i.edit.outline.icon
                     Register Online                      

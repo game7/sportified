@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_225406) do
+ActiveRecord::Schema.define(version: 2020_06_01_225129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -570,6 +570,7 @@ ActiveRecord::Schema.define(version: 2020_05_18_225406) do
     t.datetime "updated_at", null: false
     t.boolean "active"
     t.text "summary"
+    t.boolean "private"
     t.index ["registrable_type", "registrable_id"], name: "index_products_on_registrable_type_and_registrable_id"
     t.index ["tenant_id"], name: "index_products_on_tenant_id"
   end

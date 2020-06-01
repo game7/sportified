@@ -19,8 +19,10 @@
     = f.input :summary, input_html: { rows: 2 }
     = image_tag(@product.image, class: [:ui, :medium, :image]) if @product.image.attached?
     = f.input :image
-    = f.input :description, as: :markdown#, input_html: { rows: 3 }
+    -# = f.input :description, as: :markdown#, input_html: { rows: 3 }
+    = f.input :description, input_html: { rows: 5 }
     = f.input :active
+    = f.input :private
 
   %h4.ui.top.attached.header.product.variants Variants
   = f.simple_fields_for :variants, include_id: false do |variant|

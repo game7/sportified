@@ -32,7 +32,7 @@ module Blocks
     end
 
     def events
-      ::Event.public_only.tagged_with(tags, any: true).in_the_future.limit(event_count)
+      ::Event.public_only.tagged_with(tags, any: true).in_the_future.order(starts_on: :asc).limit(event_count)
     end
 
   end

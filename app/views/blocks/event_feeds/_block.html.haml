@@ -11,7 +11,12 @@
       %tr
         %td.collapsing= event.starts_on.to_date.strftime("%a %-m/%-d/%y")
         %td.collapsing= "#{event.starts_on.strftime("%l:%M %P")} - #{event.ends_on.strftime("%l:%M %P")}"
-        %td= event.summary
+        %td
+          = event.summary
+          - if event.product.present? && event.product.active? && !event.product.private?
+            = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
+              %i.edit.outline.icon
+              Register Online          
   %tfooter
     %tr
       %td{ colspan: '3', style: 'text-align: center'}
