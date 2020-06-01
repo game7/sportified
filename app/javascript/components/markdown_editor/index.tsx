@@ -13,11 +13,11 @@ interface Props {
 
 export const MarkdownEditor: (Props) => ReactElement = (props) => {
   const { object, attr } = props;
+
   const [value, setValue] = useState(props.value)
   const [preview, setPreview] = useState(props.preview)
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState('edit')
-  console.log(preview)
   function handleChange(newValue) {
     setValue(newValue)
     setPreview(null)
@@ -78,6 +78,5 @@ export const MarkdownEditor: (Props) => ReactElement = (props) => {
     </React.Fragment>
   )
 }
-
 
 export default MarkdownEditor
