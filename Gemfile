@@ -44,7 +44,7 @@ gem 'passwordless'
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
-gem 'simple_form', '~> 4.0.0'
+gem 'simple_form', '~> 5.0.0'
 gem 'virtus', '~> 1.0.5'
 gem 'audited', '~> 4.6'
 
