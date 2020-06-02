@@ -6,7 +6,7 @@ class Admin::Products::RegistrationsController < Admin::AdminController
   def index
     respond_to do |format|
       format.html do
-        @product = Product.includes(variants: :registrations).find(params[:product_id])
+        @product = Product.find(params[:product_id])
         add_breadcrumb 'Registration', admin_products_dashboard_path
         add_breadcrumb 'Products', admin_products_path
       end

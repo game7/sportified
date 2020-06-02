@@ -20,6 +20,9 @@
 #  session_id        :text
 #  payment_intent_id :text
 #  uuid              :string
+#  completed_at      :datetime
+#  abandoned_at      :datetime
+#  cancelled_at      :datetime
 #
 # Indexes
 #
@@ -39,7 +42,7 @@
 class Registration < ApplicationRecord
   include Sportified::TenantScoped
 
-  belongs_to :variant, counter_cache: true
+  belongs_to :variant
   has_one :product, through: :variant
   has_many :forms, dependent: :destroy
   accepts_nested_attributes_for :forms
@@ -72,7 +75,7 @@ class Registration < ApplicationRecord
   validate :variant_must_have_quantity_available
 
   def variant_must_have_quantity_available
-    if variant && variant.quantity_allowed.present? && variant.registrations.length > variant.quantity_allowed
+    if variant && variant.quantity_allowed.present? && variant.registrations.allocated.length > variant.quantity_allowed
       errors.add(:base, "The option for '#{variant.title}' has reached maximum capacity and is no longer available")
     end
   end
@@ -80,7 +83,8 @@ class Registration < ApplicationRecord
   paginates_per 10
 
   scope :pending, -> { where('payment_id is null') }
-  scope :completed, -> { where('payment_id is not null') }
+  scope :completed, -> { where('completed_at is not null') }
+  scope :allocated, -> { where(abandoned_at: nil, cancelled_at: nil) }
   scope :created_on_or_after, ->(date) { where('registrations.created_at >= ?', date)}
 
   def price_in_cents
@@ -95,23 +99,28 @@ class Registration < ApplicationRecord
   end
 
   def payment_required?
-    !self.new_record? and !price.blank? and price > 0 and payment_id.blank?
-  end
-
-  def forms_completed?
-    forms.all? {|form| form.completed?}
+    !self.new_record? && price.present? && price > 0 && payment_id.blank?
   end
 
   def completed?
-    forms_completed? and (payment_required? ? paid? : true)
+    completed_at.present?
   end
 
   def status
-    return 'Completed' if completed?
+    case
+    when cancelled_at.present?
+      'Cancelled'
+    when abandoned_at.present?
+      'Abandoned'
+    when completed_at.present?
+      'Completed'
+    else
+      'Pending'
+    end
   end
 
   def paid?
-    !payment_id.blank?
+    payment_id.present?
   end
 
   def full_name
@@ -130,8 +139,23 @@ class Registration < ApplicationRecord
     "https://dashboard.stripe.com#{test? ? '/test' : ''}/payments/#{payment_intent_id}"
   end
 
+  def can_abandon?
+    completed_at.blank? && abandoned_at.blank?
+  end
+
+  def can_cancel?
+    completed_at.present? && cancelled_at.blank?
+  end
+
+  def update_status!
+    if price.blank? || price == 0 || payment_id.present?
+      update_attribute(:completed_at, updated_at)
+    end
+  end
+
   before_validation :set_price_from_variant
   before_create :generate_uuid, unless: :uuid
+  before_create :mark_completed_if_free
   before_save :generate_confiramtion_code, unless: :confirmation_code
 
   private
@@ -151,6 +175,10 @@ class Registration < ApplicationRecord
 
     def generate_uuid
       self.uuid = SecureRandom.uuid
+    end
+
+    def mark_completed_if_free
+      self.completed_at = created_at if price.blank? || price == 0
     end
   
 end

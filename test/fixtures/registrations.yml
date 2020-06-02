@@ -20,6 +20,9 @@
 #  session_id        :text
 #  payment_intent_id :text
 #  uuid              :string
+#  completed_at      :datetime
+#  abandoned_at      :datetime
+#  cancelled_at      :datetime
 #
 # Indexes
 #

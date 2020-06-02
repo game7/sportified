@@ -7,7 +7,7 @@
   = area_menu_item 'Overview', [:admin, @product]
   = area_menu_item 'Registrations', [:admin, @product, :registrations]
 
-- @product.variants.each do |variant|
+- @product.variants.order(title: :asc).each do |variant|
   %h4.ui.top.attached.header= variant.title
   %table.ui.celled.bottom.attached.table
     %thead
@@ -19,7 +19,7 @@
       %th Date / Time
       %th.center.aligned Status
     %tbody
-      - variant.registrations.each do |registration|
+      - variant.registrations.order(id: :desc).each do |registration|
         %tr
           %td= link_to registration.id, [:admin, registration]
           %td= registration.full_name
@@ -27,4 +27,4 @@
           %td= registration.variant.title
           %td= number_to_currency(registration.price, :unit => "$").presence || 'Free'
           %td= registration.created_at.strftime("%a %-m/%-d/%y at %l:%M %P")
-          %td.center.aligned= registration.status
+          %td.center.aligned= render partial: 'admin/registrations/status', locals: { registration: registration }

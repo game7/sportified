@@ -20,6 +20,9 @@
 #  session_id        :text
 #  payment_intent_id :text
 #  uuid              :string
+#  completed_at      :datetime
+#  abandoned_at      :datetime
+#  cancelled_at      :datetime
 #
 # Indexes
 #
@@ -162,6 +165,7 @@ class RegistrationsController < ApplicationController
 
     if payment_intent.status == 'succeeded'
       registration.update(payment_id: registration.payment_intent_id)
+      registration.touch(:completed_at)
       RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
       flash[:success] = "Payment has been processed"
       redirect_to registration_path(registration.uuid)    
