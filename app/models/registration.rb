@@ -118,6 +118,10 @@ class Registration < ApplicationRecord
     "#{self.first_name} #{self.last_name}"
   end
 
+  def masked_name
+    "#{mask(first_name)} #{mask(last_name)}"
+  end
+
   def test?
     false
   end
@@ -131,6 +135,10 @@ class Registration < ApplicationRecord
   before_save :generate_confiramtion_code, unless: :confirmation_code
 
   private
+
+    def mask(name)
+      name[0] + ('*' * (name.length - 1))
+    end
 
     def set_price_from_variant
       self.price = self.variant.price if self.price.blank? and self.variant.present?

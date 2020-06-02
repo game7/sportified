@@ -15,6 +15,7 @@
 #  active             :boolean
 #  summary            :text
 #  private            :boolean
+#  roster             :boolean
 #
 # Indexes
 #

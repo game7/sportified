@@ -9,7 +9,6 @@
 #  description         :text
 #  price               :decimal(20, 4)
 #  quantity_allowed    :integer
-#  quantity_available  :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  form_packet_id      :integer
@@ -41,10 +40,6 @@ class Variant < ApplicationRecord
             numericality: { only_integer: true, greater_than_or_equal_to: 0 },
             :allow_nil => true
 
-  validates :quantity_available,
-            numericality: { only_integer: true, greater_than_or_equal_to: 0 },
-            :allow_nil => true
-
   validates :price,
             numericality: { greater_than_or_equal_to: 0 },
             :allow_nil => true
@@ -55,7 +50,12 @@ class Variant < ApplicationRecord
     price || 0 > 0
   end
 
-  def set_quantity_available_to_quantity_allowed
-    self.quantity_available = self.quantity_allowed
-  end    
+  def quantity_available
+    (quantity_allowed || 100000) - registrations.length
+  end
+
+  def available?
+    product.active? && quantity_available > 0
+  end
+
 end

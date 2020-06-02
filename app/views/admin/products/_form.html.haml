@@ -23,6 +23,7 @@
     = f.input :description, input_html: { rows: 5 }
     = f.input :active
     = f.input :private
+    = f.input :roster
 
   %h4.ui.top.attached.header.product.variants Variants
   = f.simple_fields_for :variants, include_id: false do |variant|

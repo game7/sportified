@@ -9,7 +9,6 @@
 #  description         :text
 #  price               :decimal(20, 4)
 #  quantity_allowed    :integer
-#  quantity_available  :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  form_packet_id      :integer
