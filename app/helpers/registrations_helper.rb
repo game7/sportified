@@ -23,6 +23,7 @@
 #  completed_at      :datetime
 #  abandoned_at      :datetime
 #  cancelled_at      :datetime
+#  checked_in_at     :datetime
 #
 # Indexes
 #

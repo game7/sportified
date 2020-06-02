@@ -1,0 +1,28 @@
+- title @product.title
+
+- wrapper class: [:ui, :container]
+- area_menu do
+  = area_menu_item 'Overview', [:admin, @product]
+  = area_menu_item 'Registrations', [:admin, @product, :registrations] 
+  = area_menu_item 'Attendance', [:admin, @product, :attendance, :index]
+
+
+%table.ui.table
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th.center.aligned Status
+      %th Variant      
+      %th.center.aligned Check In
+  %tbody
+    - @product.registrations.allocated.includes(:variant).order(last_name: :asc, first_name: :asc).each do |registration|
+      %tr
+        %td= registration.last_name_first_name
+        %td= registration.email
+        %td.center.aligned= render partial: 'admin/registrations/status', locals: { registration: registration }        
+        %td= registration.variant.title
+        %td.center.aligned
+          .ui.fitted.checkbox
+            = check_box_tag dom_id(registration, :check_in), "", registration.checked_in_at.present?, data: { method: :patch, url: toggle_check_in_admin_registration_path(registration), remote: true}
+            %label

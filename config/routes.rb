@@ -16,10 +16,12 @@
     resources :products
     resources :products, module: :products, only: [] do
       resources :registrations, only: [:index]
+      resources :attendance, only: [:index]
     end      
-    resources :registrations, only: [:index, :show] do
+    resources :registrations, module: :registrations, only: [:index, :show] do
       patch :abandon, on: :member
       patch :cancel, on: :member
+      patch :toggle_check_in, on: :member
     end
     resources :form_packets, shallow: true do
       resources :form_templates, shallow: true do

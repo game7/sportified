@@ -1,5 +1,5 @@
 class Admin::RegistrationsController < Admin::AdminController
-  before_action :set_registration, only: [:show, :abandon, :cancel]
+  before_action :set_registration, only: [:show, :abandon, :cancel, :toggle_check_in]
 
   def index
   end
@@ -28,6 +28,14 @@ class Admin::RegistrationsController < Admin::AdminController
       flash[:error] = 'Registration cannot be Cancelled'
     end
     redirect_to [:admin, @registration]    
+  end
+
+  def toggle_check_in
+    if @registration.checked_in_at.blank?
+      @registration.touch(:checked_in_at)
+    else
+      @registration.update_attribute(:checked_in_at, nil)
+    end
   end
 
   protected

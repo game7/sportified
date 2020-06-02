@@ -5,7 +5,8 @@
 - wrapper class: [:ui, :container]
 - area_menu do
   = area_menu_item 'Overview', [:admin, @product]
-  = area_menu_item 'Registrations', [:admin, @product, :registrations]
+  = area_menu_item 'Registrations', [:admin, @product, :registrations] 
+  = area_menu_item 'Attendance', [:admin, @product, :attendance, :index]
 
 .ui.padded.segment
   .ui.divided.two.column.stacked.grid

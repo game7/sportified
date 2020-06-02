@@ -23,6 +23,7 @@
 #  completed_at      :datetime
 #  abandoned_at      :datetime
 #  cancelled_at      :datetime
+#  checked_in_at     :datetime
 #
 # Indexes
 #
@@ -125,6 +126,10 @@ class Registration < ApplicationRecord
 
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def last_name_first_name
+    "#{self.last_name}, #{self.first_name}"
   end
 
   def masked_name

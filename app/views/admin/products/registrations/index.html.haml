@@ -6,6 +6,7 @@
 - area_menu do
   = area_menu_item 'Overview', [:admin, @product]
   = area_menu_item 'Registrations', [:admin, @product, :registrations]
+  = area_menu_item 'Attendance', [:admin, @product, :attendance, :index]
 
 - @product.variants.order(title: :asc).each do |variant|
   %h4.ui.top.attached.header= variant.title

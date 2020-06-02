@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_180332) do
+ActiveRecord::Schema.define(version: 2020_06_02_181446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -608,6 +608,7 @@ ActiveRecord::Schema.define(version: 2020_06_02_180332) do
     t.datetime "completed_at"
     t.datetime "abandoned_at"
     t.datetime "cancelled_at"
+    t.datetime "checked_in_at"
     t.index ["credit_card_id"], name: "index_registrations_on_credit_card_id"
     t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
@@ -760,7 +761,6 @@ ActiveRecord::Schema.define(version: 2020_06_02_180332) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
