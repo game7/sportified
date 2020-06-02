@@ -44,8 +44,6 @@ class Variant < ApplicationRecord
             numericality: { greater_than_or_equal_to: 0 },
             :allow_nil => true
 
-  before_create :set_quantity_available_to_quantity_allowed
-
   def payment_required?
     price || 0 > 0
   end
