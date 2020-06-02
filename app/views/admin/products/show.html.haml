@@ -48,7 +48,7 @@
       %tr
         %td= variant.title
         %td= number_to_currency(variant.price, :unit => "$").presence || 'Free'
-        %td= variant.quantity_allowed.present? ? "#{variant.registrations_count || 0} / #{variant.quantity_allowed}" : variant.registrations_count
+        %td= variant.quantity_allowed.present? ? "#{variant.registrations.allocated.size || 0} / #{variant.quantity_allowed}" : variant.registrations.allocated.size
 
 %h4.ui.top.attached.header Latest Registrations
 %table.ui.celled.bottom.attached.table
@@ -61,7 +61,7 @@
     %th Date / Time
     %th.center.aligned Status
   %tbody
-    - @product.registrations.each do |registration|
+    - @product.registrations.order(id: :desc).limit(20).each do |registration|
       %tr
         %td= link_to registration.id, [:admin, registration]
         %td= registration.full_name
@@ -69,7 +69,7 @@
         %td= registration.variant.title
         %td= number_to_currency(registration.price, :unit => "$").presence || 'Free'
         %td= registration.created_at.strftime("%a %-m/%-d/%y at %l:%M %P")
-        %td.center.aligned= registration.status
+        %td.center.aligned= render partial: 'admin/registrations/status', locals: { registration: registration }
 
 -# %table.ui.table
 -#   %thead

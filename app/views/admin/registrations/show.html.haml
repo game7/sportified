@@ -1,6 +1,7 @@
 - title @registration.full_name
--# - page_actions do
--#   = link_to 'Edit', edit_admin_registrar_product_path(@product), class: [:ui, :primary, :button] if current_user_is_admin?
+- page_actions do
+  = link_to 'Abandon', abandon_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_abandon?
+  = link_to 'Cancel', cancel_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_cancel?
 - wrapper class: [:ui, :container]
 
 %h4.ui.top.attached.header Registration Info
@@ -9,6 +10,9 @@
     %tr
       %td Created
       %td= @registration.created_at  
+    %tr
+      %td Status
+      %td= render partial: 'admin/registrations/status', locals: { registration: @registration }       
     %tr
       %td{ style: 'width: 25%;' } Product
       %td= @registration.product.title
@@ -40,7 +44,7 @@
   %h4.ui.top.attached.header= form.template.name
   %table.ui.bottom.attached.definition.table
     %tbody
-      - form.template.elements.each do |element|
+      - form.data && form.template.elements.each do |element|
         %tr
           %td{ style: 'width: 25%;' }= element.name.humanize.titleize
           %td= form.data[element.name]

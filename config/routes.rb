@@ -17,7 +17,10 @@
     resources :products, module: :products, only: [] do
       resources :registrations, only: [:index]
     end      
-    resources :registrations, only: [:index, :show]
+    resources :registrations, only: [:index, :show] do
+      patch :abandon, on: :member
+      patch :cancel, on: :member
+    end
     resources :form_packets, shallow: true do
       resources :form_templates, shallow: true do
         resources :form_elements, except: [:index, :show]

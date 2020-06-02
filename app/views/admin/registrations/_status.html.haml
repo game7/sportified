@@ -1,0 +1,4 @@
+- color = 'yellow'
+- color = 'red' if %{Abandoned Cancelled}.include?(registration.status)
+- color = 'green' if %{Completed}.include?(registration.status)
+.ui.label{ class: color }= registration.status

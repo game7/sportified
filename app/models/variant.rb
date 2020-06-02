@@ -2,17 +2,16 @@
 #
 # Table name: variants
 #
-#  id                  :integer          not null, primary key
-#  product_id          :integer
-#  tenant_id           :integer
-#  title               :string(40)
-#  description         :text
-#  price               :decimal(20, 4)
-#  quantity_allowed    :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  form_packet_id      :integer
-#  registrations_count :integer
+#  id               :integer          not null, primary key
+#  product_id       :integer
+#  tenant_id        :integer
+#  title            :string(40)
+#  description      :text
+#  price            :decimal(20, 4)
+#  quantity_allowed :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  form_packet_id   :integer
 #
 # Indexes
 #
@@ -49,7 +48,7 @@ class Variant < ApplicationRecord
   end
 
   def quantity_available
-    (quantity_allowed || 100000) - registrations.length
+    (quantity_allowed || 100000) - registrations.allocated.size
   end
 
   def available?
