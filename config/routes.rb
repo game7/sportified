@@ -18,7 +18,7 @@
       resources :registrations, only: [:index]
       resources :attendance, only: [:index]
     end      
-    resources :registrations, module: :registrations, only: [:index, :show] do
+    resources :registrations, only: [:index, :show] do
       patch :abandon, on: :member
       patch :cancel, on: :member
       patch :toggle_check_in, on: :member
