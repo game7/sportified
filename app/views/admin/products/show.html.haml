@@ -18,14 +18,15 @@
         .value= number_to_currency(@registration_revenue, :unit => "$").presence || '$0'
         .label Revenue
 
-.ui.icon.message
-  = semantic_icon :lock
-  .content
-    .header This Product is Marked as Private
-    %p 
-      It will not appear in any public-facing product lists but can still be purchased from its 
-      != ' '
-      = link_to 'product page', @product, target: :blank
+- if @product.private?
+  .ui.icon.message
+    = semantic_icon :lock
+    .content
+      .header This Product is Marked as Private
+      %p 
+        It will not appear in any public-facing product lists but can still be purchased from its 
+        != ' '
+        = link_to 'product page', @product, target: :blank
 
 %h4.ui.top.attached.header Associated With
 %table.ui.celled.bottom.attached.table
