@@ -72,6 +72,8 @@ class Event < ActiveRecord::Base
 
   has_one :product, as: :registrable
 
+  alias_attribute :starts_at, :starts_on
+
   validates_presence_of :starts_on
   # validate :starts_on_cannot_be_in_the_past
 

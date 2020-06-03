@@ -59,6 +59,14 @@ class Product < ApplicationRecord
     clone
   end
 
+  def event?
+    registrable_type == 'Event'
+  end
+
+  def full_title
+     event? ? "#{title} - #{registrable.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
+  end
+
   scope :active, -> { where(active: true) }
     
 end

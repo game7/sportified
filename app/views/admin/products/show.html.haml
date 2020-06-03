@@ -66,7 +66,7 @@
       %tr
         %td= link_to registration.id, [:admin, registration]
         %td= registration.full_name
-        %td= registration.email
+        %td= mail_to registration.email, registration.email, subject: registration.product.full_title
         %td= registration.variant.title
         %td= number_to_currency(registration.price, :unit => "$").presence || 'Free'
         %td= registration.created_at.strftime("%a %-m/%-d/%y at %l:%M %P")
