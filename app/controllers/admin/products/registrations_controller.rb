@@ -6,13 +6,19 @@ class Admin::Products::RegistrationsController < Admin::AdminController
   def index
     respond_to do |format|
       format.html do
-        @product = Product.find(params[:product_id])
+        @product = Product.includes(variants: :registrations).find(params[:product_id])
         add_breadcrumb 'Registration', admin_products_dashboard_path
         add_breadcrumb 'Products', admin_products_path
       end
       format.csv do
-        @product = Product.includes(variants: :registrations).find(params[:product_id])
-        send_data to_csv(@product.registrations), filename: "product-#{params[:product_id]}-registrations.csv"
+        registrations = Registration.joins(:variant)
+                                    .where(variants: { product_id: params[:product_id] })
+                                    .includes(variant: [ :product ], forms: [ :template ])     
+        registrations[0].forms.each do |form|
+          puts form.template.attributes
+          puts form.data
+        end
+        send_data to_csv(registrations), filename: "product-#{params[:product_id]}-registrations.csv"
       end
     end    
 
@@ -20,20 +26,59 @@ class Admin::Products::RegistrationsController < Admin::AdminController
 
   private
 
+    # def extract
+    #   registrations = Registration.joins(:variant)
+    #                               .where(variants: { product_id: params[:product_id] })
+    #                               .includes(variant: [ :item ], forms: [])
+
+    #   columns = %w( street city state postal )
+
+    #   data = registrations.collect do |r|
+    #     result = {
+    #       id: r.id,
+    #       email: r.email,
+    #       participant_name: r.last_name_first_name,
+    #       status: r.status
+    #     }
+    #     data = r.forms[0].data || {}
+    #     columns.each do |col|
+    #       field = "home_address-#{col}"
+    #       result[col.to_sym] = data[field]
+    #     end
+    #     result            
+    #   end
+    # end
+
+    def sanitize(str)
+      str.strip                 # strip spaces
+         .gsub(/\R+/, ' ')      # remvoe newlines
+         .gsub(/^\"|\"$/, '')   # remove outer quotes
+         .gsub(/\"\"/, '"')     # fix double quotes
+    end    
+
     def to_csv(registrations)
-      data = registrations.map do |r|
-        {
+      results = registrations.map do |r|
+        result = {
+          id: r.id,
           date: r.created_at.strftime("%a %-m/%-d/%y %l:%M %P"),
-          name: r.full_name,
-          summary: r.birthdate,
-          product: r.product.title,
+          email: r.email,
+          participant_name: r.full_name,
+          product: r.variant.product.title,
           variant: r.variant.title,
-          price: number_to_currency(r.price, :unit => "$").presence || 'Free'
+          price: number_to_currency(r.price, :unit => "$").presence || 'Free',
+          status: r.status
         }
+        r.forms.each do |form|
+          form.data&.each do |key, value|
+            result[form.template.name.underscore + '-' + key] = sanitize(value)
+          end
+        end
+        result
       end
+
       ::CSV.generate do |csv|
-        csv << data[0].keys
-        data.each{|row| csv << row.values }
+        csv << results[0].keys
+        results.each{|row| csv << row.values }
       end
     end  
 
