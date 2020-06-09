@@ -4,7 +4,11 @@ class Admin::ProductsController < Admin::AdminController
   before_action :get_form_packets, only: [:edit, :update, :new, :create]
 
   def index
-    @products = Product.all
+    @products = Product.includes(
+      pending_registrations: [], 
+      completed_registrations: [],
+      abandoned_registrations: [],
+      cancelled_registrations: []).order(id: :desc)
     @products = @products.active unless current_user_is_admin?
   end
 

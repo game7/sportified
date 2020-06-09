@@ -83,8 +83,8 @@ class Registration < ApplicationRecord
 
   paginates_per 10
 
-  scope :pending, -> { where('payment_id is null') }
-  scope :completed, -> { where('completed_at is not null') }
+  scope :pending, -> { where(completed_at: nil, abandoned_at: nil, cancelled_at: nil) }
+  scope :completed, -> { where.not(completed_at: nil) }
   scope :allocated, -> { where(abandoned_at: nil, cancelled_at: nil) }
   scope :created_on_or_after, ->(date) { where('registrations.created_at >= ?', date)}
 

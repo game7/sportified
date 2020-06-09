@@ -37,6 +37,11 @@ class Product < ApplicationRecord
   accepts_nested_attributes_for :variants, reject_if: :all_blank, allow_destroy: true
 
   has_many :registrations, through: :variants
+  
+  has_many :pending_registrations, -> { where(completed_at: nil, cancelled_at: nil, abandoned_at: nil) }, class_name: 'Registration', through: :variants, source: :registrations
+  has_many :completed_registrations, -> { where.not(completed_at: nil) }, class_name: 'Registration', through: :variants, source: :registrations
+  has_many :cancelled_registrations, -> { where.not(cancelled_at: nil) }, class_name: 'Registration', through: :variants, source: :registrations
+  has_many :abandoned_registrations, -> { where.not(abandoned_at: nil) }, class_name: 'Registration', through: :variants, source: :registrations
 
   has_one_attached :image
 

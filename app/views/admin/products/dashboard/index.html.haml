@@ -7,29 +7,4 @@
   = area_menu_item 'Dashboard', [:admin, :products, :dashboard]
   = area_menu_item 'Products', [:admin, :products]
 
-- period = params[:period]
-
-%h4.ui.top.attached.header Active Products
-
-.ui.segment.bottom.attached
-
-  .ui.buttons
-    %a.ui.button{ class: "#{'active' if period == 'day' }", href: url_for(params.permit(:period).merge(:period => 'day')) } Today
-    %a.ui.button{ class: "#{'active' if period == 'week' }", href: url_for(params.permit(:period).merge(:period => 'week')) } Week
-    %a.ui.button{ class: "#{'active' if period == 'month' }", href: url_for(params.permit(:period).merge(:period => 'month')) } Month
-    %a.ui.button{ class: "#{'active' unless period }", href: url_for() } Total
-
-  %table.ui.celled.table
-    %tr
-      %td{ style: 'width: 40%;'} Product
-      %td{ style: 'width: 15%;'} Pending
-      %td{ style: 'width: 15%;'} Completed
-      %td{ style: 'width: 15%;'} Total
-      %td{ style: 'width: 15%;'} Revenue
-    - products.each do |product|
-      %tr
-        %td= link_to product.title, [:admin, product]
-        %td= product.registrations.created_on_or_after(from_date).pending.count
-        %td= product.registrations.created_on_or_after(from_date).completed.count
-        %td= product.registrations.created_on_or_after(from_date).count
-        %td= number_to_currency product.registrations.created_on_or_after(from_date).completed.sum(:price)
+= render partial: 'admin/products/products_table', locals: { products: products, title: 'Active Products' }

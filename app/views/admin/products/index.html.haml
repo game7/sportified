@@ -6,29 +6,4 @@
   = area_menu_item 'Products', [:admin, :products]  
 - wrapper class: [:ui, :container]
 
-%table.ui.celled.table
-  %thead
-    %tr
-      %th Product
-      %th Association
-      %th Active
-      %th Pending
-      %th Completed
-      %th Total
-      %th Revenue
-  %tbody
-  - @products.each do |product|
-    %tr
-      %td
-        = link_to product.title, [:admin, product]
-        .pull-right
-          = semantic_icon :lock, class: [:small, :circular] if product.private?
-      %td
-        - if product.registrable_type == 'Event'
-          .title= link_to product.registrable.summary, [:admin, :general, product.registrable]
-          .starts_on= product.registrable.starts_on.strftime('%A, %B %e %Y %l:%M %P')
-      %td= product.active?
-      %td= product.registrations.pending.count
-      %td= product.registrations.completed.count
-      %td= product.registrations.count
-      %td= number_to_currency product.registrations.completed.sum(:price)
+= render partial: 'admin/products/products_table', locals: { products: @products }

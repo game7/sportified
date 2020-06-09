@@ -1,7 +1,11 @@
 class Admin::Products::DashboardController < Admin::AdminController
   
   def index
-    products = Product.all.order(:title)
+    products = Product.active.includes(
+      pending_registrations: [], 
+      completed_registrations: [],
+      abandoned_registrations: [],
+      cancelled_registrations: []).order(:id)
     render locals: {
       products: products,
       from_date: from_date
