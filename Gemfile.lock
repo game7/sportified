@@ -184,7 +184,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    geocoder (1.6.0)
+    geocoder (1.6.3)
     geolite2_city (2019.08.06)
     get_process_mem (0.2.5)
       ffi (~> 1.0)
