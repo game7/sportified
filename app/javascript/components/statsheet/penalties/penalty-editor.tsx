@@ -182,6 +182,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
                 options={"1|2|3|OT".split("|").map(n => ({ text: n, value: n }))} 
                 label={false}
                 placeholder="Period"
+                selectOnBlur={false}
                 style={{ minWidth: '40%' }}
               />            
               <Form.Input 
@@ -210,6 +211,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
                 options={"1|2|3|OT".split("|").map(n => ({ text: n, value: n }))} 
                 label={false}
                 placeholder="Period"
+                selectOnBlur={false}
                 style={{ minWidth: '40%' }}
               />            
               <Form.Input 

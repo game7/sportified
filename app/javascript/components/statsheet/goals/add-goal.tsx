@@ -123,6 +123,7 @@ export const AddGoal: FC<AddGoalProps> = ({ settings, teams, skaters, dispatch }
             label="Assisted By" 
             search 
             selection 
+            selectOnBlur={false}
             options={skaterOptions} 
           />
           <Form.Field 
@@ -131,6 +132,7 @@ export const AddGoal: FC<AddGoalProps> = ({ settings, teams, skaters, dispatch }
             label="Also Assisted By" 
             search 
             selection 
+            selectOnBlur={false}
             options={skaterOptions} 
           />
           <Form.Field 
