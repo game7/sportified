@@ -19,7 +19,7 @@
         .pull-right
           = semantic_icon :lock, class: [:small, :circular] if product.private?
       %td
-        - if product.registrable_type == 'Event'
+        - if product.registrable_type == 'Event' && product.registrable.present?
           .title= link_to product.registrable.summary, [:admin, :general, product.registrable]
           .starts_on= product.registrable.starts_on.strftime('%A, %B %e %Y %l:%M %P')
       %td.center.aligned
@@ -30,4 +30,4 @@
       %td.center.aligned= link_to product.completed_registrations.size, [:admin, product, :registrations]
       %td.center.aligned= link_to product.cancelled_registrations.size, [:admin, product, :registrations]
       %td.center.aligned= link_to product.abandoned_registrations.size, [:admin, product, :registrations]
-      %td.right.aligned= number_to_currency product.completed_registrations.map(&:price).reduce(0, :+)
+      %td.right.aligned= number_to_currency product.completed_registrations.map{|r| r.price || 0}.reduce(0, :+)
