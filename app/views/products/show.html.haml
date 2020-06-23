@@ -42,7 +42,7 @@
           %tbody
             %tr
               %td         
-                - variant.registrations.each do |registration|
+                - variant.registrations.filter(&:completed?).each do |registration|
                   .registration= registration.masked_name
      
 

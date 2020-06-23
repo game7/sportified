@@ -104,7 +104,7 @@ class Registration < ApplicationRecord
   end
 
   def completed?
-    completed_at.present?
+    abandoned_at.blank? && cancelled_at.blank? && completed_at.present?
   end
 
   def status
