@@ -34,7 +34,7 @@ export const Penalties: FC<Props> = ({ statsheet, dispatch }) => {
     }
   }
   function time(minute, second) {
-    if(!second) return "";
+    if(second == undefined) return "";
     return `${minute}:${padStart(second.toString(), 2, "0")}`
   }
   return (
