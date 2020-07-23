@@ -3,7 +3,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  host: postgres
+  host: 127.0.0.1
   database: sportified_development
   pool: 5
   username: postgres
@@ -15,7 +15,7 @@ development:
 test: &test
   adapter: postgresql
   encoding:
-  host: postgres
+  host: 127.0.0.1
   database: sportified_test
   pool: 5
   username: postgres

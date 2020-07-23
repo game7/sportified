@@ -22,4 +22,18 @@ namespace :sportified do
     end
   end
 
+  desc "Dump Production DB to /tmp"
+  task dump: :environment do
+    config = Rails.configuration.database_configuration['development'].with_indifferent_access
+    puts
+    puts   'Capturing Backup...'
+    system 'heroku pg:backups:capture -a sportified4'
+    puts   'Downloading Backup...'
+    system 'heroku pg:backups:download -a sportified4 -o /git/sportified/tmp/latest.dump'
+    puts   'Restoring Backup...'
+    system "PGPASSWORD=#{config[:password]} pg_restore --verbose --clean --no-acl --no-owner -h #{config[:host]} -U #{config[:username]} -d #{config[:database]} /git/sportified/tmp/latest.dump"
+    puts   'DONE!'
+    puts
+  end
+
 end
