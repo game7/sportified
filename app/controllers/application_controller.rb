@@ -88,11 +88,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_page_url(page)
-    if page.skip_to_first_child and child = page.children.order(:position).first
-      url = get_page_url(child)
-    end
-    url ||= page.link_url unless page.link_url.blank?
-    url ||= main_app.page_friendly_path(page.url_path)
+    page.link_url.presence || main_app.page_friendly_path(page.url_path)
   end
   helper_method :get_page_url
 
