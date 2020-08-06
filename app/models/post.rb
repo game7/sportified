@@ -28,6 +28,6 @@ class Post < ActiveRecord::Base
   
   scope :newest_first, ->{ order(created_at: :desc) }
   scope :newest, ->{ order(created_at: :desc) }
-  scope :random, ->{ order('RANDOM()') }
+  scope :random, ->{ order(Arel.sql('RANDOM()')) }
     
 end
