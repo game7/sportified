@@ -173,6 +173,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
+    return if session[session_key(User)].blank?
     @current_user ||= authenticate_by_session(User)
   end
 
