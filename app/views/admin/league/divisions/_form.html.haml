@@ -5,7 +5,7 @@
   = f.input :show_statistics?, as: :boolean
   = f.input :standings_schema_id, as: :select, collection: ::League::Division.standings_schema_options, label: 'Standings'
   = f.input :period_length
-  = f.association :seasons, as: :semantic_check_boxes, collection: ::League::Season.all.order(:starts_on => :desc)
+  = f.association :seasons, as: :semantic_check_boxes, collection: @league.seasons.order(:starts_on => :desc)
   = f.button :wrapped, cancel: return_url
 
 :css

@@ -1,7 +1,7 @@
 = simple_form_for [:admin, :league, @league, @season] do |f|
   = f.input :name
   = f.input :starts_on, html5: true
-  = f.association :divisions, as: :semantic_check_boxes, collection: League::Division.all.order(:name)
+  = f.association :divisions, as: :semantic_check_boxes, collection: @league.divisions.order(:name)
   = f.button :wrapped, cancel: return_url
 
 :css
