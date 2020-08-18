@@ -1,11 +1,16 @@
-- if @block.file?
-  .row-fluid
-    .span12{ style: 'text-align: center; margin-bottom: 20px;' }
-      = image_tag @block.file.thumb.url, align: :center
-= simple_form_for @block, url: page_blocks_image_path(@page, @block), remote: true do |f|
-  = f.input :file, as: :file
-  = f.input :remote_file_url
-  = f.input :file_cache, as: :hidden
-  = f.input :link_url, hind: 'Optional.  If provided clicking image will navigate to here'
+.ui.modal.edit_block
+  .header Edit Image
+  .content
+    - if @block.file?
+      = image_tag @block.file.thumb.url, align: :center  
+    = simple_form_for @block, url: page_blocks_image_path(@page, @block), remote: true do |f|
+      = f.input :file, as: :file
+      = f.input :remote_file_url
+      = f.input :file_cache, as: :hidden
+      = f.input :link_url, hind: 'Optional.  If provided clicking image will navigate to here'
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel   
+
 
 
