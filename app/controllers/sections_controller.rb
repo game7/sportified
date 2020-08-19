@@ -30,14 +30,10 @@ class SectionsController < Admin::AdminController
   end
   
   def position
-    params['section'].each_with_index do |id, i|
-      section = @page.sections.find(id);
-      if section
-        section.position = i
-      end
-    end  
-    @page.save
-    render :nothing => true
+    params[:section].each_with_index do |id, i|
+      Section.find(id).update(position: i)
+    end
+    render nothing: true
   end  
   
   private
