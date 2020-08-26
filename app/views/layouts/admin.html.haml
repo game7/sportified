@@ -12,21 +12,8 @@
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
     :css
-      .navslide {
-        margin-left: 190px;
-      }
-      .ui.left.sidebar,
-      .ui.right.sidebar {
-          margin-top: 41px !important;
-          width: 190px;
-      }
-      .ui.left.sidebar .icon {
-        float: left !important;
-        margin-right: 10px !important;
-      }   
-      .pusher#main {
-        padding-top: 41px;
-        padding-left: 190px;
+      #main {
+        padding-top: 61px;
         min-height: 100%;
         background-color: #f1f4f5;
       }
@@ -37,99 +24,57 @@
       .admin-page-title h1 {
         margin-bottom: 0;
       }
-      .admin-content {
-        padding: 30px;
-      }
+      #main > .ui.fluid.container {
+        width: auto !important;
+        margin-left: 1em !important;
+        margin-right: 1em !important;
+      }        
   %body
-    .ui.top.fixed.menu
-      .item.header{ style: 'width: 190px;'} 
+    .ui.top.fixed.menu{ style: 'dislay: flex;' }
+      .ui.dropdown.icon.item{ title: 'Admin Menu'}
+        = semantic_icon(:sidebar) 
+        .menu
+          = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
+          = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
+          = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
+          = admin_menu_item url: admin_programs_path, icon: :trophy, label: 'Leagues' 
+          = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
+          = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
+          = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
+          = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
+          = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
+          = admin_menu_item url: admin_chromecasts_path, icon: :tv, label: 'Screens' 
+          = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
+          = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms'
+          = admin_menu_item url: admin_products_dashboard_path, icon: :signup, label: 'Registration'        
+      .item.header{ style: 'flex-grow: 2;' }
         %span{ style: 'width: 100%; text-align: center;' } SPORTIFED
-
       .right.menu
         = link_to 'Go to Site', root_path, class: :item  
-    
-    .ui.visible.left.vertical.overlay.sidebar.menu
-      = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
-      = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
-      = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
-      = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
-      = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
-      = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
-      = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
-      = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
-      = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
-      = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
-      = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
-      = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms'
-      = admin_menu_item url: admin_products_dashboard_path, icon: :signup, label: 'Registration'
+ 
+    #main
+      #wrapper{ @wrapper || {} } 
+        - if @breadcrumbs and @breadcrumbs.length > 0
+          .ui.top.attached.segment{ style: 'padding-top: 5px; padding-bottom: 5px;'}
+            .ui.small.breadcrumb
+              - @breadcrumbs.each_with_index do |crumb, index|
+                - unless index == 0
+                  %span.divider= '/'
+                - if crumb[:url] && crumb[:url] != request.path
+                  %a.section{ :href => "#{crumb[:url]}" } #{crumb[:title]}
+                - else
+                  .section= crumb[:title]            
+        - if content_for?(:title)
+          .ui.attached.clearing.segment{ class: [ content_for?(:area_menu) ? nil : :bottom ]}
+            %h1{ style: 'float: left; margin-bottom: 0;' }
+              %span#page-title= yield(:title)
+            .actions{ style: 'float: right;' }
+              = yield(:actions)
+        - if content_for?(:area_menu)
+          .ui.bottom.attached.menu
+            = yield(:area_menu)
 
-      
-    .pusher#main
-      .admin-content
-        #wrapper{ @wrapper || {} } 
-          - if @breadcrumbs and @breadcrumbs.length > 0
-            .ui.top.attached.segment{ style: 'padding-top: 5px; padding-bottom: 5px;'}
-              .ui.small.breadcrumb
-                - @breadcrumbs.each_with_index do |crumb, index|
-                  - unless index == 0
-                    %span.divider= '/'
-                  - if crumb[:url] && crumb[:url] != request.path
-                    %a.section{ :href => "#{crumb[:url]}" } #{crumb[:title]}
-                  - else
-                    .section= crumb[:title]            
-          - if content_for?(:title)
-            .ui.attached.clearing.segment{ class: [ content_for?(:area_menu) ? nil : :bottom ]}
-              %h1{ style: 'float: left; margin-bottom: 0;' }
-                %span#page-title= yield(:title)
-              .actions{ style: 'float: right;' }
-                = yield(:actions)
-          - if content_for?(:area_menu)
-            .ui.bottom.attached.menu
-              = yield(:area_menu)
-
-          #page-header
-            = render :partial => 'layouts/flash', :locals => { :flash => flash }
-          = yield
+        #page-header
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
+        = yield
     = yield :javascript
-    -# .ui.top.fixed.huge.menu
-    -#   .item sportified
-    -#   .right.menu
-    -#     = link_to 'Go to Site', root_path, class: :item
-
-    -# .ui.fluid.grid{ style: 'margin-top: 20px; width: 100%;'}
-
-    -#   .two.wide.column{ style: 'text-align: center;' }
-    
-    -#     .ui.compact.vertical.labeled.icon.fluid.menu
-    -#       = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
-    -#       = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
-    -#       = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
-    -#       = admin_menu_item url: admin_programs_path, icon: :cubes, label: 'Programs' 
-    -#       = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
-    -#       = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
-    -#       = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
-    -#       = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
-    -#       = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
-    -#       = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
-    -#       = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
-
-    -#   .fourteen.wide.column                                         
-    -#     #wrapper{ @wrapper || {} }
-    -#       = render 'layouts/area_navigation' if @area_menu_items
-    -#       = render 'layouts/breadcrumbs' if @breadcrumbs
-    -#       #banner
-    -#         #{yield :banner}
-    -#       - if content_for?(:title)
-    -#         .page-title.clearfix
-    -#           %h1{ style: 'float: left;' }
-    -#             %span#page-title= yield(:title)
-    -#           .actions{ style: 'float: right;' }
-    -#             = yield(:actions)
-    -#           %div{ style: 'clear: both;' }
-    -#       #main
-    -#         #page-header
-    -#           = render :partial => 'layouts/flash', :locals => { :flash => flash }
-    -#         = yield
-
-
-

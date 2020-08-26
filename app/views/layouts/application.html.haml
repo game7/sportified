@@ -107,12 +107,12 @@
       }   
 
   %body.pushable{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
-    = render 'layouts/sidebar'
+    = render 'layouts/application/sidebar'
     .pusher
-      = render 'layouts/header'
+      = render 'layouts/application/header'
       #wrapper.ui.container
         %header
-          = render 'layouts/area_navigation' if @area_menu_items
+          = render 'layouts/application/area_navigation' if @area_menu_items
           -# = render 'layouts/breadcrumbs' if @breadcrumbs        
           - if content_for?(:banner)
             #banner{ style: 'margin-top: 15px;' }= yield(:banner)
@@ -129,7 +129,7 @@
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
       #footer
-        = render 'layouts/footer'
+        = render 'layouts/application/footer'
         -# = render 'layouts/social'
     #modal
     = yield :javascript
