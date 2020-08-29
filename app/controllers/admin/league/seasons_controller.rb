@@ -4,7 +4,6 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
   before_action :find_league, :only => [:index, :new, :create]
   before_action :find_season, :only => [:show, :edit, :update, :destroy]
   before_action :find_seasons, :only => [:index]
-  before_action :get_season_options, :only => [:show]
   before_action :add_breadcrumbs, :except => [:destroy]
 
   def index
@@ -15,6 +14,7 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
     @teams = League::Team.includes(:players)
                          .where(season_id: @season.id)
                          .order('league_teams.name')
+    @season_options = @season.program.seasons.order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}                   
 
     horizon = 3.days
     @recent = League::Game.where(season_id: @season.id).before(DateTime.now.beginning_of_day).after(horizon.ago.beginning_of_day).order(starts_on: :desc)
@@ -60,10 +60,6 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
 
   def season_params
     params.required(:season).permit(:name, :starts_on, :programs, :division_ids => [])
-  end
-
-  def get_season_options
-    @season_options = ::League::Season.order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}
   end
 
   def add_breadcrumbs

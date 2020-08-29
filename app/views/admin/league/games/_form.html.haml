@@ -20,14 +20,14 @@
         = f.input :away_team_id, as: :select, collection: @options[:teams]
         = f.input :away_team_custom_name, as: :boolean
         = f.input :away_team_name
-        = f.input :away_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
+        = f.input :away_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id] || []
     .column
       .ui.segment
         %h4.ui.header HOME TEAM
         = f.input :home_team_id, as: :select, collection: @options[:teams]
         = f.input :home_team_custom_name, as: :boolean
         = f.input :home_team_name
-        = f.input :home_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id]
+        = f.input :home_team_locker_room_id, as: :select, collection: @options[:locker_rooms][@game.location_id] || []
 
   .ui.segment
     %h4.ui.header DISPLAY
@@ -81,81 +81,59 @@
       var locker_rooms = JSON.parse('#{raw @options[:locker_rooms].to_json}');
       var teams_path = '#{admin_teams_path}?season_id={{season}}&division_id={{division}}';
 
+      function bindOptions($select, options) {
+        $select.html(options.map(function(opt){ return `<option value="${opt.value}">${opt.name}</option>`}))              
+        $select.closest('.dropdown').dropdown('change values', {
+          values: options
+        })
+      }         
+
       function bindTeams() {
-        var $homeTeams = $('#game_home_team_id').closest('.dropdown')
-        var $awayTeams = $('#game_away_team_id').closest('.dropdown')
+        var $homeTeams = $('#game_home_team_id')
+        var $awayTeams = $('#game_away_team_id')
         var seasonId = $('#game_season_id').closest('.dropdown').dropdown('get value');
         var divisionId = $('#game_division_id').closest('.dropdown').dropdown('get value');
-        if(seasonId == "" || divisionId == "") {
-          $homeTeams.dropdown({ values: [] })
-          $awayTeams.dropdown({ values: [] })
+        if(!seasonId || !divisionId) {
+          bindOptions($homeTeams, [])            
+          bindOptions($awayTeams, []) 
           return;
         }
         var url = teams_path.replace('{{season}}', seasonId).replace('{{division}}', divisionId);
         $.getJSON(url, function(data) {
-          $homeTeams.dropdown({ 
-            fields: {
-              name: 'name',
-              value: 'id'
-            },
-            values: data
-          })
-          $awayTeams.dropdown({ 
-            fields: {
-              name: 'name',
-              value: 'id'
-            },
-            values: data
-          })
+          var options = (data || []).map(function(s) { return { name: s.name, value: s.id }});
+          bindOptions($homeTeams, options)            
+          bindOptions($awayTeams, options)            
         })
       }     
 
       function bindPlayingSurfaces() {
-        var $playingSurfaces = $('#game_playing_surface_id').closest('.dropdown')
         var locationId =  $('#game_location_id').closest('.dropdown').dropdown('get value');
-        $playingSurfaces.dropdown({ values: playing_surfaces[locationId] || [] });
+        var $select = $('#game_playing_surface_id');
+        var options = (playing_surfaces[locationId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($select, options)            
       } 
 
       function bindLockerRooms() {
-        var $awayTeamLockerRooms = $('#game_away_team_locker_room_id').closest('.dropdown')
-        var $homeTeamLockerRooms = $('#game_home_team_locker_room_id').closest('.dropdown')
+        var $awayTeamLockerRooms = $('#game_away_team_locker_room_id');
+        var $homeTeamLockerRooms = $('#game_home_team_locker_room_id');
         var locationId =  $('#game_location_id').closest('.dropdown').dropdown('get value');
-        $awayTeamLockerRooms.dropdown({ 
-          fields: {
-            name: 'name',
-            value: 'id'
-          }, 
-          values: locker_rooms[locationId] || [] 
-        });
-        $homeTeamLockerRooms.dropdown({ 
-          fields: {
-            name: 'name',
-            value: 'id'
-          }, 
-          values: locker_rooms[locationId] || [] 
-        });
+        var options = (locker_rooms[locationId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($awayTeamLockerRooms, options)          
+        bindOptions($homeTeamLockerRooms, options)          
       }       
 
       function bindSeasons() {
         var programId = $('#game_program_id').closest('.dropdown').dropdown('get value');
-        $('#game_season_id').closest('.dropdown').dropdown({
-          fields: {
-            name: 'name',
-            value: 'id'
-          },
-          values: (seasons[programId] || [])
-        })
+        var $select = $('#game_season_id');
+        var options = (seasons[programId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($select, options)        
       }
 
       function bindDivisions() {
         var programId = $('#game_program_id').closest('.dropdown').dropdown('get value');        
-        $('#game_division_id').closest('.dropdown').dropdown({
-          fields: {
-            name: 'name',
-            value: 'id'
-          },
-          values: (divisions[programId] || [])
-        })
+        var $select = $('#game_division_id');
+        var options = (divisions[programId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($select, options)        
       }
 
       function onProgramChange() {

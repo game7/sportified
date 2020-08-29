@@ -4,8 +4,8 @@
     %h4.ui.header LOGISTICS   
     .fields
       = f.input :program_id, as: :select, collection: @options[:programs], wrapper_html: { class: [:four, :wide] }
-      = f.input :season_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
-      = f.input :division_id, as: :select, collection: [], wrapper_html: { class: [:four, :wide] }
+      = f.input :season_id, as: :select, collection: @options[:seasons][@event.program_id], wrapper_html: { class: [:four, :wide] }
+      = f.input :division_id, as: :select, collection: @options[:divisions][@event.program_id], wrapper_html: { class: [:four, :wide] }
     .fields
       = f.input :starts_on, html5: true, wrapper_html: { class: [:four, :wide] }
       = f.input :duration, wrapper_html: { class: [:two, :wide] }
@@ -27,26 +27,25 @@
       var seasons = JSON.parse('#{raw @options[:seasons].to_json}');
       var divisions = JSON.parse('#{raw @options[:divisions].to_json}');  
 
+      function bindOptions($select, options) {
+        $select.html(options.map(function(opt){ return `<option value="${opt.value}">${opt.name}</option>`}))              
+        $select.closest('.dropdown').dropdown('change values', {
+          values: options
+        })
+      }      
+
       function bindSeasons() {
         var programId = $('#event_program_id').closest('.dropdown').dropdown('get value');
-        $('#event_season_id').closest('.dropdown').dropdown({
-          fields: {
-            name: 'name',
-            value: 'id'
-          },
-          values: (seasons[programId] || [])
-        })
+        var $select = $('#event_season_id');
+        var options = (seasons[programId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($select, options)
       }
 
       function bindDivisions() {
-        var programId = $('#event_program_id').closest('.dropdown').dropdown('get value');        
-        $('#event_division_id').closest('.dropdown').dropdown({
-          fields: {
-            name: 'name',
-            value: 'id'
-          },
-          values: (divisions[programId] || [])
-        })
+        var programId = $('#event_program_id').closest('.dropdown').dropdown('get value');  
+        var $select = $('#event_division_id');
+        var options = (divisions[programId] || []).map(function(s) { return { name: s.name, value: s.id }});
+        bindOptions($select, options)
       }
 
       function onProgramChange() {
@@ -58,7 +57,7 @@
       (function initialize() {
         $('#event_program_id').closest('.dropdown').dropdown({
           onChange: onProgramChange
-        })
+        })   
       })()
 
     });

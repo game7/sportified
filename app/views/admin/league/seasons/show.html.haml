@@ -1,11 +1,12 @@
 - title "#{@season.program.name} #{@season.name}"
+- wrapper class: [:ui, :container]
 - content_for :actions do
   = select "season", :id, @season_options, { selected: request.path}, { class: [:ui, :dropdown, :redirect_to] }
   = link_to 'Settings', edit_admin_league_season_path(@season), class: [:ui, :primary, :button]
   = link_to 'New Season', new_admin_league_program_season_path(@season.program), class: [:ui, :primary, :button]
   = link_to 'New Division', new_admin_league_program_division_path(@season.program), class: [:ui, :primary, :button]
 
-.ui.grid
+.ui.stackable.grid{ style: "margin-top: 0;" }
   .eight.wide.column
 
     .ui.segment
