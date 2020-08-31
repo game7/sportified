@@ -22,7 +22,7 @@
         .header LEAGUE
         = link_to 'Game', new_admin_league_game_path, class: :item
         = link_to 'Event', new_admin_league_event_path, class: :item
-    = link_to url_for(format: :csv), class: [ :ui, :primary, :button] do
+    = link_to url_for(date: @date, format: :csv), class: [ :ui, :primary, :button] do
       = semantic_icon(:download)
       = ' Export'
 
