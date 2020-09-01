@@ -16,9 +16,9 @@ class Admin::League::SeasonsController < Admin::BaseLeagueController
                          .order('league_teams.name')
     @season_options = @season.program.seasons.order(starts_on: :desc).collect{|s| [s.name, admin_league_season_path(s)]}                   
 
-    horizon = 3.days
-    @recent = League::Game.where(season_id: @season.id).before(DateTime.now.beginning_of_day).after(horizon.ago.beginning_of_day).order(starts_on: :desc)
-    @upcoming = League::Game.where(season_id: @season.id).after(DateTime.now.beginning_of_day).before(horizon.from_now.beginning_of_day).order(starts_on: :asc)
+    horizon = 7.days
+    @recent = Event.where(season_id: @season.id).before(DateTime.now.beginning_of_day).after(horizon.ago.beginning_of_day).order(starts_on: :desc)
+    @upcoming = Event.where(season_id: @season.id).after(DateTime.now.beginning_of_day).before(horizon.from_now.beginning_of_day).order(starts_on: :asc)
   end
 
   def new

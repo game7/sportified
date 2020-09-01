@@ -10,7 +10,7 @@
   .eight.wide.column
 
     .ui.segment
-      %h4.ui.header UPCOMING GAMES
+      %h4.ui.header UPCOMING EVENTS
       %table.ui.celled.striped.table
         %tbody
           - @upcoming.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
@@ -38,12 +38,12 @@
                   .clear
           - unless @upcoming.any?
             %tr
-              %td{ :colspan => "2" } There are no upcoming games           
+              %td{ :colspan => "2" } There are no upcoming events           
 
   .eight.wide.column
 
     .ui.segment
-      %h4.ui.header RECENT GAMES
+      %h4.ui.header RECENT EVENTS
       %table.ui.celled.striped.table
         %tbody
           - @recent.group_by{|game| game.starts_on.strftime('%A %-m/%-e/%y') }.each do |day, games|
@@ -69,6 +69,10 @@
                           = link_to 'Result', edit_admin_game_result_path(event.id), class: :item
                           = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: :item
                   .clear  
+          - unless @recent.any?
+            %tr
+              %td{ :colspan => "2" } There are no recent events        
+
 
 .ui.segment
   %h4.ui.header DIVISIONS
