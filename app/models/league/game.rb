@@ -141,7 +141,7 @@ class League::Game < League::Event
     end
   end
 
-  before_save :update_summary
+  before_validation :update_summary
   def update_summary
     if result.final?
       tag = ''

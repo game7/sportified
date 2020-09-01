@@ -65,7 +65,9 @@ class Event < ActiveRecord::Base
 
   belongs_to :program, required: false
   belongs_to :page, required: false
+  
   belongs_to :location
+  validates_presence_of :location_id
 
   belongs_to :home_team_locker_room, class_name: 'LockerRoom', required: false
   belongs_to :away_team_locker_room, class_name: 'LockerRoom', required: false
