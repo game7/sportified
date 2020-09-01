@@ -26,7 +26,18 @@
 #
 
 class FormElements::Text < FormElement
+  
   def self.model_name
     FormElement.model_name
   end
+
+  store_accessor :properties, :pattern, :message
+
+  def validate(record)
+    super(record)
+    record.errors.add(name, self.message.presence || 'That doesn\'t look quite right') unless
+      self.pattern.blank? ||
+      record.data[name] =~ Regexp.new(self.pattern)
+  end
+
 end

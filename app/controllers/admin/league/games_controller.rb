@@ -29,6 +29,7 @@ class Admin::League::GamesController < Admin::AdminController
     if @game.save
       return_to_last_point :success => 'Game was successfully created.'
     else
+      puts @game.errors.messages
       flash[:error] = 'Game could not be created.'
       load_options
       render :action => "new"
