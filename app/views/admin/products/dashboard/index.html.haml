@@ -7,4 +7,28 @@
   = area_menu_item 'Dashboard', [:admin, :products, :dashboard]
   = area_menu_item 'Products', [:admin, :products]
 
-= render partial: 'admin/products/products_table', locals: { products: products, title: 'Active Products' }
+= render partial: 'admin/products/products_table', locals: { products: products, title: 'Products with Recent Activity' }
+
+%h4.ui.top.attached.header Latest Registrations
+%table.ui.celled.bottom.attached.table
+  %thead
+    %th Id
+    %th Name
+    %th Email
+    %th Product / Variant
+    %th Price    
+    %th Created
+    %th.center.aligned Status
+  %tbody
+    - registrations.each do |registration|
+      %tr
+        %td= link_to registration.id, [:admin, registration]
+        %td= registration.full_name
+        %td= mail_to registration.email, registration.email, subject: registration.product.full_title
+        %td= registration.product.title + ' / ' + registration.variant.title
+        %td= number_to_currency(registration.price, :unit => "$").presence || 'Free'
+        -# %td= registration.created_at.strftime("%a %-m/%-d/%y at %l:%M %P")
+        %td= time_ago_in_words(registration.created_at) + ' ago'
+        %td.center.aligned= render partial: 'admin/registrations/status', locals: { registration: registration }
+
+.spacer{ style: 'height: 20px;' }

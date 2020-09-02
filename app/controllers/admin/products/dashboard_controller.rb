@@ -2,12 +2,15 @@ class Admin::Products::DashboardController < Admin::AdminController
   
   def index
     products = Product.active.includes(
+      :registrable,
       pending_registrations: [], 
       completed_registrations: [],
       abandoned_registrations: [],
-      cancelled_registrations: []).order(:id)
+      cancelled_registrations: []).order(updated_at: :desc).limit(10)
+    registrations = Registration.order(id: :desc).limit(10)
     render locals: {
       products: products,
+      registrations: registrations,
       from_date: from_date
     }
   end

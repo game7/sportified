@@ -83,6 +83,7 @@ class RegistrationsController < ApplicationController
     registration.user = current_user if current_user
 
     if registration.save
+      registration.product.touch
       redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
       unless registration.payment_required?
         RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
