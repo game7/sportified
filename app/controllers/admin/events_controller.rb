@@ -57,6 +57,7 @@ class Admin::EventsController < Admin::AdminController
         {
           date: e.starts_on.strftime('%a %-m/%-d/%Y'),
           'start time': e.starts_on.strftime('%l:%M %P'),
+          'date/time': e.starts_on.strftime('%Y-%m-%d %H:%M'),
           duration: e.duration,
           summary: e.summary,
           'division': e.try(:division).try(:name)
