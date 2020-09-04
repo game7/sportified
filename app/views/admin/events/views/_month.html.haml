@@ -59,8 +59,9 @@
                   - if event.class.to_s == 'League::Game'
                     .divider
                     .header GAME
-                    = link_to 'Result', edit_admin_game_result_path(event.id), class: [:item]
-                    = link_to 'Statsheet', edit_admin_game_statsheet_path(event.id), class: [:item]              
+                    = link_to 'Result', edit_admin_game_result_path(event), class: [:item]
+                    = link_to 'Statsheet', edit_admin_game_statsheet_path(event), class: [:item]     
+                    = link_to 'Print Scoresheet', print_admin_game_statsheet_path(event), target: :_blank, class: [:item]
 
 -# = month_calendar start_date: @date,events: @events do |date, events|
 -#   .date= date.day
