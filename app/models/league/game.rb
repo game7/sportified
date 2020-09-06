@@ -127,7 +127,7 @@ class League::Game < League::Event
     return 'L' if margin < 0
   end
 
-  before_save :update_team_info
+  before_validation :update_team_info
   def update_team_info
     if team = self.away_team
       self.away_team_name = team.name unless away_team_custom_name
