@@ -7,12 +7,13 @@
         %table.ui.celled.table
           %thead
             %tr
-              %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
+              %th{ colspan: 3 }= date.strftime('%A, %B %e %Y')
           %tbody  
             - day_events.each do |event|
               %tr
                 %td.four.wide= event.starts_on.strftime('%l:%M %P')
                 %td= event.summary
+                %td.four.wide= event.location.name
 
 - if @events.any?
   .ui.mobile.only.grid#mobile-events-grid
@@ -28,6 +29,7 @@
                 %td
                   .summary= event.summary                
                   .time= event.starts_on.strftime('%l:%M %P')
+                  .location= event.location.name
 
 
 - if @events.none?
