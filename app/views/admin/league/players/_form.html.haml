@@ -1,18 +1,22 @@
-= simple_form_for [:admin, :league, @team, @player] do |f|
-  .row
-    .col-sm-3
-      = f.input :first_name
-    .col-sm-3
-      = f.input :last_name
-  .row
-    .col-sm-2
-      = f.input :jersey_number
-  .row
-    .col-sm-3
-      = f.input :birthdate, as: :date, html5: true
-  .row
-    .col-sm-4
-      = f.input :email
-  = f.input :substitute, :as => :boolean, :wrapper => :vertical_boolean
-  = f.button :wrapped, :cancel => return_url
+.ui.segment
+  = simple_form_for [:admin, :league, @team, @player] do |f|
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :jersey_number
+    = f.input :birthdate, as: :date, html5: true
+    = f.input :email
+    = f.input :substitute
+    = f.button :wrapped, cancel: return_url
+
+:css
+
+  .player_first_name,
+  .player_last_name,
+  .player_birthdate,
+  .player_email {
+    width: 400px;
+  }
+  .player_jersey_number {
+    width: 100px;
+  }
 

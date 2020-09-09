@@ -1,26 +1,26 @@
 - title @team.name
 - wrapper class: [:ui, :container]
 - page_actions do
-  = link_to 'Edit Team', edit_admin_league_team_path(@team), :class => 'btn btn-primary'
-  = link_to 'Add Player', new_admin_league_team_player_path(@team), :class => 'btn btn-primary'
-.row
-  .col-sm-6
-    .panel.panel-default
-      .panel-heading Players
-      %ul.list-group
-        - @team.players.each do |player|
-          %li.list-group-item
-            = player.full_name
-            .pull-right
-              = link_to 'Edit', edit_admin_league_player_path(player), :class => 'btn btn-xs btn-default'
-              = link_to 'Delete', [:admin, :league, player], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'
-  .col-sm-6
-    .panel.panel-default
-      .panel-heading Games
-      %ul.list-group
-        - @games.each do |game|
-          %li.list-group-item
-            = game.summary
-            .pull-right
-              = link_to 'Edit', edit_admin_league_game_path(game), :class => 'btn btn-xs btn-default'
-              = link_to 'Delete', [:admin, :league, game], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-default'
+  = link_to 'Edit Team', edit_admin_league_team_path(@team), class: [:ui, :primary, :button]
+  = link_to 'Add Player', new_admin_league_team_player_path(@team), class: [:ui, :primary, :button]
+
+.ui.top.attached.segment
+  %h4.ui.header Players
+%table.ui.bottom.attached.celled.striped.table
+  %tbody
+    - @team.players.each do |player|
+      %tr
+        %td= player.full_name
+        %td.collapsing
+          = link_to 'Edit', edit_admin_league_player_path(player), class: [:ui, :primary, :mini, :button]
+          = link_to 'Delete', [:admin, :league, player], confirm: 'Are you sure?', method: :delete, class: [:ui, :primary, :mini, :button]
+.ui.top.attached.segment
+  %h4.ui.header Games
+%table.ui.bottom.attached.celled.striped.table
+  %tbody  
+    - @games.each do |game|
+      %tr
+        %td= game.summary
+        %td.collapsing
+          = link_to 'Edit', edit_admin_league_game_path(game), class: [:ui, :primary, :mini, :button]
+          = link_to 'Delete', [:admin, :league, game], confirm: 'Are you sure?', method: :delete, class: [:ui, :primary, :mini, :button]

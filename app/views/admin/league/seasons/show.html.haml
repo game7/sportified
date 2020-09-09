@@ -98,6 +98,7 @@
                   .ui.icon.dropdown
                     = semantic_icon(:ellipsis, :horizontal)
                     .left.menu
+                      = link_to 'Show', admin_league_team_path(team), class: :item
                       = link_to 'Edit', edit_admin_league_team_path(team), class: :item
                       = link_to 'Clone', admin_league_team_path(team), class: :item, method: :delete, confirm: 'Are you sure?'
                 .clear                  
