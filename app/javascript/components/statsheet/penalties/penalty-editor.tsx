@@ -95,7 +95,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
     "Game Misconduct",
     "Match"
   ].map(str => ({ text: str, value: str }))
-
+  console.log(JSON.stringify(model, null, 2))
   return (
     <Modal trigger={trigger} onClose={handleClose} open={open}>
       <Modal.Header>{penalty ? 'Edit Penalty' : 'New Penalty'}</Modal.Header>

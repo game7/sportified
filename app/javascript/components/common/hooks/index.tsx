@@ -46,10 +46,10 @@ export function useForm<T>(data: Partial<T>, handler?: SubmitHandler<T>) {
     
     function input(prop: keyof T, options?: Partial<BindOptions>) {
       const { errorKey = prop.toString() } = options || {}
-
+      console.log(prop, model[prop], typeof model[prop])
       return {
         label: humanize(prop.toString()),
-        value: (prop in model) ? model[prop] + "" : "",
+        value: (prop in model) ? model[prop] : "",
         onChange: changeHandler(prop, errorKey),
         error: errors && errors[errorKey] && errors[errorKey][0]
       }

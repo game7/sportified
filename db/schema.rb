@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_181446) do
+ActiveRecord::Schema.define(version: 2020_09_10_214708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -320,7 +320,7 @@ ActiveRecord::Schema.define(version: 2020_06_02_181446) do
   create_table "hockey_penalties", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.integer "statsheet_id"
-    t.integer "period"
+    t.string "period"
     t.integer "minute"
     t.integer "second"
     t.integer "team_id"
