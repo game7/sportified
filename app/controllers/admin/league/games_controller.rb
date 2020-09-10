@@ -1,7 +1,6 @@
 class Admin::League::GamesController < Admin::AdminController
   before_action :mark_return_point, :only => [:new, :edit]
   before_action :load_event, :only => [:edit, :update, :destroy]
-  before_action :load_options, :only => [:new, :edit]
 
   def index
     add_breadcrumb 'Games', admin_league_games_path
@@ -15,7 +14,9 @@ class Admin::League::GamesController < Admin::AdminController
     if params[:clone]
       clone = ::League::Game.find(params[:clone])
       @game = clone.dup
+      load_options
     else
+      load_options
       @game = ::League::Game.new
       @game.program_id = @options[:programs].first.id if @options[:programs].length == 1
       @game.location_id = @options[:locations].first.id if @options[:locations].length == 1
@@ -37,6 +38,7 @@ class Admin::League::GamesController < Admin::AdminController
   end
 
   def edit
+    load_options
   end
 
   def update
