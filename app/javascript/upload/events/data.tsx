@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { IImportState, Header, row, storage } from './common';
+import { Table, Checkbox, CheckboxProps } from 'semantic-ui-react';
 
 const delimiters = [',', '|', '\t'];
 
@@ -25,9 +26,9 @@ export default class Data extends Component<{},IImportState> {
     this.setState(state);
   }
 
-  handleHeaderRowChange = (event) => {
+  handleHeaderRowChange = (_event, data: CheckboxProps) => {
     this.setState({
-      hasHeader: event.target.checked,
+      hasHeader: data.checked,
       teamMaps: undefined,
       locationMaps: undefined
     }, () => storage.save(this.state))
@@ -37,63 +38,42 @@ export default class Data extends Component<{},IImportState> {
     const state = this.state || {};
     const { rows = [], hasHeader = false} = state;
     const canMoveNext = (rows.length > 0);
+    
+    const data = [...rows]
+    const header = hasHeader && data.splice(0, 1)[0];      
 
     return (
       <div>
         <Header
           title="Data"
           canBack={true}
-          backUrl="/events/"
+          backUrl="/events"
           canNext={canMoveNext}
           nextUrl="/events/columns"
         />
-        <div className="form-group">
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" checked={hasHeader} onChange={this.handleHeaderRowChange}></input>
-              Has Header Row
-            </label>
-          </div>
-        </div>
-        <Rows data={rows} hasHeader={hasHeader}/>
+        <Checkbox label="Has Header Row" onChange={this.handleHeaderRowChange} checked={hasHeader} />
+        <Table celled striped>
+          {header && (
+            <Table.Header>
+              <Table.Row>
+                {header.map(column => (
+                  <Table.HeaderCell key={column}>{column}</Table.HeaderCell>
+                ))}
+              </Table.Row>
+            </Table.Header>
+          )}
+          <Table.Body>
+            {data.map((row, i) => (
+              <Table.Row key={i}>
+                {row.map(cell => (
+                  <Table.Cell key={cell}>{cell}</Table.Cell>
+                ))}
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
       </div>
     );
   }
 }
 
-//const Rows = ({data}) => <pre>{JSON.stringify(data, null, 2)}</pre>
-
-const Rows = ({data, hasHeader}) => {
-  let rows = [...data];
-  let header = hasHeader ? rows.splice(0, 1) : [];
-  return (
-    <table className="table table-bordered">
-      <TableHeader data={header}/>
-      <tbody>
-        {rows.map((row, i) => <Row data={row} key={i}/>)}
-      </tbody>
-    </table>
-  )
-};
-
-const TableHeader = ({data}) => (
-  <thead>
-    {data.map((row, i) => <HeaderRow data={row} key={i}/>)}
-  </thead>
-)
-
-const HeaderRow = ({data}) => (
-  <tr>
-    {data.map((column, i) => <HeaderColumn data={column} key={i}/>)}
-  </tr>
-);
-
-const HeaderColumn = ({data}) => <th>{data}</th>;
-
-const Row = ({data}) => (
-  <tr>
-    {data.map((column, i) => <Column data={column} key={i}/>)}
-  </tr>
-);
-
-const Column = ({data}) => <td>{data}</td>;

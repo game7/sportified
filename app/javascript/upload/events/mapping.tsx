@@ -3,6 +3,7 @@ import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column } from './common';
 import { Store, Team, Location } from '../common/store';
+import { Table, Select, DropdownProps } from 'semantic-ui-react';
 
 
 
@@ -47,8 +48,10 @@ export default class Mapping extends Component<{},IImportState> {
     })
   }
 
-  handleLocationMapChange = (key: string) => (event: any) => {
-    const id = event.target.value;
+  
+
+  handleLocationMapChange = (key: string) => (event: any, data: DropdownProps) => {
+    const id = data.value as string | number;
     const { name } = this.state.locations.filter(l => l.id == id)[0]
     const maps = (Object.assign([], this.state.locationMaps) as Map[]).map(map => {
       if(map.key == key) {
@@ -70,6 +73,10 @@ export default class Mapping extends Component<{},IImportState> {
 
   render() {
     const state = (this.state || {});
+    
+    console.log(state.locationMaps)
+    console.log(state.locations)
+
     return (
       <div>
         <Header
@@ -93,7 +100,7 @@ export default class Mapping extends Component<{},IImportState> {
   }
 }
 
-type OnMapChange = (key: string) => (event: any) => void;
+type OnMapChange = (key: string) => (event: any, data: DropdownProps) => void;
 
 interface MapsProps {
   maps: Map[];
@@ -102,31 +109,27 @@ interface MapsProps {
 }
 
 const Maps = (props: MapsProps) => {
-  console.log(props)
   const {
     maps = [],
     options = [],
     onChange
   } = props;
   return (
-    <table className="table table-bordered">
-      <tbody>
+    <Table celled striped>
+      <Table.Body>
         {maps.map((map: Map)=> (
-          <tr key={map.key}>
-            <td style={{width: '50%'}}>{map.key}</td>
-            <td style={{width: '50%'}}>
-              <select className="form-control"
+          <Table.Row key={map.key}>
+            <Table.Cell width="8">{map.key}</Table.Cell>
+            <Table.Cell width="8">
+              <Select
                 value={map.id}
-                onChange={onChange(map.key)}>
-                <option value=""></option>
-                {options.map(opt => (
-                  <option key={opt.id} value={opt.id}>{opt.name}</option>
-                ))}
-              </select>
-            </td>
-          </tr>
+                onChange={onChange(map.key)}
+                options={[ { key: 'blank' }, ...options.map(opt => ({ value: opt.id, text: opt.name }))]}
+              />
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </tbody>
-    </table>
+      </Table.Body>
+    </Table>
   );
 }

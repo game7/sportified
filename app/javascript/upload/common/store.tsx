@@ -90,7 +90,7 @@ function get(path) {
     headers: {},
     credentials: 'include'
   } as RequestInit;
-  console.log(options)
+  // console.log(options)
   return fetch(url, options)
 }
 

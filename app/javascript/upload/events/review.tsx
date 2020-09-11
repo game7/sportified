@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column, Properties } from './common';
 import { Store, Team, Location, EventUpload } from '../common/store';
 import * as moment from 'moment';
+import { Button, Table, Message, Icon } from 'semantic-ui-react';
 
 const getTeam = function(){
   let map = {};
@@ -158,41 +159,39 @@ export default class Review extends Component<{},IReviewState> {
           backUrl="/events/mapping"
           canNext={false}
         />
-        <p>
-          <em>Scroll to bottom to Submit</em>
-        </p>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Date / Time</th>
-              <th>Duration</th>
-              <th>Location</th>
-              <th>Summary</th>
-              <th>Home</th>
-              <th>Away</th>
-              <th>Tags</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Message info icon="info circle" header="You're almost there!" content="Scroll to buttom to Submit" />
+        <Table celled striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Date / Time</Table.HeaderCell>
+              <Table.HeaderCell>Duration</Table.HeaderCell>
+              <Table.HeaderCell>Location</Table.HeaderCell>
+              <Table.HeaderCell>Summary</Table.HeaderCell>
+              {/* <Table.HeaderCell>Home</Table.HeaderCell>
+              <Table.HeaderCell>Away</Table.HeaderCell> */}
+              <Table.HeaderCell>Tags</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {this.state.games.map((g, i)=> (
-              <tr key={i}>
-                {/*
-                <td style={{textAlign: 'center'}}>
+              <Table.Row key={i}>
+                {/* {/*
+                <Table.Cell style={{textAlign: 'center'}}>
                   <input type="checkbox" checked={g.selected} onChange={this.handleGameToggle(g.id)}/>
-                </td>
+                </Table.Cell>
                 */}
-                <td>{moment(new Date(g['startsOn'])).format('ddd M/D/YY h:mma').replace('m','')}</td>
-                <td>{g['duration']}</td>
-                <td>{g['location']['name']}</td>
-                <td>{g['summary']}</td>
-                <td>{g['homeTeam']}</td>
-                <td>{g['awayTeam']}</td>
-                <td>{g['tags']}</td>
-              </tr>
+                <Table.Cell>{moment(new Date(g['startsOn'])).format('ddd M/D/YY h:mma').replace('m','')}</Table.Cell>
+                <Table.Cell>{g['duration']}</Table.Cell>
+                <Table.Cell>{g['location']['name']}</Table.Cell>
+                <Table.Cell>{g['summary']}</Table.Cell>
+                {/* <Table.Cell>{g['homeTeam']}</Table.Cell>
+                <Table.Cell>{g['awayTeam']}</Table.Cell> */}
+                <Table.Cell>{g['tags']}</Table.Cell>
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
-        <button className={buttonCss.join(' ')} onClick={this.handleCreateEvents}>Create Events</button>
+          </Table.Body>
+        </Table>
+        <Button primary onClick={this.handleCreateEvents} content="Create" />
         <p style={{height: 20}}> </p>
       </div>
     );
