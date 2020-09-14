@@ -8,7 +8,7 @@ import { Button, Table, Message, Icon } from 'semantic-ui-react';
 
 const getTeam = function(){
   let map = {};
-  return (teams: Team[], id: string) : Team => {
+  return (teams: Team[], id: number) : Team => {
     let team = map[id];
     if(!team) {
       team = teams.filter(t => t.id == id)[0];
@@ -20,7 +20,7 @@ const getTeam = function(){
 
 const getLocation = function(){
   let map = {};
-  return (locations: Location[], id: string) : Location => {
+  return (locations: Location[], id: number) : Location => {
     let location = map[id];
     if(!location) {
       location = locations.filter(t => t.id == id)[0];
@@ -106,7 +106,7 @@ export default class Review extends Component<{},IReviewState> {
     this.setState(state)
   }
 
-  handleGameToggle = (id: string) => () => {
+  handleGameToggle = (id: number) => () => {
     let games = Object.assign({}, this.state.games);
     this.setState({
       games: games.map(g => {

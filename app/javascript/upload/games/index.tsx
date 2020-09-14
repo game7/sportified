@@ -1,25 +1,28 @@
 import * as React from 'react';
-import { Route, Switch, RouteComponentProps } from 'react-router-dom';
-import List from './list';
-import Import from './import';
+import { Route, RouteComponentProps } from 'react-router-dom';
 
-class Layout extends React.Component<any, any> {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+import Context from './context';
+import File from './file';
+import Data from './data';
+import Columns from './columns';
+import Mapping from './mapping';
+import Review from './review';
 
-const Index: React.SFC<RouteComponentProps<{}>> = (props) => (
-  <Layout>
-    <Switch>
-      <Route path={`${props.match.path}/`} exact component={List}/>
-      <Route path={`${props.match.path}/import`} component={Import}/>
-    </Switch>
-  </Layout>
+const Layout: React.SFC<{}> = (props) => (
+  <div>
+    {props.children}
+  </div>
 )
 
-export default Index;
+const Import: React.SFC<RouteComponentProps<{}>> = (props) => (
+  <Layout>
+    <Route path={`${props.match.path}/`} exact component={Context}/>
+    <Route path={`${props.match.path}/file`} component={File}/>
+    <Route path={`${props.match.path}/data`} component={Data}/>
+    <Route path={`${props.match.path}/columns`} component={Columns}/>
+    <Route path={`${props.match.path}/mapping`} component={Mapping}/>
+    <Route path={`${props.match.path}/review`} component={Review}/>
+  </Layout>
+);
+
+export default Import;

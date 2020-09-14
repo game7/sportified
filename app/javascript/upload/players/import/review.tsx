@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 const getTeam = function(){
   let map = {};
-  return (teams: Team[], id: string) : Team => {
+  return (teams: Team[], id: number) : Team => {
     let team = map[id];
     if(!team) {
       team = teams.filter(t => t.id == id)[0];

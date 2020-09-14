@@ -5,7 +5,7 @@
 #  id                  :integer          not null, primary key
 #  tenant_id           :integer
 #  statsheet_id        :integer
-#  period              :integer
+#  period              :string
 #  minute              :integer
 #  second              :integer
 #  team_id             :integer

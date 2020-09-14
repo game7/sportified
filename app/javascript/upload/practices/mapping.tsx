@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column } from './common';
-import { Store, Team, Location } from '../../common/store';
+import { Store, Team, Location } from '../common/store';
+import { Table, Select, DropdownProps } from 'semantic-ui-react';
 
 
 export function makeTeamMaps(columns: Column[], rows: row[], hasHeader: boolean): Map[] {
@@ -44,7 +45,7 @@ export default class Mapping extends Component<{},IImportState> {
     const { columns, rows, hasHeader } = state;
     if(!state.teamMaps) {
       state.teamMaps = findTeams(makeTeamMaps(columns, rows, hasHeader), state.teams.filter(t => t.seasonId == state.seasonId && t.divisionId == state.divisionId));
-    }
+    }    
     if(!state.locationMaps) {
       state.locationMaps = makeLocationMaps(columns, rows, hasHeader);
     }
@@ -65,7 +66,7 @@ export default class Mapping extends Component<{},IImportState> {
     if(!state) return false;
     const { teamMaps, locationMaps} = state;
     const maps = [...teamMaps, ...locationMaps];
-    return maps.every(map => map.id && map.id != '');
+    return maps.every(map => map.id);
   }
 
   setStateAndSave = (state: IImportState) => {
@@ -73,9 +74,9 @@ export default class Mapping extends Component<{},IImportState> {
       storage.save(state);
     })
   }
-
-  handleTeamMapChange = (key: string) => (event: any) => {
-    const id = event.target.value;
+ 
+  handleTeamMapChange = (key: string) => (_event: any, data: DropdownProps) => {
+    const id = data.value as number;
     const { name } = this.state.teams.filter(t => t.id == id)[0]
     const maps = (Object.assign([], this.state.teamMaps) as Map[]).map(map => {
       if(map.key == key) {
@@ -87,8 +88,8 @@ export default class Mapping extends Component<{},IImportState> {
     this.setState({ teamMaps: maps }, () => storage.save(this.state));
   }
 
-  handleLocationMapChange = (key: string) => (event: any) => {
-    const id = event.target.value;
+  handleLocationMapChange = (key: string) => (_event: any, data: DropdownProps) => {
+    const id = data.value as number;
     const { name } = this.state.locations.filter(l => l.id == id)[0]
     const maps = (Object.assign([], this.state.locationMaps) as Map[]).map(map => {
       if(map.key == key) {
@@ -110,37 +111,35 @@ export default class Mapping extends Component<{},IImportState> {
 
   render() {
     const state = (this.state || {});
+    
+    console.log(state.locationMaps)
+    console.log(state.locations)
+
     return (
       <div>
         <Header
           title="Mapping"
           canBack={true}
-          backUrl="/games/import/columns"
+          backUrl="/practices/columns"
           canNext={this.canMoveNext}
-          nextUrl="/games/import/review"
+          nextUrl="/practices/review"
         />
-        <div className="row">
-          <div className="col-sm-6">
-            <h3>Locations</h3>
-            <Maps
-              maps={state.locationMaps}
-              options={state.locations}
-              onChange={this.handleLocationMapChange}/>
-          </div>
-          <div className="col-sm-6">
-            <h3>Teams</h3>
-            <Maps
-              maps={state.teamMaps}
-              options={this.teams}
-              onChange={this.handleTeamMapChange} />
-          </div>
-        </div>
+        <h3 className="ui top attached header">Locations</h3>
+        <Maps
+          maps={state.locationMaps}
+          options={state.locations}
+          onChange={this.handleLocationMapChange}/>
+        <h3 className="ui top attached header">Teams</h3>      
+        <Maps
+          maps={state.teamMaps}
+          options={this.teams}
+          onChange={this.handleTeamMapChange} />            
       </div>
     );
   }
 }
 
-type OnMapChange = (key: string) => (event: any) => void;
+type OnMapChange = (key: string) => (event: any, data: DropdownProps) => void;
 
 interface MapsProps {
   maps: Map[];
@@ -149,31 +148,27 @@ interface MapsProps {
 }
 
 const Maps = (props: MapsProps) => {
-  console.log(props)
   const {
     maps = [],
     options = [],
     onChange
   } = props;
   return (
-    <table className="table table-bordered">
-      <tbody>
+    <Table celled striped attached>
+      <Table.Body>
         {maps.map((map: Map)=> (
-          <tr key={map.key}>
-            <td style={{width: '50%'}}>{map.key}</td>
-            <td style={{width: '50%'}}>
-              <select className="form-control"
+          <Table.Row key={map.key}>
+            <Table.Cell width="4">{map.key}</Table.Cell>
+            <Table.Cell width="12">
+              <Select
                 value={map.id}
-                onChange={onChange(map.key)}>
-                <option value=""></option>
-                {options.map(opt => (
-                  <option key={opt.id} value={opt.id}>{opt.name}</option>
-                ))}
-              </select>
-            </td>
-          </tr>
+                onChange={onChange(map.key)}
+                options={[ { key: 'blank' }, ...options.map(opt => ({ value: opt.id, text: opt.name }))]}
+              />
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </tbody>
-    </table>
+      </Table.Body>
+    </Table>
   );
 }

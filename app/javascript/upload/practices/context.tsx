@@ -37,8 +37,8 @@ export default class Context extends Component<{},IImportState> {
   handleLeagueChange = (_event, data: SelectProps) => {
     this.setStateAndSave({
       leagueId: data.value as number,
-      seasonId: undefined,
-      divisionId: undefined
+      seasonId: 0,
+      divisionId: 0
     });
   }
 
@@ -73,10 +73,11 @@ export default class Context extends Component<{},IImportState> {
     const { leagueId, seasonId, divisionId } = state;
     const { leagues = [], seasons = [], divisions = [] } = state;
     const canMoveNext = !!state.seasonId && !!state.divisionId;
-
+    console.log(canMoveNext)
     const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
-    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ name: s.name, value: s.id }))
-    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ name: d.name, value: d.id }))
+    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ text: s.name, value: s.id }))
+    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ text: d.name, value: d.id }))
+    const BLANK = { key: 'blank' }
 
     console.log(state)
 
@@ -86,12 +87,12 @@ export default class Context extends Component<{},IImportState> {
           title="Context"
           canBack={false}
           canNext={canMoveNext}
-          nextUrl="/games/import/file"
+          nextUrl="/practices/file"
         />
         <Form>
-          <Form.Field control={Select} label="League" value={leagueId} options={leagueOptions} onChange={this.handleLeagueChange} />
-          <Form.Field control={Select} label="Season" value={seasonId} options={seasonOptions} onChange={this.handleSeasonChange} />
-          <Form.Field control={Select} label="Division" value={divisionId} options={divisionOptions} onChange={this.handleDivisionChange} />
+          <Form.Field control={Select} label="League" value={leagueId} options={[BLANK, ...leagueOptions]} onChange={this.handleLeagueChange} />
+          <Form.Field control={Select} label="Season" value={seasonId} options={[BLANK, ...seasonOptions]} onChange={this.handleSeasonChange} />
+          <Form.Field control={Select} label="Division" value={divisionId} options={[BLANK, ...divisionOptions]} onChange={this.handleDivisionChange} />
         </Form>
       </div>
     );

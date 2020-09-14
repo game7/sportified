@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
-import { Tenant, League, Season, Division, Team, Location } from '../../common/store';
+import { Tenant, League, Season, Division, Team, Location } from '../common/store';
+import { Button } from 'semantic-ui-react';
 
 export type cell = string;
 export type row = cell[]
@@ -12,9 +13,9 @@ interface IFile {
 
 export interface IImportState {
   tenant?: Tenant,
-  leagueId?: string,
-  seasonId?: string,
-  divisionId?: string,
+  leagueId?: number,
+  seasonId?: number,
+  divisionId?: number,
   file?: IFile;
   delimiter?: string;
   hasHeader?: boolean;
@@ -38,7 +39,7 @@ export interface Column {
 
 export interface Map {
   key: string;
-  id?: string;
+  id?: number;
   name?: string;
 }
 
@@ -49,32 +50,14 @@ export const Properties = {
   homeTeam: 'Home Team',
   awayTeam: 'Away Team',
   location: 'Location',
-  unused: 'Not Used'
+  unused: 'Not Used',
+  textBefore: 'Text Before',
+  textAfter: 'Text After'
 };
 
 export const storage = {
   save: (state: IImportState) => localStorage.setItem('import', JSON.stringify(state)),
   load: (): IImportState => JSON.parse(localStorage.getItem('import') || '{}')
-}
-
-export const Back = (props: { disabled?: boolean, to?: string }) => {
-  let css = ['btn', 'btn-default'];
-  if(props.disabled) css.push('disabled');
-  return (
-    <Link className={css.join(' ')} to={props.to || ""}>
-      <i className="far fa-backward"/>{" "}Back
-    </Link>
-  )
-}
-
-export const Next = (props: { disabled?: boolean, to?: string }) => {
-  let css = ['btn', 'btn-default'];
-  if(props.disabled) css.push('disabled');
-  return (
-    <Link className={css.join(' ')} to={props.to || ""}>
-      Next{" "}<i className="far fa-forward"/>
-    </Link>
-  )
 }
 
 interface HeaderProps {
@@ -85,8 +68,8 @@ interface HeaderProps {
   backUrl?: string;
 }
 
-export const Header = (props: HeaderProps) => {
-  let styles = {
+export const Header = ({ title, canBack = false, backUrl = "", canNext = false, nextUrl = "" }: HeaderProps) => {
+  const styles = {
     buttons: {
       float: 'right'
     } as React.CSSProperties,
@@ -96,20 +79,13 @@ export const Header = (props: HeaderProps) => {
   }
   return (
     <h1 className="page-header">
-      {props.title}
+      {title}
       <div style={styles.buttons}>
-        <div className="btn-group">
-          <Back
-            disabled={!props.canBack}
-            to={props.backUrl}
-          />
-          <Next
-            disabled={!props.canNext}
-            to={props.nextUrl}
-          />
-        </div>
+        <Button as={Link} disabled={!canBack} content="Back" icon="left arrow" to={backUrl} labelPosition="left" />
+        <Button as={Link} disabled={!canNext} content="Next" icon="right arrow" to={nextUrl} labelPosition="right" />
       </div>
       <div style={styles.clearfix} />
     </h1>
   )
 }
+

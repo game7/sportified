@@ -7,7 +7,7 @@ export interface Tenant {
 }
 
 export interface League {
-  id: string;
+  id: number;
   name: string;
   description: string;
   created_at: string;
@@ -15,8 +15,8 @@ export interface League {
 }
 
 export interface Season {
-  id: string;
-  programId: string;
+  id: number;
+  programId: number;
   name: string;
   description: string;
   createdAt: string;
@@ -24,8 +24,8 @@ export interface Season {
 }
 
 export interface Division {
-  id: string;
-  programId: string;
+  id: number;
+  programId: number;
   name: string;
   description: string;
   createdAt: string;
@@ -33,33 +33,35 @@ export interface Division {
 }
 
 export interface Team {
-  id: string
-  seasonId: string
-  divisionId: string
+  id: number
+  seasonId: number
+  divisionId: number
   name: string
   shortName: string
 }
 
 export interface Location {
-  id: string
+  id: number
   name: string
   shortName: string
 }
 
 export interface GameUpload {
-  id: string;
+  id: number;
   startsOn: string;
   duration: string;
   homeTeam: Team;
   awayTeam: Team;
   location: Location;
+  textBefore: string;
+  textAfter: string;
   selected: boolean;
   processing: boolean;
   completed: boolean;
 }
 
 export interface EventUpload {
-  id?: string;
+  id?: number;
   summary?: string;
   startsOn: string;
   duration: string;
@@ -136,6 +138,17 @@ export class Store {
       }
     })
   }
+
+  static createPractices(practices: any) {
+    return fetch(process.env.API_BASE + 'api/league/practices/batch_create', {
+      method: 'POST',
+      body: JSON.stringify(practices),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }  
 
   static createEvents(events: any) {
     return fetch(process.env.API_BASE + 'api/general/events/batch_create', {

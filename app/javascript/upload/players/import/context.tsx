@@ -3,6 +3,7 @@ import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column } from './common';
 import { Tenant, Store, League, Season, Division } from '../../common/store';
+import { Select, Form, SelectProps } from 'semantic-ui-react';
 
 export function makeColumns(row: row): Column[] {
   return row.map(col => {
@@ -15,7 +16,8 @@ export function makeColumns(row: row): Column[] {
 export default class Context extends Component<{},IImportState> {
 
   componentDidMount() {
-    const state = storage.load();
+    let state = storage.load();
+    this.setState(state);
     Promise.all([
       Store.leagues(),
       Store.seasons(),
@@ -23,29 +25,29 @@ export default class Context extends Component<{},IImportState> {
       Store.teams()
     ]).then(results => {
       this.setStateAndSave({
-        ...state,
         leagues: results[0],
         seasons: results[1],
         divisions: results[2],
-        teams: results[3]
+        teams: results[3],
+        ...state
       })
     })
   }
 
-  handleLeagueChange = (leagueId: string) => {
+  handleLeagueChange = (_event, data: SelectProps) => {
     this.setStateAndSave({
-      leagueId: leagueId,
+      leagueId: data.value as number,
       seasonId: undefined,
       divisionId: undefined
     });
   }
 
-  handleSeasonChange = (seasonId: string) => {
-    this.setStateAndSave({ seasonId: seasonId });
+  handleSeasonChange = (_event, data: SelectProps) => {
+    this.setStateAndSave({ seasonId: data.value as number });
   }
 
-  handleDivisionChange = (divisionId: string) => {
-    this.setStateAndSave({ divisionId: divisionId })
+  handleDivisionChange = (_event, data: SelectProps) => {
+    this.setStateAndSave({ divisionId: data.value as number })
   }
 
   setStateAndSave = (state: IImportState) => {
@@ -67,8 +69,16 @@ export default class Context extends Component<{},IImportState> {
   }
 
   render() {
-    const state = (this.state || {}) as IImportState;
+    const state = (this.state || {}) as IImportState
+    const { leagueId, seasonId, divisionId } = state;
+    const { leagues = [], seasons = [], divisions = [] } = state;
     const canMoveNext = !!state.seasonId && !!state.divisionId;
+
+    const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
+    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ name: s.name, value: s.id }))
+    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ name: d.name, value: d.id }))
+
+    console.log(state)
 
     return (
       <div>
@@ -76,113 +86,15 @@ export default class Context extends Component<{},IImportState> {
           title="Context"
           canBack={false}
           canNext={canMoveNext}
-          nextUrl="/players/import/file"
+          nextUrl="/games/import/file"
         />
-        <LeaguePicker
-          leagues={state.leagues}
-          leagueId={state.leagueId}
-          onChange={this.handleLeagueChange}
-        />
-        <SeasonPicker
-          seasons={state.seasons}
-          leagueId={state.leagueId}
-          seasonId={state.seasonId}
-          onChange={this.handleSeasonChange}
-        />
-        <DivisionPicker
-          divisions={state.divisions}
-          leagueId={state.leagueId}
-          divisionId={state.divisionId}
-          onChange={this.handleDivisionChange}
-        />
-        <hr/>
+        <Form>
+          <Form.Field control={Select} label="League" value={leagueId} options={leagueOptions} onChange={this.handleLeagueChange} />
+          <Form.Field control={Select} label="Season" value={seasonId} options={seasonOptions} onChange={this.handleSeasonChange} />
+          <Form.Field control={Select} label="Division" value={divisionId} options={divisionOptions} onChange={this.handleDivisionChange} />
+        </Form>
       </div>
     );
   }
 }
 
-let LeaguePicker = (props: { leagues: League[], leagueId: string, onChange: (string) => void }) => {
-  const { leagues = [], leagueId = '' } = props;
-  return (
-    <div className="form-group">
-      <label htmlFor="league">League</label>
-      <select
-        id="league"
-        className="form-control"
-        value={leagueId}
-        onChange={event => props.onChange(event.target['value'])}
-      >
-        <option value=""></option>
-        {leagues.map((league, i) => (
-          <option
-            key={league.id}
-            value={league.id}>
-            {league.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
-
-interface SeasonPickerProps {
-  seasons: Season[];
-  leagueId: string;
-  seasonId: string;
-  onChange: (string) => void;
-}
-
-let SeasonPicker = (props: SeasonPickerProps) => {
-  let seasons = (props.seasons || []).filter((s) => s.programId == props.leagueId);
-  return (
-    <div className="form-group">
-      <label htmlFor="season">Season</label>
-      <select
-        id="season"
-        className="form-control"
-        value={props.seasonId}
-        onChange={event => props.onChange(event.target['value'])}
-      >
-        <option value=""></option>
-        {seasons.map((s, i) => (
-          <option
-            key={s.id}
-            value={s.id}>
-            {s.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
-
-interface DivisionPickerProps {
-  divisions: Division[];
-  leagueId: string;
-  divisionId: string;
-  onChange: (string) => void;
-}
-
-let DivisionPicker = (props: DivisionPickerProps) => {
-  let divisions = (props.divisions || []).filter((s) => s.programId == props.leagueId);
-  return (
-    <div className="form-group">
-      <label htmlFor="division">Division</label>
-      <select
-        id="division"
-        className="form-control"
-        value={props.divisionId}
-        onChange={event => props.onChange(event.target['value'])}
-      >
-        <option value=""></option>
-        {divisions.map((d, i) => (
-          <option
-            key={d.id}
-            value={d.id}>
-            {d.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}

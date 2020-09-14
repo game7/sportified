@@ -21,7 +21,7 @@ class Api::League::GamesController < Api::BaseController
 
   def games_params
     params.permit(game: [ :program_id, :season_id, :division_id, :starts_on, :duration,
-      :location_id, :away_team_id, :home_team_id ]
+      :location_id, :away_team_id, :home_team_id, :text_before, :text_after ]
     )
   end
 

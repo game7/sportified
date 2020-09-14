@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
 import { Tenant, League, Season, Division, Team, Location } from '../common/store';
-import { Button, ButtonGroup, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 export type cell = string;
 export type row = cell[]
@@ -39,7 +39,7 @@ export interface Column {
 
 export interface Map {
   key: string;
-  id?: string | number;
+  id?: number;
   name?: string;
 }
 
@@ -49,32 +49,15 @@ export const Properties = {
   duration: 'Duration',
   homeTeam: 'Home Team',
   awayTeam: 'Away Team',
-  summary: 'Summary',
-  prependTags: 'Tags - Prepend',
-  appendTags: 'Tags - Append',
   location: 'Location',
-  unused: 'Not Used'
+  unused: 'Not Used',
+  textBefore: 'Text Before',
+  textAfter: 'Text After'
 };
 
 export const storage = {
   save: (state: IImportState) => localStorage.setItem('import', JSON.stringify(state)),
   load: (): IImportState => JSON.parse(localStorage.getItem('import') || '{}')
-}
-
-export const Back = (props: { disabled?: boolean, to?: string }) => {
-  return (
-    <Button as="a" disabled={props.disabled} label="Back" icon="left arrow" href={props.to || ""} />
-  )
-}
-
-export const Next = (props: { disabled?: boolean, to?: string }) => {
-  let css = ['btn', 'btn-default'];
-  if(props.disabled) css.push('disabled');
-  return (
-    <Link className={css.join(' ')} to={props.to || ""}>
-      Next{" "}<i className="far fa-forward"/>
-    </Link>
-  )
 }
 
 interface HeaderProps {
@@ -105,3 +88,4 @@ export const Header = ({ title, canBack = false, backUrl = "", canNext = false, 
     </h1>
   )
 }
+

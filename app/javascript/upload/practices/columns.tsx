@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Column, Properties } from './common';
+import { Table, Select, DropdownProps } from 'semantic-ui-react';
 
 function findPropertyForPattern(pattern: string): string {
   for(var key in Properties) {
@@ -35,8 +36,8 @@ export default class Data extends Component<{},IImportState> {
     storage.save(state);
   }
 
-  handleColumnChange = (key: string) => (event: any) => {
-    const value = event.target.value;
+  handleColumnChange = (key: string) => (event: any, data: DropdownProps) => {
+    const value = data.value.toString();
     const state = Object.assign({}, this.state);
     const columns = state.columns.map((column, i) => {
       if (column.pattern == key) {
@@ -62,35 +63,28 @@ export default class Data extends Component<{},IImportState> {
         <Header
           title="Columns"
           canBack={true}
-          backUrl="/games/import/data"
+          backUrl="/practices/data"
           canNext={canMoveNext}
-          nextUrl="/games/import/mapping"
+          nextUrl="/practices/mapping"
         />
-        <table className="table table-bordered">
-          <tbody>
-            {columns.map((col) => (
-              <Row
-                column={col}
-                key={col.pattern}
-                properties={properties}
-                onChange={this.handleColumnChange}
-              />
-            ))}
-          </tbody>
-        </table>
+        <Table celled striped>
+          <Table.Body>
+            {columns.map((col, i) => (
+              <Table.Row key={i}>
+                <Table.Cell>{col.pattern}</Table.Cell>
+                <Table.Cell>
+                  <Select
+                    value={col.property} 
+                    onChange={this.handleColumnChange(col.pattern)} 
+                    options={[{ key: "blank" }, ...properties.map(prop => ({ text: prop.value, value: prop.key }))]}
+                  />
+                </Table.Cell>
+              </Table.Row>               
+            ))}  
+          </Table.Body>
+        </Table>
       </div>
     );
   }
 }
 
-let Row = ({column, properties, onChange}) => (
-  <tr>
-    <td>{column.pattern}</td>
-    <td>
-      <select className="form-control" value={column.property} onChange={onChange(column.pattern)}>
-        <option value=""></option>
-        {properties.map(prop => (<option key={prop.key} value={prop.key}>{prop.value}</option>))}
-      </select>
-    </td>
-  </tr>
-)

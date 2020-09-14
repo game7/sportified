@@ -12,9 +12,9 @@ interface IFile {
 
 export interface IImportState {
   tenant?: Tenant,
-  leagueId?: string,
-  seasonId?: string,
-  divisionId?: string,
+  leagueId?: number,
+  seasonId?: number,
+  divisionId?: number,
   file?: IFile;
   delimiter?: string;
   hasHeader?: boolean;
@@ -36,7 +36,7 @@ export interface Column {
 
 export interface Map {
   key: string;
-  id?: string;
+  id?: number;
   name?: string;
 }
 

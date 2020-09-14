@@ -2,12 +2,13 @@ import * as React from 'react';
 import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column, Properties } from './common';
-import { Store, Team, Location, GameUpload } from '../../common/store';
+import { Store, Team, Location, EventUpload, GameUpload } from '../common/store';
 import * as moment from 'moment';
+import { Button, Table, Message, Icon } from 'semantic-ui-react';
 
 const getTeam = function(){
   let map = {};
-  return (teams: Team[], id: string) : Team => {
+  return (teams: Team[], id: number) : Team => {
     let team = map[id];
     if(!team) {
       team = teams.filter(t => t.id == id)[0];
@@ -19,7 +20,7 @@ const getTeam = function(){
 
 const getLocation = function(){
   let map = {};
-  return (locations: Location[], id: string) : Location => {
+  return (locations: Location[], id: number) : Location => {
     let location = map[id];
     if(!location) {
       location = locations.filter(t => t.id == id)[0];
@@ -28,6 +29,14 @@ const getLocation = function(){
     return location;
   }
 }();
+
+const parseDuration = (value: string) => {
+  const parts = value.split(':');
+  if(parts.length == 2) {
+    return (parseInt(parts[0]) * 60) + parseInt(parts[1])
+  }
+  return value;
+}
 
 export function makeGames(state: IReviewState): GameUpload[] {
   let { rows, hasHeader, teams, locations } = state;
@@ -57,10 +66,12 @@ export function makeGames(state: IReviewState): GameUpload[] {
   const games = data.map((item: any) => {
     return {
       startsOn: item.date + ' ' + item.time,
-      duration: item.duration,
+      duration: parseDuration(item.duration),
       location: getLocation(locations, item.location.id),
       homeTeam: getTeam(teams, item.homeTeam.id),
       awayTeam: getTeam(teams, item.awayTeam.id),
+      textBefore: item.textBefore,
+      textAfter: item.textAfter,
       selected: true
     } as GameUpload;
   });
@@ -82,7 +93,7 @@ export default class Review extends Component<{},IReviewState> {
     this.setState(state)
   }
 
-  handleGameToggle = (id: string) => () => {
+  handleGameToggle = (id: number) => () => {
     let games = Object.assign({}, this.state.games);
     this.setState({
       games: games.map(g => {
@@ -97,7 +108,7 @@ export default class Review extends Component<{},IReviewState> {
     this.setState({ isProcessing: true });
     const { leagueId, seasonId, divisionId } = this.state;
     let payload = {
-      game: this.state.games.map(g => {
+      practice: this.state.games.map(g => {
         return {
           program_id: leagueId,
           season_id: seasonId,
@@ -106,62 +117,70 @@ export default class Review extends Component<{},IReviewState> {
           duration: g.duration,
           home_team_id: g.homeTeam.id,
           away_team_id: g.awayTeam.id,
-          location_id: g.location.id
+          location_id: g.location.id,
+          text_before: g.textBefore,
+          text_after: g.textAfter
         }
       })
     }
-    Store.createGames(payload).then(response => {
+    Store.createPractices(payload).then(response => {
         if(response['ok']) {
-          alert('Games have been posted');
+          alert('Practices have been posted');
         } else {
           alert('Oops!  Something didn\'t go right...');
           this.setState({ isProcessing: false });
         }
     })
-  }
+  }  
 
   render() {
-    let buttonCss = ['btn', 'btn-primary'];
-    if(this.state.isProcessing) {
-      buttonCss.push('disabled');
-    }
+    const { isProcessing } = this.state;
+    console.log(this.state)
     return (
       <div>
         <Header
           title="Review"
           canBack={true}
-          backUrl="/games/import/mapping"
+          backUrl="/practices/mapping"
           canNext={false}
         />
-        <p>
-          <em>Scroll to bottom to Submit</em>
-        </p>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Date / Time</th>
-              <th>Location</th>
-              <th>Home</th>
-              <th>Away</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Message info icon="info circle" header="You're almost there!" content="Scroll to buttom to Submit" />
+        <Table celled striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Date / Time</Table.HeaderCell>
+              <Table.HeaderCell>Duration</Table.HeaderCell>
+              <Table.HeaderCell>Location</Table.HeaderCell>
+              {/* <Table.HeaderCell>Summary</Table.HeaderCell> */}
+              <Table.HeaderCell>Home</Table.HeaderCell>
+              <Table.HeaderCell>Away</Table.HeaderCell>
+              <Table.HeaderCell>Text Before</Table.HeaderCell>
+              <Table.HeaderCell>Text After</Table.HeaderCell>
+              {/* <Table.HeaderCell>Tags</Table.HeaderCell> */}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {this.state.games.map((g, i)=> (
-              <tr key={i}>
-                {/*
-                <td style={{textAlign: 'center'}}>
+              <Table.Row key={i}>
+                {/* {/*
+                <Table.Cell style={{textAlign: 'center'}}>
                   <input type="checkbox" checked={g.selected} onChange={this.handleGameToggle(g.id)}/>
-                </td>
+                </Table.Cell>
                 */}
-                <td>{moment(new Date(g['startsOn'])).format('ddd M/D/YY h:mma').replace('m','')}</td>
-                <td>{g['location']['name']}</td>
-                <td>{g['homeTeam']['name']}</td>
-                <td>{g['awayTeam']['name']}</td>
-              </tr>
+                <Table.Cell>{moment(new Date(g['startsOn'])).format('ddd M/D/YY h:mma').replace('m','')}</Table.Cell>
+                <Table.Cell>{g['duration']}</Table.Cell>
+                <Table.Cell>{g['location']['name']}</Table.Cell>
+                {/* <Table.Cell>{g['summary']}</Table.Cell> */}
+                <Table.Cell>{g['homeTeam']['name']}</Table.Cell>
+                <Table.Cell>{g['awayTeam']['name']}</Table.Cell>
+                <Table.Cell>{g['textBefore']}</Table.Cell>
+                <Table.Cell>{g['textAfter']}</Table.Cell>
+                {/* <Table.Cell>{g['tags']}</Table.Cell> */}
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
-        <button className={buttonCss.join(' ')} onClick={this.handleCreateGames}>Create Games</button>
+          </Table.Body>
+        </Table>
+        <Button primary onClick={this.handleCreateGames} content="Create" disabled={isProcessing} />
         <p style={{height: 20}}> </p>
       </div>
     );

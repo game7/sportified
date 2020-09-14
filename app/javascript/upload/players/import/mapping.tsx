@@ -58,7 +58,7 @@ export default class Mapping extends Component<{},IImportState> {
     const state = (this.state || {});
     const { teamMaps = [] } = state;
     const maps = [...teamMaps];
-    return maps.every(map => map.id && map.id != '');
+    return maps.every(map => map.id);
   }
 
   setStateAndSave = (state: IImportState) => {
