@@ -54,7 +54,7 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
   before_create :set_games_played_to_one
 
   def set_games_played_to_one
-    games_played = 1
+    self.games_played = 1
   end
 
   def full_name
