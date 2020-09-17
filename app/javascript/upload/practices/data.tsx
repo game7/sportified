@@ -47,7 +47,7 @@ export default class Data extends Component<{},IImportState> {
         <Header
           title="Data"
           canBack={true}
-          backUrl="/practices"
+          backUrl="/practices/file"
           canNext={canMoveNext}
           nextUrl="/practices/columns"
         />

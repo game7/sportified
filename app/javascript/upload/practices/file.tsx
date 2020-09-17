@@ -55,7 +55,8 @@ export default class File extends Component<{},IImportState> {
       <div>
         <Header
           title="File"
-          canBack={false}
+          canBack={true}
+          backUrl="/practices"
           canNext={this.canMoveNext}
           nextUrl="/practices/data"
         />

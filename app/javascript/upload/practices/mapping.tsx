@@ -111,10 +111,7 @@ export default class Mapping extends Component<{},IImportState> {
 
   render() {
     const state = (this.state || {});
-    
-    console.log(state.locationMaps)
-    console.log(state.locations)
-
+    console.log(state)
     return (
       <div>
         <Header

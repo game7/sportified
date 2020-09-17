@@ -72,21 +72,17 @@ export default class Context extends Component<{},IImportState> {
     const state = (this.state || {}) as IImportState
     const { leagueId, seasonId, divisionId } = state;
     const { leagues = [], seasons = [], divisions = [] } = state;
-    const canMoveNext = !!state.seasonId && !!state.divisionId;
-    console.log(canMoveNext)
     const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
     const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ text: s.name, value: s.id }))
     const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ text: d.name, value: d.id }))
     const BLANK = { key: 'blank' }
-
-    console.log(state)
 
     return (
       <div>
         <Header
           title="Context"
           canBack={false}
-          canNext={canMoveNext}
+          canNext={!!state.seasonId && !!state.divisionId}
           nextUrl="/practices/file"
         />
         <Form>
