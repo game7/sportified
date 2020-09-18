@@ -15,7 +15,7 @@
     %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     = yield(:head)
   %body{ :style => "background-image: none;" }
-    .container
+    .printable{ style: 'margin: 20px;'}
       = yield
     = yield :javascript
 

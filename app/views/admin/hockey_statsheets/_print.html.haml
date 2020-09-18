@@ -3,8 +3,9 @@
     size: 8.5in 11in;
     margin: 0in;
   }
-  body {
+  html, body {
     padding-top: 0;
+    height: auto;
   }
   table {
     width: 100%;
@@ -167,10 +168,11 @@
             = @statsheet.game.season.name
         %tr
           %th Location
-          %td= @statsheet.game.location.name
-          - if @statsheet.game.playing_surface
-            != ' - '
-            = @statsheet.game.playing_surface.name
+          %td
+            = @statsheet.game.location.name
+            - if @statsheet.game.playing_surface
+              != ' - '
+              = @statsheet.game.playing_surface.name
         %tr.huge
           %th{ style: 'width: 30%' }
             %div Referee
