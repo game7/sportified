@@ -21,7 +21,7 @@ module Blocks
       %w{ edit }
     end
 
-    store_accessor :options, :post_count, :shuffle, :tags
+    store_accessor :options, :post_count, :shuffle, :interval, :tags
 
     def post_count=(count)
       super(count.to_i)
@@ -40,13 +40,24 @@ module Blocks
     end
 
     def shuffle
-      super == '1'
+      super == 1
     end
+
+    def interval=(count)
+      super(count.to_i)
+    end
+
+    def interval
+      [super.to_i, 3].max
+    end  
 
     def posts
       posts = Post.tagged_with(self.tags, :any => true).where("image IS NOT NULL").limit(self.post_count)
       posts = self.shuffle ? posts.random : posts.newest
     end
+
+    validates :post_count, numericality: { only_integer: true }
+    validates :interval, numericality: { only_integer: true }
 
   end
 end

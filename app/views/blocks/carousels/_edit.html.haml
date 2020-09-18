@@ -4,6 +4,7 @@
     = simple_form_for @block, url: page_blocks_carousel_path(@page, @block), remote: true do |f|
       = f.input :post_count
       = f.input :shuffle, as: :boolean
+      = f.input :interval
       = f.input :tags, as: :tags, source: :post
   .actions
     %button.ui.primary.button{ type: :submit } Save

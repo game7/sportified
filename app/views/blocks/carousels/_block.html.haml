@@ -1,12 +1,18 @@
 - posts = block.posts.entries
 
+-# - if posts.any?
+-#   .ui.compact.grid
+-#     .sixteen.wide.column
+-#       = image_tag posts[0].image.url, style: 'width: 100%;'
+-#     - posts.drop(1).each_with_index do |post, index|
+-#       .four.wide.column
+-#         = image_tag post.image.url, style: 'width: 100%;'
+-# %hr
 - if posts.any?
-  .ui.compact.grid
-    .sixteen.wide.column
-      = image_tag posts[0].image.url, style: 'width: 100%;'
-    - posts.drop(1).each_with_index do |post, index|
-      .four.wide.column
-        = image_tag post.image.url, style: 'width: 100%;'
+  -# .carousel[block]
+  = image_tag posts[0].image.url, style: 'width: 100%;', data: { link: posts[0].link_url }
+  - posts.drop(1).each_with_index do |post, index|
+    = image_tag '', style: 'width: 100%; display: none;', data: { src: post.image.url, link: post.link_url }
 
 -# .carousel.slide{ :id => "carousel_#{block.id}" }
 -#   .carousel-inner
@@ -29,15 +35,32 @@
 -#   %a.left.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "prev" }= "‹"
 -#   %a.right.carousel-control{ :href => "#carousel_#{block.id}", :"data-slide" => "next" }= "›"
 
+
+
 - content_for :javascript do
   :javascript
     $(function(){
-      $("#carousel_#{block.id} img[data-src]").each(function(index){
+      $("#blocks_carousel_#{block.id} img[data-src]").each(function(index){
         $(this).attr("src", $(this).attr("data-src"));
       });
-      $("#carousel_#{block.id} img[data-link]").each(function(index){
+      (function() {
+        let i = 0;
+        let interval = parseInt("#{block.try(:interval)}") || 3;
+        function carousel() {
+          const $slides = $("#blocks_carousel_#{block.id} img")
+          $slides.css('display', 'none')
+          $($slides[i]).css('display', 'block')
+          if(i < $slides.length - 1) {
+            i++
+          } else {
+            i = 0
+          }
+        }
+        setInterval(carousel, interval * 1000);
+      })()
+      $("#blocks_carousel_#{block.id} img[data-link]").each(function(index){
         if ( $(this).attr('data-link') != '' ) {
-          var link = $('<a/>').attr('href', $(this).attr('data-link'));/*.attr('target', '_blank');*/
+          var link = $('<a/>').attr('href', $(this).attr('data-link'));//.attr('target', '_blank');
           $(this).wrap(link);
         }
       });

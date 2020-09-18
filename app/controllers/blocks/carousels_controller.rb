@@ -29,7 +29,7 @@ class Blocks::CarouselsController < BlocksController
   private
 
   def blocks_carousel_params
-    params.required(:blocks_carousel).permit(:post_count, :shuffle, :tags => [])
+    params.required(:blocks_carousel).permit(:post_count, :shuffle, :interval, :tags => [])
   end
 
 end
