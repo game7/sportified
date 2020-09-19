@@ -1,19 +1,26 @@
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
-import List from './list';
-import Import from './import';
+import { Route, RouteComponentProps } from 'react-router';
 
-const Layout: React.SFC<{}> = (props) => (
-  <div>
-    {props.children}
-  </div>
-)
+import Context from './context';
+import File from './file';
+import Data from './data';
+import Columns from './columns';
+import Mapping from './mapping';
+import Review from './review';
 
-const Players: React.SFC<RouteComponentProps<{}>> = (props) => (
+const Layout: React.SFC<{}> = ({ children }) => (
+  <div>{children}</div>
+);
+
+const Import: React.SFC<RouteComponentProps<{}>> = ({ match }) => (
   <Layout>
-    <Route path={`${props.match.path}/`} exact component={List}/>
-    <Route path={`${props.match.path}/import`} component={Import}/>
+    <Route exact path={`${match.path}/`} component={Context}/>
+    <Route path={`${match.path}/file`} component={File}/>
+    <Route path={`${match.path}/data`} component={Data}/>
+    <Route path={`${match.path}/columns`} component={Columns}/>
+    <Route path={`${match.path}/mapping`} component={Mapping}/>
+    <Route path={`${match.path}/review`} component={Review}/>
   </Layout>
-)
+);
 
-export default Players;
+export default Import;

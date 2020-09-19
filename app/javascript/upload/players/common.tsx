@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
-import { Tenant, League, Season, Division, Team } from '../../common/store';
+import { Tenant, League, Season, Division, Team } from "../common/store";
+import { Button } from 'semantic-ui-react';
 
 export type cell = string;
 export type row = cell[]
@@ -57,26 +58,6 @@ export const storage = {
   load: (): IImportState => JSON.parse(localStorage.getItem('sprtfd-players-import') || '{}')
 }
 
-export const Back = (props: { disabled?: boolean, to?: string }) => {
-  let css = ['btn', 'btn-default'];
-  if(props.disabled) css.push('disabled');
-  return (
-    <Link className={css.join(' ')} to={props.to || ""}>
-      <i className="far fa-backward"/>{" "}Back
-    </Link>
-  )
-}
-
-export const Next = (props: { disabled?: boolean, to?: string }) => {
-  let css = ['btn', 'btn-default'];
-  if(props.disabled) css.push('disabled');
-  return (
-    <Link className={css.join(' ')} to={props.to || ""}>
-      Next{" "}<i className="far fa-forward"/>
-    </Link>
-  )
-}
-
 interface HeaderProps {
   title: string;
   canNext?: boolean;
@@ -85,8 +66,8 @@ interface HeaderProps {
   backUrl?: string;
 }
 
-export const Header = (props: HeaderProps) => {
-  let styles = {
+export const Header = ({ title, canBack = false, backUrl = "", canNext = false, nextUrl = "" }: HeaderProps) => {
+  const styles = {
     buttons: {
       float: 'right'
     } as React.CSSProperties,
@@ -96,18 +77,10 @@ export const Header = (props: HeaderProps) => {
   }
   return (
     <h1 className="page-header">
-      {props.title}
+      {title}
       <div style={styles.buttons}>
-        <div className="btn-group">
-          <Back
-            disabled={!props.canBack}
-            to={props.backUrl}
-          />
-          <Next
-            disabled={!props.canNext}
-            to={props.nextUrl}
-          />
-        </div>
+        <Button as={Link} disabled={!canBack} content="Back" icon="left arrow" to={backUrl} labelPosition="left" />
+        <Button as={Link} disabled={!canNext} content="Next" icon="right arrow" to={nextUrl} labelPosition="right" />
       </div>
       <div style={styles.clearfix} />
     </h1>

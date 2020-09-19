@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Column, Properties } from './common';
+import { Table, Select, DropdownProps } from 'semantic-ui-react';
 
 function findPropertyForPattern(pattern: string): string {
   for(var key in Properties) {
@@ -21,6 +22,10 @@ export function makeColumns(row: row): Column[] {
   }) as Column[];
 }
 
+function getProperties() {
+  return Object.keys(Properties).map(key => { return { key: key, value: Properties[key] } });
+}
+
 export default class Data extends Component<{},IImportState> {
 
   componentWillMount() {
@@ -37,12 +42,8 @@ export default class Data extends Component<{},IImportState> {
     return columnCount > 0 && columnCount == mappedCount;
   }
 
-  get properties(): { key: string, value: any }[] {
-    return Object.keys(Properties).map(key => { return { key: key, value: Properties[key] } });
-  }
-
-  handleColumnChange = (key: string) => (event: any) => {
-    const value = event.target.value;
+  handleColumnChange = (key: string) => (event: any, data: DropdownProps) => {
+    const value = data.value.toString();
     const state = Object.assign({}, this.state);
     const columns = state.columns.map((column, i) => {
       if (column.pattern == key) {
@@ -54,31 +55,43 @@ export default class Data extends Component<{},IImportState> {
   }
 
   render() {
-    console.log('render', new Date())
+    const state = (this.state || {});
+    const { columns = [] } = state;
+    const properties = getProperties();
+    const canMoveNext = (function(columns) {
+      const columnCount = columns.length;
+      const mappedCount = columns.filter(col => !!col.property).length;
+      return columnCount > 0 && columnCount == mappedCount;
+    })(columns);
+    console.log(state)
     return (
       <div>
         <Header
           title="Columns"
           canBack={true}
-          backUrl="/players/import/data"
-          canNext={this.canMoveNext}
-          nextUrl="/players/import/mapping"
+          backUrl="/players/data"
+          canNext={canMoveNext}
+          nextUrl="/players/mapping"
         />
-        <table className="table table-bordered">
-          <tbody>
-            {this.state.columns.map((col) => (
-              <Row
-                column={col}
-                key={col.pattern}
-                properties={this.properties}
-                onChange={this.handleColumnChange}
-              />
-            ))}
-          </tbody>
-        </table>
+        <Table celled striped>
+          <Table.Body>
+            {columns.map((col, i) => (
+              <Table.Row key={i}>
+                <Table.Cell>{col.pattern}</Table.Cell>
+                <Table.Cell>
+                  <Select
+                    value={col.property} 
+                    onChange={this.handleColumnChange(col.pattern)} 
+                    options={[{ key: "blank" }, ...properties.map(prop => ({ text: prop.value, value: prop.key }))]}
+                  />
+                </Table.Cell>
+              </Table.Row>               
+            ))}  
+          </Table.Body>
+        </Table>
       </div>
     );
-  }
+            }
 }
 
 let Row = ({column, properties, onChange}) => (

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { IImportState, Header, storage } from './common';
+import { Input, Button } from 'semantic-ui-react';
 
 export default class File extends Component<{},IImportState> {
 
@@ -56,37 +57,22 @@ export default class File extends Component<{},IImportState> {
         <Header
           title="File"
           canBack={true}
-          backUrl="/players/import"
+          backUrl="/players"
           canNext={this.canMoveNext}
-          nextUrl="/players/import/data"
+          nextUrl="/players/data"
         />
         <div style={{display: 'none'}}>
           <input type="file"
             ref={(ref) => this.fileInput = ref}
             onChange={this.handleFileSelect}></input>
         </div>
-        <div className="form-group">
-          <button
-            className="btn btn-default"
-            onClick={() => this.fileInput.click()}>
-            <i className="far fa-upload"/>
-            {" "}Upload File
-          </button>
-          {" "}
-          <button
-            className="btn btn-default"
-            style={{display: 'none'}}
-            onClick={this.handleStartOver}>
-            <i className="far fa-refresh"/>
-            {" "}Start Over
-          </button>
-        </div>
-        <div>
-          <div className="form-group">
-            <input className="form-control" disabled value={this.state.file ? this.state.file.name : ''} />
-          </div>
-          <pre style={{minHeight: 100}}>{this.state.file ? this.state.file.content : ''}</pre>
-        </div>
+        <Input type="text" action value={this.state.file ? this.state.file.name : ''}>
+          <input />
+          <Button content="Upload File" onClick={() => this.fileInput.click()}/>
+        </Input>
+        {this.state.file && (
+          <pre style={{ minHeight: 100, padding: 10, border: '1px solid #dedede' }}>{this.state.file.content}</pre>
+        )}
       </div>
     );
   }

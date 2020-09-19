@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import * as _ from 'lodash';
 import { IImportState, Header, row, storage, Map, Column } from './common';
-import { Tenant, Store, League, Season, Division } from '../../common/store';
+import { Tenant, Store, League, Season, Division } from '../common/store';
 import { Select, Form, SelectProps } from 'semantic-ui-react';
 
 export function makeColumns(row: row): Column[] {
@@ -75,18 +75,18 @@ export default class Context extends Component<{},IImportState> {
     const canMoveNext = !!state.seasonId && !!state.divisionId;
 
     const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
-    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ name: s.name, value: s.id }))
-    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ name: d.name, value: d.id }))
+    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ text: s.name, value: s.id }))
+    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ text: d.name, value: d.id }))
 
     console.log(state)
-
+    console.log(seasonOptions, divisionOptions)
     return (
       <div>
         <Header
           title="Context"
           canBack={false}
           canNext={canMoveNext}
-          nextUrl="/games/import/file"
+          nextUrl="/players/file"
         />
         <Form>
           <Form.Field control={Select} label="League" value={leagueId} options={leagueOptions} onChange={this.handleLeagueChange} />
