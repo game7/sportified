@@ -112,6 +112,11 @@
       margin-bottom: 5px;
     }
 
+    .bench {
+      float: right;
+      margin-right: 10px;
+    }
+
     .subject {
       padding: 0;
 
@@ -172,11 +177,16 @@
             = event.ends_on.strftime('%-I:%M %P')
           .teams.clearfix
             .away_team.clearfix
-              -#.team= event.away_team_custom_name.presence || event.away_team&.name
-              .team= event.away_team_custom_name.presence || event.away_team_name.presence || event.try(:away_team).try(:name)
+              .team
+                = event.away_team_name.presence || event.try(:away_team).try(:name)
+                - if event.type == 'League::Game'
+                  .bench (away)
               .locker_room.away= event.away_team_locker_room&.name
             .home_team.clearfix
-              .team= event.home_team_custom_name.presence || event.home_team_name.presence || event.try(:home_team).try(:name)
+              .team
+                = event.home_team_name.presence || event.try(:home_team).try(:name)
+                - if event.type == 'League::Game'
+                  .bench (home)
               .locker_room.home= event.home_team_locker_room&.name
         - else
           .time
