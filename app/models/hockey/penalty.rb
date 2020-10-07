@@ -32,6 +32,7 @@
 class Hockey::Penalty < ActiveRecord::Base
   include Sportified::TenantScoped
 
+  PERIODS = %w{1 2 3 OT}
   SEVERITIES = %w[minor major misconduct game_misconduct match]
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing
                   fighting holding hooking interference kneeing roughing slashing
@@ -42,16 +43,16 @@ class Hockey::Penalty < ActiveRecord::Base
   belongs_to :team, class_name: '::League::Team'
   belongs_to :committed_by, class_name: 'Hockey::Skater::Result'
 
-  validates :period, presence: true
-  validates :minute, presence: true, numericality: { only_integer: true }
-  validates :second, presence: true, numericality: { only_integer: true }
+  validates :period, presence: true, inclusion: { in: PERIODS }
+  validates :minute, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }
+  validates :second, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59 }
   validates :infraction, presence: true
-  validates :duration, presence: true, numericality: true
+  validates :duration, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }
   validates :severity, presence: true
-  validates :start_minute, numericality: { only_integer: true }, allow_nil: true
-  validates :start_second, numericality: { only_integer: true }, allow_nil: true
-  validates :end_minute, numericality: { only_integer: true }, allow_nil: true
-  validates :end_second, numericality: { only_integer: true }, allow_nil: true
+  validates :start_minute, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }, allow_nil: true
+  validates :start_second, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59 }, allow_nil: true
+  validates :end_minute, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }, allow_nil: true
+  validates :end_second, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59 }, allow_nil: true
 
   class << self
     def severities

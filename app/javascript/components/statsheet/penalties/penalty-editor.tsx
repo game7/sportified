@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { Settings, Skater, Team, Penalty, Action } from '../../common/types';
 import { Button, Modal, Form, Dropdown } from 'semantic-ui-react'
 import { useForm } from '../../common/hooks';
-import { omit } from 'lodash'
+import { omit, sortBy } from 'lodash'
 
 type Mode = "new" | "edit";
 
@@ -78,15 +78,15 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
     }
   }
 
-  function handleAddInfraction(_event, { value }) {
-    setInfractions(infractions => [...infractions, value])
-  }
+  // function handleAddInfraction(_event, { value }) {
+  //   setInfractions(infractions => [...infractions, value])
+  // }
 
   const [open, setOpen] = useState(false)
   const form = useForm<Penalty>(model, handleSubmit)
   const trigger = (<Button primary content={penalty ? "Edit" : "Add Penalty"} size={penalty ? "mini" : "medium"} onClick={handleOpen} />);
 
-  const skaterOptions = skaters.filter(p => p.teamId === form.model.teamId).map(p => ({ text: `${p.jerseyNumber} - ${p.lastName}, ${p.firstName}`, value: p.id }))
+  const skaterOptions = sortBy(skaters.filter(p => p.teamId == form.model.teamId).map(p => ({ text: `${p.jerseyNumber} - ${p.lastName}, ${p.firstName}`, value: p.id })), 'text')
   const infractionOptions = infractions.map(str => ({ text: str, value: str }))
   const severityOptions = [
     "Minor",
@@ -104,7 +104,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
           <Form.Field required>
             <label>Time</label>
             <Form.Group>
-              <Form.Field 
+              {/* <Form.Field 
                 control={Dropdown} 
                 {...form.input('period')}                 
                 required 
@@ -112,9 +112,16 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
                 selection 
                 options={"1|2|3|OT".split("|").map(n => ({ text: n, value: n }))} 
                 label={false}
-                placeholder="Period"
+                placeholder`="Period"
                 style={{ minWidth: '40%' }}
-              />            
+              />             */}
+              <Form.Input 
+                {...form.input('period')} 
+                label={false}
+                placeholder="Per."
+                width="2" 
+                autoFocus
+              />                 
               <Form.Input 
                 {...form.input('minute')} 
                 label={false}
@@ -130,24 +137,31 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
             </Form.Group>
           </Form.Field>
           <Form.Field 
-            control={Dropdown}
+            control="select"
             {...form.input('teamId', { errorKey: 'team' })} 
             label="Team" 
             required 
-            search 
-            selection 
             options={teams.map(t => ({ text: t.name, value: t.id }))} 
-          />
+            width="6"
+          >
+            <React.Fragment>
+              <option></option>
+              {teams.map(t => (<option key={t.id} value={t.id}>{t.name}</option>))}
+            </React.Fragment>
+          </Form.Field>
           <Form.Field 
-            control={Dropdown} 
+            control="select" 
             {...form.input('committedById', { errorKey: 'committedBy' })}             
             label="Player" 
-            required 
-            search 
-            selection 
-            options={skaterOptions} 
-          />
-          <Form.Field 
+            required  
+            width="6"
+          >
+            <React.Fragment>
+              <option></option>
+              {skaterOptions.map(o => (<option key={o.value} value={o.value}>{o.text}</option>))}
+            </React.Fragment>
+          </Form.Field>
+          {/* <Form.Field 
             control={Dropdown} 
             {...form.input('infraction')}  
             required
@@ -156,15 +170,23 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
             allowAdditions
             options={infractionOptions} 
             onAddItem={handleAddInfraction}
-          />
-          <Form.Field 
-            control={Dropdown} 
-            {...form.input('severity')} 
+          /> */}
+          <Form.Input 
+            {...form.input('infraction')}  
             required
-            search 
-            selection 
-            options={severityOptions} 
-          />
+            width="3"
+          />          
+          <Form.Field 
+            control="select" 
+            {...form.input('severity')} 
+            required 
+            width="3"
+          >
+            <React.Fragment>
+              <option></option>
+              {severityOptions.map(o => (<option key={o.value} value={o.value}>{o.text}</option>))}
+            </React.Fragment>
+          </Form.Field>
           <Form.Input
             {...form.input('duration')} 
             required
@@ -173,7 +195,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
           <Form.Field>
             <label>Start Time</label>
             <Form.Group>
-              <Form.Field 
+              {/* <Form.Field 
                 control={Dropdown} 
                 {...form.input('startPeriod')}                 
                 required 
@@ -184,7 +206,13 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
                 placeholder="Period"
                 selectOnBlur={false}
                 style={{ minWidth: '40%' }}
-              />            
+              />   */}
+              <Form.Input 
+                {...form.input('startPeriod')} 
+                label={false}
+                placeholder="Per."
+                width="2" 
+              />                           
               <Form.Input 
                 {...form.input('startMinute')} 
                 label={false}
@@ -202,7 +230,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
           <Form.Field>
             <label>End Time</label>
             <Form.Group>
-              <Form.Field 
+              {/* <Form.Field 
                 control={Dropdown} 
                 {...form.input('endPeriod')}                 
                 required 
@@ -213,7 +241,13 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
                 placeholder="Period"
                 selectOnBlur={false}
                 style={{ minWidth: '40%' }}
-              />            
+              />             */}
+              <Form.Input 
+                {...form.input('endPeriod')} 
+                label={false}
+                placeholder="Per."
+                width="2" 
+              />               
               <Form.Input 
                 {...form.input('endMinute')} 
                 label={false}

@@ -21,11 +21,13 @@ export function useForm<T>(data: Partial<T>, handler?: SubmitHandler<T>) {
     
     function changeHandler(prop: keyof T, errorKey: string) {
       return function handleChange(event, control) {
-        if(control.type == 'checkbox') {
-          setModel(model => ({ ...model, [prop]: control.checked }))
+        let value;
+        if(control) {
+          value = control.type == 'checkbox' ? control.checked : control.value || '';
         } else {
-          setModel(model => ({ ...model, [prop]: control.value || '' }))
+          value = event.target.value;
         }
+        setModel(model => ({ ...model, [prop]: value }));
         setErrors(errors => {
           let copy = { ...errors };
           delete copy[errorKey];
@@ -46,7 +48,6 @@ export function useForm<T>(data: Partial<T>, handler?: SubmitHandler<T>) {
     
     function input(prop: keyof T, options?: Partial<BindOptions>) {
       const { errorKey = prop.toString() } = options || {}
-      console.log(prop, model[prop], typeof model[prop])
       return {
         label: humanize(prop.toString()),
         value: (prop in model) ? model[prop] : "",

@@ -29,19 +29,20 @@
 class Hockey::Goal < ActiveRecord::Base
   include Sportified::TenantScoped
 
+  PERIODS = %w{1 2 3 OT}
   STR = %w[5-5 5-4 5-3 4-5 4-4 4-3 3-5 3-4 3-3 6-5 6-4 6-3]
 
   validates :statsheet, presence: true
   validates :team, presence: true
   validates :scored_by, presence: true
 
-  validates :period, presence: true
+  validates :period, presence: true, inclusion: { in: PERIODS }
 
   validates :minute, presence: true
-  validates :minute, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 90 }
+  validates :minute, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }
 
   validates :second, presence: true
-  validates :second, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 60 }
+  validates :second, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59 }
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   belongs_to :team, class_name: "::League::Team"

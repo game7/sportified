@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { Settings, Player, Team, Goaltender, Action } from '../../common/types';
 import { Button, Modal, Form, Dropdown } from 'semantic-ui-react'
 import { useForm } from '../../common/hooks';
-import { omit } from 'lodash'
+import { omit, sortBy } from 'lodash'
 
 type Mode = "new" | "edit";
 
@@ -75,15 +75,11 @@ export const GoaltenderEditor: FC<GoaltenderEditorProps> = ({ settings, goaltend
     }
   }
 
-  function handleAddInfraction(_event, { value }) {
-    setInfractions(infractions => [...infractions, value])
-  }
-
   const [open, setOpen] = useState(false)
   const form = useForm<Goaltender>(model, handleSubmit)
   const trigger = (<Button primary content={goaltender ? "Edit" : "Add Goaltender"} size={goaltender ? "mini" : "medium"} onClick={handleOpen} />);
 
-  const playerOptions = players.filter(p => p.teamId === form.model.teamId).map(p => ({ text: `${p.jerseyNumber} - ${p.lastName}, ${p.firstName}`, value: p.id }))
+  const playerOptions = sortBy(players.filter(p => p.teamId == form.model.teamId).map(p => ({ text: `${p.jerseyNumber} - ${p.lastName}, ${p.firstName}`, value: p.id })), "text")
 
   return (
     <Modal trigger={trigger} onClose={handleClose} open={open} size="mini">
@@ -91,26 +87,33 @@ export const GoaltenderEditor: FC<GoaltenderEditorProps> = ({ settings, goaltend
       <Modal.Content>
         <Form {...form.form()}>
           <Form.Field 
-            control={Dropdown}
+            control="select"
             {...form.input('teamId', { errorKey: 'team' })} 
             label="Team" 
             required 
-            search 
-            selection 
+            autoFocus={!goaltender}
             options={teams.map(t => ({ text: t.name, value: t.id }))} 
-          />
+          >
+            <React.Fragment>
+              <option></option>
+              {teams.map(t => (<option key={t.id} value={t.id}>{t.name}</option>))}
+            </React.Fragment>
+          </Form.Field>
           <Form.Field 
-            control={Dropdown} 
+            control="select"
             {...form.input('playerId', { errorKey: 'player' })}             
             label="Player" 
-            required 
-            search 
-            selection 
             options={playerOptions} 
-          />
+          >
+            <React.Fragment>
+              <option></option>
+              {playerOptions.map(o => (<option key={o.value} value={o.value}>{o.text}</option>))}
+            </React.Fragment>
+          </Form.Field>
           <Form.Group widths="3">
             <Form.Input 
               {...form.input('minutesPlayed')} 
+              autoFocus={goaltender}
             />                      
             <Form.Input 
               {...form.input('shotsAgainst')} 
