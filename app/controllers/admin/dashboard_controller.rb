@@ -1,7 +1,7 @@
 class Admin::DashboardController < Admin::AdminController
 
   def index
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? Date.parse(params[:date]) : Time.zone.now
     @visits_by_day = Ahoy::Visit.where('started_at >= ?', 1.week.ago)
                                 .group_by_day(:started_at)
                                 .count
