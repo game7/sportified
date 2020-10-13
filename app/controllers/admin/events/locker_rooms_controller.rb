@@ -1,4 +1,7 @@
-class Admin::Events::LockerRoomsController < ApplicationController
+class Admin::Events::LockerRoomsController < Admin::AdminController
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations
+
   def assign
     @date = date = params[:date] ? Date.parse(params[:date]) : Date.today
     events = Event.after(date.beginning_of_day)
@@ -19,4 +22,5 @@ class Admin::Events::LockerRoomsController < ApplicationController
       format.json { render json: events, status: 200 }
     end
   end
+  
 end

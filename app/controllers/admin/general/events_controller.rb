@@ -1,4 +1,6 @@
 class Admin::General::EventsController < Admin::AdminController
+  skip_before_action :verify_admin, only: [:show]
+  before_action :verify_admin_or_operations, only: [:show] 
   before_action :load_event, :only => [:show, :edit, :update]
   before_action :mark_return_point, only: [:new, :edit]
 

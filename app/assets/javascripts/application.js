@@ -1,7 +1,7 @@
 //= require jquery
-//= require jquery_ujs
-//= require jquery-ui.min
+
 //= require jquery.remotipart
+//= require rails-ujs
 
 //= require admin/chromecasts
 //= require chartkick

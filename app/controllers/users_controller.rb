@@ -22,12 +22,16 @@
 #  last_name              :string
 #  stripe_customer_id     :string
 #  unconfirmed_email      :string
+#  tenant_id              :bigint(8)        not null
+#  admin                  :boolean
+#  operations             :boolean
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
-#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_email_and_tenant_id   (email,tenant_id) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_tenant_id             (tenant_id)
 #
 
 require 'icalendar'

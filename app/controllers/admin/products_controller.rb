@@ -1,4 +1,6 @@
 class Admin::ProductsController < Admin::AdminController
+  skip_before_action :verify_admin, only: [:index, :show]
+  before_action :verify_admin_or_operations, only: [:index, :show]
   before_action :mark_return_point, :only => [:new, :edit]
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :get_form_packets, only: [:edit, :update, :new, :create]

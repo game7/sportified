@@ -1,5 +1,6 @@
 class Admin::GameResultController < Admin::BaseLeagueController
-
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations
   before_action :set_game, :only => [:edit, :update]
   before_action :mark_return_point, :only => :edit
 

@@ -184,27 +184,36 @@ class ApplicationController < ActionController::Base
   end  
 
   def current_user_is_host?
-    current_user && current_user.host?
+    current_user&.host?
   end
   helper_method :current_user_is_host?
 
   def current_user_is_admin?
-    current_user_is_host? || has_admin_role?(current_user, Tenant.current.id)
+    current_user&.host? || current_user&.admin?
   end
   helper_method :current_user_is_admin?
 
+  def current_user_is_admin_or_operations?
+    current_user&.host? || current_user&.admin? || current_user&.operations?
+  end
+  helper_method :current_user_is_admin_or_operations?
+
   def verify_admin
-    unless current_user_is_admin?
-      if current_user
-        render :file => "public/401.html", :status => :unauthorized, :layout => false
-      else
-        redirect_to users.sign_in_path
-      end
+    return if current_user_is_admin?
+    if current_user
+      render :file => "public/401.html", :status => :unauthorized, :layout => false
+    else
+      redirect_to users.sign_in_path
     end
   end
 
-  def has_admin_role?(user, tenant_id)
-    user && user.admin?(tenant_id)
+  def verify_admin_or_operations
+    return if current_user_is_admin_or_operations?
+    if current_user
+      render :file => "public/401.html", :status => :unauthorized, :layout => false
+    else
+      redirect_to users.sign_in_path
+    end
   end
 
   def verify_user

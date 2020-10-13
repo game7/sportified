@@ -2,6 +2,8 @@ require "chronic"
 require 'csv'
 
 class Admin::EventsController < Admin::AdminController
+  skip_before_action :verify_admin, only: [:index, :update]
+  before_action :verify_admin_or_operations, only: [:index, :update]
 
   before_action :mark_return_point, only: [:destroy]
   before_action :add_events_breadcrumb

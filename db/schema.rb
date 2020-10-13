@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_181314) do
+ActiveRecord::Schema.define(version: 2020_10_13_194855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -695,9 +695,13 @@ ActiveRecord::Schema.define(version: 2020_10_13_181314) do
     t.string "last_name"
     t.string "stripe_customer_id"
     t.string "unconfirmed_email"
+    t.bigint "tenant_id", null: false
+    t.boolean "admin"
+    t.boolean "operations"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email", "tenant_id"], name: "index_users_on_email_and_tenant_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 
   create_table "variants", id: :serial, force: :cascade do |t|
@@ -729,7 +733,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_181314) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

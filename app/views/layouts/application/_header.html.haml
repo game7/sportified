@@ -34,7 +34,7 @@
                   -# = link_to 'User Account', main_app.edit_user_registration_path, class: [:item]
                   = link_to 'Schedule', main_app.user_schedule_path, class: [:item]
                   = link_to 'Teams', main_app.user_teams_path, class: [:item]
-                  - if current_user_is_admin?
+                  - if current_user_is_admin_or_operations?
                     .divider
                     = link_to 'Administration', main_app.admin_root_path, class: [:item]
                   .divider
@@ -58,7 +58,7 @@
                 -# = link_to 'User Account', main_app.edit_user_registration_path, class: [:item]
                 = link_to 'Schedule', main_app.user_schedule_path, class: [:item]
                 = link_to 'Teams', main_app.user_teams_path, class: [:item]
-                - if current_user_is_admin?
+                - if current_user_is_admin_or_operations?
                   .divider
                   = link_to 'Administration', main_app.admin_root_path, class: [:item]
                 .divider

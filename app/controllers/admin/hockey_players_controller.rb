@@ -1,4 +1,6 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations   
   before_action :load_statsheet
   before_action :load_player, :only => [:edit, :update, :destroy]
   before_action :prepare_team_options, :only => [:new, :create]

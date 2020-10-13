@@ -1,7 +1,8 @@
 - title @product.title
 - page_actions do
-  = link_to 'Edit', edit_admin_product_path(@product), class: [:ui, :primary, :button]
-  = link_to 'Clone', new_admin_product_path(clone: @product.id), class: [:ui, :primary, :button]
+  - if current_user_is_admin?
+    = link_to 'Edit', edit_admin_product_path(@product), class: [:ui, :primary, :button]
+    = link_to 'Clone', new_admin_product_path(clone: @product.id), class: [:ui, :primary, :button]
 - wrapper class: [:ui, :container]
 - area_menu do
   = area_menu_item 'Overview', [:admin, @product]

@@ -1,4 +1,6 @@
 class Admin::RegistrationsController < Admin::AdminController
+  skip_before_action :verify_admin, only: [:index, :show, :toggle_check_in]
+  before_action :verify_admin_or_operations, only: [:index, :show]  
   before_action :set_registration, only: [:show, :abandon, :cancel, :toggle_check_in]
 
   def index

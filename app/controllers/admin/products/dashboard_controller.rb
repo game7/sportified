@@ -1,5 +1,7 @@
 class Admin::Products::DashboardController < Admin::AdminController
-  
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations
+
   def index
     products = Product.active.includes(
       :registrable,

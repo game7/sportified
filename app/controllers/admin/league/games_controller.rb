@@ -1,4 +1,6 @@
 class Admin::League::GamesController < Admin::AdminController
+  skip_before_action :verify_admin, only: [:index]
+  before_action :verify_admin_or_operations , only: [:index]
   before_action :mark_return_point, :only => [:new, :edit]
   before_action :load_event, :only => [:edit, :update, :destroy]
 

@@ -19,11 +19,19 @@
         %td= @user.sign_in_count
       %tr
         %td.collapsing Last Sign In
-        %td= @user.last_sign_in_at
+        %td= @user.last_sign_in_at        
+      %tr
+        %td.collapsing.top.aligned Permissions
+        %td
+          = simple_form_for [:admin, @user], remote: true do |f|
+            = f.input :admin, as: :boolean
+            = f.input :operations, as: :boolean    
 
-.ui.segment
-  %h4.ui.header ROLES
-  #user_roles
-    = render partial: 'admin/user_roles/grid', locals: { user: @user }
-%br
-= link_to semantic_icon(:plus) + ' Add Site Admin Role', admin_user_user_roles_path(@user), remote: true, method: :post, class: [:ui, :primary, :button]
+:javascript
+  $(function() {
+    $('form.edit_user :checkbox').change(function(e) { 
+      Rails.fire(e.target.form, 'submit')
+    })
+  })
+
+

@@ -22,42 +22,33 @@
 #  last_name              :string
 #  stripe_customer_id     :string
 #  unconfirmed_email      :string
+#  tenant_id              :bigint(8)        not null
+#  admin                  :boolean
+#  operations             :boolean
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
-#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_email_and_tenant_id   (email,tenant_id) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_tenant_id             (tenant_id)
 #
 
 class User < ActiveRecord::Base
-
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  include Sportified::TenantScoped
+  
+  validates :email, presence: true
 
   passwordless_with :email # <-- here!
 
   has_and_belongs_to_many :tenants
-
-  before_save :capture_tenant_at_sign_in
-
   has_many :authentications
-
   has_many :registrations
-
-  validates_presence_of :email
 
   scope :with_email, ->(email) { where(:email => email) }
 
-  def admin?(tenant_id)
-    self.roles.any? {|r| r.name == 'admin' and r.tenant_id == tenant_id }
-  end
-
   def host?
-    self.roles.any? {|r| r.name == 'super_admin' }
-  end
-
-  def host_or_admin?(tenant_id)
-    host? or admin?(tenant_id)
+    ENV['SUPER_ADMINS'].split(';').include?(self.email)
   end
 
   def full_name
@@ -65,11 +56,6 @@ class User < ActiveRecord::Base
   end
 
   class << self
-    def for_tenant(t)
-      id = t.class.to_s == "Tenant" ? t.id : t
-      joins(:tenants).where(tenants: { id: id })
-    end
-
     def find_by_auth_provider_and_uid(provider, uid)
       where("authentications.provider" => provider, "authentications.uid" => uid).first
     end
@@ -80,20 +66,6 @@ class User < ActiveRecord::Base
   end
 
   protected
-
-    def set_id
-      self._id = self.name if self._id.blank?
-    end
-
-    def capture_tenant_at_sign_in
-      capture_tenant if self.sign_in_count_changed?
-    end
-
-    def capture_tenant
-      unless self.tenants.all.include?(Tenant.current)
-        self.tenants << Tenant.current
-      end
-    end
 
     def password_required?
       !persisted? || password.present? || password_confirmation.present?

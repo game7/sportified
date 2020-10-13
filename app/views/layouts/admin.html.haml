@@ -34,19 +34,19 @@
       .ui.dropdown.icon.item{ title: 'Admin Menu'}
         = semantic_icon(:sidebar) 
         .menu
-          = admin_menu_item url: admin_root_path, icon: :home, label: 'Home' 
-          = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' 
+          = admin_menu_item url: admin_root_path, icon: :home, label: 'Home'
+          = admin_menu_item url: admin_events_path, icon: [:calendar, :alt], label: 'Calendar' if current_user_is_admin? 
           = admin_menu_item url: admin_league_games_path, icon: [:calendar, :check], label: 'Games' 
-          = admin_menu_item url: admin_programs_path, icon: :trophy, label: 'Leagues' 
-          = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' 
-          = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' 
-          = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' 
-          = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' 
-          = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' 
+          = admin_menu_item url: admin_programs_path, icon: :trophy, label: 'Leagues' if current_user_is_admin? 
+          = admin_menu_item url: pages_path, icon: [:file, :alt], label: 'Pages' if current_user_is_admin? 
+          = admin_menu_item url: admin_posts_path, icon: [:sticky, :note], label: 'Posts' if current_user_is_admin? 
+          = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' if current_user_is_admin? 
+          = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' if current_user_is_admin? 
+          = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' if current_user_is_admin? 
           = admin_menu_item url: admin_chromecasts_path, icon: :tv, label: 'Screens' 
-          = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' 
-          = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms'
-          = admin_menu_item url: admin_products_dashboard_path, icon: :signup, label: 'Registration'        
+          = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' if current_user_is_admin? 
+          = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms' if current_user_is_admin? 
+          = admin_menu_item url: admin_products_dashboard_path, icon: :signup, label: 'Registration' 
       .item.header{ style: 'flex-grow: 2;' }
         %span{ style: 'width: 100%; text-align: center;' } SPORTIFED
       .right.menu

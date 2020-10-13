@@ -1,5 +1,6 @@
 class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
-
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations 
   before_action :find_statsheet
   before_action :find_goaltender, :only => [:edit, :update, :destroy]
   before_action :list_players, :only => [:new, :edit]

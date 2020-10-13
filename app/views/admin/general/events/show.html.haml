@@ -1,7 +1,8 @@
 - title @event.summary
 - wrapper class: [:ui, :container]
 - page_actions do
-  = link_to 'Edit', edit_admin_general_event_path(@event), class: [:ui, :primary, :button]
+  - if current_user_is_admin?
+    = link_to 'Edit', edit_admin_general_event_path(@event), class: [:ui, :primary, :button]
 
 %h4.ui.top.attached.header Basic Info
 %table.ui.bottom.attached.definition.table

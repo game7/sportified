@@ -8,9 +8,10 @@ interface EventRowProps {
   updateEvent: (event) => void;
   deleteEvent: (event) => void;
   lockerRooms: LockerRoom[];
+  canEdit?: boolean;
 }
 
-export const EventRow: FC<EventRowProps> = ({ event, updateEvent, deleteEvent, lockerRooms }) => {
+export const EventRow: FC<EventRowProps> = ({ event, updateEvent, deleteEvent, lockerRooms, canEdit }) => {
 
   function makeOnChangeHandler(eventId: number, attr: keyof Event) {
     return async function handleChange(_e, { value }) {
@@ -49,24 +50,26 @@ export const EventRow: FC<EventRowProps> = ({ event, updateEvent, deleteEvent, l
           </Button.Group>
         </Form>            
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
-        <Dropdown icon={<Icon name="ellipsis horizontal" fitted />}>
-          <Dropdown.Menu direction="left">
-            <Dropdown.Header content="Event" />
-            <Dropdown.Item as="a" content="Edit" href={event.editUrl} />
-            <Dropdown.Item as="a" content="Clone" href={event.cloneUrl} />
-            <Dropdown.Item as="a" content="Delete" onClick={() => deleteEvent(event)} />
-            {event.type == "League::Game" && (
-              <React.Fragment>
-              <Dropdown.Header content="Game" />
-                <Dropdown.Item as="a" content="Result" href={event.resultUrl} />
-                <Dropdown.Item as="a" content="Statsheet" href={event.statsheetUrl} />
-                <Dropdown.Item as="a" content="Print Scoresheet" href={event.printScoresheetUrl} />
-              </React.Fragment>
-            )}
-          </Dropdown.Menu>
-        </Dropdown>
-      </Table.Cell>
+      {canEdit && (
+        <Table.Cell collapsing textAlign="center">
+          <Dropdown icon={<Icon name="ellipsis horizontal" fitted />}>
+            <Dropdown.Menu direction="left">
+              <Dropdown.Header content="Event" />
+              <Dropdown.Item as="a" content="Edit" href={event.editUrl} />
+              <Dropdown.Item as="a" content="Clone" href={event.cloneUrl} />
+              <Dropdown.Item as="a" content="Delete" onClick={() => deleteEvent(event)} />
+              {event.type == "League::Game" && (
+                <React.Fragment>
+                <Dropdown.Header content="Game" />
+                  <Dropdown.Item as="a" content="Result" href={event.resultUrl} />
+                  <Dropdown.Item as="a" content="Statsheet" href={event.statsheetUrl} />
+                  <Dropdown.Item as="a" content="Print Scoresheet" href={event.printScoresheetUrl} />
+                </React.Fragment>
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Table.Cell>
+      )}
     </Table.Row>    
   )
 }

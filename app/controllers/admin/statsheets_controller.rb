@@ -1,5 +1,7 @@
 class Admin::StatsheetsController < Admin::BaseLeagueController
   layout :resolve_layout
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations   
   before_action :mark_return_point, only: :edit
   before_action :find_game
   before_action :find_season

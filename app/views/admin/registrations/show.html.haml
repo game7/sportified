@@ -1,7 +1,8 @@
 - title @registration.full_name
 - page_actions do
-  = link_to 'Abandon', abandon_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_abandon?
-  = link_to 'Cancel', cancel_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_cancel?
+  - if current_user_is_admin?
+    = link_to 'Abandon', abandon_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_abandon?
+    = link_to 'Cancel', cancel_admin_registration_path(@registration), class: [:ui, :secondary, :button], method: :patch, data: { confirm: 'Are you sure?' } if @registration.can_cancel?
 - wrapper class: [:ui, :container]
 
 %h4.ui.top.attached.header Registration Info

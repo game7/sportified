@@ -1,4 +1,6 @@
-class Admin::ChromecastsController < ApplicationController
+class Admin::ChromecastsController < Admin::AdminController
+  skip_before_action :verify_admin
+  before_action :verify_admin_or_operations  
   before_action :set_chromecast, only: [:edit, :update, :destroy]
   before_action :mark_return_point, only: [:new, :edit]
 

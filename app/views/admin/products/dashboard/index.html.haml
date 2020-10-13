@@ -1,8 +1,8 @@
 - title 'Dashboard'
 - wrapper class: [:ui, :container]
 - page_actions do
-  = link_to 'Connect with Stripe', stripe_connects_path, method: :post, class: [:ui, :primary, :button]
-  = link_to 'New Product', new_admin_product_path, class: [:ui, :primary, :button]
+  = link_to 'Connect with Stripe', stripe_connects_path, method: :post, class: [:ui, :primary, :button] if current_user_is_admin?
+  = link_to 'New Product', new_admin_product_path, class: [:ui, :primary, :button] if current_user_is_admin?
 - area_menu do
   = area_menu_item 'Dashboard', [:admin, :products, :dashboard]
   = area_menu_item 'Products', [:admin, :products]

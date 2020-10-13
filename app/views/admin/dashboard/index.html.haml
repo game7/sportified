@@ -1,21 +1,21 @@
 - title Dashboard
 - wrapper class: [:ui, :container]
 
-.ui.equal.width.stackable.grid{ style: 'margin-top: 0;' }
-  .column
-    .ui.segment
-      %h4.ui.header Unique Visitors
-      = column_chart @visits_by_day
+-# .ui.equal.width.stackable.grid{ style: 'margin-top: 0;' }
+-#   .column
+-#     .ui.segment
+-#       %h4.ui.header Unique Visitors
+-#       = column_chart @visits_by_day
 
-  .column
-    .ui.segment
-      %h4.ui.header Top Pages
-      = bar_chart @top_pages      
+-#   .column
+-#     .ui.segment
+-#       %h4.ui.header Top Pages
+-#       = bar_chart @top_pages      
 
-  .column
-    .ui.segment
-      %h4.ui.header By Device
-      = pie_chart @by_device              
+-#   .column
+-#     .ui.segment
+-#       %h4.ui.header By Device
+-#       = pie_chart @by_device              
 
 = react_component('locker_rooms', { date: @date, events: ActiveModelSerializers::SerializableResource.new(@events), locker_rooms: @locker_rooms.map(&:attributes) }, { camelize_props: true, class: [:ui, :segment] })
 -# = render partial: 'admin/dashboard/locker_rooms', locals: { date: @date }

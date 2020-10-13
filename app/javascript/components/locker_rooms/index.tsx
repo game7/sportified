@@ -8,7 +8,8 @@ import moment from 'moment';
 interface Props {
   date: string;
   events: Event[];
-  lockerRooms: LockerRoom[]
+  lockerRooms: LockerRoom[];
+  canEdit?: boolean
 }
 
 
@@ -125,7 +126,9 @@ const LockerRooms: FC<Props> = (props) => {
             <Table.HeaderCell content="Summary" />
             <Table.HeaderCell content="Away Team" />
             <Table.HeaderCell content="Home Team" />
-            <Table.HeaderCell content="" />
+            {props.canEdit && (
+              <Table.HeaderCell content="" />
+            )} 
           </Table.Row>
         </Table.Header>
         <Table.Body>
