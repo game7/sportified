@@ -37,11 +37,9 @@ class User < ActiveRecord::Base
   passwordless_with :email # <-- here!
 
   has_and_belongs_to_many :tenants
-  has_many :roles, foreign_key: :user_id, class_name: 'UserRole'
 
   before_save :capture_tenant_at_sign_in
 
-  has_many :roles, :class_name => "UserRole"
   has_many :authentications
 
   has_many :registrations
