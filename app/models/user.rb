@@ -39,8 +39,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :tenants
   has_many :roles, foreign_key: :user_id, class_name: 'UserRole'
 
-  has_many :credit_cards
-
   before_save :capture_tenant_at_sign_in
 
   has_many :roles, :class_name => "UserRole"

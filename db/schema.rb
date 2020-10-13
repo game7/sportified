@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_214708) do
+ActiveRecord::Schema.define(version: 2020_10_13_180702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -137,24 +137,6 @@ ActiveRecord::Schema.define(version: 2020_09_10_214708) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["tenant_id"], name: "index_clubs_on_tenant_id"
-  end
-
-  create_table "credit_cards", id: :serial, force: :cascade do |t|
-    t.integer "tenant_id"
-    t.integer "user_id"
-    t.string "brand", limit: 20
-    t.string "country", limit: 2
-    t.string "exp_month", limit: 2
-    t.string "exp_year", limit: 4
-    t.string "funding", limit: 10
-    t.string "last4", limit: 4
-    t.string "stripe_card_id"
-    t.string "token_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stripe_card_id"], name: "index_credit_cards_on_stripe_card_id"
-    t.index ["tenant_id"], name: "index_credit_cards_on_tenant_id"
-    t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
   create_table "events", id: :serial, force: :cascade do |t|
@@ -591,7 +573,6 @@ ActiveRecord::Schema.define(version: 2020_09_10_214708) do
     t.integer "tenant_id"
     t.integer "user_id"
     t.integer "variant_id"
-    t.integer "credit_card_id"
     t.string "first_name", limit: 40
     t.string "last_name", limit: 40
     t.string "email"
@@ -609,7 +590,6 @@ ActiveRecord::Schema.define(version: 2020_09_10_214708) do
     t.datetime "abandoned_at"
     t.datetime "cancelled_at"
     t.datetime "checked_in_at"
-    t.index ["credit_card_id"], name: "index_registrations_on_credit_card_id"
     t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
@@ -747,8 +727,6 @@ ActiveRecord::Schema.define(version: 2020_09_10_214708) do
   add_foreign_key "chromecasts", "facilities", column: "playing_surface_id"
   add_foreign_key "chromecasts", "locations"
   add_foreign_key "chromecasts", "tenants"
-  add_foreign_key "credit_cards", "tenants"
-  add_foreign_key "credit_cards", "users"
   add_foreign_key "events", "pages"
   add_foreign_key "events", "programs"
   add_foreign_key "facilities", "locations"
@@ -762,9 +740,9 @@ ActiveRecord::Schema.define(version: 2020_09_10_214708) do
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
-  add_foreign_key "registrations", "credit_cards"
   add_foreign_key "registrations", "form_packets"
   add_foreign_key "registrations", "tenants"
   add_foreign_key "registrations", "users"
