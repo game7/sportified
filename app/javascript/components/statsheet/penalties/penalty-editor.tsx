@@ -87,7 +87,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
   const trigger = (<Button primary content={penalty ? "Edit" : "Add Penalty"} size={penalty ? "mini" : "medium"} onClick={handleOpen} />);
 
   const skaterOptions = sortBy(skaters.filter(p => p.teamId == form.model.teamId).map(p => ({ text: `${p.jerseyNumber} - ${p.lastName}, ${p.firstName}`, value: p.id })), 'text')
-  const infractionOptions = infractions.map(str => ({ text: str, value: str }))
+  const infractionOptions = sortBy(infractions.map(str=> ({ text: str, value: str })), opt => opt.text)
   const severityOptions = [
     "Minor",
     "Major",
@@ -95,7 +95,7 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
     "Game Misconduct",
     "Match"
   ].map(str => ({ text: str, value: str }))
-  console.log(JSON.stringify(model, null, 2))
+
   return (
     <Modal trigger={trigger} onClose={handleClose} open={open}>
       <Modal.Header>{penalty ? 'Edit Penalty' : 'New Penalty'}</Modal.Header>
@@ -171,11 +171,22 @@ export const PenaltyEditor: FC<PenaltyEditorProps> = ({ settings, penalty, skate
             options={infractionOptions} 
             onAddItem={handleAddInfraction}
           /> */}
-          <Form.Input 
+          <Form.Field 
+            control="select" 
+            {...form.input('infraction')}              
+            required  
+            width="6"
+          >
+            <React.Fragment>
+              <option></option>
+              {infractionOptions.map(o => (<option key={o.value} value={o.value}>{o.text}</option>))}
+            </React.Fragment>
+          </Form.Field>          
+          {/* <Form.Input 
             {...form.input('infraction')}  
             required
             width="3"
-          />          
+          />           */}
           <Form.Field 
             control="select" 
             {...form.input('severity')} 
