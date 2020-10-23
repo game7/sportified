@@ -1,7 +1,7 @@
 $('body').append("<%= escape_javascript( render(partial: "blocks/#{@block.class.to_s.demodulize.pluralize.underscore}/edit") )%>");
 var $modal = $('.modal.edit_block');
 $modal.find(':submit').click(function() {
-  $modal.find('form').submit();
+  Rails.fire($modal.find('form')[0], 'submit')
 })
 $modal.find('button .cancel').click(function() {
   $modal.modal('hide')
