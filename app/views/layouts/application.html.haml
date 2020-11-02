@@ -129,8 +129,7 @@
             = render :partial => 'layouts/flash', :locals => { :flash => flash }
           = yield
       #footer
-        = render 'layouts/application/footer'
-        -# = render 'layouts/social'
+        = render ::Layouts::Application::FooterComponent.new(tenant: Tenant.current)
     #modal
     = yield :javascript
 

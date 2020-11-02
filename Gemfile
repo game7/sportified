@@ -44,6 +44,7 @@ gem 'passwordless'
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
+gem "view_component", require: "view_component/engine"
 gem 'simple_form'
 gem 'virtus', '~> 1.0.5'
 gem 'audited', '~> 4.6'
@@ -55,7 +56,6 @@ gem 'carrierwave'
 gem 'carrierwave-base64'
 gem 'fog-aws', group: [:staging, :production]
 gem 'rmagick', '>= 2.13.4'
-gem 'remotipart', '~> 1.3.1'
 
 # active_storage deps
 gem "aws-sdk-s3", require: false

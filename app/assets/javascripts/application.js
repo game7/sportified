@@ -1,6 +1,5 @@
 //= require jquery
 
-//= require jquery.remotipart
 //= require rails-ujs
 
 //= require admin/chromecasts
