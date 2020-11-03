@@ -37,7 +37,7 @@ class Hockey::Penalty < ActiveRecord::Base
   INFRACTIONS = %w[butt_ending checking_from_behind cross-checking delay_of_game elbowing
                   fighting holding hooking interference kneeing roughing slashing
                   spearing tripping unsportsmanlike_conduct misconduct game_misconduct
-                  too_many_men high_stick bench_minor]
+                  too_many_men high_stick bench_minor head_contact]
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   belongs_to :team, class_name: '::League::Team'
