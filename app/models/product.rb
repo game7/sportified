@@ -65,11 +65,16 @@ class Product < ApplicationRecord
   end
 
   def event?
-    registrable_type == 'Event'
+    registrable && registrable_type == 'Event'
   end
 
   def full_title
-     event? ? "#{title} - #{registrable.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
+    puts '----------------------------------------'
+    puts self.id
+    puts registrable
+    puts '----------------------------------------'
+
+     event? ? "#{title} - #{registrable&.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
   end
 
   scope :active, -> { where(active: true) }

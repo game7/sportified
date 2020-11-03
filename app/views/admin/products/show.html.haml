@@ -34,7 +34,7 @@
 %table.ui.celled.bottom.attached.table
   %tbody
     %tr
-      - if @product.registrable_type == 'Event'
+      - if @product.registrable && @product.registrable_type == 'Event'
         %td.center.aligned= link_to "Event ##{@product.registrable_id}", admin_general_event_path(@product.registrable)
         %td.center.aligned= @product.registrable.summary
         %td.center.aligned= @product.registrable.starts_on        
