@@ -6,6 +6,16 @@ require 'chronic'
 
 namespace :league do
 
+  task :save_events => :environment do
+    Tenant.all.each do |tenant|
+      Tenant.current = tenant
+      Event.includes(:program, :season, :division)
+           .order(id: :desc)
+           .where('type LIKE \'League::%\'')
+           .each(&:save)
+    end
+  end
+
   task :recalculate_penalty_types => :environment do
     count = Hockey::Skater::Result.where('penalties > 0').count
     Hockey::Skater::Result.where('penalties > 0').each_with_index do |result, i|

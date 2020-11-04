@@ -64,6 +64,7 @@ class Event < ActiveRecord::Base
   audited
 
   belongs_to :program, required: false
+
   belongs_to :page, required: false
   
   belongs_to :location

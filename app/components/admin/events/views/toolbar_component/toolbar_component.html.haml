@@ -1,0 +1,21 @@
+.ui.grid.three.columns
+  .column
+    .ui.buttons.basic
+      = back_link
+      = today_link
+      = next_link
+  .column{ style: 'text-align: center; vertical-align: middle;' }
+    %h3= @title
+  .column{ style: 'text-align: right;' }
+    .ui.dropdown.primary.button
+      = helpers.semantic_icon(:plus)
+      Add
+      .left.menu
+        .header GENERAL
+        = new_general_event_link
+        .divider
+        .header LEAGUE
+        = new_league_game_link
+        = new_league_practice_link
+        = new_league_event_link
+    = download_button

@@ -1,0 +1,4 @@
+%td.day{ class: [disabled && :disabled, today && :positive] }
+  .number= number
+  - @events.each do |event|
+    = render event_component(event)

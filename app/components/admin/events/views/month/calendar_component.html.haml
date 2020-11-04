@@ -1,0 +1,18 @@
+
+= render Admin::Events::Views::ToolbarComponent.new(date: @date, skip: 1.month, title: title)
+
+%table.ui.celled.table.calendar
+  %thead
+    %tr
+      %th S
+      %th M
+      %th T
+      %th W
+      %th T
+      %th F
+      %th S
+  %tbody
+    - weeks.each do |week|  
+      %tr
+        - week.each do |day|
+          = render(day_component(day))

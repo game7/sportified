@@ -2,7 +2,7 @@
 - wrapper class: [:ui, :fluid, :container]
 
 .ui.segment
-  = render "admin/events/views/#{@view}"
+  = render Admin::Events::Views::Month::CalendarComponent.new(date: @date, events: @events)
 
 #dialog-modal
 
@@ -12,12 +12,39 @@
     text-align: center !important
   }
 
+  table.calendar td.day {
+    height: 200px;
+    width: 14.285%;
+    vertical-align: top;
+  }
+
+  table.calendar td.day .number {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  table.calendar td.day .event {
+    margin-bottom: 2px;
+    padding: .78em !important;
+  }  
+
+  table.calendar td.day .event .time,
+  table.calendar td.day .event .summary {
+    float: left;
+    text-align: left;
+  } 
+
+  table.calendar td.day .event .time {
+    width: 50px;
+  } 
+
+  table.calendar td.day .event .clear {
+    clear: both;
+  }     
+
 - content_for :javascript do
   :javascript
     $(function() {
-      $('[data-toggle="popover"]').popover({
-        trigger: 'focus',
-      }).click(function() {
-        return false;
-      });
-    });
+      $('.dropdown.event').popup()
+    })
+    

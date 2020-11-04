@@ -83,4 +83,9 @@ class League::Event < Event
     "division-#{division_id}"
   end
 
+  before_save :set_league_tags
+  def set_league_tags
+    tag_list.add(division&.name, season&.name, program&.name)
+  end
+
 end

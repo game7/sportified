@@ -1,0 +1,17 @@
+.ui.mini.fluid.button.pointing.dropdown.event[@event]{ style: "border-radius: 0; border: 1px solid #{border_color}; border-left-width: 10px; background-color: #{background_color};", data: { title: time_range, content: summary } }
+  .time= time
+  .summary= title
+  .clear
+  .menu
+    .header EVENT
+    = show_link
+    = edit_link
+    = clone_link
+    = delete_link
+    - if game?
+      .divider
+      .header GAME
+      = game_result_link
+      = game_statsheet_link     
+      = game_print_scoresheet_link
+
