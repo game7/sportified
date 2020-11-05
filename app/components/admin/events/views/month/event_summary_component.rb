@@ -12,7 +12,7 @@ class Admin::Events::Views::Month::EventSummaryComponent < ViewComponent::Base
   end
 
   def tags
-    @tags ||= @event.taggings.collect(&:tag)
+    @tags ||= @event.taggings.sort{|t| t.id}.collect(&:tag)
   end
 
 end
