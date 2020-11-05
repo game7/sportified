@@ -29,7 +29,7 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def color_key
-    @color_key ||= @event.taggings[0]&.tag
+    @color_key ||= @event.tags[0]&.name || "no-tags"
   end
 
   def border_color
