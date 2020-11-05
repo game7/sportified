@@ -8,17 +8,12 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
     @event.all_day? ? 'All Day' : @event.starts_on.strftime('%-l:%M %P')
   end
 
-  def time_range
-    @event.all_day? ? 'All Day' : @event.starts_on.strftime('%-l:%M %P') + ' - ' + @event.ends_on.strftime('%-l:%M %P')
-  end
-  
-  def title
-    # @event.taggings.collect(&:tag).join(', ').presence || summary
-    summary
-  end
-  
   def summary
     @event.summary
+  end
+  
+  def summary_component
+    Admin::Events::Views::Month::EventSummaryComponent.new event: @event
   end
 
   def game?

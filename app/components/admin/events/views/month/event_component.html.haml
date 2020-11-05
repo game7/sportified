@@ -1,6 +1,6 @@
-.ui.mini.fluid.button.pointing.dropdown.event[@event]{ style: "border-radius: 0; border: 1px solid #{border_color}; border-left-width: 10px; background-color: #{background_color};", data: { title: time_range, content: summary } }
+.ui.mini.fluid.button.pointing.dropdown.event[@event]{ style: "border-radius: 0; border: 1px solid #{border_color}; border-left-width: 10px; background-color: #{background_color};", data: { html: render(summary_component).sub('"', '\'') } }
   .time= time
-  .summary= title
+  .summary= summary
   .clear
   .menu
     .header EVENT
