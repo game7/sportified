@@ -3,19 +3,19 @@
 # Table name: products
 #
 #  id                 :integer          not null, primary key
-#  registrable_id     :integer
-#  registrable_type   :string
-#  title              :string(40)
+#  active             :boolean
 #  description        :text
+#  private            :boolean
 #  quantity_allowed   :integer
 #  quantity_available :integer
-#  tenant_id          :integer
+#  registrable_type   :string
+#  roster             :boolean
+#  summary            :text
+#  title              :string(40)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  active             :boolean
-#  summary            :text
-#  private            :boolean
-#  roster             :boolean
+#  registrable_id     :integer
+#  tenant_id          :integer
 #
 # Indexes
 #
@@ -26,7 +26,6 @@
 #
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase

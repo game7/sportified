@@ -3,17 +3,16 @@
 # Table name: sections
 #
 #  id         :integer          not null, primary key
-#  page_id    :integer
 #  pattern    :string
 #  position   :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  page_id    :integer
 #
 # Indexes
 #
 #  index_sections_on_page_id  (page_id)
 #
-
 class Section < ActiveRecord::Base
 
     belongs_to :page

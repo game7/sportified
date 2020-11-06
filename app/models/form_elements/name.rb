@@ -3,16 +3,16 @@
 # Table name: form_elements
 #
 #  id          :integer          not null, primary key
-#  tenant_id   :integer
-#  template_id :integer
-#  type        :string
+#  hint        :string
 #  name        :string(40)
 #  position    :integer
 #  properties  :hstore
+#  required    :boolean
+#  type        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  required    :boolean
-#  hint        :string
+#  template_id :integer
+#  tenant_id   :integer
 #
 # Indexes
 #

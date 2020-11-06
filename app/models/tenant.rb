@@ -3,31 +3,30 @@
 # Table name: tenants
 #
 #  id                    :integer          not null, primary key
+#  address               :text
+#  description           :text
+#  google_fonts          :string
+#  host                  :string
 #  name                  :string
 #  slug                  :string
-#  host                  :string
-#  description           :text
-#  analytics_id          :string
-#  theme                 :string
-#  twitter_id            :string
-#  facebook_id           :string
-#  instagram_id          :string
-#  foursquare_id         :string
-#  google_plus_id        :string
-#  created_at            :datetime
-#  updated_at            :datetime
-#  stripe_account_id     :string
-#  stripe_public_api_key :string
 #  stripe_access_token   :string
-#  google_fonts          :string
-#  time_zone             :string           default("UTC")
-#  address               :text
-#  stripe_client_id      :string
 #  stripe_private_key    :string
+#  stripe_public_api_key :string
 #  stripe_public_key     :string
 #  style                 :text
+#  theme                 :string
+#  time_zone             :string           default("UTC")
+#  created_at            :datetime
+#  updated_at            :datetime
+#  analytics_id          :string
+#  facebook_id           :string
+#  foursquare_id         :string
+#  google_plus_id        :string
+#  instagram_id          :string
+#  stripe_account_id     :string
+#  stripe_client_id      :string
+#  twitter_id            :string
 #
-
 class Tenant < ActiveRecord::Base
   include Tenancy::Resource
 

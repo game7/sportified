@@ -6,10 +6,10 @@
 #  name       :string
 #  slug       :string
 #  starts_on  :date
-#  tenant_id  :integer
 #  created_at :datetime
 #  updated_at :datetime
 #  program_id :integer
+#  tenant_id  :integer
 #
 # Indexes
 #
@@ -20,7 +20,6 @@
 #  fk_rails_...  (program_id => programs.id)
 #  fk_rails_...  (program_id => programs.id)
 #
-
 class League::Season < ActiveRecord::Base
   include Sportified::TenantScoped
 

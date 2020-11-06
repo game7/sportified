@@ -21,7 +21,6 @@
 #
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 require 'test_helper'
 
 class StripeConnectTest < ActiveSupport::TestCase

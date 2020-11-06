@@ -3,12 +3,12 @@
 # Table name: facilities
 #
 #  id          :integer          not null, primary key
-#  type        :string
 #  name        :string
-#  tenant_id   :integer
-#  location_id :integer
+#  type        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  location_id :integer
+#  tenant_id   :integer
 #
 # Indexes
 #
@@ -19,7 +19,6 @@
 #
 #  fk_rails_...  (location_id => locations.id)
 #
-
 class LockerRoom < Facility
 
 end

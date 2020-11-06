@@ -21,7 +21,6 @@
 #
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 class StripeConnect < ApplicationRecord
   include Sportified::TenantScoped
 

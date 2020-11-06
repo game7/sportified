@@ -3,26 +3,26 @@
 # Table name: registrations
 #
 #  id                :integer          not null, primary key
+#  abandoned_at      :datetime
+#  birthdate         :date
+#  cancelled_at      :datetime
+#  checked_in_at     :datetime
+#  completed_at      :datetime
+#  confirmation_code :string
+#  email             :string
+#  first_name        :string(40)
+#  last_name         :string(40)
+#  price             :decimal(20, 4)
+#  uuid              :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  form_packet_id    :integer
+#  payment_id        :string
+#  payment_intent_id :text
+#  session_id        :text
 #  tenant_id         :integer
 #  user_id           :integer
 #  variant_id        :integer
-#  first_name        :string(40)
-#  last_name         :string(40)
-#  email             :string
-#  payment_id        :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  price             :decimal(20, 4)
-#  form_packet_id    :integer
-#  confirmation_code :string
-#  birthdate         :date
-#  session_id        :text
-#  payment_intent_id :text
-#  uuid              :string
-#  completed_at      :datetime
-#  abandoned_at      :datetime
-#  cancelled_at      :datetime
-#  checked_in_at     :datetime
 #
 # Indexes
 #
@@ -36,7 +36,6 @@
 #  fk_rails_...  (user_id => users.id)
 #  fk_rails_...  (variant_id => variants.id)
 #
-
 require 'test_helper'
 
 class RegistrationTest < ActiveSupport::TestCase

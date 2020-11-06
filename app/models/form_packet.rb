@@ -3,10 +3,10 @@
 # Table name: form_packets
 #
 #  id         :integer          not null, primary key
-#  tenant_id  :integer
 #  name       :string(40)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tenant_id  :integer
 #
 # Indexes
 #
@@ -16,7 +16,6 @@
 #
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 class FormPacket < ApplicationRecord
   include Sportified::TenantScoped
 

@@ -3,17 +3,16 @@
 # Table name: blocks
 #
 #  id         :integer          not null, primary key
-#  page_id    :integer
-#  type       :string
-#  section_id :integer
 #  column     :integer
-#  position   :integer
+#  file       :string
 #  options    :hstore
+#  position   :integer
+#  type       :string
 #  created_at :datetime
 #  updated_at :datetime
-#  file       :string
+#  page_id    :integer
+#  section_id :integer
 #
-
 module Blocks
   class Image < Block
 

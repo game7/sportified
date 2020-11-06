@@ -3,29 +3,28 @@
 # Table name: hockey_goals
 #
 #  id                      :integer          not null, primary key
-#  tenant_id               :integer
-#  statsheet_id            :integer
-#  period                  :string
+#  also_assisted_by_number :string
+#  assisted_by_number      :string
 #  minute                  :integer
+#  period                  :string
+#  scored_by_number        :string
 #  second                  :integer
-#  team_id                 :integer
-#  scored_by_id            :integer
-#  scored_on_id            :integer
-#  assisted_by_id          :integer
-#  also_assisted_by_id     :integer
 #  strength                :string
 #  created_at              :datetime
 #  updated_at              :datetime
-#  scored_by_number        :string
-#  assisted_by_number      :string
-#  also_assisted_by_number :string
+#  also_assisted_by_id     :integer
+#  assisted_by_id          :integer
+#  scored_by_id            :integer
+#  scored_on_id            :integer
+#  statsheet_id            :integer
+#  team_id                 :integer
+#  tenant_id               :integer
 #
 # Indexes
 #
 #  index_hockey_goals_on_statsheet_id  (statsheet_id)
 #  index_hockey_goals_on_tenant_id     (tenant_id)
 #
-
 class Hockey::Goal < ActiveRecord::Base
   include Sportified::TenantScoped
 

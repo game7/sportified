@@ -3,12 +3,12 @@
 # Table name: form_templates
 #
 #  id         :integer          not null, primary key
-#  tenant_id  :integer
-#  packet_id  :integer
 #  name       :string(40)
 #  position   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  packet_id  :integer
+#  tenant_id  :integer
 #
 # Indexes
 #
@@ -19,7 +19,6 @@
 #  fk_rails_...  (packet_id => form_packets.id)
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 class FormTemplate < ApplicationRecord
   include Sportified::TenantScoped
 

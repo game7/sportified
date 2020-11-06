@@ -18,7 +18,6 @@
 #  index_ahoy_events_on_user_id        (user_id)
 #  index_ahoy_events_on_visit_id       (visit_id)
 #
-
 class Ahoy::Event < ApplicationRecord
   include Ahoy::QueryMethods
   include Sportified::TenantScoped

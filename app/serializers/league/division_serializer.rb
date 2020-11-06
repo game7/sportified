@@ -4,17 +4,17 @@
 #
 #  id                  :integer          not null, primary key
 #  name                :string
-#  slug                :string
-#  show_standings      :boolean
+#  period_length       :integer          default(15)
 #  show_players        :boolean
+#  show_standings      :boolean
 #  show_statistics     :boolean
+#  slug                :string
 #  standings_array     :text             default([]), is an Array
-#  tenant_id           :integer
 #  created_at          :datetime
 #  updated_at          :datetime
-#  standings_schema_id :string
 #  program_id          :integer
-#  period_length       :integer          default(15)
+#  standings_schema_id :string
+#  tenant_id           :integer
 #
 # Indexes
 #
@@ -24,7 +24,6 @@
 #
 #  fk_rails_...  (program_id => programs.id)
 #
-
 class League::DivisionSerializer < ActiveModel::Serializer
   type :division
   attributes :id, :program_id, :name, :slug, :show_standings, :show_players, :show_statistics, :created_at, :updated_at

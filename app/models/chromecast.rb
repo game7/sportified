@@ -4,12 +4,12 @@
 #
 #  id                 :integer          not null, primary key
 #  name               :string
-#  tenant_id          :integer
-#  location_id        :integer
-#  playing_surface_id :integer
+#  refreshed_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  refreshed_at       :datetime
+#  location_id        :integer
+#  playing_surface_id :integer
+#  tenant_id          :integer
 #
 # Indexes
 #
@@ -23,7 +23,6 @@
 #  fk_rails_...  (playing_surface_id => facilities.id)
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 class Chromecast < ApplicationRecord
   include Sportified::TenantScoped
 

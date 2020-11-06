@@ -1,3 +1,0 @@
-class Dashboard
-  
-end

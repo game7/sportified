@@ -3,30 +3,29 @@
 # Table name: pages
 #
 #  id                  :integer          not null, primary key
-#  tenant_id           :integer
-#  title               :string
-#  slug                :string
-#  url_path            :string
-#  meta_keywords       :text
-#  meta_description    :text
-#  link_url            :string
-#  show_in_menu        :boolean
-#  title_in_menu       :string
-#  skip_to_first_child :boolean
-#  draft               :boolean
 #  ancestry            :string
 #  ancestry_depth      :integer
+#  content             :text
+#  draft               :boolean
+#  link_url            :string
+#  meta_description    :text
+#  meta_keywords       :text
 #  position            :integer
+#  show_in_menu        :boolean
+#  skip_to_first_child :boolean
+#  slug                :string
+#  title               :string
+#  title_in_menu       :string
+#  url_path            :string
 #  created_at          :datetime
 #  updated_at          :datetime
-#  content             :text
+#  tenant_id           :integer
 #
 # Indexes
 #
 #  index_pages_on_ancestry   (ancestry)
 #  index_pages_on_tenant_id  (tenant_id)
 #
-
 class Page < ActiveRecord::Base
   has_ancestry orphan_strategy: :rootify, cache_depth: true, touch: true
   include Sportified::TenantScoped

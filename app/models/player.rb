@@ -3,18 +3,18 @@
 # Table name: players
 #
 #  id            :integer          not null, primary key
-#  tenant_id     :integer
-#  team_id       :integer
-#  first_name    :string
-#  last_name     :string
-#  jersey_number :string
 #  birthdate     :date
 #  email         :string
+#  first_name    :string
+#  jersey_number :string
+#  last_name     :string
+#  position      :string
 #  slug          :string
+#  substitute    :boolean
 #  created_at    :datetime
 #  updated_at    :datetime
-#  substitute    :boolean
-#  position      :string
+#  team_id       :integer
+#  tenant_id     :integer
 #
 # Indexes
 #
@@ -22,7 +22,6 @@
 #  index_players_on_team_id    (team_id)
 #  index_players_on_tenant_id  (tenant_id)
 #
-
 class Player < ActiveRecord::Base
   include Sportified::TenantScoped
 

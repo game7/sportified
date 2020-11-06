@@ -21,9 +21,6 @@
 #
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   referrer: MyString
   token: MyString

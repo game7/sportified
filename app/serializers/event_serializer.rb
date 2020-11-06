@@ -3,40 +3,40 @@
 # Table name: events
 #
 #  id                        :integer          not null, primary key
-#  tenant_id                 :integer
-#  division_id               :integer
-#  season_id                 :integer
-#  location_id               :integer
-#  type                      :string
-#  starts_on                 :datetime
-#  ends_on                   :datetime
-#  duration                  :integer
 #  all_day                   :boolean
-#  summary                   :string
+#  away_team_custom_name     :boolean
+#  away_team_name            :string
+#  away_team_score           :integer          default(0)
+#  completion                :string
 #  description               :text
+#  duration                  :integer
+#  ends_on                   :datetime
+#  exclude_from_team_records :boolean
+#  home_team_custom_name     :boolean
+#  home_team_name            :string
+#  home_team_score           :integer          default(0)
+#  private                   :boolean          default(FALSE), not null
+#  result                    :string
+#  starts_on                 :datetime
+#  statsheet_type            :string
+#  summary                   :string
+#  text_after                :string
+#  text_before               :string
+#  type                      :string
 #  created_at                :datetime
 #  updated_at                :datetime
-#  home_team_id              :integer
 #  away_team_id              :integer
-#  statsheet_id              :integer
-#  statsheet_type            :string
-#  home_team_score           :integer          default(0)
-#  away_team_score           :integer          default(0)
-#  home_team_name            :string
-#  away_team_name            :string
-#  home_team_custom_name     :boolean
-#  away_team_custom_name     :boolean
-#  text_before               :string
-#  text_after                :string
-#  result                    :string
-#  completion                :string
-#  exclude_from_team_records :boolean
-#  playing_surface_id        :integer
-#  home_team_locker_room_id  :integer
 #  away_team_locker_room_id  :integer
-#  program_id                :integer
+#  division_id               :integer
+#  home_team_id              :integer
+#  home_team_locker_room_id  :integer
+#  location_id               :integer
 #  page_id                   :integer
-#  private                   :boolean          default(FALSE), not null
+#  playing_surface_id        :integer
+#  program_id                :integer
+#  season_id                 :integer
+#  statsheet_id              :integer
+#  tenant_id                 :integer
 #
 # Indexes
 #
@@ -57,7 +57,6 @@
 #  fk_rails_...  (page_id => pages.id)
 #  fk_rails_...  (program_id => programs.id)
 #
-
 class EventSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 

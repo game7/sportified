@@ -33,7 +33,6 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_tenant_id             (tenant_id)
 #
-
 class User < ActiveRecord::Base
   include Sportified::TenantScoped
   

@@ -3,13 +3,13 @@
 # Table name: forms
 #
 #  id              :integer          not null, primary key
-#  tenant_id       :integer
-#  registration_id :integer
-#  template_id     :integer
+#  completed       :boolean          default(FALSE), not null
 #  data            :hstore
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  completed       :boolean          default(FALSE), not null
+#  registration_id :integer
+#  template_id     :integer
+#  tenant_id       :integer
 #
 # Indexes
 #
@@ -21,7 +21,6 @@
 #  fk_rails_...  (template_id => form_templates.id)
 #  fk_rails_...  (tenant_id => tenants.id)
 #
-
 class Form < ApplicationRecord
   include Sportified::TenantScoped
 

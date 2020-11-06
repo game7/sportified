@@ -3,20 +3,19 @@
 # Table name: posts
 #
 #  id         :integer          not null, primary key
-#  tenant_id  :integer
-#  title      :string
-#  summary    :text
 #  body       :text
-#  link_url   :string
 #  image      :string
+#  link_url   :string
+#  summary    :text
+#  title      :string
 #  created_at :datetime
 #  updated_at :datetime
+#  tenant_id  :integer
 #
 # Indexes
 #
 #  index_posts_on_tenant_id  (tenant_id)
 #
-
 class Post < ActiveRecord::Base
   include Sportified::TenantScoped  
   acts_as_taggable
