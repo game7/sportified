@@ -6,7 +6,6 @@ gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'pg'
 gem 'enumerize'
-gem 'annotate'
 
 gem 'sass-rails', '~> 5.0.4'
 #gem 'coffee-rails', '~> 4.0.0.rc1'
@@ -124,6 +123,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'derailed_benchmarks'
+ 
+  gem 'annotate'
 end
 
 group :test do

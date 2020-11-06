@@ -2,13 +2,13 @@
 #
 # Table name: ahoy_events
 #
-#  id         :bigint(8)        not null, primary key
-#  visit_id   :bigint(8)
-#  user_id    :bigint(8)
+#  id         :bigint           not null, primary key
 #  name       :string
 #  properties :jsonb
 #  time       :datetime
-#  tenant_id  :bigint(8)
+#  tenant_id  :bigint
+#  user_id    :bigint
+#  visit_id   :bigint
 #
 # Indexes
 #

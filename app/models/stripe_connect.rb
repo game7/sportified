@@ -2,16 +2,16 @@
 #
 # Table name: stripe_connects
 #
-#  id         :bigint(8)        not null, primary key
-#  tenant_id  :bigint(8)
-#  referrer   :string
-#  token      :string
+#  id         :bigint           not null, primary key
 #  client     :string
 #  redirect   :string
-#  status     :string
+#  referrer   :string
 #  result     :string
+#  status     :string
+#  token      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  tenant_id  :bigint
 #
 # Indexes
 #

@@ -734,6 +734,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_194855) do
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrations", "form_packets"
