@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::AdminController
   before_action :load_user, only: [:show, :update]
 
   def index
-    @users = Tenant.current.users
+    @search = User.search(params[:q]) if params[:q].present?
   end
 
   def show

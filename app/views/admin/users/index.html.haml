@@ -1,8 +1,15 @@
 - title 'Users'
 - wrapper class: [:ui, :container]
 
-.ui.segment
-  %table.ui.celled.striped.table
+%h4.ui.top.attached.header Find User
+.ui.attached.segment
+  = form_with url: [:admin, :users], method: :get, skip_enforcing_utf8: true, class: [:ui, :form] do |f|
+    .field.string
+      = f.text_field :q, value: params[:q], class: [:string], placeholder: 'Last Name or Email Address'
+
+- if @search&.any?
+  %h4.ui.top.attached.header Search Results
+  %table.ui.celled.bottom.attached.table
     %thead
       %tr
         %th First
@@ -10,11 +17,15 @@
         %th Email
         %th Actions
     %tbody
-      - @users.each do |user|
+      - @search.each do |user|
         %tr
           %td= user.first_name
           %td= user.last_name
           %td= user.email
           %td= link_to 'Show', [:admin, user], class: [:ui, :small, :primary, :button]
 
-
+- if @search&.none?
+  .ui.placeholder.segment
+    .ui.icon.header
+      = semantic_icon :search
+      = "There are no users matching '#{params[:q]}'"

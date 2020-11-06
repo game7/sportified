@@ -44,7 +44,14 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :registrations
 
-  scope :with_email, ->(email) { where(:email => email) }
+  scope :priviledged, -> { where(admin: true).or(where(operations: true)) }
+  scope :latest, -> { order(created_at: :desc)}
+  # scope :searchx, ->(term) { where('email LIKE \'%?%\' OR last_name LIKE \'%?%\'', term, term) }
+  scope :search, ->(term) { 
+    email = arel_table[:email].matches("%#{term}%")
+    last_name = arel_table[:last_name].matches("%#{term}%")
+    where(email).or(where(last_name))
+  }
 
   def host?
     ENV['SUPER_ADMINS'].split(';').include?(self.email)
