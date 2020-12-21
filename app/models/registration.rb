@@ -48,6 +48,10 @@ class Registration < ApplicationRecord
 
   belongs_to :credit_card, required: false
 
+  attribute :voucher_id, :integer
+
+  has_one :voucher
+
   validates :variant,
             presence: true
 
@@ -155,6 +159,7 @@ class Registration < ApplicationRecord
   end
 
   before_validation :set_price_from_variant
+  before_validation :set_voucher
   before_create :generate_uuid, unless: :uuid
   before_create :mark_completed_if_free
   before_save :generate_confiramtion_code, unless: :confirmation_code
@@ -180,6 +185,10 @@ class Registration < ApplicationRecord
 
     def mark_completed_if_free
       self.completed_at = created_at if price.blank? || price == 0
+    end
+
+    def set_voucher
+      self.voucher = Voucher.find(self.voucher_id) unless self.voucher_id.blank?
     end
   
 end

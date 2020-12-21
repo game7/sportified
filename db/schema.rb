@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_194855) do
+ActiveRecord::Schema.define(version: 2020_11_06_222435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -717,6 +717,19 @@ ActiveRecord::Schema.define(version: 2020_10_13_194855) do
     t.index ["tenant_id"], name: "index_variants_on_tenant_id"
   end
 
+  create_table "vouchers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "registration_id"
+    t.integer "amount"
+    t.datetime "expires_at"
+    t.datetime "cancelled_at"
+    t.datetime "comsumed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["registration_id"], name: "index_vouchers_on_registration_id"
+    t.index ["user_id"], name: "index_vouchers_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chromecasts", "facilities", column: "playing_surface_id"
   add_foreign_key "chromecasts", "locations"
@@ -734,7 +747,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_194855) do
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrations", "form_packets"
@@ -745,4 +757,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_194855) do
   add_foreign_key "variants", "form_packets"
   add_foreign_key "variants", "products"
   add_foreign_key "variants", "tenants"
+  add_foreign_key "vouchers", "registrations"
+  add_foreign_key "vouchers", "users"
 end

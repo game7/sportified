@@ -61,7 +61,8 @@ class RegistrationsController < ApplicationController
     end if variant.form_packet
     render locals: {
       variant: variant,
-      registration: registration
+      registration: registration,
+      vouchers: current_user&.vouchers.available || []
     }
   end
 
@@ -91,9 +92,11 @@ class RegistrationsController < ApplicationController
       registration.errors[:base].each do |message|
         flash[:error] = message
       end
+
       render :new, locals: {
         registration: registration,
-        variant: variant
+        variant: variant,
+        vouchers: current_user&.vouchers.available || []
       }
     end
   end
@@ -179,7 +182,7 @@ class RegistrationsController < ApplicationController
     end
 
     def registration_params
-      params.require(:registration).permit(:first_name, :last_name, :birthdate, :email)
+      params.require(:registration).permit(:first_name, :last_name, :birthdate, :email, :voucher_id, voucher: [:id])
     end
 
     def form_params

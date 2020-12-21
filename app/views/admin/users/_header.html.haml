@@ -1,0 +1,7 @@
+- title "#{@user.first_name} #{@user.last_name}"
+- wrapper class: [:ui, :container]
+- area_menu do
+  = area_menu_item 'Overview', [:admin, @user]
+  = area_menu_item 'Registrations', [:admin,  @user, :registrations]
+  = area_menu_item 'Teams', [:admin,  @user, :teams]
+  = area_menu_item 'Vouchers', [:admin, @user, :vouchers] 

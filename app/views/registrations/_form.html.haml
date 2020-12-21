@@ -49,6 +49,8 @@
         - form.object.template.elements.each do |element|
           = render "form_elements/#{element.partial}", element: element, builder: form   
       
+
+
       - if variant.payment_required? 
         %a.anchor{ name: :payment }
         %h3.ui.dividing.header Payment 
@@ -65,6 +67,27 @@
               and presented with a registration confirmation.
             %p
               %strong You registration is not confirmed until the payment step has been completed.
+
+
+        - if vouchers.any?
+          -# = f.simple_fields_for :voucher do |form|
+          -#   = form.input :id, collection: vouchers
+          -# = f.input :voucher_id, collection: vouchers
+          %table.ui.celled.table
+            %thead
+              %tr
+                %th.collapsing
+                %th Amount
+                %th Expires
+            %tbody
+              - vouchers.each do |voucher|
+                %tr
+                  %td.collapsing= radio_button_tag 'registration[voucher_id]', voucher.id, registration.voucher&.id == voucher.id
+                  %td= number_to_currency voucher.amount
+                  %td= time_ago_in_words(voucher.expires_at) + ' from now'
+              %tr
+                %td= radio_button_tag 'registration[voucher_id]', '', registration.voucher.blank?
+                %td{ colspan: 2 } I'll pay this time
 
       .ui.basic.center.aligned.segment
         = f.button :submit, variant.payment_required? ? 'Checkout with Stripe' : 'Complete Registration', class: [:ui, :massive, :button]

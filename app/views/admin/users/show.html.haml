@@ -1,31 +1,38 @@
-- title "#{@user.first_name} #{@user.last_name}"
-- wrapper class: [:ui, :container]
+= render 'header'
 
-.ui.segment
-  %h4.ui.header BASIC INFO
-  %table.ui.definition.table
-    %tbody
-      %tr
-        %td.collapsing Id
-        %td= @user.id
-      %tr
-        %td.collapsing Name
-        %td= "#{@user.first_name} #{@user.last_name}"
-      %tr
-        %td.collapsing Email
-        %td= @user.email
-      %tr
-        %td.collapsing Sign In Cont
-        %td= @user.sign_in_count
-      %tr
-        %td.collapsing Last Sign In
-        %td= @user.last_sign_in_at        
-      %tr
-        %td.collapsing.top.aligned Permissions
-        %td
-          = simple_form_for [:admin, @user], remote: true do |f|
-            = f.input :admin, as: :boolean
-            = f.input :operations, as: :boolean    
+%h4.ui.top.attached.header Basic Info
+%table.ui.bottom.attached.definition.table
+  %tbody
+    %tr
+      %td.collapsing Id
+      %td= @user.id
+    %tr
+      %td.collapsing Name
+      %td= "#{@user.first_name} #{@user.last_name}"
+    %tr
+      %td.collapsing Email
+      %td= @user.email
+    %tr
+      %td.collapsing Sign In Count
+      %td= @user.sign_in_count
+    %tr
+      %td.collapsing Last Sign In
+      %td= @user.last_sign_in_at        
+    %tr
+      %td.collapsing.top.aligned Permissions
+      %td
+        = simple_form_for [:admin, @user], remote: true do |f|
+          = f.input :admin, as: :boolean
+          = f.input :operations, as: :boolean 
+
+-# %h4.ui.top.attached.header Permissions
+-# %table.ui.bottom.attached.definition.table          
+
+%h4.ui.top.attached.header Teams
+%table.ui.bottom.attached.definition.table
+
+%h4.ui.top.attached.header Registrations
+%table.ui.bottom.attached.definition.table
 
 :javascript
   $(function() {

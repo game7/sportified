@@ -1,0 +1,25 @@
+%table.ui.celled.table#vouchers
+  %thead
+    %tr
+      %th{ style: 'text-align: center;' } ID
+      %th Amount
+      %th Created
+  %tbody
+    - unless vouchers.any?
+      %tr
+        %td No Vouchers
+    - vouchers.each do |voucher|
+      %tr
+        %td{ style: 'text-align: center;' }= voucher.id
+        %td= number_to_currency voucher.amount
+        %td
+          %span.created{ title: voucher.created_at.strftime('%a %-m/%-d/%Y %l:%M %P') }= "#{time_ago_in_words(voucher.created_at)} ago"
+
+:css
+
+  table#vouchers .created {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #666666;
+    cursor: help;
+  }

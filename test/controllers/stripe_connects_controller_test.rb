@@ -20,6 +20,8 @@ class StripeConnectsControllerTest < ActionDispatch::IntegrationTest
       Tenant.current.stripe_client_id = 'bogus-stripe-client-id'      
       referrer = 'http://localhost:3000/registrar/registrations'
       post '/stripe_connects', headers: { "HTTP_REFERER": referrer }
+      # TODO: need to get tenant into session so that it spans redirect
+      Tenant.current = tenants(:hockey_league_site)
       connect = StripeConnect.last
       assert_instance_of StripeConnect, connect
       assert_redirected_to connect.redirect

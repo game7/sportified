@@ -1,0 +1,7 @@
+<% if @voucher.invalid? %>
+  $('#new_voucher').replaceWith("<%= escape_javascript( render(partial: "admin/users/vouchers/form", locals: { user: @user, voucher: @voucher }) ) %>")
+<% end %>
+<% if @voucher.valid? %>
+  $('#new_voucher').replaceWith("<%= escape_javascript( render(partial: "admin/users/vouchers/form", locals: { user: @user, voucher: Voucher.new }) ) %>")
+  $('#vouchers').replaceWith("<%= escape_javascript( render(partial: "admin/users/vouchers/table", locals: { vouchers: @user.vouchers }) ) %>")
+<% end %>

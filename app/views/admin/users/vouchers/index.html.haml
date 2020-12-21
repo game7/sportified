@@ -1,0 +1,7 @@
+= render 'admin/users/header'
+
+= render partial: 'admin/users/vouchers/table', locals: { vouchers: @user.vouchers }
+
+%h4.ui.top.attached.header Add Voucher
+.ui.bottom.attached.segment
+  = render partial: 'admin/users/vouchers/form', locals: { user: @user, voucher: @user.vouchers.build }

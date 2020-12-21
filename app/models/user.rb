@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :tenants
   has_many :authentications
   has_many :registrations
+  has_many :vouchers
 
   scope :priviledged, -> { where(admin: true).or(where(operations: true)) }
   scope :latest, -> { order(created_at: :desc)}

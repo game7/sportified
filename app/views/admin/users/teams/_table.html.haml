@@ -1,0 +1,14 @@
+%table.ui.celled.table
+  %thead
+    %tr
+      %th.center.aligned Id
+      %th Season
+      %th Division
+      %th Team
+  %tbody
+    - players.each do |player|
+      %tr
+        %td.center.aligned= player.id
+        %td= player.team.season.name
+        %td= player.team.division.name
+        %td= link_to player.team.name, [:admin, :league, player.team]

@@ -1,13 +1,14 @@
 class Admin::UsersController < Admin::AdminController
 
-  before_action :load_user, only: [:show, :update]
+  before_action :load_user, only: [:update]
 
   def index
     @search = User.search(params[:q]) if params[:q].present?
   end
 
   def show
-
+    @user = User.includes(:registrations, :vouchers).find(params[:id])
+    @voucher = @user.vouchers.build
   end
 
   def update

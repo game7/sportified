@@ -1,0 +1,20 @@
+%table.ui.celled.table
+  %thead
+    %tr
+      %th{ style: 'text-align: center;' } Id
+      %th Product
+      %th Variant
+      %th{ style: 'text-align: center;' } Created
+      %th{ style: 'text-align: center;' } Price
+      %th{ style: 'text-align: center;' } Status
+      %th{ style: 'text-align: center;' } Attendance
+  %tbody
+    - registrations.each do |registration|
+      %tr
+        %td{ style: 'text-align: center;' }= link_to registration.id, [:admin, registration]
+        %td= link_to registration.variant.product.title, [:admin, registration.variant.product]
+        %td= registration.variant.title
+        %td{ style: 'text-align: center;' }= "#{time_ago_in_words(registration.created_at)} ago"
+        %td{ style: 'text-align: center;' }= number_to_currency(registration.price) || 'FREE'
+        %td{ style: 'text-align: center;' }= registration.status
+        %td{ style: 'text-align: center;' }= check_box_tag 'attendance', 1, registration.checked_in_at.present?, disabled: true

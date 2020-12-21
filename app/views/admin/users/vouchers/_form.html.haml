@@ -1,0 +1,6 @@
+= simple_form_for [:admin, user, voucher], remote: true do |f|
+  .fields
+    = f.input :amount
+    = f.input :quantity
+    = f.input :expires_at, html5: true
+  = f.button :submit, value: 'Create Voucher(s)'

@@ -1,0 +1,40 @@
+# == Schema Information
+#
+# Table name: vouchers
+#
+#  id              :bigint           not null, primary key
+#  amount          :integer
+#  cancelled_at    :datetime
+#  comsumed_at     :datetime
+#  expires_at      :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  registration_id :bigint
+#  user_id         :bigint
+#
+# Indexes
+#
+#  index_vouchers_on_registration_id  (registration_id)
+#  index_vouchers_on_user_id          (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (registration_id => registrations.id)
+#  fk_rails_...  (user_id => users.id)
+#
+
+one:
+  user: one
+  registration: one
+  amount: 9.99
+  expires_at: 2020-11-06 15:24:35
+  cancelled_at: 2020-11-06 15:24:35
+  comsumed_at: 2020-11-06 15:24:35
+
+two:
+  user: two
+  registration: two
+  amount: 9.99
+  expires_at: 2020-11-06 15:24:35
+  cancelled_at: 2020-11-06 15:24:35
+  comsumed_at: 2020-11-06 15:24:35

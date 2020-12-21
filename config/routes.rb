@@ -128,7 +128,11 @@
 
     get 'uploads(/*path)', to: 'uploads#index', :as => :uploads
 
-    resources :users, only: [:index, :show, :update]
+    resources :users, module: :users, only: [:index, :show, :update] do
+      resources :registrations, only: [:index]
+      resources :teams, only: [:index]
+      resources :vouchers, only: [:index, :create]
+    end
   end
 
   resources :programs, only: [:index, :show, :delete], param: :slug
