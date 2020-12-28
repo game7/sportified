@@ -27,48 +27,47 @@
 #  stripe_client_id      :string
 #  twitter_id            :string
 #
-require 'test_helper'
+require 'rails_helper'
 
-class TenantTest < ActiveSupport::TestCase
-
-  context :validations do
-    should validate_presence_of(:name)
-    should validate_presence_of(:slug)
+RSpec.describe Tenant, type: :model do
+  describe 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:slug) }
   end
 
-  context :associations do
-    should have_and_belong_to_many(:users)
+  describe 'associations' do
+    it { should have_and_belong_to_many(:users) }
   end
 
-  context :before_validation do
-    should "generate a slug if not provided" do
+  describe 'before_validation' do
+    it 'generates a slug if not provided' do
       tenant = Tenant.new host: 'booyah'
       tenant.valid?
-      assert_equal tenant.host, tenant.slug
+      expect(tenant.host).to eq(tenant.slug)
     end
-    should "should not generate a slug if provided" do
+
+    it "should not generate a slug if provided" do
       slug = 'foobar'
       tenant = Tenant.new host: 'booyah', slug: slug
       tenant.valid?
-      assert_equal slug, tenant.slug
-    end
+      expect(slug).to eq(tenant.slug)
+    end    
   end
 
-  context :tenant do
-    setup do
+  describe 'tenant' do
+    before(:each) do
       @slug = 'foobar'
       @tenant = Tenant.new slug: @slug
     end
-    should "provide a url based on host when present" do
+    it 'should provide a url based on host when present' do
       host = @tenant.host = 'foobar.com'
-      assert_equal "http://#{host}", @tenant.url
+      expect(@tenant.url).to eq("http://#{host}")
     end
-    should "provide a url based on the slug when host not present" do
-      assert_equal "http://#{@slug}.sportified.net", @tenant.url
+    it 'should provide a url based on the slug when host not present' do
+      expect(@tenant.url).to eq("http://#{@slug}.sportified.net")
     end
-    should "provide a secure url using the slug" do
-      assert_equal "https://#{@slug}.sportified.net", @tenant.secure_url
-    end
+    it 'should provide a secure url using the slug' do
+      expect(@tenant.secure_url).to eq("https://#{@slug}.sportified.net")
+    end  
   end
-
 end
