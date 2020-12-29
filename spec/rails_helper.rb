@@ -68,3 +68,5 @@ require "view_component/test_helpers"
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
 end
+
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}

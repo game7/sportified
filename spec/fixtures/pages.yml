@@ -1,0 +1,54 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id                  :integer          not null, primary key
+#  ancestry            :string
+#  ancestry_depth      :integer
+#  content             :text
+#  draft               :boolean
+#  link_url            :string
+#  meta_description    :text
+#  meta_keywords       :text
+#  position            :integer
+#  show_in_menu        :boolean
+#  skip_to_first_child :boolean
+#  slug                :string
+#  title               :string
+#  title_in_menu       :string
+#  url_path            :string
+#  created_at          :datetime
+#  updated_at          :datetime
+#  tenant_id           :integer
+#
+# Indexes
+#
+#  index_pages_on_ancestry   (ancestry)
+#  index_pages_on_tenant_id  (tenant_id)
+#
+home:
+  id: 1
+  tenant: hockey_league_site
+  title: 'Welcome'
+  ancestry:
+  ancestry_depth: 0
+  position: 0
+
+about:
+  id: 2
+  tenant: hockey_league_site
+  title: 'About'
+  slug: about
+  url_path: about
+  ancestry:
+  ancestry_depth: 0
+  position: 1
+
+contact-us:
+  id: 3
+  tenant: hockey_league_site
+  title: 'Contact Us'
+  slug: contact-us
+  url_path: about/contact-us
+  ancestry: '2'
+  position: 1

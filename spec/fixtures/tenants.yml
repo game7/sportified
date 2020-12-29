@@ -30,7 +30,7 @@
 hockey_league_site:
   name: Hockey League Site
   host: hockey-league-site.com
-  # stripe_client_id: hockey-league-site-client-id
+  stripe_client_id: hockey-league-site-client-id
 
 football_league_site:
   name: Football League Site

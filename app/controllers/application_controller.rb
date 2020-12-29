@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
         ::Tenant.current = ::Tenant.find_by!(slug: request.subdomain.downcase)
       end
     else
-      return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]      
+      return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]   
       return set_tenant_from_session if session[:tenant_id]
       Rails.logger.debug 'Unable to determine Tenant -- Redirecting to Tenant Picker'
       redirect_to tenants_path unless controller_name == 'tenants'
