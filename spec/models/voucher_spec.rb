@@ -27,7 +27,9 @@ require 'rails_helper'
 RSpec.describe Voucher, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:amount) }
+    it { should validate_numericality_of(:amount).only_integer }
     it { should validate_presence_of(:quantity) }
+    it { should validate_numericality_of(:quantity).only_integer }
   end
 
   describe 'associations' do

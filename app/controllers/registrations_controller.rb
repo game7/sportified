@@ -62,7 +62,7 @@ class RegistrationsController < ApplicationController
     render locals: {
       variant: variant,
       registration: registration,
-      vouchers: current_user&.vouchers.available || []
+      vouchers: current_user&.vouchers&.available || []
     }
   end
 
@@ -79,7 +79,6 @@ class RegistrationsController < ApplicationController
     end if variant.form_packet
     
     registration.user = current_user if current_user
-
     if registration.save
       registration.product.touch
       redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
@@ -96,7 +95,7 @@ class RegistrationsController < ApplicationController
       render :new, locals: {
         registration: registration,
         variant: variant,
-        vouchers: current_user&.vouchers.available || []
+        vouchers: current_user&.vouchers&.available || []
       }
     end
   end
@@ -107,7 +106,7 @@ class RegistrationsController < ApplicationController
     @stripe_public_api_key = stripe_public_api_key
     @stripe_account = Tenant.current.stripe_account_id   
 
-    return if @registration.session_id.present?
+    redirect_to registration_path(registration.uuid) unless registration.payment_required?
 
     Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
 

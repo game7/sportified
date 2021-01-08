@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id                 :integer          not null, primary key
+#  active             :boolean
+#  description        :text
+#  private            :boolean
+#  quantity_allowed   :integer
+#  quantity_available :integer
+#  registrable_type   :string
+#  roster             :boolean
+#  summary            :text
+#  title              :string(40)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  registrable_id     :integer
+#  tenant_id          :integer
+#
+# Indexes
+#
+#  index_products_on_registrable_type_and_registrable_id  (registrable_type,registrable_id)
+#  index_products_on_tenant_id                            (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tenant_id => tenants.id)
+#
+
+
+hockey_league:
+  tenant: hockey_league_site
+  active: true
+  description: Hockey League
+  private: false
+  roster: true
+  summary: This is the hockey league!
+  title: Hockey League

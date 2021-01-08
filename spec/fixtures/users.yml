@@ -34,6 +34,13 @@
 #  index_users_on_tenant_id             (tenant_id)
 #
 
+hockey_admin:
+  tenant: hockey_league_site
+  admin: true
+  first_name: Hockey
+  last_name: Admin
+  email: hockey.admin@sportified.net
+
 wayne:
   tenant: hockey_league_site
   admin: false

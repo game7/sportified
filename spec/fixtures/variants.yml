@@ -1,0 +1,41 @@
+# == Schema Information
+#
+# Table name: variants
+#
+#  id               :integer          not null, primary key
+#  description      :text
+#  price            :decimal(20, 4)
+#  quantity_allowed :integer
+#  title            :string(40)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  form_packet_id   :integer
+#  product_id       :integer
+#  tenant_id        :integer
+#
+# Indexes
+#
+#  index_variants_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (form_packet_id => form_packets.id)
+#  fk_rails_...  (product_id => products.id)
+#  fk_rails_...  (tenant_id => tenants.id)
+#
+
+variant_with_price:
+  tenant: hockey_league_site
+  product: hockey_league
+  title: Registration with price
+  description: this is a variant
+  quantity_allowed: 2
+  price: 100
+
+variant_without_price:
+  tenant: hockey_league_site
+  product: hockey_league
+  title: Free Registration
+  description: this is a variant
+  quantity_allowed: 2
+  price: 0
