@@ -62,7 +62,7 @@ class General::Event < ::Event
   validates_presence_of :summary
 
   def color_key
-    taggings.reduce([]){|result, tagging| result.push(tagging.tag.name)}.join('-')
+    tags.reduce([]){|result, tag| result.push(tag.name)}.join('-')
   end
 
   def show_teams?
