@@ -39,11 +39,47 @@
       %td Confirmation Code
       %td= registration.confirmation_code
   %tr
-    %td Price
-    %td= registration.price.present? ? number_to_currency(registration.price) : 'Free 😎'
+    %td.top.aligned Price
+    - if registration.voucher.present?
+      %td
+        .line
+          .label Price
+          .amount= number_to_currency(registration.variant.price)
+        .line.voucher
+          .label Voucher
+          .amount= number_to_currency(0 - [registration.variant.price, registration.voucher.amount].min)
+        .line.total
+          .label Total
+          .amount= number_to_currency(registration.price)
+    - if registration.voucher.blank?
+      %td= registration.price.present? ? number_to_currency(registration.price) : 'Free 😎'      
   %tr
     %td Status
     %td= registration.completed? ? 'Completed' : 'Payment Required'
 
 
 = link_to 'Your Registrations', registrations_path, class: [:ui, :button]
+
+:scss
+
+  .line {
+    display: flex;
+  }
+
+  .label {
+    width: 60px;
+  }
+
+  .total > * {
+    border-top: 1px dashed rgba(0, 0, 0, 0.87);
+  }
+
+  .voucher > * {
+    color: red;
+    font-style: italic;
+  }
+
+  .amount {
+    width: 60px;
+    text-align: right;
+  }

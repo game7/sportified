@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  amount          :integer
 #  cancelled_at    :datetime
-#  comsumed_at     :datetime
+#  consumed_at     :datetime
 #  expires_at      :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -29,7 +29,7 @@ one:
   amount: 9.99
   expires_at: 2020-11-06 15:24:35
   cancelled_at: 2020-11-06 15:24:35
-  comsumed_at: 2020-11-06 15:24:35
+  consumed_at: 2020-11-06 15:24:35
 
 two:
   user: two
@@ -37,4 +37,4 @@ two:
   amount: 9.99
   expires_at: 2020-11-06 15:24:35
   cancelled_at: 2020-11-06 15:24:35
-  comsumed_at: 2020-11-06 15:24:35
+  consumed_at: 2020-11-06 15:24:35

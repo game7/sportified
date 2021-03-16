@@ -50,10 +50,12 @@ class RegistrationsController < ApplicationController
   end
 
   def new
+    latest = current_user&.registrations&.last
     registration_attrs = {
       email: current_user&.email,
-      first_name: current_user&.first_name,
-      last_name: current_user&.last_name
+      first_name: latest&.first_name || current_user&.first_name,
+      last_name: latest&.last_name || current_user&.last_name,
+      birthdate: latest&.birthdate
     }
     registration = variant.registrations.build(registration_attrs)
     variant.form_packet.templates.each do |template|
@@ -79,8 +81,9 @@ class RegistrationsController < ApplicationController
     end if variant.form_packet
     
     registration.user = current_user if current_user
+    
     if registration.save
-      registration.product.touch
+
       redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
       unless registration.payment_required?
         RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
@@ -104,9 +107,9 @@ class RegistrationsController < ApplicationController
   def collect
     @registration = registration = Registration.find_by_uuid(params[:id])
     @stripe_public_api_key = stripe_public_api_key
-    @stripe_account = Tenant.current.stripe_account_id   
+    @stripe_account = Tenant.current.stripe_account_id    
 
-    redirect_to registration_path(registration.uuid) unless registration.payment_required?
+    redirect_to registration_path(registration.uuid) and return unless registration.payment_required?
 
     Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
 

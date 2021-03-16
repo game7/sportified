@@ -29,6 +29,18 @@
     
     .twelve.wide.column
 
+      - unless current_user
+        .ui.icon.message
+          = semantic_icon :user, :circle, :icon
+          .content
+            .header You Are Not Signed In
+            %p
+              It's ok.  You don't have to 
+              = link_to 'sign in', users.sign_in_path
+              != ' '
+              to continue but if you do
+              we might be able to make things a little bit easier for you        
+
       %a.anchor{ name: :contact }    
       %h3.ui.dividing.header Contact  
       .three.fields
@@ -69,11 +81,28 @@
               %strong You registration is not confirmed until the payment step has been completed.
 
 
+        - unless current_user
+          .ui.icon.message
+            = semantic_icon :ticket, :icon
+            .content
+              .header Need to use a Voucher?
+              %p
+                Do you have prepaid vouchers that you would like to apply to this registration?  We can help you
+                apply a voucher but you must first
+                = link_to 'sign in', users.sign_in_path
+                != ' '                
+                to your account.            
+
         - if vouchers.any?
-          -# = f.simple_fields_for :voucher do |form|
-          -#   = form.input :id, collection: vouchers
-          -# = f.input :voucher_id, collection: vouchers
-          %table.ui.celled.table
+
+          .ui.icon.info.message
+            = semantic_icon :ticket, :icon
+            .content
+              .header You have Vouchers!
+              %p
+                Choose a voucher from below and we'll deduct the amount from the total price.     
+
+          %table.ui.unstackable.celled.table
             %thead
               %tr
                 %th.collapsing
@@ -84,7 +113,7 @@
                 %tr
                   %td.collapsing= radio_button_tag 'registration[voucher_id]', voucher.id, registration.voucher&.id == voucher.id
                   %td= number_to_currency voucher.amount
-                  %td= time_ago_in_words(voucher.expires_at) + ' from now'
+                  %td= voucher.expires_at ? time_ago_in_words(voucher.expires_at) + ' from now' : 'Never'
               %tr
                 %td= radio_button_tag 'registration[voucher_id]', '', registration.voucher.blank?
                 %td{ colspan: 2 } I'll pay this time

@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  amount          :integer
 #  cancelled_at    :datetime
-#  comsumed_at     :datetime
+#  consumed_at     :datetime
 #  expires_at      :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

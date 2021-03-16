@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_222435) do
+ActiveRecord::Schema.define(version: 2021_03_15_161747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -723,7 +723,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_222435) do
     t.integer "amount"
     t.datetime "expires_at"
     t.datetime "cancelled_at"
-    t.datetime "comsumed_at"
+    t.datetime "consumed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["registration_id"], name: "index_vouchers_on_registration_id"
@@ -746,7 +746,6 @@ ActiveRecord::Schema.define(version: 2020_11_06_222435) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

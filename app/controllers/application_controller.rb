@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :set_breadcrumbs
   before_action :set_area_navigation
   before_action :set_mailer_host
+  before_action :capture_passwordless_redirect_location
   skip_before_action :track_ahoy_visit
   after_action :track_action
 
@@ -222,6 +223,10 @@ class ApplicationController < ActionController::Base
 
   def with_time_zone
     Time.use_zone('Arizona') { yield }
+  end
+
+  def capture_passwordless_redirect_location
+    save_passwordless_redirect_location!(User) if request.method == 'GET'
   end
 
 end

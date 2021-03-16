@@ -162,6 +162,7 @@ class Registration < ApplicationRecord
   before_validation :set_voucher
   before_create :generate_uuid, unless: :uuid
   before_create :mark_completed_if_free
+  after_save :touch_product
   before_save :generate_confiramtion_code, unless: :confirmation_code
 
   private
@@ -188,7 +189,14 @@ class Registration < ApplicationRecord
     end
 
     def set_voucher
-      self.voucher = Voucher.find(self.voucher_id) unless self.voucher_id.blank?
+      if self.voucher_id.present? && voucher = Voucher.find(self.voucher_id)
+        self.voucher = voucher
+        self.price = [0, self.price - voucher.amount].max
+      end
+    end
+
+    def touch_product
+      self.product.touch
     end
   
 end
