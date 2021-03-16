@@ -1,5 +1,5 @@
-- first_day = date.beginning_of_month.beginning_of_week
-- last_day = date.end_of_month.end_of_week
+- first_day = date.beginning_of_month.beginning_of_week(start_day = :sunday)
+- last_day = date.end_of_month.end_of_week(start_day = :sunday)
 - range =  @start_date ? (@start_date.to_date..@end_date.to_date) : []
 
 %table.ui.celled.unstackable.calendar.table
