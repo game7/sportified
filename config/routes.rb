@@ -128,10 +128,12 @@
 
     get 'uploads(/*path)', to: 'uploads#index', :as => :uploads
 
-    resources :users, module: :users, only: [:index, :show, :update] do
-      resources :registrations, only: [:index]
-      resources :teams, only: [:index]
-      resources :vouchers, only: [:index, :create]
+    resources :users, only: [:index, :show, :update] do
+      scope module: :users do
+        resources :registrations, only: [:index]
+        resources :teams, only: [:index]
+        resources :vouchers, only: [:index, :create]
+      end
     end
   end
 
