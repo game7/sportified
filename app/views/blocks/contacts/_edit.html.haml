@@ -1,6 +1,12 @@
-= simple_form_for @block, :url => page_blocks_contact_path(@page, @block), :remote => true do |f|
-  = f.input :first
-  = f.input :last
-  = f.input :title
-  = f.input :phone
-  = f.input :email
+.ui.modal.edit_block
+  .header Edit Contact
+  .content
+    = simple_form_for @block, :url => page_blocks_contact_path(@page, @block), :remote => true do |f|
+      = f.input :first
+      = f.input :last
+      = f.input :title
+      = f.input :phone
+      = f.input :email
+  .actions
+    %button.ui.primary.button{ type: :submit } Save
+    %button.ui.cancel.button Cancel      
