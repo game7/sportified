@@ -62,8 +62,8 @@ class Admin::EventsController < Admin::AdminController
           'date/time': e.starts_on.strftime('%Y-%m-%d %H:%M'),
           duration: e.duration,
           summary: e.summary,
-          'division': e.try(:division).try(:name)
-
+          'division': e.try(:division).try(:name),
+          tags: e.tags.join(',')
         }
       end
       ::CSV.generate do |csv|
