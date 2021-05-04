@@ -10,7 +10,7 @@ class Admin::ProductsController < Admin::AdminController
       pending_registrations: [], 
       completed_registrations: [],
       abandoned_registrations: [],
-      cancelled_registrations: []).order(id: :desc)
+      cancelled_registrations: []).order(active: :desc, id: :desc)
     @products = @products.active unless current_user_is_admin?
   end
 
