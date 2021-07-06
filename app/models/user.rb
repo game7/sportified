@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   }
 
   def host?
-    ENV['SUPER_ADMINS'].split(';').include?(self.email)
+    ENV['SUPER_ADMINS']&.split(';')&.include?(self.email)
   end
 
   def full_name

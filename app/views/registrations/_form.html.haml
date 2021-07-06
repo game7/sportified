@@ -1,5 +1,5 @@
 = simple_form_for [variant, registration] do |f|
-
+ 
   .ui.stackable.grid
     .four.wide.column
 
@@ -30,19 +30,19 @@
     .twelve.wide.column
 
       - unless current_user
-        .ui.icon.message
+        .ui.icon.info.message
           = semantic_icon :user, :circle, :icon
           .content
             .header You Are Not Signed In
             %p
               It's ok.  You don't have to 
-              = link_to 'sign in', users.sign_in_path
+              = link_to 'sign in', users.sign_in_path, style: 'text-decoration: underline;'
               != ' '
-              to continue but if you do
+              to continue... but if you do
               we might be able to make things a little bit easier for you        
 
-      %a.anchor{ name: :contact }    
-      %h3.ui.dividing.header Contact  
+      %a.anchor{ name: :contact }   
+      %h3.ui.dividing.header{ style: 'margin-top: 0;' } Contact  
       .three.fields
         = f.input :email
       

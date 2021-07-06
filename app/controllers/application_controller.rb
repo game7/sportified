@@ -180,7 +180,6 @@ class ApplicationController < ActionController::Base
 
   def require_user!
     return if current_user
-    save_passwordless_redirect_location!(User)
     redirect_to root_path, flash: { error: 'You are not worthy!' }
   end  
 
@@ -226,6 +225,8 @@ class ApplicationController < ActionController::Base
   end
 
   def capture_passwordless_redirect_location
+    return unless request.method == 'GET'
+    return if controller_name == 'sessions'
     save_passwordless_redirect_location!(User) if request.method == 'GET'
   end
 
