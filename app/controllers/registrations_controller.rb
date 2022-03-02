@@ -136,6 +136,7 @@ class RegistrationsController < ApplicationController
       ],
       payment_intent_data: {
         application_fee_amount: registration.application_fee_in_cents,
+        description: "#{registration.product.title}: #{registration.variant.title}"
       },        
       success_url: confirm_registration_url(registration.uuid),
       cancel_url: registration_url(registration.uuid)        
@@ -146,16 +147,7 @@ class RegistrationsController < ApplicationController
     
     session = Stripe::Checkout::Session.create session_params, session_options
     
-    registration.update(session_id: session.id, payment_intent_id: session.payment_intent)
-
-    # guard against unreturned payment intent 😠
-    return unless session.payment_intent
-
-    Stripe::PaymentIntent.update(session.payment_intent, {
-      description: "#{registration.product.title}: #{registration.variant.title}"
-    }, {
-      stripe_account: registration.tenant.stripe_account_id
-    })      
+    registration.update(session_id: session.id, payment_intent_id: session.payment_intent)  
 
   end
 
