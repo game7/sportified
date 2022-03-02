@@ -148,6 +148,9 @@ class RegistrationsController < ApplicationController
     
     registration.update(session_id: session.id, payment_intent_id: session.payment_intent)
 
+    # guard against unreturned payment intent 😠
+    return unless session.payment_intent
+
     Stripe::PaymentIntent.update(session.payment_intent, {
       description: "#{registration.product.title}: #{registration.variant.title}"
     }, {
