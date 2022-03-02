@@ -157,8 +157,12 @@ class RegistrationsController < ApplicationController
     registration = Registration.find_by_uuid(params[:id])
 
     Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+
+    session = Stripe::Checkout::Session.retrieve(registration.session_id, {
+      stripe_account: registration.tenant.stripe_account_id
+    })
     
-    payment_intent = Stripe::PaymentIntent.retrieve(registration.payment_intent_id, {
+    payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent, {
       stripe_account: registration.tenant.stripe_account_id
     })
 
