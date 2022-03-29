@@ -1,5 +1,7 @@
 ::Sportified::Application.routes.draw do
 
+  get 'screen' => "screen#show"
+
   resources :products, only: [:index, :show]
   resources :variants, only: [] do
     resources :registrations, only: [:new, :create]
@@ -165,6 +167,7 @@
   namespace :admin do
 
     resources :chromecasts, except: [:show]
+    resources :screens, except: [:show]
 
     resources :programs, :only => [:index, :destroy]
     namespace :league do

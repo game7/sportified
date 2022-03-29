@@ -36,7 +36,6 @@ class Admin::ProductsController < Admin::AdminController
     if @product.save
       redirect_to [:admin, @product], notice: 'Product was successfully created.'
     else
-      puts @product.errors.messages
       flash[:error] = "Product could not be created"
       render :new
     end

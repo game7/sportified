@@ -47,9 +47,4 @@ class Admin::ChromecastsController < Admin::AdminController
       params.require(:chromecast).permit(:name, :location_id, :playing_surface_id)
     end
 
-    def set_breadcrumbs
-      super
-      add_breadcrumb "Admin", admin_root_path
-    end
-
 end

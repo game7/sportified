@@ -43,7 +43,8 @@
           = admin_menu_item url: admin_users_path, icon: :user, label: 'Users' if current_user_is_admin? 
           = admin_menu_item url: admin_locations_path, icon: [:map, :marker], label: 'Locations' if current_user_is_admin? 
           = admin_menu_item url: admin_clubs_path, icon: :users, label: 'Clubs' if current_user_is_admin? 
-          = admin_menu_item url: admin_chromecasts_path, icon: :tv, label: 'Screens' 
+          = admin_menu_item url: admin_chromecasts_path, icon: :chrome, label: 'Chromecasts' 
+          = admin_menu_item url: admin_screens_path, icon: :tv, label: 'Screens' 
           = admin_menu_item url: admin_uploads_path, icon: :upload, label: 'Upload' if current_user_is_admin? 
           = admin_menu_item url: admin_form_packets_path, icon: :newspaper, label: 'Forms' if current_user_is_admin? 
           = admin_menu_item url: admin_products_dashboard_path, icon: :signup, label: 'Registration' 

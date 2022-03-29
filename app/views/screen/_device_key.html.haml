@@ -1,0 +1,29 @@
+.device_key= @device_key
+
+:css
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+  .device_key {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 128px;
+    padding: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #000000dd;
+  }
+
+:javascript
+  var ONE_SECOND = 1000;
+  $(function() {
+    window.setTimeout(function() {
+      console.log('refreshing')
+      location.reload(true)
+    }, 10 * ONE_SECOND)
+  })

@@ -1,0 +1,17 @@
+= simple_form_for [:admin, @screen] do |f|
+  = f.input :name
+  = f.input :device_key
+  = f.input :location_id, collection: Location.order('name ASC')
+  -# = f.input :playing_surface_id
+  = f.button :wrapped, :cancel => return_url 
+
+:css
+
+  .screen_name,
+  .screen_location_id,
+  .screen_playing_surface_id {
+    max-width: 400px;
+  }
+  .screen_device_key {
+    max-width: 150px;
+  }

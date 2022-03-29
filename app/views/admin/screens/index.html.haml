@@ -1,0 +1,37 @@
+- title 'Screens'
+- page_actions do
+  = link_to 'New Screen', new_admin_screen_path, class: [:ui, :primary, :button]
+- wrapper class: [:ui, :container]
+
+.ui.icon.message
+  = semantic_icon :tv
+  .content
+    .header New Screens, powered by Amazon Fire TV
+    %p 
+      This configuration is for the new screens capability, powered by Amazon Fire TV.  
+    %p  
+      For the old Google-based solution
+      please visit the
+      = link_to 'chromecasts', admin_chromecasts_path
+      != " "
+      administration area
+
+.ui.segment
+  %table.ui.celled.striped.table
+    %thead
+      %tr
+        %th Name
+        %th Location
+        %th Refreshed
+        %th Actions
+    %tbody
+      - @screens.each do |screen|
+        %tr[screen]
+          %td= screen.name
+          %td= screen.location&.name
+          %td= "#{time_ago_in_words(screen.refreshed_at)} ago" if screen.refreshed_at.present?
+          %td
+            = link_to 'Edit', [:edit, :admin, screen], class: [:ui, :primary, :mini, :button]
+            != ' '
+            = link_to 'Delete', [:admin, screen], class: [:ui, :primary, :mini, :button],
+                                method: :delete

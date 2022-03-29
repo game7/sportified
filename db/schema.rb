@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_161747) do
+ActiveRecord::Schema.define(version: 2022_03_29_023105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -594,6 +594,20 @@ ActiveRecord::Schema.define(version: 2021_03_15_161747) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
+  create_table "screens", force: :cascade do |t|
+    t.bigint "tenant_id"
+    t.string "name"
+    t.string "device_key"
+    t.bigint "location_id"
+    t.bigint "playing_surface_id"
+    t.datetime "refreshed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_screens_on_location_id"
+    t.index ["playing_surface_id"], name: "index_screens_on_playing_surface_id"
+    t.index ["tenant_id"], name: "index_screens_on_tenant_id"
+  end
+
   create_table "sections", id: :serial, force: :cascade do |t|
     t.integer "page_id"
     t.string "pattern"
@@ -747,12 +761,16 @@ ActiveRecord::Schema.define(version: 2021_03_15_161747) do
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrations", "form_packets"
   add_foreign_key "registrations", "tenants"
   add_foreign_key "registrations", "users"
   add_foreign_key "registrations", "variants"
+  add_foreign_key "screens", "facilities", column: "playing_surface_id"
+  add_foreign_key "screens", "locations"
+  add_foreign_key "screens", "tenants"
   add_foreign_key "stripe_connects", "tenants"
   add_foreign_key "variants", "form_packets"
   add_foreign_key "variants", "products"
