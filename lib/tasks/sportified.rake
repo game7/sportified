@@ -50,10 +50,10 @@ namespace :sportified do
     # system 'heroku pg:backups:download -a sportified4 -o /git/sportified/tmp/latest.dump'
     # puts   'Dropping DB...'
     # system "PGPASSWORD=#{config[:password]} dropdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
-    puts   'Creating DB...'
-    system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"    
+    # puts   'Creating DB...'
+    # system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"    
     puts   'Restoring Backup...'
-    system "PGPASSWORD=#{config[:password]} pg_restore --verbose --no-acl --no-owner -h #{config[:host]} -U #{config[:username]} -d #{config[:database]} /git/sportified/tmp/latest.dump"
+    system "PGPASSWORD=#{config[:password]} pg_restore --verbose --no-acl --no-owner -h #{config[:host]} -U #{config[:username]} -d #{config[:database]} /app/tmp/latest.dump"
     puts   'DONE!'
 
     puts
