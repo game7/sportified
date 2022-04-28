@@ -1,55 +1,78 @@
 - title 'Exceptions'
 - breadcrumb 'Exceptions'
+- page_actions do
+  = link_to 'Clear Filters', {}, class: [:ui, :button] if params.permit(:exception, :route, :hostname, :date).keys.any?
 
-.ui.segment
-  = line_chart @by_day
+- unless params[:date]
+  .ui.segment
+    = line_chart @by_day
 
-.ui.grid
-  .twelve.wide.column
-    %table.ui.celled.table
-      %thead
-        %tr
-          %th Date/Time
-          %th Exception
-      %tbody
-        - @exceptions.each do |exc|
-          %tr
-            %td{ style: 'width: 25%;' }= link_to exc.time, [:host, exc]
-            %td
-              = exc.properties['exception']
-              %br
-              %small= exc.properties['message']
-
-  .four.wide.column
+.ui.three.column.grid
+  .column
     %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Exception  
           %th Count
       %tbody          
-        - @by_exception.each do |group|
+        - @by_exception.each do |label, value|
           %tr
-            %td= group[0]
-            %td= group[1]
-
+            %td= link_to(label, params.permit(:exception, :route, :hostname, :date).merge({ exception: label }))
+            %td.right.aligned= number_with_delimiter(value)
+  .column
     %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Controller  
           %th Count
       %tbody          
-        - @by_controller.each do |group|
+        - @by_controller.each do |label, value|
           %tr
-            %td= group[0]
-            %td= group[1]          
-
+            %td= link_to(label, params.permit(:exception, :route, :hostname, :date).merge({ route: label }))
+            %td.right.aligned= number_with_delimiter(value)
+  .column            
     %table.ui.celled.table
       %thead
         %tr
           %th{ style: 'width: 80%;' } Host  
           %th Count
       %tbody          
-        - @by_host.each do |group|
+        - @by_host.each do |label, value|
           %tr
-            %td= group[0]
-            %td= group[1]                   
+            %td= link_to(label, params.permit(:exception, :route, :hostname, :date).merge({ hostname: label }))
+            %td.right.aligned= number_with_delimiter(value)
+
+
+  %table.ui.celled.table
+    %thead
+      %tr
+        %th Date/Time
+        %th Exception
+    %tbody
+      - @exceptions.each do |exc|
+        %tr
+          %td{ style: 'width: 25%;' }= link_to exc.time, [:host, exc]
+          %td
+            = exc.properties['exception']
+            %br
+            %small= exc.properties['message']
+
+
+:javascript
+
+  $(function() {
+    var chart = Chartkick.charts['chart-1'].getChartObject()
+    chart.options.onClick = function chartClickHandler(event, elements) {
+      const el = elements && elements[0]
+      if(el) {
+        const label = chart.data.labels[el._index];
+        const date = label.toISOString().split('T')[0];
+        const url = new URL(window.location.href);
+        url.searchParams.set('date', date)
+        window.location.assign(url.href)
+      }
+    }
+  })
+        
+
+                

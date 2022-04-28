@@ -11,6 +11,9 @@
       %td User
       %td= @visit.user&.full_name  
     %tr
+      %td IP
+      %td= link_to @visit.ip, [:host, :visits, { ip: @visit.ip }]
+    %tr
       %td Geo
       %td= "#{@visit.latitude}, #{@visit.longitude}"
     %tr
@@ -46,16 +49,18 @@
 %table.ui.celled.table
   %thead
     %tr
+      %th Date
       %th Time
       %th Name
       %th Description
   %tbody
     - @visit.events.where(visit: @visit).each do |event|
       %tr
+        %td= link_to l(event.time, format: :short_date), host_events_path({ date: event.time.strftime("%y-%m-%d"), anchor: event.id})
         %td= link_to l(event.time, format: :short), [:host, event]
         %td= event.name
         %td
           - if event.name == 'controller:action'
-            = event.properties['path']
+            = link_to event.properties['path'], event.properties['path'], target: :blank
           - if event.name == 'exception'
             = event.properties['exception']        

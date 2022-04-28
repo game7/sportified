@@ -1,44 +1,108 @@
 - title 'Visits'
 - breadcrumb 'Visits'
 
-.ui.three.column.grid
-  .column
-    .ui.segment
-      %h4.ui.header Device
-      = pie_chart @by_device, legend: false
-  .column
-    .ui.segment
-      %h4.ui.header Operating System 
-      = pie_chart @by_os, legend: false
-  .column
-    .ui.segment
-      %h4.ui.header Browser
-      = pie_chart @by_browser, legend: false   
+- permitted_params = params.permit(:device, :os, :browser, :date, :tenant_id)
+
+= form_tag(host_visits_path, method: :get, class: [:ui, :form], enforce_utf8: false) do
+  .inline.fields
+    .ui.action.input
+      = date_field_tag 'date', @date || Date.today, style: 'width: 150px;'
+      %button{ type: :submit, class: [:ui, :button]} Go  
 
 
-.ui.grid
-  .ten.wide.column= paginate @visits
-  .six.wide.right.aligned.column!= page_entries_info @visits
-%table.ui.celled.table
-  %thead
-    %tr
-      %th ID
-      %th IP
-      %th User
-      %th Device
-      %th OS
-      %th Browser
-  %tbody
-    - @visits.each do |visit|
+- unless @date || @ip
+
+  - total = @by_device.reduce(0){|sum, row| sum + row[1] }
+  
+  .ui.segment
+    = line_chart @by_day
+
+  %table.ui.celled.table
+    %thead
       %tr
-        %td= link_to visit.id, [:host, visit]
-        %td= visit.ip
-        %td= visit.user&.full_name
-        %td= visit.device_type           
-        %td= visit.os       
-        %td= visit.browser
-.ui.two.column.grid
-  .ten.wide.column= paginate @visits
-  .six.wide.right.aligned.column!= page_entries_info @visits
+        %th{ style: 'width: 80%;' } Segment
+        %th.center.aligned &#931;
+        %th.center.aligned %
+    %tbody          
+      - @by_all.each_with_index do |row, i|
+        - next if i >= 10
+        - segment, value = row
+        %tr
+          %td= segment.join(' / ')
+          %td.right.aligned= number_with_delimiter(value)
+          %td.right.aligned= number_to_percentage((value.to_f / total) * 100, precision: 1)
+
+  .ui.three.column.grid
+    .column
+      %table.ui.celled.table
+        %thead
+          %tr
+            %th{ style: 'width: 80%;' } Device  
+            %th.center.aligned &#931;
+            %th.center.aligned %
+        %tbody          
+          - @by_device.each_with_index do |row, i|
+            - next if i >= 10
+            - label, value = row
+            %tr
+              %td= link_to(label || '', permitted_params.merge({ device: label }))
+              %td.right.aligned= number_with_delimiter(value)
+              %td.right.aligned= number_to_percentage((value.to_f / total) * 100, precision: 1)
+    .column
+      %table.ui.celled.table
+        %thead
+          %tr
+            %th{ style: 'width: 80%;' } OS  
+            %th.center.aligned &#931;
+            %th.center.aligned %
+        %tbody          
+          - @by_os.each_with_index do |row, i|
+            - next if i >= 10
+            - label, value = row
+            %tr
+              %td= link_to(label || '', permitted_params.merge({ os: label }))
+              %td.right.aligned= number_with_delimiter(value)
+              %td.right.aligned= number_to_percentage((value.to_f / total) * 100, precision: 1)
+    .column
+      %table.ui.celled.table
+        %thead
+          %tr
+            %th{ style: 'width: 80%;' } Browser
+            %th.center.aligned &#931;
+            %th.center.aligned %
+        %tbody          
+          - @by_browser.each_with_index do |row, i|
+            - next if i >= 10
+            - label, value = row
+            %tr
+              %td= link_to(label || '', permitted_params.merge({ browser: label }))
+              %td.right.aligned= number_with_delimiter(value)
+              %td.right.aligned= number_to_percentage((value.to_f / total) * 100, precision: 1)  
+
+- if @date || @ip
+
+  %table.ui.celled.table
+    %thead
+      %tr
+        %th Started
+        %th Tenant
+        %th IP
+        %th User
+        %th Device
+    %tbody
+      - @visits.each do |visit|
+        - Tenant.with_tenant(visit.tenant_id) do
+          %tr
+            %td= link_to visit.started_at.strftime(@date ? '%l:%M:%S %p' : '%a %b %e %Y %l:%M:%S %p'), [:host, visit]
+            %td= link_to visit.tenant.name, permitted_params.merge({ tenant_id: visit.tenant_id })
+            %td= visit.ip
+            %td= visit.user&.full_name
+            %td
+              = visit.device_type
+              != ' / '         
+              = visit.os
+              != ' / '         
+              = visit.browser
+
 
 
