@@ -34,6 +34,7 @@ en:
   time:
     formats:
       default: "%m/%d/%y %l:%M %p"
+      short_date: "%m/%d/%y"
       short: '%l:%M:%S'
   standings:
     index:
