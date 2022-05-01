@@ -14,6 +14,7 @@ module Passwordless
               else
                 Passwordless.after_session_save.call(session)
               end
+              ahoy.authenticate(session.authenticatable)
               redirect_to send(Passwordless.mounted_as).token_sign_in_url(session.token) if Rails.env.development?
             else
               render

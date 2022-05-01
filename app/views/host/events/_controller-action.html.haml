@@ -4,6 +4,9 @@
     %tr
       %td.two.wide Name
       %td= @event.name
+    %tr
+      %td Visit
+      %td= link_to @event.visit_id, [:host, @event.visit]
     - @event.properties.each do |key, value|
       %tr
         %td= key.titleize

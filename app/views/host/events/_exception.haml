@@ -8,6 +8,9 @@
       %td Exception
       %td= @event.properties['exception']
     %tr
+      %td Visit
+      %td= link_to @event.visit.id, [:host, @event.visit]
+    %tr
       %td Message
       %td= @event.properties['message']          
     - @event.properties.except('backtrace', 'exception', 'message').each do |key, value|

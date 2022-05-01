@@ -1,0 +1,27 @@
+- title "Events"
+
+- permitted_params = params.permit(:date, :ip, :path)
+
+= form_tag(host_events_path, method: :get, class: [:ui, :form], enforce_utf8: false) do
+  .inline.fields
+    .ui.action.input
+      = date_field_tag 'date', @date || Date.today, style: 'width: 150px;'
+      %button{ type: :submit, class: [:ui, :button]} Go  
+
+%table.ui.celled.table
+  %thead
+    %tr
+      %th Time
+      %th IP
+      %th Path / Error
+  %tbody
+    - @events.each do |event|
+      %tr
+        %td= link_to event.time.strftime('%l:%M:%S %p'), [:host, event]        
+        %td= link_to event.visit.ip, permitted_params.merge({ ip: event.visit.ip })
+        %td
+          -# .name= event.name
+          - if event.name == 'controller:action'
+            .path= event.properties['path'].split("?")[0]
+          - if event.name == 'exception'
+            = event.properties['exception']    

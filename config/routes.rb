@@ -41,7 +41,7 @@
 
   namespace :host do
     resources :visits, only: [ :index, :show ]
-    resources :events, only: [ :show ]
+    resources :events, only: [ :index, :show ]
     resources :exceptions, only: :index
   end
 
