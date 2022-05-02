@@ -63,7 +63,7 @@
       width: 570px;
       margin-right: 5px;
       &.teams {
-        height: 125px;
+        height: 185px;
       }
     }
 
@@ -78,7 +78,7 @@
       padding-left: 10px !important;
       margin-right: 5px;
       height: 90px;
-      width: 790px;
+      width: 1205px;
     }
 
     .locker_room {
@@ -178,7 +178,6 @@
       - odd_or_even = cycle('odd', 'even')
       .event.clearfix{ class: odd_or_even }
         - if (event.try(:show_teams?))
-          - pp event
           .time.teams
             = event.starts_on.strftime('%-I:%M %P')
             != ' - '
