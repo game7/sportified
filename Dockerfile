@@ -4,25 +4,16 @@
 # ------------------------------------------------------------------------------------------------------------
 FROM ruby:2.6.3 as base
 
-RUN apt-get update -qq && apt-get install -y \
-    build-essential \
-    libpq-dev \
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    # build-essential \
+    # libpq-dev \
     imagemagick \
-    libmagickcore-dev \
-    libmagickwand-dev \
+    # libmagickcore-dev \
+    # libmagickwand-dev \
     nano \
     postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs
-
-# yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y yarn
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
@@ -33,6 +24,10 @@ RUN gem install \
     rails:5.2.3 \
     rake:13.0.1 \
     bundler:2.1.4
+
+ENV APP_HOME /app
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME    
 
 # ------------------------------------------------------------------------------------------------------------
 # development
@@ -79,21 +74,86 @@ FROM base as development
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 
+# nodejs
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install -y nodejs
+
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y yarn
+
 RUN gem install \
     foreman \
     rubocop \
     rubocop-rails \
     solargraph
 
+# install fly cli
+RUN curl -L https://fly.io/install.sh | sh
+ENV FLYCTL_INSTALL="/root/.fly"
+ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
+
 # install heroku cli
 RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
-ENV APP_HOME /app
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
+# ------------------------------------------------------------------------------------------------------------
+# build
+# ------------------------------------------------------------------------------------------------------------
+FROM development as build
+
+COPY Gemfile* ./
+ENV BUNDLE_PATH /app/vendor/bundle
+RUN bundle config set without "development test" \
+    && bundle config set deployment "true" \
+    && bundle install --jobs=3 --retry=3 \
+    &&  rm -rf vendor/bundle/ruby/*/cache
+
+COPY package.json yarn.lock ./
+RUN yarn install
+
+COPY . .
+
+ARG RAILS_MASTER_KEY
+RUN RAILS_ENV=production bundle exec rails assets:precompile
 
 # ------------------------------------------------------------------------------------------------------------
-# production
+# release
 # ------------------------------------------------------------------------------------------------------------
+FROM base as release
 
-# tbd
+COPY --from=build /app /app
+
+# RUN apt-get update -qq && \
+#     apt-get install --no-install-recommends -y \
+#     imagemagick \
+#     # nano \
+#     postgresql-client \
+#     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV RAILS_ENV production
+ENV RACK_ENV production
+ENV BUNDLE_PATH /app/vendor/bundle
+
+RUN bundle config set without "development test" \
+    && bundle install --local --jobs=3 --retry=3 \ 
+    # Remove unneeded cached gems
+    && find vendor/bundle/ -name "*.gem" -delete \
+    # Remove unneeded files and folders
+    && rm -rf spec tmp/cache node_modules app/assets vendor/assets lib/assets
+
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y yarn \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# ENV APP_HOME /app
+# RUN mkdir -p $APP_HOME
+# WORKDIR $APP_HOME    
+
+ENV PORT 8080
+
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

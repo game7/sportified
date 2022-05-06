@@ -10,7 +10,6 @@ gem 'enumerize'
 gem 'sass-rails', '~> 5.0.4'
 #gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'sprockets'
-gem 'sprockets-es6'
 
 gem 'webpacker', '~> 4'
 
@@ -145,4 +144,3 @@ end
 group :production do
   gem 'puma', ">= 4.3.5"
 end
-
