@@ -1,4 +1,4 @@
-class CreateRmsFormPackets < ActiveRecord::Migration
+class CreateRmsFormPackets < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_form_packets do |t|
       t.references :tenant, index: true, foreign_key: true

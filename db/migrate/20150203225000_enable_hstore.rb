@@ -1,4 +1,4 @@
-class EnableHstore < ActiveRecord::Migration
+class EnableHstore < ActiveRecord::Migration[4.2]
   def self.up
     enable_extension "hstore"
   end

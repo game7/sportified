@@ -1,4 +1,4 @@
-class CreateRmsItems < ActiveRecord::Migration
+class CreateRmsItems < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_items do |t|
       t.references :parent, polymorphic: true, index: true

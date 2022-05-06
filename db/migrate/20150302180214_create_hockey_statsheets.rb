@@ -1,4 +1,4 @@
-class CreateHockeyStatsheets < ActiveRecord::Migration
+class CreateHockeyStatsheets < ActiveRecord::Migration[4.2]
   def change
     create_table :hockey_statsheets do |t|
       

@@ -1,4 +1,4 @@
-class CreateRmsVariants < ActiveRecord::Migration
+class CreateRmsVariants < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_variants do |t|
       t.references :item

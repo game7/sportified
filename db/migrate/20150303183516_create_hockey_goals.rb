@@ -1,4 +1,4 @@
-class CreateHockeyGoals < ActiveRecord::Migration
+class CreateHockeyGoals < ActiveRecord::Migration[4.2]
   def change
     create_table :hockey_goals do |t|
       t.references :tenant, index: true      

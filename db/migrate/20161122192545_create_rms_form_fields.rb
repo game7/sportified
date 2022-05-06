@@ -1,4 +1,4 @@
-class CreateRmsFormFields < ActiveRecord::Migration
+class CreateRmsFormFields < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_form_fields do |t|
       t.references :tenant, index: true, foreign_key: true

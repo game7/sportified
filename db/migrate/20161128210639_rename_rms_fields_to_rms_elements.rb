@@ -1,4 +1,4 @@
-class RenameRmsFieldsToRmsElements < ActiveRecord::Migration
+class RenameRmsFieldsToRmsElements < ActiveRecord::Migration[4.2]
   def change
     rename_table :rms_form_fields, :rms_form_elements
     reversible do |change|

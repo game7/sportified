@@ -1,4 +1,4 @@
-class CreateRegistrarRegistrationTypes < ActiveRecord::Migration
+class CreateRegistrarRegistrationTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :registrar_registration_types do |t|
       t.references :tenant, index: true

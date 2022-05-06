@@ -1,4 +1,4 @@
-class DropRegistrarTables < ActiveRecord::Migration
+class DropRegistrarTables < ActiveRecord::Migration[4.2]
   def change
     drop_table :registrar_registrations
     drop_table :registrar_registration_types

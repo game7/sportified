@@ -1,4 +1,4 @@
-class CreateHockeyPenalties < ActiveRecord::Migration
+class CreateHockeyPenalties < ActiveRecord::Migration[4.2]
   def change
     create_table :hockey_penalties do |t|
       t.references :tenant, index: true      

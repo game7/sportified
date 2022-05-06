@@ -1,4 +1,4 @@
-class AddJerseyNumbersToHockeyGoals < ActiveRecord::Migration
+class AddJerseyNumbersToHockeyGoals < ActiveRecord::Migration[4.2]
   def change
     change_table :hockey_goals do |t|
       t.string :scored_by_number

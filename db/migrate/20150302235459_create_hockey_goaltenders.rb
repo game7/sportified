@@ -1,4 +1,4 @@
-class CreateHockeyGoaltenders < ActiveRecord::Migration
+class CreateHockeyGoaltenders < ActiveRecord::Migration[4.2]
   def change
    create_table :hockey_goaltenders do | t |
       t.string :type

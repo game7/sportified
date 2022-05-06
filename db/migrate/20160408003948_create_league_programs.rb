@@ -1,4 +1,4 @@
-class CreateLeaguePrograms < ActiveRecord::Migration
+class CreateLeaguePrograms < ActiveRecord::Migration[4.2]
   def up
 
     Program.unscoped.where(type: 'League').update_all(type: 'League::Program')
