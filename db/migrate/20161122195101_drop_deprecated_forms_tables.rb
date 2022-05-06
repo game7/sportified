@@ -1,4 +1,4 @@
-class DropDeprecatedFormsTables < ActiveRecord::Migration
+class DropDeprecatedFormsTables < ActiveRecord::Migration[4.2]
   def up
 
     drop_table :rms_fields

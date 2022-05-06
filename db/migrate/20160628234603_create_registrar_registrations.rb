@@ -1,4 +1,4 @@
-class CreateRegistrarRegistrations < ActiveRecord::Migration
+class CreateRegistrarRegistrations < ActiveRecord::Migration[4.2]
   def change
     create_table :registrar_registrations do |t|
       t.references :tenant, index: true, foreign_key: true

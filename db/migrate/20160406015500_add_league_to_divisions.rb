@@ -1,4 +1,4 @@
-class AddLeagueToDivisions < ActiveRecord::Migration
+class AddLeagueToDivisions < ActiveRecord::Migration[4.2]
   def change
     change_table :divisions do |t|
       t.references :league, index: true, references: :programs

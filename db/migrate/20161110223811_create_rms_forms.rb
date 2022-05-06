@@ -1,4 +1,4 @@
-class CreateRmsForms < ActiveRecord::Migration
+class CreateRmsForms < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_forms do |t|
       t.string :name, limit: 40

@@ -1,4 +1,4 @@
-class CreateInvoicingLineItems < ActiveRecord::Migration
+class CreateInvoicingLineItems < ActiveRecord::Migration[4.2]
   def change
     create_table :invoicing_line_items do |t|
       t.references :ledger_item

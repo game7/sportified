@@ -1,4 +1,4 @@
-class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration
+class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration[4.2]
   def up
     change_column_default :hockey_goaltenders, :games_played, 0
     change_column_default :hockey_goaltenders, :minutes_played, 0

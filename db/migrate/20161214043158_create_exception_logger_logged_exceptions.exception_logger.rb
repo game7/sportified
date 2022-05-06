@@ -1,5 +1,5 @@
 # This migration comes from exception_logger (originally 20120507081835)
-class CreateExceptionLoggerLoggedExceptions < ActiveRecord::Migration
+class CreateExceptionLoggerLoggedExceptions < ActiveRecord::Migration[4.2]
   def change
     create_table :logged_exceptions, :force => true do |t|
       t.string :exception_class
