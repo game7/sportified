@@ -18,7 +18,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (program_id => programs.id)
-#  fk_rails_...  (program_id => programs.id)
 #
 class League::Season < ActiveRecord::Base
   include Sportified::TenantScoped

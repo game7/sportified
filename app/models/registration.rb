@@ -46,8 +46,6 @@ class Registration < ApplicationRecord
 
   belongs_to :user, required: false
 
-  belongs_to :credit_card, required: false
-
   attribute :voucher_id, :integer
 
   has_one :voucher

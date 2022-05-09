@@ -4,7 +4,6 @@ class CreateRmsRegistrations < ActiveRecord::Migration[4.2]
       t.references :tenant, index: true, foreign_key: true
       t.references :user, index: true, foreign_key: true
       t.references :variant
-      t.references :credit_card, index: true, foreign_key: true
       t.string :first_name, limit: 40
       t.string :last_name, limit: 40
       t.string :email
