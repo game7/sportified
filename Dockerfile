@@ -2,17 +2,38 @@
 # ------------------------------------------------------------------------------------------------------------
 # base
 # ------------------------------------------------------------------------------------------------------------
-FROM ruby:2.6.3 as base
+FROM ruby:2.7.6-slim as base
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-    # build-essential \
-    # libpq-dev \
     imagemagick \
-    # libmagickcore-dev \
-    # libmagickwand-dev \
+    curl \
     nano \
     postgresql-client \
+    shared-mime-info \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV APP_HOME /app
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME    
+
+# nodejs (todo - remove runtime dependency on node)
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# ------------------------------------------------------------------------------------------------------------
+# builder
+# ------------------------------------------------------------------------------------------------------------
+FROM base as builder
+
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    curl \
+    libpq-dev \
+    libmagickcore-dev \
+    libmagickwand-dev \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Configure bundler
@@ -25,14 +46,22 @@ RUN gem install \
     rake:13.0.1 \
     bundler:2.1.4
 
-ENV APP_HOME /app
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME    
+# nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+#     && apt-get install -y nodejs \
+#     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y yarn
 
 # ------------------------------------------------------------------------------------------------------------
 # development
 # ------------------------------------------------------------------------------------------------------------
-FROM base as development
+FROM builder as development
 
 # Copy library scripts to execute
 # COPY .devcontainer/library-scripts/*.sh .devcontainer/library-scripts/*.env /tmp/library-scripts/
@@ -53,36 +82,8 @@ FROM base as development
 #     # && bash /tmp/library-scripts/ruby-debian.sh "none" "${USERNAME}" "true" "true" \
 #     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-# # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
-# ARG NODE_VERSION="none"
-# ENV NVM_DIR=/usr/local/share/nvm
-# ENV NVM_SYMLINK_CURRENT=true \
-#     PATH=${NVM_DIR}/current/bin:${PATH}
-# RUN bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${USERNAME}" \
-#     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
  # Remove library scripts for final image
 # RUN rm -rf /tmp/library-scripts
-
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
-
-# [Optional] Uncomment this line to install additional gems.
-# RUN gem install <your-gem-names-here>
-
-# [Optional] Uncomment this line to install global node packages.
-# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs
-
-# yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y yarn
 
 RUN gem install \
     foreman \
@@ -99,16 +100,21 @@ ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
 RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 # ------------------------------------------------------------------------------------------------------------
-# build
+# package
 # ------------------------------------------------------------------------------------------------------------
-FROM development as build
+FROM development as package
+
+ENV RAILS_ENV production
+ENV RACK_ENV production
+ENV BUNDLE_PATH /app/vendor/bundle
 
 COPY Gemfile* ./
 ENV BUNDLE_PATH /app/vendor/bundle
 RUN bundle config set without "development test" \
     && bundle config set deployment "true" \
     && bundle install --jobs=3 --retry=3 \
-    &&  rm -rf vendor/bundle/ruby/*/cache
+    && find vendor/bundle/ -name "*.gem" -delete \
+    && rm -rf vendor/bundle/ruby/*/cache
 
 COPY package.json yarn.lock ./
 RUN yarn install
@@ -123,36 +129,14 @@ RUN RAILS_ENV=production bundle exec rails assets:precompile
 # ------------------------------------------------------------------------------------------------------------
 FROM base as release
 
-COPY --from=build /app /app
-
-# RUN apt-get update -qq && \
-#     apt-get install --no-install-recommends -y \
-#     imagemagick \
-#     # nano \
-#     postgresql-client \
-#     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+COPY --from=package /app /app
 
 ENV RAILS_ENV production
 ENV RACK_ENV production
 ENV BUNDLE_PATH /app/vendor/bundle
 
 RUN bundle config set without "development test" \
-    && bundle install --local --jobs=3 --retry=3 \ 
-    # Remove unneeded cached gems
-    && find vendor/bundle/ -name "*.gem" -delete \
-    # Remove unneeded files and folders
-    && rm -rf spec tmp/cache node_modules app/assets vendor/assets lib/assets
-
-# yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y yarn \
-    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# ENV APP_HOME /app
-# RUN mkdir -p $APP_HOME
-# WORKDIR $APP_HOME    
+    && bundle install --local --jobs=3 --retry=3
 
 ENV PORT 8080
 

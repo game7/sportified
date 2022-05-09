@@ -1,4 +1,7 @@
 #!/bin/bash
 
+TARGET=release
+TAG=$TARGET-slim
+
 # docker build --target build -t sportified:build --build-arg RAILS_MASTER_KEY=$(cat config/master.key) .
-docker build --target release -t sportified:release --build-arg RAILS_MASTER_KEY=$(cat config/master.key) .
+docker build --target $TARGET -t sportified:$TAG --build-arg RAILS_MASTER_KEY=$(cat config/master.key) .
