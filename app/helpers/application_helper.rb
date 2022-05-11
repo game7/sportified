@@ -58,15 +58,6 @@ module ApplicationHelper
 
   def javascript_pack_tag(*names, **options)
     tag = super(*names, **options)
-    if tag && Webpacker.dev_server.running?
-      puts '--------------------------------------'
-      puts tag
-      puts '--------------------------------------'
-      #tag = tag.gsub('/packs/', "http://localhost:3035/packs/")
-      puts '--------------------------------------'
-      puts tag
-      puts '--------------------------------------'      
-    end
     tag.html_safe
   end
 

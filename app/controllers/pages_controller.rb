@@ -77,12 +77,9 @@ class PagesController < ApplicationController
     page = Page.find(params[:id])
     siblings = page.siblings.order(:position).pluck(:id)
     current_position = siblings.index(page.id)
-    puts current_position
-    puts siblings.to_json
     if (current_position > 0)
       siblings = siblings.insert(current_position - 1, siblings.delete_at(current_position))
     end
-    puts siblings.to_json
     siblings.each_with_index{|id, i| Page.update(id, position: i)}
     redirect_to pages_path, notice: 'Page has been moved up'
     # @pages = Page.arrange_as_array(order: :position)

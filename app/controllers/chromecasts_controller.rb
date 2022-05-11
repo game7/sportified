@@ -37,6 +37,5 @@ class ChromecastsController < ApplicationController
                     .ends_after(@time)
                     .before(@time.at_end_of_day)
                     .order(:starts_on)
-    puts @events.count
   end
 end

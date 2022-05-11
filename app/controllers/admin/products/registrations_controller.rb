@@ -16,10 +16,6 @@ class Admin::Products::RegistrationsController < Admin::AdminController
         registrations = Registration.joins(:variant)
                                     .where(variants: { product_id: params[:product_id] })
                                     .includes(variant: [ :product ], forms: [ :template ])     
-        registrations[0].forms.each do |form|
-          puts form.template.attributes
-          puts form.data
-        end
         send_data to_csv(registrations), filename: "product-#{params[:product_id]}-registrations.csv"
       end
     end    

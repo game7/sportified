@@ -33,7 +33,6 @@ class FormElements::Contact < FormElement
   def validate(record)
     if required?
       permitted_params.each do |param|
-        puts "#{param}: #{record.data[param].blank?}"
         record.errors.add(param, "Can't be blank") if record.data[param].blank?
       end
     end

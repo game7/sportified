@@ -22,7 +22,6 @@ class Admin::League::PracticesController < Admin::AdminController
     if @practice.save
       return_to_last_point :success => 'Practice was successfully created.'
     else
-      puts @practice.errors.messages
       flash[:error] = 'Practice could not be created.'
       load_options
       render :action => "new"

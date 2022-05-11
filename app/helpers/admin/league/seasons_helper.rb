@@ -2,7 +2,6 @@ module Admin::League::SeasonsHelper
 
   def teams_by_division(teams)
     divisions = {}
-    puts "team count: #{teams.count}"
     teams.each do |team|
       key = team.division.name
       divisions[key] ||= { }

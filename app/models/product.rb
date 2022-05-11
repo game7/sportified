@@ -68,12 +68,7 @@ class Product < ApplicationRecord
   end
 
   def full_title
-    puts '----------------------------------------'
-    puts self.id
-    puts registrable
-    puts '----------------------------------------'
-
-     event? ? "#{title} - #{registrable&.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
+    event? ? "#{title} - #{registrable&.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
   end
 
   scope :active, -> { where(active: true) }

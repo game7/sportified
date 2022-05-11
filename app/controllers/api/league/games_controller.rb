@@ -11,7 +11,6 @@ class Api::League::GamesController < Api::BaseController
       games = ::League::Game.create! games_params[:game]
       render json: games
     rescue => ex
-      puts games
       render json: ex, status: 400
     end
 

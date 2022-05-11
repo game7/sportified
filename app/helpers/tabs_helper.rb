@@ -29,8 +29,8 @@ module TabsHelper
 			content_tag( :div, raw([render_tabs, render_bodies].join), { :id => :tabs }.merge( @options ) )
 		end
 
-	private #	 ---------------------------------------------------------------------------
-
+	private 
+	
 		def render_tabs
 			content_tag :ul do
 				result = @tabs.collect do |tab|
