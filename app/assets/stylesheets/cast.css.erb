@@ -1,0 +1,115 @@
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  font-family: Roboto, Helvetica, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-image: url(<%= asset_path 'themes/oia/oia_web_bg.jpg' %>);
+  background-position: center top;
+  background-repeat:no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.main {
+  height: 1040px;
+  width: 100%;
+}
+
+.main .left {
+  height: 100%;
+  width: 50%;
+  float: left;
+  padding: 40px;
+}
+
+.main .right {
+  height: 100%;
+  width: 50%;
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  width: 100%;
+  background-color: #dedede;
+  border-width: 5px;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+td, th {
+  background-color: white;
+  padding: 10px;
+}
+td {
+  font-size: 18px;
+  font-weight: 700;
+}
+tr.featured td {
+  font-size: 24sp;
+}
+th, caption {
+  background-color: maroon;
+  color: gold;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 12px;
+}
+th.time {
+  width: 25%;
+  text-align: center;
+}
+th.summary {
+  width: 50%;
+}
+th.room {
+  width: 25%;
+  text-align: center;
+}
+td.time {
+  text-align: center;
+}
+td.room {
+  text-align: center;
+}
+
+
+.footer {
+  height: 40px;
+  width: 100%;
+  background-color: maroon;
+
+}
+.footer .left {
+  height: 100%;
+  width: 50%;
+  float: left;
+}
+
+.footer .right {
+  height: 100%;
+  width: 50%;
+  float: right;
+  text-align: right;
+}
+
+.footer #venue {
+  color: white;
+  font-size: 24px;
+  line-height: 40px;
+  margin-left: 20px;
+  text-transform: uppercase;
+}
+
+.footer #current-time {
+  color: white;
+  font-size: 24px;
+  line-height: 40px;
+  margin-right: 20px;
+}
+

@@ -10,3 +10,12 @@
   = f.input :tag_list, :input_html => { :value => @post.tag_list.to_s, :class => "input-xxlarge" }
 
   = f.button :wrapped, :cancel => return_url
+
+:css
+
+  #post_link_url,
+  #post_tags,
+  #post_image,
+  #post_remote_image_url {
+    max-width: 400px;
+  }

@@ -32,7 +32,7 @@ class ChromecastsController < ApplicationController
     @chromecast = Chromecast.unscoped.find params[:id]
     @chromecast.update_columns(refreshed_at: Time.current)
     Tenant.current = Tenant.find(@chromecast.tenant_id)
-    @time = Time.zone.now
+    @time = Time.zone.now - 1.days
     @events = Event.where(location: @chromecast.location_id)
                     .ends_after(@time)
                     .before(@time.at_end_of_day)

@@ -8,7 +8,7 @@
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
-  %body
+  %body{ style: 'padding: 40px;' }
     #wrapper.container
       %header
         #banner
@@ -25,28 +25,4 @@
           = render :partial => 'layouts/flash', :locals => { :flash => flash }
         = yield
     = yield :javascript
-    :javascript
 
-      var $dropdown = $('.dropdown-toggle');
-      if ($dropdown.dropdown) { $dropdown.dropdown(); }
-
-      // fix sub nav on scroll
-      var $win = $(window)
-        , $nav = $('.subnav')
-        , navTop = $('.subnav').length && $('.subnav').offset().top - 40
-        , isFixed = 0
-
-      processScroll()
-
-      $win.on('scroll', processScroll)
-
-      function processScroll() {
-        var i, scrollTop = $win.scrollTop()
-        if (scrollTop >= navTop && !isFixed) {
-          isFixed = 1
-          $nav.addClass('subnav-fixed')
-        } else if (scrollTop <= navTop && isFixed) {
-          isFixed = 0
-          $nav.removeClass('subnav-fixed')
-        }
-      }

@@ -3,7 +3,7 @@
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
-      != " :: #{tenant.name}" if tenant
+      != " :: #{tenant.name}" if tenant 
     - theme = tenant&.theme
     - if theme and !theme.empty?
       = stylesheet_link_tag "themes/#{theme}"
@@ -106,6 +106,24 @@
         margin-bottom: 1em;
       }   
 
+      #page-title {
+        margin: calc(2rem - 0.14285714em) 0em 1rem;
+        margin: 0em 0em 1rem;
+        padding-bottom: 0.21428571rem;
+        border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+      }
+
+      #page-title h1 {
+        border: none;
+        padding: 0em 0em;
+        margin: 0;
+        font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        line-height: 1.28571429em;
+        text-transform: none;
+        color: rgba(0, 0, 0, 0.87);        
+      }
+
   %body.pushable{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
     = render 'layouts/application/sidebar'
     .pusher
@@ -117,13 +135,10 @@
           - if content_for?(:banner)
             #banner{ style: 'margin-top: 15px;' }= yield(:banner)
           - if content_for?(:title)
-            .page-title.clearfix
-              %h1{ style: 'float: left;' }
-                %span#page-title= yield(:title)
-                = content_tag :small, yield(:title_small) if content_for?(:title_small)
-              .actions{ style: 'float: right;' }
-                = yield(:actions)
-              %div{ style: 'clear: both;' }
+            #page-title{ style: 'display: flex; justify-content: space-between;' }
+              %h1.title= yield(:title)
+              .actions= yield(:actions)
+            #div= # so title is not last child
         #main
           #page-header
             = render :partial => 'layouts/flash', :locals => { :flash => flash }

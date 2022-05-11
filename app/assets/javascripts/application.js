@@ -3,9 +3,10 @@
 //= require rails-ujs
 
 //= require admin/chromecasts
+//= semantic
 //= require chartkick
 //= require Chart.bundle
-//= require semantic-ui
+//= require semantic
 //= require cocoon
 
 function bindSelect(observerId, observedId, urlOrOptions, optionKey, optionValue, selected) {
