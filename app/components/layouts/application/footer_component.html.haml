@@ -1,4 +1,4 @@
-.ui.container
+.ui.container{ style: 'padding: 20px;' }
   .ui.grid
     .three.column.stackable.row
       .column
@@ -11,3 +11,14 @@
         = render social_link.new(url: google_plus_url, icon: 'google-plus', tagline: 'Follow us on Google+')
         = render social_link.new(url: instagram_url, icon: 'instagram', tagline: 'Check us out on Instagram')
         = render social_link.new(url: foursquare_url, icon: 'foursquare', tagline: 'Visit us on Foursquare')
+
+:css
+
+  .social-link a {
+    color: #FFF;
+  }
+
+  .social-link i {
+    width: 20px;
+  }
+

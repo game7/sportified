@@ -10,3 +10,14 @@
     .col-xs-6
       = f.input :result
   = f.input :exclude_from_team_records, :as => :boolean, :wrapper => :vertical_boolean
+
+:css
+
+  #game_result_away_score,
+  #game_result_home_score {
+    max-width: 50px;
+  }
+
+  #game_result_completed_in {
+    max-width: 200px;
+  }

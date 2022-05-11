@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/doabit/semantic-ui-sass.git
-  revision: 54e508527b1271b118346b03143fbb93a23027fe
-  specs:
-    semantic-ui-sass (2.4.2.0)
-      sass (>= 3.2)
-
-GIT
   remote: https://github.com/game7/acts-as-taggable-on.git
   revision: 69322267029b54fe42be9a05e248df9de289a65b
   specs:
@@ -77,8 +70,6 @@ GEM
     arel (9.0.0)
     audited (4.9.0)
       activerecord (>= 4.2, < 6.1)
-    autoprefixer-rails (9.7.3)
-      execjs
     aws-eventstream (1.0.3)
     aws-partitions (1.286.0)
     aws-sdk-core (3.92.0)
@@ -108,9 +99,6 @@ GEM
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
     builder (3.2.4)
     byebug (11.0.1)
     capybara (3.31.0)
@@ -188,7 +176,6 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
     geocoder (1.6.3)
-    geolite2_city (2019.08.06)
     get_process_mem (0.2.5)
       ffi (~> 1.0)
     globalid (0.4.2)
@@ -263,7 +250,6 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
-    maxminddb (0.1.22)
     memory_profiler (0.9.14)
     method_source (1.0.0)
     mime-types (3.4.1)
@@ -299,6 +285,8 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-mini-profiler (3.0.0)
+      rack (>= 1.2.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -380,19 +368,6 @@ GEM
     rubyzip (2.3.0)
     safely_block (0.3.0)
       errbase (>= 0.1.1)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.8)
-      railties (>= 5.2.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
-    sassc (2.2.1)
-      ffi (~> 1.9)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -472,10 +447,8 @@ DEPENDENCIES
   ancestry
   annotate
   audited (~> 4.6)
-  autoprefixer-rails
   aws-sdk-s3
   bootsnap (>= 1.1.0)
-  bootstrap-sass (>= 3.4.1)
   byebug
   capybara (>= 2.15)
   carrierwave
@@ -486,7 +459,6 @@ DEPENDENCIES
   derailed_benchmarks
   enumerize
   fog-aws
-  geolite2_city
   groupdate
   guard-rspec
   haml
@@ -497,11 +469,11 @@ DEPENDENCIES
   jquery-rails
   kaminari
   listen (>= 3.0.5, < 3.2)
-  maxminddb
   paranoia (~> 2.3)
   passwordless
   pg
   puma (>= 4.3.5)
+  rack-mini-profiler
   rails (~> 5.2.3)
   rails-controller-testing
   rails_12factor
@@ -509,9 +481,7 @@ DEPENDENCIES
   redcarpet (~> 3.4.0)
   rmagick (>= 2.13.4)
   rspec-rails (~> 4.0.1)
-  sass-rails (~> 5.0.4)
   selenium-webdriver
-  semantic-ui-sass!
   shoulda (~> 3.5)
   shoulda-matchers (~> 2.0)
   simple_calendar (~> 2.0)

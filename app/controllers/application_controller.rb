@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
+
   rescue_from StandardError, :with => :track_exception unless Rails.env.development?
 
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
