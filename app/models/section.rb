@@ -36,24 +36,26 @@ class Section < ActiveRecord::Base
     end    
     
     def columns
-      Section.to_word(pattern)
+      Section.to_words(pattern)
     end
     
     after_destroy do |section|
       section.page.blocks.where(section_id: section.id).destroy_all
     end
 
-    def self.to_word(pattern)
-      pattern.split("|").map do |column|
-        {
-          "100" => "sixteen",
-          "75" => "twelve",
-          "66" => "ten",
-          "50" => "eight",
-          "33" => "six",
-          "25" => "four"
-        }[column]
-      end
+    def self.to_words(pattern)
+      pattern.split("|").map{|width| self.to_word(width) }
+    end
+
+    def self.to_word(percent_width)
+      {
+        "100" => "sixteen",
+        "75" => "twelve",
+        "66" => "ten",
+        "50" => "eight",
+        "33" => "six",
+        "25" => "four"
+      }[percent_width]
     end
     
 end

@@ -9,5 +9,5 @@
             = link_to semantic_icon(:plus) + ' Add', page_sections_path(@page.id, :pattern => pattern), method: :post, remote: true, class: [:ui, :small, :primary, :button]
           .twelve.wide.column
             .ui.grid.celled{ style: 'margin: 0;' }
-              - pattern.split("|").each do |col|
-                .column.wide{ class: Section.to_word(col), style: 'text-align: center; font-size: 10px;' }= col
+              - pattern.split("|").each do |width|
+                .column{ class: "#{Section.to_word(width)} wide", style: 'text-align: center; font-size: 10px;' }= width
