@@ -42,6 +42,8 @@
 #
 class Hockey::Goaltender::Result < Hockey::Goaltender
 
+  default_scope { where(type: klass.name) }
+
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   has_one :game, through: :statsheet, class_name: '::League::Game'
   belongs_to :team, class_name: '::League::Team'

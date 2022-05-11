@@ -41,6 +41,9 @@
 #  index_hockey_goaltenders_on_tenant_id     (tenant_id)
 #
 class Hockey::Goaltender::Record < Hockey::Goaltender
+
+  default_scope { where(type: klass.name) }
+
   has_one :team, through: :player, class_name: '::League::Team'
 
   def add_result(result)

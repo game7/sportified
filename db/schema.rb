@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_023105) do
+ActiveRecord::Schema.define(version: 2022_05_11_182525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -153,6 +153,20 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
     t.text "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "statsheet_id"
+    t.string "statsheet_type"
+    t.integer "home_team_score", default: 0
+    t.integer "away_team_score", default: 0
+    t.string "home_team_name"
+    t.string "away_team_name"
+    t.boolean "home_team_custom_name"
+    t.boolean "away_team_custom_name"
+    t.string "text_before"
+    t.string "text_after"
+    t.string "result"
+    t.string "completion"
     t.boolean "exclude_from_team_records"
     t.integer "playing_surface_id"
     t.integer "home_team_locker_room_id"
@@ -160,8 +174,10 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
     t.integer "program_id"
     t.integer "page_id"
     t.boolean "private", default: false, null: false
+    t.index ["away_team_id"], name: "index_events_on_away_team_id"
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id"
     t.index ["division_id"], name: "index_events_on_division_id"
+    t.index ["home_team_id"], name: "index_events_on_home_team_id"
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["page_id"], name: "index_events_on_page_id"
@@ -525,8 +541,8 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
-    t.string "registrable_type"
     t.integer "registrable_id"
+    t.string "registrable_type"
     t.string "title", limit: 40
     t.text "description"
     t.integer "quantity_allowed"
@@ -616,10 +632,10 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
-    t.string "taggable_type"
     t.integer "taggable_id"
-    t.string "tagger_type"
+    t.string "taggable_type"
     t.integer "tagger_id"
+    t.string "tagger_type"
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
@@ -744,6 +760,7 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

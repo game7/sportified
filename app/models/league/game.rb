@@ -4,30 +4,46 @@
 #
 #  id                        :integer          not null, primary key
 #  all_day                   :boolean
+#  away_team_custom_name     :boolean
+#  away_team_name            :string
+#  away_team_score           :integer          default(0)
+#  completion                :string
 #  description               :text
 #  duration                  :integer
 #  ends_on                   :datetime
 #  exclude_from_team_records :boolean
+#  home_team_custom_name     :boolean
+#  home_team_name            :string
+#  home_team_score           :integer          default(0)
 #  private                   :boolean          default(FALSE), not null
+#  result                    :string
 #  starts_on                 :datetime
+#  statsheet_type            :string
 #  summary                   :string
+#  text_after                :string
+#  text_before               :string
 #  type                      :string
 #  created_at                :datetime
 #  updated_at                :datetime
+#  away_team_id              :integer
 #  away_team_locker_room_id  :integer
 #  division_id               :integer
+#  home_team_id              :integer
 #  home_team_locker_room_id  :integer
 #  location_id               :integer
 #  page_id                   :integer
 #  playing_surface_id        :integer
 #  program_id                :integer
 #  season_id                 :integer
+#  statsheet_id              :integer
 #  tenant_id                 :integer
 #
 # Indexes
 #
+#  index_events_on_away_team_id              (away_team_id)
 #  index_events_on_away_team_locker_room_id  (away_team_locker_room_id)
 #  index_events_on_division_id               (division_id)
+#  index_events_on_home_team_id              (home_team_id)
 #  index_events_on_home_team_locker_room_id  (home_team_locker_room_id)
 #  index_events_on_location_id               (location_id)
 #  index_events_on_page_id                   (page_id)
@@ -43,6 +59,8 @@
 #
 class League::Game < League::Event
   extend Enumerize
+
+  default_scope { where(type: klass.name) }
 
   belongs_to :home_team, class_name: '::League::Team', required: false
   belongs_to :away_team, class_name: '::League::Team', required: false

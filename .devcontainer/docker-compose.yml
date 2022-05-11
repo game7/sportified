@@ -48,5 +48,6 @@ services:
       WEB_CONCURRENCY: 1
       SUPER_ADMINS: "cmwoodall@yahoo.com;"
       EDITOR: nano
+      THOR_MERGE: code -d $$1 $$2
     depends_on:
       - postgres

@@ -13,11 +13,11 @@
     %tbody
       - @programs.each do |program|
         %tr
-          %td= link_to program.name, [:admin, program.class.name.deconstantize.underscore.presence, program]
+          %td= link_to program.name, [:admin, program.class.name.deconstantize.underscore.to_sym, program]
           %td= program.type
           %td
             .btn-group
-              = link_to 'Show', [:admin, program.class.name.deconstantize.underscore.presence, program], class: [:ui, :primary, :mini, :button]
+              = link_to 'Show', [:admin, program.class.name.deconstantize.underscore.to_sym, program], class: [:ui, :primary, :mini, :button]
               -#= link_to 'Settings', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-default'
 
 
