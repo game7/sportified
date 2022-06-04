@@ -1,34 +1,15 @@
 - first_day = date.beginning_of_month.beginning_of_week(start_day = :sunday)
 - last_day = date.end_of_month.end_of_week(start_day = :sunday)
-- range =  @start_date ? (@start_date.to_date..@end_date.to_date) : []
+- range = @start_date ? (@start_date.to_date..@end_date.to_date) : []
 
-%table.ui.celled.unstackable.calendar.table
-  %thead
-    %tr
-      %th{ colspan: 7 }= date.strftime('%B %Y')
-    %tr
-      %th S
-      %th M
-      %th T
-      %th W
-      %th T
-      %th F
-      %th S
-  %tbody
-    - (first_day..last_day).to_a.in_groups_of(7).each do |group|
-      %tr
-        - group.each do |day|
-          - disabled = date.strftime('%m') != day.strftime('%m')
-          - today = day.to_date == Date.today
-          %td.day{ class: [disabled && :disabled, !disabled && :selectable, today && :positive, !disabled && range.include?(day) && :active] }
-            = link_to_unless disabled, day.strftime('%e'), { date: day }
-
-:css
-  .ui.calendar.table th,
-  .ui.calendar.table td {
-    text-align: center;
-    padding: 3px;
-  }
-  .ui.calendar.table a {
-    padding: 3px !important;
-  }  
+.calendar
+  .grid(class="isolate grid grid-cols-7 gap-px bg-gray-200 text-sm shadow ring-1 ring-gray-200")
+    .month-header(class="col-span-7 bg-gray-50 py-1.5 text-gray-900 text-center font-bold")= date.strftime('%B %Y')
+    - %w(S M T W T F S).each do |day|
+      .day-header(class="bg-gray-50 py-1.5 text-gray-900 text-center font-bold")= day  
+    - (first_day..last_day).each do |day|
+      - disabled = date.strftime('%m') != day.strftime('%m')
+      - active = range.include?(day)
+      - today = day.to_date == Date.today
+      %a(href="#{url_for({ date: day.strftime('%Y-%m-%d') })}" class="bg-white py-1.5 text-gray-900 hover:bg-gray-100 focus:z-10 #{disabled ? 'text-gray-300' : ''}")
+        %time(datetime="#{day.strftime('%Y-%m-%d')}" class="mx-auto flex h-7 w-7 items-center justify-center rounded-full #{active ? 'bg-gray-100' : ''} #{today ? 'bg-gray-900 font-semibold text-white' : ''}")= day.strftime('%e')

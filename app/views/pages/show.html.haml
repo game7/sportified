@@ -11,5 +11,16 @@
         = link_to semantic_icon(:th, :list) + ' List', pages_path, class: :item
         = link_to semantic_icon(:plus) + ' New', new_page_path, class: :item
 
-#page-sections= render partial: 'sections/section', collection: @page.sections.order(:position)
+.grid.grid-cols-1.lg:grid-cols-6.gap-x-8
+  .sidebar
+    %ul(role="list" class="text-sm font-medium text-gray-900 space-y-4")
+      - @area_menu_items&.each_with_index do |item, index|
+        - next if index == 0
+        - active = request.path.start_with?(item[:url] || 'boo')
+        - if active
+          %li(class="font-bold")= link_to item[:title], item[:url]
+        - else
+          %li= link_to item[:title], item[:url]
+  .main.lg:col-span-5
+    = render partial: 'sections/section', collection: @page.sections.order(:position)
 

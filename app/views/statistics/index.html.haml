@@ -1,21 +1,23 @@
 - title 'Statistics'
 
-.ui.grid
-  .four.wide.column= render :partial => 'shared/season_options', :object => @season_options
+.area-menu(class="justify-evenly shadow border border-gray-200 mb-8 divide-x divide-gray-200 rounded-lg hidden lg:flex")
+  - @area_menu_items.each do |item|
+    - if item[:url]
+      - active = request.path.start_with?(item[:url])
+      = link_to item[:title], item[:url], class: "grow bg-white hover:bg-gray-100 text-center p-4 first:rounded-l-lg last:rounded-r-lg #{active ? 'bg-gray-50' : ''}"  
+    - else
+      %span(class="grow bg-white font-bold text-center p-4 first:rounded-l-lg last:rounded-r-lg")= item[:title] 
 
-.ui.equal.width.stackable.grid{ style: 'margin-top: 0;' }
-  .column
-    = render :partial => "stat_table", :locals => { :title => "POINTS", :players => @point_leaders, :view => 'scoring', :token => "points" }
-    = render :partial => "stat_table", :locals => { :title => "GOALS", :players => @goal_leaders, :view => 'scoring', :token => "goals" }
-    = render :partial => "stat_table", :locals => { :title => "ASSISTS", :players => @assist_leaders, :view => 'scoring', :token => "assists" }
-  .column
-    = render :partial => "stat_table", :locals => { :title => "SAVE PERCENTAGE", :players => @savepct_leaders, :view => 'goaltending', :token => "save_percentage", :format_with => ->(value) { number_with_precision(value, :precision => 3) } }
-    = render :partial => "stat_table", :locals => { :title => "SAVES", :players => @save_leaders, :view => 'goaltending', :token => "saves" }
-    = render :partial => "stat_table", :locals => { :title => "SHUTOUTS", :players => @shutout_leaders, :view => 'goaltending', :token => "shutouts" }
-  .column
-    = render :partial => "stat_table", :locals => { :title => "HAT TRICKS", :players => @hattrick_leaders, :view => 'scoring', :token => "hat_tricks"}
-    = render :partial => "stat_table", :locals => { :title => "PLAYMAKERS", :players => @playmaker_leaders, :view => 'scoring', :token => "playmakers" }
-    = render :partial => "stat_table", :locals => { :title => "GORDIE HOWES", :players => @gordie_leaders, :view => 'scoring', :token => "gordie_howes" }
+%div(class="grid md:grid-cols-3 gap-4")
+  = render :partial => "stat_table", :locals => { :title => "POINTS", :players => @point_leaders, :view => 'scoring', :token => "points" }
+  = render :partial => "stat_table", :locals => { :title => "GOALS", :players => @goal_leaders, :view => 'scoring', :token => "goals" }
+  = render :partial => "stat_table", :locals => { :title => "ASSISTS", :players => @assist_leaders, :view => 'scoring', :token => "assists" }
+  = render :partial => "stat_table", :locals => { :title => "SAVE PERCENTAGE", :players => @savepct_leaders, :view => 'goaltending', :token => "save_percentage", :format_with => ->(value) { number_with_precision(value, :precision => 3) } }
+  = render :partial => "stat_table", :locals => { :title => "SAVES", :players => @save_leaders, :view => 'goaltending', :token => "saves" }
+  = render :partial => "stat_table", :locals => { :title => "SHUTOUTS", :players => @shutout_leaders, :view => 'goaltending', :token => "shutouts" }
+  = render :partial => "stat_table", :locals => { :title => "HAT TRICKS", :players => @hattrick_leaders, :view => 'scoring', :token => "hat_tricks"}
+  = render :partial => "stat_table", :locals => { :title => "PLAYMAKERS", :players => @playmaker_leaders, :view => 'scoring', :token => "playmakers" }
+  = render :partial => "stat_table", :locals => { :title => "GORDIE HOWES", :players => @gordie_leaders, :view => 'scoring', :token => "gordie_howes" }
 
 :css
   .redirect_to.ui.dropdown {

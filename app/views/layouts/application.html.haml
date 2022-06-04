@@ -1,12 +1,13 @@
 !!!
-%html
+%html.h-full.bg-gray-100
   %head
     %title
       = content_for?(:title) ? yield(:title) : 'Untitled'
       != " :: #{tenant.name}" if tenant 
+    = stylesheet_link_tag 'application'
     - theme = tenant&.theme
     - if theme and !theme.empty?
-      = stylesheet_link_tag "themes/#{theme}"
+      -# = stylesheet_link_tag "themes/#{theme}"
       -# = stylesheet_link_tag 'themes/oia'
       = favicon_link_tag "themes/#{theme}/icon.ico"
     - else
@@ -20,131 +21,36 @@
     = yield(:head)
     = content_tag :style do
       != tenant.style
-    :css
+    
 
-      #wrapper {
-        background: #ffffff;
-        padding: 20px;
-        margin-top: 60px;
-        margin-bottom: 9px;
-      }
+  %body.h-full
+    .min-h-full.flex.flex-col
+      = render 'layouts/tailwind/header'
+      = render 'layouts/tailwind/page_header'
+      .grow.flex
+        .grow.max-w-7xl.mx-auto.p-4.lg:p-8.lg:p-8.bg-white
+          = render :partial => 'layouts/flash', :locals => { :flash => flash }
+          = yield     
+      = render 'layouts/tailwind/footer'
 
-      .ui.grid.compact {
-        margin: -.25rem;
-      }
+      -# #wrapper.ui.container
+      -#   %header
+      -#     = render 'layouts/application/area_navigation' if @area_menu_items
+      -#     -# = render 'layouts/breadcrumbs' if @breadcrumbs        
+      -#     - if content_for?(:banner)
+      -#       #banner{ style: 'margin-top: 15px;' }= yield(:banner)
+      -#     - if content_for?(:title)
+      -#       #page-title{ style: 'display: flex; justify-content: space-between;' }
+      -#         %h1.title= yield(:title)
+      -#         .actions= yield(:actions)
+      -#       #div= # so title is not last child
+      -#   #main
+      -#     #page-header
+      -#       = render :partial => 'layouts/flash', :locals => { :flash => flash }
+      -#     -# = yield
+      -# #footer
+      -#   = render ::Layouts::Application::FooterComponent.new(tenant: Tenant.current)
 
-      .ui.grid.compact > .column:not(.row), 
-      .ui.grid.compact > .row > .column {
-        padding: .25rem;
-      }  
-      .ui.grid.compact > .row {
-        padding: 0;
-      }
-
-      address {
-        font-style: normal;
-      }
-
-      /* mobile */
-      @media only screen and (max-width: 767px) {
-        #wrapper {
-          margin-top: 15px;
-          margin-bottom: 0;
-        }
-        .ui.container {
-          width: auto !important;
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-        }    
-        .ui.stackable.grid {
-            width: auto;
-            margin-left: -1rem !important;
-            margin-right: -1rem !important;
-        }         
-      } 
-
-      .blocks_text .content {
-        padding: 0 10px
-      }
-
-      .block {
-        margin-bottom: 20px;
-      }
-
-      .block.blocks_divider {
-        margin-bottom: 0;
-      }
-
-      .blocks_divider .ui.divider {
-        background: -webkit-repeating-linear-gradient(162deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);
-        background: repeating-linear-gradient(-72deg, #DDD 0px, transparent 1px, transparent 3px, #DDD 4px);
-        background: -webkit-repeating-linear-gradient(162deg, #000 0px, transparent 1px, transparent 3px, #000 4px);
-        background: repeating-linear-gradient(-72deg, #000 0px, transparent 1px, transparent 3px, #000 4px);
-        height: 5px;
-        margin: 10px 0;
-        border: none !important;
-      }
-
-      #page-sections .section > .ui.grid {
-        margin-top: 0;
-        margin-bottom: 0;
-      }      
-
-      #page-sections .section > .ui.grid > .column {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-      }
-
-      #page-sections .section > .ui.grid > .column > .block {
-      }      
-
-      #page-sections .section > .ui.grid > .column > .block:last-child {
-        -# margin-bottom: 0;
-      }      
-
-      #page-header .ui.message:last-child {
-        margin-bottom: 1em;
-      }   
-
-      #page-title {
-        margin: calc(2rem - 0.14285714em) 0em 1rem;
-        margin: 0em 0em 1rem;
-        padding-bottom: 0.21428571rem;
-        border-bottom: 1px solid rgba(34, 36, 38, 0.15);
-      }
-
-      #page-title h1 {
-        border: none;
-        padding: 0em 0em;
-        margin: 0;
-        font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
-        font-weight: bold;
-        line-height: 1.28571429em;
-        text-transform: none;
-        color: rgba(0, 0, 0, 0.87);        
-      }
-
-  %body.pushable{ data: { path: @page ? "pages/#{@page.url_path}" : request.path }}
-    = render 'layouts/application/sidebar'
-    .pusher
-      = render 'layouts/application/header'
-      #wrapper.ui.container
-        %header
-          = render 'layouts/application/area_navigation' if @area_menu_items
-          -# = render 'layouts/breadcrumbs' if @breadcrumbs        
-          - if content_for?(:banner)
-            #banner{ style: 'margin-top: 15px;' }= yield(:banner)
-          - if content_for?(:title)
-            #page-title{ style: 'display: flex; justify-content: space-between;' }
-              %h1.title= yield(:title)
-              .actions= yield(:actions)
-            #div= # so title is not last child
-        #main
-          #page-header
-            = render :partial => 'layouts/flash', :locals => { :flash => flash }
-          = yield
-      #footer
-        = render ::Layouts::Application::FooterComponent.new(tenant: Tenant.current)
     #modal
     = yield :javascript
 

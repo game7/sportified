@@ -1,16 +1,16 @@
 - format_with ||= ->(value) { value }
-%table.leaders.ui.celled.unstackable.table
+%table.border-collapse.border.border-gray-200.w-full
   %thead
     %tr
-      %th{ :colspan => "3"}= title
+      %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50" colspan="3")= title
   %tfoot
     %tr
-      %th{ :colspan => "3"}
-        %a{ :href => league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
+      %td(class="border border-gray-200 p-3 text-left bg-gray-50" colspan="3")
+        %a{ class: 'hover:underline', href: league_statistic_path(:league_slug => @program.slug, :division_slug => @division.slug, :season_slug => @season.slug, :view => view, :token => token) } More...
   %tbody
     - 3.times do |i|
       - record = players[i]
       %tr
-        %td.logo= image_tag record.player.team.logo.thumb.url if record && record.player.team.logo?
-        %td.player= record.player.full_name if record && record.player
-        %td.stat= format_with.call(record[token]) if record
+        %td(class="border border-gray-200 p-3 text-left w-[50px] h-[50px]")= image_tag record.player.team.logo.thumb.url if record && record.player.team.logo?
+        %td(class="border border-gray-200 p-3 text-left h-[50px]")= record.player.full_name if record && record.player
+        %td(class="border border-gray-200 p-3 text-center w-[50px] h-[50px]")= format_with.call(record[token]) if record

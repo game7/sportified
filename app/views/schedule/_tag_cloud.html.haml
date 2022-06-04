@@ -1,9 +1,10 @@
-.ui.segments
-  .ui.segment
-    %h5.ui.header TAGS
-    .ui.small.labels
-      - tags.sort_by(&:name).each do |tag|
-        - tags = Array.wrap(params[:tags]).clone
-        - btn_class = tags.include?(tag.name) ? '' : 'basic'
-        - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
-        = link_to tag.name, params.permit!.merge(tags: tags, date: nil), class: "ui #{btn_class} label"  
+.tag-cloud(class="p-2 border border-gray-200")
+  .header(class="mb-2 font-bold") TAGS
+  .tags(class="flex flex-row flex-wrap gap-1")
+    - tags.sort_by(&:name).each do |tag|
+      - tags = Array.wrap(params[:tags]).clone
+      - active = tags.include?(tag.name)
+      - tags = tags.concat([tag.name]) unless tags.delete(tag.name)
+      - url = url_for(params.permit!.merge(tags: tags, date: nil, only_path: true))
+      %a(href="#{url}" class="text-sm border-gray-300 border p-1 rounded hover:bg-gray-100 #{active ? 'bg-gray-50' : ''}")= tag.name
+      -# = link_to tag.name, params.permit!.merge(tags: tags, date: nil), class: "ui #{btn_class} label"  

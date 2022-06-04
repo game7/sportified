@@ -2,30 +2,28 @@
 
 - events = @events.entries
 
-.ui.computer.tablet.only.grid
-
-  .four.wide.column
-
+%div(class="grid lg:grid-cols-4 gap-6")
+  %div(class="flex flex-col gap-y-4")
     - date = DateTime.now
     = render 'calendar', date: date
     = render 'calendar', date: date + 1.month
-    = render 'tag_cloud', tags: @tags
+    = render 'tag_cloud', tags: @tags  
 
-  .twelve.wide.column{ class: @show_tags ? :twelve : :sixteen }
+  %div(class="lg:col-span-3 flex flex-col gap-y-4")
 
     - last_date = nil
     
     = render 'no_events' if events.none?
 
     - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-      %table.ui.celled.striped.table
+      %table(class="w-full border-separate border border-gray-200 rounded" style="border-spacing: 0")
         %thead
           %tr
-            %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
+            %th(colspan="2" class="border border-gray-200 text-left p-3 bg-gray-50")= date.strftime('%A, %B %e %Y')
         %tbody
           - day_events.each do |event|
             %tr
-              %td.four.wide
+              %td(class="border border-gray-200 text-left p-3 w-1/3")
                 - if event.all_day?
                   = 'All Day'
                 - unless event.all_day?
@@ -33,48 +31,10 @@
                   - unless event.class.name == 'League::Game'
                     != ' - '
                     = event.ends_on.strftime('%l:%M %P')  
-              %td
-                = event.summary
-                - if event.product.present? && event.product.active? && !event.product.private?
-                  = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
-                    %i.edit.outline.icon
-                    Register Online
-
-    = render 'stepper', date: @date if @date.present?    
-
-.ui.mobile.only.grid
-  .column
-    
-    - last_date = nil
-    
-    = render 'no_events' if events.none?
-
-    - events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-      %table.ui.unstackable.celled.striped.events.table
-        %thead
-          %tr
-            %th= date.strftime('%A, %B %e %Y')
-        %tbody
-          - day_events.each do |event|
-            %tr
-              %td
-                .summary= event.summary
-                .date
-                  - if event.all_day?
-                    = 'All Day'
-                  - unless event.all_day?
-                    = event.starts_on.strftime('%l:%M %P')
-                    - unless event.class.name == 'League::Game'
-                      != ' - '
-                      = event.ends_on.strftime('%l:%M %P')  
-                - if event.product.present? && event.product.active? && !event.product.private?
-                  = link_to event.product, class: [:ui, :tiny, :primary, :button] do
-                    %i.edit.outline.icon
-                    Register Online                      
-
-    = render 'stepper', date: @date if @date.present?  
-
-:css
-  .ui.table.events .summary {
-    font-weight: bold;
-  }
+              %td(class="border border-gray-200 text-left p-3 w-2/3")
+                %div(class=" flex justify-between gap-2 flex-wrap items-center")
+                  = event.summary
+                  - if event.product.present? && event.product.active? && !event.product.private?
+                    = link_to event.product, class: "bg-black hover:opacity-60 text-white p-2 flex gap-2 items-center text-sm rounded" do
+                      %i.far.fa-edit
+                      Register Online  

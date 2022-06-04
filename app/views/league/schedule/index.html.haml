@@ -1,50 +1,56 @@
 - title 'Schedule'
 
-- if @events.any?
-  .ui.computer.tablet.only.grid
-    .column
+.area-menu(class="flex justify-evenly shadow border border-gray-200 mb-8 divide-x divide-gray-200 rounded-lg")
+  - @area_menu_items.each do |item|
+    - if item[:url]
+      - active = request.path.start_with?(item[:url])
+      = link_to item[:title], item[:url], class: "grow bg-white hover:bg-gray-100 text-center p-4 first:rounded-l-lg last:rounded-r-lg #{active ? 'bg-gray-50' : ''}"  
+    - else
+      %span(class="grow bg-white font-bold text-center p-4 first:rounded-l-lg last:rounded-r-lg")= item[:title] 
+
+%div(class="flex flex-col gap-4")
+  - if @events.none?
+    .no-events(class="border border-gray-300 bg-gray-100 rounded p-8 flex flex-col gap-2 items-center")
+      .emote(class="text-4xl") 🙄
+      %h3(class="font-bold text-xl text-center") There are no upcoming events for this division.    
+
+
+  - if @events.any?             
+
+    .events(class="flex md:hidden flex-col gap-2")
       - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-        %table.ui.celled.table
+        %table.border-collapse.border.border-gray-200
           %thead
             %tr
-              %th{ colspan: 3 }= date.strftime('%A, %B %e %Y')
+              %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50")= date.strftime('%A, %B %e %Y')
           %tbody  
             - day_events.each do |event|
               %tr
-                %td.four.wide= event.starts_on.strftime('%l:%M %P')
-                %td= event.summary
-                %td.four.wide= event.location.name
+                %td(class="border border-gray-200 p-3 w-1/4")
+                  %div.font-semibold= event.summary
+                  %div= event.starts_on.strftime('%l:%M %P')
+                  %div= event.location.name
 
-- if @events.any?
-  .ui.mobile.only.grid#mobile-events-grid
-    .column
-      - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
-        %table.ui.unstackable.table
-          %thead
+    
+    .events(class="hidden md:flex flex-col gap-2")
+      %table.border-collapse.border.border-gray-200
+        %thead
+          %tr
+            %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/6") Date
+            %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/6") Time
+            %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/3") Event
+            %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/3") Location
+        %tbody
+          - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|        
+            - span = day_events.size
+            - event = day_events.shift
             %tr
-              %th= date.strftime('%A, %B %e %Y')
-          %tbody  
+              %td(rowspan="#{span}" class="border border-gray-200 p-3 align-top")= event.starts_on.strftime('%A, %B %e %Y')
+              %td(class="border border-gray-200 p-3 align-top")= event.starts_on.strftime('%l:%M %P')
+              %td(class="border border-gray-200 p-3 align-top")= event.summary
+              %td(class="border border-gray-200 p-3 align-top")= event.location.name    
             - day_events.each do |event|
               %tr
-                %td
-                  .summary= event.summary                
-                  .time= event.starts_on.strftime('%l:%M %P')
-                  .location= event.location.name
-
-
-- if @events.none?
-  .ui.placeholder.segment
-    .ui.icon.header
-      .icon{ style: 'padding-top: 4px' } 🙄
-      There are no upcoming events for this division.
-
-:css
-  #mobile-events-grid {
-    margin-top: 0;
-  }
-  #mobile-events-grid .column {
-    padding-top: 0;
-  }
-  #mobile-events-grid .summary {
-    font-weight: bold;
-  }
+                %td(class="border border-gray-200 p-3 align-top")= event.starts_on.strftime('%l:%M %P')
+                %td(class="border border-gray-200 p-3 align-top")= event.summary
+                %td(class="border border-gray-200 p-3 align-top")= event.location.name   

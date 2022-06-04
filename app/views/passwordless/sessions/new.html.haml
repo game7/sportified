@@ -1,40 +1,16 @@
 
 - title 'Login'
 
-.login-wrapper
-  .login
-    .ui.top.attached.piled.segment
-      %h2.ui.header Login via Email
-      %p 
-        Passwords are annoying!
-      %p
-        Fortunately we don't need passwords.  Just submit your email address below and we'll send you a magic link.  
-      %p
-        Check your email, click the the magic link and you're in.  That's it!
-    .ui.bottom.attached.segment
-      = simple_form_for @session, url: send(Passwordless.mounted_as).sign_in_path, html: { novalidate: false } do |f|
-        - email_field_name = :"passwordless[#{@email_field}]"    
-        .field
-          = email_field_tag email_field_name, params.fetch(email_field_name, nil), class: [:field], placeholder: 'your.email@somewhere.com', required: true
-        .field
-          = f.submit 'Send Magic Link', class: [:ui, :large, :fluid, :primary, :button]
-
-:css
-  header {
-    display: none;
-  }
-  #passwordless_email {
-    text-align: center;
-  }
-  .login-wrapper {
-    flex-grow: 1;
-    display: flex;
-  }
-  .login {
-    max-width: 480px;
-    margin: auto;
-  }
-  .login h2,
-  .login p {
-    text-align: center;
-  }
+%div(class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8")
+  %div(class="sm:mx-auto sm:w-full sm:max-w-md")
+    %h2(class="mt-6 text-center text-3xl font-extrabold text-gray-900") Sign in via email
+    %p(class="mt-2 text-center text-gray-600") 
+      Passwords are annoying!  Fortunately we don't need passwords.  Just submit your email 
+      address below and we'll send you a magic link.
+    %p(class="mt-2 text-center text-gray-600") 
+      Check your email, click the the magic link and you're in.  That's it!      
+  %div(class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 mt-8 sm:mx-auto sm:w-full sm:max-w-md border border-gray-200")
+    = simple_form_for @session, url: send(Passwordless.mounted_as).sign_in_path, html: { novalidate: false } do |f|
+      - email_field_name = :"passwordless[#{@email_field}]"    
+      = email_field_tag email_field_name, params.fetch(email_field_name, nil), class: "border border-gray-300 rounded w-full text-center", placeholder: 'your.email@somewhere.com', required: true
+      = f.submit 'Send Magic Link', class: "w-full bg-black %text-w rounded text-center text-white p-2 mt-2 pointer-events-auto hover:cursor-pointer hover:opacity-80"

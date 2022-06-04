@@ -1,89 +1,59 @@
-.ui.computer.tablet.only.grid
-  .column
-    %table.standings.ui.celled.striped.table
-      %thead
+%table.border-collapse.border.border-gray-200.w-full
+  %thead
+    %tr
+      %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-16 hidden md:table-cell")
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50") TEAM
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") GP
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") W
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") L
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") SOL
+      - if @ties
+        %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") T
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-100 w-16") PTS
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden lg:table-cell") GF
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden lg:table-cell") GA
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden lg:table-cell") +/-
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell") STRK
+      %th(class="border border-gray-200 p-3 text-center font-semibold bg-gray-50 w-16 hidden md:table-cell")
+  %tbody
+    - last_pool = nil
+    - last_points = 0
+    - @teams.order('pool, seed, points DESC, wins, margin DESC').each_with_index do |team, i|
+      - unless team.pool.blank? or team.pool == last_pool
         %tr
-          %th.rank
-          %th.team TEAM
-          %th.stat GP
-          %th.stat W
-          %th.stat L
-          %th.stat SOL
-          - if @ties
-            %th.stat T
-          -# %th.stat.visible-xs RECORD
-          %th.stat.points PTS
-          %th.stat GF
-          %th.stat GA
-          %th.stat +/-
-          %th.stat STREAK
-          %th.stat
-      %tbody
-        - last_pool = nil
-        - last_points = 0
-        - @teams.order('pool, seed, points DESC, wins, margin DESC').each_with_index do |team, i|
-          - unless team.pool.blank? or team.pool == last_pool
-            %tr
-              %th{:colspan => 10}= team.pool
-            - last_pool = team.pool
-          %tr
-            %td.rank= team.seed || i + 1
-            %td.team
-              %div{ :style => "display: flex; align-items: center;"}
-                .pull-left{ :style => "height: 25px; width: 25px; margin-right: 8px; vertical-align: middle"}
-                  %img{ :src => team.logo.micro }
-                = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
-            %td.stat= team.games_played
-            %td.stat= team.wins
-            %td.stat= team.losses
-            %td.stat= team.shootout_losses
-            - if @ties
-              %td.stat= team.ties
-            -# %td.stat.visible-xs= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
-            %td.stat.points= team.points
-            %td.stat= team.scored
-            %td.stat= team.allowed
-            %td.stat= team.margin
-            %td.stat
-              = team.streak
-            %td.stat
-              - if team.last_result == 'W' and team.current_run > 2
-                - if team.current_run >= 5
-                  .ui.circular.red.label{ data: { tooltip: 'En Fuego!'}}
-                    = semantic_icon(:fire, :alt, class: :fitted)
-                - if team.current_run < 5
-                  .ui.circular.red.label{ data: { tooltip: 'Moving Up...'}}
-                    = semantic_icon(:arrow, :up, class: :fitted)
-              - if team.last_result == 'L' and team.current_run > 2
-                - if team.current_run >= 5
-                  .ui.circular.blue.label{ data: { tooltip: 'Need a cold one!'}}
-                    = semantic_icon(:beer, class: :fitted)
-                - if team.current_run < 5
-                  .ui.circular.blue.label{ data: { tooltip: 'Fading...'}}
-                    = semantic_icon(:arrow, :down, class: :fitted)
-
-.ui.mobile.only.grid
-  .column
-    %table.standings.ui.celled.striped.unstackable.table
-      %thead
-        %tr
-          %th.rank
-          %th.team TEAM
-          %th.stat.points.visible-xs POINTS
-      %tbody
-        - last_pool = nil
-        - last_points = 0
-        - @teams.order('pool, seed, points DESC, wins, margin DESC').each_with_index do |team, i|
-          - unless team.pool.blank? or team.pool == last_pool
-            %tr
-              %th{:colspan => 10}= team.pool
-            - last_pool = team.pool
-          %tr
-            %td.rank= team.seed || i + 1
-            %td.team
-              %div{ :style => "display: flex; align-items: center;"}
-                .pull-left{ :style => "height: 25px; width: 25px; margin-right: 8px; vertical-align: middle"}
-                  %img{ :src => team.logo.micro }
-                = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug)
-            %td.stat.points= team.points
-
+          %th{:colspan => 10}= team.pool
+        - last_pool = team.pool
+      %tr
+        %td(class="border border-gray-200 p-3 text-center font-semibold hidden md:table-cell")= team.seed || i + 1
+        %td(class="border border-gray-200 p-3")
+          %div{ :style => "display: flex; align-items: center;"}
+            .pull-left{ :style => "height: 25px; width: 25px; margin-right: 8px; vertical-align: middle"}
+              %img{ :src => team.logo.micro }
+            = link_to team.name, league_team_schedule_path(@program.slug, @division.slug, @season.slug, team.slug), class: "hover:underline"
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.games_played
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.wins
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.losses
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.shootout_losses
+        - if @ties
+          %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.ties
+        -# %td.stat.visible-xs= "#{team.wins}-#{team.losses}-#{team.shootout_losses}"
+        %td(class="border border-gray-200 p-3 text-center bg-gray-100")= team.points
+        %td(class="border border-gray-200 p-3 text-center hidden lg:table-cell")= team.scored
+        %td(class="border border-gray-200 p-3 text-center hidden lg:table-cell")= team.allowed
+        %td(class="border border-gray-200 p-3 text-center hidden lg:table-cell")= team.margin
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")= team.streak
+        %td(class="border border-gray-200 p-3 text-center hidden md:table-cell")
+          - if team.last_result == 'W' and team.current_run > 2
+            - if team.current_run >= 5
+              %span(class="bg-red-600 text-yellow-300 rounded-full h-6 w-6 inline-block leading-normal" title="En Fuego 🔥🔥🔥")
+                %i(class="far fa-fire-alt")
+            - if team.current_run < 5
+              %span(class="bg-amber-500 text-white rounded-full h-6 w-6 inline-block leading-normal" title="Heating Up")
+                %i(class="far fa-arrow-up")
+          - if team.last_result == 'L' and team.current_run > 2
+            - if team.current_run >= 5
+              %span(class="bg-blue-400 text-white rounded-full h-6 w-6 inline-block leading-normal" title="Ice Cold")
+                %i(class="far fa-snowflake")            
+            - if team.current_run < 5
+              %span(class="bg-sky-700 text-white rounded-full h-6 w-6 inline-block leading-normal" title="Cooling Down")
+                %i(class="far fa-arrow-down")

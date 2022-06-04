@@ -35,7 +35,7 @@
 #
 class User < ActiveRecord::Base
   include Sportified::TenantScoped
-  
+
   validates :email, presence: true
 
   passwordless_with :email # <-- here!
@@ -46,25 +46,25 @@ class User < ActiveRecord::Base
   has_many :vouchers
 
   scope :priviledged, -> { where(admin: true).or(where(operations: true)) }
-  scope :latest, -> { order(created_at: :desc)}
+  scope :latest, -> { order(created_at: :desc) }
   # scope :searchx, ->(term) { where('email LIKE \'%?%\' OR last_name LIKE \'%?%\'', term, term) }
-  scope :search, ->(term) { 
+  scope :search, lambda { |term|
     email = arel_table[:email].matches("%#{term}%")
     last_name = arel_table[:last_name].matches("%#{term}%")
     where(email).or(where(last_name))
   }
 
   def host?
-    ENV['SUPER_ADMINS']&.split(';')&.include?(self.email)
+    ENV['SUPER_ADMINS']&.split(';')&.include?(email)
   end
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   class << self
     def find_by_auth_provider_and_uid(provider, uid)
-      where("authentications.provider" => provider, "authentications.uid" => uid).first
+      where('authentications.provider' => provider, 'authentications.uid' => uid).first
     end
 
     def fetch_resource_for_passwordless(email)
@@ -74,8 +74,7 @@ class User < ActiveRecord::Base
 
   protected
 
-    def password_required?
-      !persisted? || password.present? || password_confirmation.present?
-    end
-
+  def password_required?
+    !persisted? || password.present? || password_confirmation.present?
+  end
 end

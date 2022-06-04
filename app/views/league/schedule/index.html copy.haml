@@ -1,0 +1,51 @@
+- title 'Schedule'
+
+%div(class="flex flex-col gap-4")
+  - if @events.none?
+    .no-events(class="border border-gray-300 bg-gray-100 rounded p-8 flex flex-col gap-2 items-center")
+      .emote(class="text-4xl") 🙄
+      %h3(class="font-bold text-xl text-center") There are no upcoming events for this division.    
+
+
+  - if @events.any?             
+
+    .events(class="flex md:hidden flex-col gap-2")
+      - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+        %table.border-collapse.border.border-gray-200
+          %thead
+            %tr
+              %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50")= date.strftime('%A, %B %e %Y')
+          %tbody  
+            - day_events.each do |event|
+              %tr
+                %td(class="border border-gray-200 p-3 w-1/4")
+                  %div.font-semibold= event.summary
+                  %div= event.starts_on.strftime('%l:%M %P')
+                  %div= event.location.name
+
+    
+    .events(class="hidden md:flex flex-col gap-2")
+      %table.border-collapse.border.border-gray-200
+        -# %thead
+        -#   %tr
+        -#     %th time
+        %tbody
+          - @events.each do |event|
+            %tr
+              %td(class="border border-gray-200 p-3 w-1/4")= event.starts_on.strftime('%A, %B %e %Y')
+              %td(class="border border-gray-200 p-3 w-1/4")= event.starts_on.strftime('%l:%M %P')
+              %td(class="border border-gray-200 p-3 w-1/4")= event.summary
+              %td(class="border border-gray-200 p-3 w-1/4")= event.location.name   
+
+    .events(class="hidden md:flex flex-col gap-2")
+      - @events.group_by{|e| e.starts_on.to_date}.each do |date, day_events|
+        %table.border-collapse.border.border-gray-200
+          %thead
+            %tr
+              %th(colspan="3" class="border border-gray-200 p-3 text-left font-semibold bg-gray-50")= date.strftime('%A, %B %e %Y')
+          %tbody  
+            - day_events.each do |event|
+              %tr
+                %td(class="border border-gray-200 p-3 w-1/4")= event.starts_on.strftime('%l:%M %P')
+                %td(class="border border-gray-200 p-3 w-1/2")= event.summary
+                %td(class="border border-gray-200 p-3 w-1/4")= event.location.name

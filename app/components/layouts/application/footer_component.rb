@@ -1,5 +1,6 @@
 class Layouts::Application::FooterComponent < ViewComponent::Base
   def initialize(tenant:)
+    super
     @tenant = tenant
   end
 
@@ -25,16 +26,15 @@ class Layouts::Application::FooterComponent < ViewComponent::Base
 
   def foursquare_url
     concat_if @tenant.foursquare_id, 'https://foursquare.com/v/'
-  end   
-  
+  end
+
   def social_link
     Layouts::Application::Footer::SocialLinkComponent
   end
 
   private
 
-    def concat_if(value, target)
-      value.present? ? target + value : nil
-    end
-
+  def concat_if(value, target)
+    value.present? ? target + value : nil
+  end
 end

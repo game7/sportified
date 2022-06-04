@@ -1,20 +1,25 @@
 - title 'Players'
 
-.ui.grid
-  .four.wide.column= render :partial => 'shared/season_options', :object => season_options
+.area-menu(class="justify-evenly shadow border border-gray-200 mb-8 divide-x divide-gray-200 rounded-lg hidden lg:flex")
+  - @area_menu_items.each do |item|
+    - if item[:url]
+      - active = request.path.start_with?(item[:url])
+      = link_to item[:title], item[:url], class: "grow bg-white hover:bg-gray-100 text-center p-4 first:rounded-l-lg last:rounded-r-lg #{active ? 'bg-gray-50' : ''}"  
+    - else
+      %span(class="grow bg-white font-bold text-center p-4 first:rounded-l-lg last:rounded-r-lg")= item[:title] 
 
-- last_initials = players.group_by{|player| player.last_name.first}
-
-- last_initials.each do |last_initial, players|
-  %table.ui.celled.striped.table
-    %thead
-      %tr
-        %th{ colspan: 2 }= last_initial
-      %tr
-        %th Player
-        %th Team
-    %tbody
-      - players.each do |player|
+%div(class="flex flex-col gap-4")
+  - last_initials = players.group_by{|player| player.last_name.first}
+  - last_initials.each do |last_initial, players|
+    %table.border-collapse.border.border-gray-200.w-full
+      %thead
         %tr
-          %td{ style: 'width: 50%;'}= link_to player.last_first, league_player_path(@program.slug, @division.slug, @season.slug, player.team.slug, player.slug, player.id)
-          %td{ style: 'width: 50%;'}= link_to player.team.name, league_team_roster_path(@program.slug, @division.slug, @season.slug, player.team.slug)
+          %th(class="border border-gray-200 p-3 font-semibold text-left bg-gray-50 w-1/2" colspan="2")= last_initial
+        %tr
+          %th(class="border border-gray-200 p-3 font-semibold text-left bg-gray-50 w-1/2") Player
+          %th(class="border border-gray-200 p-3 font-semibold text-left bg-gray-50 w-1/2") Team
+      %tbody
+        - players.each do |player|
+          %tr
+            %td(class="border border-gray-200 p-3 w-1/2")= link_to player.last_first, league_player_path(@program.slug, @division.slug, @season.slug, player.team.slug, player.slug, player.id), class: 'hover:underline'
+            %td(class="border border-gray-200 p-3 w-1/2")= link_to player.team.name, league_team_roster_path(@program.slug, @division.slug, @season.slug, player.team.slug), class: 'hover:underline'

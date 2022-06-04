@@ -12,18 +12,20 @@
       = semantic_icon(:calendar)
       iCal    
 
-- @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
-  %table.ui.celled.striped.table
-    %thead
-      %tr
-        %th.three.wide DATE
-        %th.seven.wide EVENT
-        %th.three.wide TIME / RESULT
-        %th.three.wide LOCATION
-    %tbody
-      - events.each do |event|
+.flex.flex-col.gap-4
+  .grid
+  - @events.group_by{|e| e.starts_on.strftime('%B')}.each do |month, events|
+    %table.border-collapse.border.border-gray-200
+      %thead
         %tr
-          %td= event.starts_on.strftime('%a, %b %e')
-          %td= display_event_summary(event, @team)
-          %td= display_time_or_result(event, @team)
-          %td= event.try(:location).try(:name)
+          %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/6") DATE
+          %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/3") EVENT
+          %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/6") TIME / RESULT
+          %th(class="border border-gray-200 p-3 text-left font-semibold bg-gray-50 w-1/3") LOCATION
+      %tbody
+        - events.each do |event|
+          %tr
+            %td(class="border border-gray-200 p-3 align-top")= event.starts_on.strftime('%a, %b %e')
+            %td(class="border border-gray-200 p-3 align-top")= display_event_summary(event, @team)
+            %td(class="border border-gray-200 p-3 align-top")= display_time_or_result(event, @team)
+            %td(class="border border-gray-200 p-3 align-top")= event.try(:location).try(:name)
