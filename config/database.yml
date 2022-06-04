@@ -25,7 +25,7 @@ preview:
   url: <%= Rails.application.credentials.db[:preview] %>
 
 production:
-  url: <%= Rails.application.credentials.db[:production] %>
+  url: <%= ENV['DATABASE_URL'] || Rails.application.credentials.db[:production] %>
 
 cucumber:
   <<: *test
