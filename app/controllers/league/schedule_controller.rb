@@ -1,5 +1,5 @@
 class League::ScheduleController < BaseLeagueController
   def index
-    @events = @division.events.in_the_future.order(starts_on: :asc)
+    @events = @division.events.where('starts_on > ?', DateTime.now - 7.days).order(starts_on: :asc)
   end
 end
