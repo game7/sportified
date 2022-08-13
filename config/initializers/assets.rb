@@ -16,6 +16,7 @@ Rails.application.config.assets.precompile += %w(
   themes/application.css
   themes/admin.css
   themes/oia.css
+  themes/mpa.css
   themes/styfl.css
   themes/barnburner.css
   themes/sportified.css

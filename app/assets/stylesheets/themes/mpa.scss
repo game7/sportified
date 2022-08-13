@@ -1,0 +1,80 @@
+/*
+*= require_self
+*= require jcrop/jquery.Jcrop.min
+*/
+
+@import "semantic-ui";
+@import "base/include";
+
+$primary-color: #FFC627;
+$primary-text-color: #000000;
+
+#desktop.menu,
+#mobile.menu {
+  background-color: $primary-color;
+}
+
+body, 
+body.pushable > .pusher {
+  background-image: asset-url("themes/mpa/asu_mpa_sepia1.jpg");
+  background-position: center top;
+  background-repeat:no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+#site_title {
+  display: none;
+}
+
+#wrapper {
+  background: #fffffff6 !important;
+}
+
+#site_logo {
+  content: asset-url("themes/mpa/multipurpose_arena_black.svg");
+  width: 200px;
+  margin: auto;
+}
+
+body[data-path="pages/welcome"] header {
+  display: none;
+}
+
+#footer .ui.container {
+  background-color: $primary-color;
+}
+
+.ui.primary.buttons .button,
+.ui.primary.button {
+  background-color: $primary-color;
+}
+
+.ui.primary.buttons .button:hover,
+.ui.primary.button:hover,
+.ui.primary.buttons .button:focus,
+.ui.primary.button:focus,
+.ui.primary.buttons .button:active,
+.ui.primary.button:active,
+.ui.primary.buttons .active.button,
+.ui.primary.buttons .active.button:active,
+.ui.primary.active.button,
+.ui.primary.button .active.button:active {
+  background-color: rgba($primary-color, 0.6);
+  color: $primary-text-color;
+}
+
+.blocks_feed h3,
+.blocks_markup h3,
+.blocks_event_feed h3,
+.blocks_text h3 {
+  border-left: 4px solid #8C1D40;
+  border-left: 5px solid #FFC627;
+  padding-left: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: #f1f4f5;
+  background-color: #000;
+  color: #FFF;
+}
+
