@@ -40,23 +40,23 @@ RUN gem install \
 FROM base as development
 
 # Copy library scripts to execute
-COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
+# COPY .devcontainer/library-scripts/*.sh .devcontainer/library-scripts/*.env /tmp/library-scripts/
 
 # [Option] Install zsh
-ARG INSTALL_ZSH="true"
+# ARG INSTALL_ZSH="true"
 # [Option] Upgrade OS packages to their latest versions
-ARG UPGRADE_PACKAGES="true"
+# ARG UPGRADE_PACKAGES="true"
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    # Remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
-    # && apt-get purge -y imagemagick imagemagick-6-common \
-    # Install common packages, non-root user, rvm, core build tools
-    && bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
-    # && bash /tmp/library-scripts/ruby-debian.sh "none" "${USERNAME}" "true" "true" \
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+# ARG USERNAME=vscode
+# ARG USER_UID=1000
+# ARG USER_GID=$USER_UID
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     # Remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
+#     # && apt-get purge -y imagemagick imagemagick-6-common \
+#     # Install common packages, non-root user, rvm, core build tools
+#     && bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+#     # && bash /tmp/library-scripts/ruby-debian.sh "none" "${USERNAME}" "true" "true" \
+#     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
 # ARG NODE_VERSION="none"
@@ -67,7 +67,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
  # Remove library scripts for final image
-RUN rm -rf /tmp/library-scripts
+# RUN rm -rf /tmp/library-scripts
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

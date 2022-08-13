@@ -25,7 +25,7 @@ services:
 
   workspace:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
       target: development
     stdin_open: true

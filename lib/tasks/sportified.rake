@@ -44,14 +44,14 @@ namespace :sportified do
   task dump: :environment do
     config = Rails.configuration.database_configuration['development'].with_indifferent_access
     puts
-    # puts   'Capturing Backup...'
-    # system 'heroku pg:backups:capture -a sportified4'
-    # puts   'Downloading Backup...'
-    # system 'heroku pg:backups:download -a sportified4 -o /git/sportified/tmp/latest.dump'
-    # puts   'Dropping DB...'
-    # system "PGPASSWORD=#{config[:password]} dropdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
-    # puts   'Creating DB...'
-    # system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"    
+    puts   'Capturing Backup...'
+    system 'heroku pg:backups:capture -a sportified4'
+    puts   'Downloading Backup...'
+    system 'heroku pg:backups:download -a sportified4 -o /git/sportified/tmp/latest.dump'
+    puts   'Dropping DB...'
+    system "PGPASSWORD=#{config[:password]} dropdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
+    puts   'Creating DB...'
+    system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"    
     puts   'Restoring Backup...'
     system "PGPASSWORD=#{config[:password]} pg_restore --verbose --no-acl --no-owner -h #{config[:host]} -U #{config[:username]} -d #{config[:database]} /app/tmp/latest.dump"
     puts   'DONE!'
