@@ -1,22 +1,44 @@
 /*
-*= require_self
 *= require jcrop/jquery.Jcrop.min
+*= require semantic
+*= require fontawesome
+*= require fa-regular
+*= require fa-brands
+*= require_self
 */
 
-@import "semantic-ui";
-@import "base/include";
+html, body {
+  min-height: 100%;
+}
 
-$primary-color: #FFC627;
-$primary-text-color: #000000;
+#wrapper {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
 
-#desktop.menu,
-#mobile.menu {
-  background-color: $primary-color;
+#main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+}
+
+.pull-right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+:root {
+  --primary-color: 0, 0, 0;
+  --primary-text-color: 256, 256, 256;
 }
 
 body, 
 body.pushable > .pusher {
-  background-image: asset-url("themes/mpa/asu_mpa_sepia1.jpg");
+  background-image: url(<%= asset_path 'themes/mpa/asu_mpa_sepia1.jpg' %>);
   background-position: center top;
   background-repeat:no-repeat;
   background-attachment: fixed;
@@ -27,12 +49,8 @@ body.pushable > .pusher {
   display: none;
 }
 
-#wrapper {
-  background: #fffffff6 !important;
-}
-
 #site_logo {
-  content: asset-url("themes/mpa/multipurpose_arena_black.svg");
+  content: url(<%= asset_path 'themes/mpa/multipurpose_arena_black.svg' %>);
   width: 200px;
   margin: auto;
 }
@@ -42,12 +60,12 @@ body[data-path="pages/welcome"] header {
 }
 
 #footer .ui.container {
-  background-color: $primary-color;
+  background-color: #000;
 }
 
 .ui.primary.buttons .button,
 .ui.primary.button {
-  background-color: $primary-color;
+  background-color: rgba(var(--primary-color), 1);
 }
 
 .ui.primary.buttons .button:hover,
@@ -60,8 +78,8 @@ body[data-path="pages/welcome"] header {
 .ui.primary.buttons .active.button:active,
 .ui.primary.active.button,
 .ui.primary.button .active.button:active {
-  background-color: rgba($primary-color, 0.6);
-  color: $primary-text-color;
+  background-color: rgba(var(--primary-color), 0.6);
+  color: rgba(var(--primary-text-color), 1);
 }
 
 .blocks_feed h3,
@@ -77,4 +95,3 @@ body[data-path="pages/welcome"] header {
   background-color: #000;
   color: #FFF;
 }
-
