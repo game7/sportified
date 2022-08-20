@@ -18,7 +18,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (program_id => programs.id)
-#  fk_rails_...  (program_id => programs.id)
 #
 DEFAULTS: &DEFAULTS
   tenant: hockey_league_site
