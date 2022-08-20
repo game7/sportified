@@ -1,3 +1,4 @@
+
 # ------------------------------------------------------------------------------------------------------------
 # base
 # ------------------------------------------------------------------------------------------------------------
@@ -6,6 +7,7 @@ FROM ruby:2.7.6-slim as base
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     imagemagick \
+    graphviz \
     curl \
     nano \
     postgresql-client \
@@ -37,13 +39,16 @@ RUN apt-get update -qq && \
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
-  BUNDLE_JOBS=4 \
-  BUNDLE_RETRY=3    
+    BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3    
 
 RUN gem install \
     rails:5.2.3 \
     rake:13.0.1 \
-    bundler:2.1.4
+    bundler:2.1.4 \
+    rubocop \
+    rubocop-rails \
+    solargraph
 
 # nodejs
 # RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \

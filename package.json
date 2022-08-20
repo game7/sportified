@@ -17,7 +17,7 @@
     "@rails/webpacker": "^4.0.7",
     "@types/lodash": "^4.14.161",
     "@types/moment": "^2.13.0",
-    "@types/react": "^16.8.23",
+    "@types/react": "^16.8.4",
     "@types/react-color": "^2.13.5",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.1.1",
@@ -46,6 +46,9 @@
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "yarn": "^1.22.19"
+  },
+  "resolutions": {
+    "@types/react": "^16.8.4"
   },
   "version": "0.0.0"
 }

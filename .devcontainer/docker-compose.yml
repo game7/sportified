@@ -12,6 +12,7 @@ volumes:
   node_modules:
   packs:
 
+
 services:
 
   postgres:
@@ -33,14 +34,14 @@ services:
     init: true
     command: sleep infinity
     ports:
-      - 3000:3000  
+      - 3000:3000
     volumes:
       - ..:/app
       - rails_cache:/app/tmp/cache
       - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
       - packs:/app/public/packs
-      - postgres:/var/lib/postgres/data    
+      - postgres:/var/lib/postgres/data
     environment:
       RAILS_ENV: development
       RACK_ENV: production
@@ -48,5 +49,6 @@ services:
       WEB_CONCURRENCY: 1
       SUPER_ADMINS: "cmwoodall@yahoo.com;"
       EDITOR: nano
+      THOR_MERGE: code -d $$1 $$2
     depends_on:
       - postgres

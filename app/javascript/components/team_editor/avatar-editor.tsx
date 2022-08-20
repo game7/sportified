@@ -8,10 +8,10 @@ interface Props {
 }
 
 export const AvatarEditor: FC<Props> = (props) => {
-  const { onChange = function() {} } = props;
+  const { onChange = function () { } } = props;
   const [open, setOpen] = useState(true)
   const [imageUrl, setImageUrl] = useState<string>();
-  const [croppedImageUrl, setCroppedImageUrl] = useState();
+  const [croppedImageUrl, setCroppedImageUrl] = useState<string>();
 
   const [crop, setCrop] = useState<Crop>({
     unit: '%',
@@ -19,7 +19,7 @@ export const AvatarEditor: FC<Props> = (props) => {
     aspect: 1
   })
 
-  function onSelectFile(e){
+  function onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -39,7 +39,7 @@ export const AvatarEditor: FC<Props> = (props) => {
     setCroppedImageUrl(await getCroppedImage(imgElement, crop, 'booyah'))
   }
 
-  async function getCroppedImage(image, crop: Crop, filename: string) {
+  async function getCroppedImage(image, crop: Crop, filename: string): Promise<string> {
     /*
 
       original: 900,  900
@@ -53,7 +53,7 @@ export const AvatarEditor: FC<Props> = (props) => {
     */
     console.log(image.width, image.height, image.naturalWidth, image.naturalHeight)
     const { height, width } = image;
-    
+
     const original = [width, height]
     const editor = [400, 400]
     const editorScale = [(editor[0] / original[0]), (editor[1] / original[1])];
@@ -91,7 +91,7 @@ export const AvatarEditor: FC<Props> = (props) => {
         const url = window.URL.createObjectURL(blob)
         resolve(url);
       }, 'image/jpeg');
-    });    
+    });
   }
 
   function handleOpen() {
@@ -139,12 +139,12 @@ export const AvatarEditor: FC<Props> = (props) => {
               }}
             />
           </React.Fragment>
-        )}    
+        )}
         {croppedImageUrl && (
           <div>
             <img alt="Crop" style={{ maxWidth: '100%', border: '1px solid gray', height: 400, width: 400 }} src={croppedImageUrl} />
           </div>
-        )}            
+        )}
         {/* {!file && (
           <Dropzone onDrop={onDrop}>
             {({getRootProps, getInputProps}) => (

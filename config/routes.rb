@@ -206,9 +206,7 @@
       resources :locker_rooms, except: [:index, :show]
     end
 
-    resources :events, only: [:index, :update, :destroy] do
-      get :proto, on: :collection
-    end
+    resources :events, only: [:index, :update, :destroy]
     namespace :events do
       resources :locker_rooms, only: [] do
         post :assign, on: :collection

@@ -18,11 +18,24 @@
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
-	"settings": { 
-		// This will ignore your local shell user setting for Linux since shells like zsh are typically 
-		// not in base container images. You can also update this to an specific shell to ensure VS Code 
-		// uses the right one for terminals and tasks. For example, /bin/bash (or /bin/ash for Alpine).
-		"terminal.integrated.shell.linux": null
+	"settings": {
+		"[ruby]": {
+			"editor.insertSpaces": true,
+			"editor.tabSize": 2,
+			"editor.defaultFormatter": "misogi.ruby-rubocop"
+		},
+		"ruby.rubocop.onSave": true,
+		"ruby.rubocop.configFilePath": "/workspace/.rubocop.yml",
+		"ruby.format": "rubocop",
+		"editor.tabSize": 2,
+		"[haml]": {
+			"editor.snippetSuggestions": "bottom",
+		},
+		"editor.formatOnSave": true,
+		"ruby.rubocop.useBundler": true,
+		"files.associations": {
+			"*.html.erb": "erb"
+		}
 	},
 
 	// Uncomment the next line to have VS Code connect as an existing non-root user in the container. See
@@ -49,6 +62,18 @@
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
-		"bungcip.better-toml"
+		"bungcip.better-toml",
+		"ms-azuretools.vscode-docker",
+		"eamodio.gitlens",
+		"rebornix.Ruby",
+		"castwide.solargraph",
+		"kaiwood.endwise",
+		"misogi.ruby-rubocop",
+		"groksrc.ruby",
+		"hoovercj.ruby-linter",
+		"miguel-savignano.ruby-symbols",
+		"wingrunr21.vscode-ruby",
+		"karunamurti.haml",
+		"pomdtr.excalidraw-editor"		
 	]
 }
