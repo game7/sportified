@@ -1,4 +1,4 @@
-class CreateLeagueGames < ActiveRecord::Migration
+class CreateLeagueGames < ActiveRecord::Migration[4.2]
   def up
     Event.unscoped.where(type: 'Game').update_all(type: 'League::Game')
   end

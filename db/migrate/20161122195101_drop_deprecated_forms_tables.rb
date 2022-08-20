@@ -1,4 +1,4 @@
-class DropDeprecatedFormsTables < ActiveRecord::Migration
+class DropDeprecatedFormsTables < ActiveRecord::Migration[4.2]
   def up
 
     drop_table :rms_fields
@@ -14,6 +14,6 @@ class DropDeprecatedFormsTables < ActiveRecord::Migration
   end
 
   def down
-    raise ActiveRecord::IrreversibleMigration
+    raise ActiveRecord::IrreversibleMigration[4.2]
   end
 end

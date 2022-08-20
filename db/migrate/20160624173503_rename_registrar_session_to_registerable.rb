@@ -1,4 +1,4 @@
-class RenameRegistrarSessionToRegisterable < ActiveRecord::Migration
+class RenameRegistrarSessionToRegisterable < ActiveRecord::Migration[4.2]
   def change
     # rename_column :registrar_sessions, :registrable_id, :parent_id
     # rename_column :registrar_sessions, :registrable_type, :parent_type

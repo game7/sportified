@@ -1,4 +1,4 @@
-class CreateRmsEntries < ActiveRecord::Migration
+class CreateRmsEntries < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_entries do |t|
       t.references :form
