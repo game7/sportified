@@ -8,7 +8,7 @@
     = csrf_meta_tag
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
-  %body
+  %body{ style: 'padding: 40px;' }
     #wrapper.container
       %header
         #banner

@@ -6,10 +6,6 @@ class StripeConnectFlowTest < ActionDispatch::IntegrationTest
   setup do
     Tenant.current = tenants(:hockey_league_site)
     Tenant.current.stripe_client_id = 'bogus-stripe-client-id'  
-    puts '-------------------------' 
-    puts Tenant.current
-    puts StripeConnect.last
-    puts '-------------------------' 
   end
 
   context 'when user has denied access' do

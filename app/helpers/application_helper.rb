@@ -58,15 +58,6 @@ module ApplicationHelper
 
   def javascript_pack_tag(*names, **options)
     tag = super(*names, **options)
-    if tag && Webpacker.dev_server.running?
-      puts '--------------------------------------'
-      puts tag
-      puts '--------------------------------------'
-      #tag = tag.gsub('/packs/', "http://localhost:3035/packs/")
-      puts '--------------------------------------'
-      puts tag
-      puts '--------------------------------------'      
-    end
     tag.html_safe
   end
 
@@ -112,6 +103,13 @@ module ApplicationHelper
     link_to url, class: [:item, active]  do
       semantic_icon(*icon) + label
     end 
+  end
+
+  def semantic_icon(*names)
+    opts = names[-1].is_a?(Hash) ? names.delete_at(-1) : {}
+    icon_classes = names.map{|name| "#{name.to_s.gsub('_','-')}" } << 'icon'
+    opts[:class] = [opts[:class], icon_classes].flatten.reject(&:nil?)
+    content_tag :i, nil, opts
   end
 
 end

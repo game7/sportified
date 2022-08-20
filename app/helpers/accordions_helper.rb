@@ -28,7 +28,7 @@ module AccordionsHelper
 			content_tag( :div, raw(content), { :id => :accordions }.merge( @options ) )
 		end
 
-	private #	 ---------------------------------------------------------------------------
+	private
 
 		def accordion_head(accordion)
 			content_tag :h3, link_to(accordion[1], '#'), :id => accordion[0]

@@ -7,8 +7,6 @@ gem 'active_model_serializers', '~> 0.10.2'
 gem 'pg'
 gem 'enumerize'
 
-gem 'sass-rails', '~> 5.0.4'
-#gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'sprockets'
 gem 'sprockets-es6'
 
@@ -16,11 +14,7 @@ gem 'webpacker', '~> 4'
 
 gem 'paranoia', '~> 2.3'
 
-
 gem 'uglifier', '>=1.3.0'
-gem 'bootstrap-sass', '>= 3.4.1'
-gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git'
-gem 'autoprefixer-rails'
 
 gem 'react-rails'
 
@@ -30,8 +24,6 @@ gem 'acts-as-taggable-on', git: 'https://github.com/game7/acts-as-taggable-on.gi
 
 # visit & event tracking
 gem 'ahoy_matey'
-gem 'maxminddb'
-gem 'geolite2_city'
 gem 'chartkick'
 gem 'groupdate'
 

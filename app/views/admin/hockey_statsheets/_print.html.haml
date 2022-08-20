@@ -1,9 +1,10 @@
-:scss
+:css
   @page {
     size: 8.5in 11in;
     margin: 0in;
   }
-  html, body {
+  html, 
+  body {
     padding-top: 0;
     height: auto;
   }
@@ -11,7 +12,8 @@
     width: 100%;
     font-size: 12px;
   }
-  td, th {
+  td, 
+  th {
     border: 1px solid black;
     padding: 2px 4px;
     line-height: 12px;
@@ -24,15 +26,13 @@
     color: #FFFFFF !important;
     -webkit-print-color-adjust: exact;
   }
-  table.big, tr.big {
-    td {
-      line-height: 18px;
-    }
+  table.big td, 
+  tr.big td {
+    line-height: 18px;
   }
-  tr.huge {
-    th, td {
-      height: 31px;
-    }
+  tr.huge th,
+  tr.huge td {
+    height: 31px;
   }
   .note {
     font-size: 60%;
@@ -48,7 +48,8 @@
   .overview th {
     text-align: left;
   }
-  .goals, .penalties {
+  .goals, 
+  .penalties {
     float: left;
   }
   .goals {
@@ -63,7 +64,8 @@
   .middle {
     margin-bottom: 5px;
   }
-  .home-team, .away-team {
+  .home-team, 
+  .away-team {
     width: 25%;
     float: left;
   }
@@ -123,22 +125,21 @@
   .notes-on-back {
     position: absolute;
     bottom: 2px;
-
-    .checkbox {
-      width:10px;
-      height:10px;
-      border: 1px solid #000;
-      display: inline-block;
-      margin: 0;
-      margin-right: 5px;
-    }
-    .text {
-      display: inline-block;
-      font-weight: normal;
-      font-style: italic;
-    }
   }
 
+  .notes-on-back .checkbox {
+    width:10px;
+    height:10px;
+    border: 1px solid #000;
+    display: inline-block;
+    margin: 0;
+    margin-right: 5px;
+  }
+  .notes-on-back .text {
+    display: inline-block;
+    font-weight: normal;
+    font-style: italic;
+  }
 
 .header
   .away

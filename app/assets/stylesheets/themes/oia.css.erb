@@ -1,0 +1,97 @@
+/*
+*= require jcrop/jquery.Jcrop.min
+*= require semantic
+*= require fontawesome
+*= require fa-regular
+*= require fa-brands
+*= require_self
+*/
+
+html, body {
+  min-height: 100%;
+}
+
+#wrapper {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+}
+
+.pull-right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+:root {
+  --primary-color: 0, 0, 0;
+  --primary-text-color: 256, 256, 256;
+}
+
+body, 
+body.pushable > .pusher {
+  background-image: url(<%= asset_path 'themes/oia/ice_surface_goal.jpg' %>);
+  background-position: center top;
+  background-repeat:no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+#site_title {
+  display: none;
+}
+
+#site_logo {
+  content: url(<%= asset_path 'themes/oia/oia_asu_gold.svg' %>);
+  width: 200px;
+  margin: auto;
+}
+
+body[data-path="pages/welcome"] header {
+  display: none;
+}
+
+#footer .ui.container {
+  background-color: #000;
+}
+
+.ui.primary.buttons .button,
+.ui.primary.button {
+  background-color: rgba(var(--primary-color), 1);
+}
+
+.ui.primary.buttons .button:hover,
+.ui.primary.button:hover,
+.ui.primary.buttons .button:focus,
+.ui.primary.button:focus,
+.ui.primary.buttons .button:active,
+.ui.primary.button:active,
+.ui.primary.buttons .active.button,
+.ui.primary.buttons .active.button:active,
+.ui.primary.active.button,
+.ui.primary.button .active.button:active {
+  background-color: rgba(var(--primary-color), 0.6);
+  color: rgba(var(--primary-text-color), 1);
+}
+
+.blocks_feed h3,
+.blocks_markup h3,
+.blocks_event_feed h3,
+.blocks_text h3 {
+  border-left: 4px solid #8C1D40;
+  border-left: 5px solid #FFC627;
+  padding-left: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: #f1f4f5;
+  background-color: #000;
+  color: #FFF;
+}

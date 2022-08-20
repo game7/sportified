@@ -65,16 +65,6 @@ export const AvatarEditor: FC<Props> = (props) => {
     const scaleY = crop.height / 400;
     canvas.width = crop.width;
     canvas.height = crop.height;
-    console.log('--------------------------------------------------------')
-    console.log('editor:', editorScale)
-    console.log('cropper:', cropperScale)
-    // console.log('orign: ', original)
-    // console.log('crop: ', [crop.width, crop.height])
-    // console.log('scale: ', scale)
-    // console.log('grab: ', crop.width / scale[0], crop.height / scale[1])
-    // console.log('pos: ', crop.x / scale[0], crop.y / scale[1])
-    // console.log('size: ', crop.width / scale[0],crop.height / scale[1])
-    // console.log('pos: ', crop.x * -1, crop.y * -1)
 
     const ctx = canvas.getContext('2d');
     ctx.drawImage(

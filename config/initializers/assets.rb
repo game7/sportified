@@ -18,7 +18,6 @@ Rails.application.config.assets.precompile += %w(
   themes/oia.css
   themes/mpa.css
   themes/styfl.css
-  themes/barnburner.css
   themes/sportified.css
   cast.css
   pages.js
@@ -28,5 +27,4 @@ Rails.application.config.assets.precompile += %w(
   calendar/application.css
   components.js
   cast-away.js
-  registrations.js
 )
