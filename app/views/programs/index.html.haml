@@ -10,6 +10,6 @@
       %strong= link_to program.name, program_path(program.slug)
       - if current_user_is_admin?
         .pull-right
-          = link_to 'Edit', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-primary'
+          = link_to 'Edit', edit_polymorphic_path([:admin, program.module_name.to_sym, program]), :class => 'btn btn-xs btn-primary'
           = link_to 'Delete', [:admin, program], :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-xs btn-primary'
       .description= program.description

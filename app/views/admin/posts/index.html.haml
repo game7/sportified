@@ -19,7 +19,7 @@
             .ui.label.mini= tag
         %td.collapsing
           = link_to 'Edit', edit_admin_post_path(post), class: [:ui, :mini, :primary, :button]
-          = link_to 'Delete', [:admin, post], confirm: 'Are you sure?', method: :delete, class: [:ui, :mini, :primary, :button]
+          = link_to 'Delete', [:admin, post], method: :delete, class: [:ui, :mini, :primary, :button], data: { confirm: 'Are you sure?' }
   
   = paginate @posts
   %span{ style: 'margin-left: 10px' }!= page_entries_info @posts

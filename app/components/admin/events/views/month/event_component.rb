@@ -45,15 +45,15 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def show_link
-    helpers.link_to 'Show', helpers.polymorphic_path([:admin, @event.module_name, @event]), class: [:item]
+    helpers.link_to 'Show', helpers.polymorphic_path([:admin, @event.module_name.to_sym, @event]), class: [:item]
   end
 
   def edit_link
-    helpers.link_to 'Edit', helpers.edit_polymorphic_path([:admin, @event.module_name, @event]), class: [:item]
+    helpers.link_to 'Edit', helpers.edit_polymorphic_path([:admin, @event.module_name.to_sym, @event]), class: [:item]
   end
 
   def clone_link
-    helpers.link_to 'Clone', helpers.new_polymorphic_path([:admin, @event.module_name, @event.class], clone: @event.id), class: [:item]
+    helpers.link_to 'Clone', helpers.new_polymorphic_path([:admin, @event.module_name.to_sym, @event.class], clone: @event.id), class: [:item]
   end
 
   def delete_link

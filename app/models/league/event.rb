@@ -43,6 +43,8 @@
 #
 class League::Event < Event
 
+  default_scope { where(type: klass.name) }
+
   belongs_to :division
   validates_presence_of :division_id
 

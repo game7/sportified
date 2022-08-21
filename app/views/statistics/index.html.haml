@@ -1,8 +1,9 @@
 - title 'Statistics'
 
-= render :partial => 'shared/season_options', :object => @season_options
+.ui.grid
+  .four.wide.column= render :partial => 'shared/season_options', :object => @season_options
 
-.ui.equal.width.stackable.grid
+.ui.equal.width.stackable.grid{ style: 'margin-top: 0;' }
   .column
     = render :partial => "stat_table", :locals => { :title => "POINTS", :players => @point_leaders, :view => 'scoring', :token => "points" }
     = render :partial => "stat_table", :locals => { :title => "GOALS", :players => @goal_leaders, :view => 'scoring', :token => "goals" }

@@ -44,6 +44,8 @@
 class League::Game < League::Event
   extend Enumerize
 
+  default_scope { where(type: klass.name) }
+
   belongs_to :home_team, class_name: '::League::Team', required: false
   belongs_to :away_team, class_name: '::League::Team', required: false
   belongs_to :statsheet, polymorphic: true, required: false

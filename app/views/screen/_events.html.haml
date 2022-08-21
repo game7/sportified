@@ -1,15 +1,12 @@
 :css
 
   body {
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    padding: 0;
-    margin: 0;    
+    font-family: 'Rubik',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";    
   }
 
   .outer {
     width: 100%;
     height: 100%;
-    font-family: 'Rubik';
   }
 
   .header,
@@ -18,96 +15,91 @@
     background-color: #000;
   }
 
+
   .main {
     height: 900px;
     padding: 10px;
-    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
     overflow: hidden;
   }
 
+  .events {
+    height: 900px;
+    padding: 10px 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }  
 
   .event {
-    margin-bottom: 5px;
     display: flex;
+    flex-direction: row;
+    gap: 5px;
   }
 
-  .time,
-  .summary,
-  .team,
-  .locker_room {
+  .event .cell {
     background-color: maroon;
+    background-color: #800000;
     color: white;
     opacity: 1;
     font-weight: bold;
     height: 90px;
     line-height: 90px;
     font-size: 54px;
+    padding: 0 20px
   }
 
-  .even .time ,
-  .even .summary,
-  .even .team,
-  .even .locker_room {
+  .event.odd .cell {
+    background-color: maroon;
+    background-color: #800000;
+    color: white; 
+  }  
+
+  .event.even .cell {
     background-color: #FFC627;
-    color: black;
+    color: black;    
   }
 
-  .time {
-    text-align: left;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+  .event .time {
     width: 570px;
-    margin-right: 5px;
-  }
-  .time.teams {
-    height: 185px;
   }
 
-  .summary {
-    padding-left: 10px !important;
-    margin-right: 5px;
+  .teams.event .time {
+    height: 185px;
+  }  
+
+  .event .summary {
     width: 1110px;
   }
 
-  .team {
-    padding: 0;
-    padding-left: 10px !important;
-    margin-right: 5px;
+  .event .teams {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .event .away_team,
+  .event .home_team {
+    display: flex;
+    gap: 5px;
+  }
+
+  .event .team {
     height: 90px;
     width: 1205px;
+    display: flex;
+    justify-content: space-between;
   }
 
-  .locker_room {
+  .event .locker_room {
     text-align: center;
     vertical-align: middle;
-    font-size: 54px;
-    font-weight: 900;
     width: 90px;
     height: 90px;
-    padding: 0;
   }
 
-  .away_team {
-    margin-bottom: 5px;
-  }
-
-  .bench {
-    float: right;
-    margin-right: 10px;
-  }
-
-  .subject {
-    padding: 0;
-  }
-  .subject .summary,
-  .subject .locker_room {
-    float: left;
-  }
-
-  .subject .summary .away,
-  .subject .locker_room .away{
-    margin-right: 5px;
-  }
 
   .title {
     text-align: center;
@@ -140,48 +132,41 @@
 
   .logo img {
     height: 42px;
-  }
+  }  
 
 
 .outer
   .header
     .title Locker Room Assignments
 
-  .main
+  .events
     - rows = 0
     - @events.each do |event|
       - rows += 1
       - rows += 1 if event.try(:show_teams?)
       - next if rows > 9
       - odd_or_even = cycle('odd', 'even')
-      .event{ class: odd_or_even }
-        - if (event.try(:show_teams?))
-          .time.teams
-            = event.starts_on.strftime('%-I:%M %P')
-            != ' - '
-            = event.ends_on.strftime('%-I:%M %P')
+      
+      - if (event.try(:show_teams?))
+        .teams.event{ class: odd_or_even }
+          .time.cell= time_range(event.starts_on, event.ends_on)
           .teams
             .away_team
-              .team
-                = event.away_team_name.presence || event.try(:away_team).try(:name)
-                - if event.type == 'League::Game'
-                  .bench (away)
-              .locker_room.away= event.away_team_locker_room&.name
+              .team.cell
+                .name= event.away_team_name.presence || event.try(:away_team).try(:name)
+                .bench= event.type == 'League::Game' ? '(away)' : ''
+              .locker_room.away.cell= event.away_team_locker_room&.name
             .home_team
-              .team
-                = event.home_team_name.presence || event.try(:home_team).try(:name)
-                - if event.type == 'League::Game'
-                  .bench (home)
-              .locker_room.home= event.home_team_locker_room&.name
-        - else
-          .time
-            = event.starts_on.strftime('%-I:%M %P')
-            != ' - '
-            = event.ends_on.strftime('%-I:%M %P')
-          .subject
-            .summary= event.summary
-            .locker_room.away= event.away_team_locker_room&.name
-            .locker_room.home= event.home_team_locker_room&.name
+              .team.cell
+                .name= event.home_team_name.presence || event.try(:home_team).try(:name)
+                .bench= event.type == 'League::Game' ? '(home)' : ''
+              .locker_room.home.cell= event.home_team_locker_room&.name
+      - else
+        .summary.event{ class: odd_or_even }
+          .time.cell= time_range(event.starts_on, event.ends_on)
+          .summary.cell= event.summary
+          .locker_room.away.cell= event.away_team_locker_room&.name
+          .locker_room.home.cell= event.home_team_locker_room&.name  
 
   .footer
     .logo
@@ -212,12 +197,10 @@
       return hour + ':' + pad(date.getMinutes()) + ' ' + meridiem;
     }
     function setTime() {
-      // console.log('gettin time')
       var date = new Date();
       $('#time').text(formatTime(new Date()));
     }
     function refresh() {
-      console.log('refreshing');
       $.ajax(window.location).then(function(data, status) {
         var $page = $(data);
         $('.outer').replaceWith($page.filter('.outer'));

@@ -84,11 +84,11 @@ class EventSerializer < ActiveModel::Serializer
     :delete_url
 
     def edit_url
-      edit_polymorphic_path([:admin, object.module_name, object])
+      edit_polymorphic_path([:admin, object.module_name.to_sym, object])
     end
 
     def clone_url
-      new_polymorphic_path([:admin, object.module_name, object.class], :clone => object.id)
+      new_polymorphic_path([:admin, object.module_name.to_sym, object.class], :clone => object.id)
     end
 
     def delete_url

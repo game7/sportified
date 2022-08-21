@@ -13,8 +13,8 @@
     - if tenant&.google_fonts
       - tenant.google_fonts.split(/\r?\n/).each do |font|
         = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"
-    = stylesheet_link_tag 'cast'
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Rubik"
+    = stylesheet_link_tag 'cast'
     = javascript_include_tag :application
     = csrf_meta_tag
     %meta{ 'http-equiv' => 'refresh',  :content => '3000' }

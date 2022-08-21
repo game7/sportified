@@ -38,6 +38,8 @@
 class Hockey::Skater::Record < Hockey::Skater
   include Stats
 
+  default_scope { where(type: klass.name) }
+
   def add_result(result)
     STATS.each do |stat|
       self.send("#{stat}=", self.send(stat) + (result.send(stat) || 0))

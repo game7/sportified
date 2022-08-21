@@ -1,8 +1,7 @@
 - title 'Players'
 
 .ui.grid
-  .four.wide.column
-    = render :partial => 'shared/season_options', :object => season_options
+  .four.wide.column= render :partial => 'shared/season_options', :object => season_options
 
 - last_initials = players.group_by{|player| player.last_name.first}
 

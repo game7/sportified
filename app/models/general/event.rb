@@ -43,6 +43,8 @@
 #
 class General::Event < ::Event
 
+  default_scope { where(type: klass.name) }
+
   validates_presence_of :summary
 
   def color_key

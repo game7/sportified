@@ -21,4 +21,6 @@
 #
 class LockerRoom < Facility
 
+  default_scope { where(type: klass.name) }
+
 end
