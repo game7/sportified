@@ -9,7 +9,7 @@ gem 'enumerize'
 
 gem 'sprockets'
 
-gem 'webpacker', '~> 4'
+gem 'webpacker'
 
 gem 'paranoia', '~> 2.3'
 
