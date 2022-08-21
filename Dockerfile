@@ -19,7 +19,7 @@ RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME    
 
 # nodejs (todo - remove runtime dependency on node)
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -54,7 +54,6 @@ RUN gem install \
 # RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 #     && apt-get install -y nodejs \
 #     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
 
 # yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \

@@ -1,4 +1,3 @@
-source 'http://rubygems.org'
 ruby '2.7.6'
 gem 'rails', '~> 6.0.0'
 
@@ -140,3 +139,5 @@ end
 group :production do
   gem 'puma', ">= 4.3.5"
 end
+
+gem 'vite_rails'
