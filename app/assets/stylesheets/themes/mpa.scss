@@ -14,11 +14,11 @@ $primary-text-color: #000000;
   background-color: $primary-color;
 }
 
-body, 
-body.pushable > .pusher {
-  background-image: asset-url("themes/mpa/asu_mpa_bw.jpg");
+body,
+body.pushable>.pusher {
+  background-image: asset-url("themes/mpa/mpa_level2_bw.jpg");
   background-position: center top;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
@@ -32,7 +32,7 @@ body.pushable > .pusher {
 }
 
 #site_logo {
-  content: asset-url("themes/mpa/multipurpose_arena_black.svg");
+  content: asset-url("themes/mpa/mullett_arena_black.svg");
   width: 200px;
   margin: auto;
 }
@@ -77,4 +77,3 @@ body[data-path="pages/welcome"] header {
   background-color: #000;
   color: #FFF;
 }
-
