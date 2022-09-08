@@ -28,6 +28,7 @@ class ScheduleController < BaseLeagueController
     end
 
     @events = @events.public_only unless current_user_is_admin?
+    @events = @events.includes(:location)
 
     @tags = Event.public_only.in_the_future.tag_counts
 
