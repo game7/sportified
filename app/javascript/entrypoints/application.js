@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
 //
@@ -33,11 +36,33 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // vite support: https://github.com/reactjs/react-rails/issues/1134
 const context = import.meta.globEager('../components/*/index.{js,jsx,ts,tsx}');
 const pattern = new RegExp('components/(.+)/index')
+const components = {};
+
 Object.keys(context).forEach((path) => {
   let matches = path.match(pattern)
   let componentName = matches[1]
   let component = context[path]
-  window[componentName] = component.default;
+  components[componentName] = component.default;
 });
 
-import "react_ujs"
+(function () {
+  const CLASS_NAME_ATTRIBUTE = 'data-react-class'
+  const PROPS_ATTRIBUTE = 'data-react-props'
+
+  let nodes = document.querySelectorAll(`[${CLASS_NAME_ATTRIBUTE}]`)
+
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i]
+    const className = node.getAttribute(CLASS_NAME_ATTRIBUTE)
+    const propsJson = node.getAttribute(PROPS_ATTRIBUTE)
+    const props = propsJson && JSON.parse(propsJson)
+    const ctor = components[className];
+    if (!ctor) {
+      const message = `Cannot find react component named ${className}`
+      throw new Error(message)
+    }
+    const component = React.createElement(ctor, props);
+
+    ReactDOM.render(component, node)
+  }
+})()

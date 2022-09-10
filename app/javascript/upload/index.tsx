@@ -13,9 +13,6 @@ import './index.css';
 //     ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
 // };
 
-// process.env.API_BASE = '/';
-
-
 // const { AppContainer } = require('react-hot-loader');
 const rootEl = document.getElementById('uploader');
 

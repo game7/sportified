@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
-    "module": "es6",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "es2020",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es6",
-    "jsx": "react",
+    "target": "es2020",
+    "jsx": "preserve",
     "allowSyntheticDefaultImports": true
   },
   "exclude": [

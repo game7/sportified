@@ -92,12 +92,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = false
-
-  # Make javascript_pack_tag lookup digest hash to enable long-term caching
-  config.x.webpacker[:digesting] = true
-
   provider = :ses
   
   ActionMailer::Base.smtp_settings = {

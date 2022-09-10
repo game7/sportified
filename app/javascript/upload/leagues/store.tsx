@@ -65,14 +65,14 @@ export class Resource<T extends Model> {
 
   private loaded: boolean = false;
   private list: T[] = [];
-  private hash: { [id: string] : T} = {};
+  private hash: { [id: string]: T } = {};
 
   constructor() {
 
   }
 
   load(): Promise<boolean> {
-    return fetch(process.env.API_BASE + '/api/league/tenants')
+    return fetch('/api/league/tenants')
       .then(unwrap)
       .then(json => {
         const models = json['tenants'] as T[];
@@ -87,7 +87,7 @@ export class Resource<T extends Model> {
   }
 
   all(): Promise<T[]> {
-    if(this.loaded) Promise.resolve(this.list);
+    if (this.loaded) Promise.resolve(this.list);
     return this.load().then(() => this.list)
   }
 
@@ -104,7 +104,7 @@ export class Resource<T extends Model> {
 
   private patch(model: T) {
     this.list = this.list.map(obj => obj.id == model.id ? model : obj)
-    this.hash = {...this.hash, [model.id]: model};
+    this.hash = { ...this.hash, [model.id]: model };
   }
 
   private remove(id: string) {
@@ -112,8 +112,8 @@ export class Resource<T extends Model> {
   }
 
   get(id: number): Promise<T> {
-    if(this.hash[id]) Promise.resolve(this.hash[id]);
-    return fetch(process.env.API_BASE + `/api/league/tenants/${id}`)
+    if (this.hash[id]) Promise.resolve(this.hash[id]);
+    return fetch(`/api/league/tenants/${id}`)
       .then(unwrap)
       .then(json => {
         const model = json['tenants'] as T;
@@ -126,7 +126,7 @@ export class Resource<T extends Model> {
     const opt = {
       method: 'POST'
     }
-    return fetch(process.env.API_BASE + `/api/league/tenants`, opt)
+    return fetch(`/api/league/tenants`, opt)
       .then(unwrap)
       .then(json => {
         const model = json['tenants'] as T;
@@ -135,20 +135,11 @@ export class Resource<T extends Model> {
       });
   }
 
-  // update(data: any): Promise<T> {
-  //   const opt = {
-  //     method: 'PATCH'
-  //   }
-  //   return fetch(process.env.API_BASE + `/api/league/tenants/${id}`, opt)
-  //     .then(unwrap)
-  //     .then(json => json);
-  // }
-
   delete(id: number): Promise<boolean> {
     const opt = {
       method: 'DELETE'
     }
-    return fetch(process.env.API_BASE + `/api/league/tenants/${id}`, opt)
+    return fetch(`/api/league/tenants/${id}`, opt)
       .then(unwrap)
       .then(() => true);
   }
@@ -156,7 +147,7 @@ export class Resource<T extends Model> {
 }
 
 function get(path) {
-  const url = process.env.API_BASE + path;
+  const url = path;
   const options = {
     headers: {},
     credentials: 'include'
@@ -204,7 +195,7 @@ export class Store {
   }
 
   static createGames(games: any) {
-    return fetch(process.env.API_BASE + '/api/league/games/batch_create', {
+    return fetch('/api/league/games/batch_create', {
       method: 'POST',
       body: JSON.stringify(games),
       headers: {

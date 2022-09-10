@@ -13,7 +13,7 @@ export function makeColumns(row: row): Column[] {
   }) as Column[];
 }
 
-export default class Context extends Component<{},IImportState> {
+export default class Context extends Component<{}, IImportState> {
 
   componentDidMount() {
     let state = storage.load();

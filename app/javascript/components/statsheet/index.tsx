@@ -4,7 +4,7 @@ import { Summary } from './summary';
 import { Players } from './players';
 import { Goals } from './goals';
 import { Penalties } from './penalties';
-import { Settings, Team, Game, Goal, Player, Skater, Statsheet, Action, Penalty, Goaltender } from '../common/types'
+import { Settings, Team, Game, Goal, Player, Skater, Action, Penalty, Goaltender } from '../common/types'
 import { reducer } from './reducer';
 import { Goaltending } from './goaltending';
 import moment from 'moment';
@@ -20,7 +20,7 @@ interface Props {
   goaltenders: Goaltender[];
 }
 
-const Statsheet: FC<Props> = ({ settings, game, teams, players, skaters, goals, penalties, goaltenders }) => { 
+const Statsheet: FC<Props> = ({ settings, game, teams, players, skaters, goals, penalties, goaltenders }) => {
 
   const [statsheet, dispatch] = useReducer(reducer, {
     settings,
@@ -34,23 +34,23 @@ const Statsheet: FC<Props> = ({ settings, game, teams, players, skaters, goals, 
   })
 
   const panes = [
-    { 
+    {
       menuItem: 'Summary',
       render: () => <Summary statsheet={statsheet} dispatch={dispatch} />
     },
-    { 
+    {
       menuItem: 'Players',
       render: () => <Players statsheet={statsheet} dispatch={dispatch} />
     },
-    { 
+    {
       menuItem: 'Goals',
       render: () => <Goals statsheet={statsheet} dispatch={dispatch} />
     },
-    { 
+    {
       menuItem: 'Penalties',
       render: () => <Penalties statsheet={statsheet} dispatch={dispatch} />
     },
-    { 
+    {
       menuItem: 'Goaltending',
       render: () => <Goaltending statsheet={statsheet} dispatch={dispatch} />
     }
@@ -58,7 +58,7 @@ const Statsheet: FC<Props> = ({ settings, game, teams, players, skaters, goals, 
   return (
     <React.Fragment>
       <Header as="h2" content={game.summary} subheader={moment(game.startsOn).format("dddd, MMMM Do YYYY, h:mm a")} />
-      <Divider/>
+      <Divider />
       <Tab panes={panes} defaultActiveIndex={0} />
     </React.Fragment>
   )
