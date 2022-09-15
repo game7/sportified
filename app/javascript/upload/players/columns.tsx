@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Component } from 'react';
-import * as _ from 'lodash';
-import { IImportState, Header, row, storage, Column, Properties } from './common';
-import { Table, Select, DropdownProps } from 'semantic-ui-react';
+
+import { useEffect, useState } from 'react';
+import { DropdownProps, Select, Table } from 'semantic-ui-react';
+import { Column, Header, Properties, row, storage } from './common';
 
 function findPropertyForPattern(pattern: string): string {
-  for(var key in Properties) {
+  for (var key in Properties) {
     if (Properties[key].toLowerCase().indexOf(pattern.toLowerCase()) != -1) {
       return key;
     }
@@ -26,82 +25,73 @@ function getProperties() {
   return Object.keys(Properties).map(key => { return { key: key, value: Properties[key] } });
 }
 
-export default class Data extends Component<{},IImportState> {
+export default function Columns() {
+  const [state, setState] = useState(storage.load());
 
-  componentWillMount() {
-    let state = storage.load();
-    state.columns = state.columns || makeColumns(state.rows[0])
-    this.setState(state)
-    storage.save(state)
-  }
+  useEffect(() => storage.save(state), [state])
 
-  get canMoveNext(): boolean {
-    const columns = (this.state.columns || []);
+  useEffect(() => {
+    if (!state.columns) {
+      const columns = makeColumns(state.rows[0])
+      setState(state => ({
+        ...state,
+        columns
+      }))
+    }
+  }, [])
+
+  const canMoveNext = (() => {
+    const columns = (state.columns || []);
     const columnCount = columns.length;
     const mappedCount = columns.filter(col => !!col.property).length;
     return columnCount > 0 && columnCount == mappedCount;
+  })()
+
+
+  function handleColumnChange(key: string) {
+    return function columnChangeHandler(_, data: DropdownProps) {
+      const value = data.value as string;
+      const columns = state.columns.map((column) => {
+        if (column.pattern == key) {
+          return {
+            ...column,
+            property: value
+          }
+        }
+        return column;
+      })
+      setState(state => ({ ...state, columns }))
+    }
   }
 
-  handleColumnChange = (key: string) => (event: any, data: DropdownProps) => {
-    const value = data.value.toString();
-    const state = Object.assign({}, this.state);
-    const columns = state.columns.map((column, i) => {
-      if (column.pattern == key) {
-        column.property = value;
-      }
-      return column;
-    })
-    this.setState({ columns: columns }, () => storage.save(this.state));
-  }
+  const { columns = [] } = state;
+  const properties = getProperties();
 
-  render() {
-    const state = (this.state || {});
-    const { columns = [] } = state;
-    const properties = getProperties();
-    const canMoveNext = (function(columns) {
-      const columnCount = columns.length;
-      const mappedCount = columns.filter(col => !!col.property).length;
-      return columnCount > 0 && columnCount == mappedCount;
-    })(columns);
-    console.log(state)
-    return (
-      <div>
-        <Header
-          title="Columns"
-          canBack={true}
-          backUrl="/players/data"
-          canNext={canMoveNext}
-          nextUrl="/players/mapping"
-        />
-        <Table celled striped>
-          <Table.Body>
-            {columns.map((col, i) => (
-              <Table.Row key={i}>
-                <Table.Cell>{col.pattern}</Table.Cell>
-                <Table.Cell>
-                  <Select
-                    value={col.property} 
-                    onChange={this.handleColumnChange(col.pattern)} 
-                    options={[{ key: "blank" }, ...properties.map(prop => ({ text: prop.value, value: prop.key }))]}
-                  />
-                </Table.Cell>
-              </Table.Row>               
-            ))}  
-          </Table.Body>
-        </Table>
-      </div>
-    );
-            }
+  return (
+    <div>
+      <Header
+        title="Columns"
+        canBack={true}
+        backUrl="/players/data"
+        canNext={canMoveNext}
+        nextUrl="/players/mapping"
+      />
+      <Table celled striped>
+        <Table.Body>
+          {columns.map((col, i) => (
+            <Table.Row key={i}>
+              <Table.Cell>{col.pattern}</Table.Cell>
+              <Table.Cell>
+                <Select
+                  value={col.property}
+                  onChange={handleColumnChange(col.pattern)}
+                  options={[{ key: "blank" }, ...properties.map(prop => ({ text: prop.value, value: prop.key }))]}
+                />
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </div>
+  );
 }
-
-let Row = ({column, properties, onChange}) => (
-  <tr>
-    <td>{column.pattern}</td>
-    <td>
-      <select className="form-control" value={column.property} onChange={onChange(column.pattern)}>
-        <option value=""></option>
-        {properties.map(prop => (<option key={prop.key} value={prop.key}>{prop.value}</option>))}
-      </select>
-    </td>
-  </tr>
-)

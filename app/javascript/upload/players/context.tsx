@@ -1,100 +1,71 @@
-import * as React from 'react';
-import { Component } from 'react';
-import * as _ from 'lodash';
-import { IImportState, Header, row, storage, Map, Column } from './common';
-import { Tenant, Store, League, Season, Division } from '../common/store';
-import { Select, Form, SelectProps } from 'semantic-ui-react';
+import { useEffect, useState } from 'react';
+import { Form, Select, SelectProps } from 'semantic-ui-react';
+import { Store } from '../common/store';
+import { Header, storage } from './common';
 
-export function makeColumns(row: row): Column[] {
-  return row.map(col => {
-    return {
-      pattern: col
-    }
-  }) as Column[];
-}
 
-export default class Context extends Component<{}, IImportState> {
+export default function Context() {
+  const [state, setState] = useState(storage.load())
 
-  componentDidMount() {
-    let state = storage.load();
-    this.setState(state);
+  useEffect(() => {
+    storage.save(state)
+  }, [state])
+
+  useEffect(() => {
     Promise.all([
       Store.leagues(),
       Store.seasons(),
       Store.divisions(),
       Store.teams()
     ]).then(results => {
-      this.setStateAndSave({
+      setState({
+        ...state,
         leagues: results[0],
         seasons: results[1],
         divisions: results[2],
-        teams: results[3],
-        ...state
+        teams: results[3]
       })
     })
-  }
+  }, [])
 
-  handleLeagueChange = (_event, data: SelectProps) => {
-    this.setStateAndSave({
+  const { leagueId, seasonId, divisionId } = state;
+  const { leagues = [], seasons = [], divisions = [] } = state;
+  const canMoveNext = !!state.seasonId && !!state.divisionId;
+
+  const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
+  const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ text: s.name, value: s.id }))
+  const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ text: d.name, value: d.id }))
+
+  function handleLeagueChange(_, data: SelectProps) {
+    setState(state => ({
+      ...state,
       leagueId: data.value as number,
-      seasonId: undefined,
-      divisionId: undefined
-    });
+      seasonId: null,
+      divisionId: null
+    }))
   }
 
-  handleSeasonChange = (_event, data: SelectProps) => {
-    this.setStateAndSave({ seasonId: data.value as number });
+  function handleSeasonChange(_, data: SelectProps) {
+    setState(state => ({ ...state, seasonId: data.value as number }));
   }
 
-  handleDivisionChange = (_event, data: SelectProps) => {
-    this.setStateAndSave({ divisionId: data.value as number })
+  function handleDivisionChange(_, data: SelectProps) {
+    setState(state => ({ ...state, divisionId: data.value as number }));
   }
 
-  setStateAndSave = (state: IImportState) => {
-    this.setState(state, () => {
-      storage.save(this.state);
-    })
-  }
-
-  handleColumnChange = (key: string) => (event: any) => {
-    const value = event.target.value;
-    const state = Object.assign({}, this.state);
-    const columns = state.columns.map((column, i) => {
-      if (column.pattern == key) {
-        column.property = value;
-      }
-      return column;
-    })
-    this.setState({ columns: columns }, () => storage.save(this.state));
-  }
-
-  render() {
-    const state = (this.state || {}) as IImportState
-    const { leagueId, seasonId, divisionId } = state;
-    const { leagues = [], seasons = [], divisions = [] } = state;
-    const canMoveNext = !!state.seasonId && !!state.divisionId;
-
-    const leagueOptions = leagues.map(l => ({ text: l.name, value: l.id }))
-    const seasonOptions = seasons.filter(s => s.programId == leagueId).map(s => ({ text: s.name, value: s.id }))
-    const divisionOptions = divisions.filter(d => d.programId == leagueId).map(d => ({ text: d.name, value: d.id }))
-
-    console.log(state)
-    console.log(seasonOptions, divisionOptions)
-    return (
-      <div>
-        <Header
-          title="Context"
-          canBack={false}
-          canNext={canMoveNext}
-          nextUrl="/players/file"
-        />
-        <Form>
-          <Form.Field control={Select} label="League" value={leagueId} options={leagueOptions} onChange={this.handleLeagueChange} />
-          <Form.Field control={Select} label="Season" value={seasonId} options={seasonOptions} onChange={this.handleSeasonChange} />
-          <Form.Field control={Select} label="Division" value={divisionId} options={divisionOptions} onChange={this.handleDivisionChange} />
-        </Form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Header
+        title="Context"
+        canBack={false}
+        canNext={canMoveNext}
+        nextUrl="/players/file"
+      />
+      <Form>
+        <Form.Field control={Select} label="League" value={leagueId} options={leagueOptions} onChange={handleLeagueChange} />
+        <Form.Field control={Select} label="Season" value={seasonId} options={seasonOptions} onChange={handleSeasonChange} />
+        <Form.Field control={Select} label="Division" value={divisionId} options={divisionOptions} onChange={handleDivisionChange} />
+      </Form>
+    </div>
+  );
 }
-

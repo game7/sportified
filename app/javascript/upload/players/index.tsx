@@ -12,14 +12,14 @@ const Layout: React.SFC<{}> = ({ children }) => (
   <div>{children}</div>
 );
 
-const Import: React.SFC<RouteComponentProps<{}>> = ({ match }) => (
+const Import: React.FC<RouteComponentProps<{}>> = ({ match }) => (
   <Layout>
-    <Route exact path={`${match.path}/`} component={Context}/>
-    <Route path={`${match.path}/file`} component={File}/>
-    <Route path={`${match.path}/data`} component={Data}/>
-    <Route path={`${match.path}/columns`} component={Columns}/>
-    <Route path={`${match.path}/mapping`} component={Mapping}/>
-    <Route path={`${match.path}/review`} component={Review}/>
+    <Route exact path={`${match.path}/`} component={Context} />
+    <Route path={`${match.path}/file`} component={File} />
+    <Route path={`${match.path}/data`} component={Data} />
+    <Route path={`${match.path}/columns`} component={Columns} />
+    <Route path={`${match.path}/mapping`} component={Mapping} />
+    <Route path={`${match.path}/review`} component={Review} />
   </Layout>
 );
 

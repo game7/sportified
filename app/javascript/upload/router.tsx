@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Route,
   Link,
@@ -10,6 +9,7 @@ import Games from './games';
 import Practices from './practices';
 import Events from './events';
 import Players from './players';
+import { useEffect, useState } from 'react';
 
 const Home = () => (
   <ul>
@@ -20,16 +20,18 @@ const Home = () => (
   </ul>
 );
 
-export default () => (
-  <Router basename="/admin/uploads">
-    <div>
-      <App>
-        <Route path="/" exact component={Home}/>
-        <Route path="/games" component={Games}/>
-        <Route path="/practices" component={Practices}/>
-        <Route path="/events" component={Events}/>
-        <Route path="/players" component={Players}/>
-      </App>
-    </div>
-  </Router>
-);
+export default function RouterComponent() {
+  return (
+    <Router basename="/admin/uploads">
+      <div>
+        <App>
+          <Route path="/" exact component={Home} />
+          <Route path="/games" component={Games} />
+          <Route path="/practices" component={Practices} />
+          <Route path="/events" component={Events} />
+          <Route path="/players" component={Players} />
+        </App>
+      </div>
+    </Router>
+  )
+}

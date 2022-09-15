@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const App: React.SFC<{}> = (props) => (
+const App: React.FC<{}> = (props) => (
   <div>
     {props.children}
   </div>
