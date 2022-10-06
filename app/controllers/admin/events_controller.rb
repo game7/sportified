@@ -17,6 +17,8 @@ class Admin::EventsController < Admin::AdminController
 
     @events = get_events(@date, @view)
 
+    @events = @events.where(location_id: params[:location_id]) if params[:location_id]
+
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
     end

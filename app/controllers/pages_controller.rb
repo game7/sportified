@@ -93,7 +93,7 @@ class PagesController < ApplicationController
     siblings = page.siblings.order(:position).pluck(:id)
     current_position = siblings.index(page.id)
     if (current_position < siblings.length - 1)
-      siblings = siblings.insert(current_position, siblings.delete_at(current_position - 1))
+      siblings = siblings.insert(current_position + 1, siblings.delete_at(current_position))
     end
     siblings.each_with_index{|id, i| Page.update(id, position: i)}
 
