@@ -9,6 +9,7 @@
     - date = DateTime.now
     = render 'calendar', date: date
     = render 'calendar', date: date + 1.month
+    = render 'location_cloud', locations: @locations
     = render 'tag_cloud', tags: @tags
 
   .twelve.wide.column{ class: @show_tags ? :twelve : :sixteen }

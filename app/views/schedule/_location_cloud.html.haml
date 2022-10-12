@@ -1,0 +1,9 @@
+.ui.segments
+  .ui.segment
+    %h5.ui.header LOCATIONS 
+    .ui.small.labels
+      - locations.each do |location|
+        - selections = Array.wrap(params[:location]).clone
+        - btn_class = selections.include?(location.id.to_s) ? '' : 'basic'
+        - selections = selections.concat([location.id.to_s]) unless selections.delete(location.id.to_s)
+        = link_to location.name, params.permit!.merge(location: selections, date: nil), class: "ui #{btn_class} label"  
