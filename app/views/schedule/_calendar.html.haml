@@ -21,7 +21,7 @@
           - disabled = date.strftime('%m') != day.strftime('%m')
           - today = day.to_date == Date.today
           %td.day{ class: [disabled && :disabled, !disabled && :selectable, today && :positive, !disabled && range.include?(day) && :active] }
-            = link_to_unless disabled, day.strftime('%e'), { date: day }
+            = link_to_unless disabled, day.strftime('%e'), { date: day, locations: params[:locations] }
 
 :css
   .ui.calendar.table th,

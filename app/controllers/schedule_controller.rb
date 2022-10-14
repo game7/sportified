@@ -24,6 +24,9 @@ class ScheduleController < BaseLeagueController
         @events = all_divisions? ? Event : @division.events
         @events = @events.includes(:location, :product)
         @events = @events.where('starts_on > ? AND ends_on < ?', @start_date, @end_date).order(starts_on: :asc)
+        if params[:location]
+          @events = @events.where(location: params[:location])
+        end        
       end
     end
 
@@ -31,6 +34,8 @@ class ScheduleController < BaseLeagueController
     @events = @events.includes(:location)
 
     @tags = Event.public_only.in_the_future.tag_counts
+
+    @locations = Location.order(name: :asc).all
 
     respond_to do |format|
       format.html # index.html.erb
