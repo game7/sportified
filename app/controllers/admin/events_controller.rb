@@ -100,7 +100,7 @@ class Admin::EventsController < Admin::AdminController
       end
 
       Event.includes(:location, :program, :tags)
-            .after(start_at.beginning_of_day)
+            .at_or_after(start_at.beginning_of_day)
             .before(end_at.end_of_day)
             .order(:starts_on)
 
