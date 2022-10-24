@@ -2,13 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@font-face {
+  font-family: 'Sun Devil';
+  src: font-url('SunDevilBold.eot');
+  src: font-url('SunDevilBold.eot?#iefix') format('embedded-opentype'),
+       font-url('SunDevilBold.woff2') format('woff2'),
+       font-url('SunDevilBold.woff') format('woff'),
+       font-url('SunDevilBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
   height: 100vh;
   width: 100vw;
 }
 
 body {
-  font-family: Roboto, Helvetica, sans-serif;
+  font-family: 'Sun Devil', Roboto, Helvetica, sans-serif;
   //height: 100vh;
   //width: 100vw;
   height: 100vh;

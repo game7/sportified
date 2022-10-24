@@ -1,4 +1,4 @@
 - if @screen
-  = render partial: 'events'
+  = render partial: Tenant.current.id == 10 ? 'macu-wide' : 'oia'
 - else
   = render partial: 'device_key'

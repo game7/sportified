@@ -1,0 +1,274 @@
+
+:css
+
+  @font-face {
+      font-family: 'Sun Devil';
+      src: url(#{font_path('SunDevilBold.eot')});
+      src: url(#{font_path('SunDevilBold.eot?#iefix')}) format('embedded-opentype'),
+          url(#{font_path('SunDevilBold.woff2')}) format('woff2'),
+          url(#{font_path('SunDevilBold.woff')}) format('woff'),
+          url(#{font_path('SunDevilBold.ttf')}) format('truetype');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+  }
+
+:scss
+
+  html {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  body {
+    font-family: Roboto, Helvetica, sans-serif;
+
+    height: 100vh;
+    width: 100vw;
+    background-image: url(#{image_url("themes/mpa/mpa_level2_bw.jpg")});
+    background-position: center top;
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  .outer {
+    width: 100%;
+    height: 100%;
+    font-family: 'Rubik';
+  }
+
+  .header,
+  .footer {
+    height: 90px;
+    background-color: #000;
+  }
+  
+  .title {
+    font-family: 'Sun Devil';
+    text-align: center;
+    font-size: 54px;
+    height: 90px;
+    line-height: 90px;
+    color: #FFC627;
+    font-weight: bold;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } 
+
+
+  .main {
+    height: 900px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden;
+  }
+
+
+  .event {
+
+    margin-bottom: 5px;
+
+    .time,
+    .summary,
+    .team,
+    .locker_room {
+      background-color: #5B6770;
+      background-color: #800000;
+      background-color: #8C1D40;
+      color: white;
+      opacity: 1;
+      font-weight: bold;
+      height: 90px;
+      line-height: 90px;
+      font-size: 54px;
+    }
+
+    &.even {
+      .time,
+      .summary,
+      .team,
+      .locker_room {
+        background-color: #FFC627;
+        color: black;
+      }
+    }
+
+    .time {
+      text-align: left;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      width: 570px;
+      margin-right: 5px;
+      &.teams {
+        height: 185px;
+      }
+    }
+
+    .summary {
+      padding-left: 10px !important;
+      margin-right: 5px;
+      width: 1110px;
+    }
+
+    .team {
+      padding: 0;
+      padding-left: 10px !important;
+      margin-right: 5px;
+      height: 90px;
+      width: 1205px;
+    }
+
+    .locker_room {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 54px;
+      font-weight: 900;
+      width: 90px;
+      height: 90px;
+      padding: 0;
+    }
+
+
+    .time,
+    .subject {
+      float: left;
+    }
+
+    .teams {
+      float: left;
+    }
+
+    .home_team,
+    .away_team {
+      .team,
+      .locker_room {
+        float: left;
+      }
+    }
+
+    .away_team {
+      margin-bottom: 5px;
+    }
+
+    .bench {
+      float: right;
+      margin-right: 10px;
+    }
+
+    .subject {
+      padding: 0;
+
+      .summary,
+      .locker_room {
+        float: left;
+        &.away {
+          margin-right: 5px;
+        }
+      }
+    }
+
+  }
+ 
+
+  .datetime, .logo {
+    font-family: 'Rubik';
+    font-weight: bold;
+    font-size: 42px;
+    line-height: 90px;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #8E0C3A;
+    color: #5B6770;
+    color: #FFFFFF;
+  }
+
+.outer
+  .header
+    .title Locker Room Assignments
+
+  .main
+    - rows = 0
+    - @events.each do |event|
+      - rows += 1
+      - rows += 1 if event.try(:show_teams?)
+      - next if rows > 9
+      - odd_or_even = cycle('odd', 'even')
+      .event.clearfix{ class: odd_or_even }
+        - if (event.try(:show_teams?))
+          .time.teams
+            = event.starts_on.strftime('%-I:%M %P')
+            != ' - '
+            = event.ends_on.strftime('%-I:%M %P')
+          .teams.clearfix
+            .away_team.clearfix
+              .team
+                = event.away_team_name.presence || event.try(:away_team).try(:name)
+                - if event.type == 'League::Game'
+                  .bench (away)
+              .locker_room.away= event.away_team_locker_room&.name
+            .home_team.clearfix
+              .team
+                = event.home_team_name.presence || event.try(:home_team).try(:name)
+                - if event.type == 'League::Game'
+                  .bench (home)
+              .locker_room.home= event.home_team_locker_room&.name
+        - else
+          .time
+            = event.starts_on.strftime('%-I:%M %P')
+            != ' - '
+            = event.ends_on.strftime('%-I:%M %P')
+          .subject.clearfix
+            .summary= event.summary
+            .locker_room.away= event.away_team_locker_room&.name
+            .locker_room.home= event.home_team_locker_room&.name
+
+  .footer
+    .logo
+      MACU Iceplex
+    .datetime
+      %span#date
+        = "#{@time.strftime('%A, %b')} #{@time.strftime('%e').to_i.ordinalize}"
+      != ' - '
+      %span#time= @time.strftime('%l:%M %P')
+
+:javascript
+  $(function() {
+    function pad(num) {
+      return (num < 10 ? '0' : '') + num;
+    }
+    function getHour(date) {
+      var hours = date.getHours();
+      if (hours == 0) return 12;
+      if (hours <= 12) return hours;
+      return hours % 12;
+    }
+    function getMeridiem(date) {
+      return date.getHours() < 12 ? 'am' : 'pm';
+    }
+    function formatTime(date) {
+      var hour = getHour(date);
+      var meridiem = getMeridiem(date);
+      return hour + ':' + pad(date.getMinutes()) + ' ' + meridiem;
+    }
+    function setTime() {
+      // console.log('gettin time')
+      var date = new Date();
+      $('#time').text(formatTime(new Date()));
+    }
+    function refresh() {
+      console.log('refreshing');
+      $.ajax(window.location).then(function(data, status) {
+        var $page = $(data);
+        $('.outer').replaceWith($page.filter('.outer'));
+      })
+    }
+    window.setInterval(setTime, 1000)
+    window.setInterval(refresh, 5 * 60 * 1000)
+  })
