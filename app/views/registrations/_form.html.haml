@@ -9,6 +9,8 @@
             = image_tag variant.product.image.attached? ? variant.product.image : '/image.png'
           .content
             .header= variant.product.title
+          - if registration.product.registrable_type == 'Event' && registration.product.registrable.present?
+            .extra.content= registration.product.registrable.starts_on.strftime('%a %m/%d/%Y %l:%M %P')
           .extra.content
             .left.floated= variant.title
             .right.floated= "$#{number_with_precision(variant.price, precision: 2)}"
@@ -39,7 +41,20 @@
               = link_to 'sign in', users.sign_in_path, style: 'text-decoration: underline;'
               != ' '
               to continue... but if you do
-              we might be able to make things a little bit easier for you        
+              we might be able to make things a little bit easier for you       
+
+      - if current_user && warn_duplicate 
+        .ui.icon.info.message
+          = semantic_icon :info, :circle, :icon
+          .content
+            .header You Have Already Registered
+            %p
+              It looks like you may have already attempted to register for this product.  You 
+              might want to take a quick peek at 
+              != ' '
+              = link_to 'your existing registrations', registrations_path(), target: :blank, style: "text-decoration: underline;"
+              != ' '
+              so that we don't sign you up twice.
 
       %a.anchor{ name: :contact }   
       %h3.ui.dividing.header{ style: 'margin-top: 0;' } Contact  
@@ -60,8 +75,44 @@
         - form.object.add_element_accessors
         - form.object.template.elements.each do |element|
           = render "form_elements/#{element.partial}", element: element, builder: form   
-      
 
+      - if registration.potential_duplicate
+        %a.anchor{ name: :confirmation }
+        %h3.ui.dividing.header Confirmation 
+        .ui.icon.negative.message
+          = semantic_icon :exclamation, :circle, :icon
+          .content
+            .header Potential Duplicate Registration
+            %p
+              :erb
+                We've done a quick check and noticed that there are one or more existing registrations
+                for a person with the same <strong>Last Name</strong> and <strong>Birthdate</strong>.
+            %p
+              If you've already been to the checkout screen, entered your credit card or have exeperienced
+              any difficulty during registration one of the registrations below may be yours, in which case
+              it would be better to resume that registration.
+        %table.ui.celled.negative.table
+          %thead
+            %tr
+              %th Name
+              %th Birthdate
+              %th Started
+              %th Status
+              %th Action
+          %tbody
+            - potential_duplicates.each do |dupe|
+              %tr
+                %td= "#{dupe.first_name} #{dupe.last_name}"
+                %td= dupe.birthdate
+                %td= "#{time_ago_in_words(dupe.created_at)} ago"
+                %td= dupe.status
+                %td.collapsing.center.aligned
+                  - case dupe.status.downcase
+                  - when 'completed'
+                    = link_to 'Details', registration_path(dupe.uuid), class: [:ui, :basic, :fluid, :button]
+                  - when 'pending'
+                    = link_to 'Resume', registration_path(dupe.uuid), class: [:ui, :primary, :fluid, :button]
+        = f.input :confirm, label: 'Continue with this New Registration'
 
       - if variant.payment_required? 
         %a.anchor{ name: :payment }
@@ -81,45 +132,46 @@
               %strong You registration is not confirmed until the payment step has been completed.
 
 
-        - unless current_user
-          .ui.icon.message
-            = semantic_icon :ticket, :icon
-            .content
-              .header Need to use a Voucher?
-              %p
-                Do you have prepaid vouchers that you would like to apply to this registration?  We can help you
-                apply a voucher but you must first
-                = link_to 'sign in', users.sign_in_path
-                != ' '                
-                to your account.            
+        -# - unless current_user
+        -#   .ui.icon.message
+        -#     = semantic_icon :ticket, :icon
+        -#     .content
+        -#       .header Need to use a Voucher?
+        -#       %p
+        -#         Do you have prepaid vouchers that you would like to apply to this registration?  We can help you
+        -#         apply a voucher but you must first
+        -#         = link_to 'sign in', users.sign_in_path
+        -#         != ' '                
+        -#         to your account.            
 
-        - if vouchers.any?
+        -# - if vouchers.any?
 
-          .ui.icon.info.message
-            = semantic_icon :ticket, :icon
-            .content
-              .header You have Vouchers!
-              %p
-                Choose a voucher from below and we'll deduct the amount from the total price.     
+        -#   .ui.icon.info.message
+        -#     = semantic_icon :ticket, :icon
+        -#     .content
+        -#       .header You have Vouchers!
+        -#       %p
+        -#         Choose a voucher from below and we'll deduct the amount from the total price.     
 
-          %table.ui.unstackable.celled.table
-            %thead
-              %tr
-                %th.collapsing
-                %th Amount
-                %th Expires
-            %tbody
-              - vouchers.each do |voucher|
-                %tr
-                  %td.collapsing= radio_button_tag 'registration[voucher_id]', voucher.id, registration.voucher&.id == voucher.id
-                  %td= number_to_currency voucher.amount
-                  %td= voucher.expires_at ? time_ago_in_words(voucher.expires_at) + ' from now' : 'Never'
-              %tr
-                %td= radio_button_tag 'registration[voucher_id]', '', registration.voucher.blank?
-                %td{ colspan: 2 } I'll pay this time
+        -#   %table.ui.unstackable.celled.table
+        -#     %thead
+        -#       %tr
+        -#         %th.collapsing
+        -#         %th Amount
+        -#         %th Expires
+        -#     %tbody
+        -#       - vouchers.each do |voucher|
+        -#         %tr
+        -#           %td.collapsing= radio_button_tag 'registration[voucher_id]', voucher.id, registration.voucher&.id == voucher.id
+        -#           %td= number_to_currency voucher.amount
+        -#           %td= voucher.expires_at ? time_ago_in_words(voucher.expires_at) + ' from now' : 'Never'
+        -#       %tr
+        -#         %td= radio_button_tag 'registration[voucher_id]', '', registration.voucher.blank?
+        -#         %td{ colspan: 2 } I'll pay this time
 
       .ui.basic.center.aligned.segment
-        = f.button :submit, variant.payment_required? ? 'Checkout with Stripe' : 'Complete Registration', class: [:ui, :massive, :button]
+        -# = f.button :submit, variant.payment_required? ? 'Checkout with Stripe' : 'Complete Registration', class: [:ui, :massive, :button]
+        = f.button :submit, 'Add to Cart', class: [:ui, :massive, :button]
 
 :css
   a.anchor {

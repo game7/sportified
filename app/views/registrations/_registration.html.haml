@@ -1,12 +1,11 @@
 
 %tr
-  %td= link_to registration.product.title, registration_path(registration.uuid)
+  %td= link_to "#{registration.product.title} - #{registration.variant.title}", registration_path(registration.uuid)
+  %td= "#{registration.first_name} #{registration.last_name}"
   %td= registration.created_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P")
-  %td
-    = registration.updated_at.in_time_zone.strftime("%-m/%-d/%y at %l:%M %P") if registration.completed?
   %td= link_to registration.completed? ? 'Completed' : 'Payment Required', registration_path(registration.uuid)
-  %td
-    -# - if registration.completed? 
-    -#   = link_to 'View Details', registration_path(registration.uuid), class: [:ui, :mini, :primary, :button]
-    -# - unless admin || registration.completed?
-    -#   = link_to 'Checkout', checkout_registration_path(registration), class: [:ui, :mini, :primary, :button]
+  %td.collapsing.center.aligned
+    - if registration.completed? 
+      = link_to 'View Details', registration_path(registration.uuid), class: [:ui, :mini, :primary, :button]
+    - unless admin || registration.completed?
+      = link_to 'Complete Payment', collect_registration_path(registration.uuid), class: [:ui, :mini, :primary, :button]

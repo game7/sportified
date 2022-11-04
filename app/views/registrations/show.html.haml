@@ -1,20 +1,31 @@
 
 - if registration.completed?
-  .ui.placeholder.segment
-    .ui.icon.header
-      = semantic_icon :thumbs, :up, :outline
-      It's all Good!
-    .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
-      You're registration is complete and you should receive a confirmation email shortly.
+  .ui.icon.attached.positive.message
+    = semantic_icon :thumbs, :up, :outline
+    .content
+      .header It's all Good!
+      %p
+        This registration has been completed and confirmed!  You you should receive a confirmation within a few minutes after completion.      
 
 - unless registration.completed?
-  .ui.placeholder.segment
-    .ui.icon.header
-      = semantic_icon :money, :bill, :alternate
-      Oops... Looks like we're not done yet
-    .ui.center.aligned.compact.basic.segment{ style: 'margin-top: 0;' }
-      You're registration is not complete until payment has been received.
-    = link_to 'Submit Payment', collect_registration_path(registration.uuid), class: [:ui, :primary, :button]
+  .ui.icon.attached.message
+    = content_tag :i, nil, class: [:exclamation, :circle, :icon]
+    .content
+      .header Ooops... We're not quite done yet
+      - if registration.session_id.blank?
+        %p
+          It looks like you have not started the checkout process.  Your registration may not be confirmed until checkout has been completed 
+          and your payment has been verified.  Fortunately we can help!
+
+      - if registration.session_id.present?
+        %p
+          It looks like you may have visited the checkout page but for some reason we have been unable to veryfiy your payment. Your registration 
+          may not be confirmed until checkout has been completed <strong>and</strong> your payment has been verified.
+          
+  .ui.attached.segment
+    - if registration.session_id.present?
+      = link_to 'Check Payment', confirm_registration_path(registration.uuid), class: [:ui, :primary, :button]
+    = link_to 'Complete Checkout', collect_registration_path(registration.uuid), class: [:ui, :primary, :button]
 
 
 %h3.ui.top.attached.header Registration Summary

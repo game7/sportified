@@ -146,3 +146,4 @@ group :production do
   gem 'puma', ">= 4.3.5"
 end
 
+gem "pundit", "~> 2.2"

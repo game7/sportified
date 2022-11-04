@@ -1,0 +1,54 @@
+%table.ui.celled.table
+  %thead
+    %tr
+      %th Description
+      %th.two.wide.center.aligned Amount
+  %tbody
+    - if @order.registrations.none?
+      %tr
+        %td.center.aligned{ colspan: 2, style: 'height: 100px; font-style: italic;' }
+          %p Your cart is currently empty.  
+          %p
+            Perhaps you'd like to view some 
+            != ' '
+            = link_to 'products', products_path
+    - @order.registrations.each do |registration|
+      %tr
+        %td{ style: 'display: flex; justify-content: space-between; align-items: center;' }
+          .product
+            .title= link_to registration.title, registration.product
+            - if registration.product.registrable_type == 'Event' && registration.product.registrable.present?
+              .datetime= registration.product.registrable.starts_on.strftime('%a %m/%d/%Y %l:%M %P')
+            .description{ style: 'font-style: italic;' }= registration.description
+          = link_to 'Remove Item', order_item_path(@order.uuid, registration.id), method: :delete if policy(registration).destroy?
+        %td.right.aligned= number_to_currency(registration.price, precision: 2)
+  %tfoot
+    %tr
+      %th Total 
+      %th.right.aligned= number_to_currency(@order.total_price, precision: 2)
+
+- if policy(@order).checkout?
+
+  - if @order.payment_required?
+    -# %h3.ui.dividing.header Payment 
+    .ui.icon.message
+      = semantic_icon :cc, :stripe, :icon
+      .content
+        .header We Collect Payments via Stripe Checkout
+        %p
+        :erb
+          When you select "Checkout" below you will be redirected to a secure payment page 
+          hosted by <%= link_to 'stripe.com', 'https://stripe.com', target: :blank %>.  Stripe
+          will allow you to easily pay using your credit card or mobile wallet (Apple Pay, Google Pay)
+          and deliver you a purchase receipt via email.  Upon payment you will be redirected back here
+          and presented with a confirmation page.
+        %p
+          %strong You order is not processed until checkout has been completed.
+
+
+    .ui.basic.center.aligned.segment
+      = link_to 'Checkout with Stripe', checkout_order_path(@order.uuid), class: [:ui, :massive, :primary, :button]
+    
+  - unless @order.payment_required?
+    .ui.basic.center.aligned.segment
+      = link_to 'Submit your Order', checkout_order_path(@order.uuid), class: [:ui, :massive, :primary, :button]

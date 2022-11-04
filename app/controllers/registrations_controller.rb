@@ -50,6 +50,7 @@ class RegistrationsController < ApplicationController
   end
 
   def new
+    warn_duplicate = current_user&.registrations&.where(variant: variant)&.any?
     latest = current_user&.registrations&.last
     registration_attrs = {
       email: current_user&.email,
@@ -62,6 +63,7 @@ class RegistrationsController < ApplicationController
       registration.forms.build({ template: template, registration: registration })
     end if variant.form_packet
     render locals: {
+      warn_duplicate: warn_duplicate,
       variant: variant,
       registration: registration,
       vouchers: current_user&.vouchers&.available || []
@@ -69,8 +71,15 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-      
+
     registration = variant.registrations.build(registration_params.except(:forms_attributes))
+
+    registration.order = Order.find_or_create_by!(uuid: current_visit&.visit_token) do |order|
+      order.first_name = registration.first_name
+      order.last_name = registration.last_name
+      order.email = registration.email
+      order.user = current_user
+    end
     
     # we have to build and initialize forms before assigning attributes so that the
     # dynamic setters and accessors can be created
@@ -83,19 +92,23 @@ class RegistrationsController < ApplicationController
     registration.user = current_user if current_user
     
     if registration.save
-
-      redirect_to collect_registration_path(registration.uuid) if registration.payment_required?
-      unless registration.payment_required?
-        RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
-        redirect_to registration_path(registration.uuid) 
-      end
+      # unless registration.payment_required?
+      #   RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
+      # end
+      # redirect_to collect_registration_path(registration.uuid) 
+      redirect_to cart_path
     else
       flash[:error] = "Registration could not be completed"
       registration.errors[:base].each do |message|
         flash[:error] = message
       end
-
       render :new, locals: {
+        warn_duplicate: current_user&.registrations&.where(variant: variant)&.any?,
+        potential_duplicates: Registration.where({
+          variant: variant,
+          last_name: registration.last_name,
+          birthdate: registration.birthdate
+        }),
         registration: registration,
         variant: variant,
         vouchers: current_user&.vouchers&.available || []
@@ -105,49 +118,70 @@ class RegistrationsController < ApplicationController
   
 
   def collect
-    @registration = registration = Registration.find_by_uuid(params[:id])
+    @registration = Registration.find_by_uuid(params[:id])
     @stripe_public_api_key = stripe_public_api_key
     @stripe_account = Tenant.current.stripe_account_id    
 
-    redirect_to registration_path(registration.uuid) and return unless registration.payment_required?
+    unless @registration.payment_required?
+      return redirect_to registration_path(@registration.uuid)
+    end
 
-    Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    # if session already captured then let's take a look
+    if(@registration.session_id.present?)
+      session = Stripe::Checkout::Session.retrieve(@registration.session_id, {
+        stripe_account: @registration.tenant.stripe_account_id,
+        api_key: api_key
+      })
+
+      case session.status
+      when 'open'
+        # guard against creating new session
+        return
+      when 'complete'
+        # guard against new session and redirect to registration#show
+        return redirect_to(registration_path(@registration.uuid))
+      when 'expired'
+        # allow code to flow through and create new session
+      end
+    end
 
     #  get existing customer for email address
-    customers = Stripe::Customer.list({ email: registration.email, limit: 1 }, {
-      stripe_account: Tenant.current.stripe_account_id
+    customers = Stripe::Customer.list({ email: @registration.email, limit: 1 }, {
+      stripe_account: Tenant.current.stripe_account_id,
+      api_key: api_key
     })
     customer = customers['data'][0]
 
     session_params = {
       customer: (customer['id'] if customer),
-      customer_email: (registration.email unless customer),
+      customer_email: (@registration.email unless customer),
       payment_method_types: ['card'],
-      client_reference_id: registration.id,
+      client_reference_id: @registration.id,
       line_items: [
         {
-          name: registration.product.title,
-          description: "#{registration.product.title}: #{registration.variant.title}",
+          name: @registration.product.title,
+          description: "#{@registration.product.title}: #{@registration.variant.title}",
           images: [],
-          amount: registration.price_in_cents,
+          amount: @registration.price_in_cents,
           currency: 'usd',
           quantity: 1
         }
       ],
       payment_intent_data: {
-        application_fee_amount: registration.application_fee_in_cents,
-        description: "#{registration.product.title}: #{registration.variant.title}"
+        application_fee_amount: @registration.application_fee_in_cents,
+        description: "#{@registration.product.title}: #{@registration.variant.title}"
       },        
-      success_url: confirm_registration_url(registration.uuid),
-      cancel_url: registration_url(registration.uuid)        
+      success_url: confirm_registration_url(@registration.uuid),
+      cancel_url: registration_url(@registration.uuid)        
     }
     session_options = {
-      stripe_account: Tenant.current.stripe_account_id
+      stripe_account: Tenant.current.stripe_account_id,
+      api_key: api_key
     }   
     
-    session = Stripe::Checkout::Session.create session_params, session_options
+    session = Stripe::Checkout::Session.create session_params, session_options    
     
-    registration.update(session_id: session.id, payment_intent_id: session.payment_intent)  
+    @registration.update!(session_id: session.id, payment_intent_id: session.payment_intent)  
 
   end
 
@@ -156,34 +190,46 @@ class RegistrationsController < ApplicationController
 
     registration = Registration.find_by_uuid(params[:id])
 
-    Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    if registration.completed?
+      return redirect_to registration_path(registration.uuid), flash: { info: 'Registration has already been marked as completed' }
+    end
+    if registration.session_id.blank?
+      return redirect_to registration_path(registration.uuid), flash: { error: 'Registration has yet to complete checkout' }
+    end
 
     session = Stripe::Checkout::Session.retrieve(registration.session_id, {
-      stripe_account: registration.tenant.stripe_account_id
+      stripe_account: registration.tenant.stripe_account_id,
+      api_key: api_key
     })
     
     payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent, {
-      stripe_account: registration.tenant.stripe_account_id
+      stripe_account: registration.tenant.stripe_account_id,
+      api_key: api_key
     })
 
-    if payment_intent.status == 'succeeded'
+    if session.status == 'complete'
       registration.update(payment_id: registration.payment_intent_id)
       registration.touch(:completed_at)
       RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
-      flash[:success] = "Payment has been processed"
-      redirect_to registration_path(registration.uuid)    
+      return redirect_to registration_path(registration.uuid), flash: { success: 'Checkout has been completed' }
     end
+
+    redirect_to registration_path(registration.uuid), flash:  { error: "Registration Checkout has not been completed (status: #{session.status})" }
   end  
 
 
   private
+
+    def api_key
+      Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    end
 
     def variant
       Variant.find(params[:variant_id])
     end
 
     def registration_params
-      params.require(:registration).permit(:first_name, :last_name, :birthdate, :email, :voucher_id, voucher: [:id])
+      params.require(:registration).permit(:first_name, :last_name, :birthdate, :email, :confirm, :voucher_id, voucher: [:id])
     end
 
     def form_params

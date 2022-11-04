@@ -45,9 +45,9 @@ namespace :sportified do
     config = Rails.configuration.database_configuration['development'].with_indifferent_access
     puts
     puts   'Capturing Backup...'
-    system 'heroku pg:backups:capture -a sportified4'
+    # system 'heroku pg:backups:capture -a sportified4'
     puts   'Downloading Backup...'
-    system 'heroku pg:backups:download -a sportified4 -o /app/tmp/latest.dump'
+    # system 'heroku pg:backups:download -a sportified4 -o /app/tmp/latest.dump'
     puts   'Dropping DB...'
     system "PGPASSWORD=#{config[:password]} dropdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
     puts   'Creating DB...'

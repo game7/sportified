@@ -1,3 +1,5 @@
+
+
 ::Sportified::Application.routes.draw do
 
   get 'screen' => "screen#show"
@@ -12,6 +14,17 @@
       get :confirm
     end
   end
+
+  resources :orders, only: [:index, :show] do
+    resources :items, only: [:destroy]
+    member do
+      get :checkout
+      get :confirm
+    end
+  end
+
+  get 'cart', to: 'orders#current'
+
   namespace :admin do
     get 'dashboard/index'
     get 'products/dashboard' => 'products/dashboard#index'

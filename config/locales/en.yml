@@ -36,6 +36,10 @@ en:
       default: "%m/%d/%y %l:%M %p"
       short_date: "%m/%d/%y"
       short: '%l:%M:%S'
+  
+  pundit:
+    default: "You cannot perform this action."
+
   standings:
     index:
       gp: "GP"

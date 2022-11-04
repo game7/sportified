@@ -72,7 +72,9 @@ SimpleForm.setup do |config|
       b.wrapper tag: 'div', class: 'ui checkbox' do |input|
         input.use :label_input
         input.use :hint,  wrap_with: { tag: 'div', class: 'hint' }
+        input.use :error, wrap_with: { tag: 'div', class: 'ui red pointing above label error' }
       end
+      
     end     
   
     config.wrappers :ui_slider_checkbox, tag: 'div', class: "field", error_class: 'error', hint_class: 'with_hint' do |b|
