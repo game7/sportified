@@ -31,7 +31,7 @@ class Product < ApplicationRecord
 
   belongs_to :registrable, polymorphic: true, required: false
 
-  has_many :variants, dependent: :destroy
+  has_many :variants, -> { order(display_order: :asc) }, dependent: :destroy
 
   accepts_nested_attributes_for :variants, reject_if: :all_blank, allow_destroy: true
 
