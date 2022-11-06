@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_023105) do
+ActiveRecord::Schema.define(version: 2022_11_05_195452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -472,6 +472,26 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
     t.index ["tenant_id"], name: "index_locations_on_tenant_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string "uuid"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.bigint "user_id"
+    t.bigint "tenant_id"
+    t.string "session_id"
+    t.string "payment_intent_id"
+    t.string "confirmation_code"
+    t.decimal "total_price", precision: 8, scale: 2
+    t.datetime "completed_at"
+    t.datetime "cancelled_at"
+    t.datetime "abandoned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_orders_on_tenant_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "pages", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.string "title"
@@ -590,6 +610,9 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
     t.datetime "abandoned_at"
     t.datetime "cancelled_at"
     t.datetime "checked_in_at"
+    t.bigint "order_id"
+    t.datetime "deleted_at"
+    t.index ["order_id"], name: "index_registrations_on_order_id"
     t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
@@ -728,6 +751,7 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "form_packet_id"
+    t.integer "display_order", default: 0
     t.index ["tenant_id"], name: "index_variants_on_tenant_id"
   end
 
@@ -762,6 +786,8 @@ ActiveRecord::Schema.define(version: 2022_03_29_023105) do
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
+  add_foreign_key "orders", "tenants"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrations", "form_packets"

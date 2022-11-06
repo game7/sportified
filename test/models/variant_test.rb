@@ -4,6 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  description      :text
+#  display_order    :integer          default(0)
 #  price            :decimal(20, 4)
 #  quantity_allowed :integer
 #  title            :string(40)
