@@ -26,7 +26,7 @@
     = f.input :roster
 
   %h4.ui.top.attached.header.product.variants Variants
-  = f.simple_fields_for :variants, include_id: false do |variant|
+  = f.simple_fields_for :variants, @product.variants.order(display_order: :asc), include_id: false do |variant|
     = render 'variant_fields', f: variant
   .ui.bottom.attached.segment
     = link_to_add_association 'Add Variant', f, :variants, class: [:ui, :small, :button]
