@@ -34,14 +34,18 @@
     %br/
     = link_to 'Create New Product', new_admin_product_path({ registrable_id: @event.id, registrable_type: 'Event' }), class: [:ui, :primary, :button]
     - if @recent_events_with_products.any?
-      .ui.primary.dropdown.button
-        .text Clone Existing Product
+      .ui.floating.primary.dropdown.button
+        %span.text Clone Existing Product
         %i.dropdown.icon
         .menu
-          - @recent_events_with_products.each do |event|
-            = link_to new_admin_product_path({ registrable_id: @event.id, registrable_type: 'Event', clone: event.product.id }), class: [:item] do
-              %i.copy.outline.icon
-              = "#{event.summary} (#{event.starts_on.strftime("%a %-m/%-d/%y at %l:%M %P")})"
+          .ui.icon.search.input
+            %i.search.icon
+            %input{ type: 'text', placeholder: 'Search Events'}
+          .scrolling.menu
+            - @recent_events_with_products.each do |event|
+              = link_to new_admin_product_path({ registrable_id: @event.id, registrable_type: 'Event', clone: event.product.id }), class: [:item] do
+                %i.copy.outline.icon
+                = "#{event.summary} (#{event.starts_on.strftime("%a %-m/%-d/%y at %l:%M %P")})"
 
 %h4.ui.top.attached.header History
 %table.ui.bottom.attached.celled.history.table

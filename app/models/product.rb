@@ -31,7 +31,7 @@ class Product < ApplicationRecord
 
   belongs_to :registrable, polymorphic: true, required: false
 
-  has_many :variants, -> { order(display_order: :asc) }, dependent: :destroy
+  has_many :variants, dependent: :destroy
 
   accepts_nested_attributes_for :variants, reject_if: :all_blank, allow_destroy: true
 
@@ -68,11 +68,6 @@ class Product < ApplicationRecord
   end
 
   def full_title
-    puts '----------------------------------------'
-    puts self.id
-    puts registrable
-    puts '----------------------------------------'
-
      event? ? "#{title} - #{registrable&.starts_at.strftime('%a %-m/%-e %-l:%M %P')}" : title
   end
 
