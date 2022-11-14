@@ -36,15 +36,6 @@ class Admin::EventsController < Admin::AdminController
 
   end
 
-  def proto
-    view = 'month'
-    date = params[:date] ? Date.parse(params[:date]) : Date.current
-    Date.beginning_of_week = :sunday
-
-    @events = ActiveModelSerializers::SerializableResource.new get_events(date, view)
-    @tags = ActiveModelSerializers::SerializableResource.new ActsAsTaggableOn::Tag.order(:name)
-  end
-
   def destroy
     @event.destroy
     return_to_last_point :success => 'Event has been deleted.'
