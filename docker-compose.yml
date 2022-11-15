@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 volumes:
   postgres:
   rails_cache:
@@ -23,7 +23,7 @@ services:
       context: .
     command: ./scripts/start
     stdin_open: true
-    tty: true    
+    tty: true
     volumes:
       - .:/app
       - rails_cache:/app/tmp/cache
@@ -38,13 +38,3 @@ services:
     environment:
       EDITOR: nano
       SUPER_ADMINS: "cmwoodall@yahoo.com;"
-  webpacker:
-    <<: *web
-    command: bundle exec ./bin/webpack-dev-server        
-    ports:
-      - 3035:3035
-    environment:
-      NODE_ENV: development
-      WEBPACK_DEV_SERVER_HOST: 0.0.0.0
-    depends_on:
-      - postgres

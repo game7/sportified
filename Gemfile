@@ -5,14 +5,14 @@ gem 'rails', '~> 5.2.3'
 gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'pg'
+
 gem 'enumerize'
 
 gem 'sass-rails', '~> 5.0.4'
-#gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'sprockets'
 gem 'sprockets-es6'
 
-gem 'webpacker', '~> 4'
+gem 'vite_rails'
 
 gem 'paranoia', '~> 2.3'
 
@@ -120,6 +120,7 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -128,6 +129,8 @@ group :development do
   gem 'guard-rspec', require: false  
  
   gem 'annotate'
+
+  gem 'rubocop-rails', require: false
 end
 
 group :test do
@@ -145,4 +148,3 @@ end
 group :production do
   gem 'puma', ">= 4.3.5"
 end
-

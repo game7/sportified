@@ -3,7 +3,7 @@
   = link_to 'Unpost Statistics', unpost_admin_hockey_statsheet_path(@statsheet), confirm: "This post the statistcs from this game to each player's record.  Are you sure?", method: :post, class: [:ui, :primary, :button] if @statsheet.posted?
   = link_to "Done", return_url, class: [:ui, :primary, :button]
 
-= react_component('statsheet/index', { settings: @statsheet.attributes, game: @game.attributes, penalties: @statsheet.penalties.map(&:attributes), goals: @statsheet.goals.map(&:attributes), teams: @teams.map(&:attributes), skaters: @skaters.map(&:attributes), players: @players.map(&:attributes), goaltenders: @statsheet.goaltenders.map(&:attributes) }, { camelize_props: true })
+= react_component('statsheet', { settings: @statsheet.attributes, game: @game.attributes, penalties: @statsheet.penalties.map(&:attributes), goals: @statsheet.goals.map(&:attributes), teams: @teams.map(&:attributes), skaters: @skaters.map(&:attributes), players: @players.map(&:attributes), goaltenders: @statsheet.goaltenders.map(&:attributes) }, { camelize_props: true })
 -# %h2= "#{@statsheet.game.summary} (#{@statsheet.game.starts_on.strftime('%m/%d/%y')})"
 -# .ui.segment
 -#   %div{ style: 'float: right;' }

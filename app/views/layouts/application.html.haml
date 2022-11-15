@@ -16,6 +16,8 @@
         = stylesheet_link_tag "https://fonts.googleapis.com/css?family=#{font.gsub(/ /, '+')}"
     = javascript_include_tag :application
     = csrf_meta_tag
+    = csp_meta_tag
+
     %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
     = yield(:head)
     = content_tag :style do
