@@ -58,9 +58,10 @@ class Product < ApplicationRecord
   end
 
   def dup
-    clone = super
-    clone.variants << variants.collect(&:dup)
-    clone
+    super.tap do |clone|
+      variants.order(display_order: :asc).collect(&:dup).each{ |variant| clone.variants << variant }
+      clone.image.attach image_blob
+    end
   end
 
   def event?
