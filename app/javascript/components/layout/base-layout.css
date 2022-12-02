@@ -1,0 +1,81 @@
+/* #app,
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.ant-layout-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-layout-content {
+  flex-grow: 1;
+  padding: 24px;
+  background: #fff;
+} */
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout-background {
+  background-color: white;
+}
+
+.outer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.main-page-container {
+  width: 100%;
+  /* flex: auto;
+  margin-left: auto;
+  margin-right: auto; */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+@media screen and (min-width: 576px) {
+  .main-page-container {
+    width: 720px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main-page-container {
+    width: 720px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .main-page-container {
+    width: 960px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .main-page-container {
+    width: 1140px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .main-page-container {
+    width: 1320px;
+  }
+}
+
+.main-page-container.fluid {
+  width: 100%;
+}

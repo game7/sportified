@@ -34,6 +34,7 @@
 #  page_id                   :integer
 #  playing_surface_id        :integer
 #  program_id                :integer
+#  recurrence_id             :bigint
 #  season_id                 :integer
 #  statsheet_id              :integer
 #  tenant_id                 :integer
@@ -49,6 +50,7 @@
 #  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)
+#  index_events_on_recurrence_id             (recurrence_id)
 #  index_events_on_season_id                 (season_id)
 #  index_events_on_tenant_id                 (tenant_id)
 #
@@ -56,33 +58,32 @@
 #
 #  fk_rails_...  (page_id => pages.id)
 #  fk_rails_...  (program_id => programs.id)
+#  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class Event < ActiveRecord::Base
   include Sportified::TenantScoped
   acts_as_ordered_taggable
   audited
 
-  belongs_to :program, required: false
+  belongs_to :program, optional: true
 
-  belongs_to :page, required: false
-  
+  belongs_to :page, optional: true
+
   belongs_to :location
-  validates_presence_of :location_id
+  validates :location_id, presence: true
 
-  belongs_to :home_team_locker_room, class_name: 'LockerRoom', required: false
-  belongs_to :away_team_locker_room, class_name: 'LockerRoom', required: false
+  belongs_to :home_team_locker_room, class_name: 'LockerRoom', optional: true
+  belongs_to :away_team_locker_room, class_name: 'LockerRoom', optional: true
 
   has_one :product, as: :registrable
 
   alias_attribute :starts_at, :starts_on
 
-  validates_presence_of :starts_on
+  validates :starts_on, presence: true
   # validate :starts_on_cannot_be_in_the_past
 
   def starts_on_cannot_be_in_the_past
-    if new_record? && starts_on.past?
-      errors.add(:starts_on, "can't be in the past")
-    end
+    errors.add(:starts_on, "can't be in the past") if new_record? && starts_on.past?
   end
 
   before_save :set_starts_on
@@ -90,8 +91,8 @@ class Event < ActiveRecord::Base
     self.starts_on = starts_on.beginning_of_day if all_day
   end
 
-  validates_presence_of :duration
-  validates_numericality_of :duration, :only_integer => true
+  validates :duration, presence: true
+  validates :duration, numericality: { only_integer: true }
 
   before_save :set_duration
   def set_duration
@@ -100,20 +101,20 @@ class Event < ActiveRecord::Base
 
   before_save :set_ends_on
   def set_ends_on
-    self.ends_on = self.starts_on.advance(:minutes => self.duration)
+    self.ends_on = starts_on.advance(minutes: duration)
   end
 
-  scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }
-  scope :in_the_future, ->{ where('starts_on > ?', DateTime.now) }
+  scope :in_the_past, -> { where('starts_on < ?', DateTime.now) }
+  scope :in_the_future, -> { where('starts_on > ?', DateTime.now) }
   scope :after, ->(after) { where('starts_on > ?', after) }
   scope :at_or_after, ->(from) { where('starts_on >= ?', from) }
   scope :ends_after, ->(after) { where('ends_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
-  scope :public_only, ->{ where(private: false) }
-  scope :with_product, ->{ joins(:product).where('products.registrable_type = \'Event\' AND products.id IS NOT NULL') }
+  scope :public_only, -> { where(private: false) }
+  scope :with_product, -> { joins(:product).where('products.registrable_type = \'Event\' AND products.id IS NOT NULL') }
 
   def start_time
-    self.starts_on
+    starts_on
   end
 
   def module_name
@@ -123,5 +124,4 @@ class Event < ActiveRecord::Base
   def color_key
     raise "color_key must be implemented by subclass #{self.class.name}"
   end
-
 end

@@ -1,0 +1,14 @@
+!!!
+%html
+  %head 
+    = csrf_meta_tag
+    = csp_meta_tag
+
+    = vite_client_tag
+    = vite_react_refresh_tag
+    = vite_javascript_tag 'host.tsx'
+
+    %meta{ content: 'width=device-width, initial-scale=1.0', name: :viewport}
+  
+  %body
+    = yield

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_05_195452) do
+ActiveRecord::Schema.define(version: 2022_12_02_184625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
     t.integer "program_id"
     t.integer "page_id"
     t.boolean "private", default: false, null: false
+    t.bigint "recurrence_id"
     t.index ["away_team_id"], name: "index_events_on_away_team_id"
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id"
     t.index ["division_id"], name: "index_events_on_division_id"
@@ -183,6 +184,7 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
     t.index ["page_id"], name: "index_events_on_page_id"
     t.index ["playing_surface_id"], name: "index_events_on_playing_surface_id"
     t.index ["program_id"], name: "index_events_on_program_id"
+    t.index ["recurrence_id"], name: "index_events_on_recurrence_id"
     t.index ["season_id"], name: "index_events_on_season_id"
     t.index ["tenant_id"], name: "index_events_on_tenant_id"
   end
@@ -468,28 +470,9 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string "color"
     t.index ["deleted_at"], name: "index_locations_on_deleted_at"
     t.index ["tenant_id"], name: "index_locations_on_tenant_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "uuid"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
-    t.bigint "user_id"
-    t.bigint "tenant_id"
-    t.string "session_id"
-    t.string "payment_intent_id"
-    t.string "confirmation_code"
-    t.decimal "total_price", precision: 8, scale: 2
-    t.datetime "completed_at"
-    t.datetime "cancelled_at"
-    t.datetime "abandoned_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tenant_id"], name: "index_orders_on_tenant_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pages", id: :serial, force: :cascade do |t|
@@ -589,6 +572,21 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
     t.index ["tenant_id"], name: "index_programs_on_tenant_id"
   end
 
+  create_table "recurrences", force: :cascade do |t|
+    t.boolean "monday"
+    t.boolean "tuesday"
+    t.boolean "wednesday"
+    t.boolean "thursday"
+    t.boolean "friday"
+    t.boolean "saturday"
+    t.boolean "sunday"
+    t.string "ending"
+    t.date "ends_on"
+    t.integer "occurrence_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "registrations", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.integer "user_id"
@@ -610,9 +608,6 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
     t.datetime "abandoned_at"
     t.datetime "cancelled_at"
     t.datetime "checked_in_at"
-    t.bigint "order_id"
-    t.datetime "deleted_at"
-    t.index ["order_id"], name: "index_registrations_on_order_id"
     t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
@@ -774,6 +769,7 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
   add_foreign_key "chromecasts", "tenants"
   add_foreign_key "events", "pages"
   add_foreign_key "events", "programs"
+  add_foreign_key "events", "recurrences"
   add_foreign_key "facilities", "locations"
   add_foreign_key "form_elements", "form_templates", column: "template_id"
   add_foreign_key "form_elements", "tenants"
@@ -786,8 +782,6 @@ ActiveRecord::Schema.define(version: 2022_11_05_195452) do
   add_foreign_key "league_divisions", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
-  add_foreign_key "orders", "tenants"
-  add_foreign_key "orders", "users"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"
   add_foreign_key "registrations", "form_packets"

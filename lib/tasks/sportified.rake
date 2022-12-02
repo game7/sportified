@@ -1,6 +1,5 @@
 namespace :sportified do
-
-  desc "Normalize Event Times"
+  desc 'Normalize Event Times'
   task normalize_event_times: :environment do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
@@ -11,7 +10,7 @@ namespace :sportified do
     end
   end
 
-  desc "Link User to Registrations"
+  desc 'Link User to Registrations'
   task link_registrations: :environment do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
@@ -27,9 +26,9 @@ namespace :sportified do
       puts "account w/o email #{extra.length}"
       puts '----------------------'
     end
-  end  
+  end
 
-  desc "Normalize All Day Event Times"
+  desc 'Normalize All Day Event Times'
   task normalize_allday_event_times: :environment do
     Tenant.all.each do |tenant|
       Tenant.current = tenant
@@ -40,7 +39,7 @@ namespace :sportified do
     end
   end
 
-  desc "Dump Production DB to /tmp"
+  desc 'Dump Production DB to /tmp'
   task dump: :environment do
     config = Rails.configuration.database_configuration['development'].with_indifferent_access
     puts
@@ -51,12 +50,11 @@ namespace :sportified do
     puts   'Dropping DB...'
     system "PGPASSWORD=#{config[:password]} dropdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
     puts   'Creating DB...'
-    system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"    
+    system "PGPASSWORD=#{config[:password]} createdb -e -h #{config[:host]} -U #{config[:username]} #{config[:database]}"
     puts   'Restoring Backup...'
     system "PGPASSWORD=#{config[:password]} pg_restore --verbose --no-acl --no-owner -h #{config[:host]} -U #{config[:username]} -d #{config[:database]} /app/tmp/latest.dump"
     puts   'DONE!'
 
     puts
   end
-
 end

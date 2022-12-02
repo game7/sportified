@@ -1,11 +1,7 @@
-class Host::DashboardController < Host::HostController
-
+class Host::DashboardController < Host::BaseController
   def index
-    
+    inertia props: {}
   end
 
-  def status
-    
-  end
-
+  def status; end
 end

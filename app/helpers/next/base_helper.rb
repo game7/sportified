@@ -1,0 +1,2 @@
+module Next::BaseHelper
+end

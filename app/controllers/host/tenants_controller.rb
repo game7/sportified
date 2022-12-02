@@ -1,19 +1,22 @@
-class Host::TenantsController < Host::HostController
+class Host::TenantsController < Host::BaseController
+  before_action :mark_return_point, only: %i[show edit new destroy]
+  before_action :find_tenant, only: %i[show edit update destroy]
 
-  before_action :mark_return_point, :only => [:show, :edit, :new, :destroy]
-  before_action :find_tenant, :only => [:show, :edit, :update, :destroy]
+  layout 'host'
 
   def index
-    @tenants = Tenant.all
+    inertia props: {
+      tenants: Tenant.all
+    }
   end
 
   def show
-
+    inertia props: {
+      tenant: @tenant
+    }
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def new
     @tenant = Tenant.new
@@ -21,20 +24,20 @@ class Host::TenantsController < Host::HostController
 
   def update
     if @tenant.update_attributes(tenant_params)
-      return_to_last_point :success => 'Tenant has been updated.'
+      return_to_last_point success: 'Tenant has been updated.'
     else
       flash[:error] = 'Tenant could not be updated'
-      render :action => :edit
+      render action: :edit
     end
   end
 
   def create
     @tenant = Tenant.new(tenant_params)
     if @tenant.save
-      return_to_last_point(:notice => 'New Tenant has been created.')
+      return_to_last_point(notice: 'New Tenant has been created.')
     else
       flash[:error] = 'Tenant could not be created'
-      render :action => :new
+      render action: :new
     end
   end
 
@@ -80,5 +83,4 @@ class Host::TenantsController < Host::HostController
     super
     add_breadcrumb 'Tenants', host_tenants_path
   end
-
 end

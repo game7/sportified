@@ -9,7 +9,6 @@
 #  checked_in_at     :datetime
 #  completed_at      :datetime
 #  confirmation_code :string
-#  deleted_at        :datetime
 #  email             :string
 #  first_name        :string(40)
 #  last_name         :string(40)
@@ -18,7 +17,6 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  form_packet_id    :integer
-#  order_id          :bigint
 #  payment_id        :string
 #  payment_intent_id :text
 #  session_id        :text
@@ -28,7 +26,6 @@
 #
 # Indexes
 #
-#  index_registrations_on_order_id   (order_id)
 #  index_registrations_on_tenant_id  (tenant_id)
 #  index_registrations_on_user_id    (user_id)
 #

@@ -3,6 +3,7 @@
 # Table name: locations
 #
 #  id         :integer          not null, primary key
+#  color      :string
 #  deleted_at :datetime
 #  name       :string
 #  short_name :string
@@ -23,6 +24,7 @@ class Location < ActiveRecord::Base
     def playing_surfaces
       where(type: 'PlayingSurface')
     end
+
     def locker_rooms
       where(type: 'LockerRoom')
     end
@@ -30,13 +32,10 @@ class Location < ActiveRecord::Base
   has_many :playing_surfaces
   has_many :locker_rooms
 
-  validates_presence_of :name
+  validates :name, presence: true
 
   before_save :ensure_short_name
   def ensure_short_name
-    if short_name.nil? || short_name.empty?
-      self.short_name = name
-    end
+    self.short_name = name if short_name.blank?
   end
-
 end

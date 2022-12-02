@@ -15,7 +15,7 @@ class General::Events::UpdateForm
 
   def initialize(event)
     @event = event
-    assign_attributes event.attributes.slice(*self.attributes.stringify_keys.keys)
+    assign_attributes event.attributes.slice(*attributes.stringify_keys.keys)
     self.tag_list = event.tag_list
   end
 
@@ -36,22 +36,22 @@ class General::Events::UpdateForm
                         :location_id,
                         :summary
 
-
   def submit(params)
     assign_attributes(whitelist(params))
     return false unless valid?
-    @event.update_attributes(self.attributes)
+
+    @event.update(attributes)
   end
 
   def whitelist(params)
     Chronic.time_class = Time.zone
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
     params.require(:general_event)
-          .permit(:program_id, :starts_on, :duration, :page_id, :all_day, :location_id, :summary, :description, :tag_list, :private)
+          .permit(:program_id, :starts_on, :duration, :page_id, :all_day,
+                  :location_id, :summary, :description, :private, tag_list: [])
   end
 
   def location_options
     @location_options ||= Location.order(:name).pluck(:name, :id)
   end
-
 end

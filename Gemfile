@@ -14,6 +14,8 @@ gem 'sprockets-es6'
 
 gem 'vite_rails'
 
+gem 'inertia_rails', '>= 1.2.2'
+
 gem 'paranoia', '~> 2.3'
 
 

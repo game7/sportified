@@ -14,8 +14,8 @@ console.log("Vite ⚡️ Rails");
 //     <%= vite_javascript_tag 'application.jsx' %>
 
 console.log(
-    "Visit the guide for more information: ",
-    "https://vite-ruby.netlify.app/guide/rails"
+  "Visit the guide for more information: ",
+  "https://vite-ruby.netlify.app/guide/rails"
 );
 
 // Example: Load Rails libraries in Vite.
@@ -33,26 +33,24 @@ console.log(
 // import '~/index.css'
 
 (function setupReactComponents() {
-    var context = import.meta.globEager(
-        "../components/*/index.{js,jsx,ts,tsx}"
-    );
+  var context = import.meta.globEager("../widgets/*/index.{js,jsx,ts,tsx}");
 
-    var components = {};
+  var components = {};
 
-    Object.keys(context).forEach((path) => {
-        let component = context[path].default;
+  Object.keys(context).forEach((path) => {
+    let component = context[path].default;
 
-        `import * as ${component.name} from '${path}'`;
+    `import * as ${component.name} from '${path}'`;
 
-        let name = path.replace("../components/", "").split("/")[0];
+    let name = path.replace("../widgets/", "").split("/")[0];
 
-        components[name] = component;
-    });
+    components[name] = component;
+  });
 
-    console.log(components);
-    ReactRailsUJS.getConstructor = (className) => {
-        let component = components[className];
-        console.log(`Mounting ${component.name} component to ${className}`);
-        return component;
-    };
+  console.log(components);
+  ReactRailsUJS.getConstructor = (className) => {
+    let component = components[className];
+    console.log(`Mounting ${component.name} component to ${className}`);
+    return component;
+  };
 })();

@@ -34,6 +34,7 @@
 #  page_id                   :integer
 #  playing_surface_id        :integer
 #  program_id                :integer
+#  recurrence_id             :bigint
 #  season_id                 :integer
 #  statsheet_id              :integer
 #  tenant_id                 :integer
@@ -49,6 +50,7 @@
 #  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)
+#  index_events_on_recurrence_id             (recurrence_id)
 #  index_events_on_season_id                 (season_id)
 #  index_events_on_tenant_id                 (tenant_id)
 #
@@ -56,6 +58,7 @@
 #
 #  fk_rails_...  (page_id => pages.id)
 #  fk_rails_...  (program_id => programs.id)
+#  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class EventSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers

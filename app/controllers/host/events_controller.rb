@@ -1,12 +1,31 @@
-class Host::EventsController < Host::HostController
+class Host::EventsController < Host::BaseController
   def index
-    @date = Date.parse(params[:date] || Date.today.to_s)
-    @ip = params[:ip].presence
+    date = params[:date] ? Time.zone.parse(params[:date]) : Time.zone.today
 
-    @events = Ahoy::Event.unscoped.includes(:visit, :user).where('time > ? AND time < ?', @date, @date + 1.day).order(time: :asc)
-    @events = @events.joins(:visit).where(ahoy_visits: { ip: @ip }) if @ip.present?
+    inertia props: {
+      date: date,
+      tenants: tenants,
+      events: events(date)
+    }
   end
+
   def show
-    @event = Ahoy::Event.unscoped.includes(:visit, :user).find(params[:id])
+    event = Ahoy::Event.unscoped.includes(:visit, :user).find(params[:id])
+
+    inertia props: {
+      event: event
+    }
+  end
+
+  private
+
+  def events(date)
+    Ahoy::Event.unscoped.includes(:visit, :user)
+               .where(time: [date.beginning_of_day...(date.end_of_day)])
+               .order(time: :asc)
+  end
+
+  def tenants
+    Tenant.all.order(name: :asc)
   end
 end

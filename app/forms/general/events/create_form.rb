@@ -26,7 +26,7 @@ class General::Events::CreateForm
 
   def initialize(event)
     @event = event
-    assign_attributes event.attributes.slice(*self.attributes.keys.collect(&:to_s))
+    assign_attributes event.attributes.slice(*attributes.keys.collect(&:to_s))
     self.repeat = false
     self.ends = 'on'
     self.ends_after_occurrences = 10
@@ -53,30 +53,33 @@ class General::Events::CreateForm
                                                      only_integer: true }
 
   def repeating?
-    repeat
+    repeat == true
   end
 
   def repeating_with_end_date?
-    repeat and ends == 'on'
+    repeat == true and ends == 'on'
   end
 
   def repeating_with_occurances?
-    repeat and ends == 'after'
+    repeat == true and ends == 'after'
   end
 
   def submit(params)
     assign_attributes(whitelist(params))
     return false unless valid?
+
     Event.transaction do
-      @event.update_attributes(self.attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list, :private))
+      @event.update_attributes(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list, :private))
       @event.save
-      if(repeating?)
-        schedule = IceCube::Schedule.new(now = @event.starts_on + 1.days) do |schedule|
+      if repeating?
+        schedule = IceCube::Schedule.new(now = @event.starts_on + 1.day) do |schedule|
           schedule.add_recurrence_rule IceCube::Rule.weekly.day(*repeat_days)
         end
-        slots = (ends == 'after') ?
-                  schedule.first(ends_after_occurrences - 1) :
+        slots = if ends == 'after'
+                  schedule.first(ends_after_occurrences - 1)
+                else
                   schedule.occurrences(Chronic.parse(ends_on).end_of_day)
+                end
         slots.each do |slot|
           recurrence = @event.dup
           date = Time.zone.local(
@@ -84,7 +87,7 @@ class General::Events::CreateForm
             slot.month,
             slot.day,
             recurrence.starts_on.hour,
-            recurrence.starts_on.min,
+            recurrence.starts_on.min
           )
           recurrence.starts_on = date
           recurrence.save
@@ -97,27 +100,28 @@ class General::Events::CreateForm
   def whitelist(params)
     Chronic.time_class = Time.zone
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
+    puts '---------'
+    puts attributes.keys.concat([tag_list: []])
+    puts '---------'
     params.require(:general_event)
-          .permit(*self.attributes.keys.collect(&:to_s))
+          .permit(*attributes.keys.concat([tag_list: []]))
   end
 
   def repeat_days
     Date::DAYNAMES.collect(&:downcase)
-                  .select{|day| send("repeat_on_#{day}") }
+                  .select { |day| send("repeat_on_#{day}") }
                   .collect(&:to_sym)
   end
 
   def self.repeat_interval_options
-    %w{week}
+    %w[week]
   end
 
   def self.ends_options
-    %w{on after}
+    %w[on after]
   end
 
   def location_options
     @location_options ||= Location.order(:name).pluck(:name, :id)
   end
-
-
 end

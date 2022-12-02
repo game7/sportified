@@ -3,6 +3,7 @@
 # Table name: locations
 #
 #  id         :integer          not null, primary key
+#  color      :string
 #  deleted_at :datetime
 #  name       :string
 #  short_name :string

@@ -34,6 +34,7 @@
 #  page_id                   :integer
 #  playing_surface_id        :integer
 #  program_id                :integer
+#  recurrence_id             :bigint
 #  season_id                 :integer
 #  statsheet_id              :integer
 #  tenant_id                 :integer
@@ -49,6 +50,7 @@
 #  index_events_on_page_id                   (page_id)
 #  index_events_on_playing_surface_id        (playing_surface_id)
 #  index_events_on_program_id                (program_id)
+#  index_events_on_recurrence_id             (recurrence_id)
 #  index_events_on_season_id                 (season_id)
 #  index_events_on_tenant_id                 (tenant_id)
 #
@@ -56,17 +58,30 @@
 #
 #  fk_rails_...  (page_id => pages.id)
 #  fk_rails_...  (program_id => programs.id)
+#  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class General::Event < ::Event
+  validates :summary, presence: true
 
-  validates_presence_of :summary
+  belongs_to :recurrence, optional: true
+
+  after_create do
+    recurrence&.create_event_occurrences
+  end
+
+  accepts_nested_attributes_for :recurrence, reject_if: proc { |attributes| attributes['ending'].blank? }
 
   def color_key
-    tags.reduce([]){|result, tag| result.push(tag.name)}.join('-')
+    tags.reduce([]) { |result, tag| result.push(tag.name) }.join('-')
   end
 
   def show_teams?
     home_team_name.present? || away_team_name.present?
   end
 
+  def dup
+    super.tap do |clone|
+      clone.tag_list = tag_list
+    end
+  end
 end
