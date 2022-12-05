@@ -1,0 +1,5 @@
+.calendar-event:hover {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin: -1px 0;
+  cursor: pointer;
+}

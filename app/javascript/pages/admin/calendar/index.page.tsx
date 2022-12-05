@@ -1,6 +1,8 @@
 import {
   ClockCircleOutlined,
+  CopyOutlined,
   DownloadOutlined,
+  EditOutlined,
   PlusOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
@@ -10,12 +12,14 @@ import { Inertia, Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import { Badge, Button, Dropdown, Popover, Select, Space } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-import _, { intersection, keyBy, times } from "lodash";
-import { ComponentProps } from "react";
+import _, { Dictionary, intersection, keyBy, times } from "lodash";
+import { ComponentProps, PropsWithChildren } from "react";
 import { useSearchParams } from "react-router-dom";
+import { LinkButton } from "~/components/buttons";
 import DatePicker from "~/components/date-picker";
 import { AdminLayout } from "~/components/layout/admin-layout";
 import { withRouter } from "~/utils/with-router";
+import "./index.css";
 
 type Event = WithOptional<App.Event, "tags">;
 type Location = Pick<App.Location, "id" | "name" | "color">;
@@ -299,6 +303,19 @@ function getEditUrl(event: App.Event) {
   return `/next/admin/general/events/${event.id}/edit`;
 }
 
+function getCloneUrl(event: App.Event) {
+  if (event.type == "League::Game") {
+    return `/next/admin/league/games/new?clone=${event.id}`;
+  }
+  if (event.type == "League::Practice") {
+    return `/next/admin/league/practices/new?clone=${event.id}`;
+  }
+  if (event.type == "League::Event") {
+    return `/next/admin/league/events/new?clone=${event.id}`;
+  }
+  return `/next/admin/general/events/new?clone=${event.id}`;
+}
+
 function toHexColor(str: string) {
   var hash = 0;
   for (var i = 0; i < str.length; i++) {
@@ -381,60 +398,23 @@ function CalendarMonthView({
                           {(events[day.format("YYYY-MM-DD")] || [])
                             // .slice(0, 5)
                             .map((event) => (
-                              <li key={event.id}>
-                                <Badge
-                                  color={getColor(event)}
-                                  text={
-                                    <Popover
-                                      title={event.summary}
-                                      placement="right"
-                                      content={
-                                        <Space direction="vertical">
-                                          <Space>
-                                            <ClockCircleOutlined />
-                                            <span>
-                                              {dayjs(event.starts_on).format(
-                                                "dddd, MMMM D, YYYY h:mm A"
-                                              )}
-                                              {dayjs(event.ends_on).format(
-                                                "-h:mm A"
-                                              )}
-                                            </span>
-                                          </Space>
-                                          <Space>
-                                            <FontAwesomeIcon
-                                              icon={faLocationPin}
-                                            />
-                                            <span>
-                                              {
-                                                locations[event.location_id]
-                                                  ?.name
-                                              }
-                                            </span>
-                                          </Space>
-                                          {event.tags.length > 0 && (
-                                            <Space>
-                                              <TagsOutlined />
-                                              <span>
-                                                {event.tags
-                                                  .map((tag) => tag.name)
-                                                  .join(", ")}
-                                              </span>
-                                            </Space>
-                                          )}
-                                        </Space>
-                                      }
-                                    >
+                              <CalendarEventPopover
+                                key={event.id}
+                                event={event}
+                                locations={locations}
+                              >
+                                <li className="calendar-event">
+                                  <Badge
+                                    color={getColor(event)}
+                                    text={
                                       <Space>
                                         <span>{renderTime(event)}</span>
-                                        <span style={{ cursor: "pointer" }}>
-                                          <span>{event.summary}</span>
-                                        </span>
+                                        <span>{event.summary}</span>
                                       </Space>
-                                    </Popover>
-                                  }
-                                />
-                              </li>
+                                    }
+                                  />
+                                </li>
+                              </CalendarEventPopover>
                             ))}
                         </ul>
                       </div>
@@ -447,5 +427,62 @@ function CalendarMonthView({
         </div>
       </div>
     </div>
+  );
+}
+
+interface CalendarEventPopoverProps extends PropsWithChildren {
+  event: Event;
+  locations: Dictionary<Location>;
+}
+
+function CalendarEventPopover({
+  event,
+  locations,
+  children,
+}: CalendarEventPopoverProps) {
+  return (
+    <Popover
+      title={event.summary}
+      placement="right"
+      content={
+        <Space direction="vertical">
+          <Space>
+            <ClockCircleOutlined />
+            <span>
+              {dayjs(event.starts_on).format("dddd, MMMM D, YYYY h:mm A")}
+              {dayjs(event.ends_on).format("-h:mm A")}
+            </span>
+          </Space>
+          <Space>
+            <FontAwesomeIcon icon={faLocationPin} />
+            <span>{locations[event.location_id]?.name}</span>
+          </Space>
+          {event.tags.length > 0 && (
+            <Space>
+              <TagsOutlined />
+              <span>{event.tags.map((tag) => tag.name).join(", ")}</span>
+            </Space>
+          )}
+          <Space>
+            <LinkButton
+              size="small"
+              href={getEditUrl(event)}
+              icon={<EditOutlined />}
+            >
+              Edit
+            </LinkButton>
+            <LinkButton
+              size="small"
+              href={getCloneUrl(event)}
+              icon={<CopyOutlined />}
+            >
+              Clone
+            </LinkButton>
+          </Space>
+        </Space>
+      }
+    >
+      {children}
+    </Popover>
   );
 }
