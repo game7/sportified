@@ -39,4 +39,10 @@ class Admin::Events::Views::ToolbarComponent < ViewComponent::Base
     end
   end
 
+  def location_options
+    Location.all.order(:name).collect do |location|
+      [location.name, helpers.url_for(params.permit!.merge({ location_id: location.id }))]
+    end.unshift(['All Locations', helpers.url_for(params.permit!.merge({ location_id: nil }))])
+  end
+
 end

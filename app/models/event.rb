@@ -90,6 +90,7 @@ class Event < ActiveRecord::Base
   scope :in_the_past, ->{ where('starts_on < ?', DateTime.now) }
   scope :in_the_future, ->{ where('starts_on > ?', DateTime.now) }
   scope :after, ->(after) { where('starts_on > ?', after) }
+  scope :at_or_after, ->(from) { where('starts_on >= ?', from) }
   scope :ends_after, ->(after) { where('ends_on > ?', after) }
   scope :before, ->(before) { where('starts_on < ?', before) }
   scope :public_only, ->{ where(private: false) }

@@ -1,0 +1,134 @@
+// Place all the styles related to the casts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@font-face {
+  font-family: 'Sun Devil';
+  src: font-url('SunDevilBold.eot');
+  src: font-url('SunDevilBold.eot?#iefix') format('embedded-opentype'),
+       font-url('SunDevilBold.woff2') format('woff2'),
+       font-url('SunDevilBold.woff') format('woff'),
+       font-url('SunDevilBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  font-family: 'Sun Devil', Roboto, Helvetica, sans-serif;
+  //height: 100vh;
+  //width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  background-image: asset-url("themes/oia/oia_web_bg.jpg");
+  background-position: center top;
+  background-repeat:no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.main {
+  height: 1040px;
+  width: 100%;
+
+
+  .left {
+    //background-color: hsla(0, 100%, 100%, .1);
+    height: 100%;
+    width: 50%;
+    float: left;
+    padding: 40px;
+
+    table {
+      width: 100%;
+      background-color: #dedede;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 2px;
+    }
+    td, th {
+      background-color: white;
+      padding: 10px;
+    }
+    td {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    tr.featured td {
+      font-size: 24sp;
+    }
+    th, caption {
+      background-color: maroon;
+      color: gold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 12px;
+    }
+    th.time {
+      width: 25%;
+      text-align: center;
+    }
+    th.summary {
+      width: 50%;
+    }
+    th.room {
+      width: 25%;
+      text-align: center;
+    }
+    td.time {
+      text-align: center;
+    }
+    td.summary {
+    }
+    td.room {
+      text-align: center;
+    }
+  }
+
+  .right {
+    //background-color: maroon;
+    height: 100%;
+    width: 50%;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+
+.footer {
+  height: 40px;
+  width: 100%;
+  background-color: maroon;
+  .left {
+    height: 100%;
+    width: 50%;
+    float: left;
+  }
+  .right {
+    height: 100%;
+    width: 50%;
+    float: right;
+    text-align: right;
+  }
+  #venue {
+    color: white;
+    font-size: 24px;
+    line-height: 40px;
+    margin-left: 20px;
+    text-transform: uppercase;
+  }
+  #current-time {
+    color: white;
+    font-size: 24px;
+    line-height: 40px;
+    margin-right: 20px;
+  }
+}
+

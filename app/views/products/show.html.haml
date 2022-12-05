@@ -17,7 +17,7 @@
     %h3.ui.dividing.header Options
     %table.ui.table
       %tbody
-        - @product.variants.each do |variant|
+        - @product.variants.order(display_order: :asc).each do |variant|
           %tr
             %td
               .title{style: 'font-weight: bold'}= variant.title
@@ -35,7 +35,7 @@
 
     - if @product.roster?
       %h3 Roster
-      - @product.variants.each do |variant|
+      - @product.variants.order(display_order: :asc).each do |variant|
         %table.ui.table
           %thead
             %th= variant.title

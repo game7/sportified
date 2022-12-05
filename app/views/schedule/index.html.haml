@@ -9,6 +9,7 @@
     - date = DateTime.now
     = render 'calendar', date: date
     = render 'calendar', date: date + 1.month
+    = render 'location_cloud', locations: @locations
     = render 'tag_cloud', tags: @tags
 
   .twelve.wide.column{ class: @show_tags ? :twelve : :sixteen }
@@ -21,7 +22,7 @@
       %table.ui.celled.striped.table
         %thead
           %tr
-            %th{ colspan: 2 }= date.strftime('%A, %B %e %Y')
+            %th{ colspan: 3 }= date.strftime('%A, %B %e %Y')
         %tbody
           - day_events.each do |event|
             %tr
@@ -33,12 +34,15 @@
                   - unless event.class.name == 'League::Game'
                     != ' - '
                     = event.ends_on.strftime('%l:%M %P')  
-              %td
-                = event.summary
-                - if event.product.present? && event.product.active? && !event.product.private?
-                  = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
-                    %i.edit.outline.icon
-                    Register Online
+              %td.eight.wide
+                %div(style="display: flex; justify-content: space-between; align-items: center;")
+                  = event.summary
+                  - if event.product.present? && event.product.active? && !event.product.private?
+                    = link_to event.product, class: [:ui, :mini, :primary, :right, :floated, :button] do
+                      %i.edit.outline.icon
+                      Register Online
+              %td.four.wide
+                = event.location.name
 
     = render 'stepper', date: @date if @date.present?    
 
@@ -67,8 +71,10 @@
                     - unless event.class.name == 'League::Game'
                       != ' - '
                       = event.ends_on.strftime('%l:%M %P')  
+                .location
+                  = event.location.name
                 - if event.product.present? && event.product.active? && !event.product.private?
-                  = link_to event.product, class: [:ui, :tiny, :primary, :button] do
+                  = link_to event.product, class: [:ui, :tiny, :primary, :button], style: 'margin-top: 5px;' do
                     %i.edit.outline.icon
                     Register Online                      
 

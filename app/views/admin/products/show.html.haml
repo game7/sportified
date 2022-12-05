@@ -46,7 +46,7 @@
     %th Price
     %th Registrations
   %tbody
-    - @product.variants.each do |variant|
+    - @product.variants.order(display_order: :asc).each do |variant|
       %tr
         %td= variant.title
         %td= number_to_currency(variant.price, :unit => "$").presence || 'Free'

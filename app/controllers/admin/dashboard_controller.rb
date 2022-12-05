@@ -17,9 +17,14 @@ class Admin::DashboardController < Admin::AdminController
     #                         .count
     # @by_device = Ahoy::Visit.where('started_at >= ?', 1.week.ago)
     #                         .group(:device_type)
-    #                         .count                            
-    @events = Event.includes(location: :facilities).after(@date.beginning_of_day).before(@date.end_of_day).order(:starts_on) 
-    @locker_rooms = LockerRoom.order(:location_id, :name)                       
+    #                         .count                  
+    @locker_rooms = LockerRoom.order(:location_id, :name)
+    # display events only for locations that have locker rooms maintained
+    @events = Event.includes(location: :facilities)
+                   .where(location_id: @locker_rooms.collect(&:location_id))
+                   .after(@date.beginning_of_day)
+                   .before(@date.end_of_day)
+                   .order(:starts_on) 
   end
 
 end

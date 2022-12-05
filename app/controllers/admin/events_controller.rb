@@ -17,6 +17,8 @@ class Admin::EventsController < Admin::AdminController
 
     @events = get_events(@date, @view)
 
+    @events = @events.where(location_id: params[:location_id]) if params[:location_id]
+
     @days = @events.group_by do |event|
       event.starts_on.strftime('%A %-m/%-e/%y')
     end
@@ -48,11 +50,14 @@ class Admin::EventsController < Admin::AdminController
     def to_csv(events)
       data = events.map do |e|
         {
-          date: e.starts_on.strftime('%a %-m/%-d/%Y'),
+          'start date': e.starts_on.strftime('%a %-m/%-d/%Y'),
           'start time': e.starts_on.strftime('%l:%M %P'),
-          'date/time': e.starts_on.strftime('%Y-%m-%d %H:%M'),
+          'end date': e.ends_on.strftime('%a %-m/%-d/%Y'),
+          'end time': e.ends_on.strftime('%l:%M %P'),
           duration: e.duration,
           summary: e.summary,
+          location: e.location.name,
+          'playing surface': e.try(:playing_surface).try(:name),
           'division': e.try(:division).try(:name),
           tags: e.tags.join(',')
         }
@@ -86,7 +91,7 @@ class Admin::EventsController < Admin::AdminController
       end
 
       Event.includes(:location, :program, :tags)
-            .after(start_at.beginning_of_day)
+            .at_or_after(start_at.beginning_of_day)
             .before(end_at.end_of_day)
             .order(:starts_on)
 
