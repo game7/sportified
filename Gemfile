@@ -10,7 +10,6 @@ gem 'enumerize'
 
 gem 'sass-rails', '~> 5.0.4'
 gem 'sprockets'
-gem 'sprockets-es6'
 
 gem 'vite_rails'
 
@@ -28,7 +27,7 @@ gem 'react-rails'
 
 gem 'tenancy'
 gem 'ancestry'
-gem 'acts-as-taggable-on', git: 'https://github.com/game7/acts-as-taggable-on.git'
+gem 'acts-as-taggable-on'
 
 # visit & event tracking
 gem 'ahoy_matey'
@@ -143,7 +142,7 @@ group :test do
   gem 'webdrivers'
 
   gem 'shoulda', '~> 3.5'
-  gem 'shoulda-matchers', '~> 2.0'
+  gem 'shoulda-matchers'
   gem 'rails-controller-testing'
 end
 
