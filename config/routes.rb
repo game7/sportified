@@ -291,7 +291,12 @@
         resources :practices, only: %i[new create edit update]
         resources :events, only: %i[new create edit update]
       end
+      resources :posts, only: %i[index show new create edit update]
       resources :locations, only: %i[index show new create edit update]
     end
+  end
+
+  namespace :active_storage do
+    resources :blobs, only: [:create]
   end
 end

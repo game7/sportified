@@ -297,4 +297,22 @@ namespace App {
     updated_at: string;
     wins: number;
   }
+
+  interface Post {
+    body: string;
+    created_at: string;
+    id: number;
+    image: {
+      url: string;
+      thumb: {
+        url: string;
+      };
+    };
+    link_url: string[];
+    summary: string[];
+    tag_list: string[];
+    tenant_id: number;
+    title: string;
+    updated_at: string;
+  }
 }

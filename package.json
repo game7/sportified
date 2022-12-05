@@ -4,6 +4,7 @@
   },
   "scripts": {},
   "devDependencies": {
+    "@types/rails__activestorage": "^7.0.1",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^2.2.0",
@@ -25,6 +26,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@inertiajs/inertia": "^0.11.1",
     "@inertiajs/inertia-react": "^0.8.1",
+    "@rails/activestorage": "^7.0.4",
     "@types/lodash": "^4.14.161",
     "@types/moment": "^2.13.0",
     "@types/react-big-calendar": "^0.22.1",

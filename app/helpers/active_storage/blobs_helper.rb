@@ -1,0 +1,2 @@
+module ActiveStorage::BlobsHelper
+end
