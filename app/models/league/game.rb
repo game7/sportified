@@ -63,29 +63,31 @@
 class League::Game < League::Event
   extend Enumerize
 
-  belongs_to :home_team, class_name: '::League::Team', required: false
-  belongs_to :away_team, class_name: '::League::Team', required: false
-  belongs_to :statsheet, polymorphic: true, required: false
+  default_scope { where(type: klass.name) }
 
-  belongs_to :playing_surface, required: false
+  belongs_to :home_team, class_name: '::League::Team', optional: true
+  belongs_to :away_team, class_name: '::League::Team', optional: true
+  belongs_to :statsheet, polymorphic: true, optional: true
 
-  enumerize :result, in: [ :pending, :final ], default: :pending
-  enumerize :completion, in: [ :regulation, :overtime, :shootout, :forfeit]
+  belongs_to :playing_surface, optional: true
 
-  validates_presence_of :program_id
+  enumerize :result, in: %i[pending final], default: :pending
+  enumerize :completion, in: %i[regulation overtime shootout forfeit]
 
-  validates_numericality_of :away_team_score, :only_integer => true
+  validates :program_id, presence: true
+
+  validates :away_team_score, numericality: { only_integer: true }
   def away_team_is_winner?
     return away_team_score > home_team_score if result
   end
 
-  validates_numericality_of :home_team_score, :only_integer => true
+  validates :home_team_score, numericality: { only_integer: true }
   def home_team_is_winner?
     return away_team_score < home_team_score if result
   end
 
   def has_team?(team)
-    id = team.class == League::Team ? team.id : team
+    id = team.instance_of?(League::Team) ? team.id : team
     id == away_team_id || id == home_team_id
   end
 
@@ -96,22 +98,22 @@ class League::Game < League::Event
 
   def opponent_name(team)
     throw :team_not_present unless has_team?(team)
-    id = team.class == League::Team ? team.id : team
+    id = team.instance_of?(League::Team) ? team.id : team
     id == away_team_id ? home_team_name : away_team_name
   end
 
   def opponent(team)
     throw :team_not_present unless has_team?(team)
-    id = team.class == League::Team ? team.id : team
+    id = team.instance_of?(League::Team) ? team.id : team
     id == away_team_id ? home_team : away_team
   end
 
   def team_scored(team)
-    self.home_team_id == team.id ? self.home_team_score : self.away_team_score
+    home_team_id == team.id ? home_team_score : away_team_score
   end
 
   def team_allowed(team)
-    self.home_team_id == team.id ? self.away_team_score : self.home_team_score
+    home_team_id == team.id ? away_team_score : home_team_score
   end
 
   def team_margin(team)
@@ -131,12 +133,12 @@ class League::Game < League::Event
 
   before_validation :update_team_info
   def update_team_info
-    if team = self.away_team
+    if team = away_team
       self.away_team_name = team.name unless away_team_custom_name
     else
       self.away_team_name = '' unless away_team_custom_name
     end
-    if team = self.home_team
+    if team = home_team
       self.home_team_name = team.name unless home_team_custom_name
     else
       self.home_team_name = '' unless home_team_custom_name
@@ -154,15 +156,15 @@ class League::Game < League::Event
       elsif completion.forfeit?
         tag = ' (FORFEIT)'
       end
-      if away_team_score > home_team_score
-        summary = "#{away_team_name} #{away_team_score}, #{home_team_name} #{home_team_score}#{tag}"
-      else
-        summary = "#{home_team_name} #{home_team_score}, #{away_team_name} #{away_team_score}#{tag}"
-      end
+      summary = if away_team_score > home_team_score
+                  "#{away_team_name} #{away_team_score}, #{home_team_name} #{home_team_score}#{tag}"
+                else
+                  "#{home_team_name} #{home_team_score}, #{away_team_name} #{away_team_score}#{tag}"
+                end
     else
       summary = "#{away_team_name} at #{home_team_name}"
     end
-    summary = [text_before, summary, text_after].join(" ").strip
+    summary = [text_before, summary, text_after].join(' ').strip
     self.summary = summary
   end
 
@@ -173,26 +175,26 @@ class League::Game < League::Event
   end
 
   def display_score?
-    self.result.final?
+    result.final?
   end
 
   def has_statsheet?
-    self.statsheet_id.present?
+    statsheet_id.present?
   end
 
   def can_add_statsheet?
-    !self.has_statsheet? && self.starts_on < DateTime.now
+    !has_statsheet? && starts_on < DateTime.now
   end
 
   def show_teams?
     true
   end
 
-  scope :without_result, ->{ where(result: nil) }
+  scope :without_result, -> { where(result: nil) }
 
   class << self
     def for_team(t)
-      id = t.class ==  League::Team ? t.id : t
+      id = t.instance_of?(League::Team) ? t.id : t
       where('home_team_id = ? OR away_team_id = ?', id, id)
     end
 
@@ -204,5 +206,4 @@ class League::Game < League::Event
   def color_key
     "division-#{division_id}"
   end
-
 end

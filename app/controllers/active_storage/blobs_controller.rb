@@ -8,8 +8,9 @@ class ActiveStorage::BlobsController < ApplicationController
       content_type: attachable.content_type
       # service_name: :postgresql
     )
+    extra = { url: Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true) }
     respond_to do |format|
-      format.json { render json: blob }
+      format.json { render json: blob.attributes.merge(extra) }
     end
   end
 

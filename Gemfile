@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
-ruby '2.6.3'
-gem 'rails', '~> 5.2.3'
+ruby '3.0.5'
+gem 'rails', '~> 6.1'
 
 gem 'active_model_serializers', '~> 0.10.2'
 

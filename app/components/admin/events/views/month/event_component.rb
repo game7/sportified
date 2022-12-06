@@ -11,7 +11,7 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   def summary
     @event.summary
   end
-  
+
   def summary_component
     Admin::Events::Views::Month::EventSummaryComponent.new event: @event
   end
@@ -29,7 +29,7 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def color_key
-    @color_key ||= @event.tags[0]&.name || "no-tags"
+    @color_key ||= @event.tags[0]&.name || 'no-tags'
   end
 
   def border_color
@@ -45,19 +45,21 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def show_link
-    helpers.link_to 'Show', helpers.polymorphic_path([:admin, @event.module_name, @event]), class: [:item]
+    helpers.link_to 'Show', helpers.polymorphic_path([:admin, @event.module_name.to_sym, @event]), class: [:item]
   end
 
   def edit_link
-    helpers.link_to 'Edit', helpers.edit_polymorphic_path([:admin, @event.module_name, @event]), class: [:item]
+    helpers.link_to 'Edit', helpers.edit_polymorphic_path([:admin, @event.module_name.to_sym, @event]), class: [:item]
   end
 
   def clone_link
-    helpers.link_to 'Clone', helpers.new_polymorphic_path([:admin, @event.module_name, @event.class], clone: @event.id), class: [:item]
+    helpers.link_to 'Clone',
+                    helpers.new_polymorphic_path([:admin, @event.module_name.to_sym, @event.class], clone: @event.id), class: [:item]
   end
 
   def delete_link
-    helpers.link_to "Delete", helpers.admin_event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: [:item]
+    helpers.link_to 'Delete', helpers.admin_event_path(@event), method: :delete, data: { confirm: 'Are you sure?' },
+                                                                class: [:item]
   end
 
   def game_result_link
@@ -69,7 +71,7 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def game_print_scoresheet_link
-    helpers.link_to 'Print Scoresheet', helpers.print_admin_game_statsheet_path(@event), target: :_blank, class: [:item]
+    helpers.link_to 'Print Scoresheet', helpers.print_admin_game_statsheet_path(@event), target: :_blank,
+                                                                                         class: [:item], rel: :noopener
   end
-
 end

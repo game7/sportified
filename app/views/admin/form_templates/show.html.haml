@@ -21,14 +21,13 @@
       %table.ui.table.celled
         %thead
           %tr
-            %th
+            %th{ style: 'display: flex; justify-content: space-between;' }
               = element.partial.titleize
-              .pull-right
-                .ui.dropdown
-                  = semantic_icon :vertical, :ellipsis
-                  .menu.left
-                    = link_to 'Edit', edit_admin_form_element_path(element), class: [:item]
-                    = link_to 'Delete', admin_form_element_path(element), method: :delete, class:  [:item], data: { confirm: 'Are you sure?' }            
+              .ui.dropdown
+                = semantic_icon :vertical, :ellipsis
+                .menu.left
+                  = link_to 'Edit', edit_admin_form_element_path(element), class: [:item]
+                  = link_to 'Delete', admin_form_element_path(element), method: :delete, class:  [:item], data: { confirm: 'Are you sure?' }            
         %tbody
           %tr
             %td

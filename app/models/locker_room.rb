@@ -20,5 +20,5 @@
 #  fk_rails_...  (location_id => locations.id)
 #
 class LockerRoom < Facility
-
+  default_scope { where(type: klass.name) }
 end

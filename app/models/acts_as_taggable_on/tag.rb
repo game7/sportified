@@ -12,7 +12,7 @@
 #  index_tags_on_name  (name) UNIQUE
 #
 module ActsAsTaggableOn
-  class Tag
+  class Tag < ActiveRecord::Base
     scope :for_tenant, lambda { |tenant|
                          ids = ActiveRecord::Base.connection.execute(%(
                          SELECT tag_id

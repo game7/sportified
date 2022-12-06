@@ -38,31 +38,33 @@
 class Hockey::Skater::Record < Hockey::Skater
   include Stats
 
+  default_scope { where(type: klass.name) }
+
   def add_result(result)
     STATS.each do |stat|
-      self.send("#{stat}=", self.send(stat) + (result.send(stat) || 0))
+      send("#{stat}=", send(stat) + (result.send(stat) || 0))
     end
   end
 
   def add_result!(result)
-    self.add_result result
-    self.save
+    add_result result
+    save
   end
 
   def remove_result(result)
     STATS.each do |stat|
-      self.send("#{stat}=", [self.send(stat) - (result.send(stat) || 0), 0].max)
+      send("#{stat}=", [send(stat) - (result.send(stat) || 0), 0].max)
     end
   end
 
   def remove_result!(result)
-    self.remove_result result
-    self.save
+    remove_result result
+    save
   end
 
   def recalculate
-    self.reset
-    Hockey::Skater::Result.where('player_id = ?', self.player_id).each do |result|
+    reset
+    Hockey::Skater::Result.where('player_id = ?', player_id).find_each do |result|
       add_result(result)
     end
   end
@@ -71,5 +73,4 @@ class Hockey::Skater::Record < Hockey::Skater
     recalculate
     save
   end
-
 end

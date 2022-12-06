@@ -36,6 +36,7 @@
 #  index_hockey_skaters_on_tenant_id     (tenant_id)
 #
 class Hockey::Skater::Result < Hockey::Skater
+  default_scope { where(type: klass.name) }
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   has_one :game, through: :statsheet, class_name: 'League::Game'
@@ -77,7 +78,7 @@ class Hockey::Skater::Result < Hockey::Skater
     self.major_penalties = 0
     self.misconduct_penalties = 0
     self.game_misconduct_penalties = 0
-    ::Hockey::Penalty.where(committed_by: self).each do |penalty|
+    ::Hockey::Penalty.where(committed_by: self).find_each do |penalty|
       self.penalty_minutes           += penalty.duration
       self.minor_penalties           += 1 if penalty.severity == 'Minor'
       self.major_penalties           += 1 if penalty.severity == 'Major'
@@ -94,19 +95,18 @@ class Hockey::Skater::Result < Hockey::Skater
   private
 
   def calculate_points
-    self.points = self.goals + self.assists
+    self.points = goals + assists
   end
 
   def calculate_hat_tricks
-    self.hat_tricks = ( self.goals / 3 )
+    self.hat_tricks = (goals / 3)
   end
 
   def calculate_playmakers
-    self.playmakers = ( self.assists / 3 )
+    self.playmakers = (assists / 3)
   end
 
   def calculate_gordie_howes
-    self.gordie_howes = ( self.goals >= 1 and self.assists >= 1 and self.penalties >= 1 ? 1 : 0 )
+    self.gordie_howes = (goals >= 1 and assists >= 1 and penalties >= 1 ? 1 : 0)
   end
-
 end

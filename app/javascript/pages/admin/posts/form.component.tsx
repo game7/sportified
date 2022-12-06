@@ -54,7 +54,11 @@ export function PostForm() {
                 fetch("/active_storage/blobs", {
                   method: "POST",
                   body: data,
-                });
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    console.log(data);
+                  });
               }
             }}
           />

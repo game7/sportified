@@ -41,6 +41,7 @@
 #  index_hockey_goaltenders_on_tenant_id     (tenant_id)
 #
 class Hockey::Goaltender::Result < Hockey::Goaltender
+  default_scope { where(type: klass.name) }
 
   belongs_to :statsheet, class_name: 'Hockey::Statsheet'
   has_one :game, through: :statsheet, class_name: '::League::Game'
@@ -48,7 +49,7 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
 
   validates :statsheet, presence: true
   validates :team, presence: true
-  #validates :player, presence: true'
+  # validates :player, presence: true'
 
   before_create :set_games_played_to_one
 
@@ -59,5 +60,4 @@ class Hockey::Goaltender::Result < Hockey::Goaltender
   def full_name
     "#{first_name} #{last_name}"
   end
-
 end

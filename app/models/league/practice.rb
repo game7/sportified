@@ -61,73 +61,74 @@
 #  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class League::Practice < League::Event
-    extend Enumerize
+  extend Enumerize
 
-    belongs_to :home_team, class_name: '::League::Team', required: false
-    belongs_to :away_team, class_name: '::League::Team', required: false
-  
-    belongs_to :playing_surface, required: false
-    
-    validates_presence_of :program_id
-    
-    def has_team?(team)
-      id = team.class == League::Team ? team.id : team
-      id == away_team_id || id == home_team_id
-    end
-  
-    def opponent_id(team)
-      throw :team_not_present unless has_team?(team)
-      id == away_team_id ? home_team_id : away_team_id
-    end
-  
-    def opponent_name(team)
-      throw :team_not_present unless has_team?(team)
-      id = team.class == League::Team ? team.id : team
-      id == away_team_id ? home_team_name : away_team_name
-    end
-  
-    def opponent(team)
-      throw :team_not_present unless has_team?(team)
-      id = team.class == League::Team ? team.id : team
-      id == away_team_id ? home_team : away_team
-    end
-  
-    before_validation :update_team_info
-    def update_team_info
-      if team = self.away_team
-        self.away_team_name = team.name unless away_team_custom_name
-      else
-        self.away_team_name = '' unless away_team_custom_name
-      end
-      if team = self.home_team
-        self.home_team_name = team.name unless home_team_custom_name
-      else
-        self.home_team_name = '' unless home_team_custom_name
-      end
-    end
-  
-    before_validation :update_summary
-    def update_summary
-      self.summary = [text_before, away_team_name, '/', home_team_name, text_after].join(" ").strip
-    end
-   
-    def show_teams?
-      true
-    end
+  default_scope { where(type: klass.name) }
 
-    class << self
-      def for_team(t)
-        id = t.class ==  League::Team ? t.id : t
-        where('home_team_id = ? OR away_team_id = ?', id, id)
-      end
-  
-      def for_teams(team1, team2)
-        for_team(team1).for_team(team2)
-      end
+  belongs_to :home_team, class_name: '::League::Team', optional: true
+  belongs_to :away_team, class_name: '::League::Team', optional: true
+
+  belongs_to :playing_surface, optional: true
+
+  validates :program_id, presence: true
+
+  def has_team?(team)
+    id = team.instance_of?(League::Team) ? team.id : team
+    id == away_team_id || id == home_team_id
+  end
+
+  def opponent_id(team)
+    throw :team_not_present unless has_team?(team)
+    id == away_team_id ? home_team_id : away_team_id
+  end
+
+  def opponent_name(team)
+    throw :team_not_present unless has_team?(team)
+    id = team.instance_of?(League::Team) ? team.id : team
+    id == away_team_id ? home_team_name : away_team_name
+  end
+
+  def opponent(team)
+    throw :team_not_present unless has_team?(team)
+    id = team.instance_of?(League::Team) ? team.id : team
+    id == away_team_id ? home_team : away_team
+  end
+
+  before_validation :update_team_info
+  def update_team_info
+    if team = away_team
+      self.away_team_name = team.name unless away_team_custom_name
+    else
+      self.away_team_name = '' unless away_team_custom_name
     end
-  
-    def color_key
-      "division-#{division_id}"
+    if team = home_team
+      self.home_team_name = team.name unless home_team_custom_name
+    else
+      self.home_team_name = '' unless home_team_custom_name
+    end
+  end
+
+  before_validation :update_summary
+  def update_summary
+    self.summary = [text_before, away_team_name, '/', home_team_name, text_after].join(' ').strip
+  end
+
+  def show_teams?
+    true
+  end
+
+  class << self
+    def for_team(t)
+      id = t.instance_of?(League::Team) ? t.id : t
+      where('home_team_id = ? OR away_team_id = ?', id, id)
     end
 
+    def for_teams(team1, team2)
+      for_team(team1).for_team(team2)
+    end
+  end
+
+  def color_key
+    "division-#{division_id}"
+  end
 end

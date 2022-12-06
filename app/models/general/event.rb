@@ -61,6 +61,8 @@
 #  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class General::Event < ::Event
+  default_scope { where(type: klass.name) }
+
   validates :summary, presence: true
 
   belongs_to :recurrence, optional: true

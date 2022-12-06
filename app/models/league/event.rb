@@ -61,23 +61,25 @@
 #  fk_rails_...  (recurrence_id => recurrences.id)
 #
 class League::Event < Event
+  default_scope { where(type: klass.name) }
 
   belongs_to :division
-  validates_presence_of :division_id
+  validates :division_id, presence: true
 
   belongs_to :season
-  validates_presence_of :season_id
+  validates :season_id, presence: true
 
-  validates_presence_of :summary
+  validates :summary, presence: true
 
   class << self
     def for_season(s)
-      id = s.class ==  League::Season ? s.id : s
-      where(:season_id => id)
+      id = s.instance_of?(League::Season) ? s.id : s
+      where(season_id: id)
     end
+
     def for_division(d)
-      id = d.class == League::Division ? d.id : d
-      where( :division_id => id)
+      id = d.instance_of?(League::Division) ? d.id : d
+      where(division_id: id)
     end
   end
 
@@ -89,5 +91,4 @@ class League::Event < Event
   def set_league_tags
     self.tag_list = ActsAsTaggableOn::TagList.new(division&.name, season&.name, program&.name)
   end
-
 end

@@ -27,8 +27,8 @@
                       = semantic_icon(:ellipsis, :horizontal)
                       .left.menu
                         .header Event
-                        = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name, event]), class: :item
-                        = link_to 'Clone', new_polymorphic_path([:admin, event.module_name, event.class], :clone => event.id), class: :item
+                        = link_to 'Edit', edit_polymorphic_path([:admin, event.module_name.to_sym, event]), class: :item
+                        = link_to 'Clone', new_polymorphic_path([:admin, event.module_name.to_sym, event.class], :clone => event.id), class: :item
                         = link_to "Delete", admin_event_path(event), confirm: 'Are you sure?', method: :delete, class: :item
                         - if event.class.to_s == 'League::Game'
                           .divider

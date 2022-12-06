@@ -16,14 +16,14 @@
       .div{ style: 'clear: both;' }
     .ui.attached.content.segment
       .ui.internally.celled.columns.grid
-        - section.columns.each_with_index do |column, index|
-          .column.wide{ class: column, data: { column: index } }
+        - section.columns.each_with_index do |width, index|
+          .column{ class: "#{width} wide", data: { column: index } }      
             .blocks
               = render :partial => "blocks/block", :collection => @page.blocks.where(:section_id => section.id).where(:column => index).order(:position), :locals => { :editable => editable }
             %a.add-block.ui.default.fluid.button{ :role => "button", :"data-toggle" => "modal", :"data-column" => index, :"data-section_id" => section.id.to_s, :"href" => "#block-catalog"}= semantic_icon(:plus) + ' Add Block Here'
   - unless editable
-    .ui.stackable.grid
-      - section.columns.each_with_index do |column, index|
-        .column.wide{ class: column, data: { column: index } }
+    .ui.stackable.column.grid
+      - section.columns.each_with_index do |width, index|
+        .column{ class: "#{width} wide", data: { column: index } }
           = render partial: 'blocks/block', collection: @page.blocks.where(section_id: section.id).where(column: index).order(:position), locals: { editable: editable }
 
