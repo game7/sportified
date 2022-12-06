@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-set -e
-
-cd "public/client" &&
-  gulp bundle &&
-  cd -

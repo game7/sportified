@@ -96,4 +96,32 @@ WORKDIR $APP_HOME
 # production
 # ------------------------------------------------------------------------------------------------------------
 
-# tbd
+FROM base as production
+
+# setup app folder
+ENV APP_HOME /app
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+# install ruby deps
+COPY Gemfile Gemfile.lock ./
+RUN bundle config --local path vendor/bundle
+RUN bundle config --local without development:test
+RUN bundle install --jobs 4 --retry 5
+
+# copy over app
+COPY . $APP_HOME
+
+# enable rails to serve static files (js,css,etc)
+ENV RAILS_SERVE_STATIC_FILES true
+
+# set environment
+ARG env=production
+ENV RAILS_ENV $env
+ENV RACK_ENV $env
+
+# Precompile Rails assets
+ARG RAILS_MASTER_KEY
+RUN yarn install --no-progress --non-interactive \
+    && rails assets:precompile \
+    && rm -rf node_modules
