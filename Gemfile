@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 ruby '3.0.5'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 
 gem 'active_model_serializers', '~> 0.10.2'
 
@@ -15,7 +15,7 @@ gem 'vite_rails'
 
 gem 'inertia_rails', '>= 1.2.2'
 
-gem 'paranoia', '~> 2.3'
+gem 'paranoia'
 
 
 gem 'uglifier', '>=1.3.0'
@@ -47,7 +47,7 @@ gem 'chronic'
 gem "view_component", require: "view_component/engine"
 gem 'simple_form'
 gem 'virtus', '~> 1.0.5'
-gem 'audited', '~> 4.6'
+gem 'audited'
 
 gem 'cocoon'
 #gem 'delayed_job'
@@ -120,7 +120,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '>= 3.0.5'
   
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

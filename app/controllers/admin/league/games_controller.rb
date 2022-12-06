@@ -1,6 +1,16 @@
 class Admin::League::GamesController < Admin::AdminController
-  before_action :load_event, only: %i[edit update]
+  skip_before_action :verify_admin, only: [:index]
+  before_action :verify_admin_or_operations, only: [:index]
   before_action :mark_return_point, only: %i[new edit]
+  before_action :load_event, only: %i[edit update]
+
+  def index
+    add_breadcrumb 'Games', admin_league_games_path
+    @games = ::League::Game.before(1.day.from_now)
+                           .includes(:division)
+                           .order(starts_on: :desc)
+                           .page(params[:page])
+  end
 
   def new
     if params[:clone]

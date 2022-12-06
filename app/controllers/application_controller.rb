@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
-  rescue_from StandardError, :with => :track_exception unless Rails.env.development?
+  rescue_from StandardError, with: :track_exception unless Rails.env.development?
 
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
   skip_before_action :verify_authenticity_token, if: :json_request?
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   @@RAILS_ROOT_REGEX = /^#{Regexp.escape(Rails.root.to_s)}/
 
   def filter_backtrace(backtrace)
-    backtrace.collect{|line| Pathname.new(line.gsub(@@RAILS_ROOT_REGEX, "[RAILS_ROOT]")).cleanpath.to_s}
+    backtrace.collect { |line| Pathname.new(line.gsub(@@RAILS_ROOT_REGEX, '[RAILS_ROOT]')).cleanpath.to_s }
   end
 
   def track_exception(exception)
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
       format: request.format.to_s,
       params: request.filtered_parameters,
       exception: exception.class.name,
-      message: exception.message.inspect,      
+      message: exception.message.inspect,
       # env: request.filtered_env,
       backtrace: filter_backtrace(exception.backtrace)
     }
@@ -71,18 +71,16 @@ class ApplicationController < ActionController::Base
       secure_url = "https://#{Tenant.current.slug}.sportified.net#{request.fullpath}"
       redirect_to secure_url unless request.ssl?
     end
-    if Rails.env.preview? && request.protocol != 'https://'
-      redirect_to protocol: 'https://'
-    end
+    return unless Rails.env.preview? && request.protocol != 'https://'
+
+    redirect_to protocol: 'https://'
   end
 
   def set_time_zone(&block)
     Time.use_zone(Tenant.current.time_zone, &block)
   end
 
-  def load_objects
-
-  end
+  def load_objects; end
 
   def set_breadcrumbs
     @breadcrumbs ||= []
@@ -93,15 +91,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :get_page_url
 
-  def set_area_navigation
-
-  end
+  def set_area_navigation; end
 
   def add_breadcrumb(title, url = nil)
     @breadcrumbs ||= []
-    @breadcrumbs << { :title => title, :url => url }
+    @breadcrumbs << { title: title, url: url }
   end
-  alias_method :breadcrumb, :add_breadcrumb
+  alias breadcrumb add_breadcrumb
   helper_method :breadcrumb
 
   def add_area_menu_item(title, url = nil, klass = nil)
@@ -110,7 +106,7 @@ class ApplicationController < ActionController::Base
   end
 
   def url_current?(url)
-    url.present? && ( url == request.path || url == request.url )
+    url.present? && (url == request.path || url == request.url)
   end
 
   def find_current_tenant
@@ -127,8 +123,9 @@ class ApplicationController < ActionController::Base
         ::Tenant.current = ::Tenant.find_by!(slug: request.subdomain.downcase)
       end
     else
-      return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]   
+      return set_tenant_from_passwordless_session if params[:authenticatable] && params[:token]
       return set_tenant_from_session if session[:tenant_id]
+
       Rails.logger.debug 'Unable to determine Tenant -- Redirecting to Tenant Picker'
       redirect_to tenants_path unless controller_name == 'tenants'
     end
@@ -142,23 +139,21 @@ class ApplicationController < ActionController::Base
   def set_tenant_from_passwordless_session
     Rails.logger.debug 'Setting Tenant from Passwordless session'
     session_model = ::Passwordless::Session.unscoped.find_by_token(params[:token])
-    session[:tenant_id] = session_model.tenant_id   
+    session[:tenant_id] = session_model.tenant_id
     ::Tenant.current = ::Tenant.find(session_model.tenant_id)
   end
 
   def add_stylesheets
     # http://push.cx/2006/tidy-stylesheets-in-rails
     ["compiled/#{controller_path}/shared", "compiled/#{controller_path}/#{action_name}"].each do |stylesheet|
-      @stylesheets << stylesheet if File.exists? "#{::Rails.root.to_s}/tmp/stylesheets/#{stylesheet}.css"
+      @stylesheets << stylesheet if File.exist? "#{::Rails.root}/tmp/stylesheets/#{stylesheet}.css"
     end
   end
 
-  def stylesheets
-    @stylesheets
-  end
+  attr_reader :stylesheets
 
   def mark_return_point
-    session[:return_to] = params[:return_to] || request.env["HTTP_REFERER"]
+    session[:return_to] = params[:return_to] || request.env['HTTP_REFERER']
   end
 
   def return_url
@@ -167,7 +162,7 @@ class ApplicationController < ActionController::Base
   helper_method :return_url
 
   def return_to_last_point(response_status = {})
-    response_status = {:flash => response_status} unless response_status[:flash]
+    response_status = { flash: response_status } unless response_status[:flash]
     redirect_to(params[:return_to] || session[:return_to], response_status)
   end
 
@@ -175,13 +170,15 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return if session[session_key(User)].blank?
+
     @current_user ||= authenticate_by_session(User)
   end
 
   def require_user!
     return if current_user
+
     redirect_to root_path, flash: { error: 'You are not worthy!' }
-  end  
+  end
 
   def current_user_is_host?
     current_user&.host?
@@ -200,8 +197,9 @@ class ApplicationController < ActionController::Base
 
   def verify_admin
     return if current_user_is_admin?
+
     if current_user
-      render :file => "public/401.html", :status => :unauthorized, :layout => false
+      render file: 'public/401.html', status: :unauthorized, layout: false
     else
       redirect_to users.sign_in_path
     end
@@ -209,8 +207,9 @@ class ApplicationController < ActionController::Base
 
   def verify_admin_or_operations
     return if current_user_is_admin_or_operations?
+
     if current_user
-      render :file => "public/401.html", :status => :unauthorized, :layout => false
+      render file: 'public/401.html', status: :unauthorized, layout: false
     else
       redirect_to users.sign_in_path
     end
@@ -220,14 +219,14 @@ class ApplicationController < ActionController::Base
     redirect_to users.sign_in_path unless current_user
   end
 
-  def with_time_zone
-    Time.use_zone('Arizona') { yield }
+  def with_time_zone(&block)
+    Time.use_zone('Arizona', &block)
   end
 
   def capture_passwordless_redirect_location
     return unless request.method == 'GET'
     return if controller_name == 'sessions'
+
     save_passwordless_redirect_location!(User) if request.method == 'GET'
   end
-
 end
