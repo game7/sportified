@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_05_233009) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.text "metadata"
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -49,7 +48,7 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.bigint "user_id"
     t.string "name"
     t.jsonb "properties"
-    t.datetime "time"
+    t.datetime "time", precision: nil
     t.bigint "tenant_id"
     t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
     t.index ["properties"], name: "index_ahoy_events_on_properties", opclass: :jsonb_path_ops, using: :gin
@@ -83,7 +82,7 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "app_version"
     t.string "os_version"
     t.string "platform"
-    t.datetime "started_at"
+    t.datetime "started_at", precision: nil
     t.bigint "tenant_id"
     t.index ["tenant_id"], name: "index_ahoy_visits_on_tenant_id"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
@@ -104,7 +103,7 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "comment"
     t.string "remote_address"
     t.string "request_uuid"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["associated_type", "associated_id"], name: "associated_index"
     t.index ["auditable_type", "auditable_id"], name: "auditable_index"
     t.index ["created_at"], name: "index_audits_on_created_at"
@@ -119,8 +118,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "column"
     t.integer "position"
     t.hstore "options"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "file"
   end
 
@@ -129,9 +128,9 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "tenant_id"
     t.integer "location_id"
     t.integer "playing_surface_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "refreshed_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "refreshed_at", precision: nil
     t.index ["location_id"], name: "index_chromecasts_on_location_id"
     t.index ["playing_surface_id"], name: "index_chromecasts_on_playing_surface_id"
     t.index ["tenant_id"], name: "index_chromecasts_on_tenant_id"
@@ -141,8 +140,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "name"
     t.string "short_name"
     t.integer "tenant_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["tenant_id"], name: "index_clubs_on_tenant_id"
   end
 
@@ -152,28 +151,14 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "season_id"
     t.integer "location_id"
     t.string "type"
-    t.datetime "starts_on"
-    t.datetime "ends_on"
+    t.datetime "starts_on", precision: nil
+    t.datetime "ends_on", precision: nil
     t.integer "duration"
     t.boolean "all_day"
     t.string "summary"
     t.text "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "home_team_id"
-    t.integer "away_team_id"
-    t.integer "statsheet_id"
-    t.string "statsheet_type"
-    t.integer "home_team_score", default: 0
-    t.integer "away_team_score", default: 0
-    t.string "home_team_name"
-    t.string "away_team_name"
-    t.boolean "home_team_custom_name"
-    t.boolean "away_team_custom_name"
-    t.string "text_before"
-    t.string "text_after"
-    t.string "result"
-    t.string "completion"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "exclude_from_team_records"
     t.integer "playing_surface_id"
     t.integer "home_team_locker_room_id"
@@ -182,10 +167,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "page_id"
     t.boolean "private", default: false, null: false
     t.bigint "recurrence_id"
-    t.index ["away_team_id"], name: "index_events_on_away_team_id"
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id"
     t.index ["division_id"], name: "index_events_on_division_id"
-    t.index ["home_team_id"], name: "index_events_on_home_team_id"
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["page_id"], name: "index_events_on_page_id"
@@ -201,8 +184,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "name"
     t.integer "tenant_id"
     t.integer "location_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["location_id"], name: "index_facilities_on_location_id"
     t.index ["tenant_id"], name: "index_facilities_on_tenant_id"
   end
@@ -214,8 +197,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "name", limit: 40
     t.integer "position"
     t.hstore "properties"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "required"
     t.string "hint"
     t.index ["template_id", "name"], name: "index_form_elements_on_template_id_and_name", unique: true
@@ -225,8 +208,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
   create_table "form_packets", id: :serial, force: :cascade do |t|
     t.integer "tenant_id"
     t.string "name", limit: 40
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["tenant_id"], name: "index_form_packets_on_tenant_id"
   end
 
@@ -235,8 +218,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "packet_id"
     t.string "name", limit: 40
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["tenant_id"], name: "index_form_templates_on_tenant_id"
   end
 
@@ -245,8 +228,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "registration_id"
     t.integer "template_id"
     t.hstore "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "completed", default: false, null: false
     t.index ["tenant_id"], name: "index_forms_on_tenant_id"
   end
@@ -263,8 +246,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "assisted_by_id"
     t.integer "also_assisted_by_id"
     t.string "strength"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "scored_by_number"
     t.string "assisted_by_number"
     t.string "also_assisted_by_number"
@@ -297,8 +280,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "shootout_losses", default: 0
     t.integer "total_wins", default: 0
     t.integer "total_losses", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "jersey_number"
     t.string "first_name"
     t.string "last_name"
@@ -325,8 +308,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "end_period"
     t.integer "end_minute"
     t.integer "end_second"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "committed_by_number"
     t.index ["statsheet_id"], name: "index_hockey_penalties_on_statsheet_id"
     t.index ["tenant_id"], name: "index_hockey_penalties_on_tenant_id"
@@ -353,8 +336,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "playmakers", default: 0
     t.integer "gordie_howes", default: 0
     t.integer "ejections", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "first_name"
     t.string "last_name"
     t.index ["player_id"], name: "index_hockey_skaters_on_player_id"
@@ -383,8 +366,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "home_shots_2"
     t.integer "home_shots_3"
     t.integer "home_shots_ot"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["tenant_id"], name: "index_hockey_statsheets_on_tenant_id"
   end
 
@@ -396,8 +379,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.boolean "show_statistics"
     t.text "standings_array", default: [], array: true
     t.integer "tenant_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "standings_schema_id"
     t.integer "program_id"
     t.integer "period_length", default: 15
@@ -416,8 +399,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "slug"
     t.date "starts_on"
     t.integer "tenant_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "program_id"
     t.index ["program_id"], name: "index_league_seasons_on_program_id"
   end
@@ -443,8 +426,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "crop_y", default: 0
     t.integer "crop_h", default: 0
     t.integer "crop_w", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "games_played"
     t.integer "wins"
     t.integer "losses"
@@ -474,9 +457,9 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "tenant_id"
     t.string "name"
     t.string "short_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "deleted_at", precision: nil
     t.string "color"
     t.index ["deleted_at"], name: "index_locations_on_deleted_at"
     t.index ["tenant_id"], name: "index_locations_on_tenant_id"
@@ -497,8 +480,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "ancestry"
     t.integer "ancestry_depth"
     t.integer "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.text "content"
     t.index ["ancestry"], name: "index_pages_on_ancestry"
     t.index ["tenant_id"], name: "index_pages_on_tenant_id"
@@ -507,14 +490,14 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
   create_table "passwordless_sessions", force: :cascade do |t|
     t.string "authenticatable_type"
     t.bigint "authenticatable_id"
-    t.datetime "timeout_at", null: false
-    t.datetime "expires_at", null: false
-    t.datetime "claimed_at"
+    t.datetime "timeout_at", precision: nil, null: false
+    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "claimed_at", precision: nil
     t.text "user_agent", null: false
     t.string "remote_addr", null: false
     t.string "token", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "tenant_id"
     t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
     t.index ["tenant_id"], name: "index_passwordless_sessions_on_tenant_id"
@@ -529,8 +512,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.date "birthdate"
     t.string "email"
     t.string "slug"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "substitute"
     t.string "position"
     t.index ["email"], name: "index_players_on_email"
@@ -545,21 +528,21 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.text "body"
     t.string "link_url"
     t.string "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["tenant_id"], name: "index_posts_on_tenant_id"
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
-    t.integer "registrable_id"
     t.string "registrable_type"
+    t.integer "registrable_id"
     t.string "title", limit: 40
     t.text "description"
     t.integer "quantity_allowed"
     t.integer "quantity_available"
     t.integer "tenant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "active"
     t.text "summary"
     t.boolean "private"
@@ -573,9 +556,10 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "type"
     t.string "name"
     t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "slug"
+    t.index ["slug"], name: "index_programs_on_slug"
     t.index ["tenant_id"], name: "index_programs_on_tenant_id"
   end
 
@@ -590,8 +574,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "ending"
     t.date "ends_on"
     t.integer "occurrence_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "registrations", id: :serial, force: :cascade do |t|
@@ -602,8 +586,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "last_name", limit: 40
     t.string "email"
     t.string "payment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "price", precision: 20, scale: 4
     t.integer "form_packet_id"
     t.string "confirmation_code"
@@ -611,10 +595,10 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.text "session_id"
     t.text "payment_intent_id"
     t.string "uuid"
-    t.datetime "completed_at"
-    t.datetime "abandoned_at"
-    t.datetime "cancelled_at"
-    t.datetime "checked_in_at"
+    t.datetime "completed_at", precision: nil
+    t.datetime "abandoned_at", precision: nil
+    t.datetime "cancelled_at", precision: nil
+    t.datetime "checked_in_at", precision: nil
     t.index ["tenant_id"], name: "index_registrations_on_tenant_id"
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
@@ -625,9 +609,9 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "device_key"
     t.bigint "location_id"
     t.bigint "playing_surface_id"
-    t.datetime "refreshed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "refreshed_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["location_id"], name: "index_screens_on_location_id"
     t.index ["playing_surface_id"], name: "index_screens_on_playing_surface_id"
     t.index ["tenant_id"], name: "index_screens_on_tenant_id"
@@ -637,8 +621,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.integer "page_id"
     t.string "pattern"
     t.integer "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["page_id"], name: "index_sections_on_page_id"
   end
 
@@ -650,19 +634,19 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "redirect"
     t.string "status"
     t.string "result"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["tenant_id"], name: "index_stripe_connects_on_tenant_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
-    t.integer "taggable_id"
     t.string "taggable_type"
-    t.integer "tagger_id"
+    t.integer "taggable_id"
     t.string "tagger_type"
+    t.integer "tagger_id"
     t.string "context", limit: 128
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["context"], name: "index_taggings_on_context"
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
@@ -693,8 +677,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "instagram_id"
     t.string "foursquare_id"
     t.string "google_plus_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "stripe_account_id"
     t.string "stripe_public_api_key"
     t.string "stripe_access_token"
@@ -718,18 +702,18 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "first_name"
     t.string "last_name"
     t.string "stripe_customer_id"
@@ -750,8 +734,8 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.text "description"
     t.decimal "price", precision: 20, scale: 4
     t.integer "quantity_allowed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "form_packet_id"
     t.integer "display_order", default: 0
     t.index ["tenant_id"], name: "index_variants_on_tenant_id"
@@ -761,11 +745,11 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
     t.bigint "user_id"
     t.bigint "registration_id"
     t.integer "amount"
-    t.datetime "expires_at"
-    t.datetime "cancelled_at"
-    t.datetime "consumed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "expires_at", precision: nil
+    t.datetime "cancelled_at", precision: nil
+    t.datetime "consumed_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["registration_id"], name: "index_vouchers_on_registration_id"
     t.index ["user_id"], name: "index_vouchers_on_user_id"
   end
@@ -788,7 +772,6 @@ ActiveRecord::Schema.define(version: 2022_12_05_233009) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
-  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

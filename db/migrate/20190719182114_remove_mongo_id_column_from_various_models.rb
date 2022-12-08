@@ -16,7 +16,6 @@ class RemoveMongoIdColumnFromVariousModels < ActiveRecord::Migration[5.2]
     remove_column :posts, :mongo_id
     remove_column :sections, :mongo_id
     remove_column :tenants, :mongo_id
-    remove_column :user_roles, :mongo_id
-    remove_column :users, :mongo_id 
+    remove_column :users, :mongo_id
   end
 end
