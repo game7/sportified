@@ -1,4 +1,4 @@
-class CreateLeagues < ActiveRecord::Migration
+class CreateLeagues < ActiveRecord::Migration[4.2]
   def change
     create_table :leagues do |t|
       t.string :name
@@ -8,7 +8,7 @@ class CreateLeagues < ActiveRecord::Migration
       t.boolean :show_statistics
       t.text :standings_array, array: true, default: []
       t.references :tenant
-      
+
       t.string :mongo_id
 
       t.timestamps

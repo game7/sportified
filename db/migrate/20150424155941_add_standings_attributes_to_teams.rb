@@ -1,4 +1,4 @@
-class AddStandingsAttributesToTeams < ActiveRecord::Migration
+class AddStandingsAttributesToTeams < ActiveRecord::Migration[4.2]
   def change
     add_column :teams, :games_played, :integer
     add_column :teams, :wins, :integer

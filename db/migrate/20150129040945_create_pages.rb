@@ -1,4 +1,4 @@
-class CreatePages < ActiveRecord::Migration
+class CreatePages < ActiveRecord::Migration[4.2]
   def change
     create_table :pages do |t|
       t.references :tenant, index: true
@@ -12,13 +12,13 @@ class CreatePages < ActiveRecord::Migration
       t.string :title_in_menu
       t.boolean :skip_to_first_child
       t.boolean :draft
-      
+
       t.string :ancestry
       t.integer :ancestry_depth
       t.index :ancestry
-      
+
       t.integer :position
-      
+
       t.string :mongo_id
 
       t.timestamps

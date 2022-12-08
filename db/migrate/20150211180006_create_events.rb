@@ -1,4 +1,4 @@
-class CreateEvents < ActiveRecord::Migration
+class CreateEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :events do |t|
       t.references :tenant, index: true
@@ -12,7 +12,7 @@ class CreateEvents < ActiveRecord::Migration
       t.boolean :all_day
       t.string :summary
       t.text :description
-      
+
       t.string :mongo_id, index: true
 
       t.timestamps

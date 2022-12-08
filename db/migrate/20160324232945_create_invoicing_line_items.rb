@@ -1,4 +1,4 @@
-class CreateInvoicingLineItems < ActiveRecord::Migration
+class CreateInvoicingLineItems < ActiveRecord::Migration[4.2]
   def change
     create_table :invoicing_line_items do |t|
       t.references :ledger_item
@@ -9,9 +9,9 @@ class CreateInvoicingLineItems < ActiveRecord::Migration
 
       # These are optional fields, can be specified via options.
       t.string   :description
-      t.string   :uuid,       limit: 40
+      t.string   :uuid, limit: 40
       t.datetime :tax_point
-      t.decimal  :quantity,   precision: 20, scale: 4
+      t.decimal  :quantity, precision: 20, scale: 4
       t.integer  :creator_id
 
       t.timestamps

@@ -1,4 +1,4 @@
-class CreateInvoicingLedgerItems < ActiveRecord::Migration
+class CreateInvoicingLedgerItems < ActiveRecord::Migration[4.2]
   def change
     create_table :invoicing_ledger_items do |t|
       t.references :sender
@@ -16,7 +16,7 @@ class CreateInvoicingLedgerItems < ActiveRecord::Migration
       t.string   :description
       t.datetime :period_start
       t.datetime :period_end
-      t.string   :uuid,          limit: 40
+      t.string   :uuid, limit: 40
       t.datetime :due_date
 
       t.timestamps

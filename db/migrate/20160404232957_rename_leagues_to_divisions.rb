@@ -1,4 +1,4 @@
-class RenameLeaguesToDivisions < ActiveRecord::Migration
+class RenameLeaguesToDivisions < ActiveRecord::Migration[4.2]
   def change
     rename_table :leagues, :divisions
     rename_table :leagues_seasons, :divisions_seasons

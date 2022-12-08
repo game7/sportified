@@ -1,6 +1,5 @@
-class DropDeprecatedFormsTables < ActiveRecord::Migration
+class DropDeprecatedFormsTables < ActiveRecord::Migration[4.2]
   def up
-
     drop_table :rms_fields
 
     remove_foreign_key :rms_registrations, column: :entry_id
@@ -10,7 +9,6 @@ class DropDeprecatedFormsTables < ActiveRecord::Migration
     remove_foreign_key :rms_items, column: :form_id
     remove_column :rms_items, :form_id
     drop_table :rms_forms
-    
   end
 
   def down

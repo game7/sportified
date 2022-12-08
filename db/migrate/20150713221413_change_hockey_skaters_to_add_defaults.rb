@@ -1,4 +1,4 @@
-class ChangeHockeySkatersToAddDefaults < ActiveRecord::Migration
+class ChangeHockeySkatersToAddDefaults < ActiveRecord::Migration[4.2]
   def up
     change_column_default :hockey_skaters, :games_played, 0
     change_column_default :hockey_skaters, :goals, 0
@@ -15,6 +15,7 @@ class ChangeHockeySkatersToAddDefaults < ActiveRecord::Migration
     change_column_default :hockey_skaters, :gordie_howes, 0
     change_column_default :hockey_skaters, :ejections, 0
   end
+
   def down
     change_column_default :hockey_skaters, :games_played, nil
     change_column_default :hockey_skaters, :goals, nil

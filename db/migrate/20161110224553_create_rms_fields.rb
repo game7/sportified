@@ -1,4 +1,4 @@
-class CreateRmsFields < ActiveRecord::Migration
+class CreateRmsFields < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_fields do |t|
       t.references :form
@@ -10,6 +10,6 @@ class CreateRmsFields < ActiveRecord::Migration
     end
 
     add_foreign_key :rms_fields, :rms_forms, column: :form_id, primary_key: :id
-    add_index :rms_fields, [:form_id, :name], :unique => true
+    add_index :rms_fields, %i[form_id name], unique: true
   end
 end

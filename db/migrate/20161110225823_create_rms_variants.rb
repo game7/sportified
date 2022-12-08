@@ -1,4 +1,4 @@
-class CreateRmsVariants < ActiveRecord::Migration
+class CreateRmsVariants < ActiveRecord::Migration[4.2]
   def change
     create_table :rms_variants do |t|
       t.references :item
@@ -13,6 +13,5 @@ class CreateRmsVariants < ActiveRecord::Migration
     end
 
     add_foreign_key :rms_variants, :rms_items, column: :item_id
-
   end
 end

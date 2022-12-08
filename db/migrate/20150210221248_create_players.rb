@@ -1,4 +1,4 @@
-class CreatePlayers < ActiveRecord::Migration
+class CreatePlayers < ActiveRecord::Migration[4.2]
   def change
     create_table :players do |t|
       t.references :tenant, index: true
@@ -9,7 +9,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.date :birthdate
       t.string :email
       t.string :slug
-      
+
       t.string :mongo_id, index: true
 
       t.timestamps

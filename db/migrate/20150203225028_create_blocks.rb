@@ -1,13 +1,13 @@
-class CreateBlocks < ActiveRecord::Migration
+class CreateBlocks < ActiveRecord::Migration[4.2]
   def change
     create_table :blocks do |t|
       t.references :page
-      t.string :type      
+      t.string :type
       t.integer :section_id
       t.integer :column
       t.integer :position
       t.hstore :options
-      
+
       t.string :mongo_id
 
       t.timestamps

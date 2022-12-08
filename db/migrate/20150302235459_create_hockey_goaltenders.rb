@@ -1,12 +1,12 @@
-class CreateHockeyGoaltenders < ActiveRecord::Migration
+class CreateHockeyGoaltenders < ActiveRecord::Migration[4.2]
   def change
-   create_table :hockey_goaltenders do | t |
+    create_table :hockey_goaltenders do |t|
       t.string :type
       t.references :tenant, index: true
       t.references :team, index: true
       t.references :player, index: true
       t.references :statsheet, index: true
-      
+
       t.integer :games_played
       t.integer :minutes_played
       t.integer :shots_against
@@ -26,9 +26,9 @@ class CreateHockeyGoaltenders < ActiveRecord::Migration
       t.integer :shootout_losses
       t.integer :total_wins
       t.integer :total_losses
-      
-      t.string :mongo_id, index: true      
-      
+
+      t.string :mongo_id, index: true
+
       t.timestamps
     end
   end

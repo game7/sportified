@@ -1,4 +1,4 @@
-class AddFirstAndLastNameToUser < ActiveRecord::Migration
+class AddFirstAndLastNameToUser < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :first_name, :string
     add_column :users, :last_name, :string
@@ -10,6 +10,7 @@ class AddFirstAndLastNameToUser < ActiveRecord::Migration
     end
     remove_column :users, :name
   end
+
   def down
     add_column :users, :name, :string
     User.unscoped.each do |user|

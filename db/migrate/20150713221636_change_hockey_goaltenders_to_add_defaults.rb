@@ -1,4 +1,4 @@
-class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration
+class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration[4.2]
   def up
     change_column_default :hockey_goaltenders, :games_played, 0
     change_column_default :hockey_goaltenders, :minutes_played, 0
@@ -18,8 +18,9 @@ class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration
     change_column_default :hockey_goaltenders, :shootout_wins, 0
     change_column_default :hockey_goaltenders, :shootout_losses, 0
     change_column_default :hockey_goaltenders, :total_wins, 0
-    change_column_default :hockey_goaltenders, :total_losses, 0    
+    change_column_default :hockey_goaltenders, :total_losses, 0
   end
+
   def down
     change_column_default :hockey_goaltenders, :games_played, nil
     change_column_default :hockey_goaltenders, :minutes_played, nil
@@ -39,6 +40,6 @@ class ChangeHockeyGoaltendersToAddDefaults < ActiveRecord::Migration
     change_column_default :hockey_goaltenders, :shootout_wins, nil
     change_column_default :hockey_goaltenders, :shootout_losses, nil
     change_column_default :hockey_goaltenders, :total_wins, nil
-    change_column_default :hockey_goaltenders, :total_losses, nil    
+    change_column_default :hockey_goaltenders, :total_losses, nil
   end
 end

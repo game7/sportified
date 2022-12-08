@@ -1,15 +1,14 @@
-class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
-
+class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration[4.2]
   def up
     # create_and_assign_league 'oceanside', 'OAHL'
     # create_and_assign_league 'styfl', 'STYFL'
   end
 
   def down
-    update("update seasons set league_id = null")
-    update("update divisions set league_id = null")
-    delete("delete from programs")
-    League::Program.unscoped.all.each{|league| league.destroy }
+    update('update seasons set league_id = null')
+    update('update divisions set league_id = null')
+    delete('delete from programs')
+    League::Program.unscoped.all.each { |league| league.destroy }
   end
 
   private
@@ -20,6 +19,4 @@ class CreateLeagueAndAssociateSeasonsAndDivisions < ActiveRecord::Migration
     update("update seasons set league_id = #{id} where tenant_id=#{tenant.id}")
     update("update divisions set league_id = #{id} where tenant_id=#{tenant.id}")
   end
-
-
 end
