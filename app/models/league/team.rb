@@ -54,45 +54,46 @@
 #
 class League::Team < ActiveRecord::Base
   include ::Sportified::TenantScoped
-  include ::Concerns::Brandable
-  include ::Concerns::Recordable
+  include Brandable
+  include Recordable
 
   belongs_to :tenant
   belongs_to :division
   belongs_to :season
   has_one    :program, through: :division
-  belongs_to :club, required: false
+  belongs_to :club, optional: true
 
-  validates_presence_of :name, :division_id, :season_id
+  validates :name, :division_id, :season_id, presence: true
 
   has_many :players
 
   def games
-    ::League::Game.where("home_team_id = ? OR away_team_id = ?", id, id)
+    ::League::Game.where('home_team_id = ? OR away_team_id = ?', id, id)
   end
 
   before_save :set_slug
   def set_slug
-    self.slug = self.name.parameterize
+    self.slug = name.parameterize
   end
 
   before_save :ensure_short_name
   def ensure_short_name
-    if self.short_name.nil? || self.short_name.empty?
-      self.short_name = self.name
-    end
+    return unless short_name.nil? || short_name.empty?
+
+    self.short_name = name
   end
 
   class << self
     def for_division(division)
-      division_id = ( division.class == League::Division ? division.id : division )
-      where(:division_id => division_id)
+      division_id = (division.instance_of?(League::Division) ? division.id : division)
+      where(division_id: division_id)
     end
+
     def for_season(season)
-      season_id = ( season.class == League::Season ? season.id : season )
-      where(:season_id => season_id)
+      season_id = (season.instance_of?(League::Season) ? season.id : season)
+      where(season_id: season_id)
     end
   end
 
-  scope :with_slug, ->(slug) { where(:slug => slug) }
+  scope :with_slug, ->(slug) { where(slug: slug) }
 end

@@ -36,7 +36,7 @@
 #  index_hockey_skaters_on_tenant_id     (tenant_id)
 #
 class Hockey::Skater::Record < Hockey::Skater
-  include Stats
+  include Hockey::Stats
 
   default_scope { where(type: klass.name) }
 
