@@ -58,9 +58,12 @@ class Product < ApplicationRecord
   end
 
   def dup
-    clone = super
-    clone.variants << variants.collect(&:dup)
-    clone
+    super.tap do |clone|
+      clone.image = image_blob
+      variants.collect(&:dup).each do |variant|
+        clone.variants.build(variant.attributes)
+      end
+    end
   end
 
   def event?
