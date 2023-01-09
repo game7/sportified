@@ -59,6 +59,9 @@ GEM
       activemodel (>= 4.1, < 7.1)
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
+    active_storage-postgresql (0.3.0)
+      pg (>= 1.0)
+      rails (>= 6.0)
     activejob (7.0.4)
       activesupport (= 7.0.4)
       globalid (>= 0.3.6)
@@ -521,6 +524,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   active_model_serializers (~> 0.10.2)
+  active_storage-postgresql
   acts-as-taggable-on
   ahoy_matey
   ancestry

@@ -16,7 +16,7 @@ export default function EditAdminPostsIndexPage() {
       title="Editing Post"
       breadcrumbs={[
         { href: "/next/admin/posts", label: "Posts" },
-        { href: `/next/admin/posts/${post.id}`, label: "Edit" },
+        { href: `/next/admin/posts/${post.id}/edit`, label: "Edit" },
       ]}
     >
       <PostForm />

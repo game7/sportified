@@ -308,6 +308,6 @@ Rails.application.routes.draw do
   end
 
   namespace :active_storage do
-    resources :blobs, only: [:create]
+    resources :blobs, only: %i[index create]
   end
 end

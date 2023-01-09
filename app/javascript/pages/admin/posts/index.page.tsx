@@ -1,11 +1,12 @@
 import {
   EditOutlined,
   EllipsisOutlined,
+  PictureOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Dropdown, Table } from "antd";
+import { Button, Dropdown, Image, Popover, Table } from "antd";
 import { LinkButton } from "~/components/buttons";
 import { AdminLayout } from "~/components/layout/admin-layout";
 
@@ -35,16 +36,6 @@ export default function AdminPostsIndexPage() {
         dataSource={posts}
         rowKey="id"
         columns={[
-          // {
-          //   dataIndex: "id",
-          //   render: (id) => (
-          //     <LinkButton
-          //       href={`/next/admin/posts/${id}`}
-          //       icon={<ZoomInOutlined rotate={90} />}
-          //     />
-          //   ),
-          //   width: 40,
-          // },
           {
             dataIndex: "id",
             render: (id) => (
@@ -67,6 +58,16 @@ export default function AdminPostsIndexPage() {
               </Dropdown>
             ),
             width: 40,
+          },
+          {
+            dataIndex: "photo_url",
+            width: 40,
+            render: (url: string) =>
+              url && (
+                <Popover content={<Image src={url} width={200} />}>
+                  <Button icon={<PictureOutlined />} />
+                </Popover>
+              ),
           },
           { dataIndex: "title", title: "Title" },
         ]}

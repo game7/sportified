@@ -6,21 +6,24 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+postgresql:
+  service: PostgreSQL
+  root: <%= Rails.root.join("storage") %>
+
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 production:
   service: S3
   access_key_id: <%= Rails.application.credentials.dig(:s3, :key) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %> 
+  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %>
   region: us-east-1
-  bucket: <%= Rails.application.credentials.dig(:s3, :production, :bucket) %>   
+  bucket: <%= Rails.application.credentials.dig(:s3, :production, :bucket) %>
 
 development:
   service: S3
   access_key_id: <%= Rails.application.credentials.dig(:s3, :key) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %> 
+  secret_access_key: <%= Rails.application.credentials.dig(:s3, :secret) %>
   region: us-east-1
-  bucket: <%= Rails.application.credentials.dig(:s3, :development, :bucket) %>  
-
+  bucket: <%= Rails.application.credentials.dig(:s3, :development, :bucket) %>
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

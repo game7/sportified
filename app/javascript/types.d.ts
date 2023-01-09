@@ -23,6 +23,24 @@ declare type WithOptional<Type, Key extends keyof Type> = Type & {
   [Property in Key]-?: Type[Property];
 };
 
+namespace ActiveStorage {
+  export interface Blob {
+    attachable_sgid: string;
+    byte_size: number;
+    checksum: string;
+    content_type: string;
+    created_at: string;
+    filename: string;
+    id: number;
+    key: string;
+    metadata: any;
+    service_name: string;
+    signed_id: string;
+    url: string;
+    "image?": boolean;
+  }
+}
+
 namespace App {
   export interface Tenant {
     id: integer;
@@ -309,6 +327,7 @@ namespace App {
       };
     };
     link_url: string[];
+    photo: any;
     summary: string[];
     tag_list: string[];
     tenant_id: number;

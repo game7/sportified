@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_20_030337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -35,6 +35,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
     t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_postgresql_files", force: :cascade do |t|
+    t.oid "oid"
+    t.string "key"
+    t.index ["key"], name: "index_active_storage_postgresql_files_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
@@ -159,6 +165,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
     t.text "description"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "statsheet_id"
+    t.string "statsheet_type"
+    t.integer "home_team_score", default: 0
+    t.integer "away_team_score", default: 0
+    t.string "home_team_name"
+    t.string "away_team_name"
+    t.boolean "home_team_custom_name"
+    t.boolean "away_team_custom_name"
+    t.string "text_before"
+    t.string "text_after"
+    t.string "result"
+    t.string "completion"
     t.boolean "exclude_from_team_records"
     t.integer "playing_surface_id"
     t.integer "home_team_locker_room_id"
@@ -167,8 +187,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
     t.integer "page_id"
     t.boolean "private", default: false, null: false
     t.bigint "recurrence_id"
+    t.index ["away_team_id"], name: "index_events_on_away_team_id"
     t.index ["away_team_locker_room_id"], name: "index_events_on_away_team_locker_room_id"
     t.index ["division_id"], name: "index_events_on_division_id"
+    t.index ["home_team_id"], name: "index_events_on_home_team_id"
     t.index ["home_team_locker_room_id"], name: "index_events_on_home_team_locker_room_id"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["page_id"], name: "index_events_on_page_id"
@@ -534,8 +556,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
   end
 
   create_table "products", id: :serial, force: :cascade do |t|
-    t.string "registrable_type"
     t.integer "registrable_id"
+    t.string "registrable_type"
     t.string "title", limit: 40
     t.text "description"
     t.integer "quantity_allowed"
@@ -559,7 +581,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "slug"
-    t.index ["slug"], name: "index_programs_on_slug"
     t.index ["tenant_id"], name: "index_programs_on_tenant_id"
   end
 
@@ -641,10 +662,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
-    t.string "taggable_type"
     t.integer "taggable_id"
-    t.string "tagger_type"
+    t.string "taggable_type"
     t.integer "tagger_id"
+    t.string "tagger_type"
     t.string "context", limit: 128
     t.datetime "created_at", precision: nil
     t.index ["context"], name: "index_taggings_on_context"
@@ -772,6 +793,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_233009) do
   add_foreign_key "forms", "registrations"
   add_foreign_key "forms", "tenants"
   add_foreign_key "league_divisions", "programs"
+  add_foreign_key "league_seasons", "programs"
   add_foreign_key "league_seasons", "programs"
   add_foreign_key "products", "tenants"
   add_foreign_key "programs", "tenants"

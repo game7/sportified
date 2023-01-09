@@ -1,6 +1,6 @@
 import { FormDataConvertible } from "@inertiajs/inertia";
 import { Form, FormItemProps } from "antd";
-import _, { get, isPlainObject, mapKeys, mapValues } from "lodash";
+import _, { get, isPlainObject } from "lodash";
 import { humanize } from "./inflector";
 import { useErrors } from "./use-errors";
 
@@ -27,7 +27,7 @@ function getInitialValue<T extends object>(
   model: T | undefined,
   attr: NestedKeyOf<T>
 ) {
-  let value = model && get(model, attr, "");
+  let value = model && get(model, attr);
   return value === null ? "" : value;
 }
 

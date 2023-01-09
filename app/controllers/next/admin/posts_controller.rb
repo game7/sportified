@@ -3,8 +3,9 @@ class Next::Admin::PostsController < Next::Admin::BaseController
   before_action :mark_return_point, only: %i[new edit]
 
   def index
+    ActiveStorage::Current.url_options = { only_path: true }
     inertia props: {
-      posts: Post.order(updated_at: :desc)
+      posts: posts
     }
   end
 
@@ -31,7 +32,7 @@ class Next::Admin::PostsController < Next::Admin::BaseController
 
   def edit
     inertia props: {
-      post: @post
+      post: @post.as_json
     }
   end
 
@@ -46,11 +47,17 @@ class Next::Admin::PostsController < Next::Admin::BaseController
 
   private
 
+  def posts
+    Post.includes(:photo_blob)
+        .order(updated_at: :desc)
+        .as_json(except: :tag_list)
+  end
+
   def set_post
     @post = Post.find(params[:id])
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body)
+    params.require(:post).permit(:title, :summary, :body, :photo)
   end
 end

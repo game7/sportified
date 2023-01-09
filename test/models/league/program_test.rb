@@ -13,7 +13,6 @@
 #
 # Indexes
 #
-#  index_programs_on_slug       (slug)
 #  index_programs_on_tenant_id  (tenant_id)
 #
 # Foreign Keys

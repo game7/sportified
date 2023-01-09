@@ -60,6 +60,7 @@ gem 'rmagick', '>= 2.13.4'
 # active_storage deps
 gem "aws-sdk-s3", require: false
 gem 'image_processing', '~> 1.2'
+gem 'active_storage-postgresql'
 
 gem 'haml-rails'
 
