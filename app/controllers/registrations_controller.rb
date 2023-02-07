@@ -109,13 +109,33 @@ class RegistrationsController < ApplicationController
     @stripe_public_api_key = stripe_public_api_key
     @stripe_account = Tenant.current.stripe_account_id    
 
-    redirect_to registration_path(registration.uuid) and return unless registration.payment_required?
+    unless @registration.payment_required?
+      return redirect_to registration_path(@registration.uuid)
+    end
 
-    Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    # if session already captured then let's take a look
+    if(@registration.session_id.present?)
+      session = Stripe::Checkout::Session.retrieve(@registration.session_id, {
+        stripe_account: @registration.tenant.stripe_account_id,
+        api_key: api_key
+      })
+
+      case session.status
+      when 'open'
+        # guard against creating new session
+        return
+      when 'complete'
+        # guard against new session and redirect to registration#show
+        return redirect_to(registration_path(@registration.uuid))
+      when 'expired'
+        # allow code to flow through and create new session
+      end
+    end
 
     #  get existing customer for email address
-    customers = Stripe::Customer.list({ email: registration.email, limit: 1 }, {
-      stripe_account: Tenant.current.stripe_account_id
+    customers = Stripe::Customer.list({ email: @registration.email, limit: 1 }, {
+      stripe_account: Tenant.current.stripe_account_id,
+      api_key: api_key
     })
     customer = customers['data'][0]
 
@@ -142,7 +162,8 @@ class RegistrationsController < ApplicationController
       cancel_url: registration_url(registration.uuid)        
     }
     session_options = {
-      stripe_account: Tenant.current.stripe_account_id
+      stripe_account: Tenant.current.stripe_account_id,
+      api_key: api_key
     }   
     
     session = Stripe::Checkout::Session.create session_params, session_options
@@ -156,27 +177,39 @@ class RegistrationsController < ApplicationController
 
     registration = Registration.find_by_uuid(params[:id])
 
-    Stripe.api_key = Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    if registration.completed?
+      return redirect_to registration_path(registration.uuid), flash: { info: 'Registration has already been marked as completed' }
+    end
+    if registration.session_id.blank?
+      return redirect_to registration_path(registration.uuid), flash: { error: 'Registration has yet to complete checkout' }
+    end
 
     session = Stripe::Checkout::Session.retrieve(registration.session_id, {
-      stripe_account: registration.tenant.stripe_account_id
+      stripe_account: registration.tenant.stripe_account_id,
+      api_key: api_key
     })
     
     payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent, {
-      stripe_account: registration.tenant.stripe_account_id
+      stripe_account: registration.tenant.stripe_account_id,
+      api_key: api_key
     })
 
-    if payment_intent.status == 'succeeded'
+    if session.status == 'complete'
       registration.update(payment_id: registration.payment_intent_id)
       registration.touch(:completed_at)
       RegistrationMailer.confirmation_email(registration.id, registration_url(registration.uuid)).deliver_now
-      flash[:success] = "Payment has been processed"
-      redirect_to registration_path(registration.uuid)    
+      return redirect_to registration_path(registration.uuid), flash: { success: 'Checkout has been completed' }
     end
+
+    redirect_to registration_path(registration.uuid), flash:  { error: "Registration Checkout has not been completed (status: #{session.status})" }
   end  
 
 
   private
+
+    def api_key
+      Tenant.current.stripe_private_key.presence || ENV['STRIPE_SECRET_KEY']
+    end
 
     def variant
       Variant.find(params[:variant_id])
