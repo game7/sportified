@@ -86,7 +86,7 @@ RUN gem install \
     solargraph
 
 # install heroku cli
-RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+RUN curl https://cli-assets.heroku.com/install.sh | sh
 
 ENV APP_HOME /app
 RUN mkdir -p $APP_HOME
