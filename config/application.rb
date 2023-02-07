@@ -16,7 +16,6 @@ module Sportified
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-
     config.generators do |g|
       g.template_engine :haml
       g.orm :active_record
@@ -24,7 +23,7 @@ module Sportified
       # g.fixture_replacement :factory_girl, :dir => "spec/support/factories"
     end
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     # config.autoload_paths += %W(#{config.root}/app/services)
     # config.autoload_paths += Dir["#{config.root}/app/services/**/*"]
@@ -43,5 +42,8 @@ module Sportified
 
     config.react.camelize_props = true
 
+    # https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+    # config.active_record.yaml_column_permitted_classes = [ActsAsTaggableOn::TagList, Symbol]
+    config.active_record.use_yaml_unsafe_load = true
   end
 end
