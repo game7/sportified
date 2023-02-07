@@ -18,7 +18,7 @@
             = semantic_icon(:exclamation, :circle, class: [ :red ]) if registration.errors.key?(:email)
             Contact
           %a.item{ href: '#participant' }
-            = semantic_icon(:exclamation, :circle, class: [ :red ]) if (registration.errors.keys & %i{first_name last_name birthdate}).any?
+            = semantic_icon(:exclamation, :circle, class: [ :red ]) if %i{first_name last_name birthdate}.filter{|key| registration.errors.key?(key)}.any?
             Participant            
           - registration.forms.each do |form|
             %a.item{ href: "##{form.template.name.parameterize}" }
