@@ -1,8 +1,8 @@
 class Admin::General::EventsController < Admin::AdminController
   skip_before_action :verify_admin, only: [:show]
-  before_action :verify_admin_or_operations, only: [:show] 
-  before_action :load_event, :only => [:show, :edit, :update]
-  before_action :mark_return_point, only: [:new, :edit]
+  before_action :verify_admin_or_operations, only: [:show]
+  before_action :load_event, only: %i[show edit update]
+  before_action :mark_return_point, only: %i[new edit]
 
   def show
     @recent_events_with_products = General::Event.with_product.order(starts_on: :desc).includes(:product).limit(100)
@@ -22,13 +22,12 @@ class Admin::General::EventsController < Admin::AdminController
   def create
     @form = ::General::Events::CreateForm.new ::General::Event.new
     if @form.submit(params)
-      return_to_last_point :success => 'Event was successfully created.'
+      return_to_last_point success: 'Event was successfully created.'
     else
       flash[:error] = 'Event could not be created.'
-      render :action => :new
+      render action: :new
     end
   end
-
 
   def edit
     @form = ::General::Events::UpdateForm.new @event
@@ -37,17 +36,16 @@ class Admin::General::EventsController < Admin::AdminController
   def update
     @form = ::General::Events::UpdateForm.new @event
     if @form.submit(params)
-      return_to_last_point(:notice => 'Event was successfully updated.')
+      return_to_last_point(notice: 'Event was successfully updated.')
     else
       flash[:error] = 'Event could not be updated.'
-      render :action => :edit
+      render action: :edit
     end
   end
 
   private
 
-    def load_event
-      @event = ::General::Event.find(params[:id])
-    end
-
+  def load_event
+    @event = ::General::Event.find(params[:id])
+  end
 end

@@ -69,7 +69,8 @@ class General::Events::CreateForm
     return false unless valid?
 
     Event.transaction do
-      @event.update_attributes(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list, :private))
+      @event.update_attributes(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list,
+                                                :private))
       @event.save
       if repeating?
         schedule = IceCube::Schedule.new(now = @event.starts_on + 1.day) do |schedule|
@@ -100,9 +101,7 @@ class General::Events::CreateForm
   def whitelist(params)
     Chronic.time_class = Time.zone
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
-    puts '---------'
-    puts attributes.keys.concat([tag_list: []])
-    puts '---------'
+    params[:general_event][:ends_on] = Chronic.parse(params[:general_event][:ends_on])
     params.require(:general_event)
           .permit(*attributes.keys.concat([tag_list: []]))
   end
