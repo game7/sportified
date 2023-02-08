@@ -79,7 +79,7 @@ class General::Events::CreateForm
         slots = if ends == 'after'
                   schedule.first(ends_after_occurrences - 1)
                 else
-                  schedule.occurrences(Chronic.parse(ends_on).end_of_day)
+                  schedule.occurrences(ends_on.end_of_day)
                 end
         slots.each do |slot|
           recurrence = @event.dup
