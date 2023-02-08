@@ -1,6 +1,6 @@
 class Admin::League::PracticesController < Admin::AdminController
-  before_action :mark_return_point, :only => [:new, :edit]
-  before_action :load_event, :only => [:edit, :update, :destroy]
+  before_action :mark_return_point, only: %i[new edit]
+  before_action :load_event, only: %i[edit update destroy]
 
   def new
     if params[:clone]
@@ -20,12 +20,12 @@ class Admin::League::PracticesController < Admin::AdminController
     params[:practice][:starts_on] = Chronic.parse(params[:practice][:starts_on])
     @practice = ::League::Practice.new(practice_params)
     if @practice.save
-      return_to_last_point :success => 'Practice was successfully created.'
+      return_to_last_point success: 'Practice was successfully created.'
     else
       puts @practice.errors.messages
       flash[:error] = 'Practice could not be created.'
       load_options
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -37,12 +37,12 @@ class Admin::League::PracticesController < Admin::AdminController
     @practice = ::League::Practice.find(params[:id])
     Chronic.time_class = Time.zone
     params[:practice][:starts_on] = Chronic.parse(params[:practice][:starts_on])
-    if @practice.update_attributes(practice_params)
-      return_to_last_point(:notice => 'Game was successfully updated.')
+    if @practice.update(practice_params)
+      return_to_last_point(notice: 'Game was successfully updated.')
     else
       flash[:error] = 'Game could not be updated.'
       load_options
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
@@ -50,22 +50,21 @@ class Admin::League::PracticesController < Admin::AdminController
 
   def practice_params
     params.require(:practice).permit(:program_id, :season_id, :division_id, :starts_on, :duration,
-      :location_id, :summary, :description, :show_for_all_teams,
-      :away_team_id, :away_team_custom_name, :away_team_name,
-      :home_team_id, :home_team_custom_name, :home_team_name,
-      :text_before, :text_after, :show_for_all_teams,
-      :playing_surface_id, :home_team_locker_room_id, :away_team_locker_room_id
-    )
+                                     :location_id, :summary, :description, :show_for_all_teams,
+                                     :away_team_id, :away_team_custom_name, :away_team_name,
+                                     :home_team_id, :home_team_custom_name, :home_team_name,
+                                     :text_before, :text_after, :show_for_all_teams,
+                                     :playing_surface_id, :home_team_locker_room_id, :away_team_locker_room_id)
   end
 
   def load_options
     @options = {
       programs: ::League::Program.order(:name).select(:id, :name),
-      divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by{|d| d.program_id},
-      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by{|s| s.program_id},
+      divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by { |d| d.program_id },
+      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by { |s| s.program_id },
       locations: Location.order(:name).select(:id, :name),
-      playing_surfaces: PlayingSurface.order(:name).select(:id, :name, :location_id).group_by{|ps| ps.location_id},
-      locker_rooms: LockerRoom.order(:name).select(:id, :name, :location_id).group_by{|ps| ps.location_id},
+      playing_surfaces: PlayingSurface.order(:name).select(:id, :name, :location_id).group_by { |ps| ps.location_id },
+      locker_rooms: LockerRoom.order(:name).select(:id, :name, :location_id).group_by { |ps| ps.location_id },
       teams: @practice ? ::League::Team.for_division(@practice.division).for_season(@practice.season).order(:name) : []
     }
   end

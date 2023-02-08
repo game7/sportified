@@ -56,27 +56,26 @@
 require 'icalendar'
 
 class League::TeamsController < BaseLeagueController
-  before_action :verify_admin, :except => [:show, :index, :schedule, :roster, :statistics]
-  before_action :get_season_options, :only => [:index]
-  before_action :find_team, :only => [:edit, :update, :destroy]
-  before_action :load_division_options, :only => [:new]
-  before_action :load_club_options, :only => [:new, :edit]
+  before_action :verify_admin, except: %i[show index schedule roster statistics]
+  before_action :get_season_options, only: [:index]
+  before_action :find_team, only: %i[edit update destroy]
+  before_action :load_division_options, only: [:new]
+  before_action :load_club_options, only: %i[new edit]
 
   def index
-
     @teams = @division.teams.for_season(@season).order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @teams }
+      format.xml  { render xml: @teams }
     end
   end
 
   def schedule
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @events = ::Event.where('home_team_id = ? OR away_team_id = ?', @team.id, @team.id)
-                          .order(:starts_on)
-                          .includes(:location, :home_team, :away_team)
+                     .order(:starts_on)
+                     .includes(:location, :home_team, :away_team)
 
     @team_links = links_to_team_schedule(@division, @season)
 
@@ -84,16 +83,13 @@ class League::TeamsController < BaseLeagueController
       format.html
       format.ics { to_ical(@events) }
     end
-
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
     @division = @team.division
-    @team.update_attributes(team_params)
+    @team.update(team_params)
   end
 
   def roster
@@ -105,14 +101,16 @@ class League::TeamsController < BaseLeagueController
   def statistics
     @team = @division.teams.for_season(@season).with_slug(params[:team_slug]).first!
     @team_links = links_to_team_schedule(@division, @season)
-    @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(points: :desc)
-    @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?', @team.id).order(save_percentage: :desc)
+    @players = Hockey::Skater::Record.joins(player: :team).includes(:player).where('players.team_id = ?',
+                                                                                   @team.id).order(points: :desc)
+    @goalies = Hockey::Goaltender::Record.joins(player: :team).includes(:player).where('players.team_id = ?',
+                                                                                       @team.id).order(save_percentage: :desc)
   end
 
   def show
-    @teams = @division.teams.for_season(@season).desc("record.pts")
-    @current_game = Game.for_team(@team).in_the_future().desc(:starts_on).first
-    @next_game = Game.for_team(@team).in_the_future().desc(:starts_on).skip(1).first
+    @teams = @division.teams.for_season(@season).desc('record.pts')
+    @current_game = Game.for_team(@team).in_the_future.desc(:starts_on).first
+    @next_game = Game.for_team(@team).in_the_future.desc(:starts_on).skip(1).first
     @related_teams = Team.for_club(@team.club_id).order(:season_name) if @team.club_id
     @players = @team.players.order(:last_name)
   end
@@ -140,16 +138,17 @@ class League::TeamsController < BaseLeagueController
   end
 
   def set_area_navigation
-    super unless [:edit,:update,:new,:create].include? params[:action].to_sym
+    super unless %i[edit update new create].include? params[:action].to_sym
   end
 
   def load_objects
     super
-
   end
 
   def get_season_options
-    @season_options = @division.seasons.all.order(starts_on: :desc).collect{|s| [s.name, league_teams_path(@program.slug, @division.slug, s.slug)]}
+    @season_options = @division.seasons.all.order(starts_on: :desc).collect do |s|
+      [s.name, league_teams_path(@program.slug, @division.slug, s.slug)]
+    end
   end
 
   def links_to_team_schedule(division, season)
@@ -168,7 +167,7 @@ class League::TeamsController < BaseLeagueController
 
   def to_ical(events)
     cal = Icalendar::Calendar.new
-    #offset = ActiveSupport::TimeZone.new('America/Arizona').utc_offset()
+    # offset = ActiveSupport::TimeZone.new('America/Arizona').utc_offset()
     events.each do |e|
       event = Icalendar::Event.new
       event.uid = e.id.to_s
@@ -180,7 +179,7 @@ class League::TeamsController < BaseLeagueController
     end
     cal.x_wr_calname = "#{@team.season.name} #{@team.division.name} #{@team.short_name}"
     cal.publish
-    send_data(cal.to_ical, :type => 'text/calendar', :disposition => "inline; filename=#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics", :filename => "#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics")
+    send_data(cal.to_ical, type: 'text/calendar',
+                           disposition: "inline; filename=#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics", filename: "#{@team.slug}-#{@team.season.slug}-#{@team.division.slug}-schedule.ics")
   end
-
 end

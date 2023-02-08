@@ -1,16 +1,15 @@
 require 'chronic'
 class Admin::League::PlayersController < Admin::BaseLeagueController
-
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]
-  before_action :find_player, :only => [:edit, :update, :destroy]
-  before_action :find_team, :only => [:index, :new, :create]
-  before_action :add_team_breadcrumbs, :only => [:index]
+  before_action :mark_return_point, only: %i[new edit destroy]
+  before_action :find_player, only: %i[edit update destroy]
+  before_action :find_team, only: %i[index new create]
+  before_action :add_team_breadcrumbs, only: [:index]
 
   def index
     @players = @team.players.order(:last_name)
     respond_to do |format|
       format.html
-      format.json { render :json => @players }
+      format.json { render json: @players }
     end
   end
 
@@ -18,32 +17,30 @@ class Admin::League::PlayersController < Admin::BaseLeagueController
     @player = @team.players.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     params[:player][:birthdate] = Chronic.parse params[:player][:birthdate]
     @player = @team.players.build(player_params)
     if @player.save
-      return_to_last_point :success => 'Player was successfully created.'
+      return_to_last_point success: 'Player was successfully created.'
     else
-      render :action => "new"
+      render action: 'new'
     end
-
   end
 
   def update
     params[:player][:birthdate] = Chronic.parse params[:player][:birthdate]
-    if @player.update_attributes(player_params)
-     return_to_last_point :success => 'Player was successfully updated.'
+    if @player.update(player_params)
+      return_to_last_point success: 'Player was successfully updated.'
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @player.destroy
-    return_to_last_point :success => 'Player has been deleted.'
+    return_to_last_point success: 'Player has been deleted.'
   end
 
   private
@@ -62,8 +59,8 @@ class Admin::League::PlayersController < Admin::BaseLeagueController
 
   def add_team_breadcrumbs
     add_breadcrumb @team.division.name
-    add_breadcrumb "Teams", admin_teams_path
+    add_breadcrumb 'Teams', admin_teams_path
     add_breadcrumb @team.name
-    add_breadcrumb "Roster", admin_team_players_path(@team)
+    add_breadcrumb 'Roster', admin_team_players_path(@team)
   end
 end

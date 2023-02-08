@@ -23,7 +23,7 @@ class Host::TenantsController < Host::BaseController
   end
 
   def update
-    if @tenant.update_attributes(tenant_params)
+    if @tenant.update(tenant_params)
       return_to_last_point success: 'Tenant has been updated.'
     else
       flash[:error] = 'Tenant could not be updated'

@@ -1,7 +1,7 @@
 class Admin::League::EventsController < Admin::AdminController
-  before_action :mark_return_point, :only => [:new, :edit]
-  before_action :load_event, :only => [:edit, :update, :destroy]
-  before_action :load_options, :only => [:new, :edit]
+  before_action :mark_return_point, only: %i[new edit]
+  before_action :load_event, only: %i[edit update destroy]
+  before_action :load_options, only: %i[new edit]
 
   def new
     if params[:clone]
@@ -19,28 +19,26 @@ class Admin::League::EventsController < Admin::AdminController
     params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
     @event = ::League::Event.new(event_params)
     if @event.save
-      return_to_last_point :success => 'Event was successfully created.'
+      return_to_last_point success: 'Event was successfully created.'
     else
       flash[:error] = 'Event could not be created.'
       load_options
-      render :action => "new"
+      render action: 'new'
     end
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
     @event = ::League::Event.find(params[:id])
     Chronic.time_class = Time.zone
     params[:event][:starts_on] = Chronic.parse(params[:event][:starts_on])
-    if @event.update_attributes(event_params)
-      return_to_last_point(:notice => 'Event was successfully updated.')
+    if @event.update(event_params)
+      return_to_last_point(notice: 'Event was successfully updated.')
     else
       flash[:error] = 'Event could not be updated.'
       load_options
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
@@ -48,15 +46,14 @@ class Admin::League::EventsController < Admin::AdminController
 
   def event_params
     params.require(:event).permit(:program_id, :season_id, :division_id, :starts_on, :duration,
-      :all_day, :location_id, :summary, :description, :show_for_all_teams
-    )
+                                  :all_day, :location_id, :summary, :description, :show_for_all_teams)
   end
 
   def load_options
     @options = {
       programs: ::League::Program.order(:name).select(:id, :name),
-      divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by{|d| d.program_id},
-      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by{|s| s.program_id},
+      divisions: ::League::Division.order(:name).select(:id, :name, :program_id).group_by { |d| d.program_id },
+      seasons: ::League::Season.order(starts_on: :desc).select(:id, :name, :program_id).group_by { |s| s.program_id },
       locations: Location.order(:name).select(:id, :name)
     }
   end
@@ -64,5 +61,4 @@ class Admin::League::EventsController < Admin::AdminController
   def load_event
     @event = ::League::Event.find(params[:id])
   end
-
 end

@@ -16,36 +16,36 @@
 
 class BlocksController < ApplicationController
   before_action :verify_admin
-  before_action :find_page, :only => [:create, :edit, :update, :destroy]
-  before_action :find_block, :only => [:edit, :update, :destroy]
+  before_action :find_page, only: %i[create edit update destroy]
+  before_action :find_block, only: %i[edit update destroy]
 
   def create
-    @block = block_type.create({ section_id: params[:section_id], column: params[:column]}) do |block|
+    @block = block_type.create({ section_id: params[:section_id], column: params[:column] }) do |block|
       block.page = @page
     end
     flash[:success] = "#{@block.class_name.humanize} has been added to Page"
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
-    if @block.update_attributes(params[:block])
-      flash[:success] = @block.class.to_s.demodulize+" updated"
-    end
+    return unless @block.update(params[:block])
+
+    flash[:success] = @block.class.to_s.demodulize + ' updated'
   end
 
   def destroy
     @block.delete
-    flash[:success] = "Block Deleted"
+    flash[:success] = 'Block Deleted'
   end
 
   def position
-    params[:block].each_with_index do |id, i|
-      Block.update(id, :position => i, :section_id => params[:section_id], :column => params[:column])
-    end if params[:block]
-    render :nothing => true
+    if params[:block]
+      params[:block].each_with_index do |id, i|
+        Block.update(id, position: i, section_id: params[:section_id], column: params[:column])
+      end
+    end
+    render nothing: true
   end
 
   private
@@ -61,6 +61,4 @@ class BlocksController < ApplicationController
   def find_block
     @block = @page.blocks.find(params[:id])
   end
-
-
 end

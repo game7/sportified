@@ -1,17 +1,15 @@
 class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   skip_before_action :verify_admin
-  before_action :verify_admin_or_operations 
+  before_action :verify_admin_or_operations
   before_action :load_statsheet
-  before_action :load_penalty, :only => [:edit, :update, :destroy]
-  before_action :list_players, :only => [:new, :edit]
+  before_action :load_penalty, only: %i[edit update destroy]
+  before_action :list_players, only: %i[new edit]
 
   def new
     @penalty = Hockey::Penalty.new
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def create
     penalty_service = Hockey::PenaltyService.new(@statsheet)
@@ -20,42 +18,42 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
       respond_to do |format|
         format.html do
           @statsheet.reload
-          flash[:notice] = "Penalty Added"
+          flash[:notice] = 'Penalty Added'
         end
-        format.json  { render json: @penalty }
+        format.json { render json: @penalty }
       end
     else
       respond_to do |format|
         format.html do
           list_players
-        end 
-        format.json  { render json: @penalty.errors, status: 422 }
-      end  
-    end    
+        end
+        format.json { render json: @penalty.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
-    if @penalty.update_attributes(hockey_penalty_params)
-      flash[:notice] = "Penalty Updated"
+    if @penalty.update(hockey_penalty_params)
+      flash[:notice] = 'Penalty Updated'
       respond_to do |format|
-        format.html { flash[:notice] = "Penalty Updated" }
+        format.html { flash[:notice] = 'Penalty Updated' }
         format.json { render json: @penalty }
-      end        
+      end
     else
       format.html { list_players }
-      format.json { render json: @penalty.errors, status: 422 }      
+      format.json { render json: @penalty.errors, status: :unprocessable_entity }
     end
   end
 
   def destroy
     penalty_service = Hockey::PenaltyService.new(@statsheet)
     @penalty = penalty_service.destroy_penalty!(params[:id])
-    if @penalty.destroyed?
-      @statsheet.save
-      respond_to do |format|
-        format.html { flash[:notice] = "Penalty has been deleted" }
-        format.json { head :no_content }
-      end      
+    return unless @penalty.destroyed?
+
+    @statsheet.save
+    respond_to do |format|
+      format.html { flash[:notice] = 'Penalty has been deleted' }
+      format.json { head :no_content }
     end
   end
 
@@ -63,10 +61,9 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
 
   def hockey_penalty_params
     params.required(:hockey_penalty).permit(:period, :minute, :second, :team_id, :committed_by_id,
-      :infraction, :duration, :severity,
-      :start_period, :start_minute, :start_second,
-      :end_period, :end_minute, :end_second
-    )
+                                            :infraction, :duration, :severity,
+                                            :start_period, :start_minute, :start_second,
+                                            :end_period, :end_minute, :end_second)
   end
 
   def load_statsheet
@@ -80,5 +77,4 @@ class Admin::HockeyPenaltiesController < Admin::BaseLeagueController
   def list_players
     @players = @statsheet.skaters.playing.order(last_name: :asc)
   end
-
 end

@@ -29,29 +29,24 @@ class Admin::Events::AssignForm
     end
 
     def starts_on
-      @event.starts_on.strftime("%l:%M%P").gsub("m","")
+      @event.starts_on.strftime('%l:%M%P').gsub('m', '')
     end
 
     def summary
       @event.summary
     end
 
-    def locker_rooms
-      @locker_rooms
-    end
+    attr_reader :locker_rooms
 
-    def model_name
-      model.model_name
-    end
+    delegate :model_name, to: :model
 
     def persisted?
       true
     end
 
     def save
-      @event.update_attributes(self.attributes)
+      @event.update(attributes)
     end
-
   end
 
   attribute :id, Integer
@@ -63,7 +58,7 @@ class Admin::Events::AssignForm
     @events = Event.after(date.beginning_of_day)
                    .before(date.end_of_day)
                    .order(:starts_on)
-                   .collect{|e| EventForm.new(e, locker_rooms[e.location_id])}
+                   .collect { |e| EventForm.new(e, locker_rooms[e.location_id]) }
   end
 
   def submit(params)
@@ -72,13 +67,7 @@ class Admin::Events::AssignForm
     true
   end
 
-  def events
-    @events
-  end
-
-  def date
-    @date
-  end
+  attr_reader :events, :date
 
   def date_display
     @date.today? ? 'Today' : @date.strftime('%A %b %-d')
@@ -90,5 +79,4 @@ class Admin::Events::AssignForm
       @events[i.to_i].assign_attributes(event_params.except('id'))
     end
   end
-
 end

@@ -15,15 +15,12 @@
 #
 
 class Blocks::EventFeedsController < BlocksController
-
-  def edit
-
-  end
+  def edit; end
 
   def update
-    if @block.update_attributes(blocks_event_feed_params)
-      flash[:success] = 'Event Feed updated'
-    end
+    return unless @block.update(blocks_event_feed_params)
+
+    flash[:success] = 'Event Feed updated'
   end
 
   private
@@ -31,5 +28,4 @@ class Blocks::EventFeedsController < BlocksController
   def blocks_event_feed_params
     params.required(:blocks_event_feed).permit(:title, :event_count, tags: [])
   end
-
 end

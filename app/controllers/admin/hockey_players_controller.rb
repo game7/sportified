@@ -1,28 +1,27 @@
 class Admin::HockeyPlayersController < Admin::BaseLeagueController
   skip_before_action :verify_admin
-  before_action :verify_admin_or_operations   
+  before_action :verify_admin_or_operations
   before_action :load_statsheet
-  before_action :load_player, :only => [:edit, :update, :destroy]
-  before_action :prepare_team_options, :only => [:new, :create]
+  before_action :load_player, only: %i[edit update destroy]
+  before_action :prepare_team_options, only: %i[new create]
 
   def new
-    @player = @statsheet.skaters.build(:games_played => true)
+    @player = @statsheet.skaters.build(games_played: true)
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @player.update_attributes(hockey_player_params)
+    if @player.update(hockey_player_params)
       respond_to do |format|
-        format.html { flash[:success] = "Player Updated" }
+        format.html { flash[:success] = 'Player Updated' }
         format.json { render json: @player }
-      end             
+      end
     else
       respond_to do |format|
         format.html
-        format.json { render json: @player.errors, status: :unprocessable_entity }    
-      end  
+        format.json { render json: @player.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -32,41 +31,41 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
       respond_to do |format|
         format.html do
           @statsheet.reload
-          flash[:notice] = "Player Added"
+          flash[:notice] = 'Player Added'
         end
         format.json { render json: @player }
-      end             
+      end
     else
       respond_to do |format|
         format.html
-        format.json { render json: @player.errors, status: :unprocessable_entity }    
-      end       
+        format.json { render json: @player.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-    if @player.delete
-      respond_to do |format|
-        format.html { flash[:notice] = 'Player has been deleted' }
-        format.json { head :no_content }
-      end
+    return unless @player.delete
+
+    respond_to do |format|
+      format.html { flash[:notice] = 'Player has been deleted' }
+      format.json { head :no_content }
     end
   end
 
   def load
     @statsheet.load_players
-    if @statsheet.save
-      respond_to do |format|
-        format.html { flash[:notice] = 'Players have been loaded from team rosters' }
-        format.json { render json: @statsheet.skaters }
-      end      
+    return unless @statsheet.save
+
+    respond_to do |format|
+      format.html { flash[:notice] = 'Players have been loaded from team rosters' }
+      format.json { render json: @statsheet.skaters }
     end
   end
 
   private
 
   def serialize_errors(resource)
-    resource.errors#.to_h.deep_transform_keys{|k| k.to_s.camelize(:lower) }
+    resource.errors # .to_h.deep_transform_keys{|k| k.to_s.camelize(:lower) }
   end
 
   def hockey_player_params
@@ -82,7 +81,7 @@ class Admin::HockeyPlayersController < Admin::BaseLeagueController
   end
 
   def prepare_team_options
-    @team_options = [ [@statsheet.away_team.name, @statsheet.away_team.id], [@statsheet.home_team.name, @statsheet.home_team.id] ]
+    @team_options = [[@statsheet.away_team.name, @statsheet.away_team.id],
+                     [@statsheet.home_team.name, @statsheet.home_team.id]]
   end
-
 end

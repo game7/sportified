@@ -1,21 +1,20 @@
 class Admin::StandingsLayoutsController < Admin::BaseLeagueController
-  
   before_action :add_standings_layout_breadcrumb
-  before_action :load_layout, :only => [:show, :edit, :update, :destroy, :columns]
-  before_action :load_layouts, :only => [:index]
-  before_action :mark_return_point, :only => [:new, :edit]
+  before_action :load_layout, only: %i[show edit update destroy columns]
+  before_action :load_layouts, only: [:index]
+  before_action :mark_return_point, only: %i[new edit]
 
   def add_standings_layout_breadcrumb
-    add_breadcrumb 'Standings Layout', admin_standings_layouts_path    
+    add_breadcrumb 'Standings Layout', admin_standings_layouts_path
   end
 
   def load_layout
-    @layout = StandingsLayout.for_site(Site.current).find(params[:id])  
+    @layout = StandingsLayout.for_site(Site.current).find(params[:id])
     add_breadcrumb @layout.name
   end
 
   def load_layouts
-    @layouts = StandingsLayout.for_site(Site.current).asc(:name)    
+    @layouts = StandingsLayout.for_site(Site.current).asc(:name)
   end
 
   def index
@@ -46,9 +45,7 @@ class Admin::StandingsLayoutsController < Admin::BaseLeagueController
     end
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def create
     @layout = StandingsLayout.new(params[:standings_layout])
@@ -56,21 +53,20 @@ class Admin::StandingsLayoutsController < Admin::BaseLeagueController
 
     respond_to do |format|
       if @layout.save
-        format.html { return_to_last_point(:notice => 'Layout was successfully created.') }
+        format.html { return_to_last_point(notice: 'Layout was successfully created.') }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
       end
     end
   end
 
   def update
-
     respond_to do |format|
-      if @layout.update_attributes(params[:standings_layout])
-        format.html { return_to_last_point(:notice => 'Layout was successfully updated.') }
+      if @layout.update(params[:standings_layout])
+        format.html { return_to_last_point(notice: 'Layout was successfully updated.') }
       else
         load_seasons
-        format.html { render :action => "edit" }
+        format.html { render action: 'edit' }
       end
     end
   end
@@ -79,7 +75,7 @@ class Admin::StandingsLayoutsController < Admin::BaseLeagueController
     @layout.destroy
 
     respond_to do |format|
-      format.html { return_to_last_point(:notice => 'Layout has been deleted.') }
+      format.html { return_to_last_point(notice: 'Layout has been deleted.') }
     end
   end
 end

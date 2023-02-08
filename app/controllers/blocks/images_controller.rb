@@ -15,17 +15,14 @@
 #
 
 class Blocks::ImagesController < BlocksController
+  def dialog; end
 
-  def dialog
-  end
-
-  def edit
-  end
+  def edit; end
 
   def update
-    if @block.update_attributes(blocks_image_params)
-      flash[:success] = 'Image updated'
-    end
+    return unless @block.update(blocks_image_params)
+
+    flash[:success] = 'Image updated'
   end
 
   private
@@ -33,5 +30,4 @@ class Blocks::ImagesController < BlocksController
   def blocks_image_params
     params.required(:blocks_image).permit(:link_url, :alignment, :height, :width, :file, :remote_file_url, :file_cache)
   end
-
 end

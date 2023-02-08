@@ -1,7 +1,7 @@
 class Admin::League::ProgramsController < Admin::AdminController
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :mark_return_point, only: %i[new edit destroy]
   before_action :add_breadcrumbs
-  before_action :find_league, :only => [:show, :edit, :update, :destroy]
+  before_action :find_league, only: %i[show edit update destroy]
 
   def show
     # @league = ::League::Program.find(params[:id])
@@ -21,28 +21,27 @@ class Admin::League::ProgramsController < Admin::AdminController
   def create
     @league = ::League::Program.new(league_params)
     if @league.save
-      return_to_last_point :success => 'League was successfully created.'
+      return_to_last_point success: 'League was successfully created.'
     else
       flash[:error] = 'League could not be created'
-      render :action => "new"
+      render action: 'new'
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @league.update_attributes(league_params)
-      return_to_last_point :success => 'League was successfully updated.'
+    if @league.update(league_params)
+      return_to_last_point success: 'League was successfully updated.'
     else
       flash[:error] = 'League could not be updated.'
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @league.destroy
-    return_to_last_point :success => 'League has been deleted.'
+    return_to_last_point success: 'League has been deleted.'
   end
 
   private

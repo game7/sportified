@@ -1,13 +1,12 @@
 class Admin::TeamsController < Admin::BaseLeagueController
-
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :mark_return_point, only: %i[new edit destroy]
   before_action :add_teams_breadcrumb
-  before_action :find_season, :only => [:index, :new, :create]
-  before_action :load_season_links, :only => [:index]
-  before_action :load_division_links, :only => [:index]
-  before_action :find_team, :only => [:show, :edit, :update, :destroy]
-  before_action :load_division_options, :only => [:new]
-  before_action :load_club_options, :only => [:new, :edit]
+  before_action :find_season, only: %i[index new create]
+  before_action :load_season_links, only: [:index]
+  before_action :load_division_links, only: [:index]
+  before_action :find_team, only: %i[show edit update destroy]
+  before_action :load_division_options, only: [:new]
+  before_action :load_club_options, only: %i[new edit]
 
   def index
     @teams = ::League::Team
@@ -19,7 +18,7 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @teams.entries }
+      format.json { render json: @teams.entries }
     end
   end
 
@@ -28,38 +27,37 @@ class Admin::TeamsController < Admin::BaseLeagueController
   end
 
   def new
-    @team = @season.teams.build(:division_id => params[:division_id], :show_in_standings => true)
+    @team = @season.teams.build(division_id: params[:division_id], show_in_standings: true)
     add_breadcrumb 'New'
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @team = @season.teams.build(team_params)
     if @team.save
-      return_to_last_point :success => 'Team was successfully created.'
+      return_to_last_point success: 'Team was successfully created.'
     else
-      flash[:error] = "Team could not be created."
+      flash[:error] = 'Team could not be created.'
       load_division_options
       load_club_options
-      render :action => "new"
+      render action: 'new'
     end
   end
 
   def update
-    if @team.update_attributes(team_params)
-      return_to_last_point :success => 'Team was successfully updated.'
+    if @team.update(team_params)
+      return_to_last_point success: 'Team was successfully updated.'
     else
-      flash[:error] = "Team could not be updated."
+      flash[:error] = 'Team could not be updated.'
       load_club_options
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @team.destroy
-    return_to_last_point :success => 'Team has been deleted.'
+    return_to_last_point success: 'Team has been deleted.'
   end
 
   private
@@ -84,20 +82,20 @@ class Admin::TeamsController < Admin::BaseLeagueController
 
   def find_season
     @season = ::League::Season.find(params[:season_id]) if params[:season_id]
-    @season ||= ::League::Season.most_recent()
+    @season ||= ::League::Season.most_recent
   end
 
   def load_season_links
-    @season_links = ::League::Season.all.order(:starts_on => :desc).each.collect do |s|
-      [s.name, admin_teams_path(:season_id => s.id)]
+    @season_links = ::League::Season.all.order(starts_on: :desc).each.collect do |s|
+      [s.name, admin_teams_path(season_id: s.id)]
     end
   end
 
   def load_division_links
     @division_links = @season.divisions.all.order(:name).each.collect do |s|
-      [s.name, admin_teams_path(:season_id => @season.id, :division_id => s.id)]
+      [s.name, admin_teams_path(season_id: @season.id, division_id: s.id)]
     end
-    @division_links.insert 0, ['All Divisions', admin_teams_path(:season_id => @season.id)]
+    @division_links.insert 0, ['All Divisions', admin_teams_path(season_id: @season.id)]
   end
 
   def load_division_options
@@ -107,6 +105,4 @@ class Admin::TeamsController < Admin::BaseLeagueController
   def load_club_options
     @clubs = Club.order(:name).entries
   end
-
-
 end

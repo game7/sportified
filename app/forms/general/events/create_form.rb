@@ -69,7 +69,7 @@ class General::Events::CreateForm
     return false unless valid?
 
     Event.transaction do
-      @event.update_attributes(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list,
+      @event.update(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list,
                                                 :private))
       @event.save
       if repeating?

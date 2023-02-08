@@ -15,20 +15,17 @@
 #
 
 class Blocks::MarkupsController < BlocksController
-  
-  def edit
-  end
-  
+  def edit; end
+
   def update
-    if @block.update_attributes(blocks_markup_params)
-      flash[:success] = "Markup updated"          
-    end    
+    return unless @block.update(blocks_markup_params)
+
+    flash[:success] = 'Markup updated'
   end
-  
+
   private
-  
+
   def blocks_markup_params
     params.required(:blocks_markup).permit(:title, :body)
-  end  
-  
+  end
 end

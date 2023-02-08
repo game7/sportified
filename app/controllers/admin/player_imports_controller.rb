@@ -2,12 +2,11 @@ require 'csv'
 require 'open-uri'
 
 class Admin::PlayerImportsController < Admin::BaseLeagueController
-
   before_action :add_players_breadcrumb
-  before_action :find_player_import, :only => [:edit, :update, :complete]
-  before_action :load_season_options, :only => [:new]
-  before_action :load_division_options, :only => [:new]
-  before_action :load_team_options, :only => [:edit, :update]
+  before_action :find_player_import, only: %i[edit update complete]
+  before_action :load_season_options, only: [:new]
+  before_action :load_division_options, only: [:new]
+  before_action :load_team_options, only: %i[edit update]
 
   def new
     add_breadcrumb 'New'
@@ -22,50 +21,48 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
     @player_import = Player::Import.new(player_import_params)
     @player_import.contents = contents if contents
     if @player_import.save
-      redirect_to edit_admin_player_import_path(@player_import.id), :success => "Player Import has been created."
+      redirect_to edit_admin_player_import_path(@player_import.id), success: 'Player Import has been created.'
     else
-      flash[:error] = "Player Import could not be created."
+      flash[:error] = 'Player Import could not be created.'
       find_season
       load_season_options
       load_division_options
-      render :action => "new"
+      render action: 'new'
     end
   end
 
   def edit
     add_breadcrumb 'Edit'
-    #set defaults
+    # set defaults
     @player_import.teams.each do |map|
       @team_options.each do |option|
-        if map.team_id == nil
-          if map.name.include? option[0] or option[0].include? map.name
-            map.team_id = option[1]
-            break
-          end
+        if map.team_id.nil? && (map.name.include? option[0] or option[0].include? map.name)
+          map.team_id = option[1]
+          break
         end
       end
     end
   end
 
   def update
-    if @player_import.update_attributes(player_import_params)
-      redirect_to admin_player_imports_path, :notice => 'Player Import was successfully updated.'
+    if @player_import.update(player_import_params)
+      redirect_to admin_player_imports_path, notice: 'Player Import was successfully updated.'
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def complete
-    unless @player_import.can_complete?
-      flash.now[:error] = 'Player Import is not ready for completion'
-      render :action => "index"
-    else
+    if @player_import.can_complete?
       processor = Player::Import::Processor.new(@player_import)
       processor.build_players!
       processor.complete!
-      redirect_to admin_player_imports_path, :success => "#{processor.players.length} Players have been successfully imported"
+      redirect_to admin_player_imports_path,
+                  success: "#{processor.players.length} Players have been successfully imported"
+    else
+      flash.now[:error] = 'Player Import is not ready for completion'
+      render action: 'index'
     end
-
   end
 
   def index
@@ -75,7 +72,7 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
   private
 
   def player_import_params
-    params.require(:player_import).permit(:division_id, :season_id, :teams_attributes => [ :team_id, :id ])
+    params.require(:player_import).permit(:division_id, :season_id, teams_attributes: %i[team_id id])
   end
 
   def add_players_breadcrumb
@@ -102,11 +99,10 @@ class Admin::PlayerImportsController < Admin::BaseLeagueController
 
   def load_team_options
     @team_options = []
-    if @player_import
-      @team_options = Team.for_season(@player_import.season_id).for_division(@player_import.division_id).asc(:name).entries.collect do |team|
-        [ team.name, team.id ]
-      end
+    return unless @player_import
+
+    @team_options = Team.for_season(@player_import.season_id).for_division(@player_import.division_id).asc(:name).entries.collect do |team|
+      [team.name, team.id]
     end
   end
-
 end

@@ -1,7 +1,7 @@
 class Admin::ActivitiesController < Admin::AdminController
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]
+  before_action :mark_return_point, only: %i[new edit destroy]
   before_action :add_breadcrumbs
-  before_action :find_activity, :only => [:edit, :update, :destroy]
+  before_action :find_activity, only: %i[edit update destroy]
 
   def new
     @activity = Activity.new
@@ -10,28 +10,27 @@ class Admin::ActivitiesController < Admin::AdminController
   def create
     @activity = Activity.new(activity_params)
     if @activity.save
-      return_to_last_point :success => 'Activity was successfully created.'
+      return_to_last_point success: 'Activity was successfully created.'
     else
-      flash[:error] = "Activity could not be created"
-      render :action => "new"
+      flash[:error] = 'Activity could not be created'
+      render action: 'new'
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @activity.update_attributes(activity_params)
-      return_to_last_point :success => 'Activity was successfully updated.'
+    if @activity.update(activity_params)
+      return_to_last_point success: 'Activity was successfully updated.'
     else
-      flash[:error] = "Activity could not be updated."
-      render :action => "edit"
+      flash[:error] = 'Activity could not be updated.'
+      render action: 'edit'
     end
   end
 
   def destroy
     @activity.destroy
-    return_to_last_point :success => 'activity has been deleted.'
+    return_to_last_point success: 'activity has been deleted.'
   end
 
   private

@@ -1,34 +1,33 @@
 class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   skip_before_action :verify_admin
-  before_action :verify_admin_or_operations 
+  before_action :verify_admin_or_operations
   before_action :find_statsheet
-  before_action :find_goaltender, :only => [:edit, :update, :destroy]
-  before_action :list_players, :only => [:new, :edit]
+  before_action :find_goaltender, only: %i[edit update destroy]
+  before_action :list_players, only: %i[new edit]
 
   def new
-    @goaltender = @statsheet.goaltenders.build()
+    @goaltender = @statsheet.goaltenders.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @goaltender.update_attributes(hockey_goaltender_params)
+    if @goaltender.update(hockey_goaltender_params)
       respond_to do |format|
         format.html do
           @statsheet.reload
-          flash[:notice] = "Goaltender Updated"
+          flash[:notice] = 'Goaltender Updated'
         end
-        format.json  { render json: @goaltender }
+        format.json { render json: @goaltender }
       end
     else
       respond_to do |format|
         format.html do
           list_players
-        end 
-        format.json  { render json: @goaltender.errors, status: 422 }
-      end  
-    end     
+        end
+        format.json { render json: @goaltender.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def create
@@ -37,29 +36,29 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
       respond_to do |format|
         format.html do
           @statsheet.reload
-          flash[:notice] = "Goaltender Added"
+          flash[:notice] = 'Goaltender Added'
         end
-        format.json  { render json: @goaltender }
+        format.json { render json: @goaltender }
       end
     else
       respond_to do |format|
         format.html do
           list_players
-        end 
-        format.json  { render json: @goaltender.errors, status: 422 }
-      end  
-    end  
+        end
+        format.json { render json: @goaltender.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
     if @goaltender.delete
       respond_to do |format|
-        format.html { flash[:notice] = "Goaltender has been deleted" }
+        format.html { flash[:notice] = 'Goaltender has been deleted' }
         format.json { head :ok }
       end
     else
       respond_to do |format|
-        format.html { flash[:error] = "Goaltender could not be" }
+        format.html { flash[:error] = 'Goaltender could not be' }
         format.json { head :bad_request }
       end
     end
@@ -72,13 +71,13 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
       respond_to do |format|
         format.html do
           @statsheet.reload
-          flash[:notice] = "Goaltenders Loaded."
+          flash[:notice] = 'Goaltenders Loaded.'
         end
-        format.json  { render json: @statsheet.goaltenders.reload }
-      end      
+        format.json { render json: @statsheet.goaltenders.reload }
+      end
     else
       respond_to do |format|
-        format.html { flash[:error] = "Goaltenders could not be loaded." }
+        format.html { flash[:error] = 'Goaltenders could not be loaded.' }
         format.json { head :bad_request }
       end
     end
@@ -87,7 +86,8 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   private
 
   def hockey_goaltender_params
-    params.required(:hockey_goaltender_result).permit(:team_id, :player_id, :minutes_played, :shots_against, :goals_against)
+    params.required(:hockey_goaltender_result).permit(:team_id, :player_id, :minutes_played, :shots_against,
+                                                      :goals_against)
   end
 
   def find_statsheet
@@ -101,6 +101,4 @@ class Admin::HockeyGoaltendersController < Admin::BaseLeagueController
   def list_players
     @players = @statsheet.skaters.playing.order(last_name: :asc)
   end
-
-
 end

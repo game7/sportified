@@ -1,51 +1,49 @@
 class Admin::League::TeamsController < Admin::BaseLeagueController
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]
-  before_action :find_team, except: [:new, :create]
-  before_action :find_division, only: [:new, :create]
+  before_action :mark_return_point, only: %i[new edit destroy]
+  before_action :find_team, except: %i[new create]
+  before_action :find_division, only: %i[new create]
   before_action :find_program
   before_action :load_options
-  before_action :add_breadcrumbs, :except => [:destroy]
+  before_action :add_breadcrumbs, except: [:destroy]
 
   def show
     @games = ::League::Game.for_team(@team)
   end
 
   def new
-    @team = @division.teams.build({season_id: params[:season_id]})
+    @team = @division.teams.build({ season_id: params[:season_id] })
     add_breadcrumb 'New'
   end
 
   def create
     @team = @division.teams.build(team_params)
     if @team.save
-      return_to_last_point :success => 'Team was successfully created.'
+      return_to_last_point success: 'Team was successfully created.'
     else
-      flash[:error] = "Team could not be created."
-      render :action => "new"
+      flash[:error] = 'Team could not be created.'
+      render action: 'new'
     end
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
-    if @team.update_attributes(team_params)
+    if @team.update(team_params)
       respond_to do |format|
         format.html { return_to_last_point success: 'Team was successfully updated.' }
         format.json { render json: @team, status: :ok }
-      end    
+      end
     else
       respond_to do |format|
         format.html { render action: :edit, error: 'Team could not be updated.' }
         format.json { render json: @team.errors, status: :unprocessable_entity }
-      end      
+      end
     end
   end
 
   def destroy
     @team.destroy
-    return_to_last_point :success => 'Team has been deleted.'
+    return_to_last_point success: 'Team has been deleted.'
   end
 
   private
@@ -79,11 +77,8 @@ class Admin::League::TeamsController < Admin::BaseLeagueController
       clubs: ::Club.order(:name),
       divisions: @program.divisions.order(:name),
       seasons: @program.seasons.order(:name)
-    }    
+    }
   end
 
-  def add_breadcrumbs
-
-  end
-
+  def add_breadcrumbs; end
 end

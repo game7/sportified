@@ -22,12 +22,10 @@
 #
 
 class League::SeasonsController < BaseLeagueController
-
-  before_action :mark_return_point, :only => [:new, :edit, :destroy]    
-  before_action :load_for_season, :only => [:show, :edit]
+  before_action :mark_return_point, only: %i[new edit destroy]
+  before_action :load_for_season, only: %i[show edit]
 
   def load_for_season
-    
     if params[:id]
       @season = Season.for_site(Site.current).find(params[:id])
       @division = @season.division
@@ -40,50 +38,43 @@ class League::SeasonsController < BaseLeagueController
     add_breadcrumb @season.name
 
     load_area_navigation @division, @season
-
   end
 
- 
   # GET /seasons
   # GET /seasons.xml
   def index
-
     @seasons = Season.for_site(Site.current)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @seasons }
+      format.xml  { render xml: @seasons }
     end
   end
 
   # GET /seasons/1
   # GET /seasons/1.xml
   def show
-
     @teams = @season.teams
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @season }
+      format.xml  { render xml: @season }
     end
   end
 
   # GET /seasons/new
   # GET /seasons/new.xml
   def new
-
     @season = Season.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @season }
+      format.xml  { render xml: @season }
     end
   end
 
   # GET /seasons/1/edit
-  def edit
-
-  end
+  def edit; end
 
   # POST /seasons
   # POST /seasons.xml
@@ -92,9 +83,9 @@ class League::SeasonsController < BaseLeagueController
 
     respond_to do |format|
       if @season.save
-        format.html { return_to_last_point(:notice => 'Season was successfully created.') }
+        format.html { return_to_last_point(notice: 'Season was successfully created.') }
       else
-        format.html { render :action => "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -105,12 +96,12 @@ class League::SeasonsController < BaseLeagueController
     @season = Season.find(params[:id])
 
     respond_to do |format|
-      if @season.update_attributes(params[:season])
-        format.html { return_to_last_point(:notice => 'Season was successfully updated.') }
+      if @season.update(params[:season])
+        format.html { return_to_last_point(notice: 'Season was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @season.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.xml  { render xml: @season.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -122,7 +113,7 @@ class League::SeasonsController < BaseLeagueController
     @season.destroy
 
     respond_to do |format|
-      format.html { return_to_last_point(:notice => 'Season has been deleted.') }
+      format.html { return_to_last_point(notice: 'Season has been deleted.') }
       format.xml  { head :ok }
     end
   end

@@ -14,7 +14,7 @@ class Admin::PostsController < Admin::AdminController
   end
 
   def update
-    if @post.update_attributes(post_params)
+    if @post.update(post_params)
       return_to_last_point(:notice => 'Post has been updated')
     else
       render :action => "edit"

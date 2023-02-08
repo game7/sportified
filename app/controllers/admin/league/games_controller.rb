@@ -47,7 +47,7 @@ class Admin::League::GamesController < Admin::AdminController
     @game = ::League::Game.find(params[:id])
     Chronic.time_class = Time.zone
     params[:game][:starts_on] = Chronic.parse(params[:game][:starts_on])
-    if @game.update_attributes(game_params)
+    if @game.update(game_params)
       return_to_last_point(notice: 'Game was successfully updated.')
     else
       flash[:error] = 'Game could not be updated.'

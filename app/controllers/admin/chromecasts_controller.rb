@@ -1,8 +1,8 @@
 class Admin::ChromecastsController < Admin::AdminController
   skip_before_action :verify_admin
-  before_action :verify_admin_or_operations  
-  before_action :set_chromecast, only: [:edit, :update, :destroy]
-  before_action :mark_return_point, only: [:new, :edit]
+  before_action :verify_admin_or_operations
+  before_action :set_chromecast, only: %i[edit update destroy]
+  before_action :mark_return_point, only: %i[new edit]
 
   layout 'admin'
 
@@ -18,33 +18,25 @@ class Admin::ChromecastsController < Admin::AdminController
     @chromecast = Chromecast.create chromecast_params
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @chromecast.update_attributes(chromecast_params)
-
-    else
-
-    end
+    return unless @chromecast.update(chromecast_params)
   end
 
   def destroy
     @chromecast.destroy
   end
 
-  def receive
-
-  end
+  def receive; end
 
   private
 
-    def set_chromecast
-      @chromecast = Chromecast.find(params[:id])
-    end
+  def set_chromecast
+    @chromecast = Chromecast.find(params[:id])
+  end
 
-    def chromecast_params
-      params.require(:chromecast).permit(:name, :location_id, :playing_surface_id)
-    end
-
+  def chromecast_params
+    params.require(:chromecast).permit(:name, :location_id, :playing_surface_id)
+  end
 end
