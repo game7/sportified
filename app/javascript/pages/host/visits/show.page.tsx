@@ -27,7 +27,7 @@ export default function hostVisitsShowPage() {
 
   return (
     <HostLayout
-      title="Tenants"
+      title="Visit"
       breadcrumbs={[
         { href: "/host/visits", label: "Visits" },
         { href: `/host/visits/${visit.id}`, label: visit.id.toString() },

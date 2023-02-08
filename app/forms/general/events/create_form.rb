@@ -70,7 +70,7 @@ class General::Events::CreateForm
 
     Event.transaction do
       @event.update(attributes.slice(:starts_on, :duration, :location_id, :page_id, :summary, :tag_list,
-                                                :private))
+                                     :private))
       @event.save
       if repeating?
         schedule = IceCube::Schedule.new(now = @event.starts_on + 1.day) do |schedule|
