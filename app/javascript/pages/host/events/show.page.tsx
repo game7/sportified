@@ -1,6 +1,6 @@
 import { Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Descriptions, DescriptionsProps, Space } from "antd";
+import { Descriptions, DescriptionsProps, List, Space } from "antd";
 import { HostLayout } from "../../../components/layout/host-layout";
 
 interface Props extends App.SharedProps {
@@ -11,7 +11,7 @@ export default function hostEventsShowPage() {
   const { event } = usePage<Page<Props>>().props;
 
   const { Item } = Descriptions;
-
+  console.log(event);
   const COMMON_PROPS: DescriptionsProps = {
     bordered: true,
     column: 1,
@@ -24,7 +24,7 @@ export default function hostEventsShowPage() {
   };
   return (
     <HostLayout
-      title="Tenants"
+      title="Event"
       breadcrumbs={[
         { href: "/host/events", label: "Events" },
         { href: `/host/events/${event.id}`, label: event.id.toString() },
@@ -52,6 +52,12 @@ export default function hostEventsShowPage() {
             <Item label={key}>{value.toString()}</Item>
           ))}
         </Descriptions>
+        <List
+          header={<div>Backtrace</div>}
+          bordered
+          dataSource={event.properties.backtrace}
+          renderItem={(item) => <List.Item>{item}</List.Item>}
+        ></List>
       </Space>
     </HostLayout>
   );

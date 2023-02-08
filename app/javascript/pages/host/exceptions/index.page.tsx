@@ -240,11 +240,13 @@ export default function HostExceptionsIndexPage() {
               {
                 dataIndex: "id",
                 title: "Id",
+                render: (id) => <Link href={`/host/events/${id}`}>{id}</Link>,
                 width: "10%",
               },
               {
                 dataIndex: "visit_id",
                 title: "Visit Id",
+                render: (id) => <Link href={`/host/visits/${id}`}>{id}</Link>,
                 width: "10%",
               },
               {

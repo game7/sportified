@@ -74,6 +74,7 @@ namespace App {
     user_id: number;
     name: string;
     properties: {
+      backtrace?: string[];
       format: string;
       host: string;
       params: Record<string, string>;
