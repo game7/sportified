@@ -33,6 +33,9 @@ export default function hostEventsShowPage() {
       <Space direction="vertical" size="large" style={{ display: "flex" }}>
         <Descriptions title="Basic Info" {...COMMON_PROPS}>
           <Item label="Name">{event.name}</Item>
+          {event.properties?.message && (
+            <Item label="Message">{event.properties.message}</Item>
+          )}
           <Item label="Time">{event.time}</Item>
           <Item label="Visit">
             <Link href={`/host/visits/${event.visit_id}`}>

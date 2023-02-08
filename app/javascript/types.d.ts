@@ -77,6 +77,7 @@ namespace App {
       backtrace?: string[];
       format: string;
       host: string;
+      message?: string;
       params: Record<string, string>;
       path: string;
       url: string;
