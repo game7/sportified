@@ -18,11 +18,6 @@
     = f.input :title
     = f.input :summary, input_html: { rows: 2 }
     = image_tag(@product.image, class: [:ui, :medium, :image]) if @product.image.attached?
-<<<<<<< HEAD
-    = f.hidden_field :image, value: f.object.image.signed_id if f.object.image.attached?
-=======
-
->>>>>>> master
     = f.input :image
     -# = f.input :description, as: :markdown#, input_html: { rows: 3 }
     = f.input :description, input_html: { rows: 5 }
@@ -31,11 +26,7 @@
     = f.input :roster
 
   %h4.ui.top.attached.header.product.variants Variants
-<<<<<<< HEAD
-  = f.simple_fields_for :variants, @product.variants.sort{ |a, b| a.display_order <=> b.display_order }, include_id: false do |variant|
-=======
   = f.simple_fields_for :variants, @product.variants, include_id: false do |variant|
->>>>>>> master
     = render 'variant_fields', f: variant
   .ui.bottom.attached.segment
     = link_to_add_association 'Add Variant', f, :variants, class: [:ui, :small, :button]
