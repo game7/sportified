@@ -59,10 +59,8 @@ class Product < ApplicationRecord
 
   def dup
     super.tap do |clone|
-      clone.image = image_blob
-      variants.collect(&:dup).each do |variant|
-        clone.variants.build(variant.attributes)
-      end
+      variants.order(display_order: :asc).collect(&:dup).each{ |variant| clone.variants << variant }
+      clone.image.attach image_blob
     end
   end
 

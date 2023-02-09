@@ -21,6 +21,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def new
     @product = params[:clone] ? Product.find(params[:clone]).dup : Product.new
+
     @product.assign_attributes( registrable_type: params[:registrable_type], registrable_id: params[:registrable_id] )
     if(@product.registrable_type == 'Event' && @product.registrable.present?) 
       @product.title = @product.registrable.summary
