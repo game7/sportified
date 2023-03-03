@@ -8,8 +8,6 @@ import { asPayload, useForm } from "~/utils/use-form";
 
 type Location = App.Location & { color: string };
 
-type Mode = "create" | "update";
-
 interface Props extends App.SharedProps {
   location: Location;
 }
@@ -17,7 +15,6 @@ interface Props extends App.SharedProps {
 export function LocationForm() {
   const { props } = usePage<Page<Props>>();
   const { form, bind } = useForm<Location>(props.location);
-  const mode: Mode = props.location.id ? "update" : "create";
 
   function handleFinish(data: Location) {
     if (props.location.id) {

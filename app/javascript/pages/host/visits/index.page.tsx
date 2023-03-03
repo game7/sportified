@@ -11,7 +11,7 @@ interface Props extends App.SharedProps {
   date: string;
 
   tenants: App.Tenant[];
-  visits: App.Visit[];
+  visits: Ahoy.Visit[];
 }
 
 export default function HostVisitsIndexPage() {

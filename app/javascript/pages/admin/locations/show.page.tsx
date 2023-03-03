@@ -14,10 +14,13 @@ export default function AdminLocationShowPage() {
 
   return (
     <AdminLayout
-      title={location.name}
+      title={location.name || ""}
       breadcrumbs={[
         { href: "/next/admin/locations", label: "Locations" },
-        { href: `/next/admin/locations/${location.id}`, label: location.name },
+        {
+          href: `/next/admin/locations/${location.id}`,
+          label: location.name || "",
+        },
       ]}
       extra={[
         <LinkButton

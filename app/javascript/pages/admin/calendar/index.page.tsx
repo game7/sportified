@@ -28,7 +28,7 @@ interface Props extends App.SharedProps {
   date: string;
   events: Event[];
   locations: Location[];
-  tags: App.Tag[];
+  tags: ActsAsTaggableOn.Tag[];
 }
 
 type PickerMode = ComponentProps<typeof DatePicker>["picker"];
@@ -61,7 +61,7 @@ export default withRouter(function AdminCalendarIndexPage() {
 
   const events = _(props.events)
     .filter((e) =>
-      query.locationId ? e.location_id.toString() == query.locationId : true
+      query.locationId ? e.location_id?.toString() == query.locationId : true
     )
     .filter((e) => {
       if (query.tags.length === 0) {
@@ -81,11 +81,11 @@ export default withRouter(function AdminCalendarIndexPage() {
     Inertia.get(url.toString());
   }
 
-  function handleViewChange(mode: ViewMode) {
-    let url = new URL(window.location.toString());
-    url.searchParams.set("view", mode);
-    Inertia.get(url.toString());
-  }
+  // function handleViewChange(mode: ViewMode) {
+  //   let url = new URL(window.location.toString());
+  //   url.searchParams.set("view", mode);
+  //   Inertia.get(url.toString());
+  // }
 
   function handleLocationChange(value: string) {
     setSearchParams((params) => {
@@ -340,7 +340,7 @@ function CalendarMonthView({
 
   function getColor(event: Event) {
     return colorSource == "location"
-      ? locations[event.location_id]?.color
+      ? locations[event.location_id || 0]?.color
       : toHexColor(event.tags[0]?.name || "random");
   }
 
@@ -405,7 +405,7 @@ function CalendarMonthView({
                               >
                                 <li className="calendar-event">
                                   <Badge
-                                    color={getColor(event)}
+                                    color={getColor(event) || undefined}
                                     text={
                                       <Space>
                                         <span>{renderTime(event)}</span>
@@ -455,7 +455,7 @@ function CalendarEventPopover({
           </Space>
           <Space>
             <FontAwesomeIcon icon={faLocationPin} />
-            <span>{locations[event.location_id]?.name}</span>
+            <span>{locations[event.location_id || 0]?.name}</span>
           </Space>
           {event.tags.length > 0 && (
             <Space>

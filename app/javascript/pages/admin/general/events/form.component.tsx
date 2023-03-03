@@ -17,7 +17,9 @@ import DatePicker from "~/components/date-picker";
 import { Fieldset } from "~/components/fieldset";
 import { asPayload, useForm } from "~/utils/use-form";
 
-type GeneralEvent = WithOptional<App.General.Event, "recurrence">;
+type GeneralEvent = WithOptional<General.Event, "recurrence"> & {
+  tag_list: string;
+};
 
 type Ending = "on" | "after";
 
@@ -26,7 +28,7 @@ type Mode = "create" | "update";
 interface Props extends App.SharedProps {
   event: GeneralEvent;
   locations: App.Location[];
-  tags: App.Tag[];
+  tags: ActsAsTaggableOn.Tag[];
 }
 
 export function GeneralEventForm() {

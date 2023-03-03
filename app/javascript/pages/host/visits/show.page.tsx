@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { HostLayout } from "../../../components/layout/host-layout";
 
 interface Props extends App.SharedProps {
-  visit: App.Visit;
+  visit: Ahoy.Visit;
   events: App.Event[];
 }
 

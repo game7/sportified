@@ -8,7 +8,6 @@ import {
   Input,
   Modal,
   Space,
-  Table,
   Upload,
   UploadFile,
 } from "antd";
@@ -19,6 +18,11 @@ import { asPayload, useForm } from "~/utils/use-form";
 
 type Post = App.Post & {
   photo_url: string;
+};
+
+type Blob = ActiveStorage.Blob & {
+  url: string;
+  "image?": boolean;
 };
 
 interface Props extends App.SharedProps {
@@ -75,7 +79,7 @@ type ImagePickerProps = Omit<ComponentProps<typeof Upload>, "onChange"> & {
 
 function ImagePicker(props: ImagePickerProps) {
   const [url, setUrl] = useState<string | undefined>(props.url);
-  const [blobs, setBlobs] = useState<ActiveStorage.Blob[]>();
+  const [blobs, setBlobs] = useState<Blob[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const paginated = blobs?.slice(0, 20);
@@ -88,11 +92,7 @@ function ImagePicker(props: ImagePickerProps) {
       fetch("/active_storage/blobs")
         .then((res) => res.json())
         .then((data) => {
-          setBlobs(
-            (data as ActiveStorage.Blob[]).filter(
-              (blob) => blob["image?"] == true
-            )
-          );
+          setBlobs((data as Blob[]).filter((blob) => blob["image?"] == true));
         });
     }
   };

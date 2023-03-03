@@ -10,7 +10,7 @@ import { HostLayout } from "../../../components/layout/host-layout";
 interface Props extends App.SharedProps {
   date: string;
   tenants: App.Tenant[];
-  events: App.Event[];
+  events: Ahoy.Event[];
 }
 
 function normalizeHour(hour: number) {
@@ -61,7 +61,7 @@ export default function HostEventsIndexPage() {
               title: "Time",
               render: (time, event) => (
                 <Link href={`/host/events/${event.id}`}>
-                  {dayjs(time).format("h:mm:ss A Z")}
+                  {dayjs(event.time).format("h:mm:ss A Z")}
                 </Link>
               ),
               width: "15%",
@@ -93,8 +93,8 @@ export default function HostEventsIndexPage() {
                 .uniq()
                 .sort()
                 .map((name) => ({
-                  text: name,
-                  value: name,
+                  text: name || "",
+                  value: name || "",
                 }))
                 .value(),
               onFilter: (value, record) => {
@@ -108,10 +108,10 @@ export default function HostEventsIndexPage() {
               width: "15%",
               ellipsis: true,
               filters: chain(events)
-                .map((e) => e.tenant_id)
+                .map((e) => e.tenant_id || 0)
                 .uniq()
                 .map((id) => tenants[id])
-                .sort((a, b) => a.name.localeCompare(b.name))
+                .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
                 .map((t) => ({
                   text: t.name,
                   value: t.id,
@@ -143,7 +143,9 @@ export default function HostEventsIndexPage() {
               filters: chain(events)
                 .map(
                   (e) =>
-                    `${e.properties.params.controller}#${e.properties.params.action}`
+                    `${(e.properties || {}).params.controller}#${
+                      (e.properties || {}).params.action
+                    }`
                 )
                 .uniq()
                 .sort()
@@ -152,8 +154,9 @@ export default function HostEventsIndexPage() {
               onFilter: (value, record) => {
                 console.log(value);
                 return (
-                  `${record.properties.params.controller}#${record.properties.params.action}` ===
-                  value
+                  `${(record.properties || {}).params.controller}#${
+                    (record.properties || {}).params.action
+                  }` === value
                 );
               },
               ellipsis: true,

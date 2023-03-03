@@ -1,10 +1,6 @@
 import { AdminLayout } from "~/components/layout/admin-layout";
 import { GeneralEventForm } from "./form.component";
 
-type GeneralEvent = WithOptional<App.General.Event, "recurrence">;
-
-type Ending = "on" | "after";
-
 export default function NewNextAdminGeneralEventsPage() {
   return (
     <AdminLayout

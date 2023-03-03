@@ -28,7 +28,7 @@ export default function hostTenantsShowPage() {
       title="Tenants"
       breadcrumbs={[
         { href: "/host/tenants", label: "Tenants" },
-        { href: `/host/tenants/${tenant.id}`, label: tenant.id },
+        { href: `/host/tenants/${tenant.id}`, label: tenant.id.toString() },
       ]}
     >
       <Space direction="vertical" size="large" style={{ display: "flex" }}>

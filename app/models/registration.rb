@@ -44,9 +44,7 @@ class Registration < ApplicationRecord
   has_many :forms, dependent: :destroy
   accepts_nested_attributes_for :forms
 
-  belongs_to :user, required: false
-
-  belongs_to :credit_card, required: false
+  belongs_to :user, optional: true
 
   attribute :voucher_id, :integer
 
@@ -86,7 +84,7 @@ class Registration < ApplicationRecord
   scope :pending, -> { where(completed_at: nil, abandoned_at: nil, cancelled_at: nil) }
   scope :completed, -> { where.not(completed_at: nil) }
   scope :allocated, -> { where(abandoned_at: nil, cancelled_at: nil) }
-  scope :created_on_or_after, ->(date) { where('registrations.created_at >= ?', date)}
+  scope :created_on_or_after, ->(date) { where('registrations.created_at >= ?', date) }
 
   def price_in_cents
     (price * 100).to_i
@@ -100,7 +98,7 @@ class Registration < ApplicationRecord
   end
 
   def payment_required?
-    !self.new_record? && price.present? && price > 0 && payment_id.blank?
+    !new_record? && price.present? && price > 0 && payment_id.blank?
   end
 
   def completed?
@@ -108,12 +106,11 @@ class Registration < ApplicationRecord
   end
 
   def status
-    case
-    when cancelled_at.present?
+    if cancelled_at.present?
       'Cancelled'
-    when abandoned_at.present?
+    elsif abandoned_at.present?
       'Abandoned'
-    when completed_at.present?
+    elsif completed_at.present?
       'Completed'
     else
       'Pending'
@@ -125,11 +122,11 @@ class Registration < ApplicationRecord
   end
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def last_name_first_name
-    "#{self.last_name}, #{self.first_name}"
+    "#{last_name}, #{first_name}"
   end
 
   def masked_name
@@ -153,9 +150,9 @@ class Registration < ApplicationRecord
   end
 
   def update_status!
-    if price.blank? || price == 0 || payment_id.present?
-      update_attribute(:completed_at, updated_at)
-    end
+    return unless price.blank? || price == 0 || payment_id.present?
+
+    update_attribute(:completed_at, updated_at)
   end
 
   before_validation :set_price_from_variant
@@ -167,36 +164,35 @@ class Registration < ApplicationRecord
 
   private
 
-    def mask(name)
-      name[0] + ('*' * (name.length - 1))
-    end
+  def mask(name)
+    name[0] + ('*' * (name.length - 1))
+  end
 
-    def set_price_from_variant
-      self.price = self.variant.price if self.price.blank? and self.variant.present?
-    end
+  def set_price_from_variant
+    self.price = variant.price if price.blank? and variant.present?
+  end
 
-    def generate_confiramtion_code
-      charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z}
-      self.confirmation_code = (0...6).map{ charset.to_a[rand(charset.size)] }.join
-    end
+  def generate_confiramtion_code
+    charset = %w[2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z]
+    self.confirmation_code = (0...6).map { charset.to_a[rand(charset.size)] }.join
+  end
 
-    def generate_uuid
-      self.uuid = SecureRandom.uuid
-    end
+  def generate_uuid
+    self.uuid = SecureRandom.uuid
+  end
 
-    def mark_completed_if_free
-      self.completed_at = created_at if price.blank? || price == 0
-    end
+  def mark_completed_if_free
+    self.completed_at = created_at if price.blank? || price == 0
+  end
 
-    def set_voucher
-      if self.voucher_id.present? && voucher = Voucher.find(self.voucher_id)
-        self.voucher = voucher
-        self.price = [0, self.price - voucher.amount].max
-      end
-    end
+  def set_voucher
+    return unless voucher_id.present? && voucher = Voucher.find(voucher_id)
 
-    def touch_product
-      self.product.touch
-    end
-  
+    self.voucher = voucher
+    self.price = [0, price - voucher.amount].max
+  end
+
+  def touch_product
+    product.touch
+  end
 end
