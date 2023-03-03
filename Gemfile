@@ -44,7 +44,7 @@ gem 'passwordless'
 gem 'icalendar', '~> 2.3.0'
 gem 'chronic'
 
-gem "view_component", require: "view_component/engine"
+gem "view_component"
 gem 'simple_form'
 gem 'virtus', '~> 1.0.5'
 gem 'audited'
