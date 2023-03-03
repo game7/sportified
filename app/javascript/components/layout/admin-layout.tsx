@@ -9,6 +9,7 @@ import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@inertiajs/inertia-react";
 import { FC } from "react";
+import { paths } from "~/routes";
 import { BaseLayout, BaseLayoutProps } from "./base-layout";
 
 export const AdminLayout: FC<BaseLayoutProps> = ({
@@ -24,6 +25,13 @@ export const AdminLayout: FC<BaseLayoutProps> = ({
         {
           key: "/next/admin/calendar",
           label: <Link href="/next/admin/calendar">Calendar</Link>,
+          icon: <CalendarOutlined />,
+        },
+        {
+          key: paths["/next/admin/planner"].path({}),
+          label: (
+            <Link href={paths["/next/admin/planner"].path({})}>Planner</Link>
+          ),
           icon: <CalendarOutlined />,
         },
         {

@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get 'screen' => 'screen#show'
 
   resources :products, only: %i[index show]
@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 
   match 'markdown' => 'markdown#preview', :as => :markdown, :via => :post
 
-  namespace :api do
+  namespace :api do # rubocop:disable Metrics/BlockLength
     resources :tenants
     resources :events, only: [:index]
     resources :programs, only: [:index]
@@ -174,7 +174,7 @@ Rails.application.routes.draw do
 
   resources :cast, only: :index
 
-  namespace :admin do
+  namespace :admin do # rubocop:disable Metrics/BlockLength
     resources :chromecasts, except: [:show]
     resources :screens, except: [:show]
 
@@ -293,6 +293,7 @@ Rails.application.routes.draw do
   namespace :next do
     namespace :admin do
       root to: 'dashboard#index'
+      get 'planner' => 'planner#index'
       get 'calendar' => 'calendar#index'
       namespace :general do
         resources :events, only: %i[new create edit update]
