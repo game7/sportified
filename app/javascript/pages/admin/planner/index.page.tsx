@@ -54,14 +54,9 @@ export default withRouter(function AdminPlannerIndexPage() {
       breadcrumbs={[
         { label: "Planner", href: paths["/next/admin/planner"].path({}) },
       ]}
-      extra={[
-        <LinkButton key="home" icon={<HomeOutlined />} href="/">
-          Home
-        </LinkButton>,
-      ]}
-    >
-      <Space direction="vertical" style={{ display: "flex" }}>
-        <div>
+      extra={
+        <>
+          {" "}
           <Radio.Group
             optionType="button"
             buttonStyle="outline"
@@ -72,7 +67,10 @@ export default withRouter(function AdminPlannerIndexPage() {
             ]}
             onChange={(e) => setExpanded(!!e.target.value ? true : null)}
           />
-        </div>
+        </>
+      }
+    >
+      <Space direction="vertical" style={{ display: "flex" }}>
         <div className="ant-table ant-table-bordered">
           <div className="ant-table-container">
             <div className="ant-table-content">
@@ -157,16 +155,12 @@ function DayRow({
         className="ant-table-cell"
         style={{ textAlign: "center", verticalAlign: "top" }}
       >
-        <a
-          href={`/next/admin/planner?date=${date.format("YYYY-MM-DD")}`}
-          onClick={(e) => handleDateClick(e, date)}
-        >
+        <div style={{ position: "sticky", top: 80 }}>
           <Statistic
             value={date.format("D")}
             title={date.format("dddd").toUpperCase()}
           />
-        </a>
-        expnaded: {expand ? "Yes" : "No"}
+        </div>
       </td>
       {!expand &&
         locations.map((location) => (
