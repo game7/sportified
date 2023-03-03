@@ -1,0 +1,57 @@
+
+import { Form, Input, Space } from "antd";
+import { BackButton, SubmitButton } from "~/components/buttons";
+import { actions } from "~/routes";
+import { useForm, usePage } from "~/utils";
+
+type PageProps = {
+  <%= model_property_name %>: <%= model_type_name %>;
+};
+
+// -------------------------------------------
+// specify the name of your model prop,
+// then delete this comment :-)
+// -------------------------------------------
+const MODEL_NAME = "<%= model_property_name %>";
+
+export function <%= form_component_name %>() {
+  const page = usePage<PageProps>();
+  const model = page.props[MODEL_NAME];
+  const { form, bind } = useForm(model);
+
+  function handleSubmit(data: Partial<typeof model>) {
+    // -------------------------------------------
+    // payload should always be keyed/wrapped by the
+    // model name so that it is properly ingested by
+    // Rails strong parameters:
+    //
+    //   params.require(:model).permit(:attribute1, :attribute2)
+    //
+    // please delete this comment block :-)
+    // -------------------------------------------
+    const payload = { [MODEL_NAME]: data };
+
+    if (model.id) {
+      actions["<%= resource_path %>"]['update'].patch({ id: model.id }, payload);
+    } else {
+      actions["<%= resource_path %>"]['create'].post({}, payload);
+    }
+  }
+
+  return (
+    <Form form={form} layout="vertical" onFinish={handleSubmit}>
+      <Form.Item {...bind("first_name")}>
+        <Input />
+      </Form.Item>
+      <Form.Item {...bind("last_name")}>
+        <Input />
+      </Form.Item>
+      <Form.Item>
+        <Space>
+          <SubmitButton></SubmitButton>
+          <BackButton></BackButton>
+        </Space>
+      </Form.Item>
+    </Form>
+  );
+}

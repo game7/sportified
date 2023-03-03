@@ -1,0 +1,30 @@
+import { HomeOutlined } from "@ant-design/icons";
+import { LinkButton } from "~/components/buttons";
+import { MainLayout } from "~/components/layouts";
+import { actions } from "~/routes";
+import { usePage } from "~/utils/use-page";
+
+interface Props {
+  <%= model_property_name %>: <%= model_type_name %>;
+}
+
+export default function <%= page_component_name %>Page() {
+  const { <%= model_property_name %>, current_user } = usePage<Props>().props;
+
+  return (
+    <MainLayout
+      title="<%= class_name %>"
+      breadcrumbs={[
+        <%= breadcrumbs %>
+      ]}
+      extra={[
+        <LinkButton key="home" icon={<HomeOutlined />} href="/">
+          Home
+        </LinkButton>,
+      ]}
+    >
+      <p>Hi {current_user.first_name}!</p>
+      <p>This is where the main content for this page goes</p>
+    </MainLayout>
+  );
+}
