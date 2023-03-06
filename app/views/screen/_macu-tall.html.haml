@@ -16,14 +16,15 @@
 :scss
 
   html {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
   }
 
   body {
     font-family: Roboto, Helvetica, sans-serif;
-    height: 100%;
-    width: 100%;
+
+    height: 100vh;
+    width: 100vw;
     background-image: url(#{image_url("themes/mpa/mpa_level2_bw.jpg")});
     background-position: center top;
     background-repeat:no-repeat;
@@ -59,34 +60,19 @@
     align-items: center;
   } 
 
-  .datetime, .logo {
-    font-family: 'Rubik';
-    font-weight: bold;
-    font-size: 42px;
-    line-height: 90px;
-    color: white;
-    margin-left: 20px;
-    margin-right: 20px;
-    color: #8E0C3A;
-    color: #5B6770;
-    color: #FFFFFF;
-  }
 
   .main {
-    height: calc(100% - 180px);
-    padding: 10px 20px;
+    height: 900px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
   }
 
 
   .event {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
+
+    margin-bottom: 5px;
 
     .time,
     .summary,
@@ -114,24 +100,28 @@
     }
 
     .time {
+      text-align: left;
       padding-left: 10px !important;
       padding-right: 10px !important;
-      width: 540px;
-      height: 100%;
+      width: 570px;
+      margin-right: 5px;
+      &.teams {
+        height: 185px;
+      }
     }
 
     .summary {
       padding-left: 10px !important;
-      flex-grow: 1;
-      min-width: 800px;
+      margin-right: 5px;
+      width: 1110px;
     }
 
     .team {
       padding: 0;
       padding-left: 10px !important;
+      margin-right: 5px;
       height: 90px;
-      flex-grow: 1;
-      min-width: 800px;
+      width: 1205px;
     }
 
     .locker_room {
@@ -144,43 +134,60 @@
       padding: 0;
     }
 
+
+    .time,
+    .subject {
+      float: left;
+    }
+
+    .teams {
+      float: left;
+    }
+
+    .home_team,
+    .away_team {
+      .team,
+      .locker_room {
+        float: left;
+      }
+    }
+
+    .away_team {
+      margin-bottom: 5px;
+    }
+
     .bench {
       float: right;
       margin-right: 10px;
     }
 
-    .teams {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-
-    }
-
-    .away_team, .home_team {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
-    }
-
     .subject {
       padding: 0;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
+
+      .summary,
+      .locker_room {
+        float: left;
+        &.away {
+          margin-right: 5px;
+        }
+      }
     }
 
   }
  
-  @media (max-width: 1200px) {
-    .time {
-      display: none;
-    }
+
+  .datetime, .logo {
+    font-family: 'Rubik';
+    font-weight: bold;
+    font-size: 42px;
+    line-height: 90px;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #8E0C3A;
+    color: #5B6770;
+    color: #FFFFFF;
   }
-
-
 
 .outer
   .header
@@ -193,20 +200,20 @@
       - rows += 1 if event.try(:show_teams?)
       - next if rows > 9
       - odd_or_even = cycle('odd', 'even')
-      .event{ class: odd_or_even }
+      .event.clearfix{ class: odd_or_even }
         - if (event.try(:show_teams?))
-          .time
+          .time.teams
             = event.starts_on.strftime('%-I:%M %P')
             != ' - '
             = event.ends_on.strftime('%-I:%M %P')
-          .teams
-            .away_team
+          .teams.clearfix
+            .away_team.clearfix
               .team
                 = event.away_team_name.presence || event.try(:away_team).try(:name)
                 - if event.type == 'League::Game'
                   .bench (away)
               .locker_room.away= event.away_team_locker_room&.name
-            .home_team
+            .home_team.clearfix
               .team
                 = event.home_team_name.presence || event.try(:home_team).try(:name)
                 - if event.type == 'League::Game'
@@ -217,7 +224,7 @@
             = event.starts_on.strftime('%-I:%M %P')
             != ' - '
             = event.ends_on.strftime('%-I:%M %P')
-          .subject
+          .subject.clearfix
             .summary= event.summary
             .locker_room.away= event.away_team_locker_room&.name
             .locker_room.home= event.home_team_locker_room&.name

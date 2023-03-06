@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
-# the Next::Admin::PlannerHelper. For example:
+# the Next::Admin::Events::PlannerHelper. For example:
 #
-# describe Next::Admin::PlannerHelper do
+# describe Next::Admin::Events::PlannerHelper do
 #   describe "string concat" do
 #     it "concats two strings with spaces" do
 #       expect(helper.concat_strings("this","that")).to eq("this that")
 #     end
 #   end
 # end
-RSpec.describe Next::Admin::PlannerHelper, type: :helper do
+RSpec.describe Next::Admin::Events::PlannerHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

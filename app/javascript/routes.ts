@@ -1601,16 +1601,16 @@ export const actions = {
       'path': handle.path('/next/admin'),
     },
   },
-  'next/admin/planner': {
+  'next/admin/events/planner': {
     'index': {
-      'get': handle.get('/next/admin/planner'),
-      'path': handle.path('/next/admin/planner'),
+      'get': handle.get('/next/admin/events/planner'),
+      'path': handle.path('/next/admin/events/planner'),
     },
   },
-  'next/admin/calendar': {
+  'next/admin/events/calendar': {
     'index': {
-      'get': handle.get('/next/admin/calendar'),
-      'path': handle.path('/next/admin/calendar'),
+      'get': handle.get('/next/admin/events/calendar'),
+      'path': handle.path('/next/admin/events/calendar'),
     },
   },
   'next/admin/general/events': {
@@ -2977,13 +2977,13 @@ export const paths = {
     get: handle.get('/next/admin'),
     path: handle.path('/next/admin'),
   },
-  '/next/admin/planner': {
-    get: handle.get('/next/admin/planner'),
-    path: handle.path('/next/admin/planner'),
+  '/next/admin/events/planner': {
+    get: handle.get('/next/admin/events/planner'),
+    path: handle.path('/next/admin/events/planner'),
   },
-  '/next/admin/calendar': {
-    get: handle.get('/next/admin/calendar'),
-    path: handle.path('/next/admin/calendar'),
+  '/next/admin/events/calendar': {
+    get: handle.get('/next/admin/events/calendar'),
+    path: handle.path('/next/admin/events/calendar'),
   },
   '/next/admin/general/events': {
     post: handle.post('/next/admin/general/events'),

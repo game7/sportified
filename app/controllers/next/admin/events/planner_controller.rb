@@ -1,4 +1,4 @@
-class Next::Admin::PlannerController < Next::Admin::BaseController
+class Next::Admin::Events::PlannerController < Next::Admin::BaseController
   def index
     inertia props: {
       date: date,

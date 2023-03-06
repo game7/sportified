@@ -1,17 +1,18 @@
-import { HomeOutlined } from "@ant-design/icons";
 import { Radio, Space, Statistic } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { groupBy } from "lodash";
-import { useSearchParams } from "react-router-dom";
-import { LinkButton } from "~/components/buttons";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import { ScrollRestoration, useSearchParams } from "react-router-dom";
 import { EventPopover } from "~/components/calendar/event-popover";
 import { EventWithBadge } from "~/components/calendar/event-with-badge";
+import DatePicker from "~/components/date-picker";
 import { AdminLayout } from "~/components/layout/admin-layout";
-import { paths } from "~/routes";
+import { actions, paths } from "~/routes";
 import { toHexColor } from "~/utils/to-hex-color";
 import { useLocalStorage } from "~/utils/use-local-storage";
 import { usePage } from "~/utils/use-page";
 import { withRouter } from "~/utils/with-router";
+import { AddEventDropdown } from "../add-event-dropdown";
 
 type PlannerEvent = WithOptional<App.Event, "location" | "program" | "tags"> & {
   location_id: number;
@@ -40,23 +41,60 @@ export default withRouter(function AdminPlannerIndexPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [expanded, setExpanded] = useLocalStorage<boolean>("planner-expanded");
 
+  const date = dayjs(props.date);
   const dates = getMonthDays(dayjs(props.date));
   const eventsByDay = groupBy(events, (event) => dayjs(event.starts_on).date());
+
+  const scrollTo = useCallback(function scrollToDate(value: Dayjs) {
+    const anchor = value.format("YYYY-MM-DD");
+    setTimeout(() => {
+      document.getElementById(anchor)?.scrollIntoView();
+      window.scrollBy(0, -70);
+    }, 100);
+  }, []);
+
+  useEffect(() => {
+    if (searchParams.has("date")) {
+      scrollTo(dayjs(searchParams.get("date")));
+    }
+  }, []);
 
   function handleDateClick(date: Dayjs) {
     searchParams.set("date", date.format("YYYY-MM-DD"));
     setSearchParams(searchParams);
   }
 
+  function handleDateChange(value: Dayjs | null) {
+    if (value && value?.isSame(date, "month")) {
+      searchParams.set("date", value?.format("YYYY-MM-DD"));
+      setSearchParams(searchParams);
+      scrollTo(value);
+      return;
+    }
+    paths["/next/admin/events/planner"].get(
+      {},
+      { date: value?.format("YYYY-MM-DD") || "" },
+      { preserveScroll: true }
+    );
+  }
+
   return (
     <AdminLayout
       title="Planner"
       breadcrumbs={[
-        { label: "Planner", href: paths["/next/admin/planner"].path({}) },
+        {
+          label: "Planner",
+          href: paths["/next/admin/events/planner"].path({}),
+        },
       ]}
       extra={
         <>
-          {" "}
+          <DatePicker
+            value={date}
+            format="MMMM D, YYYY"
+            onChange={handleDateChange}
+            allowClear={false}
+          />
           <Radio.Group
             optionType="button"
             buttonStyle="outline"
@@ -67,6 +105,7 @@ export default withRouter(function AdminPlannerIndexPage() {
             ]}
             onChange={(e) => setExpanded(!!e.target.value ? true : null)}
           />
+          <AddEventDropdown />
         </>
       }
     >
@@ -120,7 +159,7 @@ export default withRouter(function AdminPlannerIndexPage() {
 
 function DayRow({
   date,
-  events,
+  events = [],
   locations,
   expand,
 
@@ -144,13 +183,18 @@ function DayRow({
     }
   }
 
-  const start = dayjs(events[0].starts_on);
-  const last = events[events.length - 1];
-  const end = dayjs(last.starts_on).add(last.duration || 0, "minutes");
-  const height = end.diff(start, "minute") + 60;
+  let height = 200;
+  let start: Dayjs;
+
+  if (events.length) {
+    start = dayjs(events[0].starts_on);
+    const last = events[events.length - 1];
+    const end = dayjs(last.starts_on).add(last.duration || 0, "minutes");
+    height = end.diff(start, "minute") + 60;
+  }
 
   return (
-    <tr>
+    <tr id={date.format("YYYY-MM-DD")}>
       <td
         className="ant-table-cell"
         style={{ textAlign: "center", verticalAlign: "top" }}
@@ -162,24 +206,23 @@ function DayRow({
           />
         </div>
       </td>
-      {!expand &&
-        locations.map((location) => (
-          <CompactEventCell
-            key={location.id}
-            events={eventsByLocation[location.id]}
-            locations={locations}
-          />
-        ))}
-      {expand &&
-        locations.map((location) => (
-          <ScaledEventCell
-            key={location.id}
-            events={eventsByLocation[location.id]}
-            locations={locations}
-            start={start}
-            height={height}
-          />
-        ))}
+      {expand && events.length
+        ? locations.map((location) => (
+            <ScaledEventCell
+              key={location.id}
+              events={eventsByLocation[location.id]}
+              locations={locations}
+              start={start}
+              height={height}
+            />
+          ))
+        : locations.map((location) => (
+            <CompactEventCell
+              key={location.id}
+              events={eventsByLocation[location.id]}
+              locations={locations}
+            />
+          ))}
     </tr>
   );
 }
@@ -245,6 +288,15 @@ function ScaledEvent({
 
   const color = toHexColor(event.tags[0]?.name || "random");
 
+  const renderTime = useCallback((event: App.Event) => {
+    if (event.all_day) {
+      return "All Day";
+    }
+    return `${starts_on.format("h:mm a")} - ${starts_on
+      .add(event.duration || 0, "minute")
+      .format("h:mm a")}`;
+  }, []);
+
   return (
     <EventPopover event={event} locations={locations}>
       <div
@@ -256,7 +308,7 @@ function ScaledEvent({
           position: "absolute",
           width: "90%",
           top,
-          height: event.duration || 20,
+          height: event.all_day ? 60 : event.duration || 20,
           marginTop: -1,
           marginBottom: -1,
           padding: 5,
@@ -264,10 +316,7 @@ function ScaledEvent({
           cursor: "pointer",
         }}
       >
-        <div>
-          {starts_on.format("h:mm a")} -{" "}
-          {starts_on.add(event.duration || 0, "minute").format("h:mm a")}
-        </div>
+        <div>{renderTime(event)}</div>
         <div>{event.summary}</div>
       </div>
     </EventPopover>

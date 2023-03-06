@@ -293,8 +293,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   namespace :next do
     namespace :admin do
       root to: 'dashboard#index'
-      get 'planner' => 'planner#index'
-      get 'calendar' => 'calendar#index'
+      namespace :events do
+        get 'planner' => 'planner#index'
+        get 'calendar' => 'calendar#index'
+      end
       namespace :general do
         resources :events, only: %i[new create edit update]
       end

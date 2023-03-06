@@ -1,4 +1,4 @@
-class Next::Admin::CalendarController < Next::Admin::BaseController
+class Next::Admin::Events::CalendarController < Next::Admin::BaseController
   def index
     respond_to do |format|
       format.html do

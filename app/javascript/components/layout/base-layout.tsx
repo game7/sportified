@@ -1,10 +1,4 @@
-import {
-  AlertOutlined,
-  GlobalOutlined,
-  HomeOutlined,
-  OrderedListOutlined,
-  PieChartOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import { Page } from "@inertiajs/inertia";
 import { Head, Link, usePage } from "@inertiajs/inertia-react";
 import {
@@ -20,9 +14,10 @@ import {
   PageHeaderProps,
 } from "antd";
 import Sider from "antd/lib/layout/Sider";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
+import { ItemType, MenuItemGroupType } from "antd/lib/menu/hooks/useItems";
 import { get } from "lodash";
 import React, { FC, PropsWithChildren, useState } from "react";
+import { useLocalStorage } from "~/utils/use-local-storage";
 import "./base-layout.css";
 
 export interface Breadcrumb {
@@ -70,37 +65,51 @@ export const BaseLayout: FC<BaseLayoutProps> = ({
   children,
 }) => {
   const page = usePage<Page<App.SharedProps>>();
-  const { current_user, flash } = page.props;
+  const { flash } = page.props;
 
-  // let's setup some dummy application "modules" in order to demonstrate
-  // the top-level "module" menu
-  // const modules: ItemType[] = new Array(2).fill(null).map((_, index) => ({
-  //   key: String(index + 1),
-  //   label: `App Module ${index + 1}`,
-  //   onClick: () => alert(`this is just a an example!`),
-  // }));
-
-  const modules: ItemType[] = [];
-
-  // modules.push({
-  //   key: routes.glossaryEntries.list.path(),
-  //   label: <Link href={routes.glossaryEntries.list.path()}>Glossary</Link>,
-  // });
-  // if (policies.can_index_admin) {
-  //   modules.push({
-  //     key: routes.admin.list.path(),
-  //     label: <Link href={routes.admin.list.path()}>Admin</Link>,
-  //   });
-  // }
+  const [collapsed, setCollapsed] = useLocalStorage("layout-sidebar", false);
 
   // extract href from menu item label and compare to current
   // window.location in order to identify menu items that should
   // be marked as selected
-  const selectedKeys = sidebar
-    ?.map((item) => get(item, "label.props.href"))
-    .filter((href) => {
-      return window.location.pathname.startsWith(href);
+  const [state, setState] = useState<{
+    openKeys: string[];
+    selectedKeys: string[];
+  }>(() => {
+    const openKeys: string[] = [];
+    const selectedKeys: string[] = [];
+
+    sidebar?.forEach((item) => {
+      const key = (item?.key || Date.now).toString();
+
+      if ((item as MenuItemGroupType).children) {
+        if (window.location.pathname.startsWith(key)) {
+          collapsed ? selectedKeys.push(key) : openKeys.push(key);
+        }
+        (item as MenuItemGroupType).children?.forEach((child) => {
+          const childKey = (child?.key || Date.now).toString();
+          if (window.location.pathname.startsWith(childKey)) {
+            selectedKeys.push(childKey);
+          }
+        });
+      } else {
+        if (window.location.pathname.startsWith(key)) {
+          selectedKeys.push(key);
+        }
+      }
     });
+
+    return {
+      openKeys,
+      selectedKeys,
+    };
+  });
+
+  const { openKeys, selectedKeys } = state;
+
+  function setOpenKeys(keys: string[]) {
+    setState((current) => ({ ...current, openKeys: keys }));
+  }
 
   const pageHeaderBreadcrumb: BreadcrumbProps = {
     routes: [
@@ -115,18 +124,17 @@ export const BaseLayout: FC<BaseLayoutProps> = ({
         };
       }),
     ],
-    itemRender: (route) => (
-      <Link key={route.path} href={route.path}>
-        {route.breadcrumbName == "APP_HOME" ? (
+    itemRender: (route) =>
+      route.breadcrumbName == "APP_HOME" ? (
+        <a key={route.path} href={route.path}>
           <HomeOutlined />
-        ) : (
-          route.breadcrumbName
-        )}
-      </Link>
-    ),
+        </a>
+      ) : (
+        <Link key={route.path} href={route.path}>
+          {route.breadcrumbName}
+        </Link>
+      ),
   };
-
-  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <React.Fragment>
@@ -149,6 +157,8 @@ export const BaseLayout: FC<BaseLayoutProps> = ({
           <Menu
             theme="dark"
             selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            onOpenChange={setOpenKeys}
             mode="inline"
             inlineCollapsed={collapsed}
             items={sidebar}

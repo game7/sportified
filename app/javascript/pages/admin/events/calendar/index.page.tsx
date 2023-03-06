@@ -10,7 +10,9 @@ import { EventPopover } from "~/components/calendar/event-popover";
 import { EventWithBadge } from "~/components/calendar/event-with-badge";
 import DatePicker from "~/components/date-picker";
 import { AdminLayout } from "~/components/layout/admin-layout";
+import { actions, paths } from "~/routes";
 import { withRouter } from "~/utils/with-router";
+import { AddEventDropdown } from "../add-event-dropdown";
 import "./index.css";
 
 type Event = WithOptional<App.Event, "tags">;
@@ -111,7 +113,12 @@ export default withRouter(function AdminCalendarIndexPage() {
     <AdminLayout
       title="Calendar"
       pageHeader={false}
-      breadcrumbs={[{ label: "Calendar", href: "/next/admin/calendar" }]}
+      breadcrumbs={[
+        {
+          label: "Calendar",
+          href: paths["/next/admin/events/calendar"].path({}),
+        },
+      ]}
       fluid
     >
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
@@ -163,54 +170,7 @@ export default withRouter(function AdminCalendarIndexPage() {
             <Button icon={<DownloadOutlined />} onClick={handleDownloadClick}>
               Export
             </Button>
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: "general",
-                    type: "group",
-                    label: "General",
-                  },
-                  {
-                    key: "general-event",
-                    label: (
-                      <Link href="/next/admin/general/events/new">Event</Link>
-                    ),
-                  },
-                  {
-                    key: "divider",
-                    type: "divider",
-                  },
-                  {
-                    key: "league",
-                    type: "group",
-                    label: "League",
-                  },
-                  {
-                    key: "league-game",
-                    label: (
-                      <Link href="/next/admin/league/games/new">Game</Link>
-                    ),
-                  },
-                  {
-                    key: "league-practice",
-                    label: (
-                      <Link href="/next/admin/league/practices/new">
-                        Practice
-                      </Link>
-                    ),
-                  },
-                  {
-                    key: "league-event",
-                    label: (
-                      <Link href="/next/admin/league/events/new">Event</Link>
-                    ),
-                  },
-                ],
-              }}
-            >
-              <Button icon={<PlusOutlined />}>Add</Button>
-            </Dropdown>
+            <AddEventDropdown />
           </Space>
         </div>
 

@@ -37,6 +37,7 @@
                   - if current_user_is_admin_or_operations?
                     .divider
                     = link_to 'Administration', main_app.admin_root_path, class: [:item]
+                    = link_to 'Administration (next-gen)', main_app.next_admin_root_path, class: [:item]
                   .divider
                   = link_to 'Sign Out', users.sign_out_path, class: [:item]
             - else
@@ -61,6 +62,7 @@
                 - if current_user_is_admin_or_operations?
                   .divider
                   = link_to 'Administration', main_app.admin_root_path, class: [:item]
+                  = link_to 'Administration (next-gen)', main_app.next_admin_root_path, class: [:item]
                 .divider
                 = link_to 'Sign Out', users.sign_out_path, class: [:item]
           - else
