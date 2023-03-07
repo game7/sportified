@@ -380,7 +380,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     regexp_parser (2.6.1)
     request_store (1.0.8)
     rexml (3.2.5)
@@ -565,7 +565,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_12factor
   react-rails
-  redcarpet (~> 3.4.0)
+  redcarpet (~> 3.5.1)
   rmagick (>= 2.13.4)
   rspec-rails (~> 4.0.1)
   rubocop-rails

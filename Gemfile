@@ -69,7 +69,7 @@ gem 'simple_calendar', '~> 2.0'
 gem 'stripe'
 
 gem 'RedCloth'
-gem 'redcarpet', '~> 3.4.0'
+gem 'redcarpet', '~> 3.5.1'
 
 gem 'ice_cube', '~> 0.16.2'
 
