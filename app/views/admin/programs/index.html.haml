@@ -18,6 +18,6 @@
           %td
             .btn-group
               = link_to 'Show', [:admin, program.class.name.deconstantize.underscore.presence&.to_sym, program], class: [:ui, :primary, :mini, :button]
-              -#= link_to 'Settings', edit_polymorphic_path([:admin, program.module_name, program]), :class => 'btn btn-xs btn-default'
+              -#= link_to 'Settings', edit_polymorphic_path([:admin, program.module_name.to_sym, program]), :class => 'btn btn-xs btn-default'
 
 

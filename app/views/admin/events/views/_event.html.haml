@@ -12,8 +12,8 @@
       = event.summary unless event.private?
   %ul.dropdown-menu
     %li.dropdown-header Event
-    %li= link_to 'Edit', edit_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event])
-    %li= link_to 'Clone', new_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence, event.class], :clone => event.id)
+    %li= link_to 'Edit', edit_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence&.to_sym, event])
+    %li= link_to 'Clone', new_polymorphic_path([:admin, event.class.name.deconstantize.underscore.presence&.to_sym, event.class], :clone => event.id)
     %li= link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
     - if event.class.to_s == 'League::Game'
       %li.divider{role: :separator}
