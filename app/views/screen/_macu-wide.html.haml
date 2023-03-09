@@ -256,12 +256,28 @@
       $('#time').text(formatTime(new Date()));
     }
     function refresh() {
-      console.log('refreshing');
-      $.ajax(window.location).then(function(data, status) {
+      var url = new URL(window.location)
+      url.searchParams.set('width', document.documentElement.clientWidth)
+      url.searchParams.set('height', document.documentElement.clientHeight)
+      $.ajax(url.toString()).then(function(data, status) {
         var $page = $(data);
         $('.outer').replaceWith($page.filter('.outer'));
       })
     }
+    // reload the entire page but do so only if the server is reponding
+    function reload() {
+      var url = new URL(window.location)
+      $.ajax(url.toString()).then(function(data, status) {
+        window.location.reload()
+      })      
+    }
+    
+    // update the time every second
     window.setInterval(setTime, 1000)
+    
+    // update the schedule eveery 5 minutes
     window.setInterval(refresh, 5 * 60 * 1000)
+    
+    // completely reload the window every hour (actually 100ms before)
+    window.setInterval(reload, (60 * 60 * 1000) - 100)
   })

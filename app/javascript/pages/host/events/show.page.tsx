@@ -4,7 +4,7 @@ import { Descriptions, DescriptionsProps, List, Space } from "antd";
 import { HostLayout } from "../../../components/layout/host-layout";
 
 interface Props extends App.SharedProps {
-  event: App.Event;
+  event: Ahoy.Event;
 }
 
 export default function hostEventsShowPage() {
@@ -46,21 +46,23 @@ export default function hostEventsShowPage() {
           <Item label="Tenant">{event.tenant_id}</Item>
         </Descriptions>
         <Descriptions title="Properties" {...COMMON_PROPS}>
-          <Item label="Host">{event.properties.host}</Item>
-          <Item label="Path">{event.properties.path}</Item>
-          <Item label="URL">{event.properties.url}</Item>
+          <Item label="Host">{event.properties?.host}</Item>
+          <Item label="Path">{event.properties?.path}</Item>
+          <Item label="URL">{event.properties?.url}</Item>
         </Descriptions>
         <Descriptions title="Params" {...COMMON_PROPS}>
-          {Object.entries(event.properties.params).map(([key, value]) => (
-            <Item label={key}>{value.toString()}</Item>
+          {Object.entries(event.properties?.params).map(([key, value]) => (
+            <Item label={key}>{value?.toString()}</Item>
           ))}
         </Descriptions>
-        <List
-          header={<div>Backtrace</div>}
-          bordered
-          dataSource={event.properties.backtrace}
-          renderItem={(item) => <List.Item>{item}</List.Item>}
-        ></List>
+        {event.properties?.backtrace && (
+          <List
+            header={<div>Backtrace</div>}
+            bordered
+            dataSource={event.properties?.backtrace}
+            renderItem={(item: string) => <List.Item>{item}</List.Item>}
+          ></List>
+        )}
       </Space>
     </HostLayout>
   );
