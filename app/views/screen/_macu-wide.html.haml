@@ -95,7 +95,7 @@
       background-color: #5B6770;
       background-color: #800000;
       background-color: #8C1D40;
-      color: white;
+      color: #f3f3f3;
       opacity: 1;
       font-weight: bold;
       height: 90px;
@@ -123,7 +123,6 @@
     .summary {
       padding-left: 10px !important;
       flex-grow: 1;
-      min-width: 800px;
     }
 
     .team {
@@ -131,7 +130,6 @@
       padding-left: 10px !important;
       height: 90px;
       flex-grow: 1;
-      min-width: 800px;
     }
 
     .locker_room {
@@ -175,10 +173,42 @@
   }
  
   @media (max-width: 1200px) {
-    .time {
-      display: none;
+    .event {
+      background-color: #33333399;
+      padding: 5px;
+      border-radius: 5px;
+      gap: 0;
+
+      .time {
+        width: 100%;
+        height: auto;
+        font-size: 20px;
+        line-height: 32px;
+        margin-bottom: 5px;
+      }
+
+      .teams, .away_team, .home_team, .subject {
+        gap: 0;
+      }
+
+      .home_team {
+        margin-top: 5px;
+      }
+
+      .locker_room {
+        margin-left: 5px;
+      }
     }
   }
+
+  @media (max-width: 900px) {
+    .title {
+      font-size: 48px;
+    }
+    .datetime, .logo {
+      font-size: 32px;
+    }
+  }  
 
 
 
