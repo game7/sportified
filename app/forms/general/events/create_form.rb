@@ -103,7 +103,7 @@ class General::Events::CreateForm
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
     params[:general_event][:ends_on] = Chronic.parse(params[:general_event][:ends_on])
     params.require(:general_event)
-          .permit(*attributes.keys.concat([tag_list: []]))
+          .permit(*attributes.keys.concat([:tag_list]))
   end
 
   def repeat_days

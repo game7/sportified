@@ -48,7 +48,7 @@ class General::Events::UpdateForm
     params[:general_event][:starts_on] = Chronic.parse(params[:general_event][:starts_on])
     params.require(:general_event)
           .permit(:program_id, :starts_on, :duration, :page_id, :all_day,
-                  :location_id, :summary, :description, :private, tag_list: [])
+                  :location_id, :summary, :description, :private, :tag_list)
   end
 
   def location_options
