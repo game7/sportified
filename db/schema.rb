@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_20_030337) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_08_184856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -624,6 +624,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_030337) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
+  create_table "screen_locations", force: :cascade do |t|
+    t.bigint "screen_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_screen_locations_on_location_id"
+    t.index ["screen_id"], name: "index_screen_locations_on_screen_id"
+  end
+
   create_table "screens", force: :cascade do |t|
     t.bigint "tenant_id"
     t.string "name"
@@ -801,6 +810,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_030337) do
   add_foreign_key "registrations", "tenants"
   add_foreign_key "registrations", "users"
   add_foreign_key "registrations", "variants"
+  add_foreign_key "screen_locations", "locations"
+  add_foreign_key "screen_locations", "screens"
   add_foreign_key "screens", "facilities", column: "playing_surface_id"
   add_foreign_key "screens", "locations"
   add_foreign_key "screens", "tenants"

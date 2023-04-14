@@ -1,8 +1,7 @@
 = simple_form_for [:admin, @screen] do |f|
   = f.input :name
   = f.input :device_key
-  = f.input :location_id, collection: Location.order('name ASC')
-  -# = f.input :playing_surface_id
+  = f.input :location_ids, as: :semantic_check_boxes, collection: Location.order('name ASC')
   = f.button :wrapped, :cancel => return_url 
 
 :css

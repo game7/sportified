@@ -133,16 +133,8 @@ class League::Game < League::Event
 
   before_validation :update_team_info
   def update_team_info
-    if team = away_team
-      self.away_team_name = team.name unless away_team_custom_name
-    else
-      self.away_team_name = '' unless away_team_custom_name
-    end
-    if team = home_team
-      self.home_team_name = team.name unless home_team_custom_name
-    else
-      self.home_team_name = '' unless home_team_custom_name
-    end
+    self.away_team_name = away_team&.name || '' unless away_team_custom_name?
+    self.home_team_name = home_team&.name || '' unless home_team_custom_name?
   end
 
   before_validation :update_summary

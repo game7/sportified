@@ -28,20 +28,23 @@ class Screen < ApplicationRecord
   include Sportified::TenantScoped
 
   belongs_to :tenant
-  belongs_to :location, required: false
-  belongs_to :playing_surface, required: false
+  belongs_to :location, optional: true
+  belongs_to :playing_surface, optional: true
+
+  has_many :screen_locations, dependent: :destroy
+  has_many :locations, through: :screen_locations
 
   validates :name, presence: true
-  validates :device_key, 
-    presence: true, 
-    format: { 
-      with: /[A-F0-9]{6}/,
-      message: "is not a valid device key" }
+  validates :device_key,
+            presence: true,
+            format: {
+              with: /[A-F0-9]{6}/,
+              message: 'is not a valid device key'
+            }
 
   before_validation :upcase_device_key
 
   def upcase_device_key
     self.device_key = device_key.upcase
   end
-
 end

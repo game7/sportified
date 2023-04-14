@@ -44,6 +44,6 @@ class Admin::ScreensController < Admin::AdminController
   end
 
   def screen_params
-    params.require(:screen).permit(:name, :device_key, :location_id, :playing_surface_id)
+    params.require(:screen).permit(:name, :device_key, :location_id, :playing_surface_id, location_ids: [])
   end
 end

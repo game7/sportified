@@ -88,7 +88,7 @@
     flex-wrap: wrap;
     gap: 5px;
 
-    .time,
+    .logistics,
     .summary,
     .team,
     .locker_room {
@@ -104,7 +104,7 @@
     }
 
     &.even {
-      .time,
+      .logistics,
       .summary,
       .team,
       .locker_room {
@@ -113,11 +113,26 @@
       }
     }
 
-    .time {
+    .logistics {
       padding-left: 10px !important;
       padding-right: 10px !important;
       width: 540px;
       height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-size: 20px;
+      line-height: 30px;
+      padding: 18px 0;
+      .time {
+        //border-top: 1px solid green;
+        font-size: 28px;
+        line-height: 28px;
+      }
+      .location {
+        font-size: 18px;
+        line-height: 24px;
+        //border-bottom: 1px solid green;
+      }
     }
 
     .summary {
@@ -171,6 +186,7 @@
     }
 
   }
+
  
   @media (max-width: 1200px) {
     .event {
@@ -179,12 +195,16 @@
       border-radius: 5px;
       gap: 0;
 
-      .time {
+      .logistics {
         width: 100%;
         height: auto;
-        font-size: 20px;
         line-height: 32px;
         margin-bottom: 5px;
+        flex-direction: row;
+        justify-content: space-between;
+        .time, .location {
+          font-size: 28px;
+        }
       }
 
       .teams, .away_team, .home_team, .subject {
@@ -199,6 +219,9 @@
         margin-left: 5px;
       }
     }
+    .logistics .location {
+      display: block;
+    }
   }
 
   @media (max-width: 900px) {
@@ -211,10 +234,9 @@
   }  
 
 
-
 .outer
   .header
-    .title Locker Room Assignments
+    .title Schedule of Events
 
   .main
     - rows = 0
@@ -225,10 +247,14 @@
       - odd_or_even = cycle('odd', 'even')
       .event{ class: odd_or_even }
         - if (event.try(:show_teams?))
-          .time
-            = event.starts_on.strftime('%-I:%M %P')
-            != ' - '
-            = event.ends_on.strftime('%-I:%M %P')
+          .logistics
+            .time
+              = event.starts_on.strftime('%-I:%M %P')
+              != ' - '
+              = event.ends_on.strftime('%-I:%M %P')
+            .location
+              = event.location.name
+              
           .teams
             .away_team
               .team
@@ -243,10 +269,13 @@
                   .bench (home)
               .locker_room.home= event.home_team_locker_room&.name
         - else
-          .time
-            = event.starts_on.strftime('%-I:%M %P')
-            != ' - '
-            = event.ends_on.strftime('%-I:%M %P')
+          .logistics
+            .time
+              = event.starts_on.strftime('%-I:%M %P')
+              != ' - '
+              = event.ends_on.strftime('%-I:%M %P')
+            .location
+              = event.location.name
           .subject
             .summary= event.summary
             .locker_room.away= event.away_team_locker_room&.name

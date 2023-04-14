@@ -23,7 +23,8 @@ class ScreenController < ApplicationController
 
     screen.touch(:refreshed_at) # rubocop:disable Rails/SkipsModelValidations
     Tenant.current = Tenant.find(screen.tenant_id)
-    events = Event.where(location: screen.location_id)
+    events = Event.includes(:location)
+                  .where(location: screen.location_ids)
                   .ends_after(time)
                   .before(time.at_end_of_day)
                   .order(:starts_on)

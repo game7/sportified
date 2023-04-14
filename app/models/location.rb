@@ -29,8 +29,9 @@ class Location < ActiveRecord::Base
       where(type: 'LockerRoom')
     end
   end
-  has_many :playing_surfaces
-  has_many :locker_rooms
+  has_many :playing_surfaces, dependent: :destroy
+  has_many :locker_rooms, dependent: :destroy
+  has_many :screen_locations, dependent: :destroy
 
   validates :name, presence: true
 

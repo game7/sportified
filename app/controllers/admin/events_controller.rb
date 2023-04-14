@@ -40,8 +40,12 @@ class Admin::EventsController < Admin::AdminController
   end
 
   def update
-    @event.update params.require(:event).permit(:home_team_name, :away_team_name, :home_team_locker_room_id,
-                                                :away_team_locker_room_id)
+    puts '-------------------'
+
+    @event.update!(update_event_params)
+    @event.changes
+    puts '-------------------'
+    render json: @event
   end
 
   private
@@ -97,6 +101,12 @@ class Admin::EventsController < Admin::AdminController
   def event_params
     params.require(:event).permit(:program_id, :starts_on, :duration, :page_id,
                                   :all_day, :location_id, :summary, :description)
+  end
+
+  def update_event_params
+    params.require(:event).permit(:home_team_name, :away_team_name,
+                                  :home_team_custom_name, :away_team_custom_name,
+                                  :home_team_locker_room_id, :away_team_locker_room_id)
   end
 
   def add_events_breadcrumb

@@ -26,6 +26,19 @@ namespace ActiveStorage {
     }
   }
 }
+namespace ActiveRecord {
+  interface InternalMetadata {
+    key: string;
+    value: string | null;
+    created_at: string;
+    updated_at: string;
+  }
+}
+namespace ActiveRecord {
+  interface SchemaMigration {
+    version: string;
+  }
+}
 namespace ActiveStorage {
   interface Attachment {
     id: number;
@@ -1285,6 +1298,7 @@ namespace App {
     facilities?: App.Facility[];
     playing_surfaces?: App.PlayingSurface[];
     locker_rooms?: App.LockerRoom[];
+    screen_locations?: App.ScreenLocation[];
     tenant?: App.Tenant;
   }
 }
@@ -1505,9 +1519,22 @@ namespace App {
     refreshed_at: string | null;
     created_at: string;
     updated_at: string;
+    screen_locations?: App.ScreenLocation[];
+    locations?: App.Location[];
     tenant?: App.Tenant;
     location?: App.Location;
     playing_surface?: App.PlayingSurface;
+  }
+}
+namespace App {
+  interface ScreenLocation {
+    id: number;
+    screen_id: number;
+    location_id: number;
+    created_at: string;
+    updated_at: string;
+    screen?: App.Screen;
+    location?: App.Location;
   }
 }
 namespace App {
