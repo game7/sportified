@@ -29,7 +29,7 @@
           %h4.ui.header Locker Rooms
           %table.ui.celled.table
             %tbody
-              - location.facilities.locker_rooms.each do |locker_room|
+              - location.facilities.locker_rooms.order(name: :asc).each do |locker_room|
                 %tr
                   %td= locker_room.name
                   %td.collapsing

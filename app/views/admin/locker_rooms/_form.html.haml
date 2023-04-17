@@ -2,6 +2,9 @@
   .panel.panel-default
     .panel-body
       = f.input :name
+      = f.input :auto_assign, as: :semantic_radio_buttons, 
+                              collection: [['home', 'Home'], ['away', 'Away'], [nil, 'None']], 
+                              label_method: :second, value_method: :first
       = f.button :wrapped, :cancel => return_url
 
 :css

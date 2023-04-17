@@ -3,6 +3,7 @@
 # Table name: facilities
 #
 #  id          :integer          not null, primary key
+#  auto_assign :string
 #  name        :string
 #  type        :string
 #  created_at  :datetime         not null

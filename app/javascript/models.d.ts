@@ -418,6 +418,7 @@ namespace App {
     location_id: number | null;
     created_at: string;
     updated_at: string;
+    auto_assign: string | null;
     tenant?: App.Tenant;
     location?: App.Location;
   }
@@ -1311,6 +1312,7 @@ namespace App {
     location_id: number | null;
     created_at: string;
     updated_at: string;
+    auto_assign: string | null;
     tenant?: App.Tenant;
     location?: App.Location;
   }
@@ -1389,6 +1391,7 @@ namespace App {
     location_id: number | null;
     created_at: string;
     updated_at: string;
+    auto_assign: string | null;
     tenant?: App.Tenant;
     location?: App.Location;
   }

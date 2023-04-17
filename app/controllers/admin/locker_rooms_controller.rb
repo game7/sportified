@@ -1,8 +1,7 @@
 class Admin::LockerRoomsController < Admin::AdminController
-
-  before_action :mark_return_point, only: [:new, :edit, :destroy]
-  before_action :set_locker_room, only: [:edit, :update, :destroy]
-  before_action :set_location, only: [:new, :create]
+  before_action :mark_return_point, only: %i[new edit destroy]
+  before_action :set_locker_room, only: %i[edit update destroy]
+  before_action :set_location, only: %i[new create]
 
   # GET /locker_rooms/new
   def new
@@ -10,8 +9,7 @@ class Admin::LockerRoomsController < Admin::AdminController
   end
 
   # GET /locker_rooms/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /locker_rooms
   def create
@@ -42,15 +40,15 @@ class Admin::LockerRoomsController < Admin::AdminController
 
   private
 
-    def set_locker_room
-      @locker_room = LockerRoom.find(params[:id])
-    end
+  def set_locker_room
+    @locker_room = LockerRoom.find(params[:id])
+  end
 
-    def set_location
-      @location = Location.find(params[:location_id])
-    end
+  def set_location
+    @location = Location.find(params[:location_id])
+  end
 
-    def locker_room_params
-      params[:locker_room].permit(:name, :parent_id)
-    end
+  def locker_room_params
+    params[:locker_room].permit(:name, :parent_id, :auto_assign)
+  end
 end

@@ -9,18 +9,21 @@ class Admin::Events::LockerRoomsController < Admin::AdminController
                   .order(:starts_on)
     locker_rooms = LockerRoom.order(:name)
                              .group_by(&:location_id)
-                             .transform_values{|v| v.each_slice(v.count/2).to_a}
+                             .transform_values { |v| v.each_slice(v.count / 2).to_a }
+    locker_rooms = LockerRoom.order(:name)
+                             .group_by(&:location_id)
+                             .transform_values { |v| v.group_by(&:auto_assign) }
+
     events.each do |event|
-      event.away_team_locker_room = locker_rooms[event.location_id][0][0]
-      event.home_team_locker_room = locker_rooms[event.location_id][1][0]
+      event.away_team_locker_room = locker_rooms[event.location_id]['away'][0]
+      event.home_team_locker_room = locker_rooms[event.location_id]['home'][0]
       event.save
-      locker_rooms[event.location_id][0].rotate!
-      locker_rooms[event.location_id][1].rotate!
+      locker_rooms[event.location_id]['away'].rotate!
+      locker_rooms[event.location_id]['home'].rotate!
     end
     respond_to do |format|
       format.js
-      format.json { render json: events, status: 200 }
+      format.json { render json: events, status: :ok }
     end
   end
-  
 end

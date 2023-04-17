@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_08_184856) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_17_212912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -208,6 +208,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_184856) do
     t.integer "location_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "auto_assign"
     t.index ["location_id"], name: "index_facilities_on_location_id"
     t.index ["tenant_id"], name: "index_facilities_on_tenant_id"
   end
