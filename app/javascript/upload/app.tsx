@@ -1,10 +1,5 @@
-import * as React from 'react';
-import 'whatwg-fetch';
+import { PropsWithChildren } from "react";
 
-const App: React.SFC<{}> = (props) => (
-  <div>
-    {props.children}
-  </div>
-);
-
-export default App;
+export default function App(props: PropsWithChildren) {
+  return <div>{props.children}</div>;
+}

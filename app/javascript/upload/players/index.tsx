@@ -1,26 +1,21 @@
-import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router';
+import { Route, Routes } from "react-router";
 
-import Context from './context';
-import File from './file';
-import Data from './data';
-import Columns from './columns';
-import Mapping from './mapping';
-import Review from './review';
+import Columns from "./columns";
+import Context from "./context";
+import Data from "./data";
+import File from "./file";
+import Mapping from "./mapping";
+import Review from "./review";
 
-const Layout: React.SFC<{}> = ({ children }) => (
-  <div>{children}</div>
-);
-
-const Import: React.SFC<RouteComponentProps<{}>> = ({ match }) => (
-  <Layout>
-    <Route exact path={`${match.path}/`} component={Context}/>
-    <Route path={`${match.path}/file`} component={File}/>
-    <Route path={`${match.path}/data`} component={Data}/>
-    <Route path={`${match.path}/columns`} component={Columns}/>
-    <Route path={`${match.path}/mapping`} component={Mapping}/>
-    <Route path={`${match.path}/review`} component={Review}/>
-  </Layout>
-);
-
-export default Import;
+export default function Import() {
+  return (
+    <Routes>
+      <Route index element={<Context />} />
+      <Route path="file" element={<File />} />
+      <Route path="data" element={<Data />} />
+      <Route path="columns" element={<Columns />} />
+      <Route path="mapping" element={<Mapping />} />
+      <Route path="review" element={<Review />} />
+    </Routes>
+  );
+}
