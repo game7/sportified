@@ -34,7 +34,7 @@ module Blocks
     end
 
     def tags
-      super.split('||')
+      super&.split('||') || []
     end
 
     def shuffle
