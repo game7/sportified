@@ -1,6 +1,7 @@
 import { Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
-import { Descriptions, DescriptionsProps, Space } from "antd";
+import { Stack, Title } from "@mantine/core";
+import { PropertyTable } from "~/components/tables";
 import { HostLayout } from "../../../components/layout/host-layout";
 
 interface Props extends App.SharedProps {
@@ -10,18 +11,7 @@ interface Props extends App.SharedProps {
 export default function hostTenantsShowPage() {
   const { tenant } = usePage<Page<Props>>().props;
 
-  const { Item } = Descriptions;
-
-  const COMMON_PROPS: DescriptionsProps = {
-    bordered: true,
-    column: 1,
-    labelStyle: {
-      width: "20%",
-    },
-    contentStyle: {
-      width: "80%",
-    },
-  };
+  const { Item } = PropertyTable;
 
   return (
     <HostLayout
@@ -31,35 +21,49 @@ export default function hostTenantsShowPage() {
         { href: `/host/tenants/${tenant.id}`, label: tenant.id.toString() },
       ]}
     >
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
-        <Descriptions title="Basic Info" {...COMMON_PROPS}>
+      <Stack>
+        <Title order={4}>Basic Info</Title>
+
+        <PropertyTable>
           <Item label="Name">{tenant.name}</Item>
           <Item label="Slug">{tenant.slug}</Item>
           <Item label="Host">{tenant.host}</Item>
-        </Descriptions>
-        <Descriptions title="Social Media" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Social Media</Title>
+
+        <PropertyTable>
           <Item label="Twitter Id">{tenant.twitter_id}</Item>
           <Item label="Facebook Id">{tenant.facebook_id}</Item>
           <Item label="Instagram Id">{tenant.instagram_id}</Item>
           <Item label="Foursquare Id">{tenant.foursquare_id}</Item>
           <Item label="Google Plus Id">{tenant.google_plus_id}</Item>
-        </Descriptions>
-        <Descriptions title="Stripe Platform Configuration" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Stripe Platform Configuration</Title>
+
+        <PropertyTable>
           <Item label="Client ID">{tenant.stripe_client_id}</Item>
           <Item label="Public Key">{tenant.stripe_public_key}</Item>
           <Item label="Private Key">{tenant.stripe_private_key}</Item>
-        </Descriptions>
-        <Descriptions title="Stripe Tenant Configuration" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Stripe Tenant Configuration</Title>
+
+        <PropertyTable>
           <Item label="Access Token">{tenant.stripe_access_token}</Item>
           <Item label="Account Id">{tenant.stripe_account_id}</Item>
           <Item label="Public API Key">{tenant.stripe_public_api_key}</Item>
-        </Descriptions>
-        <Descriptions title="Styling" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Styling</Title>
+
+        <PropertyTable>
           <Item label="Theme">{tenant.theme}</Item>
           <Item label="Style">{tenant.style}</Item>
           <Item label="Google Fonts">{tenant.google_fonts}</Item>
-        </Descriptions>
-      </Space>
+        </PropertyTable>
+      </Stack>
     </HostLayout>
   );
 }

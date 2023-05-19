@@ -1,11 +1,14 @@
 import { Inertia, Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Space, Table } from "antd";
 import dayjs from "dayjs";
 import { keyBy } from "lodash";
+import { DataGrid } from "mantine-data-grid";
 import DatePicker from "~/components/date-picker";
 import { LinkButton } from "../../../components/buttons/link-button";
 import { HostLayout } from "../../../components/layout/host-layout";
+import { Group, Stack } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import { IconCalendar } from "@tabler/icons-react";
 
 interface Props extends App.SharedProps {
   date: string;
@@ -40,48 +43,69 @@ export default function HostVisitsIndexPage() {
         </LinkButton>,
       ]}
     >
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
-        <Table
-          dataSource={visits}
-          rowKey={(exc) => exc.id}
+      <Stack>
+        <Group>
+          <DatePickerInput
+            icon={<IconCalendar size="1.1rem" stroke={1.5} />}
+            value={date.toDate()}
+            maxDate={dayjs().toDate()}
+            onChange={(date) => {
+              if (date) {
+                Inertia.get(
+                  `/host/events?date=${dayjs(date).format("YYYY-MM-DD")}`
+                );
+              }
+            }}
+          />
+          <LinkButton href={window.location.pathname}>Clear Filters</LinkButton>
+        </Group>
+        <DataGrid
+          styles={(theme) => ({
+            thead: {
+              "::after": {
+                backgroundColor: "transparent",
+              },
+            },
+          })}
+          withBorder
+          withColumnBorders
+          data={visits}
           columns={[
             {
-              dataIndex: "id",
-              title: "Id",
-              render: (id) => <Link href={`/host/visits/${id}`}>{id}</Link>,
-              width: "10%",
+              accessorKey: "id",
+              cell: (cell) => (
+                <Link href={`/host/visits/${cell.getValue()}`}>
+                  {cell.getValue<number>()}
+                </Link>
+              ),
+              header: "Id",
             },
             {
-              dataIndex: "started_at",
-              title: "Started At",
-              render: (time) => dayjs(time).format("h:mm:ss A Z"),
-              ellipsis: true,
+              accessorKey: "started_at",
+              accessorFn: (visit) =>
+                dayjs(visit.started_at).format("h:mm:ss A Z"),
+              header: "Started At",
             },
             {
-              dataIndex: "tenant_id",
-              title: "Tenant",
-              render: (id) => tenants[id].name,
-              ellipsis: true,
+              accessorKey: "tenant_id",
+              accessorFn: (visit) => tenants[visit.tenant_id || ""].name,
+              header: "Tenant",
             },
             {
-              dataIndex: "device_type",
-              title: "Device",
-              ellipsis: true,
+              accessorKey: "device",
+              header: "Device",
             },
             {
-              dataIndex: "os",
-              title: "OS",
-              ellipsis: true,
+              accessorKey: "os",
+              header: "OS",
             },
             {
-              dataIndex: "browser",
-              title: "Browser",
-              ellipsis: true,
+              accessorKey: "browser",
+              header: "Browser",
             },
           ]}
-          bordered
-        />
-      </Space>
+        ></DataGrid>
+      </Stack>
     </HostLayout>
   );
 }

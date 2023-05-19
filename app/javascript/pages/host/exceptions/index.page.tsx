@@ -1,7 +1,8 @@
 import { Inertia, Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Col, ColProps, Row, Select, Space, Table } from "antd";
+import { Grid, Select, Stack, Table } from "@mantine/core";
 import dayjs from "dayjs";
+import { DataGrid } from "mantine-data-grid";
 import { ComponentProps } from "react";
 import { LinkButton } from "../../../components/buttons/link-button";
 import { HostLayout } from "../../../components/layout/host-layout";
@@ -20,24 +21,19 @@ function toList(object: Record<string, number>) {
 
 function toOptions(
   object: Record<string, number>
-): ComponentProps<typeof Select>["options"] {
+): ComponentProps<typeof Select>["data"] {
   return Object.entries(object).map(([key, value]) => ({
     value: key,
     label: `${key} (${value})`,
   }));
 }
 
-const COL_PROPS: ColProps = {
-  span: 12,
-  xl: 6,
-};
-
 export default function HostExceptionsIndexPage() {
   const { by_controller, by_day, by_exception, by_host, exceptions } =
     usePage<Page<Props>>().props;
   const searchParams = new URLSearchParams(window.location.search);
 
-  function makeUrl(param: string, value: string) {
+  function makeUrl(param: string, value: string | null) {
     let url = new URL(window.location.toString());
     if (value) {
       url.searchParams.set(param, value);
@@ -47,9 +43,13 @@ export default function HostExceptionsIndexPage() {
     return url.toString();
   }
 
-  function goto(param: string, value: string) {
+  function goto(param: string, value: string | null) {
     Inertia.get(makeUrl(param, value));
   }
+
+  const Col = (props: ComponentProps<typeof Grid.Col>) => (
+    <Grid.Col md={6} {...props} />
+  );
 
   return (
     <HostLayout
@@ -61,221 +61,207 @@ export default function HostExceptionsIndexPage() {
         </LinkButton>,
       ]}
     >
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
-        <Row gutter={[16, 16]}>
-          <Col {...COL_PROPS}>
+      <Stack>
+        <Grid>
+          <Col>
             <Select
               placeholder="Date"
-              options={toOptions(by_day)?.reverse()}
+              data={Array.from(toOptions(by_day)).reverse()}
               onChange={(value) => goto("date", value)}
               defaultValue={searchParams.get("date")}
               style={{ width: "100%" }}
-              allowClear={true}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.value ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
+              clearable
+              searchable
             />
           </Col>
-          <Col {...COL_PROPS}>
+          <Col>
             <Select
               placeholder="Controller/Action"
-              options={toOptions(by_controller)}
+              data={toOptions(by_controller)}
               onChange={(value) => goto("route", value)}
               defaultValue={searchParams.get("route")}
               style={{ width: "100%" }}
-              allowClear={true}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.value ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
+              clearable
+              searchable
             />
           </Col>
-          <Col {...COL_PROPS}>
+          <Col>
             <Select
               placeholder="Exception"
-              options={toOptions(by_exception)}
+              data={toOptions(by_exception)}
               onChange={(value) => goto("exception", value)}
               defaultValue={searchParams.get("exception")}
               style={{ width: "100%" }}
-              allowClear={true}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.value ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
+              clearable
+              searchable
             />
           </Col>
-          <Col {...COL_PROPS}>
+          <Col>
             <Select
               placeholder="Host"
-              options={toOptions(by_host)}
+              data={toOptions(by_host)}
               onChange={(value) => goto("hostname", value)}
               defaultValue={searchParams.get("hostname")}
               style={{ width: "100%" }}
-              allowClear={true}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.value ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
+              clearable
+              searchable
             />
           </Col>
-        </Row>
+        </Grid>
         {!exceptions && (
-          <Row gutter={[16, 16]}>
-            <Col {...COL_PROPS}>
-              <Table
-                dataSource={toList(by_day).reverse().slice(0, 20)}
-                rowKey={(record) => record.key}
-                bordered
-                size="small"
-                columns={[
-                  {
-                    dataIndex: "key",
-                    title: "Date",
-                    render: (key) => (
-                      <Link href={makeUrl("date", key)}>{key}</Link>
-                    ),
-                    ellipsis: true,
-                  },
-                  {
-                    dataIndex: "value",
-                    title: "Count",
-                    align: "right",
-                    width: "20%",
-                  },
-                ]}
-                pagination={false}
-              />
+          <Grid>
+            <Col>
+              <Table withBorder withColumnBorders>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {toList(by_day)
+                    .reverse()
+                    .slice(0, 20)
+                    .map(({ key, value }) => (
+                      <tr>
+                        <td>
+                          <Link href={makeUrl("date", key)}>{key}</Link>
+                        </td>
+                        <td align="right" width="20%">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </Col>
-            <Col {...COL_PROPS}>
-              <Table
-                dataSource={toList(by_controller).slice(0, 20)}
-                rowKey={(record) => record.key}
-                bordered
-                size="small"
-                columns={[
-                  {
-                    dataIndex: "key",
-                    title: "Controller",
-                    render: (key) => (
-                      <Link href={makeUrl("route", key)}>{key}</Link>
-                    ),
-                    ellipsis: true,
-                  },
-                  {
-                    dataIndex: "value",
-                    title: "Count",
-                    align: "right",
-                    width: "20%",
-                  },
-                ]}
-                pagination={false}
-              />
+            <Col>
+              <Table withBorder withColumnBorders>
+                <thead>
+                  <tr>
+                    <th>Controller</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {toList(by_controller)
+                    .slice(0, 20)
+                    .map(({ key, value }) => (
+                      <tr>
+                        <td>
+                          <Link href={makeUrl("route", key)}>{key}</Link>
+                        </td>
+                        <td align="right" width="20%">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </Col>
-            <Col {...COL_PROPS}>
-              <Table
-                dataSource={toList(by_exception).slice(0, 20)}
-                rowKey={(record) => record.key}
-                bordered
-                size="small"
-                columns={[
-                  {
-                    dataIndex: "key",
-                    title: "Exception",
-                    render: (key) => (
-                      <Link href={makeUrl("exception", key)}>{key}</Link>
-                    ),
-                    ellipsis: true,
-                  },
-                  {
-                    dataIndex: "value",
-                    title: "Count",
-                    align: "right",
-                    width: "20%",
-                  },
-                ]}
-                pagination={false}
-              />
+            <Col>
+              <Table withBorder withColumnBorders>
+                <thead>
+                  <tr>
+                    <th>Controller</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {toList(by_exception)
+                    .slice(0, 20)
+                    .map(({ key, value }) => (
+                      <tr>
+                        <td>
+                          <Link href={makeUrl("exception", key)}>{key}</Link>
+                        </td>
+                        <td align="right" width="20%">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </Col>
-            <Col {...COL_PROPS}>
-              <Table
-                dataSource={toList(by_host).slice(0, 20)}
-                rowKey={(record) => record.key}
-                bordered
-                size="small"
-                columns={[
-                  {
-                    dataIndex: "key",
-                    title: "Host",
-                    render: (key) => (
-                      <Link href={makeUrl("hostname", key)}>{key}</Link>
-                    ),
-                    ellipsis: true,
-                  },
-                  {
-                    dataIndex: "value",
-                    title: "Count",
-                    align: "right",
-                    width: "20%",
-                  },
-                ]}
-                pagination={false}
-              />
+            <Col>
+              <Table withBorder withColumnBorders>
+                <thead>
+                  <tr>
+                    <th>Controller</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {toList(by_host)
+                    .slice(0, 20)
+                    .map(({ key, value }) => (
+                      <tr>
+                        <td>
+                          <Link href={makeUrl("hostname", key)}>{key}</Link>
+                        </td>
+                        <td align="right" width="20%">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </Col>
-          </Row>
+          </Grid>
         )}
         {exceptions && (
-          <Table
-            dataSource={exceptions}
-            rowKey={(exc) => exc.id}
+          <DataGrid
+            styles={(theme) => ({
+              thead: {
+                "::after": {
+                  backgroundColor: "transparent",
+                },
+              },
+            })}
+            withBorder
+            withColumnBorders
+            data={exceptions}
             columns={[
               {
-                dataIndex: "id",
-                title: "Id",
-                render: (id) => <Link href={`/host/events/${id}`}>{id}</Link>,
-                width: "10%",
+                header: "Id",
+                accessorKey: "id",
+                cell: (cell) => (
+                  <Link href={`/host/events/${cell.getValue<number>()}`}>
+                    {cell.getValue<number>()}
+                  </Link>
+                ),
               },
               {
-                dataIndex: "visit_id",
-                title: "Visit Id",
-                render: (id) => <Link href={`/host/visits/${id}`}>{id}</Link>,
-                width: "10%",
+                header: "Visit Id",
+                accessorKey: "visit_id",
+                cell: (cell) => (
+                  <Link href={`/host/visits/${cell.getValue<number>()}`}>
+                    {cell.getValue<number>()}
+                  </Link>
+                ),
               },
               {
-                dataIndex: "time",
-                title: "Date / Time",
-                render: (time) => dayjs(time).format("YYYY-MM-DD HH:mm:ss Z"),
-                ellipsis: true,
+                header: "Date / Time",
+                accessorFn: (exception) =>
+                  dayjs(exception.time).format("YYYY-MM-DD HH:mm:ss Z"),
               },
               {
-                dataIndex: ["properties", "params"],
-                title: "Controller/Action",
-                render: (params) => `${params.controller}#${params.action}`,
-                ellipsis: true,
+                header: "Controller / Action",
+                accessorFn: ({ properties: { params } }) =>
+                  `${params.controller}#${params.action}`,
               },
               {
-                dataIndex: ["properties", "exception"],
-                title: "Exception",
-                ellipsis: true,
+                header: "Exception",
+                accessorFn: ({ properties }) => properties.exception,
               },
               {
-                dataIndex: ["properties", "host"],
-                title: "Host",
-                ellipsis: true,
+                header: "Host",
+                accessorFn: ({ properties }) => properties.host,
               },
             ]}
-            bordered
-          />
+          ></DataGrid>
         )}
-      </Space>
+      </Stack>
     </HostLayout>
   );
 }

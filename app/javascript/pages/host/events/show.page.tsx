@@ -1,7 +1,11 @@
 import { Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Descriptions, DescriptionsProps, List, Space } from "antd";
+import { Stack, Table, Title } from "@mantine/core";
+import { Fragment } from "react";
+import { PropertyTable } from "~/components/tables";
 import { HostLayout } from "../../../components/layout/host-layout";
+
+const { Item } = PropertyTable;
 
 interface Props extends App.SharedProps {
   event: Ahoy.Event;
@@ -10,18 +14,6 @@ interface Props extends App.SharedProps {
 export default function hostEventsShowPage() {
   const { event } = usePage<Page<Props>>().props;
 
-  const { Item } = Descriptions;
-  console.log(event);
-  const COMMON_PROPS: DescriptionsProps = {
-    bordered: true,
-    column: 1,
-    labelStyle: {
-      width: "20%",
-    },
-    contentStyle: {
-      width: "80%",
-    },
-  };
   return (
     <HostLayout
       title="Event"
@@ -30,8 +22,10 @@ export default function hostEventsShowPage() {
         { href: `/host/events/${event.id}`, label: event.id.toString() },
       ]}
     >
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
-        <Descriptions title="Basic Info" {...COMMON_PROPS}>
+      <Stack>
+        <Title order={4}>Basic Info</Title>
+
+        <PropertyTable>
           <Item label="Name">{event.name}</Item>
           {event.properties?.message && (
             <Item label="Message">{event.properties.message}</Item>
@@ -44,26 +38,42 @@ export default function hostEventsShowPage() {
           </Item>
           <Item label="User">{event.user_id}</Item>
           <Item label="Tenant">{event.tenant_id}</Item>
-        </Descriptions>
-        <Descriptions title="Properties" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Properties</Title>
+
+        <PropertyTable>
           <Item label="Host">{event.properties?.host}</Item>
           <Item label="Path">{event.properties?.path}</Item>
           <Item label="URL">{event.properties?.url}</Item>
-        </Descriptions>
-        <Descriptions title="Params" {...COMMON_PROPS}>
+        </PropertyTable>
+
+        <Title order={4}>Params</Title>
+
+        <PropertyTable>
           {Object.entries(event.properties?.params).map(([key, value]) => (
-            <Item label={key}>{value?.toString()}</Item>
+            <Item key={key} label={key}>
+              {value?.toString()}
+            </Item>
           ))}
-        </Descriptions>
+        </PropertyTable>
+
         {event.properties?.backtrace && (
-          <List
-            header={<div>Backtrace</div>}
-            bordered
-            dataSource={event.properties?.backtrace}
-            renderItem={(item: string) => <List.Item>{item}</List.Item>}
-          ></List>
+          <Fragment>
+            <Title order={4}>Backtrace</Title>
+
+            <Table withBorder withColumnBorders>
+              <tbody>
+                {event.properties?.backtrace.map((item: string) => (
+                  <tr key={item}>
+                    <td>{item}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Fragment>
         )}
-      </Space>
+      </Stack>
     </HostLayout>
   );
 }

@@ -1,8 +1,11 @@
 import { Inertia, Page } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { Space, Table } from "antd";
+import { Group, MultiSelect, Stack } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import { IconCalendar } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { chain, keyBy } from "lodash";
+import { keyBy } from "lodash";
+import { DataGrid, createOperatorFilter } from "mantine-data-grid";
 import DatePicker from "~/components/date-picker";
 import { LinkButton } from "../../../components/buttons/link-button";
 import { HostLayout } from "../../../components/layout/host-layout";
@@ -19,16 +22,37 @@ function normalizeHour(hour: number) {
   return `${normal == 0 ? 12 : normal}:00${meridian}`;
 }
 
-function timeFilterLabel(hh: string) {
-  let numeric = parseInt(hh);
-  return `${normalizeHour(numeric)} to ${normalizeHour(numeric + 1)}`;
-}
+// function timeFilterLabel(hh: string) {
+//   let numeric = parseInt(hh);
+//   return `${normalizeHour(numeric)} to ${normalizeHour(numeric + 1)}`;
+// }
 
 export default function HostEventsIndexPage() {
   const { props } = usePage<Page<Props>>();
   const { events } = props;
   const tenants = keyBy(props.tenants, "id");
   const date = dayjs(props.date);
+
+  const tenantFilter = createOperatorFilter<string, string[]>({
+    init: () => [],
+    operators: [
+      {
+        op: "select",
+        filterFn: (rowValue, filterValue) => filterValue.includes(rowValue),
+        element: ({ onChange, value, ...rest }) => (
+          <MultiSelect
+            {...rest}
+            data={props.tenants.map((tenant) => ({
+              value: tenant.name || "",
+              label: tenant.name || "",
+            }))}
+            value={value}
+            onChange={onChange}
+          />
+        ),
+      },
+    ],
+  });
 
   return (
     <HostLayout
@@ -51,147 +75,85 @@ export default function HostEventsIndexPage() {
         </LinkButton>,
       ]}
     >
-      <Space direction="vertical" size="large" style={{ display: "flex" }}>
-        <Table
-          dataSource={events}
-          rowKey={(exc) => exc.id}
+      <Stack>
+        <Group>
+          <DatePickerInput
+            icon={<IconCalendar size="1.1rem" stroke={1.5} />}
+            value={date.toDate()}
+            maxDate={dayjs().toDate()}
+            onChange={(date) => {
+              if (date) {
+                Inertia.get(
+                  `/host/events?date=${dayjs(date).format("YYYY-MM-DD")}`
+                );
+              }
+            }}
+          />
+          <LinkButton href={window.location.pathname}>Clear Filters</LinkButton>
+        </Group>
+
+        <DataGrid
+          styles={(theme) => ({
+            thead: {
+              "::after": {
+                backgroundColor: "transparent",
+              },
+            },
+          })}
+          withBorder
+          withColumnBorders
+          withColumnFilters
+          withSorting
+          withPagination
+          data={events}
           columns={[
             {
-              dataIndex: "time",
-              title: "Time",
-              render: (time, event) => (
-                <Link href={`/host/events/${event.id}`}>
-                  {dayjs(event.time).format("h:mm:ss A Z")}
+              accessorKey: "time",
+              header: "Time",
+              cell: (cell) => (
+                <Link href={`/host/events/${cell.row.original.id}`}>
+                  {dayjs(cell.getValue<Date>()).format("h:mm:ss A Z")}
                 </Link>
               ),
-              width: "15%",
-              filters: chain(events)
-                .map((e) => dayjs(e.time).format("HH"))
-                .uniq()
-                .sort()
-                .map((t) => ({
-                  text: timeFilterLabel(t),
-                  value: t,
-                }))
-                .value(),
-              onFilter: (value, record) => {
-                return dayjs(record.time).format("HH") === value;
-              },
             },
             {
-              dataIndex: "visit_id",
-              title: "Visit",
-              render: (id) => <Link href={`/host/visits/${id}`}>{id}</Link>,
-              width: "10%",
-            },
-            {
-              dataIndex: "name",
-              title: "Name",
-              width: "15%",
-              filters: chain(events)
-                .map((e) => e.name)
-                .uniq()
-                .sort()
-                .map((name) => ({
-                  text: name || "",
-                  value: name || "",
-                }))
-                .value(),
-              onFilter: (value, record) => {
-                return record.name === value;
-              },
-            },
-            {
-              dataIndex: "tenant_id",
-              title: "Tenant",
-              render: (id) => tenants[id].name,
-              width: "15%",
-              ellipsis: true,
-              filters: chain(events)
-                .map((e) => e.tenant_id || 0)
-                .uniq()
-                .map((id) => tenants[id])
-                .sort((a, b) => (a.name || "").localeCompare(b.name || ""))
-                .map((t) => ({
-                  text: t.name,
-                  value: t.id,
-                }))
-                .value(),
-              onFilter: (value, record) => {
-                return record.tenant_id === (value as number);
-              },
-            },
-            // {
-            //   dataIndex: ["properties", "params", "controller"],
-            //   title: "Controller",
-            //   filters: chain(events)
-            //     .map((e) => e.properties.params?.controller)
-            //     .uniq()
-            //     .sort()
-            //     .map((name) => ({ text: name, value: name }))
-            //     .value(),
-            //   onFilter: (value, record) => {
-            //     return record.properties.params?.controller === value;
-            //   },
-            //   ellipsis: true,
-            // },
-            {
-              dataIndex: ["properties", "params"],
-              key: "controller-action",
-              title: "Controller / Action",
-              render: (params) => `${params.controller}#${params.action}`,
-              filters: chain(events)
-                .map(
-                  (e) =>
-                    `${(e.properties || {}).params.controller}#${
-                      (e.properties || {}).params.action
-                    }`
-                )
-                .uniq()
-                .sort()
-                .map((name) => ({ text: name, value: name }))
-                .value(),
-              onFilter: (value, record) => {
-                console.log(value);
+              accessorKey: "visit_id",
+              header: "Visit",
+              cell: (cell) => {
                 return (
-                  `${(record.properties || {}).params.controller}#${
-                    (record.properties || {}).params.action
-                  }` === value
+                  <Link href={`/host/visits/${cell.row.getValue("visit_id")}`}>
+                    {cell.getValue<number>()}
+                  </Link>
                 );
               },
-              ellipsis: true,
             },
             {
-              dataIndex: ["properties", "path"],
-              title: "URL",
-              // render: (time) => dayjs(time).format("h:mm:ss A Z"),
-              ellipsis: true,
+              accessorKey: "name",
+              header: "Name",
             },
-            // {
-            //   dataIndex: "tenant_id",
-            //   title: "Tenant",
-            //   render: (id) => tenants[id].name,
-            //   ellipsis: true,
-            // },
-            // {
-            //   dataIndex: "device_type",
-            //   title: "Device",
-            //   ellipsis: true,
-            // },
-            // {
-            //   dataIndex: "os",
-            //   title: "OS",
-            //   ellipsis: true,
-            // },
-            // {
-            //   dataIndex: "browser",
-            //   title: "Browser",
-            //   ellipsis: true,
-            // },
+            {
+              accessorKey: "tenant_id",
+              header: "Tenant",
+              accessorFn: (visit) => tenants[visit.tenant_id || ""].name,
+              filterFn: tenantFilter,
+            },
+            {
+              accessorKey: "controller-action",
+              header: "Controller / Action",
+              accessorFn: (visit) =>
+                [
+                  visit.properties?.params.controller,
+                  visit.properties?.params.action,
+                ].join("#"),
+            },
+            {
+              accessorKey: "path",
+              header: "URL",
+              accessorFn: (visit) => visit.properties?.path,
+            },
           ]}
-          bordered
         />
-      </Space>
+      </Stack>
     </HostLayout>
   );
 }
