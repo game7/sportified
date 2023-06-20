@@ -26,17 +26,16 @@ namespace ActiveStorage {
     }
   }
 }
-namespace ActiveRecord {
-  interface InternalMetadata {
-    key: string;
-    value: string | null;
-    created_at: string;
-    updated_at: string;
+namespace ActionMailbox {
+  interface InboundEmail {
   }
 }
-namespace ActiveRecord {
-  interface SchemaMigration {
-    version: string;
+namespace ActionText {
+  interface EncryptedRichText {
+  }
+}
+namespace ActionText {
+  interface RichText {
   }
 }
 namespace ActiveStorage {
@@ -56,7 +55,7 @@ namespace ActiveStorage {
     key: string;
     filename: string;
     content_type: string | null;
-    metadata: string | null;
+    metadata: unknown /* ActiveRecord::Type::Serialized */ | null;
     byte_size: number;
     checksum: string;
     created_at: string;
@@ -72,7 +71,7 @@ namespace ActiveStorage {
   namespace PostgreSQL {
     interface File {
       id: number;
-      oid:  | null;
+      oid: number | null;
       key: string | null;
     }
   }
@@ -116,7 +115,7 @@ namespace Ahoy {
     visit_id: number | null;
     user_id: number | null;
     name: string | null;
-    properties: Record<string, any> | null;
+    properties: unknown /* ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Jsonb */ | null;
     time: string | null;
     tenant_id: number | null;
     tenant?: App.Tenant;
@@ -158,6 +157,10 @@ namespace Ahoy {
     user?: App.User;
   }
 }
+namespace App {
+  interface Asset {
+  }
+}
 namespace Audited {
   interface Audit {
     id: number;
@@ -169,7 +172,7 @@ namespace Audited {
     user_type: string | null;
     username: string | null;
     action: string | null;
-    audited_changes: string | null;
+    audited_changes: unknown /* ActiveRecord::Type::Serialized */ | null;
     version: number | null;
     comment: string | null;
     remote_address: string | null;
@@ -185,7 +188,7 @@ namespace App {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -200,7 +203,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -215,7 +218,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -230,7 +233,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -245,7 +248,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -260,7 +263,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -275,7 +278,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -290,7 +293,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -305,7 +308,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -320,7 +323,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -335,7 +338,7 @@ namespace Blocks {
     section_id: number | null;
     column: number | null;
     position: number | null;
-    options:  | null;
+    options: Record<string, unknown> | null;
     created_at: string | null;
     updated_at: string | null;
     file: string | null;
@@ -355,6 +358,14 @@ namespace App {
     tenant?: App.Tenant;
     location?: App.Location;
     playing_surface?: App.PlayingSurface;
+  }
+}
+namespace App {
+  interface Club {
+  }
+}
+namespace App {
+  interface Document {
   }
 }
 namespace App {
@@ -395,6 +406,7 @@ namespace App {
     page_id: number | null;
     private: boolean;
     recurrence_id: number | null;
+    tag_list: string | null;
     taggings?: ActsAsTaggableOn.Tagging[];
     base_tags?: ActsAsTaggableOn.Tag[];
     tag_taggings?: ActsAsTaggableOn.Tagging[];
@@ -429,7 +441,7 @@ namespace App {
     tenant_id: number | null;
     registration_id: number | null;
     template_id: number | null;
-    data:  | null;
+    data: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     completed: boolean;
@@ -447,7 +459,7 @@ namespace App {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -464,7 +476,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -481,11 +493,12 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
     hint: string | null;
+    terms: string | null;
     tenant?: App.Tenant;
     template?: App.FormTemplate;
   }
@@ -498,11 +511,13 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
     hint: string | null;
+    options: string | null;
+    allow_multiple: boolean | null;
     tenant?: App.Tenant;
     template?: App.FormTemplate;
   }
@@ -515,7 +530,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -532,7 +547,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -549,7 +564,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -566,7 +581,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -583,11 +598,12 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
     hint: string | null;
+    rows: number | null;
     tenant?: App.Tenant;
     template?: App.FormTemplate;
   }
@@ -600,11 +616,13 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
     hint: string | null;
+    pattern: string | null;
+    message: string | null;
     tenant?: App.Tenant;
     template?: App.FormTemplate;
   }
@@ -617,7 +635,7 @@ namespace FormElements {
     type: string | null;
     name: string | null;
     position: number | null;
-    properties:  | null;
+    properties: Record<string, unknown> | null;
     created_at: string;
     updated_at: string;
     required: boolean | null;
@@ -691,6 +709,7 @@ namespace General {
     page_id: number | null;
     private: boolean;
     recurrence_id: number | null;
+    tag_list: string | null;
     taggings?: ActsAsTaggableOn.Tagging[];
     base_tags?: ActsAsTaggableOn.Tag[];
     tag_taggings?: ActsAsTaggableOn.Tagging[];
@@ -704,6 +723,22 @@ namespace General {
     home_team_locker_room?: App.LockerRoom;
     away_team_locker_room?: App.LockerRoom;
     recurrence?: App.Recurrence;
+  }
+}
+namespace App {
+  interface HABTMDivisions {
+  }
+}
+namespace App {
+  interface HABTMSeasons {
+  }
+}
+namespace App {
+  interface HABTMTenants {
+  }
+}
+namespace Hockey {
+  interface Event {
   }
 }
 namespace Hockey {
@@ -1020,7 +1055,7 @@ namespace League {
     show_standings: boolean | null;
     show_players: boolean | null;
     show_statistics: boolean | null;
-    standings_array: string | null;
+    standings_array: unknown /* ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array */ | null;
     tenant_id: number | null;
     created_at: string | null;
     updated_at: string | null;
@@ -1072,6 +1107,7 @@ namespace League {
     page_id: number | null;
     private: boolean;
     recurrence_id: number | null;
+    tag_list: string | null;
     taggings?: ActsAsTaggableOn.Tagging[];
     base_tags?: ActsAsTaggableOn.Tag[];
     tag_taggings?: ActsAsTaggableOn.Tagging[];
@@ -1116,8 +1152,8 @@ namespace League {
     away_team_custom_name: boolean | null;
     text_before: string | null;
     text_after: string | null;
-    result: string | null;
-    completion: string | null;
+    result: unknown /* Enumerize::ActiveRecordSupport::Type */ | null;
+    completion: unknown /* Enumerize::ActiveRecordSupport::Type */ | null;
     exclude_from_team_records: boolean | null;
     playing_surface_id: number | null;
     home_team_locker_room_id: number | null;
@@ -1126,6 +1162,7 @@ namespace League {
     page_id: number | null;
     private: boolean;
     recurrence_id: number | null;
+    tag_list: string | null;
     taggings?: ActsAsTaggableOn.Tagging[];
     base_tags?: ActsAsTaggableOn.Tag[];
     tag_taggings?: ActsAsTaggableOn.Tagging[];
@@ -1183,6 +1220,7 @@ namespace League {
     page_id: number | null;
     private: boolean;
     recurrence_id: number | null;
+    tag_list: string | null;
     taggings?: ActsAsTaggableOn.Tagging[];
     base_tags?: ActsAsTaggableOn.Tag[];
     tag_taggings?: ActsAsTaggableOn.Tagging[];
@@ -1251,7 +1289,7 @@ namespace League {
     primary_color: string | null;
     secondary_color: string | null;
     accent_color: string | null;
-    main_colors: string | null;
+    main_colors: unknown /* ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array */ | null;
     custom_colors: boolean | null;
     crop_x: number | null;
     crop_y: number | null;
@@ -1407,6 +1445,7 @@ namespace App {
     image: string | null;
     created_at: string | null;
     updated_at: string | null;
+    tag_list: string | null;
     photo?: ActiveStorage.Attached.One;
     references?: ActiveStorage.Attached.Many;
     taggings?: ActsAsTaggableOn.Tagging[];
@@ -1503,6 +1542,7 @@ namespace App {
     abandoned_at: string | null;
     cancelled_at: string | null;
     checked_in_at: string | null;
+    voucher_id: number | null;
     forms?: App.Form[];
     product?: App.Product;
     voucher?: App.Voucher;
@@ -1660,7 +1700,28 @@ namespace App {
     consumed_at: string | null;
     created_at: string;
     updated_at: string;
+    quantity: number | null;
     user?: App.User;
     registration?: App.Registration;
+  }
+}
+namespace Event {
+  interface Registrable {
+    id: number;
+    starts_on: string;
+    summary: string;
+  }
+}
+namespace Registration {
+  namespace Summarization {
+    interface ByProduct {
+      product_id: number;
+      total_count: number;
+      pending_count: number;
+      cancelled_count: number;
+      abandoned_count: number;
+      completed_count: number;
+      completed_value: number;
+    }
   }
 }

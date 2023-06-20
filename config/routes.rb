@@ -307,6 +307,23 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       end
       resources :posts, only: %i[index show new create edit update]
       resources :locations, only: %i[index show new create edit update]
+      resources :forms, only: :index
+      namespace :forms do
+        resources :form_packets, only: [:show]
+        resources :form_templates, only: [:show], shallow: true do
+          resources :form_elements, only: [], module: :form_templates do
+            post :order, on: :collection
+          end
+        end
+        namespace :form_elements, shallow: true do
+          resources :notes, only: [:update]
+          resources :texts, only: [:update]
+          resources :choices, only: [:update]
+          resources :agreements, only: [:update]
+          resources :contacts, only: [:update]
+        end
+      end
+      resources :products, only: %i[index show]
     end
   end
 

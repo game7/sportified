@@ -38,6 +38,7 @@
 #
 class Registration < ApplicationRecord
   include Sportified::TenantScoped
+  include Registration::Summarization
 
   belongs_to :variant
   has_one :product, through: :variant
@@ -85,6 +86,15 @@ class Registration < ApplicationRecord
   scope :completed, -> { where.not(completed_at: nil) }
   scope :allocated, -> { where(abandoned_at: nil, cancelled_at: nil) }
   scope :created_on_or_after, ->(date) { where('registrations.created_at >= ?', date) }
+  scope :grouped_by_product, lambda {
+    model = Registration.arel_table
+    joins(:product).group('products.id')
+                   .project('products.id',
+                            model['id'].count,
+                            Arel::Nodes::Case.new.when(model['cancelled_at'].not_eq(nil)).then(1).else(0).sum.as('cancelled'),
+                            Arel::Nodes::Case.new.when(model['abandoned_at'].not_eq(nil)).then(1).else(0).sum.as('abandoned'),
+                            Arel::Nodes::Case.new.when(model['cancelled_at'].eq(nil).and(model['abandoned_at'].eq(nil)).and(model['completed_at'].not_eq(nil))).then(1).else(0).sum.as('completed'))
+  }
 
   def price_in_cents
     (price * 100).to_i

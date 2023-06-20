@@ -4,4 +4,7 @@ import ViteReact from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [RubyPlugin(), ViteReact()],
+  build: {
+    sourcemap: true,
+  },
 });

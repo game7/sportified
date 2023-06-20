@@ -1,12 +1,12 @@
 import { usePage } from "@inertiajs/inertia-react";
-import { FormItemProps } from "antd";
+import { LooseKeys } from "@mantine/form/lib/types";
 
 // hook to provide an utility function that generates
 // error props for form item by name
-export function useErrors<T extends object>() {
+export function useErrors<T extends Record<string, unknown>>() {
   const { errors } = usePage().props;
 
-  function errorsFor(attr: NestedKeyOf<T>): Partial<FormItemProps<T>> {
+  function errorsFor(path: LooseKeys<T>): { error?: string } {
     // for associations we bind our forms to the _id attribute however
     // validation messages may come back for the association name, so
     // let's check for both.  For example - our model may belongs_to
@@ -15,12 +15,11 @@ export function useErrors<T extends object>() {
     // for widget
     const messages =
       errors &&
-      (errors[attr as string] || errors[(attr as string).replace(/_id$/, "")]);
+      (errors[path as string] || errors[(path as string).replace(/_id$/, "")]);
 
     if (messages) {
       return {
-        validateStatus: "error",
-        help: messages[0],
+        error: messages[0],
       };
     } else {
       return {};

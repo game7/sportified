@@ -25,18 +25,15 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class FormElements::Agreement < FormElement
-
   def self.model_name
     FormElement.model_name
-  end    
+  end
 
   store_accessor :properties, :terms
 
-  def validate(record)
-    puts record
-    puts record.attributes
-    puts "#{self.name}: #{record.data[self.name]}"
-    record.errors.add(self.name, "Must accept #{self.name.humanize.titleize}") unless record.data[self.name] == "true"
-  end
+  attribute :terms, :string
 
+  def validate(record)
+    record.errors.add(name, "must accept #{name.humanize.titleize}") unless record.data[name] == 'true'
+  end
 end

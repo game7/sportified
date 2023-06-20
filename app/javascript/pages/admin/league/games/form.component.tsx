@@ -2,58 +2,17 @@ import { Inertia, Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 import {
   Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Space,
-} from "antd";
-import dayjs from "dayjs";
-import { useState } from "react";
+  Grid,
+  Group,
+  NumberInput,
+  Stack,
+  TextInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { BackButton, SubmitButton } from "~/components/buttons";
-import DatePicker from "~/components/date-picker";
-import { Fieldset } from "~/components/fieldset";
-import { asPayload, useForm } from "~/utils/use-form";
-
-interface Game {
-  all_day: boolean;
-  away_team_custom_name: boolean;
-  away_team_id: number;
-  away_team_locker_room_id: number;
-  away_team_name: string;
-  away_team_score: number;
-  completion: string;
-  created_at: string;
-  description: string;
-  division_id: number;
-  duration: number;
-  ends_on: string;
-  exclude_from_team_records: boolean;
-  home_team_custom_name: boolean;
-  home_team_id: number;
-  home_team_locker_room_id: null;
-  home_team_name: string;
-  home_team_score: number;
-  id: number;
-  location_id: number;
-  page_id: number;
-  playing_surface_id: number;
-  private: boolean;
-  program_id: number;
-  result: string;
-  season_id: number;
-  starts_on: string;
-  statsheet_id: number;
-  statsheet_type: string;
-  summary: string;
-  tag_list: string[];
-  tenant_id: number;
-  text_after: string;
-  text_before: string;
-  updated_at: string;
-}
+import { Fieldset, NumberSelect } from "~/components/forms";
+import { DateTimeInput } from "~/components/forms/date-time-input";
+import { useBind } from "~/utils/use-bind";
 
 interface Option {
   id: number;
@@ -74,7 +33,7 @@ interface LocationSpecificOption extends Option {
 }
 
 interface Props extends App.SharedProps {
-  game: Game;
+  game: League.Game;
   programs: Option[];
   seasons: ProgramSpecificOption[];
   divisions: ProgramSpecificOption[];
@@ -96,39 +55,25 @@ export function LeagueGameForm() {
     locker_rooms,
     teams,
   } = props;
-  const { form, bind } = useForm<Game>(game);
 
-  const [state, setState] = useState({
-    programId: game.program_id,
-    locationId: game.location_id,
-    seasonId: game.season_id,
-    divisionId: game.division_id,
-    awayTeamCustomName: game.away_team_custom_name,
-    homeTeamCustomName: game.home_team_custom_name,
-  });
+  const form = useForm<League.Game>({ initialValues: props.game });
+  const bind = useBind(form);
 
-  function patchState(update: Partial<typeof state>) {
-    setState((existing) => ({
-      ...existing,
-      ...update,
-    }));
-  }
-
-  function handleFinish(data: Game) {
+  function handleSubmit(data: League.Game) {
     if (game.id) {
-      Inertia.patch(
-        `/next/admin/league/games/${game.id}`,
-        asPayload({ game: data })
-      );
+      Inertia.patch(`/next/admin/league/games/${game.id}`, {
+        game: data,
+      } as any);
     } else {
-      Inertia.post(`/next/admin/league/games`, asPayload({ game: data }));
+      Inertia.post(`/next/admin/league/games`, { game: data } as any);
     }
   }
 
   const teamOptions = teams
     .filter(
       (team) =>
-        team.season_id == state.seasonId && team.division_id == state.divisionId
+        team.season_id == form.values.season_id &&
+        team.division_id == form.values.division_id
     )
     .map((team) => ({
       label: team.name,
@@ -136,199 +81,162 @@ export function LeagueGameForm() {
     }));
 
   return (
-    <Form form={form} onFinish={handleFinish} layout="vertical">
-      <Space direction="vertical" style={{ width: "100%" }}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Stack>
         <Fieldset title="Logistics">
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Space>
-              <Form.Item {...bind("program_id")} required>
-                <Select
-                  options={programs.map((option) => ({
-                    label: option.name,
-                    value: option.id,
-                  }))}
-                  onChange={(value) => patchState({ programId: value })}
-                  style={{ minWidth: 200 }}
-                />
-              </Form.Item>
-              <Form.Item {...bind("season_id")} required>
-                <Select
-                  options={seasons
-                    .filter(({ program_id }) => program_id == state.programId)
-                    .map((option) => ({
-                      label: option.name,
-                      value: option.id,
-                    }))}
-                  onChange={(value) => patchState({ seasonId: value })}
-                  style={{ minWidth: 200 }}
-                  disabled={!state.programId}
-                />
-              </Form.Item>
-              <Form.Item {...bind("division_id")} required>
-                <Select
-                  options={divisions
-                    .filter(({ program_id }) => program_id == state.programId)
-                    .map((option) => ({
-                      label: option.name,
-                      value: option.id,
-                    }))}
-                  onChange={(value) => patchState({ divisionId: value })}
-                  style={{ minWidth: 200 }}
-                  disabled={!state.programId}
-                />
-              </Form.Item>
-            </Space>
+          <Group sx={{ display: "flex", alignItems: "flex-start" }}>
+            <NumberSelect
+              withAsterisk
+              {...bind("program_id")}
+              data={programs.map((option) => ({
+                label: option.name,
+                value: option.id,
+              }))}
+              clearable
+              maw={400}
+            />
+            <NumberSelect
+              withAsterisk
+              {...bind("season_id")}
+              data={seasons
+                .filter(
+                  ({ program_id }) => program_id == form.values.program_id
+                )
+                .map((option) => ({
+                  label: option.name,
+                  value: option.id,
+                }))}
+              disabled={!form.values.program_id}
+              maw={400}
+            />
+            <NumberSelect
+              withAsterisk
+              {...bind("division_id")}
+              data={divisions
+                .filter(
+                  ({ program_id }) => program_id == form.values.program_id
+                )
+                .map((option) => ({
+                  label: option.name,
+                  value: option.id,
+                }))}
+              disabled={!form.values.program_id}
+              miw={200}
+            />
+          </Group>
 
-            <Space>
-              <Form.Item
-                {...bind("starts_on")}
-                initialValue={game.starts_on && dayjs(game.starts_on)}
-                required
-              >
-                <DatePicker
-                  showTime
-                  format="M/D/YYYY h:mm a"
-                  style={{ minWidth: 200 }}
-                />
-              </Form.Item>
-              <Form.Item {...bind("duration")} required>
-                <InputNumber min={0} />
-              </Form.Item>
-            </Space>
-          </Space>
-          <Space>
-            <Form.Item {...bind("location_id")} required>
-              <Select
-                options={locations.map((location) => ({
+          <Group sx={{ display: "flex", alignItems: "flex-start" }}>
+            <DateTimeInput
+              {...bind("starts_on")}
+              dateInputProps={{ label: "Start Date", withAsterisk: true }}
+              timeInputProps={{ label: "Start Time", withAsterisk: true }}
+            />
+            <NumberInput withAsterisk {...bind("duration")} maw={100} />
+          </Group>
+
+          <Group sx={{ display: "flex", alignItems: "flex-start" }}>
+            <NumberSelect
+              withAsterisk
+              {...bind("location_id")}
+              data={locations.map((location) => ({
+                value: location.id,
+                label: location.name,
+              }))}
+            />
+            <NumberSelect
+              {...bind("playing_surface_id")}
+              data={playing_surfaces
+                .filter(
+                  ({ location_id }) => location_id == form.values.location_id
+                )
+                .map((location) => ({
                   value: location.id,
                   label: location.name,
                 }))}
-                onChange={(value) => patchState({ locationId: value })}
-                style={{ minWidth: 200 }}
-              />
-            </Form.Item>
-            <Form.Item {...bind("playing_surface_id")}>
-              <Select
-                options={playing_surfaces
-                  .filter(({ location_id }) => location_id == state.locationId)
-                  .map((location) => ({
-                    value: location.id,
-                    label: location.name,
-                  }))}
-                allowClear
-                style={{ minWidth: 200 }}
-                disabled={!state.locationId}
-              />
-            </Form.Item>
-          </Space>
+              disabled={!form.values.location_id}
+              clearable
+              miw={200}
+              maw={400}
+            />
+          </Group>
         </Fieldset>
-        <Row gutter={[16, 16]}>
-          <Col span={12}>
-            <Fieldset title="Away Team">
-              <Form.Item {...bind("away_team_id")}>
-                <Select
-                  options={teamOptions}
-                  disabled={!(state.seasonId && state.divisionId)}
-                  showSearch
-                  filterOption={(input, option) =>
-                    (option?.label ?? "")
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
-                />
-              </Form.Item>
-              <Form.Item
-                {...bind("away_team_custom_name")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox
-                  onChange={(e) =>
-                    patchState({ awayTeamCustomName: e.target.checked })
-                  }
-                >
-                  Away Team Custom Name
-                </Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("away_team_name")}
-                hidden={!state.awayTeamCustomName}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item {...bind("away_team_locker_room_id")}>
-                <Select
-                  options={locker_rooms
-                    .filter((room) => room.location_id == state.locationId)
-                    .map((room) => ({ value: room.id, label: room.name }))}
-                  disabled={!state.locationId}
-                ></Select>
-              </Form.Item>
+
+        <Grid>
+          <Grid.Col span={6}>
+            <Fieldset title="Away">
+              <NumberSelect
+                {...bind("away_team_id")}
+                label="Team"
+                data={teamOptions}
+                searchable
+                disabled={!(form.values.season_id && form.values.division_id)}
+                clearable
+              />
+              <Checkbox
+                {...bind("away_team_custom_name", { type: "checkbox" })}
+                label="Custom Name"
+              />
+              {form.values.away_team_custom_name && (
+                <TextInput {...bind("away_team_name")} label={false} />
+              )}
+
+              <NumberSelect
+                {...bind("away_team_locker_room_id")}
+                label="Locker Room"
+                data={locker_rooms
+                  .filter((room) => room.location_id == form.values.location_id)
+                  .map((room) => ({ value: room.id, label: room.name }))}
+                disabled={!form.values.location_id}
+                clearable
+              />
             </Fieldset>
-          </Col>
-          <Col span={12}>
-            <Fieldset title="Home Team">
-              <Form.Item {...bind("home_team_id")}>
-                <Select
-                  options={teamOptions}
-                  disabled={!(state.seasonId && state.divisionId)}
-                  showSearch
-                  filterOption={(input, option) =>
-                    (option?.label ?? "")
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
-                />
-              </Form.Item>
-              <Form.Item
-                {...bind("home_team_custom_name")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox
-                  onChange={(e) =>
-                    patchState({ homeTeamCustomName: e.target.checked })
-                  }
-                >
-                  Home Team Custom Name
-                </Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("home_team_name")}
-                hidden={!state.homeTeamCustomName}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item {...bind("home_team_locker_room_id")}>
-                <Select
-                  options={locker_rooms
-                    .filter((room) => room.location_id == state.locationId)
-                    .map((room) => ({ value: room.id, label: room.name }))}
-                  disabled={!state.locationId}
-                ></Select>
-              </Form.Item>
+          </Grid.Col>
+
+          <Grid.Col span={6}>
+            <Fieldset title="Home">
+              <NumberSelect
+                {...bind("home_team_id")}
+                label="Team"
+                data={teamOptions}
+                searchable
+                disabled={!(form.values.season_id && form.values.division_id)}
+                clearable
+              />
+              <Checkbox
+                {...bind("home_team_custom_name", { type: "checkbox" })}
+                label="Custom Name"
+              />
+              {form.values.home_team_custom_name && (
+                <TextInput {...bind("home_team_name")} label={false} />
+              )}
+
+              <NumberSelect
+                {...bind("home_team_locker_room_id")}
+                label="Locker Room"
+                data={locker_rooms
+                  .filter((room) => room.location_id == form.values.location_id)
+                  .map((room) => ({ value: room.id, label: room.name }))}
+                disabled={!form.values.location_id}
+                clearable
+              />
             </Fieldset>
-          </Col>
-        </Row>
+          </Grid.Col>
+        </Grid>
 
         <Fieldset title="Display">
-          <Space>
-            <Form.Item {...bind("text_before")}>
-              <Input style={{ minWidth: 200 }} />
-            </Form.Item>
-            <Form.Item {...bind("text_after")}>
-              <Input style={{ minWidth: 200 }} />
-            </Form.Item>
-          </Space>
+          <Group>
+            <TextInput {...bind("text_before")} miw={200} maw={400} />
+            <TextInput {...bind("text_after")} miw={200} maw={400} />
+          </Group>
         </Fieldset>
 
-        <Form.Item>
-          <Space>
+        <Fieldset>
+          <Group spacing="xs">
             <SubmitButton></SubmitButton>
             <BackButton></BackButton>
-          </Space>
-        </Form.Item>
-      </Space>
-    </Form>
+          </Group>
+        </Fieldset>
+      </Stack>
+    </form>
   );
 }

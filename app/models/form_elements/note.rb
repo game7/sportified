@@ -25,18 +25,18 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class FormElements::Note < FormElement
-
   def self.model_name
     FormElement.model_name
   end
 
   store_accessor :properties, :rows
 
+  attribute :rows, :integer, default: 3
+
   def rows
-    super || 3
+    super&.to_i
   end
 
   validates :rows, presence: true,
-                    numericality: { integer_only: true }
-
+                   numericality: { integer_only: true }
 end

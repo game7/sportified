@@ -1,35 +1,46 @@
 import { FormDataConvertible } from "@inertiajs/inertia";
-import { Form, FormItemProps } from "antd";
-import _, { get, isPlainObject } from "lodash";
+import _, { get, isPlainObject, toString } from "lodash";
 import { humanize } from "./inflector";
 import { useErrors } from "./use-errors";
+import { useForm as mantineUseForm } from "@mantine/form";
+import { GetInputProps } from "@mantine/form/lib/types";
+
+type useFormParams<T> = Parameters<typeof mantineUseForm>[0];
 
 // hook to wrap antd useForm hook and include
 // model binding helper
-export function useForm<T extends object>(model?: T) {
-  const [form] = Form.useForm<T>();
+export function useForm<T extends object>(
+  model?: T,
+  options?: useFormParams<T>
+) {
+  const form = mantineUseForm<T>({
+    initialValues: options?.initialValues || model,
+  });
   const [errorsFor] = useErrors<T>();
 
-  function bind(attr: NestedKeyOf<T>): Partial<FormItemProps<T>> {
-    const path = (attr as string).split(".");
+  const bind: GetInputProps<T> = (path, options) => {
+    const props = form.getInputProps(path, options);
+    if ("value" in props && !props.value) {
+      props.value = "";
+    }
     return {
-      name: path,
-      label: humanize(path.join(" ")),
-      initialValue: getInitialValue<T>(model, attr),
-      ...errorsFor(attr),
+      ...props,
+      label: humanize(toString(path).split(".").pop()),
+      // initialValue: getInitialValue<T>(model, attr),
+      ...errorsFor(path.toString()),
     };
-  }
+  };
 
   return { form, bind };
 }
 
-function getInitialValue<T extends object>(
-  model: T | undefined,
-  attr: NestedKeyOf<T>
-) {
-  let value = model && get(model, attr);
-  return value === null ? "" : value;
-}
+// function getInitialValue<T extends object>(
+//   model: T | undefined,
+//   attr: NestedKeyOf<T>
+// ) {
+//   let value = model && get(model, attr);
+//   return value === null ? "" : value;
+// }
 
 export function asPayload<TModel extends Record<string, any>>(
   model: TModel,

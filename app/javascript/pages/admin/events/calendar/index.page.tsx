@@ -1,17 +1,24 @@
-import { DownloadOutlined, PlusOutlined } from "@ant-design/icons";
-import { Inertia, Page } from "@inertiajs/inertia";
-import { Link, usePage } from "@inertiajs/inertia-react";
-import { Button, Dropdown, Select, Space } from "antd";
+import { Page } from "@inertiajs/inertia";
+import { usePage } from "@inertiajs/inertia-react";
+import {
+  Button,
+  Group,
+  MultiSelect,
+  Select,
+  Stack,
+  Table,
+} from "@mantine/core";
+import { MonthPickerInput } from "@mantine/dates";
+import { IconCalendar, IconDownload } from "@tabler/icons-react";
 import dayjs, { Dayjs } from "dayjs";
-import _, { intersection, times } from "lodash";
+import _, { intersection, times, toString } from "lodash";
 import { ComponentProps } from "react";
-import { useSearchParams } from "react-router-dom";
-import { EventPopover } from "~/components/calendar/event-popover";
 import { EventWithBadge } from "~/components/calendar/event-with-badge";
+import { EventWithHoverCard } from "~/components/calendar/event-with-hover-card";
 import DatePicker from "~/components/date-picker";
 import { AdminLayout } from "~/components/layout/admin-layout";
-import { actions, paths } from "~/routes";
-import { withRouter } from "~/utils/with-router";
+import { paths } from "~/routes";
+import { useSearchParams } from "~/utils/use-search-params";
 import { AddEventDropdown } from "../add-event-dropdown";
 import "./index.css";
 
@@ -32,14 +39,10 @@ type EventColorSource = "location" | "tag";
 const KEYS = {
   LOCATION: "location",
   TAG: "tag",
+  DATE: "date",
 };
 
-const PICKER_FORMAT: Record<ViewMode, string> = {
-  month: "MMMM YYYY",
-  date: "ddd MMM D, YYYY",
-};
-
-export default withRouter(function AdminCalendarIndexPage() {
+export default function AdminCalendarIndexPage() {
   const { props } = usePage<Page<Props>>();
   const { locations, tags } = props;
   const date = dayjs(props.date);
@@ -70,37 +73,25 @@ export default withRouter(function AdminCalendarIndexPage() {
   const view = (searchParams.get("view") || "month") as ViewMode;
 
   function handleDateChange(date: Dayjs) {
-    let url = new URL(window.location.toString());
-    url.searchParams.set("date", date.format("YYYY-MM-DD"));
-    Inertia.get(url.toString());
+    searchParams.set(KEYS.DATE, date.format("YYYY-MM-DD"));
+    setSearchParams(searchParams, { only: ["date", "events"] });
   }
 
-  // function handleViewChange(mode: ViewMode) {
-  //   let url = new URL(window.location.toString());
-  //   url.searchParams.set("view", mode);
-  //   Inertia.get(url.toString());
-  // }
-
-  function handleLocationChange(value: string) {
-    setSearchParams((params) => {
-      if (value) {
-        params.set(KEYS.LOCATION, value);
-      } else {
-        params.delete(KEYS.LOCATION);
-      }
-      return params;
-    });
+  function handleLocationChange(value: string | null) {
+    if (value) {
+      searchParams.set(KEYS.LOCATION, value);
+    } else {
+      searchParams.delete(KEYS.LOCATION);
+    }
+    setSearchParams(searchParams);
   }
 
   function handleTagChange(values: string[]) {
-    console.log(values);
-    setSearchParams((params) => {
-      params.delete(KEYS.TAG);
-      (values || []).forEach((value) => {
-        params.append(KEYS.TAG, value);
-      });
-      return params;
+    searchParams.delete(KEYS.TAG);
+    (values || []).forEach((value) => {
+      searchParams.append(KEYS.TAG, value);
     });
+    setSearchParams(searchParams);
   }
 
   function handleDownloadClick() {
@@ -121,57 +112,45 @@ export default withRouter(function AdminCalendarIndexPage() {
       ]}
       fluid
     >
-      <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Stack>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Space>
-            <DatePicker
-              key="date"
-              picker={view}
-              format={PICKER_FORMAT[view]}
-              defaultValue={date}
-              allowClear={false}
-              onChange={(value) => value && handleDateChange(value)}
+          <Group spacing="xs">
+            <MonthPickerInput
+              icon={<IconCalendar size="1rem" stroke={1.5} />}
+              value={date.toDate()}
+              onChange={(value) => value && handleDateChange(dayjs(value))}
             />
-            {/* <Radio.Group
-            optionType="button"
-            value={view}
-            onChange={(e) => handleViewChange(e.target.value)}
-            options={[
-              { label: "Month", value: "month" },
-              // { label: "Week", value: "week" },
-              { label: "Day", value: "date" },
-            ]}
-          /> */}
             <Select
-              options={locations.map((record) => ({
-                value: record.id.toString(),
-                label: record.name,
+              data={locations.map((record) => ({
+                value: toString(record.id),
+                label: toString(record.name),
               }))}
               defaultValue={query.locationId}
               onChange={(value) => handleLocationChange(value)}
               style={{ minWidth: 200 }}
               placeholder="Filter By Location"
-              allowClear={true}
+              clearable
             />
-            <Select
-              options={tags.map((record) => ({
-                value: record.name,
-                label: record.name,
-              }))}
+            <MultiSelect
+              data={tags.map((record) => toString(record.name))}
               defaultValue={query.tags}
               onChange={(value) => handleTagChange(value)}
               style={{ minWidth: 200 }}
               placeholder="Filter By Tag(s)"
-              mode="tags"
-              allowClear={true}
+              clearable
+              searchable
             />
-          </Space>
-          <Space>
-            <Button icon={<DownloadOutlined />} onClick={handleDownloadClick}>
+          </Group>
+          <Group spacing="xs">
+            <Button
+              variant="default"
+              leftIcon={<IconDownload size="1rem" />}
+              onClick={handleDownloadClick}
+            >
               Export
             </Button>
             <AddEventDropdown />
-          </Space>
+          </Group>
         </div>
 
         {view == "month" && (
@@ -190,10 +169,10 @@ export default withRouter(function AdminCalendarIndexPage() {
             colorSource={colorSource}
           />
         )}
-      </Space>
+      </Stack>
     </AdminLayout>
   );
-});
+}
 
 function getMonthCalendarWeeks(date: Dayjs): Dayjs[][] {
   let weekStart = date.startOf("month").startOf("week");
@@ -214,25 +193,19 @@ interface CalendarViewProps {
 
 function CalendarDayView({ date, events }: CalendarViewProps) {
   return (
-    <div className="ant-table ant-table-bordered">
-      <div className="ant-table-container">
-        <div className="ant-table-content">
-          <table style={{ tableLayout: "fixed" }}>
-            <thead className="ant-table-thead">
-              <tr>
-                <th className="ant-table-cell">Sunday</th>
-                <th className="ant-table-cell">Monday</th>
-                <th className="ant-table-cell">Tuesday</th>
-                <th className="ant-table-cell">Wednesday</th>
-                <th className="ant-table-cell">Thursday</th>
-                <th className="ant-table-cell">Friday</th>
-                <th className="ant-table-cell">Saturday</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-    </div>
+    <Table withBorder withColumnBorders>
+      <thead>
+        <tr>
+          <th>Sunday</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+        </tr>
+      </thead>
+    </Table>
   );
 }
 
@@ -246,79 +219,72 @@ function CalendarMonthView({
   const weeks = getMonthCalendarWeeks(date);
 
   return (
-    <div className="ant-table ant-table-bordered">
-      <div className="ant-table-container">
-        <div className="ant-table-content">
-          <table style={{ tableLayout: "fixed" }}>
-            <thead className="ant-table-thead">
-              <tr>
-                <th className="ant-table-cell">Sunday</th>
-                <th className="ant-table-cell">Monday</th>
-                <th className="ant-table-cell">Tuesday</th>
-                <th className="ant-table-cell">Wednesday</th>
-                <th className="ant-table-cell">Thursday</th>
-                <th className="ant-table-cell">Friday</th>
-                <th className="ant-table-cell">Saturday</th>
-              </tr>
-            </thead>
-            <tbody className="ant-table-tbody">
-              {weeks.map((week) => (
-                <tr
-                  key={week[0].format("YYYY-MM-DD")}
-                  className="ant-table-row"
-                  style={{ height: 150 }}
+    <Table withBorder withColumnBorders style={{ width: 840 }}>
+      <colgroup>
+        <col width="120" />
+        <col width="120" />
+        <col width="120" />
+        <col width="120" />
+        <col width="120" />
+        <col width="120" />
+        <col width="120" />
+      </colgroup>
+      <thead className="ant-table-thead">
+        <tr>
+          <th>Sunday</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+        </tr>
+      </thead>
+      <tbody>
+        {weeks.map((week) => (
+          <tr
+            key={week[0].format("YYYY-MM-DD")}
+            className="ant-table-row"
+            style={{ height: 150 }}
+          >
+            {week.map((day) => (
+              <td
+                key={day.format("YYYY-MM-DD")}
+                style={{
+                  verticalAlign: "top",
+                  width: "14.285%",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: date.month() == day.month() ? "bold" : "",
+                  }}
                 >
-                  {week.map((day) => (
-                    <td
-                      key={day.format("YYYY-MM-DD")}
-                      className="ant-table-cell"
-                      style={{
-                        verticalAlign: "top",
-                        width: "14.285%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "auto",
-                          overflowX: "hidden",
-                          whiteSpace: "nowrap",
-                        }}
+                  {day.format("D")}
+                </div>
+                <Stack spacing="xs" sx={{ width: 180 }}>
+                  {(events[day.format("YYYY-MM-DD")] || [])
+                    // .slice(0, 5)
+                    .map((event) => (
+                      <EventWithHoverCard
+                        key={event.id}
+                        event={event}
+                        locations={locations}
                       >
-                        <div
-                          style={{
-                            fontWeight:
-                              date.month() == day.month() ? "bold" : "",
-                          }}
-                        >
-                          {day.format("D")}
+                        <div>
+                          <EventWithBadge event={event} />
                         </div>
-                        <ul
-                          className="events"
-                          style={{ listStyle: "none", margin: 0, padding: 0 }}
-                        >
-                          {(events[day.format("YYYY-MM-DD")] || [])
-                            // .slice(0, 5)
-                            .map((event) => (
-                              <EventPopover
-                                key={event.id}
-                                event={event}
-                                locations={locations}
-                              >
-                                <li className="calendar-event">
-                                  <EventWithBadge event={event} />
-                                </li>
-                              </EventPopover>
-                            ))}
-                        </ul>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+                      </EventWithHoverCard>
+                    ))}
+                </Stack>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 }

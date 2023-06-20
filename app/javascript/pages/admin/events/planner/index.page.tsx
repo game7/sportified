@@ -6,13 +6,13 @@ import { ScrollRestoration, useSearchParams } from "react-router-dom";
 import { EventPopover } from "~/components/calendar/event-popover";
 import { EventWithBadge } from "~/components/calendar/event-with-badge";
 import DatePicker from "~/components/date-picker";
-import { AdminLayout } from "~/components/layout/admin-layout";
 import { actions, paths } from "~/routes";
 import { toHexColor } from "~/utils/to-hex-color";
 import { useLocalStorage } from "~/utils/use-local-storage";
 import { usePage } from "~/utils/use-page";
 import { withRouter } from "~/utils/with-router";
 import { AddEventDropdown } from "../add-event-dropdown";
+import { AdminLayout } from "~/components/layout/admin-layout";
 
 type PlannerEvent = WithOptional<App.Event, "location" | "program" | "tags"> & {
   location_id: number;
@@ -240,7 +240,7 @@ function CompactEventCell({
         <div key={event.id}>
           <EventPopover event={event} locations={locations} placement="right">
             <div style={{ display: "inline-block", cursor: "pointer" }}>
-              <EventWithBadge event={event} />
+              <EventWithBadge event={event} locations={locations} />
             </div>
           </EventPopover>
         </div>

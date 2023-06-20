@@ -44,16 +44,24 @@ class FormElement < ApplicationRecord
   end
 
   def permitted_params
-    [ self.name ]
+    [name]
   end
 
   def accessors
-    [ self.name ]
+    [name]
   end
 
   before_save :format_name
 
   def format_name
-    self.name = self.name.parameterize(separator: '_')
-  end  
+    self.name = name.parameterize(separator: '_')
+  end
+
+  def as_json(options = {})
+    options = options.try(:clone) || {}
+    options[:methods] = Array(options[:methods]).map(&:to_sym)
+    options[:methods] |= [:type]
+
+    super(options)
+  end
 end

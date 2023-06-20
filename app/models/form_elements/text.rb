@@ -25,18 +25,19 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class FormElements::Text < FormElement
-  
   def self.model_name
     FormElement.model_name
   end
 
   store_accessor :properties, :pattern, :message
 
+  attribute :pattern, :string
+  attribute :message, :string
+
   def validate(record)
     super(record)
-    record.errors.add(name, self.message.presence || 'That doesn\'t look quite right') unless
-      self.pattern.blank? ||
-      record.data[name] =~ Regexp.new(self.pattern)
+    record.errors.add(name, message.presence || 'That doesn\'t look quite right') unless
+      pattern.blank? ||
+      record.data[name] =~ Regexp.new(pattern)
   end
-
 end

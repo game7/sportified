@@ -1,10 +1,8 @@
-import { Button, ButtonProps } from "antd";
+import { Button, ButtonProps } from "@mantine/core";
 
-export type SubmitButtonProps = Omit<ButtonProps, "href" | "type" | "htmlType">;
-
-export function SubmitButton(props: SubmitButtonProps) {
+export function SubmitButton(props: ButtonProps) {
   return (
-    <Button {...props} type="primary" htmlType="submit">
+    <Button {...props} variant="filled" type="submit">
       {props.children || "Submit"}
     </Button>
   );

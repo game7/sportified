@@ -4,8 +4,8 @@ class Next::Admin::Events::CalendarController < Next::Admin::BaseController
       format.html do
         inertia props: {
           date: date,
-          events: events(date).as_json(include: %i[location program tags], methods: [:type], except: :tag_list),
-          locations: Location.select(:id, :name, :color).order(name: :asc).as_json,
+          events: -> { events(date).as_json(include: %i[location program tags], methods: [:type], except: :tag_list) },
+          locations: Location.select(:id, :name, :color).order(name: :asc),
           tags: ActsAsTaggableOn::Tag.for_tenant(Tenant.current).order(name: :asc)
         }
       end

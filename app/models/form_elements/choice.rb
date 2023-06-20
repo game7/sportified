@@ -25,16 +25,14 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class FormElements::Choice < FormElement
-
   def self.model_name
     FormElement.model_name
   end
 
   store_accessor :properties, :options, :allow_multiple
 
-  def options
-    super || ''
-  end
+  attribute :options, :string, default: ''
+  attribute :allow_multiple, :boolean
 
   def options_as_list
     options.split(/\r?\n/)
@@ -51,11 +49,11 @@ class FormElements::Choice < FormElement
   def validate(record)
     super
     # multi-select returns 1 result even when nothing has been selected
-    record.errors.add(name, "Select at least one option") if allow_multiple && required? && record.try(:data).try(:[], name).length <= 1
+    record.errors.add(name, 'Select at least one option') if allow_multiple && required? && record.try(:data).try(:[],
+                                                                                                                  name).length <= 1
   end
 
   def permitted_params
-    allow_multiple ? [ self.name => []] : [ self.name ]
+    allow_multiple ? [name => []] : [name]
   end
-
 end

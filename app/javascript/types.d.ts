@@ -23,6 +23,8 @@ declare type WithOptional<Type, Key extends keyof Type> = Type & {
   [Property in Key]-?: Type[Property];
 };
 
+declare type Unpacked<T> = T extends (infer U)[] ? U : T;
+
 namespace App {
   export interface Exception {
     id: number;

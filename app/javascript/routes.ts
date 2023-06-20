@@ -1737,6 +1737,70 @@ export const actions = {
       'path': handle.path('/next/admin/locations/:id'),
     },
   },
+  'next/admin/forms': {
+    'index': {
+      'get': handle.get('/next/admin/forms'),
+      'path': handle.path('/next/admin/forms'),
+    },
+  },
+  'next/admin/forms/form_packets': {
+    'show': {
+      'get': handle.get('/next/admin/forms/form_packets/:id'),
+      'path': handle.path('/next/admin/forms/form_packets/:id'),
+    },
+  },
+  'next/admin/forms/form_templates/form_elements': {
+    'order': {
+      'post': handle.post('/next/admin/forms/form_templates/:form_template_id/form_elements/order'),
+      'path': handle.path('/next/admin/forms/form_templates/:form_template_id/form_elements/order'),
+    },
+  },
+  'next/admin/forms/form_templates': {
+    'show': {
+      'get': handle.get('/next/admin/forms/form_templates/:id'),
+      'path': handle.path('/next/admin/forms/form_templates/:id'),
+    },
+  },
+  'next/admin/forms/form_elements/notes': {
+    'update': {
+      'patch': handle.patch('/next/admin/forms/form_elements/notes/:id'),
+      'path': handle.path('/next/admin/forms/form_elements/notes/:id'),
+    },
+  },
+  'next/admin/forms/form_elements/texts': {
+    'update': {
+      'patch': handle.patch('/next/admin/forms/form_elements/texts/:id'),
+      'path': handle.path('/next/admin/forms/form_elements/texts/:id'),
+    },
+  },
+  'next/admin/forms/form_elements/choices': {
+    'update': {
+      'patch': handle.patch('/next/admin/forms/form_elements/choices/:id'),
+      'path': handle.path('/next/admin/forms/form_elements/choices/:id'),
+    },
+  },
+  'next/admin/forms/form_elements/agreements': {
+    'update': {
+      'patch': handle.patch('/next/admin/forms/form_elements/agreements/:id'),
+      'path': handle.path('/next/admin/forms/form_elements/agreements/:id'),
+    },
+  },
+  'next/admin/forms/form_elements/contacts': {
+    'update': {
+      'patch': handle.patch('/next/admin/forms/form_elements/contacts/:id'),
+      'path': handle.path('/next/admin/forms/form_elements/contacts/:id'),
+    },
+  },
+  'next/admin/products': {
+    'index': {
+      'get': handle.get('/next/admin/products'),
+      'path': handle.path('/next/admin/products'),
+    },
+    'show': {
+      'get': handle.get('/next/admin/products/:id'),
+      'path': handle.path('/next/admin/products/:id'),
+    },
+  },
   'active_storage/blobs': {
     'index': {
       'get': handle.get('/active_storage/blobs'),
@@ -3090,6 +3154,55 @@ export const paths = {
     patch: handle.patch('/next/admin/locations/:id'),
     put: handle.put('/next/admin/locations/:id'),
     path: handle.path('/next/admin/locations/:id'),
+  },
+  '/next/admin/forms': {
+    get: handle.get('/next/admin/forms'),
+    path: handle.path('/next/admin/forms'),
+  },
+  '/next/admin/forms/form_packets/:id': {
+    get: handle.get('/next/admin/forms/form_packets/:id'),
+    path: handle.path('/next/admin/forms/form_packets/:id'),
+  },
+  '/next/admin/forms/form_templates/:form_template_id/form_elements/order': {
+    post: handle.post('/next/admin/forms/form_templates/:form_template_id/form_elements/order'),
+    path: handle.path('/next/admin/forms/form_templates/:form_template_id/form_elements/order'),
+  },
+  '/next/admin/forms/form_templates/:id': {
+    get: handle.get('/next/admin/forms/form_templates/:id'),
+    path: handle.path('/next/admin/forms/form_templates/:id'),
+  },
+  '/next/admin/forms/form_elements/notes/:id': {
+    patch: handle.patch('/next/admin/forms/form_elements/notes/:id'),
+    put: handle.put('/next/admin/forms/form_elements/notes/:id'),
+    path: handle.path('/next/admin/forms/form_elements/notes/:id'),
+  },
+  '/next/admin/forms/form_elements/texts/:id': {
+    patch: handle.patch('/next/admin/forms/form_elements/texts/:id'),
+    put: handle.put('/next/admin/forms/form_elements/texts/:id'),
+    path: handle.path('/next/admin/forms/form_elements/texts/:id'),
+  },
+  '/next/admin/forms/form_elements/choices/:id': {
+    patch: handle.patch('/next/admin/forms/form_elements/choices/:id'),
+    put: handle.put('/next/admin/forms/form_elements/choices/:id'),
+    path: handle.path('/next/admin/forms/form_elements/choices/:id'),
+  },
+  '/next/admin/forms/form_elements/agreements/:id': {
+    patch: handle.patch('/next/admin/forms/form_elements/agreements/:id'),
+    put: handle.put('/next/admin/forms/form_elements/agreements/:id'),
+    path: handle.path('/next/admin/forms/form_elements/agreements/:id'),
+  },
+  '/next/admin/forms/form_elements/contacts/:id': {
+    patch: handle.patch('/next/admin/forms/form_elements/contacts/:id'),
+    put: handle.put('/next/admin/forms/form_elements/contacts/:id'),
+    path: handle.path('/next/admin/forms/form_elements/contacts/:id'),
+  },
+  '/next/admin/products': {
+    get: handle.get('/next/admin/products'),
+    path: handle.path('/next/admin/products'),
+  },
+  '/next/admin/products/:id': {
+    get: handle.get('/next/admin/products/:id'),
+    path: handle.path('/next/admin/products/:id'),
   },
   '/active_storage/blobs': {
     get: handle.get('/active_storage/blobs'),

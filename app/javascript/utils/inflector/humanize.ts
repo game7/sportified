@@ -13,12 +13,12 @@ import { capitalize, trimStart } from "lodash";
 // note: in the future this may be better suited to js/ts if modified
 // to humanize camelcase words rather than underscore
 export function humanize(
-  lowerCaseAndUnderscoredWord: string,
+  lowerCaseAndUnderscoredWord: string | undefined,
   options?: { capitalize: boolean }
 ): string {
   options = { ...{ capitalize: true }, ...options };
 
-  let result = lowerCaseAndUnderscoredWord;
+  let result = lowerCaseAndUnderscoredWord || "";
   result = trimStart(result, "_");
   result = result.replace(/_id$/, "");
   result = result.replace(/_/g, " ");

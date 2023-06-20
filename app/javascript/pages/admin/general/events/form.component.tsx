@@ -1,21 +1,25 @@
 import { Inertia, Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 import {
-  Card,
+  Box,
   Checkbox,
-  Form,
-  Input,
-  InputNumber,
+  Divider,
+  Group,
+  MultiSelect,
+  NumberInput,
   Radio,
-  Select,
-  Space,
-} from "antd";
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+  Stack,
+  TextInput,
+  Textarea,
+} from "@mantine/core";
+import { DatePicker } from "@mantine/dates";
+import { useForm } from "@mantine/form";
+import { toString } from "lodash";
+import { Fragment, useState } from "react";
 import { BackButton, SubmitButton } from "~/components/buttons";
-import DatePicker from "~/components/date-picker";
-import { Fieldset } from "~/components/fieldset";
-import { asPayload, useForm } from "~/utils/use-form";
+import { Fieldset, NumberSelect } from "~/components/forms";
+import { DateTimeInput } from "~/components/forms/date-time-input";
+import { useBind } from "~/utils/use-bind";
 
 type GeneralEvent = WithOptional<General.Event, "recurrence"> & {
   tag_list: string;
@@ -34,193 +38,135 @@ interface Props extends App.SharedProps {
 export function GeneralEventForm() {
   const { props } = usePage<Page<Props>>();
   const { locations, tags } = props;
-  const { form, bind } = useForm<GeneralEvent>(props.event);
+
+  const form = useForm<GeneralEvent>({ initialValues: props.event });
+  const bind = useBind(form);
   const mode: Mode = props.event.id ? "update" : "create";
 
+  const [tagsData, setTagsData] = useState(
+    tags.map((tag) => toString(tag.name))
+  );
+
   const [repeat, setRepeat] = useState(false);
-  const [ending, setEnding] = useState<Ending>();
 
-  function handleEndingChanged(value: Ending) {
-    setEnding(value);
-  }
-
-  useEffect(() => {
-    if (repeat == false) {
-      form.setFieldValue(["recurrence", "ending"], undefined);
-      setEnding(undefined);
-    }
-  }, [repeat]);
-
-  function handleFinish(data: GeneralEvent) {
-    console.log(data);
+  function handleSubmit(data: GeneralEvent) {
     if (props.event.id) {
-      Inertia.patch(
-        `/next/admin/general/events/${props.event.id}`,
-        asPayload({ general_event: data })
-      );
+      Inertia.patch(`/next/admin/general/events/${props.event.id}`, {
+        general_event: data,
+      } as any);
     } else {
-      Inertia.post(
-        "/next/admin/general/events",
-        asPayload({ general_event: data }, "recurrence")
-      );
+      Inertia.post("/next/admin/general/events", {
+        general_event: data,
+      } as any);
     }
   }
 
   return (
-    <Form form={form} onFinish={handleFinish} layout="vertical">
-      <Space direction="vertical" style={{ width: "100%" }}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Stack>
         <Fieldset title="Logistics">
-          <Space>
-            <Form.Item
+          <Group sx={{ display: "flex", alignItems: "flex-start" }}>
+            <DateTimeInput
               {...bind("starts_on")}
-              initialValue={
-                props.event.starts_on ? dayjs(props.event.starts_on) : null
-              }
-              required
-            >
-              <DatePicker showTime format="M/D/YYYY h:mm a" />
-            </Form.Item>
-            <Form.Item {...bind("duration")} required>
-              <InputNumber min={0} />
-            </Form.Item>
-          </Space>
-          <Form.Item {...bind("all_day")} label={false} valuePropName="checked">
-            <Checkbox>All Day</Checkbox>
-          </Form.Item>
-          <Form.Item {...bind("location_id")} required>
-            <Select
-              options={locations.map((location) => ({
-                value: location.id,
-                label: location.name,
-              }))}
-              allowClear
-              showSearch
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              style={{ width: 400 }}
+              dateInputProps={{ label: "Start Date", withAsterisk: true }}
+              timeInputProps={{ label: "Start Time", withAsterisk: true }}
             />
-          </Form.Item>
+            <NumberInput withAsterisk {...bind("duration")} maw={100} />
+          </Group>
+          <Checkbox {...bind("all_day")} />
+          <NumberSelect
+            withAsterisk
+            {...bind("location_id")}
+            data={locations.map((location) => ({
+              value: location.id,
+              label: toString(location.name),
+            }))}
+            maw={400}
+          />
         </Fieldset>
-        <Fieldset title="Description">
-          <Form.Item {...bind("summary")} required>
-            <Input />
-          </Form.Item>
-          <Form.Item {...bind("description")}>
-            <Input.TextArea rows={3} />
-          </Form.Item>
 
-          <Form.Item {...bind("tag_list")}>
-            <Select
-              mode="tags"
-              options={tags.map((tag) => ({
-                text: tag.name,
-                value: tag.name,
-              }))}
-            />
-          </Form.Item>
-          <Form.Item {...bind("private")} label={false} valuePropName="checked">
-            <Checkbox>Private</Checkbox>
-          </Form.Item>
+        <Fieldset title="Description">
+          <TextInput withAsterisk {...bind("summary")} />
+          <Textarea {...bind("description")} />
+          <MultiSelect
+            {...bind("tag_list")}
+            searchable
+            clearable
+            creatable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(item) => {
+              setTagsData((current) => [...current, item]);
+              return item;
+            }}
+            data={tagsData}
+          />
+          <Checkbox {...bind("private")} />
         </Fieldset>
 
         {mode == "create" && (
           <Fieldset title="Recurrence">
-            <Form.Item label={false}>
-              <Checkbox onChange={(e) => setRepeat(e.target.checked)}>
-                Repeat
-              </Checkbox>
-            </Form.Item>
-            <Card style={{ display: repeat ? "block" : "none" }}>
-              <Form.Item
-                {...bind("recurrence.sunday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Sunday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.monday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Monday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.tuesday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Tuesday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.wednesday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Wednesday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.thursday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Thursday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.friday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Friday</Checkbox>
-              </Form.Item>
-              <Form.Item
-                {...bind("recurrence.saturday")}
-                label={false}
-                valuePropName="checked"
-              >
-                <Checkbox>Repeat on Saturday</Checkbox>
-              </Form.Item>
-              <Form.Item {...bind("recurrence.ending")}>
-                <Radio.Group
-                  onChange={(e) => handleEndingChanged(e.target.value)}
-                >
-                  <Space direction="vertical">
-                    <Radio value="on">On</Radio>
-                    <Radio value="after">After</Radio>
-                  </Space>
-                </Radio.Group>
-              </Form.Item>
-              {ending == "on" && (
-                <Form.Item {...bind("recurrence.ends_on")} label={false}>
-                  <DatePicker />
-                </Form.Item>
-              )}
-              {ending == "after" && (
-                <Form.Item
-                  {...bind("recurrence.occurrence_count")}
-                  label={false}
-                >
-                  <InputNumber
-                    min={1}
-                    addonAfter="occurences"
-                    style={{ width: 160 }}
-                  />
-                </Form.Item>
-              )}
-            </Card>
+            <Checkbox
+              onChange={(e) => setRepeat(e.target.checked)}
+              label="Repeat"
+            />
+            {repeat && (
+              <Fragment>
+                <Divider />
+                <Checkbox {...bind("recurrence.monday")} />
+                <Checkbox {...bind("recurrence.tuesday")} />
+                <Checkbox {...bind("recurrence.wednesday")} />
+                <Checkbox {...bind("recurrence.thursday")} />
+                <Checkbox {...bind("recurrence.friday")} />
+                <Checkbox {...bind("recurrence.saturday")} />
+                <Checkbox {...bind("recurrence.sunday")} />
+                <Divider />
+              </Fragment>
+            )}
+            <Radio.Group {...bind("recurrence.ending")}>
+              <Group mt="xs">
+                <Radio value="on" label="On" />
+                <Radio value="after" label="After" />
+              </Group>
+            </Radio.Group>
+
+            {form.values.recurrence.ending == "on" && (
+              <DatePicker {...bind("recurrence.ends_on")} miw={150} />
+            )}
+
+            {form.values.recurrence.ending == "after" && (
+              <NumberInput
+                withAsterisk
+                {...bind("recurrence.occurrence_count", {})}
+                rightSection={
+                  <Box
+                    sx={(theme) => ({
+                      borderLeftColor: theme.colors.gray[4],
+                      borderLeftWidth: 1,
+                      borderLeftStyle: "solid",
+                      width: 100,
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    })}
+                  >
+                    occurrences
+                  </Box>
+                }
+                rightSectionWidth={100}
+                w={150}
+              />
+            )}
           </Fieldset>
         )}
 
-        <Form.Item>
-          <Space>
+        <Fieldset>
+          <Group spacing="xs">
             <SubmitButton></SubmitButton>
             <BackButton></BackButton>
-          </Space>
-        </Form.Item>
-      </Space>
-    </Form>
+          </Group>
+        </Fieldset>
+      </Stack>
+    </form>
   );
 }

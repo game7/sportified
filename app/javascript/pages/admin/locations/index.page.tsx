@@ -1,8 +1,8 @@
 import { PlusOutlined, ZoomInOutlined } from "@ant-design/icons";
 import { Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
-import { Table } from "antd";
-import { LinkButton } from "~/components/buttons";
+import { Table } from "@mantine/core";
+import { LinkButton, ZoomLinkButton } from "~/components/buttons";
 import { AdminLayout } from "~/components/layout/admin-layout";
 
 interface Props extends App.SharedProps {
@@ -27,25 +27,24 @@ export default function AdminLocationsIndexPage() {
         </LinkButton>,
       ]}
     >
-      <Table
-        dataSource={locations}
-        rowKey="id"
-        columns={[
-          {
-            dataIndex: "id",
-            render: (id) => (
-              <LinkButton
-                href={`/next/admin/locations/${id}`}
-                icon={<ZoomInOutlined rotate={90} />}
-              />
-            ),
-            width: 40,
-          },
-          { dataIndex: "name", title: "Name" },
-        ]}
-        bordered
-        pagination={false}
-      ></Table>
+      <Table withBorder withColumnBorders>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {locations.map((location) => (
+            <tr>
+              <td width={40}>
+                <ZoomLinkButton href={`/next/admin/locations/${location.id}`} />
+              </td>
+              <td>{location.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </AdminLayout>
   );
 }

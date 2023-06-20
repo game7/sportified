@@ -112,6 +112,7 @@ class Event < ActiveRecord::Base
   scope :before, ->(before) { where('starts_on < ?', before) }
   scope :public_only, -> { where(private: false) }
   scope :with_product, -> { joins(:product).where('products.registrable_type = \'Event\' AND products.id IS NOT NULL') }
+  scope :as_registrable,  -> {  select(:id, :starts_at, :summary).collect { |event| Registrable.from_event(event) } }
 
   def start_time
     starts_on
@@ -123,5 +124,15 @@ class Event < ActiveRecord::Base
 
   def color_key
     raise "color_key must be implemented by subclass #{self.class.name}"
+  end
+
+  class Registrable < Projection
+    attribute :id, :integer
+    attribute :starts_on, :datetime
+    attribute :summary, :string
+
+    def self.from_event(event)
+      Registrable.new event.attributes.slice(*attribute_names)
+    end
   end
 end

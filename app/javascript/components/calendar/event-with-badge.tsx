@@ -1,6 +1,5 @@
-import { Badge, Space } from "antd";
+import { Badge } from "@mantine/core";
 import dayjs from "dayjs";
-import { toHexColor } from "~/utils/to-hex-color";
 
 type EventWithTags = WithOptional<App.Event, "tags">;
 
@@ -8,17 +7,23 @@ interface EventWithBadgeProps {
   event: EventWithTags;
 }
 
-export function EventWithBadge({ event }: EventWithBadgeProps) {
+export function EventWithBadge(props: EventWithBadgeProps) {
+  const { event } = props;
+
   return (
     <Badge
-      color={getColor(event)}
-      text={
-        <Space>
-          <span>{renderTime(event)}</span>
-          <span>{event.summary}</span>
-        </Space>
-      }
-    />
+      radius="sm"
+      fullWidth
+      sx={{
+        justifyContent: "left",
+        paddingLeft: 3,
+        cursor: "pointer",
+      }}
+      leftSection={<span>{renderTime(event)}</span>}
+      // ref={ref}
+    >
+      {event.summary}
+    </Badge>
   );
 }
 
@@ -28,6 +33,6 @@ function renderTime(event: App.Event) {
     : dayjs(event.starts_on).format("h:mma").replace("m", "");
 }
 
-function getColor(event: EventWithTags) {
-  return toHexColor(event.tags[0]?.name || "random");
-}
+// function getColor(event: EventWithTags) {
+//   return toHexColor(event.tags[0]?.name || "random");
+// }

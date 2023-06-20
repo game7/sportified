@@ -4,17 +4,13 @@ module Typescript::Models
       include Associations
       include BaseTypes
       include Conversions
+      include Projections
 
       def generate
+        load_application!
         types = []
-        models.each do |model|
-          types << {
-            name: model_name(model),
-            properties: build_attributes(model) + build_associations(model)
-          }
-        rescue StandardError => e
-          puts "Typescript::Models - Unable to produce types for #{model_name(model)} - #{e}"
-        end
+        types.concat(generate_models)
+        types.concat(generate_projections)
         File.open(output_file_path, 'w') { |file| file.write(output(types)) }
       end
 
@@ -30,8 +26,27 @@ module Typescript::Models
         Rails.root.join('app/javascript/models.d.ts')
       end
 
-      def models
+      def load_application!
         Rails.application.eager_load!
+      end
+
+      def generate_models
+        models.collect do |model|
+          begin
+            properties = build_columns(model) + build_associations(model)
+          rescue StandardError => e
+            # puts "Typescript::Models - Unable to produce types for #{model_name(model)} - #{e}"
+            properties = []
+          end
+
+          {
+            name: model_name(model),
+            properties: properties
+          }
+        end
+      end
+
+      def models
         ActiveRecord::Base.descendants.reject(&:abstract_class?).sort_by(&:name)
       end
 
@@ -93,17 +108,33 @@ module Typescript::Models
       end
 
       # extract attribute metadata from model
-      def build_attributes(model)
-        model.columns.map do |i|
-          type = conversions[i.type.to_s]
-          if (enum = model.defined_enums[i.name])
-            type = enum.keys.map { |k| "'#{k}'" }.join(' | ')
+      def build_columns(model)
+        types = {}
+
+        model.columns.each do |col|
+          type = conversions[col.type.to_s] || 'unknown'
+
+          if (enum = model.defined_enums[col.name])
+            type = enum.keys.map { |key| "'#{key}'" }.join(' | ')
           end
 
-          {
-            name: i.name,
-            ts_type: i.null ? "#{type} | null" : type
+          types[col.name] = {
+            type: type,
+            nullable: col.null
           }
+        end
+
+        model.attribute_names.collect do |name|
+          klass_name = model.attribute_types[name].class.to_s
+
+          types[name] = {
+            type: attribute_conversions[klass_name] || "unknown /* #{klass_name} */",
+            nullable: types.key?(name) ? types[name][:nullable] : true
+          }
+        end
+
+        types.entries.map do |key, value|
+          { name: key, ts_type: value[:nullable] ? "#{value[:type]} | null" : value[:type] }
         end
       end
 

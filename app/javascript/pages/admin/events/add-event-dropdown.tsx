@@ -1,65 +1,62 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "@inertiajs/inertia-react";
-import { Button, Dropdown } from "antd";
+import { Inertia } from "@inertiajs/inertia";
+import { Button, Menu } from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
 import { actions } from "~/routes";
 
 export function AddEventDropdown() {
+  function withHref(href: string) {
+    return {
+      href,
+      onClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+        Inertia.get(href);
+      },
+    };
+  }
+
   return (
-    <Dropdown
-      menu={{
-        items: [
-          {
-            key: "general",
-            type: "group",
-            label: "General",
-          },
-          {
-            key: "general-event",
-            label: (
-              <Link href={actions["next/admin/general/events"]["new"].path({})}>
-                Event
-              </Link>
-            ),
-          },
-          {
-            key: "divider",
-            type: "divider",
-          },
-          {
-            key: "league",
-            type: "group",
-            label: "League",
-          },
-          {
-            key: "league-game",
-            label: (
-              <Link href={actions["next/admin/league/games"]["new"].path({})}>
-                Game
-              </Link>
-            ),
-          },
-          {
-            key: "league-practice",
-            label: (
-              <Link
-                href={actions["next/admin/league/practices"]["new"].path({})}
-              >
-                Practice
-              </Link>
-            ),
-          },
-          {
-            key: "league-event",
-            label: (
-              <Link href={actions["next/admin/league/events"]["new"].path({})}>
-                Event
-              </Link>
-            ),
-          },
-        ],
-      }}
-    >
-      <Button icon={<PlusOutlined />}>Add</Button>
-    </Dropdown>
+    <Menu width={150} position="bottom-end">
+      <Menu.Target>
+        <Button
+          variant="default"
+          leftIcon={<IconPlus size="1rem" stroke={1.5} />}
+        >
+          Add
+        </Button>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Label>General</Menu.Label>
+        <Menu.Item
+          component="a"
+          icon={<IconPlus size="1rem" stroke={1.5} />}
+          {...withHref(actions["next/admin/general/events"]["new"].path({}))}
+        >
+          Event
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Label>League</Menu.Label>
+        <Menu.Item
+          component="a"
+          icon={<IconPlus size="1rem" stroke={1.5} />}
+          {...withHref(actions["next/admin/league/games"]["new"].path({}))}
+        >
+          Game
+        </Menu.Item>
+        <Menu.Item
+          component="a"
+          icon={<IconPlus size="1rem" stroke={1.5} />}
+          {...withHref(actions["next/admin/league/practices"]["new"].path({}))}
+        >
+          Practice
+        </Menu.Item>
+        <Menu.Item
+          component="a"
+          icon={<IconPlus size="1rem" stroke={1.5} />}
+          {...withHref(actions["next/admin/league/events"]["new"].path({}))}
+        >
+          Event
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   );
 }
