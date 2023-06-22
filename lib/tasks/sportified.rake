@@ -66,4 +66,39 @@ namespace :sportified do
 
     puts
   end
+
+  task copy: :environment do
+    Tenant.current = Tenant.find(10)
+
+    # COPY = {
+    #   3697 => 3875,
+    #   3698 => 3876
+    # }
+    COPY = {
+      3697 => 3895,
+      3698 => 3896
+    }
+    COPY.entries.each do |entry|
+      from = Variant.find(entry[0])
+      to = Variant.find(entry[1])
+
+      puts '-------------------------'
+      puts "copying from #{from.title} (#{from.id}) to #{to.title} (#{to.id})"
+
+      to.update quantity_allowed: 100
+
+      from.registrations.each do |registration|
+        next unless registration.status == 'Completed'
+
+        copy = to.registrations.create(registration.attributes.slice('user_id', 'first_name', 'last_name', 'email',
+                                                                     'confirmation_code', 'birthdate'))
+        copy.completed_at = Time.zone.now
+        ok = copy.save
+        puts "- #{ok}"
+        puts copy.errors.messages unless ok
+      end
+
+      to.update quantity_allowed: 0
+    end
+  end
 end
