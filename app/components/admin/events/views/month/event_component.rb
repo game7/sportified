@@ -34,11 +34,11 @@ class Admin::Events::Views::Month::EventComponent < ViewComponent::Base
   end
 
   def border_color
-    @colors.border_color(color_key)
+    @event.location&.color || @colors.border_color(color_key)
   end
 
   def background_color
-    @colors.background_color(color_key)
+    @event.location&.color ? "#{@event.location&.color}11" : @colors.background_color(color_key)
   end
 
   def text_color

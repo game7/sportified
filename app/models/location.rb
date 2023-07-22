@@ -16,11 +16,11 @@
 #  index_locations_on_deleted_at  (deleted_at)
 #  index_locations_on_tenant_id   (tenant_id)
 #
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
   include Sportified::TenantScoped
   acts_as_paranoid
 
-  has_many :facilities do
+  has_many :facilities, dependent: :destroy do
     def playing_surfaces
       where(type: 'PlayingSurface')
     end
@@ -36,7 +36,8 @@ class Location < ActiveRecord::Base
   validates :name, presence: true
 
   before_save :ensure_short_name
+
   def ensure_short_name
-    self.short_name = name if short_name.blank?
+    self.short_name ||= name
   end
 end
