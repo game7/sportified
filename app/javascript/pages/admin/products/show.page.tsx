@@ -231,7 +231,9 @@ export default function AdminProductsShowPage() {
             {
               accessor: "registrations",
               render: (record) =>
-                `${record.registrations_count} / ${record.quantity_allowed}`,
+                `${record.registrations_count} / ${
+                  record.quantity_allowed || "∞"
+                }`,
             },
           ]}
         />

@@ -1,4 +1,4 @@
-import { Button, Group, Stack, TextInput } from "@mantine/core";
+import { Box, Button, Group, Stack, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { keyBy } from "lodash";
@@ -98,21 +98,23 @@ export default function AdminProductsIndexPage() {
             {
               accessor: "title",
               filter: ({ close }) => (
-                <form {...nameFilter.formProps}>
-                  <Stack spacing="xs">
-                    <TextInput
-                      placeholder="Search title..."
-                      icon={<IconSearch size={16} />}
-                      {...nameFilter.form.getInputProps("name")}
-                    />
-                    <Group spacing="xs">
-                      <SubmitButton size="xs"></SubmitButton>
-                      <Button type="reset" size="xs" variant="default">
-                        Clear
-                      </Button>
-                    </Group>
-                  </Stack>
-                </form>
+                <Box>
+                  <form {...nameFilter.formProps}>
+                    <Stack spacing="xs">
+                      <TextInput
+                        placeholder="Search title..."
+                        icon={<IconSearch size={16} />}
+                        {...nameFilter.form.getInputProps("name")}
+                      />
+                      <Group spacing="xs">
+                        <SubmitButton size="xs"></SubmitButton>
+                        <Button type="reset" size="xs" variant="default">
+                          Clear
+                        </Button>
+                      </Group>
+                    </Stack>
+                  </form>
+                </Box>
               ),
               filtering: nameFilter.active,
             },

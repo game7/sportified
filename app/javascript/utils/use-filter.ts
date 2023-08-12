@@ -34,17 +34,14 @@ export function useFilter<T>(
   const clear = () => apply(null);
 
   // wrap form onSubmit function
-  const onSubmit = () => {
-    return form.onSubmit((data, event) => {
-      apply(data.name);
-      event.stopPropagation();
-    });
-  };
+  const onSubmit = form.onSubmit((data, event) => {
+    apply(data.name);
+    event.stopPropagation();
+  });
 
   // wrap form onReset function
-  const onReset = form.onReset;
-  form.onReset = (e: React.FormEvent<HTMLFormElement>) => {
-    onReset(e);
+  const onReset = (e: React.FormEvent<HTMLFormElement>) => {
+    form.onReset(e);
     clear();
   };
 
