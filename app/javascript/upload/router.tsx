@@ -9,9 +9,9 @@ import Practices from "./practices";
 function Home() {
   return (
     <ul>
-      {/* <li>
+      <li>
         <Link to="/events">Events</Link>
-      </li> */}
+      </li>
       <li>
         <Link to="/games">Games</Link>
       </li>
