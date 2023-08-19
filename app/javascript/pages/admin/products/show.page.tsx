@@ -147,10 +147,13 @@ export default function AdminProductsShowPage() {
     <AdminLayout
       title={product.title!}
       breadcrumbs={[
-        { label: "Admin", href: actions["admin/dashboard"]["index"].path({}) },
         {
           label: "Products",
-          href: actions["admin/products"]["index"].path({}),
+          href: actions["next/admin/products"]["index"].path({}),
+        },
+        {
+          label: product.title || "",
+          href: actions["next/admin/products"]["show"].path({ id: product.id }),
         },
       ]}
     >

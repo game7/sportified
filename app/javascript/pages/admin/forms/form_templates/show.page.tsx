@@ -74,10 +74,6 @@ export default function AdminFormsFormTemplatesShowPage() {
       title={packet.name || ""}
       breadcrumbs={[
         {
-          label: "Admin",
-          href: actions["next/admin/dashboard"]["index"].path({}),
-        },
-        {
           label: "Forms",
           href: actions["next/admin/forms"]["index"].path({}),
         },

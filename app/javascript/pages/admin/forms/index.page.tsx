@@ -1,4 +1,3 @@
-import { Link } from "@inertiajs/inertia-react";
 import { Stack } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
 import { ZoomLinkButton } from "~/components/buttons";
@@ -17,10 +16,6 @@ export default function AdminFormsIndexPage() {
     <AdminLayout
       title="Forms"
       breadcrumbs={[
-        {
-          label: "Admin",
-          href: actions["next/admin/dashboard"]["index"].path({}),
-        },
         {
           label: "Forms",
           href: actions["next/admin/forms"]["index"].path({}),

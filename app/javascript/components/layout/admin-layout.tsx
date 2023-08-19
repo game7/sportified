@@ -1,18 +1,21 @@
 import { Link } from "@inertiajs/inertia-react";
 import {
   AppShell,
-  Aside,
+  Breadcrumbs,
   Burger,
   Footer,
   Group,
   Header,
   MediaQuery,
   Navbar,
+  Stack,
   Text,
   ThemeIcon,
+  Title,
   UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import {
   IconAssembly,
   IconCalendar,
@@ -21,9 +24,8 @@ import {
   IconMapPin,
   TablerIconsProps,
 } from "@tabler/icons-react";
-import { FC, useMemo, useState } from "react";
-import { BaseLayoutProps } from "./base-layout";
-import { useDocumentTitle } from "@mantine/hooks";
+import { FC, useState } from "react";
+import { BaseLayoutProps, Breadcrumb } from "./base-layout";
 
 type Icon = (props: TablerIconsProps) => JSX.Element;
 
@@ -85,7 +87,7 @@ export const AdminLayout: FC<BaseLayoutProps> = ({
   breadcrumbs = [],
   ...props
 }) => {
-  breadcrumbs.unshift({ label: "Host", href: "/host" });
+  breadcrumbs = [{ label: "Admin", href: "/Admin" }, ...breadcrumbs];
 
   useDocumentTitle(`${props.title} :: Sportified`);
 
@@ -155,19 +157,53 @@ export const AdminLayout: FC<BaseLayoutProps> = ({
       }
     >
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div
+        <Stack
           style={{
-            backgroundColor: "white",
-            padding: 20,
             width: props.fluid ? "" : 1140,
           }}
         >
-          {props.children}
-        </div>
+          <PageHeader title={props.title} breadcrumbs={breadcrumbs} />
+
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: 20,
+            }}
+          >
+            {props.children}
+          </div>
+        </Stack>
       </div>
     </AppShell>
   );
 };
+
+interface PageHeaderProps {
+  title: string;
+  breadcrumbs: Breadcrumb[];
+}
+
+function PageHeader({ title, breadcrumbs }: PageHeaderProps) {
+  return (
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: 20,
+      }}
+    >
+      <Stack spacing="xs">
+        <Breadcrumbs>
+          {breadcrumbs.map((crumb) => (
+            <Link key={crumb.label} href={crumb.href}>
+              {crumb.label}
+            </Link>
+          ))}
+        </Breadcrumbs>
+        <Title>{title}</Title>
+      </Stack>
+    </div>
+  );
+}
 
 interface MainLinkProps {
   icon: React.ReactNode;

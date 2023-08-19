@@ -69,7 +69,6 @@ export default function AdminProductsIndexPage() {
     <AdminLayout
       title="Products"
       breadcrumbs={[
-        { label: "Admin", href: actions["admin/dashboard"]["index"].path({}) },
         {
           label: "Products",
           href: actions["admin/products"]["index"].path({}),
