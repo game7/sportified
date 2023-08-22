@@ -1,4 +1,5 @@
 import { AdminLayout } from "~/components/layout/admin-layout";
+import { LocationForm } from "./form.component";
 
 export default function NewAdminLocationsIndexPage() {
   return (
@@ -8,6 +9,8 @@ export default function NewAdminLocationsIndexPage() {
         { href: "/next/admin/locations", label: "Locations" },
         { href: `/next/admin/locations/new`, label: "New" },
       ]}
-    ></AdminLayout>
+    >
+      <LocationForm />
+    </AdminLayout>
   );
 }

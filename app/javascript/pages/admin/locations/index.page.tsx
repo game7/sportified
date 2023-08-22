@@ -1,7 +1,7 @@
-import { PlusOutlined, ZoomInOutlined } from "@ant-design/icons";
 import { Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 import { Table } from "@mantine/core";
+import { IconZoomIn } from "@tabler/icons-react";
 import { LinkButton, ZoomLinkButton } from "~/components/buttons";
 import { AdminLayout } from "~/components/layout/admin-layout";
 
@@ -17,15 +17,15 @@ export default function AdminLocationsIndexPage() {
     <AdminLayout
       title="Locations"
       breadcrumbs={[{ label: "Locations", href: "/next/admin/locations" }]}
-      extra={[
+      extra={
         <LinkButton
           key="new"
           href="/next/admin/locations/new"
-          icon={<PlusOutlined />}
+          leftIcon={<IconZoomIn size="1rem" />}
         >
           Add New Location
-        </LinkButton>,
-      ]}
+        </LinkButton>
+      }
     >
       <Table withBorder withColumnBorders>
         <thead>
@@ -36,7 +36,7 @@ export default function AdminLocationsIndexPage() {
         </thead>
         <tbody>
           {locations.map((location) => (
-            <tr>
+            <tr key={location.id}>
               <td width={40}>
                 <ZoomLinkButton href={`/next/admin/locations/${location.id}`} />
               </td>

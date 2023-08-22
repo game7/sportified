@@ -9,12 +9,12 @@ module Typescript::Routes::Generator::Paths
     out << '}'
   end
 
-  def allowed_verbs
-    %w[get put patch post destroy path]
+  def path_allowed_verbs
+    %w[get put patch post delete path]
   end
 
   def build_path(path, verbs)
-    verbs = (verbs.map { |v| v.split('|') }.flatten.map(&:downcase).uniq.push('path') & allowed_verbs)
+    verbs = (verbs.map { |v| v.split('|') }.flatten.map(&:downcase).uniq.push('path') & path_allowed_verbs)
     out = []
     out << "  '#{path}': {"
     out.concat(verbs.map { |verb| "    #{verb}: handle.#{verb}('#{path}')," })

@@ -15,15 +15,15 @@ module Typescript::Routes::Generator::Actions
     out << '}'
   end
 
-  def allowed_verbs
-    %w[get put patch post destroy path]
+  def action_allowed_verbs
+    %w[get put patch post delete path]
   end
 
   def build_actions(routes) # rubocop:disable Metrics/AbcSize
     out = []
     routes.group_by { |route| route[:action] }.each do |action, group|
       route = group[0]
-      verbs = (route[:verb].split('|').map(&:downcase).push('path') & allowed_verbs)
+      verbs = (route[:verb].split('|').map(&:downcase).push('path') & action_allowed_verbs)
       out << "    '#{action}': {"
       out.concat(verbs.map { |verb| "      '#{verb}': handle.#{verb}('#{route[:path]}')," })
       out << '    },'

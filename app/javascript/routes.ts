@@ -88,6 +88,7 @@ export const actions = {
       'path': handle.path('/admin/products/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/products/:id'),
       'path': handle.path('/admin/products/:id'),
     },
   },
@@ -143,6 +144,7 @@ export const actions = {
       'path': handle.path('/admin/form_elements/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/form_elements/:id'),
       'path': handle.path('/admin/form_elements/:id'),
     },
   },
@@ -172,6 +174,7 @@ export const actions = {
       'path': handle.path('/admin/form_templates/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/form_templates/:id'),
       'path': handle.path('/admin/form_templates/:id'),
     },
   },
@@ -201,6 +204,7 @@ export const actions = {
       'path': handle.path('/admin/form_packets/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/form_packets/:id'),
       'path': handle.path('/admin/form_packets/:id'),
     },
   },
@@ -306,6 +310,7 @@ export const actions = {
       'path': handle.path('/api/tenants/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/api/tenants/:id'),
       'path': handle.path('/api/tenants/:id'),
     },
   },
@@ -411,6 +416,7 @@ export const actions = {
       'path': handle.path('/api/league/games/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/api/league/games/:id'),
       'path': handle.path('/api/league/games/:id'),
     },
   },
@@ -444,6 +450,7 @@ export const actions = {
       'path': handle.path('/api/league/practices/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/api/league/practices/:id'),
       'path': handle.path('/api/league/practices/:id'),
     },
   },
@@ -477,6 +484,7 @@ export const actions = {
       'path': handle.path('/api/league/players/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/api/league/players/:id'),
       'path': handle.path('/api/league/players/:id'),
     },
   },
@@ -558,6 +566,7 @@ export const actions = {
       'path': handle.path('/pages/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/pages/:id'),
       'path': handle.path('/pages/:id'),
     },
   },
@@ -587,6 +596,7 @@ export const actions = {
       'path': handle.path('/authentications/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/authentications/:id'),
       'path': handle.path('/authentications/:id'),
     },
   },
@@ -640,6 +650,7 @@ export const actions = {
       'path': handle.path('/host/tenants/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/host/tenants/:id'),
       'path': handle.path('/host/tenants/:id'),
     },
   },
@@ -669,6 +680,7 @@ export const actions = {
       'path': handle.path('/host/users/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/host/users/:id'),
       'path': handle.path('/host/users/:id'),
     },
   },
@@ -834,6 +846,7 @@ export const actions = {
       'path': handle.path('/admin/chromecasts/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/chromecasts/:id'),
       'path': handle.path('/admin/chromecasts/:id'),
     },
   },
@@ -859,6 +872,7 @@ export const actions = {
       'path': handle.path('/admin/screens/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/screens/:id'),
       'path': handle.path('/admin/screens/:id'),
     },
   },
@@ -868,6 +882,7 @@ export const actions = {
       'path': handle.path('/admin/programs'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/programs/:id'),
       'path': handle.path('/admin/programs/:id'),
     },
   },
@@ -889,6 +904,7 @@ export const actions = {
       'path': handle.path('/admin/league/players/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/league/players/:id'),
       'path': handle.path('/admin/league/players/:id'),
     },
   },
@@ -914,6 +930,7 @@ export const actions = {
       'path': handle.path('/admin/league/teams/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/league/teams/:id'),
       'path': handle.path('/admin/league/teams/:id'),
     },
   },
@@ -939,6 +956,7 @@ export const actions = {
       'path': handle.path('/admin/league/divisions/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/league/divisions/:id'),
       'path': handle.path('/admin/league/divisions/:id'),
     },
   },
@@ -968,6 +986,7 @@ export const actions = {
       'path': handle.path('/admin/league/seasons/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/league/seasons/:id'),
       'path': handle.path('/admin/league/seasons/:id'),
     },
   },
@@ -1103,6 +1122,7 @@ export const actions = {
       'path': handle.path('/admin/clubs/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/clubs/:id'),
       'path': handle.path('/admin/clubs/:id'),
     },
   },
@@ -1124,6 +1144,7 @@ export const actions = {
       'path': handle.path('/admin/playing_surfaces/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/playing_surfaces/:id'),
       'path': handle.path('/admin/playing_surfaces/:id'),
     },
   },
@@ -1145,6 +1166,7 @@ export const actions = {
       'path': handle.path('/admin/locker_rooms/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/locker_rooms/:id'),
       'path': handle.path('/admin/locker_rooms/:id'),
     },
   },
@@ -1174,6 +1196,7 @@ export const actions = {
       'path': handle.path('/admin/locations/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/locations/:id'),
       'path': handle.path('/admin/locations/:id'),
     },
   },
@@ -1191,6 +1214,7 @@ export const actions = {
       'path': handle.path('/admin/events/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/events/:id'),
       'path': handle.path('/admin/events/:id'),
     },
   },
@@ -1252,6 +1276,7 @@ export const actions = {
       'path': handle.path('/admin/game_imports/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/game_imports/:id'),
       'path': handle.path('/admin/game_imports/:id'),
     },
   },
@@ -1285,6 +1310,7 @@ export const actions = {
       'path': handle.path('/admin/player_imports/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/player_imports/:id'),
       'path': handle.path('/admin/player_imports/:id'),
     },
   },
@@ -1340,6 +1366,7 @@ export const actions = {
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
     },
   },
@@ -1369,6 +1396,7 @@ export const actions = {
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
     },
   },
@@ -1398,6 +1426,7 @@ export const actions = {
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
     },
   },
@@ -1431,6 +1460,7 @@ export const actions = {
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
       'path': handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
     },
   },
@@ -1450,6 +1480,7 @@ export const actions = {
       'path': handle.path('/pages/:page_id/sections'),
     },
     'destroy': {
+      'delete': handle.delete('/pages/:page_id/sections/:id'),
       'path': handle.path('/pages/:page_id/sections/:id'),
     },
   },
@@ -1483,6 +1514,7 @@ export const actions = {
       'path': handle.path('/pages/:page_id/blocks/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/pages/:page_id/blocks/:id'),
       'path': handle.path('/pages/:page_id/blocks/:id'),
     },
   },
@@ -1592,6 +1624,7 @@ export const actions = {
       'path': handle.path('/admin/posts/:id'),
     },
     'destroy': {
+      'delete': handle.delete('/admin/posts/:id'),
       'path': handle.path('/admin/posts/:id'),
     },
   },
@@ -1709,6 +1742,28 @@ export const actions = {
     'update': {
       'patch': handle.patch('/next/admin/posts/:id'),
       'path': handle.path('/next/admin/posts/:id'),
+    },
+  },
+  'next/admin/locations/locker_rooms': {
+    'create': {
+      'post': handle.post('/next/admin/locations/:location_id/locker_rooms'),
+      'path': handle.path('/next/admin/locations/:location_id/locker_rooms'),
+    },
+    'new': {
+      'get': handle.get('/next/admin/locations/:location_id/locker_rooms/new'),
+      'path': handle.path('/next/admin/locations/:location_id/locker_rooms/new'),
+    },
+    'edit': {
+      'get': handle.get('/next/admin/locker_rooms/:id/edit'),
+      'path': handle.path('/next/admin/locker_rooms/:id/edit'),
+    },
+    'update': {
+      'patch': handle.patch('/next/admin/locker_rooms/:id'),
+      'path': handle.path('/next/admin/locker_rooms/:id'),
+    },
+    'destroy': {
+      'delete': handle.delete('/next/admin/locker_rooms/:id'),
+      'path': handle.path('/next/admin/locker_rooms/:id'),
     },
   },
   'next/admin/locations': {
@@ -1882,6 +1937,7 @@ export const paths = {
     get: handle.get('/admin/products/:id'),
     patch: handle.patch('/admin/products/:id'),
     put: handle.put('/admin/products/:id'),
+    delete: handle.delete('/admin/products/:id'),
     path: handle.path('/admin/products/:id'),
   },
   '/admin/products/:product_id/registrations': {
@@ -1927,6 +1983,7 @@ export const paths = {
   '/admin/form_elements/:id': {
     patch: handle.patch('/admin/form_elements/:id'),
     put: handle.put('/admin/form_elements/:id'),
+    delete: handle.delete('/admin/form_elements/:id'),
     path: handle.path('/admin/form_elements/:id'),
   },
   '/admin/form_packets/:form_packet_id/form_templates': {
@@ -1946,6 +2003,7 @@ export const paths = {
     get: handle.get('/admin/form_templates/:id'),
     patch: handle.patch('/admin/form_templates/:id'),
     put: handle.put('/admin/form_templates/:id'),
+    delete: handle.delete('/admin/form_templates/:id'),
     path: handle.path('/admin/form_templates/:id'),
   },
   '/admin/form_packets': {
@@ -1965,6 +2023,7 @@ export const paths = {
     get: handle.get('/admin/form_packets/:id'),
     patch: handle.patch('/admin/form_packets/:id'),
     put: handle.put('/admin/form_packets/:id'),
+    delete: handle.delete('/admin/form_packets/:id'),
     path: handle.path('/admin/form_packets/:id'),
   },
   '/registrar/items/:id': {
@@ -2055,6 +2114,7 @@ export const paths = {
     get: handle.get('/api/tenants/:id'),
     patch: handle.patch('/api/tenants/:id'),
     put: handle.put('/api/tenants/:id'),
+    delete: handle.delete('/api/tenants/:id'),
     path: handle.path('/api/tenants/:id'),
   },
   '/api/events': {
@@ -2132,6 +2192,7 @@ export const paths = {
     get: handle.get('/api/league/games/:id'),
     patch: handle.patch('/api/league/games/:id'),
     put: handle.put('/api/league/games/:id'),
+    delete: handle.delete('/api/league/games/:id'),
     path: handle.path('/api/league/games/:id'),
   },
   '/api/league/practices/batch_create': {
@@ -2155,6 +2216,7 @@ export const paths = {
     get: handle.get('/api/league/practices/:id'),
     patch: handle.patch('/api/league/practices/:id'),
     put: handle.put('/api/league/practices/:id'),
+    delete: handle.delete('/api/league/practices/:id'),
     path: handle.path('/api/league/practices/:id'),
   },
   '/api/league/players/batch_create': {
@@ -2178,6 +2240,7 @@ export const paths = {
     get: handle.get('/api/league/players/:id'),
     patch: handle.patch('/api/league/players/:id'),
     put: handle.put('/api/league/players/:id'),
+    delete: handle.delete('/api/league/players/:id'),
     path: handle.path('/api/league/players/:id'),
   },
   '/api/locations': {
@@ -2234,6 +2297,7 @@ export const paths = {
     get: handle.get('/authentications/:id'),
     patch: handle.patch('/authentications/:id'),
     put: handle.put('/authentications/:id'),
+    delete: handle.delete('/authentications/:id'),
     path: handle.path('/authentications/:id'),
   },
   '/user/schedule': {
@@ -2273,6 +2337,7 @@ export const paths = {
     get: handle.get('/host/tenants/:id'),
     patch: handle.patch('/host/tenants/:id'),
     put: handle.put('/host/tenants/:id'),
+    delete: handle.delete('/host/tenants/:id'),
     path: handle.path('/host/tenants/:id'),
   },
   '/host/users': {
@@ -2292,6 +2357,7 @@ export const paths = {
     get: handle.get('/host/users/:id'),
     patch: handle.patch('/host/users/:id'),
     put: handle.put('/host/users/:id'),
+    delete: handle.delete('/host/users/:id'),
     path: handle.path('/host/users/:id'),
   },
   '/host/status': {
@@ -2430,6 +2496,7 @@ export const paths = {
   '/admin/chromecasts/:id': {
     patch: handle.patch('/admin/chromecasts/:id'),
     put: handle.put('/admin/chromecasts/:id'),
+    delete: handle.delete('/admin/chromecasts/:id'),
     path: handle.path('/admin/chromecasts/:id'),
   },
   '/admin/screens': {
@@ -2448,6 +2515,7 @@ export const paths = {
   '/admin/screens/:id': {
     patch: handle.patch('/admin/screens/:id'),
     put: handle.put('/admin/screens/:id'),
+    delete: handle.delete('/admin/screens/:id'),
     path: handle.path('/admin/screens/:id'),
   },
   '/admin/programs': {
@@ -2455,6 +2523,7 @@ export const paths = {
     path: handle.path('/admin/programs'),
   },
   '/admin/programs/:id': {
+    delete: handle.delete('/admin/programs/:id'),
     path: handle.path('/admin/programs/:id'),
   },
   '/admin/league/teams/:team_id/players': {
@@ -2472,6 +2541,7 @@ export const paths = {
   '/admin/league/players/:id': {
     patch: handle.patch('/admin/league/players/:id'),
     put: handle.put('/admin/league/players/:id'),
+    delete: handle.delete('/admin/league/players/:id'),
     path: handle.path('/admin/league/players/:id'),
   },
   '/admin/league/divisions/:division_id/teams': {
@@ -2490,6 +2560,7 @@ export const paths = {
     get: handle.get('/admin/league/teams/:id'),
     patch: handle.patch('/admin/league/teams/:id'),
     put: handle.put('/admin/league/teams/:id'),
+    delete: handle.delete('/admin/league/teams/:id'),
     path: handle.path('/admin/league/teams/:id'),
   },
   '/admin/league/programs/:program_id/divisions': {
@@ -2508,6 +2579,7 @@ export const paths = {
   '/admin/league/divisions/:id': {
     patch: handle.patch('/admin/league/divisions/:id'),
     put: handle.put('/admin/league/divisions/:id'),
+    delete: handle.delete('/admin/league/divisions/:id'),
     path: handle.path('/admin/league/divisions/:id'),
   },
   '/admin/league/programs/:program_id/seasons': {
@@ -2527,6 +2599,7 @@ export const paths = {
     get: handle.get('/admin/league/seasons/:id'),
     patch: handle.patch('/admin/league/seasons/:id'),
     put: handle.put('/admin/league/seasons/:id'),
+    delete: handle.delete('/admin/league/seasons/:id'),
     path: handle.path('/admin/league/seasons/:id'),
   },
   '/admin/league/programs': {
@@ -2637,6 +2710,7 @@ export const paths = {
     get: handle.get('/admin/clubs/:id'),
     patch: handle.patch('/admin/clubs/:id'),
     put: handle.put('/admin/clubs/:id'),
+    delete: handle.delete('/admin/clubs/:id'),
     path: handle.path('/admin/clubs/:id'),
   },
   '/admin/locations/:location_id/playing_surfaces': {
@@ -2654,6 +2728,7 @@ export const paths = {
   '/admin/playing_surfaces/:id': {
     patch: handle.patch('/admin/playing_surfaces/:id'),
     put: handle.put('/admin/playing_surfaces/:id'),
+    delete: handle.delete('/admin/playing_surfaces/:id'),
     path: handle.path('/admin/playing_surfaces/:id'),
   },
   '/admin/locations/:location_id/locker_rooms': {
@@ -2671,6 +2746,7 @@ export const paths = {
   '/admin/locker_rooms/:id': {
     patch: handle.patch('/admin/locker_rooms/:id'),
     put: handle.put('/admin/locker_rooms/:id'),
+    delete: handle.delete('/admin/locker_rooms/:id'),
     path: handle.path('/admin/locker_rooms/:id'),
   },
   '/admin/locations': {
@@ -2690,6 +2766,7 @@ export const paths = {
     get: handle.get('/admin/locations/:id'),
     patch: handle.patch('/admin/locations/:id'),
     put: handle.put('/admin/locations/:id'),
+    delete: handle.delete('/admin/locations/:id'),
     path: handle.path('/admin/locations/:id'),
   },
   '/admin/events/proto': {
@@ -2703,6 +2780,7 @@ export const paths = {
   '/admin/events/:id': {
     patch: handle.patch('/admin/events/:id'),
     put: handle.put('/admin/events/:id'),
+    delete: handle.delete('/admin/events/:id'),
     path: handle.path('/admin/events/:id'),
   },
   '/admin/events/locker_rooms/assign': {
@@ -2748,6 +2826,7 @@ export const paths = {
     get: handle.get('/admin/game_imports/:id'),
     patch: handle.patch('/admin/game_imports/:id'),
     put: handle.put('/admin/game_imports/:id'),
+    delete: handle.delete('/admin/game_imports/:id'),
     path: handle.path('/admin/game_imports/:id'),
   },
   '/admin/player_imports/:id/complete': {
@@ -2771,6 +2850,7 @@ export const paths = {
     get: handle.get('/admin/player_imports/:id'),
     patch: handle.patch('/admin/player_imports/:id'),
     put: handle.put('/admin/player_imports/:id'),
+    delete: handle.delete('/admin/player_imports/:id'),
     path: handle.path('/admin/player_imports/:id'),
   },
   '/admin/hockey_statsheets/:id/post': {
@@ -2806,6 +2886,7 @@ export const paths = {
     get: handle.get('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
     patch: handle.patch('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
     put: handle.put('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
+    delete: handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
     path: handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/players/:id'),
   },
   '/admin/hockey_statsheets/:hockey_statsheet_id/goals': {
@@ -2825,6 +2906,7 @@ export const paths = {
     get: handle.get('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
     patch: handle.patch('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
     put: handle.put('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
+    delete: handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
     path: handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goals/:id'),
   },
   '/admin/hockey_statsheets/:hockey_statsheet_id/penalties': {
@@ -2844,6 +2926,7 @@ export const paths = {
     get: handle.get('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
     patch: handle.patch('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
     put: handle.put('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
+    delete: handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
     path: handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/penalties/:id'),
   },
   '/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/autoload': {
@@ -2867,6 +2950,7 @@ export const paths = {
     get: handle.get('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
     patch: handle.patch('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
     put: handle.put('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
+    delete: handle.delete('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
     path: handle.path('/admin/hockey_statsheets/:hockey_statsheet_id/goaltenders/:id'),
   },
   '/admin/hockey_statsheets/:id/edit': {
@@ -2899,6 +2983,7 @@ export const paths = {
     path: handle.path('/pages/:page_id/sections'),
   },
   '/pages/:page_id/sections/:id': {
+    delete: handle.delete('/pages/:page_id/sections/:id'),
     path: handle.path('/pages/:page_id/sections/:id'),
   },
   '/pages/:page_id/blocks/position': {
@@ -2922,6 +3007,7 @@ export const paths = {
     get: handle.get('/pages/:page_id/blocks/:id'),
     patch: handle.patch('/pages/:page_id/blocks/:id'),
     put: handle.put('/pages/:page_id/blocks/:id'),
+    delete: handle.delete('/pages/:page_id/blocks/:id'),
     path: handle.path('/pages/:page_id/blocks/:id'),
   },
   '/pages/:page_id/blocks/contacts/:id/edit': {
@@ -3012,6 +3098,7 @@ export const paths = {
   '/pages/:id': {
     patch: handle.patch('/pages/:id'),
     put: handle.put('/pages/:id'),
+    delete: handle.delete('/pages/:id'),
     path: handle.path('/pages/:id'),
   },
   '/pages/*path': {
@@ -3035,6 +3122,7 @@ export const paths = {
     get: handle.get('/admin/posts/:id'),
     patch: handle.patch('/admin/posts/:id'),
     put: handle.put('/admin/posts/:id'),
+    delete: handle.delete('/admin/posts/:id'),
     path: handle.path('/admin/posts/:id'),
   },
   '/next/admin': {
@@ -3135,6 +3223,24 @@ export const paths = {
     patch: handle.patch('/next/admin/posts/:id'),
     put: handle.put('/next/admin/posts/:id'),
     path: handle.path('/next/admin/posts/:id'),
+  },
+  '/next/admin/locations/:location_id/locker_rooms': {
+    post: handle.post('/next/admin/locations/:location_id/locker_rooms'),
+    path: handle.path('/next/admin/locations/:location_id/locker_rooms'),
+  },
+  '/next/admin/locations/:location_id/locker_rooms/new': {
+    get: handle.get('/next/admin/locations/:location_id/locker_rooms/new'),
+    path: handle.path('/next/admin/locations/:location_id/locker_rooms/new'),
+  },
+  '/next/admin/locker_rooms/:id/edit': {
+    get: handle.get('/next/admin/locker_rooms/:id/edit'),
+    path: handle.path('/next/admin/locker_rooms/:id/edit'),
+  },
+  '/next/admin/locker_rooms/:id': {
+    patch: handle.patch('/next/admin/locker_rooms/:id'),
+    put: handle.put('/next/admin/locker_rooms/:id'),
+    delete: handle.delete('/next/admin/locker_rooms/:id'),
+    path: handle.path('/next/admin/locker_rooms/:id'),
   },
   '/next/admin/locations': {
     get: handle.get('/next/admin/locations'),

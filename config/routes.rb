@@ -306,7 +306,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
         resources :events, only: %i[new create edit update]
       end
       resources :posts, only: %i[index show new create edit update]
-      resources :locations, only: %i[index show new create edit update]
+      resources :locations, only: %i[index show new create edit update], shallow: true do
+        resources :locker_rooms, only: %i[new create edit update destroy], module: :locations
+      end
       resources :forms, only: :index
       namespace :forms do
         resources :form_packets, only: [:show]

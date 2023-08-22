@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
 import {
   AppShell,
+  Box,
   Breadcrumbs,
   Burger,
   Footer,
@@ -24,7 +25,7 @@ import {
   IconMapPin,
   TablerIconsProps,
 } from "@tabler/icons-react";
-import { FC, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { BaseLayoutProps, Breadcrumb } from "./base-layout";
 
 type Icon = (props: TablerIconsProps) => JSX.Element;
@@ -162,7 +163,11 @@ export const AdminLayout: FC<BaseLayoutProps> = ({
             width: props.fluid ? "" : 1140,
           }}
         >
-          <PageHeader title={props.title} breadcrumbs={breadcrumbs} />
+          <PageHeader
+            title={props.title}
+            breadcrumbs={breadcrumbs}
+            extra={props.extra}
+          />
 
           <div
             style={{
@@ -181,9 +186,10 @@ export const AdminLayout: FC<BaseLayoutProps> = ({
 interface PageHeaderProps {
   title: string;
   breadcrumbs: Breadcrumb[];
+  extra?: ReactNode;
 }
 
-function PageHeader({ title, breadcrumbs }: PageHeaderProps) {
+function PageHeader({ title, breadcrumbs, extra }: PageHeaderProps) {
   return (
     <div
       style={{
@@ -199,7 +205,12 @@ function PageHeader({ title, breadcrumbs }: PageHeaderProps) {
             </Link>
           ))}
         </Breadcrumbs>
-        <Title>{title}</Title>
+        <Box sx={() => ({ display: "flex", justifyContent: "space-between" })}>
+          <Title>{title}</Title>
+          <Box sx={() => ({ display: "flex", alignItems: "center" })}>
+            {extra}
+          </Box>
+        </Box>
       </Stack>
     </div>
   );

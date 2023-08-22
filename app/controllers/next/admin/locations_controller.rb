@@ -12,7 +12,9 @@ class Next::Admin::LocationsController < Next::Admin::BaseController
 
   def show
     inertia props: {
-      location: @location
+      location: @location,
+      playing_surfaces: @location.playing_surfaces.order(name: :asc),
+      locker_rooms: @location.locker_rooms.order(name: :asc)
     }
   end
 

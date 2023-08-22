@@ -1,10 +1,10 @@
 import { Inertia, Page } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
-import { Form, Input, Space } from "antd";
-import { Colorpicker } from "antd-colorpicker";
-import { ColorResult } from "react-color";
+import { ColorInput, Group, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { Space } from "antd";
 import { BackButton, SubmitButton } from "~/components/buttons";
-import { asPayload, useForm } from "~/utils/use-form";
+import { useBind } from "~/utils/use-bind";
 
 type Location = App.Location & { color: string };
 
@@ -14,41 +14,47 @@ interface Props extends App.SharedProps {
 
 export function LocationForm() {
   const { props } = usePage<Page<Props>>();
-  const { form, bind } = useForm<Location>(props.location);
+  const form = useForm<Location>({ initialValues: props.location });
+  const bind = useBind(form);
 
-  function handleFinish(data: Location) {
+  function handleSubmit(data: Location) {
     if (props.location.id) {
-      Inertia.patch(
-        `/next/admin/locations/${props.location.id}`,
-        asPayload({ location: data })
-      );
+      Inertia.patch(`/next/admin/locations/${props.location.id}`, {
+        location: data,
+      } as any);
     } else {
-      Inertia.post("/next/admin/locations", asPayload({ location: data }));
+      Inertia.post("/next/admin/locations", { location: data } as any);
     }
   }
 
   return (
-    <Form form={form} onFinish={handleFinish} layout="vertical">
+    <form onSubmit={form.onSubmit(handleSubmit)}>
       <Space direction="vertical" style={{ width: "100%" }}>
-        <Form.Item {...bind("name")} required>
-          <Input />
-        </Form.Item>
-        <Form.Item {...bind("short_name")}>
-          <Input />
-        </Form.Item>
-        <Form.Item
+        <TextInput
+          {...bind("name")}
+          required
+          sx={() => ({
+            width: 400,
+          })}
+        />
+        <TextInput
+          {...bind("short_name")}
+          required
+          sx={() => ({
+            width: 150,
+          })}
+        />
+        <ColorInput
           {...bind("color")}
-          getValueFromEvent={(event: ColorResult) => event.hex}
-        >
-          <Colorpicker picker="CompactPicker" />
-        </Form.Item>
-        <Form.Item>
-          <Space>
-            <SubmitButton></SubmitButton>
-            <BackButton></BackButton>
-          </Space>
-        </Form.Item>
+          sx={() => ({
+            width: 150,
+          })}
+        />
+        <Group spacing="xs">
+          <SubmitButton></SubmitButton>
+          <BackButton></BackButton>
+        </Group>
       </Space>
-    </Form>
+    </form>
   );
 }
