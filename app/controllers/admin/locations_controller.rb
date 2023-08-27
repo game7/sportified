@@ -43,7 +43,7 @@ class Admin::LocationsController < Admin::BaseLeagueController
   private
 
   def location_params
-    params.required(:location).permit(:name, :short_name)
+    params.required(:location).permit(:name, :short_name, :color)
   end
 
   def add_locations_breadcrumb

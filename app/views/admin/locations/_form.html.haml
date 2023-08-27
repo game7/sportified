@@ -3,6 +3,7 @@
     .panel-body
       = f.input :name
       = f.input :short_name
+      = f.input :color
       = f.button :wrapped, :cancel => return_url
 
 :css
@@ -11,4 +12,7 @@
   }
   .location_short_name {
     width: 200px;
+  }
+  .location_color {
+    width: 100px;
   }
