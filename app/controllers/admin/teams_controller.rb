@@ -65,7 +65,8 @@ class Admin::TeamsController < Admin::BaseLeagueController
   def team_params
     params.required(:team).permit(
       :division_id, :name, :short_name, :club_id, :division_id, :pool, :show_in_standings, :seed,
-      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache
+      :crop_x, :crop_y, :crop_h, :crop_w, :logo, :remote_logo_url, :logo_cache,
+      :primary_color, :secondary_color, :accent_color
     )
   end
 
