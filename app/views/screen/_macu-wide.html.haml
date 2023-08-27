@@ -249,9 +249,12 @@
         - if (event.try(:show_teams?))
           .logistics
             .time
-              = event.starts_on.strftime('%-I:%M %P')
-              != ' - '
-              = event.ends_on.strftime('%-I:%M %P')
+              - if event.all_day?
+                All Day
+              - else
+                = event.starts_on.strftime('%-I:%M %P')
+                != ' - '
+                = event.ends_on.strftime('%-I:%M %P')
             .location
               = event.location.name
               
@@ -271,9 +274,12 @@
         - else
           .logistics
             .time
-              = event.starts_on.strftime('%-I:%M %P')
-              != ' - '
-              = event.ends_on.strftime('%-I:%M %P')
+              - if event.all_day?
+                All Day
+              - else
+                = event.starts_on.strftime('%-I:%M %P')
+                != ' - '
+                = event.ends_on.strftime('%-I:%M %P')
             .location
               = event.location.name
           .subject
