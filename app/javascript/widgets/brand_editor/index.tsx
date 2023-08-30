@@ -9,7 +9,7 @@ import {
   Card,
   Image as SemanticImage,
 } from "semantic-ui-react";
-import * as ReactAvatarEditor from "react-avatar-editor";
+import ReactAvatarEditor from "react-avatar-editor";
 import "./react-image-crop.css";
 import ColorThief from "colorthief";
 import { ColorPicker } from "./color-picker";

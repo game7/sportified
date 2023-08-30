@@ -6,6 +6,7 @@
   "devDependencies": {
     "@types/rails__activestorage": "^7.0.1",
     "@types/react": "^18.0.25",
+    "@types/react-avatar-editor": "^13.0.0",
     "@types/react-dom": "^18.0.9",
     "@types/recharts": "^1.8.24",
     "@vitejs/plugin-react": "^2.2.0",
@@ -57,7 +58,7 @@
     "rc-virtual-list": "^3.4.13",
     "react": "^18.2.0",
     "react-ace": "^4.3.0",
-    "react-avatar-editor": "11.0.7",
+    "react-avatar-editor": "^13.0.0",
     "react-big-calendar": "^0.22.0",
     "react-color": "^2.14.1",
     "react-dom": "^18.2.0",
