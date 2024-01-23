@@ -229,4 +229,9 @@ class ApplicationController < ActionController::Base
 
     save_passwordless_redirect_location!(User) if request.method == 'GET'
   end
+
+  def require_host
+    find_current_tenant
+    redirect_to '/' unless current_user&.host?
+  end
 end

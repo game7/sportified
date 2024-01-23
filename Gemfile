@@ -77,6 +77,8 @@ gem 'jquery-rails'
 
 gem 'rails_12factor', group: [:staging, :production]
 
+gem "blazer"
+
 #gem 'pages', :path => 'vendor/engines/pages'
 
 # gem 'aws-s3', :require => 'aws/s3'

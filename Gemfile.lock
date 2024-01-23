@@ -127,6 +127,11 @@ GEM
     bcrypt (3.1.18)
     benchmark-ips (2.10.0)
     bindex (0.8.1)
+    blazer (2.6.5)
+      activerecord (>= 5)
+      chartkick (>= 3.2)
+      railties (>= 5)
+      safely_block (>= 0.1.1)
     bootsnap (1.15.0)
       msgpack (~> 1.2)
     bootstrap-sass (3.4.1)
@@ -532,6 +537,7 @@ DEPENDENCIES
   audited
   autoprefixer-rails
   aws-sdk-s3
+  blazer
   bootsnap (>= 1.1.0)
   bootstrap-sass (>= 3.4.1)
   byebug
@@ -592,4 +598,4 @@ RUBY VERSION
    ruby 3.0.5p211
 
 BUNDLED WITH
-   2.3.26
+   2.4.6

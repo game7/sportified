@@ -38,6 +38,19 @@ namespace ActionText {
   interface RichText {
   }
 }
+namespace ActiveRecord {
+  interface InternalMetadata {
+    key: string;
+    value: string | null;
+    created_at: string;
+    updated_at: string;
+  }
+}
+namespace ActiveRecord {
+  interface SchemaMigration {
+    version: string;
+  }
+}
 namespace ActiveStorage {
   interface Attachment {
     id: number;
@@ -178,6 +191,82 @@ namespace Audited {
     remote_address: string | null;
     request_uuid: string | null;
     created_at: string | null;
+  }
+}
+namespace Blazer {
+  interface Audit {
+    id: number;
+    user_id: number | null;
+    query_id: number | null;
+    statement: string | null;
+    data_source: string | null;
+    created_at: string | null;
+    user?: App.User;
+    query?: Blazer.Query;
+  }
+}
+namespace Blazer {
+  interface Check {
+    id: number;
+    creator_id: number | null;
+    query_id: number | null;
+    state: string | null;
+    schedule: string | null;
+    emails: string | null;
+    slack_channels: string | null;
+    check_type: string | null;
+    message: string | null;
+    last_run_at: string | null;
+    created_at: string;
+    updated_at: string;
+    creator?: App.User;
+    query?: Blazer.Query;
+  }
+}
+namespace Blazer {
+  interface Dashboard {
+    id: number;
+    creator_id: number | null;
+    name: string | null;
+    created_at: string;
+    updated_at: string;
+    dashboard_queries?: Blazer.DashboardQuery[];
+    queries?: Blazer.Query[];
+    creator?: App.User;
+  }
+}
+namespace Blazer {
+  interface DashboardQuery {
+    id: number;
+    dashboard_id: number | null;
+    query_id: number | null;
+    position: number | null;
+    created_at: string;
+    updated_at: string;
+    dashboard?: Blazer.Dashboard;
+    query?: Blazer.Query;
+  }
+}
+namespace Blazer {
+  interface Query {
+    id: number;
+    creator_id: number | null;
+    name: string | null;
+    description: string | null;
+    statement: string | null;
+    data_source: string | null;
+    status: string | null;
+    created_at: string;
+    updated_at: string;
+    checks?: Blazer.Check[];
+    dashboard_queries?: Blazer.DashboardQuery[];
+    dashboards?: Blazer.Dashboard[];
+    audits?: Blazer.Audit[];
+    creator?: App.User;
+  }
+}
+namespace Blazer {
+  interface Upload {
   }
 }
 namespace App {

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get 'screen' => 'screen#show'
 
+  mount Blazer::Engine, at: 'analytics'
+
   resources :products, only: %i[index show]
   resources :variants, only: [] do
     resources :registrations, only: %i[new create]
