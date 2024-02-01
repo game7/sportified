@@ -1,4 +1,6 @@
 Rails.application.config.to_prepare do
+  next if Rails.env.production?
+
   db = Rails.configuration.database_configuration[Rails.env].with_indifferent_access
   Blazer.settings['data_sources']['main']['url'] = [
     db[:adapter],
