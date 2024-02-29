@@ -28,13 +28,13 @@
 #
 
 class ProductsController < ApplicationController
-
   def index
     @products = Product.active.where(private: [nil, false])
   end
 
   def show
-    @product = Product.includes(:variants).find(params[:id])
+    @product = Product.includes(:variants).where(id: params[:id], private: [nil, false])
+                      .or(Product.where(private_token: params[:id]))
+                      .sole
   end
-
 end

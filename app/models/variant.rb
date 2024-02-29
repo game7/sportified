@@ -28,7 +28,7 @@ class Variant < ApplicationRecord
   include Sportified::TenantScoped
 
   belongs_to :product
-  belongs_to :form_packet, required: false
+  belongs_to :form_packet, optional: true
   has_many :registrations, dependent: :destroy
 
   validates :title,
@@ -37,22 +37,23 @@ class Variant < ApplicationRecord
 
   validates :quantity_allowed,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 },
-            :allow_nil => true
+            allow_nil: true
 
   validates :price,
             numericality: { greater_than_or_equal_to: 0 },
-            :allow_nil => true
+            allow_nil: true
 
   def payment_required?
-    price || 0 > 0
+    price.present?
   end
 
   def quantity_available
-    (quantity_allowed || 100000) - registrations.allocated.size
+    (quantity_allowed || 100_000) - registrations.allocated.size
   end
+
+  delegate :active?, to: :product
 
   def available?
-    product.active? && quantity_available > 0
+    product.active? && quantity_available.positive?
   end
-
 end

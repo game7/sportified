@@ -28,7 +28,7 @@
       %p 
         It will not appear in any public-facing product lists but can still be purchased from its 
         != ' '
-        = link_to 'product page', @product, target: :blank
+        = link_to 'product page', product_path(@product.private_token), target: :blank
 
 %h4.ui.top.attached.header Associated With
 %table.ui.celled.bottom.attached.table

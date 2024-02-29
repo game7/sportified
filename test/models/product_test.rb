@@ -6,6 +6,7 @@
 #  active             :boolean
 #  description        :text
 #  private            :boolean
+#  private_token      :string
 #  quantity_allowed   :integer
 #  quantity_available :integer
 #  registrable_type   :string

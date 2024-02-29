@@ -1564,6 +1564,7 @@ namespace App {
     summary: string | null;
     private: boolean | null;
     roster: boolean | null;
+    private_token: string | null;
     image?: ActiveStorage.Attached.One;
     variants?: App.Variant[];
     registrations?: App.Registration[];

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_23_222742) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_28_231348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -626,6 +626,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_222742) do
     t.text "summary"
     t.boolean "private"
     t.boolean "roster"
+    t.string "private_token"
     t.index ["registrable_type", "registrable_id"], name: "index_products_on_registrable_type_and_registrable_id"
     t.index ["tenant_id"], name: "index_products_on_tenant_id"
   end

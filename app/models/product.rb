@@ -6,6 +6,7 @@
 #  active             :boolean
 #  description        :text
 #  private            :boolean
+#  private_token      :string
 #  quantity_allowed   :integer
 #  quantity_available :integer
 #  registrable_type   :string
@@ -52,6 +53,8 @@ class Product < ApplicationRecord
 
   has_one_attached :image
 
+  has_secure_token :private_token
+
   validates :title,
             presence: true,
             length: { maximum: 50 }
@@ -85,5 +88,4 @@ class Product < ApplicationRecord
   scope :summaries, lambda {
     unscoped.group(:tenant_id).select(Product.arel_table['tenant_id'], Product.arel_table['id'].count)
   }
-
 end
