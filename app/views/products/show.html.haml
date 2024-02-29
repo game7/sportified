@@ -23,14 +23,14 @@
               .title{style: 'font-weight: bold'}= variant.title
             %td
               .description= variant.description
-              - if variant.quantity_allowed.present?
+              - if variant.quantity_allowed.present? && variant.active?
                 .availability
                   %em= "#{variant.quantity_available} of #{variant.quantity_allowed} registration#{variant.quantity_allowed != 1 ? 's' : ''} are available"
             %td= variant.price ? number_to_currency(variant.price) : 'FREE'
             
             %td.collapsing
               = link_to 'Register', new_variant_registration_path(variant), class: [:ui, :mini, :primary, :button] if variant.available?
-              %em= 'Sold Out' unless variant.available?
+              %em= 'Unavailable' unless variant.available?
 
 
     - if @product.roster?
