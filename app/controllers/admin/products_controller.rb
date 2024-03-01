@@ -73,7 +73,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def product_params
     params.required(:product).permit(:title, :summary, :description, :quantity_allowed, :active, :private, :roster, :registrable_id, :registrable_type, :image,
-                                     variants_attributes: %i[id title description form_packet_id display_order quantity_allowed price _destroy])
+                                     variants_attributes: %i[id title description form_packet_id display_order quantity_allowed hide_quantity_available price _destroy])
   end
 
   def get_form_packets

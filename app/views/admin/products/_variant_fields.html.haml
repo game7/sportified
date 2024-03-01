@@ -3,12 +3,14 @@
   .fields
     .five.wide.field  
       = f.input :title
-    .five.wide.field
+    .four.wide.field
       = f.association :form_packet, :collection => @form_packets, include_blank: true
     .two.wide.field
-      = f.input :display_order      
+      = f.input :display_order, label: 'Order'
     .two.wide.field
       = f.input :quantity_allowed
+    .two.wide.field{ style: 'display: flex; align-items: flex-end; padding-bottom: 10px; padding-top: 10px;' }
+      = f.input :hide_quantity_available?, as: :boolean, label: 'Hide Quantity'
     .two.wide.field
       = f.input :price, as: :currency, placeholder: 'Free'
   = f.input :description, input_html: { rows: 3 }

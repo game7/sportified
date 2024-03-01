@@ -2,17 +2,18 @@
 #
 # Table name: variants
 #
-#  id               :integer          not null, primary key
-#  description      :text
-#  display_order    :integer          default(0)
-#  price            :decimal(20, 4)
-#  quantity_allowed :integer
-#  title            :string(40)
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  form_packet_id   :integer
-#  product_id       :integer
-#  tenant_id        :integer
+#  id                      :integer          not null, primary key
+#  description             :text
+#  display_order           :integer          default(0)
+#  hide_quantity_available :boolean          default(FALSE)
+#  price                   :decimal(20, 4)
+#  quantity_allowed        :integer
+#  title                   :string(40)
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  form_packet_id          :integer
+#  product_id              :integer
+#  tenant_id               :integer
 #
 # Indexes
 #

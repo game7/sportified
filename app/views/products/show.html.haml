@@ -23,7 +23,7 @@
               .title{style: 'font-weight: bold'}= variant.title
             %td
               .description= variant.description
-              - if variant.quantity_allowed.present? && variant.active?
+              - if variant.show_quantity_available? && variant.active?
                 .availability
                   %em= "#{variant.quantity_available} of #{variant.quantity_allowed} registration#{variant.quantity_allowed != 1 ? 's' : ''} are available"
             %td= variant.price ? number_to_currency(variant.price) : 'FREE'

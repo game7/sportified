@@ -1773,6 +1773,7 @@ namespace App {
     updated_at: string;
     form_packet_id: number | null;
     display_order: number | null;
+    hide_quantity_available: boolean | null;
     registrations?: App.Registration[];
     tenant?: App.Tenant;
     product?: App.Product;
