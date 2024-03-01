@@ -59,6 +59,6 @@ class Variant < ApplicationRecord
   delegate :active?, to: :product
 
   def available?
-    product.active? && quantity_available&.positive?
+    product.active? && (quantity_available.blank? || quantity_available.positive?)
   end
 end
