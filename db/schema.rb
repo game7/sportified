@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_01_042549) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_155009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -615,7 +615,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_01_042549) do
   create_table "products", id: :serial, force: :cascade do |t|
     t.integer "registrable_id"
     t.string "registrable_type"
-    t.string "title", limit: 40
+    t.string "title"
     t.text "description"
     t.integer "quantity_allowed"
     t.integer "quantity_available"

@@ -12,7 +12,7 @@
 #  registrable_type   :string
 #  roster             :boolean
 #  summary            :text
-#  title              :string(40)
+#  title              :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  registrable_id     :integer
