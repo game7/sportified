@@ -8,11 +8,15 @@ class Admin::ProductsController < Admin::AdminController
   def index
     @products = Product.includes(:registrable).order(active: :desc, id: :desc)
 
-    @pending_counts = Registration.joins(:product).group('products.id').pending.count
-    @completed_counts = Registration.joins(:product).group('products.id').completed.count
-    @abandoned_counts = Registration.joins(:product).group('products.id').abandoned.count
-    @cancelled_counts = Registration.joins(:product).group('products.id').pending.count
-    @completed_total = Registration.joins(:product).group('products.id').completed.sum(:price)
+    product_registrations = Registration.joins(:product).group('products.id')
+
+    @statistics = {
+      pending: product_registrations.pending.count,
+      completed: product_registrations.completed.count,
+      abandoned: product_registrations.abandoned.count,
+      cancelled: product_registrations.pending.count,
+      revenue: product_registrations.completed.sum(:price)
+    }
 
     @products = @products.active unless current_user_is_admin?
   end

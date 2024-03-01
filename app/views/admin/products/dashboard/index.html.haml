@@ -7,7 +7,7 @@
   = area_menu_item 'Dashboard', [:admin, :products, :dashboard]
   = area_menu_item 'Products', [:admin, :products]
 
-= render partial: 'admin/products/products_table', locals: { products: products, title: 'Products with Recent Activity' }
+= render partial: 'admin/products/products_table', locals: { products: products, statistics: statistics, title: 'Products with Recent Activity' }
 
 %h4.ui.top.attached.header Latest Registrations
 %table.ui.celled.bottom.attached.table
