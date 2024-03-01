@@ -6,13 +6,14 @@ class Admin::ProductsController < Admin::AdminController
   before_action :get_form_packets, only: %i[edit update new create]
 
   def index
-    @products = Product.includes(
-      registrable: {},
-      pending_registrations: [],
-      completed_registrations: [],
-      abandoned_registrations: [],
-      cancelled_registrations: []
-    ).order(active: :desc, id: :desc)
+    @products = Product.includes(:registrable).order(active: :desc, id: :desc)
+
+    @pending_counts = Registration.joins(:product).group('products.id').pending.count
+    @completed_counts = Registration.joins(:product).group('products.id').completed.count
+    @abandoned_counts = Registration.joins(:product).group('products.id').abandoned.count
+    @cancelled_counts = Registration.joins(:product).group('products.id').pending.count
+    @completed_total = Registration.joins(:product).group('products.id').completed.sum(:price)
+
     @products = @products.active unless current_user_is_admin?
   end
 

@@ -26,8 +26,8 @@
         .ui.disabled.fitted.checkbox
           = check_box_tag nil, nil, product.active?, disabled: true
           %label
-      %td.center.aligned= link_to product.pending_registrations.size, [:admin, product, :registrations]
-      %td.center.aligned= link_to product.completed_registrations.size, [:admin, product, :registrations]
-      %td.center.aligned= link_to product.cancelled_registrations.size, [:admin, product, :registrations]
-      %td.center.aligned= link_to product.abandoned_registrations.size, [:admin, product, :registrations]
-      %td.right.aligned= number_to_currency product.completed_registrations.map{|r| r.price || 0}.reduce(0, :+)
+      %td.center.aligned= link_to @pending_counts[product.id] || 0, [:admin, product, :registrations]
+      %td.center.aligned= link_to @pending_counts[product.id] || 0, [:admin, product, :registrations]
+      %td.center.aligned= link_to @pending_counts[product.id] || 0, [:admin, product, :registrations]
+      %td.center.aligned= link_to @pending_counts[product.id] || 0, [:admin, product, :registrations]
+      %td.right.aligned= number_to_currency(@completed_total[product.id] || 0)
