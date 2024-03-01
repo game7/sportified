@@ -29,7 +29,8 @@
 
 class ProductsController < ApplicationController
   def index
-    @products = Product.active.where(private: [nil, false])
+    @products = Product.active.where(private: [nil, false]).order(id: :desc)
+    @products = @products.where('title ILIKE ?', "%#{params[:q]}%") if params[:q].present?
   end
 
   def show
