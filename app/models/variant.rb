@@ -49,7 +49,7 @@ class Variant < ApplicationRecord
   end
 
   def quantity_available
-    (quantity_allowed || 100_000) - registrations.allocated.size
+    quantity_allowed && (quantity_allowed - registrations.allocated.size)
   end
 
   def show_quantity_available?
@@ -59,6 +59,6 @@ class Variant < ApplicationRecord
   delegate :active?, to: :product
 
   def available?
-    product.active? && quantity_available.positive?
+    product.active? && quantity_available&.positive?
   end
 end
